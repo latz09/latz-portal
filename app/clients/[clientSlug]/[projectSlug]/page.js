@@ -82,7 +82,7 @@ export default async function ProjectPage({ params }) {
               Open →
             </a>
           </div>
-          <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-6 py-4">
+          {/* <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-6 py-4">
             <div className="flex items-center gap-3">
               <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
                 designer
@@ -98,7 +98,7 @@ export default async function ProjectPage({ params }) {
             >
               Open →
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
 

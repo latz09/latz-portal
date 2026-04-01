@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>TWWG — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'TWWG';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.warn { color: #fbbf24; }
+  .header-meta-item .value.ok { color: #4ade80; }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .warn-row td {
+    background: var(--orange-light) !important;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-open { background: var(--orange-light); color: var(--orange); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+  .pill-red { background: var(--red-light); color: var(--red); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── OPEN ITEMS TABLE ── */
+  .open-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .open-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .open-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+  }
+
+  .open-table tr:last-child td { border-bottom: none; }
+  .open-table tr:nth-child(even) td { background: var(--off-white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Region 5 TWWG</div>
+    <div class="status-pill">Pre-Proposal</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏛️</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#open" class="nav-link"><span class="nav-icon">❓</span> Open Items</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Region 5 Tribal Wetlands Working Group</h1>
+    <div class="sub">TWWG Website · Custom Build + Ongoing Maintenance · EPA Grant-Funded</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Point of Contact</span>
+        <span class="value">Rachel Crownhart (SMSC)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Est. Dev Range</span>
+        <span class="value warn">$12,000 – $14,000</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Maintenance</span>
+        <span class="value">$400–$500/mo (quarterly)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit</span>
+        <span class="value warn">None yet — Pre-proposal</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Grant Payer</span>
+        <span class="value">NAWM (EPA WPDG)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Status</span>
+        <span class="value warn">⚠ Blocked — Grant language pending</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏛️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Rachel Crownhart</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Supervisor of Natural Resources, SMSC</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">TWWG Role</span>
+            <span class="data-value">Co-lead (started January 2026 — new to position)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:rachel.crownhart@shakopeedakota.org">rachel.crownhart@shakopeedakota.org</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Direct Phone</span>
+            <span class="data-value">952-233-4257</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Cell</span>
+            <span class="data-value">612-485-5034</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Day-to-Day POC</span>
+            <span class="data-value">Rachel — all decisions flow through her. She and Mike Jones can approve independently without full advisory board vote.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Employer</span>
+            <span class="data-value">Shakopee Mdewakanton Sioux Community (SMSC) — Prior Lake, MN</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SMSC Context</span>
+            <span class="data-value">Federally recognized sovereign Dakota tribe. Mystic Lake Casino. 3,500+ employees. $325M+ in charitable donations. This is not a scrappy nonprofit — they have resources.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">TWWG Full Name</span>
+            <span class="data-value">Region 5 Tribal Wetlands Working Group — internally called "the TWIG"</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Founded</span>
+            <span class="data-value">2021, modeled after Region 10 (Pacific Northwest) group</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">EPA Region 5</span>
+            <span class="data-value">MI, WI, MN, IN, OH, IL — active in MI, WI, MN only so far</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Active Members</span>
+            <span class="data-value">~20 tribes out of 35 federally recognized in Region 5 (Rachel's estimate)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Other Co-lead</span>
+            <span class="data-value">Mike Jones — Stockbridge-Munsee, WI. Off week of March 30. Rachel and Mike can make decisions without full board.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Facilitated By</span>
+            <span class="data-value">NAWM (National Association of Wetland Managers) — they hold the grant and cut the checks. Historically slow to respond. Lost staff due to EPA/admin cuts.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>About the TWWG & Their Mission</h3>
+        <div class="data-row">
+          <span class="data-label">Core Mission</span>
+          <span class="data-value">Get tribal natural resource staff trained in wetland delineation — determining where wetlands begin and end for regulatory purposes. Expensive to train for. Few programs available. TWWG exists to close that gap.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Design Vibe</span>
+          <span class="data-value">Community-driven over professional/government. Rachel confirmed this. PNW TWIG site shared as reference/inspiration.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Web Presence</span>
+          <span class="data-value">One page buried on nawm.org + a Gmail address (R5TWWG@gmail.com). Nothing they own. Rachel called it "pathetic" and "abysmal." Her name isn't even on it.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">How We Were Found</span>
+          <span class="data-value">Rachel came directly through the contact form. Was not shopping around — specifically wanted a Midwest company.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚨</span>
+        <div class="callout-body">
+          <strong>NAWM Risk — Monitor This</strong>
+          <span>NAWM holds the grant money and issues payment. They have lost staff due to EPA/administration cuts and are not currently being helpful. Rachel is frustrated with them. She is unsure whether the TWWG will continue working with NAWM long-term or eventually go independent. This is a real risk to watch as the project progresses. Build a relationship with Rachel, not NAWM.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Proposal not yet sent — blocked on grant language from NAWM</strong>
+        <p>Rachel reached out directly, call happened March 30, 2026. Scope confirmed. Pricing range established. Everything is ready to build the HTML proposal — we're just waiting on NAWM's grant wording so the dev/maintenance split can be structured correctly. Rachel expected to have an answer by end of week of April 6. Advisory board meeting likely that week.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Came to Us</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> No real web presence — buried on nawm.org, nothing they own</li>
+            <li><span class="check-icon">🔴</span> Gmail address as their "contact" — looks amateur for a federally recognized group</li>
+            <li><span class="check-icon">🔴</span> No place to host training resources, recorded modules, or event info</li>
+            <li><span class="check-icon">🔴</span> No CMS — everything goes through NAWM, who are unresponsive</li>
+            <li><span class="check-icon">🔴</span> Rachel personally motivated: her name isn't even on the existing page</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Real standalone site the TWWG owns — not buried on NAWM's domain</li>
+            <li><span class="check-icon">✅</span> Training resources and video modules accessible to all member tribes</li>
+            <li><span class="check-icon">✅</span> Staff can update events, add resources, manage content themselves</li>
+            <li><span class="check-icon">✅</span> Travel reimbursement form that emails a designated address</li>
+            <li><span class="check-icon">✅</span> Searchable, SEO-visible — not invisible to Google</li>
+            <li><span class="check-icon">✅</span> Written into next grant cycle for long-term relationship</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Current Blocker: Grant Language from NAWM</strong>
+          <span>The grant allocates $7,600 for "website development" and $19,500 for "website maintenance" — Rachel believes these are likely flipped or misallocated (she doesn't know who wrote the budget). NAWM has not provided the full grant wording (citing "data reasons"). Rachel emailed them March 30. They are historically slow. We're working on structure in the meantime and will send the HTML proposal once she gives the green light — grant language or not.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Long Game: Written into the Next Grant</strong>
+          <span>Rachel and her supervisor are actively writing the next grant cycle (2027+). She wants Jordan written in. Estimated range: $80K–$250K over the full next grant. The current project is also the audition for that relationship.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>No deposit received — proposal not yet sent</strong>
+          <span>All numbers below are estimates from the discovery call. Final proposal pending grant language confirmation from NAWM. NAWM pays Jordan directly, not SMSC/Rachel.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Website Development</strong></td>
+            <td>Custom build — all confirmed scope (see Scope section). Jordan's target range.</td>
+            <td class="amount">$12,000–$14,000</td>
+          </tr>
+          <tr>
+            <td><strong>Branding / Logo</strong></td>
+            <td>Separate line item — to be included if advisory board approves. Do NOT bundle by default.</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Dev (Est.)</strong></td>
+            <td>Grant has $7,600 allocated for "development" — will need to restructure grant split</td>
+            <td class="amount"><strong>~$12,000–$14,000+</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Maintenance</strong></td>
+            <td>Content updates, events, resource uploads, hosting mgmt, security, support. Billed quarterly.</td>
+            <td class="amount">$400–$500/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Maintenance (Quarterly)</strong></td>
+            <td>What Rachel needs for her grant budget narrative (confirmed ballpark given April 1)</td>
+            <td class="amount">$1,200–$1,500/qtr</td>
+          </tr>
+          <tr>
+            <td><strong>Maintenance (Annual)</strong></td>
+            <td>Grant has $19,500 allocated for "maintenance" — annual rate well under that</td>
+            <td class="amount">$5,000–$6,000/yr</td>
+          </tr>
+          <tr class="warn-row">
+            <td>⚠ Grant Dev Allocation</td>
+            <td>How the grant is currently written — likely misallocated. Needs to be restructured in proposal.</td>
+            <td class="amount">$7,600</td>
+          </tr>
+          <tr class="warn-row">
+            <td>⚠ Grant Maint. Allocation</td>
+            <td>Also likely misallocated. Both Jordan and Rachel agreed numbers seem backwards.</td>
+            <td class="amount">$19,500</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout success" style="margin-top:16px;">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Long-term Value if Written into Next Grant</strong>
+          <span>Rachel + supervisor writing 2027+ grant now. Estimated range $80K–$250K. Even at the low end, this is a multi-year relationship worth pursuing carefully. Nail this project, get written into the next one.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Fast-moving — 2 days from first contact to near-proposal</strong>
+          <span>Rachel came in through the contact form, call happened same week, scope was mostly confirmed in one call. The only thing slowing this down is the grant language from NAWM, not Rachel's enthusiasm or decision-making speed.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 30, 2026 — Morning</div>
+          <div class="timeline-title">Discovery Call</div>
+          <div class="timeline-desc">Rachel submitted contact form and call was booked. Full scope, funding structure, decision process, and design vibe confirmed in one session. Rachel specifically wanted a Midwest company — didn't shop around.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 30, 2026 — 10:37 AM</div>
+          <div class="timeline-title">Pre-Proposal Questions Sent</div>
+          <div class="timeline-desc">Jordan emailed two questions: (1) how to structure the grant split between dev and maintenance so the proposal aligns with grant wording, (2) billing preference — monthly or quarterly for maintenance.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 30, 2026 — 10:53 AM</div>
+          <div class="timeline-title">Rachel Responds — Quarterly Confirmed + Grant Blocker Flagged</div>
+          <div class="timeline-desc">Quarterly maintenance confirmed. Rachel flagged that she emailed NAWM to get the grant language before Jordan starts the proposal — doesn't want to waste his time if the grant is a stickler about how funds are spent. NAWM described as "frustratingly slow."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 30, 2026 — 11:04 AM</div>
+          <div class="timeline-title">Jordan Holds on Proposal — Works on Structure</div>
+          <div class="timeline-desc">Acknowledged the blocker, agreed not to finalize proposal until grant clarity comes through. Started working on overall structure and scope in the meantime.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 1, 2026 — 10:30 AM</div>
+          <div class="timeline-title">Rachel Returns with Bad News — Grant Language Complication</div>
+          <div class="timeline-desc">NAWM's grant wording says NAWM must create the website — not a third party. NAWM doesn't have a web designer. Contracting out is possible but would require multiple bids and unclear whether TWWG gets to choose the vendor. Rachel frustrated. Will meet with NAWM next week for more details. Also asked for ballpark maintenance cost for the next grant she's writing.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Apr 1, 2026 — 11:13 AM</div>
+          <div class="timeline-title">Jordan Responds — Happy to Bid + Maintenance Ballpark Given</div>
+          <div class="timeline-desc">Confirmed willingness to participate in formal bid process. Provided ballpark for next grant: $400–$500/mo, $1,200–$1,500/qtr, $5,000–$6,000/yr. Expressed continued commitment regardless of which grant cycle it happens through.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Week of Apr 6, 2026</div>
+          <div class="timeline-title">Rachel's Meeting with NAWM</div>
+          <div class="timeline-desc">Rachel will meet with NAWM to get clarity on the bid/contracting process. She expects to have an answer for Jordan by end of that week. Advisory board meeting may also happen this week.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD — Post-NAWM Meeting</div>
+          <div class="timeline-title">HTML Proposal Delivered</div>
+          <div class="timeline-desc">Once Jordan knows the path forward (direct contract vs. formal bid), send the full proposal. If bid process: provide whatever documentation NAWM requires. Proposal goes to Rachel → advisory board → NAWM.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Scope confirmed on discovery call — not yet formalized in proposal</strong>
+          <span>All features below were explicitly discussed and confirmed with Rachel. A few structural decisions are still open (see Open Items section). Custom CMS throughout — Rachel asked about it directly and it was a key requirement.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:16px;">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Home / About</h4>
+          <ul>
+            <li>Who the TWWG is, mission statement</li>
+            <li>Member tribes overview</li>
+            <li>Introduce the group to tribes, agencies, partners landing cold</li>
+            <li>Community-driven tone, not corporate/government</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Resources</h4>
+          <ul>
+            <li>Two types: (1) external links to agencies, (2) downloadable internal PDFs</li>
+            <li>Organized by state — each state's resources differ (wetland certs vary)</li>
+            <li>External links confirmed: EPA, MN Board of Water and Soil, WI DNR, MPCA, Michigan EGLE</li>
+            <li>Structure (state pages vs. filtered view) — still open, see Open Items</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Events & Upcoming Workshops</h4>
+          <ul>
+            <li>Upcoming virtual meetings + in-person training workshops</li>
+            <li>Card layout per event — NOT a full calendar (Rachel confirmed: won't be many events)</li>
+            <li>Typically 2 virtual meetings + 1 in-person per year</li>
+            <li>Registration method still open — contact form or Eventbrite link (see Open Items)</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static + Embed</span>
+          <h4>Online Training Library</h4>
+          <ul>
+            <li>Embed existing 2024 recorded video modules — organized by topic</li>
+            <li>Accompanying PDF for each module</li>
+            <li>Fully public — no login, no paywall</li>
+            <li>2 modules already exist from 2024 Wetland Vegetation ID Training series</li>
+            <li>Live virtual trainings are NOT hosted here — site just links out to separate platform</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Form / Email</span>
+          <h4>Travel Reimbursement Forms</h4>
+          <ul>
+            <li>Email submission only — no login, no dashboard, no tracking system needed</li>
+            <li>Form submits and emails to a designated address</li>
+            <li>Rachel confirmed this explicitly: keep it simple</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--orange);">
+          <span class="page-badge badge-open">Open — Propose</span>
+          <h4>Interactive Tribe Map</h4>
+          <ul>
+            <li>Not discussed on the call — Jordan to flag as an option in the proposal</li>
+            <li>NAWM has one on their site for reference</li>
+            <li>Shows all 35 tribes in Region 5, highlights active members</li>
+            <li>Good "wow factor" for the home page — community-driven feel</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>CMS Overview</h3>
+        <div class="data-row">
+          <span class="data-label">Platform</span>
+          <span class="data-value">Custom-built (no WordPress, no plugin bloat) — built from scratch for exactly what TWWG needs</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Who Uses It</span>
+          <span class="data-value">Rachel + tribal staff. Rachel asked about CMS directly — it was a key requirement. She wants staff to update content without calling Jordan.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Manageable Content</span>
+          <span class="data-value">Events, resources (links + PDFs), training library uploads, board/contact info</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPEN ITEMS -->
+    <section id="open">
+      <div class="section-header">
+        <div class="section-icon">❓</div>
+        <h2>Open Items — Needs Decision</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>These were raised but not finalized on the call — flag each one in the proposal</strong>
+          <span>Jordan should propose a recommended approach for each structural item and lead Rachel to a good decision. She's community-minded but not technical — she needs to be guided, not just asked.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <table class="open-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Context</th>
+              <th>Recommended Approach</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>State pages vs. filtered resources</strong></td>
+              <td>Rachel leaned toward individual pages per state. Structure needs to be thought through — nav/filtering approach TBD.</td>
+              <td>Propose state landing pages — cleaner UX, easier to link to, simpler for staff to manage per state.</td>
+            </tr>
+            <tr>
+              <td><strong>Interactive tribe map</strong></td>
+              <td>Not discussed on call. NAWM has one. Flag as an option.</td>
+              <td>Include as optional add-on. Strong visual for the home page. Shows all 35 tribes in Region 5.</td>
+            </tr>
+            <tr>
+              <td><strong>Event registration method</strong></td>
+              <td>Options: on-site contact form or link out to Eventbrite. Currently they email NAWM directly. Left open.</td>
+              <td>Propose on-site contact form by default — keeps it self-contained, no dependency on third-party platforms.</td>
+            </tr>
+            <tr>
+              <td><strong>Registration email routing</strong></td>
+              <td>Does each state route to a different contact email? Needs confirmation from Rachel.</td>
+              <td>Ask Rachel to confirm before building the form — this determines CMS structure for events.</td>
+            </tr>
+            <tr>
+              <td><strong>Branding / logo</strong></td>
+              <td>No existing logo or brand. Rachel will raise it at next admin meeting. Separate line item.</td>
+              <td>Include branding as a clearly optional add-on in the proposal. Do NOT bundle by default.</td>
+            </tr>
+            <tr>
+              <td><strong>Photos</strong></td>
+              <td>Unknown what exists. Rachel will try to source from NAWM or trainers. Stock fallback.</td>
+              <td>Ask Rachel to reach out to NAWM/trainers after approval. Budget stock photos as fallback in proposal.</td>
+            </tr>
+            <tr>
+              <td><strong>Grant / contracting path</strong></td>
+              <td>Grant says NAWM must create the website. Bid process may be required. Rachel meeting NAWM week of April 6.</td>
+              <td>Be ready to submit formal bid documentation if NAWM requires it. Signal willingness in every email.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Nothing has been collected yet — proposal hasn't been sent</strong>
+          <span>Content gathering begins after proposal approval. Rachel will need to source some items from NAWM (photos, existing docs) — build that dependency into the timeline expectations.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Branding / Logo Decision</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">No logo exists. Rachel raising at next admin meeting. Determines whether branding is added to scope.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending Admin Meeting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Photos</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Wetland scenes, tribe events, training workshops. Rachel will try to source from NAWM or trainers. Stock photos are the fallback.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎥</span>
+            <div>
+              <strong>Recorded Training Modules (2024)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">2 modules already exist from 2024 Wetland Vegetation ID Training series. Need embed links + accompanying PDFs.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Exists — Need Links</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🗺️</span>
+            <div>
+              <strong>Member Tribe List</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Full list of 35 federally recognized tribes in Region 5. Active members (~20) identified separately. Needed for map and About page.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔗</span>
+            <div>
+              <strong>State Resource Links</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">External agency links per state (EPA, MN Board of Water and Soil, WI DNR, MPCA, Michigan EGLE + any others). Organized by state.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>Downloadable Resources (PDFs)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Internal documents, guides, reference materials to be hosted on the site.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📅</span>
+            <div>
+              <strong>Upcoming Events / Meeting Schedule</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Virtual meeting dates + any in-person training workshops scheduled. Typically 2 virtual + 1 in-person/year.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📬</span>
+            <div>
+              <strong>Registration Email Routing</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Does each state have a different contact email for event registration? Determines form structure.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Open Question</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>About / Mission Copy</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Rough description of TWWG, mission, origin story. Jordan will write the final copy — just need Rachel's raw input.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom-built — no WordPress, no plugin bloat. Tailored to TWWG's actual needs.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — SSL auto-renewal, analytics included</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Video Embeds</span>
+            <span class="data-value">Embed existing recorded training modules (2024 series). Live trainings link out to separate platform — not hosted on site.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Key Technical Decisions</h3>
+          <div class="data-row">
+            <span class="data-label">Resource Structure</span>
+            <span class="data-value">State landing pages (proposed) vs. filtered single page — open item. State pages recommended for easier nav and linking.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Event Registration</span>
+            <span class="data-value">Contact form (proposed default) vs. Eventbrite link. On-site form keeps everything self-contained.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Travel Form</span>
+            <span class="data-value">Email submission only — no backend system, no tracking. Submits to designated address. Confirmed by Rachel.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Tribe Map</span>
+            <span class="data-value">Interactive map (flagged as option in proposal). Region 5 tribes plotted — active members highlighted. Good homepage visual.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Proposal Format</span>
+            <span class="data-value">HTML page with print stylesheet — professional, on-brand, shareable via link. Rachel will share with advisory board and NAWM.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Design Direction</h3>
+        <div class="data-row">
+          <span class="data-label">Tone</span>
+          <span class="data-value">Community-driven over professional/government. Rachel confirmed this explicitly.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Reference Site</span>
+          <span class="data-value">PNW TWIG site (Region 10) — shared as inspiration. Review it before designing.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Branding</span>
+          <span class="data-value">No existing logo or brand. Separate line item — optional. Rachel raising with admin board.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Accessibility</span>
+          <span class="data-value">ADA/WCAG 2.1 AA — tribal government audience, diverse device usage expected</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">SEO</span>
+          <span class="data-value">Currently invisible on Google. Strong SEO improvement is a clear sell — mention in proposal vs. current NAWM page situation.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚨</span>
+        <div class="callout-body">
+          <strong>Project cannot start until proposal is approved and grant path is confirmed</strong>
+          <span>Timeline below assumes NAWM gives clarity by end of week of April 6 and proposal is approved shortly after. If NAWM drags, the start date slides. Rachel expected an answer by end of that week.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">00</div>
+        <div>
+          <div class="weeks">Now — Week of Apr 6</div>
+          <h4>Pre-Project — Clarity & Proposal</h4>
+          <ul>
+            <li>Wait for Rachel's NAWM meeting (week of April 6)</li>
+            <li>Determine path: direct contract vs. formal bid process</li>
+            <li>Finalize proposal once grant structure is known</li>
+            <li>Build and send HTML proposal with print stylesheet</li>
+            <li>If bid: prepare whatever documentation NAWM requires</li>
+            <li>Confirm branding decision from Rachel's admin meeting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Week 1 (Post-Approval)</div>
+          <h4>Setup & Content Gathering</h4>
+          <ul>
+            <li>Set up project repo, Vercel project, CMS project</li>
+            <li>Confirm all open items (state pages vs. filter, registration email routing, etc.)</li>
+            <li>Send formal content checklist to Rachel</li>
+            <li>Rachel sources photos from NAWM + trainers</li>
+            <li>Confirm tribe map is in or out of scope</li>
+            <li>Finalize branding direction if add-on is approved</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Weeks 2–5</div>
+          <h4>Design & Development</h4>
+          <ul>
+            <li>Build home / about (community-driven design, PNW TWIG as reference)</li>
+            <li>Build resources section (state pages or filtered — pending decision)</li>
+            <li>Build events section with registration method</li>
+            <li>Build training library with video embeds + PDFs</li>
+            <li>Build travel reimbursement form (email submission)</li>
+            <li>Tribe map (if approved) — interactive, Region 5</li>
+            <li>Share live dev link throughout for Rachel's feedback</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 5–7</div>
+          <h4>Content Integration & Refinement</h4>
+          <ul>
+            <li>Populate real content as it arrives from Rachel</li>
+            <li>Integrate photos (from NAWM sources or stock)</li>
+            <li>Implement feedback from Rachel's reviews</li>
+            <li>Accessibility + SEO pass</li>
+            <li>Test travel reimbursement form email routing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Week 7–8</div>
+          <h4>Finalization & Launch</h4>
+          <ul>
+            <li>Final review with Rachel (+ Mike Jones / advisory board if needed)</li>
+            <li>Domain setup (TWWG gets their own domain — not on nawm.org)</li>
+            <li>CMS training session with Rachel + any staff who'll update content</li>
+            <li>Site goes live — final invoice to NAWM</li>
+            <li>Post-launch check-in and maintenance relationship begins</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Next Grant</h2>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Primary long-term play: Get written into the 2027+ grant cycle</strong>
+          <span>Rachel and her supervisor are actively writing it now. Estimated range $80K–$250K. She wants Jordan written in. The current project IS the audition. Deliver well, stay close to Rachel, and the next grant is a real opportunity.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🗺️ Interactive Tribe Map</h4>
+          <div class="price">$600–$1,000</div>
+          <p>All 35 Region 5 tribes plotted, active members highlighted. Not discussed on call — flag as optional in proposal. Strong visual anchor for the home page that reinforces the community mission.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎨 Branding / Logo</h4>
+          <div class="price">TBD — separate line item</div>
+          <p>No existing logo or identity. Rachel raising with admin board. Already positioned as optional add-on. Natural first upsell if approved — don't bundle by default, but it's a clear need.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📅 Advanced Event System</h4>
+          <div class="price">$400–$700</div>
+          <p>Full calendar view, RSVP tracking, automated reminder emails. Currently scoped as a simple card list. Once the site proves its value, this is a natural next step if event volume grows.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎓 Expanded Training Library</h4>
+          <div class="price">$500–$800</div>
+          <p>Currently 2 modules exist. As more trainings are recorded, the library grows. Structured by topic, searchable, filterable by tribe or region. Natural evolution of the existing library once content volume increases.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🌐 Multi-State Expansion</h4>
+          <div class="price">Included in next grant</div>
+          <p>Site currently covers MI, WI, MN — active states. IN, OH, IL have no active participation yet. If the group expands, the site grows with it. Position ongoing maintenance to cover this as it happens.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📊 2027+ Grant — Full Scope</h4>
+          <div class="price">$80K–$250K estimated</div>
+          <p>The big one. Rachel + supervisor writing it now. Jordan written in. Could include expanded training infrastructure, new state onboarding, site redesign, advanced features, full multi-year maintenance retainer. Nail this first project.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">March 30–April 1, 2026 — First Impressions</div>
+        <p>Rachel is sharp, decisive, and genuinely frustrated with the status quo. She came directly through the contact form without shopping around — specifically wanted a Midwest company. She's new to the co-lead role (started January 2026) and is personally motivated to build something real. Her exact words about the current nawm.org page: "pathetic" and "abysmal." Her name isn't even on it. That's the energy driving this. She's not waiting for permission to move — she's trying to get the grant bureaucracy out of the way so she can act.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Grant Complication — April 1, 2026</div>
+        <p>The grant language says NAWM must build the site — not a third party. This is a bureaucratic headache, not a sign that Rachel is backing out. She's frustrated with it, not with us. The path forward is: (1) she meets NAWM next week to understand the bid/contracting process, (2) Jordan participates in whatever bid process is required. Expressed willingness clearly in the April 1 email — "I'm completely happy to participate in that." Don't oversell this. Just make it clear we'll do whatever the process requires.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Rachel responds fast (same day). She's direct, practical, and not technical. She doesn't need to understand how the CMS works — she needs to trust that it will work and that her staff can figure it out without calling Jordan. Lead her on structural decisions (state pages vs. filtered view, registration method) — she'll have opinions but she doesn't know what she doesn't know technically. Guide her to good decisions in the proposal rather than asking open-ended questions.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Who to Talk To (and Who Not To)</div>
+        <p>All communication goes through Rachel. She's the human point of contact throughout the project. Jordan can work directly with NAWM on financial/logistical side once the project is approved — but NAWM should be treated as the payer, not the client. The client is Rachel and the TWWG. NAWM is a bureaucratic bottleneck — be patient and professional with them, but stay close to Rachel as the real relationship.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Next Grant — Play This Long</div>
+        <p>Rachel mentioned the next grant cycle ($80K–$250K) unprompted, and then asked for a maintenance ballpark she could use in her budget narrative for it. She's already thinking about Jordan for the next one. The way to secure that is simple: do a great job on this project, stay in contact, and be easy to work with when the NAWM bureaucracy is being frustrating. Don't pitch the next grant — just do the work and let her advocate for us internally.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
