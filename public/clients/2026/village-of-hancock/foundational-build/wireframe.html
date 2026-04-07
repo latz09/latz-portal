@@ -1,29 +1,1771 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Village of Hancock — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--navy: #0e1c44;
+				--navy-dark: #091232;
+				--navy-mid: #1a2d5a;
+				--red: #720f11;
+				--red-light: rgba(114, 15, 17, 0.08);
+				--tan: #f5f1e8;
+				--tan-dark: #ede8d8;
+				--tan-mid: #e8e2d0;
+				--green: #4a5d3d;
+				--green-light: rgba(74, 93, 61, 0.1);
+				--brown: #8a2f2e;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Roboto', sans-serif;
+				background: var(--tan);
+				background-image:
+					linear-gradient(rgba(14, 28, 68, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(14, 28, 68, 0.05) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--navy);
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--navy);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--navy-mid);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Roboto', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Merriweather', serif;
+				font-size: 16px;
+				font-weight: 700;
+				color: var(--tan);
+				line-height: 1.2;
+				margin-bottom: 4px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Roboto', sans-serif;
+				font-size: 10px;
+				color: rgba(245, 241, 232, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(114, 15, 17, 0.2);
+				border: 1px solid rgba(114, 15, 17, 0.4);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: #e05555;
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.3;
+				}
+			}
+
+			.status-pill span {
+				font-family: 'Roboto', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: #e05555;
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Roboto', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(245, 241, 232, 0.45);
+				text-decoration: none;
+				font-family: 'Roboto', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--tan);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--tan);
+				background: rgba(114, 15, 17, 0.15);
+				border-left-color: var(--red);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Roboto', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 52px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--red);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Merriweather', serif;
+				font-size: 34px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'Roboto', sans-serif;
+				font-size: 14px;
+				color: rgba(14, 28, 68, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(14, 28, 68, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(14, 28, 68, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(14, 28, 68, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--navy);
+			}
+
+			.meta-value.warn {
+				color: var(--red);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--navy);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--navy);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--navy);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(14, 28, 68, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--navy);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Merriweather', serif;
+				font-weight: 700;
+				font-size: 15px;
+				color: var(--navy);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 16px;
+				align-items: center;
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				color: rgba(14, 28, 68, 0.5);
+			}
+
+			.wf-nav-links span.active {
+				color: var(--navy);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--navy);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(14, 28, 68, 0.04);
+				border-left: 3px solid rgba(14, 28, 68, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--red);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(114, 15, 17, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--red);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(245, 241, 232, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Merriweather', serif;
+				font-size: 26px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Merriweather', serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Merriweather', serif;
+				font-size: 14px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 4px;
+			}
+
+			.wf-subtext {
+				font-family: 'Roboto', sans-serif;
+				font-size: 14px;
+				color: rgba(14, 28, 68, 0.5);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				color: rgba(14, 28, 68, 0.6);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(14, 28, 68, 0.15);
+				margin: 20px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--navy);
+				padding: 14px 22px;
+				background: var(--navy);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11px;
+				color: rgba(245, 241, 232, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(14, 28, 68, 0.07);
+				border: 2px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.3;
+				color: var(--navy);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(14, 28, 68, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── DOCUMENT ROWS (ordinances, agendas) ── */
+			.doc-list {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				margin-top: 10px;
+			}
+
+			.doc-row {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				border: 1.5px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 5px;
+				padding: 10px 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.doc-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				background: rgba(14, 28, 68, 0.08);
+				color: var(--navy);
+				border-radius: 3px;
+				padding: 4px 8px;
+				font-weight: 700;
+			}
+
+			.doc-info {
+				flex: 1;
+			}
+
+			.doc-name {
+				font-family: 'Roboto', sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+			}
+
+			.doc-date {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				color: rgba(14, 28, 68, 0.45);
+			}
+
+			.doc-action {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				color: var(--navy);
+				border: 1px solid var(--navy);
+				border-radius: 3px;
+				padding: 3px 10px;
+				font-weight: 600;
+				white-space: nowrap;
+			}
+
+			/* ── FILTER ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				margin-bottom: 14px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: rgba(14, 28, 68, 0.4);
+			}
+
+			.filter-pill {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				border: 1.5px solid rgba(14, 28, 68, 0.2);
+				border-radius: 20px;
+				padding: 3px 12px;
+				color: rgba(14, 28, 68, 0.5);
+			}
+
+			.filter-pill.active {
+				border-color: var(--navy);
+				color: var(--navy);
+				font-weight: 600;
+			}
+
+			/* ── BOARD MEMBER GRID ── */
+			.board-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.board-card {
+				border: 1.5px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 5px;
+				padding: 12px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.board-name {
+				font-family: 'Merriweather', serif;
+				font-size: 13px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 3px;
+			}
+
+			.board-role {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11px;
+				color: rgba(14, 28, 68, 0.5);
+				margin-bottom: 4px;
+			}
+
+			.board-email {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11px;
+				color: var(--navy);
+				text-decoration: underline;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Merriweather', serif;
+				font-size: 12px;
+				font-weight: 700;
+				padding: 8px 16px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 120px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(14, 28, 68, 0.1);
+				color: var(--navy);
+				border: 1.5px dashed var(--navy);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(14, 28, 68, 0.3);
+				padding: 0 8px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(14, 28, 68, 0.12);
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				color: var(--navy);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 10px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--red);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			/* ── QUICK LINKS GRID ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin: 14px 0;
+			}
+
+			.quick-link-card {
+				border: 2px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 6px;
+				padding: 14px 12px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.quick-link-icon {
+				font-size: 20px;
+				margin-bottom: 6px;
+			}
+
+			.quick-link-label {
+				font-family: 'Merriweather', serif;
+				font-size: 12px;
+				font-weight: 700;
+				color: var(--navy);
+			}
+
+			/* ── PRICING BOX ── */
+			.pricing-box {
+				background: var(--navy);
+				color: var(--tan);
+				border-radius: 6px;
+				padding: 18px 24px;
+				margin-bottom: 40px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 20px;
+			}
+
+			.pricing-box .pricing-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: rgba(245, 241, 232, 0.5);
+				margin-bottom: 4px;
+			}
+
+			.pricing-box .pricing-amount {
+				font-family: 'Merriweather', serif;
+				font-size: 28px;
+				font-weight: 700;
+				color: var(--tan);
+			}
+
+			.pricing-box .pricing-note {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				color: rgba(245, 241, 232, 0.5);
+				max-width: 320px;
+				line-height: 1.5;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.board-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+				.quick-links {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					display: none;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 60px;
+				}
+				.option-grid {
+					grid-template-columns: 1fr;
+				}
+				.board-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Village of Hancock</div>
+				<div class="sidebar-doctype">Site Wireframes</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Internal Review</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"
+					><span class="nav-icon">🗺️</span> Site Map</a
+				>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"
+					><span class="nav-icon">🏠</span> Home</a
+				>
+				<a href="#about" class="nav-link"
+					><span class="nav-icon">🏛️</span> About Hancock</a
+				>
+				<a href="#contact" class="nav-link"
+					><span class="nav-icon">📬</span> Contact</a
+				>
+				<a href="#agendas" class="nav-link"
+					><span class="nav-icon">📋</span> Agendas & Minutes</a
+				>
+				<a href="#ordinances" class="nav-link"
+					><span class="nav-icon">📄</span> Ordinances</a
+				>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"
+					><span class="nav-icon">✅</span> Confirmed</a
+				>
+				<a href="#discussion" class="nav-link"
+					><span class="nav-icon">💬</span> Discussion</a
+				>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content & Structure</div>
+				<div class="doc-title">Village of Hancock</div>
+				<div class="doc-sub">
+					5-Page Municipal Website &nbsp;·&nbsp; Foundation + Documents Package
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Internal Review</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">5 in scope</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Jillian Steele</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value ok">✓ Received</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div
+				class="annotation"
+				style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px"
+			>
+				✏️ Layouts shown are illustrative — they communicate what content needs
+				to exist on each page and how it should behave, not how it should be
+				designed. Layout, hierarchy, and visual treatment are in the designer's
+				hands.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">
+								Village of Hancock
+							</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								5 pages · custom CMS for documents and board directory
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 6px; align-items: center">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span
+										style="
+											font-size: 10px;
+											font-family: 'Roboto', sans-serif;
+											font-weight: 400;
+											opacity: 0.7;
+										"
+										>/</span
+									>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									About<br /><span
+										style="
+											font-size: 10px;
+											font-family: 'Roboto', sans-serif;
+											font-weight: 400;
+											opacity: 0.7;
+										"
+										>/about</span
+									>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Contact<br /><span
+										style="
+											font-size: 10px;
+											font-family: 'Roboto', sans-serif;
+											font-weight: 400;
+											opacity: 0.7;
+										"
+										>/contact</span
+									>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Agendas<br /><span
+										style="
+											font-size: 10px;
+											font-family: 'Roboto', sans-serif;
+											font-weight: 400;
+											opacity: 0.7;
+										"
+										>/agendas-minutes</span
+									>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Ordinances<br /><span
+										style="
+											font-size: 10px;
+											font-family: 'Roboto', sans-serif;
+											font-weight: 400;
+											opacity: 0.7;
+										"
+										>/ordinances</span
+									>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							All 5 pages live on the same domain. No subdomains, no external
+							platforms. Nav is consistent across all pages. Logo click returns
+							to Home.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home Page &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>About</span>
+							<span>Contact</span>
+							<span>Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+							</div>
+							<div class="img-placeholder" style="height: 180px">
+								<div class="img-icon">🌲</div>
+								<div class="img-label">
+									Hero image — community photo<br />
+									Jillian gathering: lakes, park, local events<br />
+									Stock photo fallback if needed
+								</div>
+							</div>
+							<div style="margin-top: 16px; text-align: center">
+								<div class="wf-heading-lg">Welcome to Hancock</div>
+								<div class="wf-subtext">
+									A small Wisconsin village on the shores of Pine, Fish, and
+									Whistler Lakes.
+								</div>
+								<div class="wf-cta">Explore Our Village →</div>
+							</div>
+							<div class="annotation">
+								Hero copy is placeholder — Jordan writes final. Photo comes from
+								Jillian — lakes, park, community events. Stock fallback if
+								community photos aren't ready in time.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Quick Links -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">
+									Quick Links — Resident Resources
+								</div>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">📋</div>
+									<div class="quick-link-label">Agendas & Minutes</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">📄</div>
+									<div class="quick-link-label">Ordinances</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">📬</div>
+									<div class="quick-link-label">Contact the Board</div>
+								</div>
+							</div>
+							<div class="annotation">
+								These three resident resources need to be easy to find from the
+								home page — residents shouldn't have to hunt. Agendas & Minutes,
+								Ordinances, and Contact the Board are the three things people
+								actually come for.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- About blurb -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Village Snapshot</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								A short warm paragraph about Hancock — the lakes, the community,
+								what makes this place home. 2–3 sentences max. Calls out to the
+								full About page.
+							</div>
+							<div style="margin-top: 8px">
+								<span
+									style="
+										font-family: 'Roboto', sans-serif;
+										font-size: 13px;
+										color: var(--navy);
+										font-weight: 600;
+									"
+									>Learn more about our village →</span
+								>
+							</div>
+							<div class="annotation">
+								Short, warm intro to the village — the lakes, the community,
+								what makes Hancock home. Leads to the full About page. Jordan
+								writes the initial copy from Jillian's bullet points, editable
+								in CMS.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: ABOUT ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label">
+					<span class="section-num">2</span> About Hancock &mdash; /about
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">About</span>
+							<span>Contact</span>
+							<span>Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Page hero -->
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">About Hancock</div>
+							<div class="wf-subtext">
+								A community rooted in Wisconsin lake country.
+							</div>
+						</div>
+
+						<!-- Photo + Intro -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Village Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Option A / B — Photo Layout</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A</div>
+										<div
+											class="img-placeholder"
+											style="height: 100px; margin-bottom: 8px"
+										>
+											<div class="img-label">
+												Single landscape photo — clean and focused
+											</div>
+										</div>
+										<div class="wf-body-text" style="font-size: 12px">
+											One strong image above or beside the copy. Cleaner, more
+											editorial. Best if the one photo is great.
+										</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B</div>
+										<div style="display: flex; gap: 6px; margin-bottom: 8px">
+											<div
+												class="img-placeholder"
+												style="height: 80px; flex: 2"
+											>
+												<div class="img-label">main</div>
+											</div>
+											<div
+												style="
+													display: flex;
+													flex-direction: column;
+													gap: 6px;
+													flex: 1;
+												"
+											>
+												<div class="img-placeholder" style="height: 36px">
+													<div class="img-label" style="font-size: 9px">
+														candid
+													</div>
+												</div>
+												<div class="img-placeholder" style="height: 36px">
+													<div class="img-label" style="font-size: 9px">
+														scene
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="wf-body-text" style="font-size: 12px">
+											Multiple photos — more personal, shows different sides of
+											village life. Best if Jillian gathers 3+ good shots.
+										</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top: 10px">
+									Decision depends on what photos Jillian collects. If one great
+									landscape comes through → Option A. If she gets 3+ community
+									shots → Option B. Designer should be ready for either.
+								</div>
+							</div>
+
+							<div class="wf-body-text">
+								Village history, founding, character. The lakes. The quiet. What
+								makes Hancock home. Jordan writes the final copy from Jillian's
+								rough bullet points — approximately 3 short paragraphs.
+							</div>
+							<div class="annotation">
+								Copy managed in CMS — Jordan writes the initial version from
+								Jillian's bullet points. Clerk can update anytime without
+								calling Jordan.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Lakes callout -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">The Lakes</div>
+							</div>
+							<div style="display: flex; gap: 12px; flex-wrap: wrap">
+								<div
+									style="
+										border: 1.5px dashed rgba(14, 28, 68, 0.2);
+										border-radius: 5px;
+										padding: 10px 16px;
+										background: rgba(255, 255, 255, 0.5);
+										font-family: 'Merriweather', serif;
+										font-size: 13px;
+										font-weight: 700;
+										color: var(--navy);
+									"
+								>
+									Pine Lake
+								</div>
+								<div
+									style="
+										border: 1.5px dashed rgba(14, 28, 68, 0.2);
+										border-radius: 5px;
+										padding: 10px 16px;
+										background: rgba(255, 255, 255, 0.5);
+										font-family: 'Merriweather', serif;
+										font-size: 13px;
+										font-weight: 700;
+										color: var(--navy);
+									"
+								>
+									Fish Lake
+								</div>
+								<div
+									style="
+										border: 1.5px dashed rgba(14, 28, 68, 0.2);
+										border-radius: 5px;
+										padding: 10px 16px;
+										background: rgba(255, 255, 255, 0.5);
+										font-family: 'Merriweather', serif;
+										font-size: 13px;
+										font-weight: 700;
+										color: var(--navy);
+									"
+								>
+									Whistler Lake
+								</div>
+							</div>
+							<div class="annotation">
+								Optional section — simple callout of the three lakes. Could be a
+								brief blurb per lake or just the names as an anchor element.
+								Designer decides treatment.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: CONTACT ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label">
+					<span class="section-num">3</span> Contact &mdash; /contact
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>About</span>
+							<span class="active">Contact</span>
+							<span>Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Contact</div>
+							<div class="wf-subtext">
+								Reach the Village of Hancock board and staff.
+							</div>
+						</div>
+
+						<!-- Board Directory -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Board Directory</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="board-grid">
+								<div class="board-card">
+									<div class="board-name">Board Member Name</div>
+									<div class="board-role">Village President</div>
+									<div class="board-email">email@hancock.gov</div>
+								</div>
+								<div class="board-card">
+									<div class="board-name">Board Member Name</div>
+									<div class="board-role">Trustee</div>
+									<div class="board-email">email@hancock.gov</div>
+								</div>
+								<div class="board-card">
+									<div class="board-name">Board Member Name</div>
+									<div class="board-role">Trustee</div>
+									<div class="board-email">email@hancock.gov</div>
+								</div>
+								<div class="board-card">
+									<div class="board-name">Board Member Name</div>
+									<div class="board-role">Trustee</div>
+									<div class="board-email">email@hancock.gov</div>
+								</div>
+								<div class="board-card">
+									<div class="board-name">Board Member Name</div>
+									<div class="board-role">Village Clerk</div>
+									<div class="board-email">email@hancock.gov</div>
+								</div>
+								<div class="board-card">
+									<div class="board-name">Board Member Name</div>
+									<div class="board-role">Treasurer</div>
+									<div class="board-email">email@hancock.gov</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Clerk updates board directory via Sanity when membership changes
+								— no need to call Jordan. Each entry needs: name, role,
+								click-to-call phone, and email. Number of board members TBD —
+								Jillian confirming.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Village office -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Village Office</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div
+								style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+							>
+								<div>
+									<div class="wf-body-text">
+										<strong>Address</strong><br />Village Hall address here<br />Hancock,
+										WI [zip]
+									</div>
+									<div class="wf-body-text" style="margin-top: 8px">
+										<strong>Phone</strong><br />(###) ###-####<br /><span
+											style="font-size: 11px; color: rgba(14, 28, 68, 0.4)"
+											>click-to-call on mobile</span
+										>
+									</div>
+								</div>
+								<div>
+									<div class="wf-body-text">
+										<strong>Office Hours</strong><br />[Hours from Jillian]
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Village hall address, phone (click-to-call on mobile — critical
+								for 60+ audience), and office hours. All editable in CMS —
+								Jillian provides the initial details.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 4: AGENDAS & MINUTES ── -->
+			<section class="wf-section" id="agendas">
+				<div class="section-label">
+					<span class="section-num">4</span> Agendas &amp; Minutes &mdash;
+					/agendas-minutes
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>About</span>
+							<span>Contact</span>
+							<span class="active">Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Agendas & Minutes</div>
+							<div class="wf-subtext">
+								Meeting documents for Village of Hancock board meetings.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Meeting Documents</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="filter-row">
+								<span class="filter-label">Filter by year:</span>
+								<span class="filter-pill active">All</span>
+								<span class="filter-pill">2026</span>
+								<span class="filter-pill">2025</span>
+								<span class="filter-pill">2024</span>
+							</div>
+
+							<div class="doc-list">
+								<div class="doc-row">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">
+											April 2026 — Board Meeting Agenda
+										</div>
+										<div class="doc-date">Uploaded: April 1, 2026</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">
+											March 2026 — Board Meeting Minutes
+										</div>
+										<div class="doc-date">Uploaded: March 18, 2026</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+								<div class="doc-row" style="opacity: 0.6">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">
+											February 2026 — Board Meeting Minutes
+										</div>
+										<div class="doc-date">Uploaded: February 20, 2026</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Clerk uploads one PDF per meeting via Sanity — agenda before the
+								meeting, minutes after. Year filter is client-side, no page
+								reload. Download opens PDF in a new tab. How far back we go
+								depends on what Jillian has available.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 5: ORDINANCES ── -->
+			<section class="wf-section" id="ordinances">
+				<div class="section-label">
+					<span class="section-num">5</span> Ordinances &mdash; /ordinances
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>About</span>
+							<span>Contact</span>
+							<span>Agendas & Minutes</span>
+							<span class="active">Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Ordinances</div>
+							<div class="wf-subtext">
+								Official Village of Hancock ordinances and municipal code.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Ordinance Documents</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="doc-list">
+								<div class="doc-row">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">Ordinance #[001] — [Title]</div>
+										<div class="doc-date">Last updated: [date]</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">Ordinance #[002] — [Title]</div>
+										<div class="doc-date">Last updated: [date]</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">Ordinance #[003] — [Title]</div>
+										<div class="doc-date">Last updated: [date]</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+								<div class="doc-row" style="opacity: 0.6">
+									<div class="doc-icon">PDF</div>
+									<div class="doc-info">
+										<div class="doc-name">Ordinance #[004] — [Title]</div>
+										<div class="doc-date">Last updated: [date]</div>
+									</div>
+									<div class="doc-action">Download →</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Titles and numbering TBD once we review the USB drive contents
+								Jillian provided. Clerk replaces the file and updates the date
+								via Sanity when an ordinance is amended. Always the current
+								version — no archive needed here.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>5-Page Scope</strong> — Home, About, Contact, Agendas
+									& Minutes, Ordinances. No calendar, no news bulletin, no
+									payment system in this build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>CMS for Documents & Directory</strong> — Clerk manages
+									agendas, minutes, ordinances, and board directory via Sanity.
+									No need to call Jordan for routine updates.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No Online Payments</strong> — Not in scope for this
+									build. Future upsell.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Click-to-Call Phone Numbers</strong> — All phone
+									numbers are tap-to-call on mobile. Critical for 60+ audience.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Download Links Open PDFs in New Tab</strong> —
+									Agendas, minutes, and ordinances all open in a new tab rather
+									than force-downloading.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Jordan Writes Copy</strong> — Final copy for Home and
+									About comes from Jordan based on Jillian's bullet points. Not
+									the clerk's job.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Domain</strong> — villageofhancock.org. Jordan handles
+									DNS transfer at launch.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>About Page — Photo Layout (Option A vs B)</strong> —
+									Single photo or multi-photo layout. Decision depends on what
+									Jillian collects. Designer should be ready for either
+									direction.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Ordinance Organization</strong> — Numbered list or
+									organized by category? Need to review the USB drive contents
+									before finalizing structure.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Board Directory Details</strong> — Do all board
+									members want email shown publicly? Any prefer phone only?
+									Jillian to confirm before we build the contact page.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>How Far Back Do Agendas & Minutes Go?</strong> — What
+									does Jillian have in hand? We'll populate what exists — no
+									need to backfill years of PDFs if they don't have them.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Village Seal</strong> — Does it appear anywhere on the
+									site? Footer? About page? Or purely ceremonial? Designer has
+									an opinion — worth a quick discussion.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Office Hours / Address</strong> — Need the actual
+									village hall address and office hours from Jillian for the
+									Contact page.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' },
+			);
+
+			sections.forEach((s) => observer.observe(s));
+		</script>
+	</body>
 </html>
