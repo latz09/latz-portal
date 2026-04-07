@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Village of Hancock — What We Need | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			/* ── CONFIG ── swap these two values before sending ── */
+			:root {
+				--drive-link: 'PASTE_GOOGLE_DRIVE_LINK_HERE';
+			}
+
+			:root {
+				--teal: #18a1ad;
+				--teal-dim: rgba(24, 161, 173, 0.1);
+				--teal-border: rgba(24, 161, 173, 0.22);
+				--green: #16a34a;
+				--green-light: #f0fdf4;
+				--green-border: #bbf7d0;
+				--orange: #ea580c;
+				--orange-light: #fff7ed;
+				--orange-border: #fed7aa;
+				--gray-50: #f9fafb;
+				--gray-100: #f3f4f6;
+				--gray-200: #e5e7eb;
+				--gray-300: #d1d5db;
+				--gray-400: #9ca3af;
+				--gray-500: #6b7280;
+				--gray-600: #4b5563;
+				--gray-700: #374151;
+				--gray-900: #111827;
+				--white: #ffffff;
+				--off-white: #f9fafb;
+				--header-bg: #0f0f0f;
+				--sidebar-bg: #0a0a0a;
+				--sidebar-border: rgba(255, 255, 255, 0.06);
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--off-white);
+				color: var(--gray-900);
+				line-height: 1.6;
+				font-size: 14px;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 228px;
+				height: 100vh;
+				background: var(--sidebar-bg);
+				border-right: 1px solid var(--sidebar-border);
+				display: flex;
+				flex-direction: column;
+				z-index: 100;
+				overflow-y: auto;
+			}
+
+			.sidebar-top {
+				padding: 22px 18px 18px;
+				border-bottom: 1px solid var(--sidebar-border);
+			}
+
+			.sidebar-wordmark {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+				margin-bottom: 18px;
+			}
+
+			.sidebar-wordmark .dot {
+				width: 6px;
+				height: 6px;
+				background: var(--teal);
+				border-radius: 50%;
+				flex-shrink: 0;
+			}
+
+			.lwd-text {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: rgba(255, 255, 255, 0.3);
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 15.5px;
+				color: rgba(255, 255, 255, 0.9);
+				font-weight: 600;
+				margin-bottom: 4px;
+				line-height: 1.25;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: rgba(255, 255, 255, 0.28);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+			}
+
+			.sidebar-status {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				border: 1px solid var(--teal-border);
+				border-radius: 20px;
+				padding: 3px 10px 3px 8px;
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--teal);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.pulse {
+				width: 5px;
+				height: 5px;
+				background: var(--teal);
+				border-radius: 50%;
+				animation: pulse 2s ease-in-out infinite;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+					transform: scale(1);
+				}
+				50% {
+					opacity: 0.4;
+					transform: scale(0.75);
+				}
+			}
+
+			.sidebar-nav {
+				padding: 18px 12px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				padding: 0 6px;
+				margin-bottom: 6px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				padding: 7px 8px;
+				border-radius: 5px;
+				color: rgba(255, 255, 255, 0.38);
+				font-size: 12px;
+				text-decoration: none;
+				transition:
+					color 0.15s,
+					background 0.15s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: rgba(255, 255, 255, 0.65);
+			}
+
+			.nav-link.active {
+				color: rgba(255, 255, 255, 0.88);
+				border-left-color: var(--teal);
+				background: rgba(255, 255, 255, 0.04);
+			}
+
+			.nav-icon {
+				font-size: 11px;
+			}
+
+			.sidebar-footer {
+				padding: 16px 18px;
+				border-top: 1px solid var(--sidebar-border);
+				font-size: 10px;
+				color: rgba(255, 255, 255, 0.2);
+				line-height: 1.7;
+				font-family: 'DM Mono', monospace;
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: 228px;
+				min-height: 100vh;
+			}
+
+			/* ── DRIVE BANNER ── */
+			.drive-banner {
+				background: var(--teal);
+				padding: 0;
+			}
+
+			.drive-banner-inner {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 14px 52px;
+				gap: 20px;
+			}
+
+			.drive-banner-text {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: rgba(255, 255, 255, 0.75);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.drive-banner-label {
+				font-size: 13px;
+				font-weight: 600;
+				color: #fff;
+				font-family: 'DM Sans', sans-serif;
+				letter-spacing: normal;
+				text-transform: none;
+				margin-top: 2px;
+			}
+
+			.drive-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(255, 255, 255, 0.15);
+				border: 1px solid rgba(255, 255, 255, 0.3);
+				border-radius: 6px;
+				padding: 9px 18px;
+				color: #fff;
+				font-size: 13px;
+				font-weight: 600;
+				text-decoration: none;
+				white-space: nowrap;
+				transition: background 0.15s;
+				flex-shrink: 0;
+			}
+
+			.drive-btn:hover {
+				background: rgba(255, 255, 255, 0.25);
+			}
+
+			/* ── HEADER ── */
+			.page-header {
+				background: var(--header-bg);
+				padding: 44px 52px 40px;
+			}
+
+			.header-overline {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--teal);
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.header-overline::before {
+				content: '';
+				display: inline-block;
+				width: 28px;
+				height: 1px;
+				background: var(--teal);
+				opacity: 0.6;
+			}
+
+			.page-header h1 {
+				font-family: 'Fraunces', serif;
+				font-size: 38px;
+				font-weight: 700;
+				color: #fff;
+				line-height: 1.1;
+				letter-spacing: -0.02em;
+				margin-bottom: 8px;
+			}
+
+			.page-sub {
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.38);
+				font-weight: 300;
+				margin-bottom: 28px;
+			}
+
+			.header-meta {
+				display: flex;
+				border: 1px solid rgba(255, 255, 255, 0.08);
+				border-radius: 7px;
+				overflow: hidden;
+			}
+
+			.meta-item {
+				padding: 10px 18px;
+				border-right: 1px solid rgba(255, 255, 255, 0.08);
+				flex: 1;
+			}
+
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.28);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				display: block;
+				margin-bottom: 3px;
+			}
+
+			.meta-value {
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.75);
+				font-weight: 500;
+			}
+
+			.meta-value.ok {
+				color: #4ade80;
+			}
+			.meta-value.warn {
+				color: #fbbf24;
+			}
+
+			/* ── CONTENT ── */
+			.content {
+				padding: 44px 52px 80px;
+			}
+
+			section {
+				margin-bottom: 52px;
+			}
+
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 10px;
+			}
+
+			.section-num {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				font-weight: 500;
+				color: var(--teal);
+				background: var(--teal-dim);
+				border: 1px solid var(--teal-border);
+				border-radius: 4px;
+				padding: 3px 8px;
+				letter-spacing: 0.06em;
+			}
+
+			.section-header h2 {
+				font-family: 'Fraunces', serif;
+				font-size: 22px;
+				font-weight: 600;
+				color: var(--gray-900);
+			}
+
+			.section-divider {
+				height: 1px;
+				background: var(--gray-200);
+				margin-bottom: 22px;
+			}
+
+			/* ── CARDS ── */
+			.card {
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin-bottom: 14px;
+			}
+
+			.card-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: var(--gray-400);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				padding-bottom: 12px;
+				border-bottom: 1px solid var(--gray-100);
+				margin-bottom: 14px;
+			}
+
+			/* ── ASSET LIST ── */
+			.asset-list {
+				list-style: none;
+				padding: 0;
+			}
+
+			.asset-list li {
+				display: flex;
+				align-items: flex-start;
+				gap: 13px;
+				padding: 14px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.asset-list li:last-child {
+				border-bottom: none;
+			}
+
+			.asset-icon {
+				font-size: 18px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			.asset-body {
+				flex: 1;
+			}
+
+			.asset-name {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--gray-900);
+				margin-bottom: 3px;
+			}
+
+			.asset-desc {
+				font-size: 12.5px;
+				color: var(--gray-500);
+				line-height: 1.5;
+				margin-bottom: 5px;
+			}
+
+			.asset-format {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				letter-spacing: 0.04em;
+			}
+
+			.asset-format strong {
+				color: var(--gray-600);
+				font-weight: 500;
+			}
+
+			.asset-meta {
+				margin-left: auto;
+				flex-shrink: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				gap: 6px;
+				padding-top: 2px;
+			}
+
+			/* ── PILLS ── */
+			.pill {
+				display: inline-block;
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				font-weight: 600;
+				padding: 2px 9px;
+				border-radius: 4px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				border: 1px solid transparent;
+			}
+
+			.pill-teal {
+				background: var(--teal-dim);
+				color: var(--teal);
+				border-color: var(--teal-border);
+			}
+			.pill-green {
+				background: var(--green-light);
+				color: var(--green);
+				border-color: var(--green-border);
+			}
+			.pill-orange {
+				background: var(--orange-light);
+				color: var(--orange);
+				border-color: var(--orange-border);
+			}
+			.pill-gray {
+				background: var(--gray-100);
+				color: var(--gray-500);
+				border-color: var(--gray-200);
+			}
+
+			.folder-tag {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--gray-400);
+				letter-spacing: 0.04em;
+			}
+
+			/* ── CALLOUTS ── */
+			.callout {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				border-radius: 7px;
+				padding: 14px 16px;
+				margin-bottom: 18px;
+				border: 1px solid transparent;
+			}
+
+			.callout-icon {
+				font-size: 16px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			.callout-body {
+				font-size: 13px;
+				line-height: 1.55;
+			}
+
+			.callout-body strong {
+				display: block;
+				margin-bottom: 3px;
+				font-size: 13px;
+			}
+
+			.callout.info {
+				background: var(--teal-dim);
+				border-color: var(--teal-border);
+				color: var(--gray-700);
+			}
+
+			.callout.success {
+				background: var(--green-light);
+				border-color: var(--green-border);
+				color: var(--gray-700);
+			}
+
+			.callout.warn {
+				background: var(--orange-light);
+				border-color: var(--orange-border);
+				color: var(--gray-700);
+			}
+
+			/* ── HIGHLIGHT BOX ── */
+			.highlight-box {
+				background: var(--header-bg);
+				border: 1px solid rgba(255, 255, 255, 0.07);
+				border-left: 3px solid var(--teal);
+				border-radius: 7px;
+				padding: 18px 20px;
+				margin-bottom: 22px;
+			}
+
+			.highlight-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--teal);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.highlight-box p {
+				font-size: 13.5px;
+				color: rgba(255, 255, 255, 0.65);
+				font-weight: 300;
+				line-height: 1.6;
+			}
+
+			/* ── JORDAN HANDLES LIST ── */
+			.handles-list {
+				list-style: none;
+				padding: 0;
+			}
+
+			.handles-list li {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--gray-100);
+				font-size: 13px;
+				color: var(--gray-600);
+			}
+
+			.handles-list li:last-child {
+				border-bottom: none;
+			}
+
+			.handles-list .h-icon {
+				font-size: 15px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			.handles-list strong {
+				color: var(--gray-800);
+				display: block;
+				margin-bottom: 2px;
+			}
+
+			/* ── PHOTO TIPS ── */
+			.tip-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.tip-card {
+				background: var(--gray-50);
+				border: 1px solid var(--gray-200);
+				border-radius: 6px;
+				padding: 12px 14px;
+			}
+
+			.tip-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--gray-400);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+			}
+
+			.tip-card ul {
+				list-style: none;
+				padding: 0;
+			}
+
+			.tip-card ul li {
+				font-size: 12px;
+				color: var(--gray-600);
+				padding: 2px 0 2px 12px;
+				position: relative;
+				line-height: 1.45;
+			}
+
+			.tip-card ul li::before {
+				content: '→';
+				position: absolute;
+				left: 0;
+				color: var(--teal);
+				font-size: 9px;
+				top: 4px;
+			}
+
+			/* ── DOMAIN SECTION ── */
+			.domain-note {
+				font-size: 12.5px;
+				color: var(--gray-500);
+				line-height: 1.55;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 768px) {
+				.sidebar {
+					display: none;
+				}
+				.main {
+					margin-left: 0;
+				}
+				.drive-banner-inner {
+					padding: 14px 20px;
+					flex-direction: column;
+					align-items: flex-start;
+				}
+				.page-header {
+					padding: 32px 20px 28px;
+				}
+				.content {
+					padding: 32px 20px 60px;
+				}
+				.header-meta {
+					flex-direction: column;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.tip-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar">
+			<div class="sidebar-top">
+				<div class="sidebar-wordmark">
+					<div class="dot"></div>
+					<span class="lwd-text">Latz Web Design</span>
+				</div>
+				<div class="sidebar-client">Village of Hancock</div>
+				<div class="sidebar-doctype">Content Checklist</div>
+				<div class="sidebar-status">
+					<div class="pulse"></div>
+					<span>In Progress</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Sections</div>
+				<a href="#drive" class="nav-link active"
+					><span class="nav-icon">📁</span> Google Drive</a
+				>
+				<a href="#from-you" class="nav-link"
+					><span class="nav-icon">📬</span> What We Need</a
+				>
+				<a href="#photos" class="nav-link"
+					><span class="nav-icon">📸</span> Photo Guidance</a
+				>
+				<a href="#domain" class="nav-link"
+					><span class="nav-icon">🌐</span> Domain Info</a
+				>
+				<a href="#jordan-handles" class="nav-link"
+					><span class="nav-icon">✅</span> Jordan Handles</a
+				>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				<a
+					href="/cdn-cgi/l/email-protection"
+					class="__cf_email__"
+					data-cfemail="cba1a4b9afaaa58ba7aabfb1bcaea9afaeb8a2aca5e5a8a4a6"
+					>[email&#160;protected]</a
+				><br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- ── DRIVE BANNER ── -->
+			<!-- ★ BEFORE SENDING: replace the href below with the real Google Drive link ★ -->
+			<div class="drive-banner" id="drive">
+				<div class="drive-banner-inner">
+					<div>
+						<div class="drive-banner-text">Your project folder</div>
+						<div class="drive-banner-label">
+							📁 &nbsp;Village of Hancock — Website Project
+						</div>
+					</div>
+					<a
+						href="PASTE_GOOGLE_DRIVE_LINK_HERE"
+						target="_blank"
+						class="drive-btn"
+					>
+						Open Google Drive →
+					</a>
+				</div>
+			</div>
+
+			<!-- ── HEADER ── -->
+			<div class="page-header">
+				<div class="header-overline">
+					Content Checklist · Village of Hancock
+				</div>
+				<h1>Here's What We Need</h1>
+				<div class="page-sub">
+					Village of Hancock Website &nbsp;·&nbsp; Foundation + Documents
+					Package
+				</div>
+
+				<div class="header-meta">
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Jillian Steele</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Project</span>
+						<span class="meta-value">5-Page Municipal Site</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value ok">✓ Received</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Design</span>
+						<span class="meta-value warn">In Progress</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ── CONTENT ── -->
+			<div class="content">
+				<!-- Intro callout -->
+				<div class="highlight-box">
+					<div class="highlight-label">Where things stand</div>
+					<p>
+						Design is underway — the look and feel of the site is being put
+						together now. Getting your content and files in early means the
+						moment design wraps, we can move straight into building. The items
+						below are everything we'll need. Nothing needs to be perfect — rough
+						notes and bullet points are great, and I'll handle the polish.
+					</p>
+				</div>
+
+				<!-- ── WHAT WE NEED FROM YOU ── -->
+				<section id="from-you">
+					<div class="section-header">
+						<span class="section-num">01</span>
+						<h2>What We Need From You</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout info">
+						<span class="callout-icon">📁</span>
+						<div class="callout-body">
+							<strong>Drop everything in the Google Drive folder above.</strong>
+							Each item below lists which folder it goes in. If something is
+							easier to email, that works too — whatever is simplest for you.
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Content &amp; Files</div>
+						<ul class="asset-list">
+							<!-- Photos -->
+							<li>
+								<span class="asset-icon">📸</span>
+								<div class="asset-body">
+									<div class="asset-name">Community Photos</div>
+									<div class="asset-desc">
+										Anything that shows off Hancock — the lakes, the park,
+										community events like the street dance or farmers market,
+										aerial shots, seasonal scenery. The more the better. We'll
+										pick the best ones. No professional shoot needed — good
+										phone photos work great.
+									</div>
+									<div class="asset-format">
+										<strong>Format:</strong> JPG or PNG ·
+										<strong>Size:</strong> Original full-size files please, not
+										screenshots or resized copies
+									</div>
+								</div>
+								<div class="asset-meta">
+									<span class="folder-tag">📁 Photos/</span>
+								</div>
+							</li>
+
+							<!-- Village Seal -->
+							<li>
+								<span class="asset-icon">🏛️</span>
+								<div class="asset-body">
+									<div class="asset-name">Village Seal</div>
+									<div class="asset-desc">
+										We have a copy of the seal but the resolution is low. If you
+										have a higher-quality version — even an original file from
+										when it was made — send it along. PNG works great. If this
+										is all that exists, no worries, we'll make it work.
+									</div>
+									<div class="asset-format">
+										<strong>Format:</strong> PNG or SVG preferred · any size,
+										bigger is better
+									</div>
+								</div>
+								<div class="asset-meta">
+									<span class="folder-tag">📁 Brand/</span>
+								</div>
+							</li>
+
+							<!-- Board Directory -->
+							<li>
+								<span class="asset-icon">👥</span>
+								<div class="asset-body">
+									<div class="asset-name">Board Member Directory</div>
+									<div class="asset-desc">
+										Names, roles (Village President, Trustee, Clerk, etc.), and
+										email addresses for all current board members. A simple list
+										or spreadsheet is perfect — doesn't need to be formatted at
+										all.
+									</div>
+									<div class="asset-format">
+										<strong>Format:</strong> Any — list, spreadsheet, or just
+										typed in an email
+									</div>
+								</div>
+								<div class="asset-meta">
+									<span class="folder-tag">📁 Content/</span>
+								</div>
+							</li>
+
+							<!-- Agendas & Minutes -->
+							<li>
+								<span class="asset-icon">📋</span>
+								<div class="asset-body">
+									<div class="asset-name">Meeting Agendas &amp; Minutes</div>
+									<div class="asset-desc">
+										PDFs of recent meeting agendas and minutes. We'll figure out
+										together how far back you'd like to go — start with whatever
+										you have handy. Each file should be labeled by date so
+										residents can find what they're looking for.
+									</div>
+									<div class="asset-format">
+										<strong>Format:</strong> PDF · label files by date, e.g.
+										<em>2025-03-18-minutes.pdf</em>
+									</div>
+								</div>
+								<div class="asset-meta">
+									<span class="folder-tag"
+										>📁 Documents/Agendas &amp; Minutes/</span
+									>
+								</div>
+							</li>
+
+							<!-- Village Overview / Welcome -->
+							<li>
+								<span class="asset-icon">✍️</span>
+								<div class="asset-body">
+									<div class="asset-name">
+										Village Overview &amp; Welcome Message
+									</div>
+									<div class="asset-desc">
+										A little about Hancock — the history, the lakes, what makes
+										it a good place to live. Bullet points are completely fine.
+										I'll take your thoughts and turn them into polished copy for
+										the site. There's no wrong way to send this.
+									</div>
+									<div class="asset-format">
+										<strong>Format:</strong> Any — Word doc, Google Doc, email,
+										notes app, whatever's easiest
+									</div>
+								</div>
+								<div class="asset-meta">
+									<span class="folder-tag">📁 Content/</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<!-- ── PHOTO GUIDANCE ── -->
+				<section id="photos">
+					<div class="section-header">
+						<span class="section-num">02</span>
+						<h2>A Note on Photos</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout info">
+						<span class="callout-icon">📷</span>
+						<div class="callout-body">
+							<strong
+								>Quality matters more than quantity — here's what to look
+								for.</strong
+							>
+							Good photos can make or break a website. The tips below will help
+							you send the most useful ones. That said, send everything you have
+							— we'll sort through it.
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Photo Tips</div>
+						<div class="tip-grid">
+							<div class="tip-card">
+								<div class="tip-label">✅ Great shots</div>
+								<ul>
+									<li>Horizontal / landscape orientation</li>
+									<li>Well-lit — outdoors or bright natural light</li>
+									<li>Shows people, places, or community life</li>
+									<li>Lakes, park, village landmarks</li>
+									<li>Community events — street dance, gatherings</li>
+									<li>Seasonal — all four seasons welcome</li>
+								</ul>
+							</div>
+							<div class="tip-card">
+								<div class="tip-label">⚠️ Try to avoid</div>
+								<ul>
+									<li>Screenshots from Facebook or social media</li>
+									<li>Very dark or blurry shots</li>
+									<li>Heavily filtered or edited photos</li>
+									<li>Portrait / vertical phone photos (for hero use)</li>
+									<li>Tiny file sizes — send the originals</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- ── DOMAIN INFO ── -->
+				<section id="domain">
+					<div class="section-header">
+						<span class="section-num">03</span>
+						<h2>Domain Info</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout warn">
+						<span class="callout-icon">🌐</span>
+						<div class="callout-body">
+							<strong
+								>We'll need access to villageofhancock.org to connect it to the
+								new site.</strong
+							>
+							Don't worry — this is a routine step and I'll walk you through
+							everything. You stay in control of the domain at all times.
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">What We Need to Know</div>
+						<ul class="asset-list">
+							<li>
+								<span class="asset-icon">🔍</span>
+								<div class="asset-body">
+									<div class="asset-name">Who is your domain registrar?</div>
+									<div class="asset-desc">
+										This is the company where villageofhancock.org is registered
+										— GoDaddy, Namecheap, Network Solutions, and Google Domains
+										(now Squarespace Domains) are common ones. The best way to
+										find out: check your inbox for the original domain
+										registration confirmation email, or search your email for
+										"villageofhancock.org." You can also type the domain into
+										<strong>who.is</strong> or do a quick Google search for
+										"whois villageofhancock.org" — it'll tell you right away.
+										Getting familiar with where it lives now will make the
+										connection step much smoother later.
+									</div>
+								</div>
+							</li>
+
+							<li>
+								<span class="asset-icon">🔑</span>
+								<div class="asset-body">
+									<div class="asset-name">Login credentials</div>
+									<div class="asset-desc">
+										Once you've tracked down the registrar, locate your login
+										credentials and keep them handy. We'll reach out when it's
+										time to connect the domain and figure out the quickest path
+										from there. The domain stays yours — nothing gets
+										transferred.
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<!-- ── JORDAN HANDLES ── -->
+				<section id="jordan-handles">
+					<div class="section-header">
+						<span class="section-num">04</span>
+						<h2>What Jordan Handles</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout success">
+						<span class="callout-icon">✅</span>
+						<div class="callout-body">
+							<strong>These are all taken care of on our end.</strong>
+							You don't need to worry about any of this — just here so you know
+							where things stand.
+						</div>
+					</div>
+
+					<div class="card">
+						<ul class="handles-list">
+							<li>
+								<span class="h-icon">📁</span>
+								<div>
+									<strong>Ordinances</strong>
+									Received on the USB drive — we've got these. We'll organize
+									and upload them as part of the build.
+								</div>
+							</li>
+							<li>
+								<span class="h-icon">✍️</span>
+								<div>
+									<strong>Copywriting</strong>
+									Once you send your bullet points and notes, we write all final
+									copy for the site. No need to send anything polished.
+								</div>
+							</li>
+							<li>
+								<span class="h-icon">🌐</span>
+								<div>
+									<strong>Domain connection &amp; hosting</strong>
+									Once we have registrar access, we handle connecting the domain
+									and setting up hosting. Nothing you need to configure.
+								</div>
+							</li>
+							<li>
+								<span class="h-icon">🏗️</span>
+								<div>
+									<strong>Design &amp; development</strong>
+									Everything visual and technical is on us. You'll review and
+									give feedback along the way, but the building is handled.
+								</div>
+							</li>
+							<li>
+								<span class="h-icon">⚙️</span>
+								<div>
+									<strong>Sanity CMS setup</strong>
+									The content management system Jillian will use to update
+									documents and board info. We build and configure it — just
+									plan on a quick walkthrough when it's ready.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+			<!-- /content -->
+		</div>
+		<!-- /main -->
+
+		<script>
+			// Scrollspy
+			const sections = document.querySelectorAll('section[id], div[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((l) => l.classList.remove('active'));
+							const active = document.querySelector(
+								`.nav-link[href="#${entry.target.id}"]`,
+							);
+							if (active) active.classList.add('active');
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' },
+			);
+
+			sections.forEach((s) => observer.observe(s));
+		</script>
+	</body>
+</html>
