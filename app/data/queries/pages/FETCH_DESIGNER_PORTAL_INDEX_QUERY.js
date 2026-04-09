@@ -5,8 +5,10 @@ export const FETCH_DESIGNER_PORTAL_INDEX_QUERY = `
     "projects": projects[status == "active"] | order(year asc, month asc) {
       name,
       "slug": slug.current,
+      status,
       month,
       year,
+      "docCount": count(docs[audience match "designer"]),
       "deadlines": deadlines[audience match "designer"] | order(date asc) {
         title,
         date,
