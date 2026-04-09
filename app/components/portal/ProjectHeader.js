@@ -26,11 +26,11 @@ export default function ProjectHeader({
 				← {backLabel}
 			</Link>
 			<p
-				className={`font-mono text-end text-xs ${s.label} tracking-widest uppercase mt-4 mb-2`}
+				className={`font-mono opacity-70 lg:text-end text-xs ${s.label} tracking-widest uppercase mt-4 mb-2`}
 			>
 				LWD ·{' '}
 				{variant === 'designer'
-					? 'Designer'
+					? 'Alyssa'
 					: variant === 'client'
 						? 'Client Portal'
 						: 'Internal'}

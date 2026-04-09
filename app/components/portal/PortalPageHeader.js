@@ -8,7 +8,7 @@ export default function PortalPageHeader({ variant, label, title }) {
   const color = variantStyles[variant]
   return (
     <div className="mb-12">
-      <p className={`font-mono text-xs ${color} tracking-widest uppercase mb-2`}>
+      <p className={`font-mono text-xs ${color} opacity-75 tracking-widest uppercase mb-4`}>
         {label}
       </p>
       <h1 className="text-4xl font-semibold">{title}</h1>
