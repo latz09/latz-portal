@@ -15,7 +15,8 @@ const dmMono = DM_Mono({
 
 export const metadata = {
   title: 'Latz Portal',
-  description: 'Internal project management for Latz Web Design.',
+  description: 'Latz Web Design internal portal',
+    manifest: '/manifest.json',
   robots: 'noindex, nofollow',
 }
 
