@@ -12,13 +12,12 @@ export default async function Home() {
 	const clients = await f(Q);
 
 	return (
-		<main className='max-w-3xl  mx-auto px-3 lg:px-6 py-8 lg:py-16  w-full'>
+		<main className='max-w-3xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
 			<PortalPageHeader
 				variant='internal'
 				label='Latz Web Design'
 				title='Latz Portal'
 			/>
-
 			<div className='flex gap-3 mb-12'>
 				<a
 					href='/portal/designer'
@@ -28,11 +27,14 @@ export default async function Home() {
 					Designer View →
 				</a>
 				<StudioLink />
+
+				{/* Sign Out — inline on lg+, fixed bottom center below lg */}
 				<form
 					action={async () => {
 						'use server';
 						await signOut({ redirectTo: '/login' });
 					}}
+					className='hidden lg:block'
 				>
 					<button
 						type='submit'
@@ -43,7 +45,7 @@ export default async function Home() {
 				</form>
 			</div>
 
-			<div className=' flex flex-col justify-center gap-3 mb-12 mx-auto'>
+			<div className='flex flex-col justify-center gap-3 mb-12 mx-auto'>
 				{clients.map((client) => (
 					<Link
 						key={client.slug}
@@ -60,6 +62,22 @@ export default async function Home() {
 
 			<UpcomingDeadlines clients={clients} variant='internal' />
 			<PortalFooter />
+
+			{/* Floating Sign Out — visible below lg only */}
+			<form
+				action={async () => {
+					'use server';
+					await signOut({ redirectTo: '/login' });
+				}}
+				className='lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50'
+			>
+				<button
+					type='submit'
+					className='font-mono text-xs px-6 py-3 rounded-full bg-white/10 text-white/50 hover:bg-danger/20 hover:text-danger transition-colors shadow-lg backdrop-blur-sm'
+				>
+					Sign Out
+				</button>
+			</form>
 		</main>
 	);
 }
