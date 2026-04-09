@@ -18,7 +18,7 @@ export default async function ClientPage({ params }) {
 			<div className='mb-12'>
 				<Link
 					href='/'
-					className='font-mono text-xs text-[#18a1ad] tracking-widest uppercase hover:opacity-70 transition-opacity'
+					className='font-mono text-xs text-white tracking-widest uppercase hover:opacity-70 transition-opacity'
 				>
 					← Portal
 				</Link>

@@ -8,9 +8,17 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
       status,
       month,
       year,
-      docs[audience match "designer"] {
+      previewUrl,
+      figmaUrl,
+      docs[] {
         label,
         filename,
+        audience
+      },
+      deadlines[] | order(date asc) {
+        title,
+        description,
+        date,
         audience
       }
     }

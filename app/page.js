@@ -1,44 +1,50 @@
 import { fetchContent as f } from './utils/cms/fetchContent';
 import { FETCH_CLIENTS_QUERY as Q } from './data/queries/pages/FETCH_CLIENTS_QUERY';
 import Link from 'next/link';
+import PortalPageHeader from './components/portal/PortalPageHeader';
+import UpcomingDeadlines from './components/portal/UpcomingDeadlines';
+import PortalFooter from './components/portal/PortalFooter';
+import StudioLink from './components/portal/StudioLink';
 
 export default async function Home() {
 	const clients = await f(Q);
 
 	return (
-		<main className='max-w-4xl mx-auto px-6 py-16'>
-			<div className='mb-12'>
-				<p className='font-mono text-xs text-[#18a1ad] tracking-widest uppercase mb-2'>
-					Latz Web Design
-				</p>
-				<h1 className='text-4xl font-semibold mb-8'>Latz Portal</h1>
+		<main className='max-w-3xl  mx-auto px-3 lg:px-6 py-8 lg:py-16  w-full'>
+			<PortalPageHeader
+				variant='internal'
+				label='Latz Web Design'
+				title='Latz Portal'
+			/>
 
-				{/* PORTAL VIEWS */}
-				<div className='flex gap-3'>
-					<a
-						href='/portal/designer'
-						target='_blank'
-						className='font-mono text-xs px-4 py-2 rounded-full bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors'
-					>
-						Designer View →
-					</a>
-				</div>
+			<div className='flex gap-3 mb-12'>
+				<a
+					href='/portal/designer'
+					target='_blank'
+					className='font-mono text-xs px-4 py-2 rounded-full bg-purple/20 text-white hover:bg-purple/70 transition-colors'
+				>
+					Designer View →
+				</a>
+				<StudioLink />
 			</div>
 
-			<div className='flex flex-col gap-3'>
+			<div className=' flex flex-col justify-center gap-3 mb-12 mx-auto'>
 				{clients.map((client) => (
 					<Link
 						key={client.slug}
 						href={`/clients/${client.slug}`}
-						className='flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-6 py-4 transition-colors'
+						className='w-full grid bg-white/5 gap-0.5 hover:bg-dark border border-white/10 rounded px-6 py-4 transition-colors'
 					>
-						<span className='font-medium'>{client.name}</span>
-						<span className='font-mono text-xs text-white/40'>
+						<h3 className='font-medium text-lg text-white'>{client.name}</h3>
+						<span className='font-mono text-sm text-teal'>
 							{client.activeProjects} active · {client.totalProjects} total
 						</span>
 					</Link>
 				))}
 			</div>
+
+			<UpcomingDeadlines clients={clients} variant='internal' />
+			<PortalFooter />
 		</main>
 	);
 }

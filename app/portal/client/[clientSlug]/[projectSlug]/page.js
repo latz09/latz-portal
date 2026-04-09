@@ -10,7 +10,7 @@ export default async function ClientPortal({ params }) {
     <main className="max-w-3xl mx-auto px-6 py-16">
 
       <div className="mb-12">
-        <p className="font-mono text-xs text-[#18a1ad] tracking-widest uppercase mb-2">
+        <p className="font-mono text-xs text-teal tracking-widest uppercase mb-2">
           Latz Web Design
         </p>
         <h1 className="text-4xl font-semibold">{clientName}</h1>
@@ -30,7 +30,7 @@ export default async function ClientPortal({ params }) {
               className="flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-6 py-4 transition-colors"
             >
               <span className="font-medium">{doc.label}</span>
-              <span className="font-mono text-xs text-[#18a1ad]">
+              <span className="font-mono text-xs text-teal">
                 View →
               </span>
             </a>

@@ -3,6 +3,18 @@ export const FETCH_CLIENTS_QUERY = `
     name,
     "slug": slug.current,
     "activeProjects": count(projects[status == "active"]),
-    "totalProjects": count(projects)
+    "totalProjects": count(projects),
+    "projects": projects[] {
+      name,
+      "slug": slug.current,
+      month,
+      year,
+      "deadlines": deadlines[] | order(date asc) {
+        title,
+        date,
+        description,
+        audience
+      }
+    }
   }
 `

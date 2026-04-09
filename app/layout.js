@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0D1B2A] text-white">
+      <body className="min-h-full flex flex-col  bg-linear-to-b from-dark via-dark-mid to-dark">
         {children}
       </body>
     </html>
