@@ -1,3 +1,4 @@
+import { signOut } from '@/auth'
 import { fetchContent as f } from '@/app/utils/cms/fetchContent'
 import { FETCH_DESIGNER_PORTAL_INDEX_QUERY as Q } from '@/app/data/queries/pages/FETCH_DESIGNER_PORTAL_INDEX_QUERY'
 import PortalPageHeader from '@/app/components/portal/PortalPageHeader'
@@ -21,6 +22,14 @@ export default async function DesignerPortalIndex() {
         hrefBuilder={(clientSlug, projectSlug) => `/portal/designer/${clientSlug}/${projectSlug}`}
       />
       <UpcomingDeadlines clients={clients} variant="designer" />
+      <form action={async () => { 'use server'; await signOut({ redirectTo: '/login' }) }} className='mt-12 flex justify-center'>
+  <button
+    type='submit'
+    className='font-mono text-xs px-4 py-2 rounded-full bg-white/5 text-white/40 hover:bg-danger/20 hover:text-danger transition-colors'
+  >
+    Sign Out
+  </button>
+</form>
       <PortalFooter />
     </main>
   )

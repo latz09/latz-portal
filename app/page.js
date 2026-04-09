@@ -1,3 +1,5 @@
+import { signOut } from '@/auth'
+
 import { fetchContent as f } from './utils/cms/fetchContent';
 import { FETCH_CLIENTS_QUERY as Q } from './data/queries/pages/FETCH_CLIENTS_QUERY';
 import Link from 'next/link';
@@ -17,16 +19,24 @@ export default async function Home() {
 				title='Latz Portal'
 			/>
 
-			<div className='flex gap-3 mb-12'>
-				<a
-					href='/portal/designer'
-					target='_blank'
-					className='font-mono text-xs px-4 py-2 rounded-full bg-purple/20 text-white hover:bg-purple/70 transition-colors'
-				>
-					Designer View →
-				</a>
-				<StudioLink />
-			</div>
+		<div className='flex gap-3 mb-12'>
+  <a
+    href='/portal/designer'
+    target='_blank'
+    className='font-mono text-xs px-4 py-2 rounded-full bg-purple/20 text-white hover:bg-purple/70 transition-colors'
+  >
+    Designer View →
+  </a>
+  <StudioLink />
+  <form action={async () => { 'use server'; await signOut({ redirectTo: '/login' }) }}>
+    <button
+      type='submit'
+      className='font-mono text-xs px-4 py-2 rounded-full bg-white/5 text-white/40 hover:bg-danger/20 hover:text-danger transition-colors'
+    >
+      Sign Out
+    </button>
+  </form>
+</div>
 
 			<div className=' flex flex-col justify-center gap-3 mb-12 mx-auto'>
 				{clients.map((client) => (
