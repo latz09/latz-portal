@@ -25,6 +25,12 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
         "url": image.asset->url,
         caption,
         category
+      },
+      resources[] {
+        label,
+        url,
+        type,
+        audience
       }
     }
   }

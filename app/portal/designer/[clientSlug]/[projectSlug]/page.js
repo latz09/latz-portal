@@ -5,6 +5,7 @@ import ProjectLinks from '@/app/components/portal/ProjectLinks';
 import DocumentList from '@/app/components/portal/DocumentList';
 import DeadlineList from '@/app/components/portal/DeadlineList';
 import PortalFooter from '@/app/components/portal/PortalFooter';
+import ResourceList from '@/app/components/portal/ResourceList';
 
 export default async function DesignerPortal({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -16,6 +17,9 @@ export default async function DesignerPortal({ params }) {
 	);
 	const designerDeadlines =
 		project.deadlines?.filter((d) => d.audience?.includes('designer')) ?? [];
+
+	const designerResources =
+		project.resources?.filter((r) => r.audience?.includes('designer')) ?? [];
 
 	return (
 		<main className='max-w-4xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
@@ -37,6 +41,7 @@ export default async function DesignerPortal({ params }) {
 				basePath={`/clients/${project.year}/${clientSlug}/${projectSlug}`}
 				inspiration={project.inspiration}
 			/>
+			<ResourceList variant='designer' resources={designerResources} />
 			<DeadlineList deadlines={designerDeadlines} variant='designer' />
 			<PortalFooter />
 		</main>

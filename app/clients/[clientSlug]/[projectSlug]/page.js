@@ -5,6 +5,7 @@ import ProjectLinks from '@/app/components/portal/ProjectLinks'
 import DocumentList from '@/app/components/portal/DocumentList'
 import DeadlineList from '@/app/components/portal/DeadlineList'
 import PortalLinks from '@/app/components/portal/PortalLinks'
+import ResourceList from '@/app/components/portal/ResourceList'
 
 export default async function ProjectPage({ params }) {
   const { clientSlug, projectSlug } = await params
@@ -35,6 +36,10 @@ export default async function ProjectPage({ params }) {
         basePath={`/clients/${project.year}/${clientSlug}/${projectSlug}`}
         inspiration={project.inspiration}
       />
+      <ResourceList
+  variant='internal'
+  resources={project.resources}
+/>
       <DeadlineList deadlines={project.deadlines} variant="internal"  />
       <PortalLinks clientSlug={clientSlug} projectSlug={projectSlug} studioId={_id} />
     </main>

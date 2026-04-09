@@ -28,6 +28,12 @@ export const FETCH_PROJECT_QUERY = `
         "url": image.asset->url,
         caption,
         category
+      },
+      resources[] {
+        label,
+        url,
+        type,
+        audience
       }
     }
   }

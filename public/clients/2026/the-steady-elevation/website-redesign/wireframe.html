@@ -1,0 +1,2646 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Wireframe — The Steady Elevation | Latz Web Design</title>
+		<style>
+			/* ── TOKENS ── */
+			:root {
+				--ind: #8ea08a;
+				--biz: #013543;
+				--ind-light: #f0f3ef;
+				--biz-light: #e8f0f2;
+				--ink: #1a1a1a;
+				--ink-mid: #555;
+				--ink-faint: #999;
+				--border: #d0d0d0;
+				--border-dash: #bbb;
+				--bg: #f4f2ee;
+				--white: #fff;
+				--cms-green: #2d7a2d;
+				--note-orange: #c85a00;
+				--note-bg: #fff8f2;
+				--font: 'Georgia', serif;
+				--sans: system-ui, -apple-system, sans-serif;
+			}
+
+			/* ── RESET ── */
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: var(--sans);
+				font-size: 15px;
+				background: var(--bg);
+				color: var(--ink);
+				line-height: 1.5;
+			}
+
+			/* ── DOCUMENT ── */
+			.doc {
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 48px 32px 80px;
+			}
+
+			/* ── COVER ── */
+			.cover {
+				text-align: center;
+				padding: 40px 0 32px;
+				border-bottom: 3px solid var(--ink);
+				margin-bottom: 48px;
+			}
+			.cover-brand {
+				font-family: var(--font);
+				font-size: 11px;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--ink-mid);
+				margin-bottom: 10px;
+			}
+			.cover h1 {
+				font-family: var(--font);
+				font-size: 36px;
+				font-weight: normal;
+				letter-spacing: 0.04em;
+				margin-bottom: 8px;
+			}
+			.cover-meta {
+				font-size: 13px;
+				color: var(--ink-mid);
+			}
+			.cover-colors {
+				display: inline-flex;
+				gap: 24px;
+				margin-top: 20px;
+				padding: 12px 24px;
+				border: 1px solid var(--border);
+				background: var(--white);
+				font-size: 12px;
+			}
+			.color-swatch {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.swatch {
+				width: 20px;
+				height: 20px;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				flex-shrink: 0;
+			}
+
+			/* ── TOC ── */
+			.toc {
+				background: var(--white);
+				border: 1px solid var(--border);
+				padding: 24px 28px;
+				margin-bottom: 48px;
+			}
+			.toc h2 {
+				font-family: var(--font);
+				font-size: 14px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 16px;
+				padding-bottom: 8px;
+				border-bottom: 1px solid var(--border);
+			}
+			.toc-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 6px 32px;
+			}
+			.toc-item {
+				font-size: 13px;
+				display: flex;
+				justify-content: space-between;
+				gap: 8px;
+				padding: 4px 0;
+				border-bottom: 1px dotted var(--border-dash);
+				color: var(--ink-mid);
+			}
+			.toc-item span:first-child {
+				color: var(--ink);
+				font-weight: 500;
+			}
+			.toc-route {
+				font-family: monospace;
+				font-size: 11px;
+				color: var(--ink-faint);
+			}
+
+			/* ── PAGE BREAK HEADER ── */
+			.page-break {
+				margin: 56px 0 24px;
+				display: flex;
+				align-items: center;
+				gap: 0;
+			}
+			.page-break-bar {
+				background: var(--ink);
+				color: var(--white);
+				padding: 10px 20px;
+				font-family: var(--font);
+				font-size: 20px;
+				font-weight: normal;
+				letter-spacing: 0.04em;
+				flex-shrink: 0;
+			}
+			.page-break-route {
+				background: var(--white);
+				border: 1px solid var(--ink);
+				border-left: none;
+				padding: 10px 16px;
+				font-family: monospace;
+				font-size: 12px;
+				color: var(--ink-mid);
+				flex-shrink: 0;
+			}
+			.page-break-applies {
+				border-top: 1px solid var(--border);
+				border-bottom: 1px solid var(--border);
+				border-right: 1px solid var(--border);
+				padding: 10px 16px;
+				font-size: 12px;
+				color: var(--ink-faint);
+				flex: 1;
+			}
+			.tag-ind {
+				display: inline-block;
+				background: var(--ind);
+				color: var(--white);
+				font-size: 10px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 2px 7px;
+				margin-right: 4px;
+			}
+			.tag-biz {
+				display: inline-block;
+				background: var(--biz);
+				color: var(--white);
+				font-size: 10px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 2px 7px;
+				margin-right: 4px;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.section {
+				border: 1px solid var(--border);
+				background: var(--white);
+				margin-bottom: 12px;
+			}
+			.section-head {
+				background: #f8f8f8;
+				border-bottom: 1px solid var(--border);
+				padding: 8px 14px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 12px;
+				flex-wrap: wrap;
+			}
+			.section-head-label {
+				font-size: 11px;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--ink-mid);
+			}
+			.cms-badge {
+				font-size: 10px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--cms-green);
+				border: 1px solid var(--cms-green);
+				padding: 2px 7px;
+				font-weight: 600;
+			}
+			.section-body {
+				padding: 20px 24px;
+			}
+
+			/* ── NOTE ── */
+			.note {
+				background: var(--note-bg);
+				border-left: 3px solid var(--note-orange);
+				padding: 10px 14px;
+				font-size: 13px;
+				color: var(--note-orange);
+				margin: 10px 0;
+				font-style: italic;
+			}
+
+			/* ── CONTENT ELEMENTS ── */
+			.wf-headline {
+				font-family: var(--font);
+				font-size: 26px;
+				font-weight: normal;
+				line-height: 1.2;
+				margin-bottom: 10px;
+				color: var(--ink);
+			}
+			.wf-subhead {
+				font-family: var(--font);
+				font-size: 18px;
+				font-weight: normal;
+				margin-bottom: 8px;
+				color: var(--ink);
+			}
+			.wf-body {
+				font-size: 14px;
+				color: var(--ink-mid);
+				line-height: 1.6;
+				margin-bottom: 8px;
+			}
+			.wf-label {
+				font-size: 11px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--ink-faint);
+				margin-bottom: 4px;
+				font-weight: 600;
+			}
+
+			/* ── BUTTON MOCK ── */
+			.btn {
+				display: inline-block;
+				border: 2px solid var(--ink);
+				padding: 10px 22px;
+				font-size: 13px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				font-weight: 600;
+				background: var(--white);
+				color: var(--ink);
+				margin-top: 12px;
+				margin-right: 8px;
+			}
+			.btn-filled {
+				background: var(--ink);
+				color: var(--white);
+			}
+			.btn-ind {
+				background: var(--ind);
+				border-color: var(--ind);
+				color: var(--white);
+			}
+			.btn-biz {
+				background: var(--biz);
+				border-color: var(--biz);
+				color: var(--white);
+			}
+			.btn-sm {
+				padding: 7px 14px;
+				font-size: 11px;
+			}
+
+			/* ── GRID LAYOUTS ── */
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 20px;
+			}
+			.three-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				gap: 16px;
+			}
+			.side-r {
+				display: grid;
+				grid-template-columns: 1.2fr 1fr;
+				gap: 24px;
+				align-items: start;
+			}
+			.side-l {
+				display: grid;
+				grid-template-columns: 1fr 1.2fr;
+				gap: 24px;
+				align-items: start;
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-block {
+				background: #ebebeb;
+				border: 1px dashed var(--border-dash);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 6px;
+				color: var(--ink-faint);
+				font-size: 13px;
+				text-align: center;
+				padding: 16px;
+				min-height: 180px;
+			}
+			.img-block-sm {
+				min-height: 100px;
+			}
+			.img-block-tall {
+				min-height: 260px;
+			}
+			.img-icon {
+				font-size: 32px;
+				opacity: 0.4;
+			}
+
+			/* ── CARD ── */
+			.card {
+				border: 1px solid var(--border);
+				padding: 18px 18px;
+			}
+			.card-title {
+				font-family: var(--font);
+				font-size: 16px;
+				margin-bottom: 6px;
+			}
+			.card-body {
+				font-size: 13px;
+				color: var(--ink-mid);
+				line-height: 1.55;
+			}
+
+			/* ── TESTIMONIAL ── */
+			.testimonial {
+				border: 1px solid var(--border);
+				padding: 20px;
+				background: #fafafa;
+				position: relative;
+			}
+			.testimonial-quote {
+				font-family: var(--font);
+				font-size: 15px;
+				font-style: italic;
+				line-height: 1.6;
+				color: var(--ink);
+				margin-bottom: 12px;
+			}
+			.testimonial-attr {
+				font-size: 12px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--ink-faint);
+			}
+			.testimonial-featured {
+				border-left: 4px solid var(--ind);
+				padding-left: 20px;
+				background: var(--ind-light);
+			}
+			.testimonial-featured-biz {
+				border-left: 4px solid var(--biz);
+				background: var(--biz-light);
+			}
+
+			/* ── EVENT CARD ── */
+			.event-card {
+				border: 1px solid var(--border);
+				display: flex;
+				gap: 0;
+			}
+			.event-date {
+				background: var(--ink);
+				color: var(--white);
+				padding: 12px 16px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-width: 68px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+			.event-month {
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				opacity: 0.7;
+			}
+			.event-day {
+				font-family: var(--font);
+				font-size: 30px;
+				line-height: 1;
+			}
+			.event-info {
+				padding: 12px 16px;
+				flex: 1;
+			}
+			.event-format {
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 600;
+				border: 1px solid var(--border);
+				padding: 2px 7px;
+				display: inline-block;
+				margin-bottom: 5px;
+				color: var(--ink-mid);
+			}
+
+			/* ── PROCESS STEP ── */
+			.step {
+				display: flex;
+				gap: 16px;
+				padding: 14px 0;
+				border-bottom: 1px solid var(--border);
+			}
+			.step:last-child {
+				border-bottom: none;
+			}
+			.step-num {
+				font-family: var(--font);
+				font-size: 24px;
+				color: var(--ind);
+				flex-shrink: 0;
+				width: 36px;
+				font-weight: normal;
+			}
+			.step-num-biz {
+				color: var(--biz);
+			}
+			.step-content {
+			}
+			.step-title {
+				font-weight: 600;
+				font-size: 14px;
+				margin-bottom: 3px;
+			}
+			.step-body {
+				font-size: 13px;
+				color: var(--ink-mid);
+			}
+
+			/* ── LEVEL CARD (ELEVATION SERIES) ── */
+			.level-card {
+				border: 1px solid var(--border);
+				padding: 20px;
+			}
+			.level-num {
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--ink-faint);
+				margin-bottom: 4px;
+			}
+			.level-title {
+				font-family: var(--font);
+				font-size: 22px;
+				font-weight: normal;
+				margin-bottom: 4px;
+			}
+			.level-duration {
+				font-size: 12px;
+				color: var(--ink-faint);
+				margin-bottom: 12px;
+				padding-bottom: 12px;
+				border-bottom: 1px solid var(--border);
+			}
+			.level-desc {
+				font-size: 13px;
+				color: var(--ink-mid);
+				margin-bottom: 12px;
+				line-height: 1.55;
+			}
+			.check-item {
+				display: flex;
+				gap: 8px;
+				font-size: 13px;
+				color: var(--ink-mid);
+				margin-bottom: 5px;
+			}
+			.check-item::before {
+				content: '✓';
+				color: var(--biz);
+				font-weight: 700;
+				flex-shrink: 0;
+			}
+
+			/* ── SPEAKING TOPIC ── */
+			.topic-card {
+				border: 1px solid var(--border);
+				padding: 18px 20px;
+				display: grid;
+				grid-template-columns: 40px 1fr auto;
+				gap: 16px;
+				align-items: start;
+			}
+			.topic-num {
+				font-family: var(--font);
+				font-size: 28px;
+				color: #ddd;
+				font-weight: normal;
+				line-height: 1;
+			}
+			.topic-title {
+				font-size: 14px;
+				font-weight: 600;
+				margin-bottom: 3px;
+			}
+			.topic-sub {
+				font-size: 12px;
+				color: var(--ind);
+				font-style: italic;
+				margin-bottom: 6px;
+			}
+			.topic-body {
+				font-size: 13px;
+				color: var(--ink-mid);
+				line-height: 1.5;
+			}
+
+			/* ── FORK LAYOUT ── */
+			.fork {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 0;
+				border: 1px solid var(--border);
+			}
+			.fork-side {
+				padding: 40px 32px;
+			}
+			.fork-ind {
+				background: var(--ind-light);
+				border-right: 1px solid var(--border);
+			}
+			.fork-biz {
+				background: var(--biz-light);
+			}
+			.fork-side-label {
+				font-family: var(--font);
+				font-size: 11px;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+			.fork-headline {
+				font-family: var(--font);
+				font-size: 20px;
+				font-weight: normal;
+				margin-bottom: 8px;
+			}
+
+			/* ── CTA STRIP ── */
+			.cta-strip {
+				background: var(--ink);
+				color: var(--white);
+				padding: 40px 32px;
+				text-align: center;
+			}
+			.cta-strip .wf-headline {
+				color: var(--white);
+			}
+			.cta-strip .wf-body {
+				color: rgba(255, 255, 255, 0.75);
+			}
+
+			/* ── DIVIDER ── */
+			.divider {
+				border: none;
+				border-top: 1px solid var(--border);
+				margin: 20px 0;
+			}
+
+			/* ── NAV MOCK ── */
+			.mock-nav {
+				background: var(--white);
+				border: 1px solid var(--border);
+				padding: 0 24px;
+				height: 60px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+			}
+			.mock-nav-logo {
+				font-family: var(--font);
+				font-size: 15px;
+				letter-spacing: 0.1em;
+			}
+			.mock-nav-links {
+				display: flex;
+				gap: 20px;
+				list-style: none;
+				font-size: 12px;
+				color: var(--ink-mid);
+			}
+			.mock-nav-links li {
+				position: relative;
+			}
+			.mock-nav-links li.has-dropdown {
+				cursor: default;
+			}
+			.mock-nav-links li.has-dropdown > span {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
+			.mock-nav-links li.has-dropdown > span::after {
+				content: '▾';
+				font-size: 9px;
+			}
+			.nav-dropdown {
+				position: absolute;
+				top: calc(100% + 8px);
+				left: 0;
+				background: var(--white);
+				border: 1px solid var(--border);
+				min-width: 220px;
+				z-index: 10;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+			}
+			.nav-dropdown-item {
+				padding: 9px 14px;
+				font-size: 12px;
+				color: var(--ink-mid);
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				position: relative;
+			}
+			.nav-dropdown-item:last-child {
+				border-bottom: none;
+			}
+			.nav-dropdown-item.separator {
+				background: #f8f8f8;
+				color: var(--ink-faint);
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 600;
+				padding: 6px 14px;
+			}
+			.nav-dropdown-item.has-sub::after {
+				content: '▸';
+				font-size: 9px;
+				color: var(--ink-faint);
+			}
+			.nav-sub-dropdown {
+				position: absolute;
+				left: 100%;
+				top: 0;
+				background: var(--white);
+				border: 1px solid var(--border);
+				min-width: 180px;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+			}
+			.nav-sub-dropdown .nav-dropdown-item {
+				font-size: 11px;
+			}
+			.mock-nav-cta {
+				font-size: 11px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				font-weight: 600;
+				border: 1.5px solid var(--ink);
+				padding: 7px 14px;
+			}
+
+			/* ── FOOTER MOCK ── */
+			.mock-footer {
+				background: #1a1a1a;
+				color: rgba(255, 255, 255, 0.7);
+				padding: 36px 32px 24px;
+				margin-top: 0;
+			}
+			.mock-footer-cols {
+				display: grid;
+				grid-template-columns: 2fr 1fr 1fr;
+				gap: 32px;
+				margin-bottom: 24px;
+			}
+			.mock-footer-col h4 {
+				font-size: 10px;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.4);
+				margin-bottom: 10px;
+			}
+			.mock-footer-col p,
+			.mock-footer-col a {
+				font-size: 13px;
+				color: rgba(255, 255, 255, 0.55);
+				display: block;
+				margin-bottom: 6px;
+				text-decoration: none;
+			}
+			.mock-footer-bottom {
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+				padding-top: 14px;
+				font-size: 11px;
+				color: rgba(255, 255, 255, 0.3);
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+			.footer-switch {
+				color: rgba(255, 255, 255, 0.5);
+				text-decoration: underline;
+				font-size: 11px;
+			}
+
+			/* ── FORM MOCK ── */
+			.form-field {
+				margin-bottom: 14px;
+			}
+			.form-label {
+				font-size: 12px;
+				font-weight: 600;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				margin-bottom: 5px;
+				color: var(--ink-mid);
+			}
+			.form-input {
+				width: 100%;
+				border: 1px solid var(--border);
+				padding: 10px 12px;
+				font-size: 14px;
+				font-family: var(--sans);
+				background: var(--white);
+				color: var(--ink-faint);
+			}
+			.form-textarea {
+				min-height: 90px;
+				resize: vertical;
+			}
+
+			/* ── CALENDLY MOCK ── */
+			.calendly-mock {
+				border: 1px solid var(--border);
+				padding: 24px;
+				background: #fafafa;
+				text-align: center;
+			}
+			.calendly-name {
+				font-family: var(--font);
+				font-size: 16px;
+				margin-bottom: 4px;
+			}
+			.calendly-title {
+				font-size: 13px;
+				color: var(--ind);
+				margin-bottom: 4px;
+			}
+			.calendly-duration {
+				font-size: 12px;
+				color: var(--ink-faint);
+				margin-bottom: 16px;
+			}
+			.calendly-cal {
+				border: 1px dashed var(--border-dash);
+				min-height: 120px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 13px;
+				color: var(--ink-faint);
+				background: var(--white);
+			}
+
+			/* ── ASSESSMENT BADGE ── */
+			.assess-badge {
+				font-family: var(--font);
+				font-size: 48px;
+				font-weight: normal;
+				letter-spacing: 0.08em;
+				line-height: 1;
+				margin-bottom: 4px;
+			}
+
+			/* ── APPROACH GRID ── */
+			.approach-item {
+				border-top: 2px solid var(--ind);
+				padding-top: 12px;
+			}
+			.approach-item-biz {
+				border-top-color: var(--biz);
+			}
+			.approach-title {
+				font-weight: 600;
+				font-size: 14px;
+				margin-bottom: 4px;
+			}
+			.approach-body {
+				font-size: 13px;
+				color: var(--ink-mid);
+				line-height: 1.5;
+			}
+
+			/* ── PROBLEM LIST ── */
+			.problem-item {
+				display: flex;
+				gap: 12px;
+				padding: 12px 0;
+				border-bottom: 1px solid var(--border);
+			}
+			.problem-item:last-child {
+				border-bottom: none;
+			}
+			.problem-dot {
+				width: 8px;
+				height: 8px;
+				background: var(--ind);
+				border-radius: 50%;
+				flex-shrink: 0;
+				margin-top: 5px;
+			}
+			.problem-dot-biz {
+				background: var(--biz);
+			}
+
+			/* ── UTILITY ── */
+			.mt-16 {
+				margin-top: 16px;
+			}
+			.mt-24 {
+				margin-top: 24px;
+			}
+			.mb-8 {
+				margin-bottom: 8px;
+			}
+			.text-sm {
+				font-size: 13px;
+				color: var(--ink-mid);
+			}
+			.text-faint {
+				color: var(--ink-faint);
+			}
+			.mono {
+				font-family: monospace;
+			}
+
+			@media (max-width: 680px) {
+				.two-col,
+				.three-col,
+				.side-r,
+				.side-l,
+				.fork,
+				.mock-footer-cols,
+				.mock-nav-links {
+					grid-template-columns: 1fr;
+				}
+				.topic-card {
+					grid-template-columns: 32px 1fr;
+				}
+				.topic-card .btn-sm {
+					grid-column: 2;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="doc">
+			<!-- ══ COVER ══ -->
+			<div class="cover">
+				<div class="cover-brand">
+					Latz Web Design LLC — Prepared for Alyssa Shurbert-Hetzel
+				</div>
+				<h1>The Steady Elevation — Site Wireframe</h1>
+				<div class="cover-meta">
+					9 Templates · 23 Pages · March 2026 · v2 — With Copy
+				</div>
+				<div style="margin-top: 16px">
+					<div class="cover-colors">
+						<div class="color-swatch">
+							<div class="swatch" style="background: #8ea08a"></div>
+							<span>Individual — #8EA08A</span>
+						</div>
+						<div class="cover-colors" style="border: none; padding: 0">·</div>
+						<div class="color-swatch">
+							<div class="swatch" style="background: #013543"></div>
+							<span>Business — #013543</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══ TOC ══ -->
+			<div class="toc">
+				<h2>Contents</h2>
+				<div class="toc-grid">
+					<div class="toc-item">
+						<span>1. Fork Landing</span><span class="toc-route">/</span>
+					</div>
+					<div class="toc-item">
+						<span>6. Assessment Template</span
+						><span class="toc-route">/[side]/services/assessments/[slug]</span>
+					</div>
+					<div class="toc-item">
+						<span>2. Side Landing Hub</span
+						><span class="toc-route">/individual &amp; /business</span>
+					</div>
+					<div class="toc-item">
+						<span>7. Events Template</span
+						><span class="toc-route">/[side]/events</span>
+					</div>
+					<div class="toc-item">
+						<span>3. About Template</span
+						><span class="toc-route">/[side]/about</span>
+					</div>
+					<div class="toc-item">
+						<span>8. Testimonials Template</span
+						><span class="toc-route">/[side]/testimonials</span>
+					</div>
+					<div class="toc-item">
+						<span>4. Service Template</span
+						><span class="toc-route">/[side]/services/[slug]</span>
+					</div>
+					<div class="toc-item">
+						<span>9. Contact Template</span
+						><span class="toc-route">/[side]/contact</span>
+					</div>
+					<div class="toc-item">
+						<span>5. Elevation Series</span
+						><span class="toc-route"
+							>/business/services/the-elevation-series</span
+						>
+					</div>
+					<div class="toc-item">
+						<span>10. Speaking Template</span
+						><span class="toc-route">/business/services/speaking</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══ GLOBAL NAV NOTE ══ -->
+			<div class="note">
+				Global Nav: Logo links to current side hub (/individual or /business),
+				not the root fork. "Work With Me" CTA links to /contact — Contact is not
+				a standalone nav item. Services has a dropdown with services AND a
+				nested Assessments submenu. No nav on the fork page (/).
+			</div>
+			<div class="mock-nav">
+				<div class="mock-nav-logo">the Steady Elevation</div>
+				<ul class="mock-nav-links">
+					<li>About</li>
+					<li class="has-dropdown">
+						<span>Services</span>
+						<div class="nav-dropdown">
+							<div class="nav-dropdown-item">Confidence &amp; Energy</div>
+							<div class="nav-dropdown-item">
+								Infertility, Miscarriage &amp; Surrogacy
+							</div>
+							<div class="nav-dropdown-item">Leadership</div>
+							<div class="nav-dropdown-item separator">Assessments</div>
+							<div class="nav-dropdown-item has-sub">
+								DISC
+								<div class="nav-sub-dropdown">
+									<div class="nav-dropdown-item">DISC</div>
+								</div>
+							</div>
+							<div class="nav-dropdown-item has-sub">
+								ELI
+								<div class="nav-sub-dropdown">
+									<div class="nav-dropdown-item">ELI</div>
+								</div>
+							</div>
+							<div class="nav-dropdown-item has-sub">
+								Insights Discovery
+								<div class="nav-sub-dropdown">
+									<div class="nav-dropdown-item">Insights Discovery</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>Events</li>
+					<li>Testimonials</li>
+				</ul>
+				<div class="mock-nav-cta">Work With Me</div>
+			</div>
+			<div class="note" style="margin-top: 8px; margin-bottom: 220px">
+				Business side nav Services dropdown: Fractional Cultural Director,
+				Leadership Coaching, The Elevation Series, Speaking — then Assessments
+				submenu with DISC, ELI, Insights.
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 1 — FORK LANDING
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">01 — Fork Landing</div>
+				<div class="page-break-route">/</div>
+				<div class="page-break-applies">
+					1 page · No nav · Entry point for entire site
+				</div>
+			</div>
+
+			<div class="note">
+				No header nav on this page. Full-screen split. Both brand colors
+				represented. Logo centered above or between the two sides — designer's
+				call.
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero — Full Screen Split</span>
+				</div>
+				<div class="section-body">
+					<div style="text-align: center; padding: 16px 0 24px">
+						<div class="wf-label mb-8">Logo</div>
+						<div class="wf-headline" style="font-size: 32px">
+							Clarity for you. Culture for your team.
+						</div>
+						<div class="wf-body mt-16">Choose your path.</div>
+					</div>
+					<div class="fork mt-16">
+						<div class="fork-side fork-ind">
+							<div class="fork-side-label" style="color: var(--ind)">
+								Path A — Individual
+							</div>
+							<div class="fork-headline">For you.</div>
+							<div class="wf-body text-sm">
+								Personal coaching, growth, and assessments.
+							</div>
+							<div class="btn btn-ind" style="margin-top: 20px">Individual</div>
+						</div>
+						<div class="fork-side fork-biz">
+							<div class="fork-side-label" style="color: var(--biz)">
+								Path B — Business
+							</div>
+							<div class="fork-headline">For your team.</div>
+							<div class="wf-body text-sm">
+								Leadership development, culture, and speaking.
+							</div>
+							<div class="btn btn-biz" style="margin-top: 20px">Business</div>
+						</div>
+					</div>
+					<div class="note mt-16">
+						Designer note: Visual treatment of each side (photo vs. color
+						block), logo placement, and split proportions are open decisions.
+						Both sides must feel equally prominent.
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 2 — SIDE LANDING HUB
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">02 — Side Landing Hub</div>
+				<div class="page-break-route">/individual &amp; /business</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>2 pages · Same layout, different
+					color theme &amp; content
+				</div>
+			</div>
+
+			<div class="note">
+				Copy below is from /individual. Business version uses same structure
+				with business-specific copy and #013543 color theme.
+			</div>
+
+			<!-- Hero -->
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="side-r">
+						<div>
+							<div class="wf-headline">
+								Clarity, Confidence, and a Path Forward
+							</div>
+							<div class="wf-body">
+								Coaching and assessments for individuals navigating transitions,
+								burnout, or fertility challenges — so you can reconnect with
+								yourself and move forward with confidence.
+							</div>
+							<div class="btn btn-filled">Let's Talk</div>
+						</div>
+						<div class="img-block img-block-tall">
+							<div class="img-icon">🖼</div>
+							<span>Hero Photo — Stephanie</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Intro -->
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Introduction — Meet Stephanie</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="side-l">
+						<div class="img-block">
+							<div class="img-icon">🖼</div>
+							<span>Stephanie — Warm/Personal Photo</span>
+						</div>
+						<div>
+							<div class="wf-label mb-8">Introduction</div>
+							<div class="wf-subhead">Meet Stephanie</div>
+							<div class="wf-body">
+								I work one-on-one with people navigating life's hardest chapters
+								— helping you cut through the noise, strengthen emotional
+								clarity, and find your footing again. Through tailored coaching
+								and proven tools, we uncover what's driving your stress and turn
+								it into real momentum.
+							</div>
+							<div class="btn">More about Stephanie →</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Featured Testimonial -->
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Featured Testimonial</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="testimonial testimonial-featured">
+						<div class="testimonial-quote">
+							"Stephanie has been the catalyst in helping me improve many
+							aspects of my life. She has shifted the way I think about all the
+							ups and the downs of my life truly."
+						</div>
+						<div class="testimonial-attr">— Kate, Minneapolis MN</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Services -->
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Services Overview</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-label mb-8">Section Header</div>
+					<div class="wf-subhead" style="margin-bottom: 20px">
+						How I can help.
+					</div>
+					<div class="three-col">
+						<div class="card">
+							<div class="wf-label">Service</div>
+							<div class="card-title">Confidence &amp; Energy</div>
+							<div class="card-body">
+								Find your steady. Build authentic confidence — especially when
+								life feels uncertain, heavy, or stuck.
+							</div>
+							<div class="btn btn-sm" style="margin-top: 10px">
+								Learn More →
+							</div>
+						</div>
+						<div class="card">
+							<div class="wf-label">Service</div>
+							<div class="card-title">
+								Infertility, Miscarriage &amp; Surrogacy
+							</div>
+							<div class="card-body">
+								Sacred space for your sacred journey. You don't have to carry
+								this alone.
+							</div>
+							<div class="btn btn-sm" style="margin-top: 10px">
+								Learn More →
+							</div>
+						</div>
+						<div class="card">
+							<div class="wf-label">Service</div>
+							<div class="card-title">Leadership</div>
+							<div class="card-body">
+								Lead from your center, not your chaos. Build the self-awareness
+								and presence your team needs.
+							</div>
+							<div class="btn btn-sm" style="margin-top: 10px">
+								Learn More →
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Assessments -->
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Assessments Callout</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-body" style="margin-bottom: 16px">
+						Every engagement starts with understanding where you are. We use
+						proven assessment tools to uncover your strengths, energy patterns,
+						and blind spots — so our work together is grounded in real insight,
+						not guesswork.
+					</div>
+					<div class="two-col">
+						<div class="card">
+							<div class="assess-badge">DISC</div>
+							<div class="card-body">
+								Understand your communication and behavioral style to strengthen
+								your relationships.
+							</div>
+							<div class="btn btn-sm">Learn More →</div>
+						</div>
+						<div class="card">
+							<div class="assess-badge">ELI</div>
+							<div class="card-body">
+								See how your energy shows up in everyday life and under stress —
+								and learn how to shift it.
+							</div>
+							<div class="btn btn-sm">Learn More →</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- CTA -->
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Call to Action</span>
+				</div>
+				<div class="section-body" style="padding: 0">
+					<div class="cta-strip">
+						<div class="wf-headline">Ready to take the first step?</div>
+						<div class="wf-body">
+							Book a free discovery call and let's figure out what's next —
+							together.
+						</div>
+						<div
+							class="btn"
+							style="
+								color: var(--white);
+								border-color: var(--white);
+								margin-top: 20px;
+							"
+						>
+							Schedule a Consultation
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 3 — ABOUT
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">03 — About</div>
+				<div class="page-break-route">/[side]/about</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>2 pages · Same layout, different
+					copy &amp; photo per side
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero — Intro</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="side-r">
+						<div>
+							<div class="wf-headline">
+								Hey, I'm Stephanie — and I'm glad you're here.
+							</div>
+							<div class="wf-body">
+								I help people navigate transitions, cut through the noise, and
+								reconnect with who they actually are. Whether you're burned out,
+								stuck, or just ready for something different — I create a space
+								where real growth happens.
+							</div>
+						</div>
+						<div class="img-block img-block-tall">
+							<div class="img-icon">🖼</div>
+							<span>About Hero — Stephanie</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">The Work</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead">Coaching that gets to the core.</div>
+					<div class="wf-body">
+						Through coaching and proven assessments, we get to the core of
+						what's driving your stress and turn it into forward momentum. This
+						isn't about quick fixes or surface-level advice. It's about
+						understanding the energy behind your patterns — and shifting it.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label"
+						>My Approach — How We Work Together</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-label mb-8">Section Header</div>
+					<div class="wf-subhead" style="margin-bottom: 20px">
+						How we work together
+					</div>
+					<div class="two-col">
+						<div class="approach-item">
+							<div class="approach-title">Elevate Awareness</div>
+							<div class="approach-body">
+								We get clear on what drives you and where you actually want to
+								go — no more autopilot.
+							</div>
+						</div>
+						<div class="approach-item">
+							<div class="approach-title">Empowered Energy</div>
+							<div class="approach-body">
+								We reduce the stress and tap into a mindset that feels
+								confident, grounded, and yours.
+							</div>
+						</div>
+						<div class="approach-item">
+							<div class="approach-title">Co-Creation</div>
+							<div class="approach-body">
+								I'm not here to tell you how to live. I'm here to help you
+								figure it out — with honesty, humor, and zero judgment.
+							</div>
+						</div>
+						<div class="approach-item">
+							<div class="approach-title">Accountable Change</div>
+							<div class="approach-body">
+								Real goals. Direct feedback. Plans you'll actually follow
+								through on.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Who I Work With</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 16px">
+						People who are ready for what's next
+					</div>
+					<div class="three-col">
+						<div class="card">
+							<div class="card-title">Navigating Change</div>
+							<div class="card-body">
+								Career shifts, life transitions, big questions — I help you
+								realign with what actually matters.
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-title">Seeking Clarity</div>
+							<div class="card-body">
+								Stretched thin between responsibilities and your own well-being?
+								We restore the balance.
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-title">Ready to Grow</div>
+							<div class="card-body">
+								You're done just coping. You're ready to move forward with
+								confidence.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">What to Expect</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 4px">
+						A process built for you
+					</div>
+					<div class="step">
+						<div class="step-num">01</div>
+						<div class="step-content">
+							<div class="step-title">Assessments</div>
+							<div class="step-body">
+								We start with proven tools to uncover your strengths, blind
+								spots, and potential.
+							</div>
+						</div>
+					</div>
+					<div class="step">
+						<div class="step-num">02</div>
+						<div class="step-content">
+							<div class="step-title">Coaching Sessions</div>
+							<div class="step-body">
+								Every session is tailored to you — blending insight, mindset
+								work, and emotional clarity.
+							</div>
+						</div>
+					</div>
+					<div class="step">
+						<div class="step-num">03</div>
+						<div class="step-content">
+							<div class="step-title">Action + Accountability</div>
+							<div class="step-body">
+								Realistic goals, real progress, real tools — without the
+								overwhelm.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Why It Works</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 16px">
+						What makes this different
+					</div>
+					<div class="three-col">
+						<div class="card">
+							<div class="card-title">I've been there.</div>
+							<div class="card-body">
+								I've walked through my own transitions and supported many
+								others. I bring both perspective and empathy.
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-title">I keep it real.</div>
+							<div class="card-body">
+								This feels like talking to someone who listens deeply — and
+								isn't afraid to tell it like it is.
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-title">Growth is the goal.</div>
+							<div class="card-body">
+								We turn struggle into strength and momentum into something that
+								lasts.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Call to Action</span>
+				</div>
+				<div class="section-body" style="padding: 0">
+					<div class="cta-strip">
+						<div class="wf-headline">Ready to Start?</div>
+						<div class="wf-body">
+							If you're craving clarity and confidence, let's talk. Book a free
+							call and let's figure out what's next — together.
+						</div>
+						<div
+							class="btn"
+							style="
+								color: var(--white);
+								border-color: var(--white);
+								margin-top: 20px;
+							"
+						>
+							Let's Get Started
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 4 — SERVICE PAGE
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">04 — Service Page</div>
+				<div class="page-break-route">/[side]/services/[slug]</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>5 pages total · Copy below from
+					Confidence &amp; Energy
+				</div>
+			</div>
+
+			<div class="note">
+				Used by: Confidence &amp; Energy, Infertility/Miscarriage/Surrogacy,
+				Leadership (individual), Leadership Coaching (biz), Fractional Cultural
+				Director (biz). Same layout — CMS drives all content.
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="side-l">
+						<div class="img-block img-block-tall">
+							<div class="img-icon">🖼</div>
+							<span>Service Hero Image</span>
+						</div>
+						<div>
+							<div class="wf-headline">
+								Find Your Steady. Build Authentic Confidence.
+							</div>
+							<div class="wf-body">
+								Reconnect with the most confident version of yourself —
+								especially when life feels uncertain, heavy, or stuck.
+							</div>
+							<div class="btn btn-filled">Book Your Discovery Call</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">The Problem</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 16px">
+						When self-doubt keeps you small.
+					</div>
+					<div>
+						<div class="problem-item">
+							<div class="problem-dot"></div>
+							<div class="wf-body" style="margin: 0">
+								You're caught in cycles of comparison, perfectionism, and
+								people-pleasing — exhausted and disconnected from who you
+								actually are.
+							</div>
+						</div>
+						<div class="problem-item">
+							<div class="problem-dot"></div>
+							<div class="wf-body" style="margin: 0">
+								You feel uncertain and stuck. You second-guess yourself
+								constantly and wonder if you'll ever feel truly confident in
+								your own skin.
+							</div>
+						</div>
+						<div class="problem-item">
+							<div class="problem-dot"></div>
+							<div class="wf-body" style="margin: 0">
+								You're ready to show up with clarity, courage, and calm —
+								instead of being held back by self-doubt and the need for
+								everyone else's approval.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label"
+						>You're Not Alone — Personal Note from Stephanie</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="side-r">
+						<div>
+							<div class="wf-subhead" style="margin-bottom: 8px">
+								I've been on this path.
+							</div>
+							<div class="wf-body">
+								I know what it feels like to be disconnected from your most
+								confident self. I've walked the road of perfectionism and
+								people-pleasing, always feeling like something was missing.
+								Through my own journey of slowing down, getting honest, and
+								doing the work that actually sticks, I discovered that authentic
+								confidence isn't about having all the answers. It's about
+								reconnecting with who you are underneath all the noise.
+							</div>
+						</div>
+						<div class="img-block">
+							<div class="img-icon">🖼</div>
+							<span>Stephanie — Personal/Warm</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">The Process</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 4px">
+						A simple path to lasting confidence.
+					</div>
+					<div class="wf-body" style="margin-bottom: 16px">
+						We don't chase quick fixes. We slow down, get honest, and do the
+						work that sticks — through mindset shifts, personalized assessments,
+						and heart-level conversations.
+					</div>
+					<div class="step">
+						<div class="step-num">01</div>
+						<div class="step-content">
+							<div class="step-title">Understand Your Natural Patterns</div>
+							<div class="step-body">
+								Discover your strengths and energy patterns so you know how you
+								operate at your best.
+							</div>
+						</div>
+					</div>
+					<div class="step">
+						<div class="step-num">02</div>
+						<div class="step-content">
+							<div class="step-title">Release What's Not Serving You</div>
+							<div class="step-body">
+								Reduce comparison, perfectionism, and people-pleasing habits
+								that keep you small.
+							</div>
+						</div>
+					</div>
+					<div class="step">
+						<div class="step-num">03</div>
+						<div class="step-content">
+							<div class="step-title">Build Authentic Confidence</div>
+							<div class="step-body">
+								Set goals that match your values and show up with more clarity,
+								courage, and calm.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label"
+						>The Cost of Staying Stuck / What Becomes Possible — Two
+						Column</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="two-col">
+						<div>
+							<div class="wf-label mb-8">If nothing changes</div>
+							<div
+								class="wf-subhead"
+								style="font-size: 15px; margin-bottom: 12px"
+							>
+								The cost of staying stuck.
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">
+									Ongoing exhaustion from performing for others
+								</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">Missed opportunities from self-doubt</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">Relationships that stay surface-level</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">Goals that don't fit</div>
+							</div>
+						</div>
+						<div>
+							<div class="wf-label mb-8">What becomes possible</div>
+							<div
+								class="wf-subhead"
+								style="font-size: 15px; margin-bottom: 12px"
+							>
+								When you stop performing and start living.
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot" style="background: var(--ind)"></div>
+								<div class="text-sm">
+									Confidence that's yours — built from the inside out
+								</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot" style="background: var(--ind)"></div>
+								<div class="text-sm">
+									Energy patterns you understand and honor
+								</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot" style="background: var(--ind)"></div>
+								<div class="text-sm">Boundaries without guilt</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot" style="background: var(--ind)"></div>
+								<div class="text-sm">Days that energize instead of deplete</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Call to Action</span>
+				</div>
+				<div class="section-body" style="padding: 0">
+					<div class="cta-strip">
+						<div class="wf-headline">Ready to reconnect with yourself?</div>
+						<div class="wf-body">
+							Let's explore how confidence coaching can help you find your
+							steady, authentic self. Book a free discovery call and let's talk.
+						</div>
+						<div
+							class="btn"
+							style="
+								color: var(--white);
+								border-color: var(--white);
+								margin-top: 20px;
+							"
+						>
+							Book Your Discovery Call
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 5 — ELEVATION SERIES
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">05 — Elevation Series</div>
+				<div class="page-break-route">
+					/business/services/the-elevation-series
+				</div>
+				<div class="page-break-applies">
+					<span class="tag-biz">Business</span>1 page · Unique layout ·
+					Three-level program
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body" style="background: var(--biz-light)">
+					<div class="wf-label mb-8" style="color: var(--biz)">
+						Business — Leadership Development
+					</div>
+					<div class="wf-headline" style="font-size: 30px">
+						The Elevation Series
+					</div>
+					<div class="wf-subhead" style="margin-bottom: 12px">
+						Leadership Growth at Every Level
+					</div>
+					<div class="wf-body">
+						Leadership isn't one-size-fits-all. The Elevation Series offers
+						three tracks — designed to grow with your leaders and your business.
+						Each level includes expert facilitation, strategic assessments, and
+						development that sticks. Whether you're building a foundation or
+						preparing your team for long-term impact, there's a level that fits.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Three Levels</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="three-col">
+						<div class="level-card">
+							<div class="level-num">Level 1 of 3</div>
+							<div class="level-title">Foundation</div>
+							<div class="level-duration">3 Months · 1 Session per Month</div>
+							<div class="level-desc">
+								The starting point. Build a baseline of self-awareness and
+								communication skills that set leaders up for everything that
+								follows.
+							</div>
+							<div class="wf-label mb-8">What's Included</div>
+							<div class="check-item">DISC Assessment</div>
+							<div class="check-item">Communication Adaptability</div>
+							<div class="check-item">Presentation Celebration</div>
+							<div class="btn btn-biz btn-sm" style="margin-top: 16px">
+								Start Your Leadership Journey
+							</div>
+						</div>
+						<div
+							class="level-card"
+							style="border-color: var(--biz); border-width: 2px"
+						>
+							<div class="level-num">Level 2 of 3</div>
+							<div class="level-title">Growth</div>
+							<div class="level-duration">6 Months · 1 Session per Month</div>
+							<div class="level-desc">
+								Go deeper. Build on the foundation with energy awareness,
+								feedback skills, and tools that develop well-rounded leaders.
+							</div>
+							<div class="wf-label mb-8">What's Included</div>
+							<div class="check-item">Everything in Foundation, plus:</div>
+							<div class="check-item">Energy Leadership Index (ELI)</div>
+							<div class="check-item">Giving &amp; Receiving Feedback</div>
+							<div class="btn btn-biz btn-sm" style="margin-top: 16px">
+								Advance to the Next Level
+							</div>
+						</div>
+						<div class="level-card">
+							<div class="level-num">Level 3 of 3</div>
+							<div class="level-title">Legacy</div>
+							<div class="level-duration">12 Months · 1 Session per Month</div>
+							<div class="level-desc">
+								The full experience. A year-long leadership development journey
+								that builds strategic thinkers, culture shapers, and leaders who
+								leave a lasting impact.
+							</div>
+							<div class="wf-label mb-8">What's Included</div>
+							<div class="check-item">
+								Everything in Foundation &amp; Growth, plus:
+							</div>
+							<div class="check-item">StrengthsFinder</div>
+							<div class="check-item">Time Management</div>
+							<div class="check-item">Goal Setting / Strategy Maps</div>
+							<div class="check-item">Communicating Across Generations</div>
+							<div class="check-item">Guest Speakers on Specific Goals</div>
+							<div class="check-item">1-on-1 Coaching for 3 Leaders</div>
+							<div class="btn btn-biz btn-sm" style="margin-top: 16px">
+								Build a Legacy of Impactful Leadership
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Call to Action</span>
+				</div>
+				<div class="section-body" style="padding: 0">
+					<div class="cta-strip">
+						<div class="wf-headline">Not sure which level is right?</div>
+						<div class="wf-body">
+							Let's talk through where your team is and find the right fit. Book
+							a call and we'll figure it out together.
+						</div>
+						<div
+							class="btn"
+							style="
+								color: var(--white);
+								border-color: var(--white);
+								margin-top: 20px;
+							"
+						>
+							Schedule a Consultation
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 6 — ASSESSMENT
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">06 — Assessment Template</div>
+				<div class="page-break-route">/[side]/services/assessments/[slug]</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>5 pages · DISC, ELI (both sides)
+					+ Insights (biz only) · Copy from DISC · Routes:
+					/individual/services/assessments/[slug] &amp;
+					/business/services/assessments/[slug]
+				</div>
+			</div>
+
+			<div class="note">
+				Used by: DISC, ELI (both sides), Insights (business only). Routes nest
+				under /services/assessments/ — e.g.
+				/individual/services/assessments/disc,
+				/business/services/assessments/eli. Same layout for all 5 pages — CMS
+				controls content per assessment.
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="side-r">
+						<div>
+							<div class="assess-badge">DISC</div>
+							<div class="wf-headline">
+								Understand Yourself Better. Strengthen Your Relationships.
+							</div>
+							<div class="wf-body">
+								The DISC assessment reveals your natural tendencies — how you
+								communicate, respond to stress, and show up in relationships.
+								With that insight, you gain confidence, clarity, and deeper
+								connections.
+							</div>
+							<div class="btn btn-filled">Schedule Your Assessment</div>
+						</div>
+						<div class="img-block img-block-tall">
+							<div class="img-icon">📊</div>
+							<span>Assessment Graphic / Diagram</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">The Problem</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 8px">
+						Ever feel misunderstood or stuck in patterns?
+					</div>
+					<div class="wf-body">
+						Maybe you've had conversations that went sideways and you couldn't
+						figure out why. Maybe relationships feel harder than they should, or
+						you keep repeating the same patterns when things get stressful. The
+						key to breaking those cycles isn't changing who you are — it's
+						understanding yourself better and learning how to adapt your
+						approach.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">What DISC Shows You</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 6px">
+						See yourself clearly — without the guesswork.
+					</div>
+					<div class="wf-body" style="margin-bottom: 20px">
+						DISC measures your preferences across four behavioral styles:
+						Dominance, Influence, Steadiness, and Conscientiousness. It doesn't
+						box you in. It helps you see why certain situations energize or
+						drain you, and how your style shapes every interaction.
+					</div>
+					<div class="three-col">
+						<div
+							class="step"
+							style="
+								display: block;
+								border: 1px solid var(--border);
+								padding: 16px;
+							"
+						>
+							<div class="step-num">01</div>
+							<div class="step-title" style="margin-top: 4px">
+								Deeper Self-Awareness
+							</div>
+							<div class="step-body">
+								Clearly see your natural strengths and where you have room to
+								grow.
+							</div>
+						</div>
+						<div
+							class="step"
+							style="
+								display: block;
+								border: 1px solid var(--border);
+								padding: 16px;
+							"
+						>
+							<div class="step-num">02</div>
+							<div class="step-title" style="margin-top: 4px">
+								Enhanced Communication
+							</div>
+							<div class="step-body">
+								Understand how your style impacts conversations and
+								relationships — and navigate them with more ease.
+							</div>
+						</div>
+						<div
+							class="step"
+							style="
+								display: block;
+								border: 1px solid var(--border);
+								padding: 16px;
+							"
+						>
+							<div class="step-num">03</div>
+							<div class="step-title" style="margin-top: 4px">
+								Greater Adaptability
+							</div>
+							<div class="step-body">
+								Learn simple shifts that help you feel more comfortable and
+								effective, even in difficult moments.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Results</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 16px">
+						Small shifts, meaningful results.
+					</div>
+					<div class="two-col">
+						<div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">
+									More confidence in how you communicate — stop second-guessing
+									and start showing up with intention.
+								</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">
+									Stronger personal and professional relationships.
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">
+									Less stress in hard conversations — navigate tension without
+									losing yourself.
+								</div>
+							</div>
+							<div class="problem-item">
+								<div class="problem-dot"></div>
+								<div class="text-sm">
+									More authenticity in your interactions — stop performing and
+									start being real.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Call to Action</span>
+				</div>
+				<div class="section-body" style="padding: 0">
+					<div class="cta-strip">
+						<div class="wf-headline">
+							Ready to communicate with clarity and confidence?
+						</div>
+						<div class="wf-body">
+							DISC is more than a personality test — it's a powerful first step
+							toward understanding your unique style and transforming how you
+							interact with others. We'll unpack your results together and turn
+							insights into practical changes you can use immediately.
+						</div>
+						<div
+							class="btn"
+							style="
+								color: var(--white);
+								border-color: var(--white);
+								margin-top: 20px;
+							"
+						>
+							Schedule Your Assessment
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 7 — SPEAKING
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">07 — Speaking</div>
+				<div class="page-break-route">/business/services/speaking</div>
+				<div class="page-break-applies">
+					<span class="tag-biz">Business</span>1 page · Unique layout ·
+					Topic-forward
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Hero</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body" style="background: var(--biz-light)">
+					<div
+						class="img-block"
+						style="min-height: 160px; margin-bottom: 20px; background: #dce8ea"
+					>
+						<div class="img-icon">🎤</div>
+						<span
+							>Full-width speaking/stage photo — Stephanie on stage or at
+							event</span
+						>
+					</div>
+					<div class="wf-headline">Speaking That Sparks Change</div>
+					<div class="wf-body">
+						Choose from four power-packed topics — or let's create one just for
+						your team.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Topics</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div style="display: flex; flex-direction: column; gap: 12px">
+						<div class="topic-card">
+							<div class="topic-num">01</div>
+							<div>
+								<div class="topic-title">The Stress Reset</div>
+								<div class="topic-sub">
+									Mastering Mindset in the Midst of Pressure
+								</div>
+								<div class="topic-body">
+									Unpack the connection between attitude and stress, and walk
+									away with practical tools to reset before burnout hits.
+								</div>
+							</div>
+							<div class="btn btn-biz btn-sm" style="white-space: nowrap">
+								Schedule This Topic
+							</div>
+						</div>
+						<div class="topic-card">
+							<div class="topic-num">02</div>
+							<div>
+								<div class="topic-title">Resilience in Real Time</div>
+								<div class="topic-sub">
+									Leading Through Change Without Losing Yourself
+								</div>
+								<div class="topic-body">
+									This session reframes change as an opportunity for clarity,
+									connection, and growth — even during uncertain seasons.
+								</div>
+							</div>
+							<div class="btn btn-biz btn-sm" style="white-space: nowrap">
+								Schedule This Topic
+							</div>
+						</div>
+						<div class="topic-card">
+							<div class="topic-num">03</div>
+							<div>
+								<div class="topic-title">Bridging the Gap</div>
+								<div class="topic-sub">
+									Communicating Across Generations with Confidence
+								</div>
+								<div class="topic-body">
+									Break through generational assumptions and discover new ways
+									to engage your full team — from Gen Z to Boomers.
+								</div>
+							</div>
+							<div class="btn btn-biz btn-sm" style="white-space: nowrap">
+								Schedule This Topic
+							</div>
+						</div>
+						<div class="topic-card">
+							<div class="topic-num">04</div>
+							<div>
+								<div class="topic-title">Goals with Grit</div>
+								<div class="topic-sub">
+									Setting the Right Goals and Actually Reaching Them
+								</div>
+								<div class="topic-body">
+									Move beyond checkbox goals. This talk helps leaders identify
+									aligned, actionable goals they're actually motivated to chase.
+								</div>
+							</div>
+							<div class="btn btn-biz btn-sm" style="white-space: nowrap">
+								Schedule This Topic
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Custom Option</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-subhead" style="margin-bottom: 8px">
+						Need something different?
+					</div>
+					<div class="wf-body">
+						Every organization has its own challenges. If none of these topics
+						are the right fit, let's build something tailored to exactly what
+						your team needs.
+					</div>
+					<div class="btn btn-biz" style="margin-top: 16px">
+						Let's Tailor a Talk for Your Organization
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 8 — EVENTS
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">08 — Events</div>
+				<div class="page-break-route">/[side]/events</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>2 pages · Sanity CMS · Cards
+					auto-archive when past
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Page Header</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-headline">Upcoming Events</div>
+					<div class="wf-body">
+						Workshops, speaking engagements, and opportunities to connect — find
+						something that fits where you are right now.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Event Cards — Sanity CMS</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div style="display: flex; flex-direction: column; gap: 12px">
+						<div class="event-card">
+							<div class="event-date">
+								<span class="event-month">Apr</span
+								><span class="event-day">12</span>
+							</div>
+							<div class="event-info">
+								<div class="event-format">In-Person</div>
+								<div class="card-title">Women's Leadership Conference</div>
+								<div class="card-body">
+									Join Stephanie and other speakers for a day focused on
+									leadership, resilience, and growth.
+								</div>
+								<div
+									style="
+										font-size: 12px;
+										color: var(--ink-faint);
+										margin-top: 6px;
+									"
+								>
+									Saturday, April 12, 2026 · 9:00 AM – 3:00 PM
+								</div>
+								<div class="btn btn-sm" style="margin-top: 8px">Register →</div>
+							</div>
+						</div>
+						<div class="event-card">
+							<div class="event-date">
+								<span class="event-month">May</span
+								><span class="event-day">7</span>
+							</div>
+							<div class="event-info">
+								<div class="event-format">In-Person</div>
+								<div class="card-title">
+									Chamber Networking Lunch — Guest Speaker
+								</div>
+								<div class="card-body">
+									Stephanie presents on communication and emotional intelligence
+									in leadership.
+								</div>
+								<div
+									style="
+										font-size: 12px;
+										color: var(--ink-faint);
+										margin-top: 6px;
+									"
+								>
+									Wednesday, May 7, 2026 · 11:30 AM – 1:00 PM
+								</div>
+								<div class="btn btn-sm" style="margin-top: 8px">
+									View Details →
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="note mt-16">
+						CMS fields per event: Title · Short description · Date &amp; time ·
+						Format (virtual / in-person / hybrid) · Registration link or CTA ·
+						Register-by date (optional)
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label"
+						>Empty State — When No Events Are Scheduled</span
+					>
+				</div>
+				<div
+					class="section-body"
+					style="text-align: center; padding: 32px 24px"
+				>
+					<div class="wf-subhead" style="margin-bottom: 8px">
+						No upcoming events right now — but something's always in the works.
+					</div>
+					<div class="wf-body">
+						Check back soon or reach out to stay in the loop.
+					</div>
+					<div class="btn" style="margin-top: 16px">Get in Touch</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 9 — TESTIMONIALS
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">09 — Testimonials</div>
+				<div class="page-break-route">/[side]/testimonials</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>2 pages · Stephanie manages all
+					content via CMS
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Page Header</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-headline">Kind Words</div>
+					<div class="wf-body">
+						Every journey looks different. Here's what people have to say about
+						working with Stephanie — in their own words.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label"
+						>Featured Testimonial — Pinned via CMS, displays larger</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="testimonial testimonial-featured">
+						<div class="testimonial-quote">
+							"Stephanie has the innate ability to always make me feel
+							incredibly comfortable which in turn allows me to share freely and
+							confidently. She asks questions in a way that makes you think
+							deeper and see things from a different perspective."
+						</div>
+						<div class="testimonial-attr">— Individual Coaching Client</div>
+					</div>
+					<div class="note mt-16">
+						Stephanie selects the featured testimonial via CMS. Displays
+						larger/highlighted above the rest.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">All Testimonials — Grid</span
+					><span class="cms-badge">CMS</span>
+				</div>
+				<div class="section-body">
+					<div class="three-col">
+						<div class="testimonial">
+							<div class="testimonial-quote">
+								"Her energy level assessment provided amazing insight to how I
+								handle stress and created labels to put on different levels of
+								energy to realize when I've been dwelling in a certain area too
+								long..."
+							</div>
+							<div class="testimonial-attr">— UXUI Expert, Minneapolis MN</div>
+							<div class="btn btn-sm" style="margin-top: 10px">Read more</div>
+						</div>
+						<div class="testimonial">
+							<div class="testimonial-quote">
+								[Testimonial text — added via CMS]
+							</div>
+							<div class="testimonial-attr">— Attribution</div>
+						</div>
+						<div class="testimonial">
+							<div class="testimonial-quote">
+								[Testimonial text — added via CMS]
+							</div>
+							<div class="testimonial-attr">— Attribution</div>
+						</div>
+					</div>
+					<div class="note mt-16">
+						Stephanie adds, removes, and reorders testimonials via CMS. Each
+						displays the quote, attribution, and optional "Read more" expand for
+						longer quotes.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Call to Action</span>
+				</div>
+				<div class="section-body" style="padding: 0">
+					<div class="cta-strip">
+						<div class="wf-headline">Ready to write your own story?</div>
+						<div class="wf-body">
+							If you're ready for clarity, confidence, and real forward momentum
+							— let's talk. Book a free discovery call and see what's possible.
+						</div>
+						<div
+							class="btn"
+							style="
+								color: var(--white);
+								border-color: var(--white);
+								margin-top: 20px;
+							"
+						>
+							Let's Get Started
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══════════════════════════════════════════
+       TEMPLATE 10 — CONTACT
+  ══════════════════════════════════════════ -->
+			<div class="page-break">
+				<div class="page-break-bar">10 — Contact</div>
+				<div class="page-break-route">/[side]/contact</div>
+				<div class="page-break-applies">
+					<span class="tag-ind">Individual</span
+					><span class="tag-biz">Business</span>2 pages · No phone number ·
+					Calendly embed as primary action
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label">Page Header</span>
+				</div>
+				<div class="section-body">
+					<div class="wf-headline">Let's Get Started</div>
+					<div class="wf-body">
+						Book a free 30-minute discovery call and let's talk about where you
+						are and where you want to go.
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-head">
+					<span class="section-head-label"
+						>Two-Column Layout — Calendly Primary / Form Secondary</span
+					>
+				</div>
+				<div class="section-body">
+					<div class="two-col">
+						<div>
+							<div class="wf-label mb-8">Primary Action — Calendly Embed</div>
+							<div class="calendly-mock">
+								<div class="calendly-name">Stephanie Elliston</div>
+								<div class="calendly-title">
+									The Steady Start: 30-Minute Discovery Session
+								</div>
+								<div class="calendly-duration">
+									30 min · Web conferencing details provided upon confirmation
+								</div>
+								<div class="calendly-cal">
+									[ Calendly Calendar — Embedded, no popup ]<br /><span
+										style="font-size: 11px; margin-top: 4px; display: block"
+										>Central Time – US &amp; Canada</span
+									>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="wf-label mb-8">Secondary Option — Contact Form</div>
+							<div class="wf-body" style="margin-bottom: 14px">
+								Prefer to reach out directly? Not ready to book? No problem.
+								Send a message and I'll get back to you.
+							</div>
+							<div class="form-field">
+								<div class="form-label">Name</div>
+								<div class="form-input">Your name</div>
+							</div>
+							<div class="form-field">
+								<div class="form-label">Email</div>
+								<div class="form-input">your@email.com</div>
+							</div>
+							<div class="form-field">
+								<div class="form-label">How Can I Help?</div>
+								<div class="form-input form-textarea"></div>
+							</div>
+							<div class="btn btn-filled">Submit</div>
+							<div
+								style="
+									font-size: 12px;
+									color: var(--ink-faint);
+									margin-top: 14px;
+								"
+							>
+								Prefer to email?
+								<span style="color: var(--ink-mid)"
+									>stephanie.elliston@thesteadyelevation.com</span
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ══ GLOBAL FOOTER ══ -->
+			<div class="page-break" style="margin-top: 40px">
+				<div class="page-break-bar">Global Footer</div>
+				<div class="page-break-route">All pages</div>
+				<div class="page-break-applies">
+					Subtle "Switch to Business / Individual" link in footer — confirmed in
+					proposal
+				</div>
+			</div>
+
+			<div class="mock-footer">
+				<div class="mock-footer-cols">
+					<div class="mock-footer-col">
+						<div
+							style="
+								font-family: Georgia, serif;
+								font-size: 18px;
+								color: #fff;
+								margin-bottom: 4px;
+								letter-spacing: 0.08em;
+							"
+						>
+							the Steady Elevation
+						</div>
+						<p style="margin-bottom: 12px">
+							Elevating People. Elevating Organizations.
+						</p>
+						<p>stephanie.elliston@thesteadyelevation.com</p>
+					</div>
+					<div class="mock-footer-col">
+						<h4>Individual</h4>
+						<a href="#">Services</a>
+						<a href="#">DISC</a>
+						<a href="#">ELI</a>
+						<a href="#">Insights (Business)</a>
+						<a href="#">Events</a>
+						<a href="#">Contact</a>
+					</div>
+					<div class="mock-footer-col">
+						<h4>Business</h4>
+						<a href="#">Services</a>
+						<a href="#">The Elevation Series</a>
+						<a href="#">Speaking</a>
+						<a href="#">Contact</a>
+					</div>
+				</div>
+				<div class="mock-footer-bottom">
+					<span>© 2026 The Steady Elevation. All rights reserved.</span>
+					<a href="#" class="footer-switch">→ Switch to Business Side</a>
+				</div>
+			</div>
+
+			<!-- ══ LATZ CREDIT ══ -->
+			<div
+				style="
+					text-align: center;
+					padding: 32px 0 8px;
+					font-size: 12px;
+					color: #888;
+				"
+			>
+				Prepared by
+				<strong style="color: var(--ink)"
+					>Jordan Latz — Latz Web Design LLC</strong
+				>
+				&nbsp;·&nbsp; (715) 630-5689 &nbsp;·&nbsp; Jordan@LatzWebDesign.com<br />
+				<span style="font-size: 11px; opacity: 0.6"
+					>The Steady Elevation Redesign · March 2026 · Internal document</span
+				>
+			</div>
+		</div>
+	</body>
+</html>
