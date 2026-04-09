@@ -28,7 +28,7 @@ export default function ProjectHeader({
 			<p
 				className={`font-mono text-end text-xs ${s.label} tracking-widest uppercase mt-4 mb-2`}
 			>
-				Latz Web Design ·{' '}
+				LWD ·{' '}
 				{variant === 'designer'
 					? 'Designer'
 					: variant === 'client'
