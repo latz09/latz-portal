@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import {
-	TbPhoto,
-	TbChevronDown,
-	TbX,
-	TbChevronLeft,
-	TbChevronRight,
-} from 'react-icons/tb';
+import { TbPhoto, TbChevronDown, TbX } from 'react-icons/tb';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
+import Captions from 'yet-another-react-lightbox/plugins/captions';
+import 'yet-another-react-lightbox/plugins/captions.css';
 
 function groupByCategory(images) {
 	return images.reduce((acc, img) => {
@@ -22,7 +23,11 @@ function groupByCategory(images) {
 export default function MoodBoard({ inspiration, variant }) {
 	const [open, setOpen] = useState(false);
 	const [expandedCategories, setExpandedCategories] = useState({});
-	const [lightbox, setLightbox] = useState(null);
+	const [lightbox, setLightbox] = useState({
+		open: false,
+		index: 0,
+		slides: [],
+	});
 
 	if (!inspiration?.length) return null;
 
@@ -33,32 +38,27 @@ export default function MoodBoard({ inspiration, variant }) {
 	const badgeBg =
 		variant === 'designer'
 			? 'bg-purple/20 text-purple'
-			: 'bg-teal/20 text-teal';
+			: 'bg-teal/10 text-teal';
+	const accentColor = variant === 'designer' ? '#d946ef' : '#18a1ad';
 
 	function toggleCategory(cat) {
 		setExpandedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }));
 	}
 
 	function openLightbox(images, index) {
-		setLightbox({ images, index });
+		setLightbox({
+			open: true,
+			index,
+			slides: images.map((img) => ({
+				src: img.url,
+				alt: img.caption || '',
+				description: img.caption || '',
+			})),
+		});
 	}
 
 	function closeLightbox() {
-		setLightbox(null);
-	}
-
-	function prevImage() {
-		setLightbox((prev) => ({
-			...prev,
-			index: (prev.index - 1 + prev.images.length) % prev.images.length,
-		}));
-	}
-
-	function nextImage() {
-		setLightbox((prev) => ({
-			...prev,
-			index: (prev.index + 1) % prev.images.length,
-		}));
+		setLightbox((prev) => ({ ...prev, open: false }));
 	}
 
 	return (
@@ -106,7 +106,7 @@ export default function MoodBoard({ inspiration, variant }) {
 							return (
 								<div
 									key={cat}
-									className='border border-white/10 rounded-xl overflow-hidden'
+									className='border border-white/10 rounded-xl bg-dark overflow-hidden'
 								>
 									<button
 										onClick={() => toggleCategory(cat)}
@@ -115,7 +115,7 @@ export default function MoodBoard({ inspiration, variant }) {
 										<div className='flex items-center gap-3'>
 											<span className='font-medium'>{cat}</span>
 											<span
-												className={`font-mono text-[10px] px-1.5 py-0.5 rounded-full ${badgeBg}`}
+												className={`font-mono text-sm lg:text-base px-1.5 py-0.5 rounded-full ${badgeBg}`}
 											>
 												{images.length}
 											</span>
@@ -152,67 +152,70 @@ export default function MoodBoard({ inspiration, variant }) {
 				</div>
 			)}
 
-			{/* Lightbox */}
-			{lightbox && (
-				<div
-					className='fixed inset-0 z-60 bg-dark-mid/70 backdrop-blur-sm flex flex-col'
-					onClick={closeLightbox}
-				>
-					<div
-						className='flex flex-col flex-1 w-full max-w-5xl mx-auto px-6 py-6'
-						onClick={(e) => e.stopPropagation()}
-					>
-						{/* Close button — always at top */}
-						<div className='flex justify-end mb-4 shrink-0'>
-							<button
-								onClick={closeLightbox}
-								className='p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors'
-							>
-								<TbX size={18} />
-							</button>
-						</div>
+			{/* YARL Lightbox */}
+			<Lightbox
+				open={lightbox.open}
+				close={closeLightbox}
+				index={lightbox.index}
+				slides={lightbox.slides}
+				plugins={[Captions, Zoom, Thumbnails]}
+				animation={{ fade: 300, swipe: 400 }}
+				styles={{
+					root: {
+						'--yarl__color_backdrop': 'rgba(15, 26, 46, 0.95)',
+						'--yarl__color_button': '#ededed',
+						'--yarl__color_button_hover': accentColor,
+						'--yarl__color_button_active': accentColor,
 
-						{/* Image — fills remaining space */}
-						<div className='relative flex-1 rounded overflow-hidden'>
-							<Image
-								src={lightbox.images[lightbox.index].url}
-								alt={lightbox.images[lightbox.index].caption || ''}
-								fill
-								className='object-contain'
-								sizes='100vw'
-							/>
-						</div>
-
-						{/* Caption + nav — always at bottom */}
-						<div className='shrink-0 flex flex-col items-center gap-3 mt-4'>
-							{lightbox.images[lightbox.index].caption && (
-								<p className='font-mono text-sm text-white/70 text-center'>
-									{lightbox.images[lightbox.index].caption}
-								</p>
-							)}
-							{lightbox.images.length > 1 && (
-								<div className='flex gap-3 items-center'>
-									<button
-										onClick={prevImage}
-										className='p-2 rounded-full bg-teal hover:bg-teal/70 transition-colors'
-									>
-										<TbChevronLeft size={18} />
-									</button>
-									<span className='font-mono text-xs text-white/30'>
-										{lightbox.index + 1} / {lightbox.images.length}
-									</span>
-									<button
-										onClick={nextImage}
-										className='p-2 rounded-full bg-teal hover:bg-teal/70 transition-colors'
-									>
-										<TbChevronRight size={18} />
-									</button>
-								</div>
-							)}
-						</div>
-					</div>
-				</div>
-			)}
+						'--yarl__thumbnails_track_background_color': 'transparent',
+						'--yarl__thumbnails_thumbnail_background_color': 'transparent',
+						'--yarl__thumbnails_thumbnail_border_color': 'transparent',
+						'--yarl__thumbnails_thumbnail_border_color_active': accentColor,
+						'--yarl__thumbnails_thumbnail_border_radius': '0.25rem',
+						'--yarl__thumbnails_thumbnail_padding': '0px',
+						'--yarl__navigation_button_size': '40px',
+						'--yarl__navigation_button_border_radius': '9999px',
+						'--yarl__captions_title_color': '#ededed',
+						'--yarl__captions_description_color': 'rgba(237, 237, 237, 0.6)',
+					},
+					navigationButton: {
+						backgroundColor: 'rgba(255,255,255,0.05)',
+						backdropFilter: 'blur(3px)',
+						border: '1px solid rgba(255,255,255,0.1)',
+						boxShadow: 'none',
+					},
+					slide: {
+						borderRadius: '0.25rem',
+						overflow: 'hidden',
+					},
+					toolbar: {
+						backgroundColor: 'transparent',
+					},
+					thumbnail: {
+						border: 'none',
+						borderRadius: '0.25rem',
+					},
+					thumbnailsContainer: {
+						backgroundColor: 'rgba(15, 26, 46, 0.95)',
+						background: 'rgba(15, 26, 46, 1)',
+					},
+					captionsTitle: {
+						fontSize: '0.875rem',
+						fontFamily: 'var(--font-dm-mono)',
+						textAlign: 'center',
+						width: '100%',
+						display: 'flex',
+						justifyContent: 'center',
+					},
+					captionsDescriptionContainer: {
+						backgroundColor: 'rgba(15, 26, 46, 0.65)',
+						display: 'flex',
+						justifyContent: 'center',
+						padding: '0.75rem 1.5rem',
+						backdropFilter: 'blur(2px)',
+					},
+				}}
+			/>
 		</>
 	);
 }
