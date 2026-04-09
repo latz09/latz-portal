@@ -20,6 +20,11 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
         description,
         date,
         audience
+      },
+      inspiration[] {
+        "url": image.asset->url,
+        caption,
+        category
       }
     }
   }

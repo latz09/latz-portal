@@ -1,4 +1,5 @@
 import { TbLayoutDashboard, TbFileText, TbPencil, TbLayout, TbBook } from 'react-icons/tb'
+import MoodBoard from './MoodBoard'
 
 const variantStyles = {
   internal: { icon: 'text-teal',   badge: 'bg-teal/20 text-teal'     },
@@ -20,10 +21,10 @@ const docIcon = {
   'cms-guide.html':   TbBook,
 }
 
-export default function DocumentList({ variant, docs, basePath }) {
+export default function DocumentList({ variant, docs, basePath, inspiration }) {
   const s = variantStyles[variant]
 
-  return (
+return (
     <div>
       <p className="font-mono text-xs text-white/30 tracking-widest uppercase mb-4">
         Documents
@@ -57,6 +58,9 @@ export default function DocumentList({ variant, docs, basePath }) {
             </a>
           )
         })}
+        {inspiration?.length > 0 && (
+          <MoodBoard inspiration={inspiration} variant={variant} />
+        )}
       </div>
     </div>
   )

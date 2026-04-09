@@ -33,8 +33,9 @@ export default async function ProjectPage({ params }) {
         variant="internal"
         docs={project.docs}
         basePath={`/clients/${project.year}/${clientSlug}/${projectSlug}`}
+        inspiration={project.inspiration}
       />
-      <DeadlineList deadlines={project.deadlines} variant="internal" />
+      <DeadlineList deadlines={project.deadlines} variant="internal"  />
       <PortalLinks clientSlug={clientSlug} projectSlug={projectSlug} studioId={_id} />
     </main>
   )

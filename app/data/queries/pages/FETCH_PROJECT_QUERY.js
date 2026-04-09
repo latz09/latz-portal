@@ -23,6 +23,11 @@ export const FETCH_PROJECT_QUERY = `
         description,
         date,
         audience
+      },
+      inspiration[] {
+        "url": image.asset->url,
+        caption,
+        category
       }
     }
   }

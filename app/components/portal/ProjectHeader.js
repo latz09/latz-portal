@@ -35,15 +35,16 @@ export default function ProjectHeader({
 						? 'Client Portal'
 						: 'Internal'}
 			</p>
-			<div className='flex items-center gap-4 mt-2'>
+			<div className='grid gap-2 mt-2'>
 				<h1 className='text-4xl font-semibold'>{clientName}</h1>
+				<p className=' mb-1 text-warning'>{projectName}</p>
 				{month && year && (
-					<span className='font-mono text-xs text-white/40'>
+					<span className='font-mono text-xs text-white/70'>
 						{month}/{year}
 					</span>
 				)}
 			</div>
-			<p className='text-white/40 mt-2'>{projectName}</p>
+			
 		</div>
 	);
 }
