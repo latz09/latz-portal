@@ -29,7 +29,7 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 			<p className='font-mono text-teal tracking-widest uppercase mb-4'>
 				Upcoming Deadlines
 			</p>
-			<div className='flex flex-col gap-3 pl-2 lg:pl-4'>
+			<div className='flex flex-col gap-3  lg:pl-4'>
 				{deadlines.map((d, i) => (
 					<div
 						key={i}

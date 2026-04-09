@@ -13,11 +13,11 @@ const audienceBadge = {
 }
 
 const docIcon = {
-  'overview.html':      TbLayoutDashboard,
-  'proposal.html':      TbFileText,
-  'designBrief.html':   TbPencil,
-  'wireframe.html':     TbLayout,
-  'cms-guide.html':     TbBook,
+  'overview.html':    TbLayoutDashboard,
+  'proposal.html':    TbFileText,
+  'designBrief.html': TbPencil,
+  'wireframe.html':   TbLayout,
+  'cms-guide.html':   TbBook,
 }
 
 export default function DocumentList({ variant, docs, basePath }) {
@@ -36,7 +36,7 @@ export default function DocumentList({ variant, docs, basePath }) {
               key={doc.filename}
               href={`${basePath}/${doc.filename}`}
               target="_blank"
-              className="flex flex-col bg-white/5 hover:bg-white/10 border border-white/10 rounded p-5 aspect-square transition-colors"
+              className="flex flex-col bg-white/5 hover:bg-white/10 border border-white/10 rounded p-4 min-h-40 lg:min-h-44 transition-colors"
             >
               <Icon className={`text-2xl ${s.icon} shrink-0`} />
               <div className="flex flex-col justify-end flex-1 gap-2 mt-auto pt-4">
