@@ -4,6 +4,7 @@ export const FETCH_CLIENTS_QUERY = `
     "slug": slug.current,
     "activeProjects": count(projects[status == "active"]),
     "onHoldProjects": count(projects[status == "on-hold"]),
+    "potentialProjects": count(projects[status == "potential"]),
     "completeProjects": count(projects[status == "complete"]),
     "totalProjects": count(projects),
     "projects": projects[] {

@@ -53,10 +53,17 @@ export default function ClientList({ clients }) {
 	const onHold = clients.filter(
 		(c) => c.activeProjects === 0 && c.onHoldProjects > 0,
 	);
+	const potential = clients.filter(
+		(c) =>
+			c.activeProjects === 0 &&
+			c.onHoldProjects === 0 &&
+			c.potentialProjects > 0,
+	);
 	const complete = clients.filter(
 		(c) =>
 			c.activeProjects === 0 &&
 			c.onHoldProjects === 0 &&
+			c.potentialProjects === 0 &&
 			c.completeProjects > 0,
 	);
 
@@ -78,6 +85,13 @@ export default function ClientList({ clients }) {
 				<CollapsibleSection
 					label='On Hold'
 					clients={onHold}
+					defaultOpen={false}
+				/>
+			)}
+			{potential.length > 0 && (
+				<CollapsibleSection
+					label='Potential'
+					clients={potential}
 					defaultOpen={false}
 				/>
 			)}
