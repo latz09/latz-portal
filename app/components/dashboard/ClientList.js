@@ -81,6 +81,7 @@ export default function ClientList({ clients }) {
 					</div>
 				</>
 			)}
+			<div className="space-y-2">
 			{onHold.length > 0 && (
 				<CollapsibleSection
 					label='On Hold'
@@ -101,7 +102,7 @@ export default function ClientList({ clients }) {
 					clients={complete}
 					defaultOpen={false}
 				/>
-			)}
+			)}</div>
 		</div>
 	);
 }
