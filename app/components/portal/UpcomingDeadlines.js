@@ -30,7 +30,7 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 
 	return (
 		<div className='inline-flex flex-col mt-16 pt-8 border-t border-white/10 w-full'>
-			<p className='font-mono text-sm lg:text-base text-teal/70 tracking-widest uppercase mb-4'>
+			<p className={` ${accentColor} font-mono text-sm lg:text-base tracking-widest uppercase mb-4`}>
 				Upcoming milestones
 			</p>
 			<div className='flex flex-col gap-3 lg:pl-4'>
@@ -46,7 +46,7 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 					>
 						<div className='flex items-start justify-between gap-6'>
 							<div className='flex flex-col gap-1'>
-								<span className={`font-mono text-sm ${accentColor}`}>
+								<span className={`font-mono text-sm text-white/70 `}>
 									{d.clientName} · {d.projectName}
 								</span>
 								<span className='font-medium text-lg mt-2'>{d.title}</span>
