@@ -1,29 +1,2158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>The Steady Elevation — Project Overview | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--navy: #0d1b2a;
+				--teal: #18a1ad;
+				--teal-light: #e8f7f8;
+				--teal-mid: #b3e5e9;
+				--yellow: #ffee65;
+				--white: #ffffff;
+				--off-white: #f7f9fa;
+				--gray-100: #f0f2f4;
+				--gray-200: #e2e8f0;
+				--gray-400: #94a3b8;
+				--gray-600: #475569;
+				--gray-800: #1e293b;
+				--text: #0d1b2a;
+				--green: #16a34a;
+				--green-light: #dcfce7;
+				--orange: #ea580c;
+				--orange-light: #fff7ed;
+				--red: #dc2626;
+				--red-light: #fef2f2;
+
+				/* Brand colors for this project */
+				--brand-biz: #013543;
+				--brand-ind: #8e9f89;
+				--brand-peach: #d09f84;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--off-white);
+				color: var(--text);
+				line-height: 1.6;
+				font-size: 15px;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 240px;
+				height: 100vh;
+				background: var(--navy);
+				padding: 32px 0;
+				overflow-y: auto;
+				z-index: 100;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.sidebar-brand {
+				padding: 0 24px 24px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				margin-bottom: 20px;
+			}
+
+			.sidebar-brand .lwd {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--teal);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-brand .client-name {
+				font-family: 'Fraunces', serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--white);
+				line-height: 1.2;
+			}
+
+			.sidebar-brand .status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: var(--orange);
+				color: white;
+				font-size: 10px;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 3px 10px;
+				border-radius: 20px;
+				margin-top: 10px;
+			}
+
+			.status-pill::before {
+				content: '';
+				width: 6px;
+				height: 6px;
+				background: white;
+				border-radius: 50%;
+				animation: pulse 2s infinite;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.4;
+				}
+			}
+
+			.nav-section-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--gray-400);
+				padding: 8px 24px 4px;
+				margin-top: 8px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 9px 24px;
+				color: rgba(255, 255, 255, 0.6);
+				text-decoration: none;
+				font-size: 13px;
+				font-weight: 400;
+				transition: all 0.15s;
+				border-left: 3px solid transparent;
+			}
+
+			.nav-link:hover {
+				color: white;
+				background: rgba(255, 255, 255, 0.05);
+				border-left-color: rgba(24, 161, 173, 0.5);
+			}
+
+			.nav-link.active {
+				color: var(--teal);
+				background: rgba(24, 161, 173, 0.08);
+				border-left-color: var(--teal);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 14px;
+				width: 18px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				margin-top: auto;
+				padding: 20px 24px;
+				border-top: 1px solid rgba(255, 255, 255, 0.08);
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: rgba(255, 255, 255, 0.3);
+				letter-spacing: 0.08em;
+				line-height: 1.8;
+			}
+
+			/* ── MAIN CONTENT ── */
+			.main {
+				margin-left: 240px;
+				min-height: 100vh;
+			}
+
+			/* ── PAGE HEADER ── */
+			.page-header {
+				background: var(--navy);
+				padding: 48px 56px 40px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.page-header::after {
+				content: 'ELEVATION';
+				position: absolute;
+				right: -20px;
+				top: 50%;
+				transform: translateY(-50%);
+				font-family: 'Fraunces', serif;
+				font-size: 120px;
+				font-weight: 700;
+				color: rgba(255, 255, 255, 0.03);
+				letter-spacing: -4px;
+				pointer-events: none;
+				user-select: none;
+			}
+
+			.page-header .overline {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--teal);
+				margin-bottom: 12px;
+			}
+
+			.page-header h1 {
+				font-family: 'Fraunces', serif;
+				font-size: 36px;
+				font-weight: 600;
+				color: white;
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.page-header .sub {
+				color: rgba(255, 255, 255, 0.5);
+				font-size: 14px;
+			}
+
+			.header-meta {
+				display: flex;
+				gap: 32px;
+				margin-top: 28px;
+				flex-wrap: wrap;
+			}
+
+			.header-meta-item {
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+
+			.header-meta-item .label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+			}
+
+			.header-meta-item .value {
+				font-size: 14px;
+				font-weight: 500;
+				color: white;
+			}
+
+			.header-meta-item .value a {
+				color: var(--teal);
+				text-decoration: none;
+			}
+
+			/* ── CONTENT SECTIONS ── */
+			.content {
+				padding: 40px 56px 80px;
+			}
+
+			section {
+				margin-bottom: 56px;
+				scroll-margin-top: 24px;
+			}
+
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 24px;
+				padding-bottom: 12px;
+				border-bottom: 2px solid var(--teal);
+			}
+
+			.section-header h2 {
+				font-family: 'Fraunces', serif;
+				font-size: 22px;
+				font-weight: 600;
+				color: var(--navy);
+			}
+
+			.section-icon {
+				width: 32px;
+				height: 32px;
+				background: var(--teal);
+				border-radius: 8px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 15px;
+				flex-shrink: 0;
+			}
+
+			/* ── CARDS & GRIDS ── */
+			.card {
+				background: white;
+				border-radius: 10px;
+				padding: 24px;
+				border: 1px solid var(--gray-200);
+				margin-bottom: 16px;
+			}
+
+			.card h3 {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--teal);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				margin-bottom: 12px;
+			}
+
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16px;
+			}
+
+			.three-col {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16px;
+			}
+
+			/* ── DATA ROWS ── */
+			.data-row {
+				display: grid;
+				grid-template-columns: 180px 1fr;
+				gap: 12px;
+				align-items: start;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.data-row:last-child {
+				border-bottom: none;
+			}
+
+			.data-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 11px;
+				color: var(--gray-400);
+				letter-spacing: 0.06em;
+				padding-top: 1px;
+				text-transform: uppercase;
+			}
+
+			.data-value {
+				font-size: 14px;
+				color: var(--text);
+				font-weight: 500;
+			}
+
+			.data-value a {
+				color: var(--teal);
+				text-decoration: none;
+			}
+
+			/* ── CALLOUT BOXES ── */
+			.callout {
+				border-radius: 8px;
+				padding: 16px 20px;
+				margin-bottom: 16px;
+				display: flex;
+				gap: 12px;
+				align-items: flex-start;
+			}
+
+			.callout-icon {
+				font-size: 18px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.callout-body {
+				flex: 1;
+			}
+			.callout-body strong {
+				display: block;
+				font-size: 13px;
+				font-weight: 600;
+				margin-bottom: 4px;
+			}
+			.callout-body p,
+			.callout-body span {
+				font-size: 13px;
+				line-height: 1.5;
+			}
+
+			.callout.info {
+				background: var(--teal-light);
+				border-left: 4px solid var(--teal);
+			}
+			.callout.warn {
+				background: var(--orange-light);
+				border-left: 4px solid var(--orange);
+			}
+			.callout.success {
+				background: var(--green-light);
+				border-left: 4px solid var(--green);
+			}
+			.callout.alert {
+				background: var(--red-light);
+				border-left: 4px solid var(--red);
+			}
+			.callout.yellow {
+				background: #fffbcc;
+				border-left: 4px solid #d4a800;
+			}
+
+			/* ── HIGHLIGHT BOX ── */
+			.highlight-box {
+				background: var(--yellow);
+				border: 2px solid var(--navy);
+				border-radius: 8px;
+				padding: 20px 24px;
+				margin-bottom: 16px;
+			}
+
+			.highlight-box strong {
+				font-weight: 700;
+			}
+			.highlight-box p {
+				font-size: 14px;
+				margin-top: 8px;
+			}
+
+			/* ── TIMELINE ── */
+			.timeline {
+				position: relative;
+				padding-left: 24px;
+			}
+
+			.timeline::before {
+				content: '';
+				position: absolute;
+				left: 6px;
+				top: 8px;
+				bottom: 8px;
+				width: 2px;
+				background: var(--teal-mid);
+			}
+
+			.timeline-item {
+				position: relative;
+				margin-bottom: 20px;
+				padding-left: 20px;
+			}
+
+			.timeline-item::before {
+				content: '';
+				position: absolute;
+				left: -18px;
+				top: 6px;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: var(--teal);
+				border: 2px solid white;
+				box-shadow: 0 0 0 2px var(--teal);
+			}
+
+			.timeline-item.complete::before {
+				background: var(--green);
+				box-shadow: 0 0 0 2px var(--green);
+			}
+			.timeline-item.pending::before {
+				background: var(--gray-400);
+				box-shadow: 0 0 0 2px var(--gray-400);
+			}
+			.timeline-item.active::before {
+				background: var(--teal);
+				box-shadow: 0 0 0 3px var(--teal-mid);
+			}
+
+			.timeline-date {
+				font-family: 'DM Mono', monospace;
+				font-size: 11px;
+				color: var(--teal);
+				letter-spacing: 0.06em;
+				font-weight: 500;
+			}
+
+			.timeline-title {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+				margin: 2px 0;
+			}
+
+			.timeline-desc {
+				font-size: 13px;
+				color: var(--gray-600);
+				line-height: 1.5;
+			}
+
+			/* ── BUDGET TABLE ── */
+			.budget-table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: 14px;
+			}
+
+			.budget-table th {
+				background: var(--navy);
+				color: white;
+				padding: 10px 16px;
+				text-align: left;
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 500;
+			}
+
+			.budget-table td {
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.budget-table tr:last-child td {
+				border-bottom: none;
+			}
+			.budget-table tr:nth-child(even) td {
+				background: var(--off-white);
+			}
+
+			.budget-table .total-row td {
+				background: var(--teal-light) !important;
+				font-weight: 700;
+				border-top: 2px solid var(--teal);
+				font-size: 15px;
+			}
+
+			.budget-table .paid-row td {
+				background: var(--green-light) !important;
+				color: var(--green);
+				font-weight: 600;
+			}
+
+			.budget-table .pending-pay-row td {
+				background: var(--orange-light) !important;
+				color: var(--orange);
+				font-weight: 600;
+			}
+
+			.amount {
+				text-align: right;
+				font-family: 'DM Mono', monospace;
+				font-weight: 500;
+			}
+
+			/* ── BRAND SPLIT BLOCK ── */
+			.brand-split {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 0;
+				border-radius: 10px;
+				overflow: hidden;
+				border: 1px solid var(--gray-200);
+				margin-bottom: 16px;
+			}
+
+			.brand-side {
+				padding: 24px;
+			}
+
+			.brand-side.biz {
+				background: var(--brand-biz);
+				color: white;
+			}
+
+			.brand-side.ind {
+				background: var(--brand-ind);
+				color: white;
+			}
+
+			.brand-side h4 {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				opacity: 0.7;
+				margin-bottom: 8px;
+			}
+
+			.brand-side .side-label {
+				font-family: 'Fraunces', serif;
+				font-size: 20px;
+				font-weight: 600;
+				margin-bottom: 12px;
+			}
+
+			.brand-side .color-swatch {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				font-family: 'DM Mono', monospace;
+				font-size: 11px;
+				opacity: 0.85;
+				margin-bottom: 4px;
+			}
+
+			.swatch {
+				width: 14px;
+				height: 14px;
+				border-radius: 3px;
+				border: 1px solid rgba(255, 255, 255, 0.3);
+				flex-shrink: 0;
+			}
+
+			.brand-side ul {
+				list-style: none;
+				padding: 0;
+				margin-top: 12px;
+			}
+
+			.brand-side ul li {
+				font-size: 12px;
+				padding: 3px 0;
+				opacity: 0.85;
+				padding-left: 14px;
+				position: relative;
+			}
+
+			.brand-side ul li::before {
+				content: '→';
+				position: absolute;
+				left: 0;
+				font-size: 10px;
+				opacity: 0.6;
+			}
+
+			/* ── PAGE SCOPE GRID ── */
+			.page-card {
+				background: white;
+				border: 1px solid var(--gray-200);
+				border-radius: 10px;
+				padding: 20px;
+				border-top: 3px solid var(--teal);
+			}
+
+			.page-card h4 {
+				font-family: 'Fraunces', serif;
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--navy);
+				margin-bottom: 10px;
+			}
+
+			.page-card ul {
+				list-style: none;
+				padding: 0;
+			}
+
+			.page-card ul li {
+				font-size: 13px;
+				color: var(--gray-600);
+				padding: 4px 0;
+				padding-left: 16px;
+				position: relative;
+				line-height: 1.4;
+			}
+
+			.page-card ul li::before {
+				content: '→';
+				position: absolute;
+				left: 0;
+				color: var(--teal);
+				font-size: 11px;
+			}
+
+			.page-badge {
+				display: inline-block;
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				font-weight: 500;
+				padding: 2px 8px;
+				border-radius: 20px;
+				margin-bottom: 8px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			.badge-cms {
+				background: var(--teal-light);
+				color: var(--teal);
+			}
+			.badge-static {
+				background: var(--gray-100);
+				color: var(--gray-600);
+			}
+			.badge-shared {
+				background: #ede9fe;
+				color: #7c3aed;
+			}
+			.badge-unique {
+				background: #fce7f3;
+				color: #be185d;
+			}
+
+			/* ── CONTENT CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+			.checklist li {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+				padding: 8px 0;
+				border-bottom: 1px solid var(--gray-100);
+				font-size: 13px;
+			}
+			.checklist li:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 15px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.check-status {
+				margin-left: auto;
+				flex-shrink: 0;
+			}
+
+			.pill {
+				display: inline-block;
+				font-size: 10px;
+				font-weight: 600;
+				padding: 2px 8px;
+				border-radius: 20px;
+				font-family: 'DM Mono', monospace;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.pill-green {
+				background: var(--green-light);
+				color: var(--green);
+			}
+			.pill-orange {
+				background: var(--orange-light);
+				color: var(--orange);
+			}
+			.pill-gray {
+				background: var(--gray-100);
+				color: var(--gray-600);
+			}
+			.pill-teal {
+				background: var(--teal-light);
+				color: var(--teal);
+			}
+			.pill-yellow {
+				background: #fffbcc;
+				color: #a07d00;
+			}
+
+			/* ── TEMPLATE TABLE ── */
+			.template-table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: 13px;
+			}
+
+			.template-table th {
+				background: var(--navy);
+				color: white;
+				padding: 9px 14px;
+				text-align: left;
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 500;
+			}
+
+			.template-table td {
+				padding: 10px 14px;
+				border-bottom: 1px solid var(--gray-100);
+				vertical-align: top;
+			}
+
+			.template-table tr:last-child td {
+				border-bottom: none;
+			}
+			.template-table tr:nth-child(even) td {
+				background: var(--off-white);
+			}
+
+			.template-table .route {
+				font-family: 'DM Mono', monospace;
+				font-size: 11px;
+				color: var(--teal);
+			}
+
+			/* ── UPSELL CARDS ── */
+			.upsell-card {
+				background: white;
+				border: 2px dashed var(--gray-200);
+				border-radius: 10px;
+				padding: 20px;
+				transition: border-color 0.2s;
+			}
+
+			.upsell-card:hover {
+				border-color: var(--teal);
+			}
+
+			.upsell-card h4 {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.upsell-card .price {
+				font-family: 'DM Mono', monospace;
+				font-size: 13px;
+				color: var(--teal);
+				font-weight: 500;
+				margin-bottom: 8px;
+			}
+
+			.upsell-card p {
+				font-size: 13px;
+				color: var(--gray-600);
+			}
+
+			/* ── PHASE BLOCKS ── */
+			.phase {
+				background: white;
+				border: 1px solid var(--gray-200);
+				border-radius: 10px;
+				padding: 20px 24px;
+				margin-bottom: 12px;
+				display: grid;
+				grid-template-columns: 80px 1fr;
+				gap: 20px;
+				align-items: start;
+			}
+
+			.phase-num {
+				font-family: 'Fraunces', serif;
+				font-size: 48px;
+				font-weight: 700;
+				color: var(--teal-mid);
+				line-height: 1;
+				text-align: center;
+			}
+
+			.phase h4 {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+				margin-bottom: 4px;
+			}
+
+			.phase .weeks {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--teal);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.phase ul {
+				list-style: none;
+				padding: 0;
+			}
+			.phase ul li {
+				font-size: 13px;
+				color: var(--gray-600);
+				padding: 3px 0;
+				padding-left: 14px;
+				position: relative;
+			}
+			.phase ul li::before {
+				content: '·';
+				position: absolute;
+				left: 4px;
+				color: var(--teal);
+			}
+
+			/* ── NOTES AREA ── */
+			.note-block {
+				background: #fffef0;
+				border: 1px solid #e6d96b;
+				border-radius: 8px;
+				padding: 16px 20px;
+				margin-bottom: 12px;
+			}
+
+			.note-block .note-date {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: #a07d00;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+			}
+
+			.note-block p {
+				font-size: 13px;
+				color: var(--gray-800);
+				line-height: 1.6;
+			}
+
+			/* ── DECISION LOG ── */
+			.decision-row {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--gray-100);
+				font-size: 13px;
+			}
+			.decision-row:last-child {
+				border-bottom: none;
+			}
+			.decision-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				flex-shrink: 0;
+				width: 130px;
+				padding-top: 2px;
+			}
+			.decision-value {
+				color: var(--text);
+				font-weight: 500;
+				line-height: 1.4;
+			}
+			.decision-value small {
+				display: block;
+				font-size: 12px;
+				color: var(--gray-600);
+				font-weight: 400;
+				margin-top: 2px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 900px) {
+				.sidebar {
+					width: 200px;
+				}
+				.main {
+					margin-left: 200px;
+				}
+				.two-col,
+				.three-col {
+					grid-template-columns: 1fr;
+				}
+				.page-header,
+				.content {
+					padding-left: 32px;
+					padding-right: 32px;
+				}
+				.phase {
+					grid-template-columns: 56px 1fr;
+				}
+				.brand-split {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					display: none;
+				}
+				.main {
+					margin-left: 0;
+				}
+				.page-header,
+				.content {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- SIDEBAR -->
+		<nav class="sidebar">
+			<div class="sidebar-brand">
+				<div class="lwd">Latz Web Design</div>
+				<div class="client-name">The Steady Elevation</div>
+				<div class="status-pill">Design Phase</div>
+			</div>
+
+			<div class="nav-section-label">Overview</div>
+			<a href="#client" class="nav-link active"
+				><span class="nav-icon">👤</span> Client Info</a
+			>
+			<a href="#project" class="nav-link"
+				><span class="nav-icon">📋</span> Project Summary</a
+			>
+			<a href="#financials" class="nav-link"
+				><span class="nav-icon">💰</span> Financials</a
+			>
+			<a href="#history" class="nav-link"
+				><span class="nav-icon">🗓️</span> Client History</a
+			>
+
+			<div class="nav-section-label">Build</div>
+			<a href="#brand" class="nav-link"
+				><span class="nav-icon">🎨</span> Brand & Design</a
+			>
+			<a href="#scope" class="nav-link"
+				><span class="nav-icon">📐</span> Scope & Templates</a
+			>
+			<a href="#technical" class="nav-link"
+				><span class="nav-icon">⚙️</span> Technical</a
+			>
+			<a href="#decisions" class="nav-link"
+				><span class="nav-icon">✅</span> Locked Decisions</a
+			>
+			<a href="#timeline" class="nav-link"
+				><span class="nav-icon">🚀</span> Timeline</a
+			>
+
+			<div class="nav-section-label">Strategy</div>
+			<a href="#notes" class="nav-link"
+				><span class="nav-icon">📝</span> Notes</a
+			>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- MAIN -->
+		<div class="main">
+			<!-- PAGE HEADER -->
+			<div class="page-header">
+				<div class="overline">Project Overview · Source of Truth</div>
+				<h1>The Steady Elevation</h1>
+				<div class="sub">
+					thesteadyelevation.com · Full Website Redesign + 3 Months Content
+					Support
+				</div>
+
+				<div class="header-meta">
+					<div class="header-meta-item">
+						<span class="label">Client</span>
+						<span class="value">Stephanie Elliston</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Designer</span>
+						<span class="value">Alyssa Shurbert-Hetzel</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Contract Value</span>
+						<span class="value">$1,500 + content support</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Deposit Received</span>
+						<span class="value">$750 ✓</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Balance Due</span>
+						<span class="value">$750 at launch</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Domain</span>
+						<span class="value"
+							><a href="https://thesteadyelevation.com" target="_blank"
+								>thesteadyelevation.com</a
+							></span
+						>
+					</div>
+				</div>
+			</div>
+
+			<!-- CONTENT -->
+			<div class="content">
+				<!-- CLIENT INFO -->
+				<section id="client">
+					<div class="section-header">
+						<div class="section-icon">👤</div>
+						<h2>Client Information</h2>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<h3>Primary Contact</h3>
+							<div class="data-row">
+								<span class="data-label">Name</span>
+								<span class="data-value">Stephanie Elliston</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Business</span>
+								<span class="data-value">The Steady Elevation</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Website</span>
+								<span class="data-value"
+									><a href="https://thesteadyelevation.com" target="_blank"
+										>thesteadyelevation.com</a
+									></span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Billing</span>
+								<span class="data-value">First 50% paid Feb 25, 2026</span>
+							</div>
+						</div>
+
+						<div class="card">
+							<h3>Project Team</h3>
+							<div class="data-row">
+								<span class="data-label">Developer</span>
+								<span class="data-value"
+									>Jordan Latz — Latz Web Design LLC</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Designer</span>
+								<span class="data-value">Alyssa Shurbert-Hetzel</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Wireframe URL</span>
+								<span class="data-value"
+									><a
+										href="https://www.latzwebdevelopment.com/clients/2026/the-steady-elevation/website-redesign/wireframe.html"
+										target="_blank"
+										>Latz Portal (login required)</a
+									></span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Design Comms</span>
+								<span class="data-value"
+									>Jordan ↔ Alyssa coordinate directly. Stephanie reviews final
+									outputs.</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>What Stephanie Does</h3>
+						<div class="data-row">
+							<span class="data-label">Business Type</span>
+							<span class="data-value"
+								>Life & leadership coaching — two distinct audiences (Individual
+								+ Business clients)</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Individual Services</span>
+							<span class="data-value"
+								>Confidence & Energy, Infertility/Miscarriage/Surrogacy,
+								Leadership, DISC Assessment, ELI Assessment</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Business Services</span>
+							<span class="data-value"
+								>Fractional Cultural Director, Leadership Coaching, The
+								Elevation Series, Workshops & Speaking, DISC, ELI, Insights
+								Discovery</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Primary CTA</span>
+							<span class="data-value"
+								>Calendly booking — embedded directly on contact pages, no
+								popup</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">No Phone</span>
+							<span class="data-value"
+								>No phone number anywhere on site — contact is form + Calendly +
+								email only. Confirmed preference.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- PROJECT SUMMARY -->
+				<section id="project">
+					<div class="section-header">
+						<div class="section-icon">📋</div>
+						<h2>Project Summary</h2>
+					</div>
+
+					<div class="highlight-box">
+						<strong>Full website redesign — not a patch job.</strong>
+						<p>
+							Diagnosed the existing site Feb 25 and proposed a full redesign
+							over patchwork edits. Stephanie agreed. 23 pages, 10 shared
+							templates, two fully-themed sides (Individual + Business), Sanity
+							CMS, Vercel hosting. Designer: Alyssa Shurbert-Hetzel.
+						</p>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<h3>Why a Redesign (Not Edits)</h3>
+							<ul class="checklist">
+								<li>
+									<span class="check-icon">🔴</span>Existing site had
+									fundamental structure problems not worth patching
+								</li>
+								<li>
+									<span class="check-icon">🔴</span>Two audiences (Individual +
+									Business) not clearly differentiated
+								</li>
+								<li>
+									<span class="check-icon">🔴</span>No CMS — Stephanie couldn't
+									manage events or testimonials herself
+								</li>
+								<li>
+									<span class="check-icon">🔴</span>Site didn't reflect the
+									brand depth or service breadth
+								</li>
+							</ul>
+						</div>
+						<div class="card">
+							<h3>What Success Looks Like</h3>
+							<ul class="checklist">
+								<li>
+									<span class="check-icon">✅</span>Two clearly distinct sides —
+									Individual (sage) and Business (navy/teal)
+								</li>
+								<li>
+									<span class="check-icon">✅</span>Stephanie manages events +
+									testimonials herself via Sanity
+								</li>
+								<li>
+									<span class="check-icon">✅</span>Calendly drives bookings —
+									zero friction to schedule
+								</li>
+								<li>
+									<span class="check-icon">✅</span>Cohesive brand — Climora
+									Thin heading font, Raleway body
+								</li>
+								<li>
+									<span class="check-icon">✅</span>10 reusable templates =
+									efficient build + consistent experience
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">🔀</span>
+						<div class="callout-body">
+							<strong>The Fork at / is the entire UX strategy</strong>
+							<span
+								>No nav on the root page. Full-screen split: visitor
+								self-selects Individual or Business. Once inside a side, the
+								entire color system + content shifts. Logo links to current side
+								hub — not back to the fork. Footer has a subtle "Switch to
+								Business / Individual" escape hatch.</span
+							>
+						</div>
+					</div>
+
+					<div class="callout warn">
+						<span class="callout-icon">⚠️</span>
+						<div class="callout-body">
+							<strong>NOT in scope: Pricing pages</strong>
+							<span
+								>No pricing displayed anywhere on the site — including The
+								Elevation Series. This is a firm decision. Don't second-guess
+								it.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- FINANCIALS -->
+				<section id="financials">
+					<div class="section-header">
+						<div class="section-icon">💰</div>
+						<h2>Financials</h2>
+					</div>
+
+					<table class="budget-table">
+						<thead>
+							<tr>
+								<th>Line Item</th>
+								<th>Notes</th>
+								<th class="amount">Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>Full Website Redesign</strong></td>
+								<td>
+									23 pages, 10 templates, Sanity CMS, two-sided theme system,
+									Vercel
+								</td>
+								<td class="amount">$1,500</td>
+							</tr>
+							<tr>
+								<td><strong>3 Months Content Support</strong></td>
+								<td>Post-launch support — scope TBD (included in contract)</td>
+								<td class="amount">Included</td>
+							</tr>
+							<tr class="total-row">
+								<td><strong>Total Contract</strong></td>
+								<td></td>
+								<td class="amount"><strong>$1,500</strong></td>
+							</tr>
+							<tr class="paid-row">
+								<td>✅ Deposit Received</td>
+								<td>First 50% paid Feb 25, 2026 at project kickoff</td>
+								<td class="amount">$750</td>
+							</tr>
+							<tr class="pending-pay-row">
+								<td>⏳ Balance Due at Launch</td>
+								<td>Due when site goes live</td>
+								<td class="amount">$750</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="callout info" style="margin-top: 16px">
+						<span class="callout-icon">📝</span>
+						<div class="callout-body">
+							<strong>Content Support — Clarify Scope Before Launch</strong>
+							<span
+								>3 months of content support is included in the contract but the
+								specific deliverables/hours aren't documented here. Make sure
+								this is defined in writing before the balance is invoiced.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- CLIENT HISTORY -->
+				<section id="history">
+					<div class="section-header">
+						<div class="section-icon">🗓️</div>
+						<h2>Client Journey Timeline</h2>
+					</div>
+
+					<div class="timeline">
+						<div class="timeline-item complete">
+							<div class="timeline-date">Feb 25, 2026</div>
+							<div class="timeline-title">
+								Initial Client Review + Project Kickoff
+							</div>
+							<div class="timeline-desc">
+								Diagnosed the existing site. Proposed full redesign over
+								patchwork edits. Stephanie agreed. First 50% deposit paid same
+								day — fast decision, clear trust.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 4, 2026</div>
+							<div class="timeline-title">Copy Strategy Locked</div>
+							<div class="timeline-desc">
+								Copy strategy finalized for all 21 pages across both Individual
+								and Business sides. Clear direction established for every page
+								before any design work began.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 17, 2026</div>
+							<div class="timeline-title">
+								Site Structure, Sitemap & Wireframes
+							</div>
+							<div class="timeline-desc">
+								Site structure and sitemap finalized. 6 shared templates
+								identified. Designer brief structure planned. Wireframe document
+								built covering all 9 layout types (v1).
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 19, 2026</div>
+							<div class="timeline-title">Designer Brief Completed</div>
+							<div class="timeline-desc">
+								Designer brief completed. Color system and fonts confirmed.
+								Email drafts sent to Stephanie. Alyssa Shurbert-Hetzel brought
+								on as designer.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Apr 9, 2026</div>
+							<div class="timeline-title">Design Timeline Set with Alyssa</div>
+							<div class="timeline-desc">
+								Timeline established with Alyssa. Font situation clarified —
+								Raleway confirmed as body/subheading font (replaced Champagne &
+								Limousines, too hard to read at small sizes). Climora Thin
+								confirmed as heading font pending in-build testing.
+							</div>
+						</div>
+						<div class="timeline-item active">
+							<div class="timeline-date">Apr 15, 2026 (due)</div>
+							<div class="timeline-title">Style Sheet Due from Alyssa</div>
+							<div class="timeline-desc">
+								Homepage is done. Style sheet due April 15. This gates
+								everything else.
+							</div>
+						</div>
+						<div class="timeline-item pending">
+							<div class="timeline-date">May 1, 2026 (due)</div>
+							<div class="timeline-title">Remaining Page Designs Due</div>
+							<div class="timeline-desc">
+								All remaining page designs due from Alyssa. Development can
+								begin in parallel as designs are delivered.
+							</div>
+						</div>
+						<div class="timeline-item pending">
+							<div class="timeline-date">TBD</div>
+							<div class="timeline-title">Development Build</div>
+							<div class="timeline-desc">
+								Next.js build, Sanity CMS setup, both sides, all 10 templates,
+								Calendly integration.
+							</div>
+						</div>
+						<div class="timeline-item pending">
+							<div class="timeline-date">TBD</div>
+							<div class="timeline-title">Launch + Final Invoice</div>
+							<div class="timeline-desc">
+								Site goes live. Final $750 invoiced. 3 months content support
+								begins.
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- BRAND & DESIGN -->
+				<section id="brand">
+					<div class="section-header">
+						<div class="section-icon">🎨</div>
+						<h2>Brand & Design System</h2>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">💡</span>
+						<div class="callout-body">
+							<strong>Sage is the visual thread connecting both sides</strong>
+							<span
+								>The sage green (#8e9f89) appears as the primary color on the
+								Individual side and as an accent on the Business side. This is
+								intentional — it creates a visual connection between the two
+								worlds without blending them. Worth mentioning to
+								Stephanie.</span
+							>
+						</div>
+					</div>
+
+					<div class="brand-split">
+						<div class="brand-side ind">
+							<h4>Individual Side</h4>
+							<div class="side-label">The Individual</div>
+							<div class="color-swatch">
+								<span class="swatch" style="background: #8e9f89"></span> Primary
+								— Sage #8e9f89
+							</div>
+							<br />
+							<div class="color-swatch">
+								<span class="swatch" style="background: #d09f84"></span> Accent
+								— Peach #D09F84
+							</div>
+							<ul>
+								<li>About</li>
+								<li>Events (CMS)</li>
+								<li>Testimonials (CMS)</li>
+								<li>Contact (Calendly)</li>
+								<li>
+									Services: Confidence & Energy,
+									Infertility/Miscarriage/Surrogacy, Leadership
+								</li>
+								<li>Assessments: DISC, ELI</li>
+							</ul>
+						</div>
+						<div class="brand-side biz">
+							<h4>Business Side</h4>
+							<div class="side-label">The Business</div>
+							<div class="color-swatch">
+								<span class="swatch" style="background: #013543"></span> Primary
+								— Navy #013543
+							</div>
+							<br />
+							<div class="color-swatch">
+								<span class="swatch" style="background: #8e9f89"></span> Accent
+								— Sage #8e9f89
+							</div>
+							<ul>
+								<li>About</li>
+								<li>Events (CMS)</li>
+								<li>Testimonials (CMS)</li>
+								<li>Contact (Calendly)</li>
+								<li>
+									Services: Fractional Cultural Director, Leadership Coaching,
+									The Elevation Series, Workshops & Speaking
+								</li>
+								<li>Assessments: DISC, ELI, Insights Discovery</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>Typography</h3>
+						<div class="data-row">
+							<span class="data-label">Heading Font</span>
+							<span class="data-value"
+								>Climora Thin — Stephanie's brand font. Confirmed for
+								production.
+								<strong
+									>Weights and sizing need adjustment after live build
+									testing.</strong
+								>
+								Alyssa will advise once she sees it rendered.</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Body / Subheading</span>
+							<span class="data-value"
+								>Raleway — confirmed Apr 9. Replaced Champagne & Limousines (too
+								hard to read at small sizes).</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Placeholder (Style Sheet)</span>
+							<span class="data-value"
+								>Cormorant Garamond — similar feel to Climora Thin. Used in
+								style sheet until Climora is tested in production.</span
+							>
+						</div>
+					</div>
+
+					<div class="callout warn">
+						<span class="callout-icon">⚠️</span>
+						<div class="callout-body">
+							<strong
+								>Climora Thin — test in-build before finalizing type
+								scale</strong
+							>
+							<span
+								>Font hasn't been seen in a live Next.js/Tailwind context yet.
+								Don't finalize heading sizes, weights, or line-heights in the
+								style sheet — those decisions happen after Alyssa reviews it in
+								the build.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- SCOPE & TEMPLATES -->
+				<section id="scope">
+					<div class="section-header">
+						<div class="section-icon">📐</div>
+						<h2>Scope & Templates</h2>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">📋</span>
+						<div class="callout-body">
+							<strong>23 pages, 10 templates</strong>
+							<span
+								>Most pages share templates — the theme (colors, copy, photos)
+								swaps per side but the layout structure is reused. This is what
+								makes a 23-page site buildable efficiently.</span
+							>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>The 10 Templates</h3>
+						<table class="template-table">
+							<thead>
+								<tr>
+									<th>Template</th>
+									<th>Route(s)</th>
+									<th>Pages</th>
+									<th>Notes</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><strong>Fork Landing</strong></td>
+									<td class="route">/</td>
+									<td>1</td>
+									<td>
+										Full-screen split. No header nav. Visitor chooses side.
+									</td>
+								</tr>
+								<tr>
+									<td><strong>Side Landing Hub</strong></td>
+									<td class="route">/individual, /business</td>
+									<td>2</td>
+									<td>Same layout, different theme + content per side.</td>
+								</tr>
+								<tr>
+									<td><strong>About</strong></td>
+									<td class="route">/[side]/about</td>
+									<td>2</td>
+									<td>Same layout, different copy & photo per side.</td>
+								</tr>
+								<tr>
+									<td><strong>Service Page</strong></td>
+									<td class="route">/[side]/services/[slug]</td>
+									<td>5</td>
+									<td>
+										Confidence & Energy, Infertility/Miscarriage/Surrogacy,
+										Leadership, Leadership Coaching, Fractional Cultural
+										Director.
+									</td>
+								</tr>
+								<tr>
+									<td><strong>Elevation Series</strong></td>
+									<td class="route">/business/services/the-elevation-series</td>
+									<td>1</td>
+									<td>
+										<strong>Unique layout.</strong> 3-level program structure.
+										Business side only.
+									</td>
+								</tr>
+								<tr>
+									<td><strong>Assessment</strong></td>
+									<td class="route">/[side]/services/assessments/[slug]</td>
+									<td>5</td>
+									<td>
+										DISC & ELI on both sides. Insights Discovery on Business
+										only.
+									</td>
+								</tr>
+								<tr>
+									<td><strong>Speaking</strong></td>
+									<td class="route">/business/services/speaking</td>
+									<td>1</td>
+									<td>
+										<strong>Unique layout.</strong> Topic-forward design.
+										Business side only.
+									</td>
+								</tr>
+								<tr>
+									<td><strong>Events</strong></td>
+									<td class="route">/[side]/events</td>
+									<td>2</td>
+									<td>Sanity CMS. Cards auto-archive when past date.</td>
+								</tr>
+								<tr>
+									<td><strong>Testimonials</strong></td>
+									<td class="route">/[side]/testimonials</td>
+									<td>2</td>
+									<td>
+										Sanity CMS. Stephanie pins a featured one (displays larger);
+										rest in a grid.
+									</td>
+								</tr>
+								<tr>
+									<td><strong>Contact</strong></td>
+									<td class="route">/[side]/contact</td>
+									<td>2</td>
+									<td>
+										Calendly embedded as primary. Contact form secondary. No
+										phone number.
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card" style="margin-top: 0">
+						<h3>Global Nav Behavior</h3>
+						<div class="data-row">
+							<span class="data-label">Logo</span>
+							<span class="data-value"
+								>Links to current side hub (/individual or /business) — not the
+								root fork once inside a side</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Primary CTA</span>
+							<span class="data-value"
+								>"Work With Me" → /contact. Contact is NOT a standalone nav
+								item.</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Services Dropdown</span>
+							<span class="data-value"
+								>Services has a dropdown with services AND a nested Assessments
+								submenu</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Fork Page</span>
+							<span class="data-value"
+								>No nav at all on / — full-screen split only</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Footer</span>
+							<span class="data-value"
+								>Subtle "Switch to Business / Individual" link — escape hatch
+								between sides</span
+							>
+						</div>
+					</div>
+
+					<div class="two-col">
+						<div class="page-card" style="border-top-color: var(--brand-ind)">
+							<span
+								class="page-badge"
+								style="background: #e8f0e7; color: #4a6b46"
+								>Individual Nav</span
+							>
+							<h4>Services Dropdown</h4>
+							<ul>
+								<li>Confidence & Energy</li>
+								<li>Infertility / Miscarriage / Surrogacy</li>
+								<li>Leadership</li>
+								<li>Assessments → DISC, ELI</li>
+							</ul>
+						</div>
+						<div class="page-card" style="border-top-color: var(--brand-biz)">
+							<span
+								class="page-badge"
+								style="background: #e0edf0; color: #013543"
+								>Business Nav</span
+							>
+							<h4>Services Dropdown</h4>
+							<ul>
+								<li>Fractional Cultural Director</li>
+								<li>Leadership Coaching</li>
+								<li>The Elevation Series</li>
+								<li>Speaking</li>
+								<li>Assessments → DISC, ELI, Insights Discovery</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- TECHNICAL -->
+				<section id="technical">
+					<div class="section-header">
+						<div class="section-icon">⚙️</div>
+						<h2>Technical Specifications</h2>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<h3>Stack</h3>
+							<div class="data-row">
+								<span class="data-label">Framework</span>
+								<span class="data-value">Next.js 13+ (App Router)</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Frontend</span>
+								<span class="data-value"
+									>React + Tailwind CSS + Framer Motion</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">CMS</span>
+								<span class="data-value"
+									>Sanity — Stephanie manages events, testimonials, and other
+									CMS-tagged content herself</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Hosting</span>
+								<span class="data-value">Vercel</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Booking</span>
+								<span class="data-value"
+									>Calendly — embedded directly on /[side]/contact. No popup.
+									Stephanie's preference.</span
+								>
+							</div>
+						</div>
+
+						<div class="card">
+							<h3>CMS Scope</h3>
+							<div class="data-row">
+								<span class="data-label">Who Manages</span>
+								<span class="data-value"
+									>Stephanie manages all CMS content herself</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Events</span>
+								<span class="data-value"
+									>Both sides. Cards auto-archive when past date — Stephanie
+									doesn't have to clean up manually.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Testimonials</span>
+								<span class="data-value"
+									>Both sides. Stephanie pins a featured one (displays larger);
+									rest auto-populate in grid.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Other</span>
+								<span class="data-value"
+									>Any other content marked CMS-managed in page designs</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>Theming Architecture</h3>
+						<div class="data-row">
+							<span class="data-label">Theme System</span>
+							<span class="data-value"
+								>Color system swaps automatically based on which side the
+								visitor is on — same components, different CSS variables applied
+								per route segment</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Individual Theme</span>
+							<span class="data-value"
+								>Primary: Sage #8e9f89 / Accent: Peach #D09F84</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Business Theme</span>
+							<span class="data-value"
+								>Primary: Navy #013543 / Accent: Sage #8e9f89</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Sage Thread</span>
+							<span class="data-value"
+								>Sage carries across both sides intentionally — visual
+								continuity that ties the two worlds together</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- LOCKED DECISIONS -->
+				<section id="decisions">
+					<div class="section-header">
+						<div class="section-icon">✅</div>
+						<h2>Locked Decisions</h2>
+					</div>
+
+					<div class="callout success">
+						<span class="callout-icon">🔒</span>
+						<div class="callout-body">
+							<strong>These are done. Don't revisit them.</strong>
+							<span
+								>All decisions below have been confirmed with Stephanie or
+								established in the project. If something needs to change, it
+								requires an explicit conversation — not a passive edit.</span
+							>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="decision-row">
+							<span class="decision-label">No Phone Number</span>
+							<div class="decision-value">
+								No phone number anywhere on the site. Contact = form + Calendly
+								+ email only.<small
+									>Confirmed: Stephanie's stated preference.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">No Pricing</span>
+							<div class="decision-value">
+								No pricing displayed anywhere — including The Elevation
+								Series.<small>Confirmed: deliberate business decision.</small>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Calendly Embed</span>
+							<div class="decision-value">
+								Calendly embedded directly on contact pages. No popup. Primary
+								contact method.<small
+									>Confirmed: Stephanie's preference. Don't add a popup
+									variant.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Logo Destination</span>
+							<div class="decision-value">
+								Logo links to current side landing (/individual or /business) —
+								not the root fork, once inside a side.<small
+									>Confirmed: intentional UX decision.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Fork Page Nav</span>
+							<div class="decision-value">
+								No nav at all on / — full-screen split only. Visitor
+								self-selects, then gets nav.<small
+									>Confirmed: core to the site structure.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Footer Side Switch</span>
+							<div class="decision-value">
+								Subtle "Switch to Business / Individual" link in footer —
+								low-profile escape hatch between sides.<small
+									>Confirmed: intentional, should stay subtle.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Events Auto-Archive</span>
+							<div class="decision-value">
+								Events auto-archive when past date — Stephanie doesn't manage
+								cleanup manually.<small>Confirmed: CMS behavior.</small>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Featured Testimonial</span>
+							<div class="decision-value">
+								Stephanie pins one featured testimonial per side via CMS.
+								Displays larger. Rest auto-populate in grid.<small
+									>Confirmed: CMS behavior.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Body Font</span>
+							<div class="decision-value">
+								Raleway — confirmed Apr 9. Replaced Champagne & Limousines (too
+								hard to read at small sizes).<small
+									>Confirmed: locked Apr 9, 2026.</small
+								>
+							</div>
+						</div>
+						<div class="decision-row">
+							<span class="decision-label">Heading Font</span>
+							<div class="decision-value">
+								Climora Thin — Stephanie's brand font. Placeholder: Cormorant
+								Garamond in style sheet.<small
+									>Note: sizing/weights need adjustment after in-build testing —
+									Alyssa to advise.</small
+								>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- TIMELINE -->
+				<section id="timeline">
+					<div class="section-header">
+						<div class="section-icon">🚀</div>
+						<h2>Project Timeline</h2>
+					</div>
+
+					<div class="callout warn">
+						<span class="callout-icon">⏳</span>
+						<div class="callout-body">
+							<strong
+								>Design gates development — Alyssa is the current critical
+								path</strong
+							>
+							<span
+								>Style sheet due April 15. Remaining pages due May 1.
+								Development can begin on completed designs while others are
+								still in progress. Don't wait for everything.</span
+							>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">01</div>
+						<div>
+							<div class="weeks">Complete</div>
+							<h4>Strategy, Structure & Brief</h4>
+							<ul>
+								<li>Copy strategy locked for all 21 pages</li>
+								<li>Site structure + sitemap finalized</li>
+								<li>10 templates identified</li>
+								<li>Wireframes built (v1 — all 9 layout types)</li>
+								<li>Designer brief completed + delivered to Alyssa</li>
+								<li>Color system and fonts confirmed</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">02</div>
+						<div>
+							<div class="weeks">Now — Due Apr 15 / May 1</div>
+							<h4>Design (Alyssa)</h4>
+							<ul>
+								<li>✅ Homepage — DONE</li>
+								<li>⏳ Style sheet — due April 15</li>
+								<li>⏳ Remaining page designs — due May 1</li>
+								<li>
+									Climora Thin to be tested in-build; Alyssa reviews and advises
+									on type scale
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">03</div>
+						<div>
+							<div class="weeks">Parallel with Phase 2 completion</div>
+							<h4>Development Build</h4>
+							<ul>
+								<li>Next.js app setup, Vercel project, Sanity project</li>
+								<li>Both side themes (sage + navy) with CSS variable system</li>
+								<li>Build all 10 templates</li>
+								<li>Sanity schemas: events + testimonials (both sides)</li>
+								<li>Calendly integration on contact pages</li>
+								<li>Fork page — no nav, full-screen split</li>
+								<li>
+									Services dropdown + nested Assessments submenu (both navs)
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">04</div>
+						<div>
+							<div class="weeks">TBD</div>
+							<h4>Content, Review & Launch</h4>
+							<ul>
+								<li>Populate all content per copy strategy</li>
+								<li>Stephanie reviews live dev site</li>
+								<li>Implement feedback</li>
+								<li>Accessibility + mobile pass</li>
+								<li>Final sign-off from Stephanie</li>
+								<li>DNS cutover to Vercel</li>
+								<li>Site goes live — final $750 invoice sent</li>
+								<li>3-month content support begins</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- NOTES -->
+				<section id="notes">
+					<div class="section-header">
+						<div class="section-icon">📝</div>
+						<h2>Notes & Observations</h2>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">Feb 25, 2026 — Decision to Redesign</div>
+						<p>
+							Stephanie paid the deposit the same day she got the diagnosis.
+							Fast decision, clear trust in Jordan's judgment. She wasn't
+							attached to the old site — she agreed immediately when presented
+							with "full redesign, not patchwork edits." That's a good client.
+							Respect the trust by executing cleanly.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">Apr 9, 2026 — Font Change Note</div>
+						<p>
+							Champagne & Limousines was cut because it was too hard to read at
+							small sizes. Raleway confirmed as the replacement for body +
+							subheadings. This was a practical call, not a brand direction
+							change — document it so no one goes back and questions it.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">On the Fork Concept</div>
+						<p>
+							The fork at / is the whole UX bet. If a visitor self-selects into
+							a side, every subsequent page they see is filtered to their
+							context. This only works if the fork itself is clear, visually
+							balanced, and makes both sides feel equally premium. Don't let one
+							side feel like the "real" site and the other feel like a
+							sub-section. They must feel like two distinct presences that share
+							a root.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">On Alyssa's Role</div>
+						<p>
+							Alyssa is the designer — Jordan and Alyssa coordinate directly.
+							Stephanie reviews finished work but isn't in the day-to-day design
+							loop. Keep the design conversation clean: don't put Stephanie in a
+							position to weigh in on in-progress design decisions she doesn't
+							have the context to evaluate. Bring her polished outputs, not
+							process.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">
+							Content Support — Define This Before Launch
+						</div>
+						<p>
+							Three months of content support is included in the contract, but
+							exactly what that means hasn't been documented in these notes.
+							Before the final invoice goes out, make sure Stephanie knows
+							what's included — number of rounds, types of changes, what's out
+							of scope. Ambiguity here will cause friction post-launch.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">Wireframe Reference</div>
+						<p>
+							Full wireframe with copy for all 10 templates lives at
+							latzwebdevelopment.com/clients/2026/the-steady-elevation/website-redesign/wireframe.html
+							(behind Latz Portal login). That document is the canonical
+							reference for page-level copy direction. If something feels off in
+							the build, check the wireframe first.
+						</p>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script>
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' },
+			);
+
+			sections.forEach((s) => observer.observe(s));
+		</script>
+	</body>
 </html>
