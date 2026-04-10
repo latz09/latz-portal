@@ -8,7 +8,7 @@ export default function DeadlineList({ deadlines, variant = 'internal' }) {
 	return (
 		<div className='mt-12'>
 			<p className='font-mono text-xs text-white/30 tracking-widest uppercase mb-4'>
-				Deadlines
+				Upcoming milestones
 			</p>
 			<div className='flex flex-col gap-3'>
 				{deadlines.map((d, i) => {
