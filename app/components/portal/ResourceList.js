@@ -24,7 +24,7 @@ export default function ResourceList({ variant, resources }) {
 
   return (
     <div className='mt-10'>
-      <p className='font-mono text-xs text-white/30 tracking-widest uppercase mb-4'>
+      <p className='font-mono text-xs lg:text-base text-white/60 tracking-widest uppercase mb-4'>
         Additional Resources
       </p>
       <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3'>

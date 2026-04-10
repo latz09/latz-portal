@@ -2,9 +2,9 @@ import { TbLayoutDashboard, TbFileText, TbPencil, TbLayout, TbBook } from 'react
 import MoodBoard from './MoodBoard'
 
 const variantStyles = {
-  internal: { icon: 'text-teal',   badge: 'bg-teal/20 text-teal'     },
-  designer: { icon: 'text-purple', badge: 'bg-purple/20 text-purple' },
-  client:   { icon: 'text-teal',   badge: 'bg-teal/20 text-teal'     },
+  internal: { icon: 'text-teal'   },
+  designer: { icon: 'text-purple' },
+  client:   { icon: 'text-teal'   },
 }
 
 const audienceBadge = {
@@ -21,12 +21,12 @@ const docIcon = {
   'cms-guide.html':   TbBook,
 }
 
-export default function DocumentList({ variant, docs, basePath, inspiration }) {
+export default function DocumentList({ variant, docs, clientSlug, projectSlug, inspiration }) {
   const s = variantStyles[variant]
 
-return (
+  return (
     <div>
-      <p className="font-mono text-xs text-white/30 tracking-widest uppercase mb-4">
+      <p className="font-mono text-xs lg:text-base text-white/60 tracking-widest uppercase mb-4">
         Documents
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -35,8 +35,7 @@ return (
           return (
             <a
               key={doc.filename}
-              href={`${basePath}/${doc.filename}`}
-              target="_blank"
+             href={`/view/${clientSlug}/${projectSlug}/${doc.filename}?ref=${variant}`}
               className="flex flex-col bg-white/5 hover:bg-white/10 border border-white/10 rounded p-4 min-h-40 lg:min-h-44 transition-colors"
             >
               <Icon className={`text-2xl ${s.icon} shrink-0`} />

@@ -5,6 +5,14 @@ export default auth((req) => {
   const { pathname } = req.nextUrl
   const role = req.auth?.user?.role
 
+  if (pathname.startsWith("/portal/view")) {
+    return NextResponse.next()
+  }
+
+  if (pathname.startsWith("/clients") && pathname.endsWith(".html")) {
+    return NextResponse.next()
+  }
+
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/clients")) {
     if (role !== "internal") {
       return NextResponse.redirect(new URL("/login", req.url))
@@ -21,5 +29,9 @@ export default auth((req) => {
 })
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/clients/:path*", "/portal/designer/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/clients/:path*",
+    "/portal/:path*",
+  ],
 }

@@ -38,9 +38,11 @@ export default async function DesignerPortal({ params }) {
 			<DocumentList
 				variant='designer'
 				docs={designerDocs}
-				basePath={`/clients/${project.year}/${clientSlug}/${projectSlug}`}
+				clientSlug={clientSlug}
+				projectSlug={projectSlug}
 				inspiration={project.inspiration}
 			/>
+
 			<ResourceList variant='designer' resources={designerResources} />
 			<DeadlineList deadlines={designerDeadlines} variant='designer' />
 			<PortalFooter />
