@@ -1,1482 +1,2143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<title>Village of Hancock — Project Overview | Latz Web Design</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0D1B2A;
-    --teal: #18a1ad;
-    --teal-light: #e8f7f8;
-    --teal-mid: #b3e5e9;
-    --yellow: #ffee65;
-    --white: #ffffff;
-    --off-white: #f7f9fa;
-    --gray-100: #f0f2f4;
-    --gray-200: #e2e8f0;
-    --gray-400: #94a3b8;
-    --gray-600: #475569;
-    --gray-800: #1e293b;
-    --text: #0D1B2A;
-    --green: #16a34a;
-    --green-light: #dcfce7;
-    --orange: #ea580c;
-    --orange-light: #fff7ed;
-    --red: #dc2626;
-    --red-light: #fef2f2;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off-white);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 15px;
-  }
-
-  /* ── SIDEBAR ── */
-  .sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 240px;
-    height: 100vh;
-    background: var(--navy);
-    padding: 32px 0;
-    overflow-y: auto;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sidebar-brand {
-    padding: 0 24px 24px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 20px;
-  }
-
-  .sidebar-brand .lwd {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--teal);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .sidebar-brand .client-name {
-    font-family: 'Fraunces', serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--white);
-    line-height: 1.2;
-  }
-
-  .sidebar-brand .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--green);
-    color: white;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-top: 10px;
-  }
-
-  .status-pill::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: white;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .nav-section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    padding: 8px 24px 4px;
-    margin-top: 8px;
-  }
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 24px;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 400;
-    transition: all 0.15s;
-    border-left: 3px solid transparent;
-  }
-
-  .nav-link:hover {
-    color: white;
-    background: rgba(255,255,255,0.05);
-    border-left-color: rgba(24,161,173,0.5);
-  }
-
-  .nav-link.active {
-    color: var(--teal);
-    background: rgba(24,161,173,0.08);
-    border-left-color: var(--teal);
-    font-weight: 500;
-  }
-
-  .nav-icon {
-    font-size: 14px;
-    width: 18px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  .sidebar-footer {
-    margin-top: auto;
-    padding: 20px 24px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 0.08em;
-    line-height: 1.8;
-  }
-
-  /* ── MAIN CONTENT ── */
-  .main {
-    margin-left: 240px;
-    min-height: 100vh;
-  }
-
-  /* ── PAGE HEADER ── */
-  .page-header {
-    background: var(--navy);
-    padding: 48px 56px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .page-header::after {
-    content: 'HANCOCK';
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Fraunces', serif;
-    font-size: 120px;
-    font-weight: 700;
-    color: rgba(255,255,255,0.03);
-    letter-spacing: -4px;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .page-header .overline {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin-bottom: 12px;
-  }
-
-  .page-header h1 {
-    font-family: 'Fraunces', serif;
-    font-size: 36px;
-    font-weight: 600;
-    color: white;
-    margin-bottom: 8px;
-    line-height: 1.15;
-  }
-
-  .page-header .sub {
-    color: rgba(255,255,255,0.5);
-    font-size: 14px;
-  }
-
-  .header-meta {
-    display: flex;
-    gap: 32px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-
-  .header-meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .header-meta-item .label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
-
-  .header-meta-item .value {
-    font-size: 14px;
-    font-weight: 500;
-    color: white;
-  }
-
-  .header-meta-item .value a {
-    color: var(--teal);
-    text-decoration: none;
-  }
-
-  /* ── CONTENT SECTIONS ── */
-  .content {
-    padding: 40px 56px 80px;
-  }
-
-  section {
-    margin-bottom: 56px;
-    scroll-margin-top: 24px;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--teal);
-  }
-
-  .section-header h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--navy);
-  }
-
-  .section-icon {
-    width: 32px; height: 32px;
-    background: var(--teal);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-
-  /* ── CARDS & GRIDS ── */
-  .card {
-    background: white;
-    border-radius: 10px;
-    padding: 24px;
-    border: 1px solid var(--gray-200);
-    margin-bottom: 16px;
-  }
-
-  .card h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--teal);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 12px;
-  }
-
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .three-col {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  /* ── DATA ROWS ── */
-  .data-row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 12px;
-    align-items: start;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray-100);
-  }
-
-  .data-row:last-child { border-bottom: none; }
-
-  .data-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gray-400);
-    letter-spacing: 0.06em;
-    padding-top: 1px;
-    text-transform: uppercase;
-  }
-
-  .data-value {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .data-value a {
-    color: var(--teal);
-    text-decoration: none;
-  }
-
-  /* ── CALLOUT BOXES ── */
-  .callout {
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 16px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .callout-body { flex: 1; }
-  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
-
-  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
-  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
-  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
-  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
-  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
-
-  /* ── HIGHLIGHT BOX ── */
-  .highlight-box {
-    background: var(--yellow);
-    border: 2px solid var(--navy);
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
-  }
-
-  .highlight-box strong { font-weight: 700; }
-  .highlight-box p { font-size: 14px; margin-top: 8px; }
-
-  /* ── TIMELINE ── */
-  .timeline {
-    position: relative;
-    padding-left: 24px;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 6px; top: 8px; bottom: 8px;
-    width: 2px;
-    background: var(--teal-mid);
-  }
-
-  .timeline-item {
-    position: relative;
-    margin-bottom: 20px;
-    padding-left: 20px;
-  }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -18px; top: 6px;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--teal);
-    border: 2px solid white;
-    box-shadow: 0 0 0 2px var(--teal);
-  }
-
-  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
-  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
-  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
-
-  .timeline-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--teal);
-    letter-spacing: 0.06em;
-    font-weight: 500;
-  }
-
-  .timeline-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy);
-    margin: 2px 0;
-  }
-
-  .timeline-desc {
-    font-size: 13px;
-    color: var(--gray-600);
-    line-height: 1.5;
-  }
-
-  /* ── BUDGET TABLE ── */
-  .budget-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-
-  .budget-table th {
-    background: var(--navy);
-    color: white;
-    padding: 10px 16px;
-    text-align: left;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  .budget-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--gray-100);
-  }
-
-  .budget-table tr:last-child td { border-bottom: none; }
-  .budget-table tr:nth-child(even) td { background: var(--off-white); }
-
-  .budget-table .total-row td {
-    background: var(--teal-light) !important;
-    font-weight: 700;
-    border-top: 2px solid var(--teal);
-    font-size: 15px;
-  }
-
-  .budget-table .paid-row td {
-    background: var(--green-light) !important;
-    color: var(--green);
-    font-weight: 600;
-  }
-
-  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
-
-  /* ── PAGE SCOPE GRID ── */
-  .page-card {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    padding: 20px;
-    border-top: 3px solid var(--teal);
-  }
-
-  .page-card h4 {
-    font-family: 'Fraunces', serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 10px;
-  }
-
-  .page-card ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .page-card ul li {
-    font-size: 13px;
-    color: var(--gray-600);
-    padding: 4px 0;
-    padding-left: 16px;
-    position: relative;
-    line-height: 1.4;
-  }
-
-  .page-card ul li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--teal);
-    font-size: 11px;
-  }
-
-  .page-badge {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-bottom: 8px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .badge-cms { background: var(--teal-light); color: var(--teal); }
-  .badge-static { background: var(--gray-100); color: var(--gray-600); }
-
-  /* ── CONTENT CHECKLIST ── */
-  .checklist { list-style: none; padding: 0; }
-  .checklist li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--gray-100);
-    font-size: 13px;
-  }
-  .checklist li:last-child { border-bottom: none; }
-
-  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-  .check-status { margin-left: auto; flex-shrink: 0; }
-
-  .pill {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .pill-green { background: var(--green-light); color: var(--green); }
-  .pill-orange { background: var(--orange-light); color: var(--orange); }
-  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
-  .pill-teal { background: var(--teal-light); color: var(--teal); }
-
-  /* ── UPSELL ── */
-  .upsell-card {
-    background: white;
-    border: 2px dashed var(--gray-200);
-    border-radius: 10px;
-    padding: 20px;
-    transition: border-color 0.2s;
-  }
-
-  .upsell-card:hover { border-color: var(--teal); }
-
-  .upsell-card h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-
-  .upsell-card .price {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--teal);
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-
-  .upsell-card p { font-size: 13px; color: var(--gray-600); }
-
-  /* ── PHASE BLOCKS ── */
-  .phase {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 12px;
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 20px;
-    align-items: start;
-  }
-
-  .phase-num {
-    font-family: 'Fraunces', serif;
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--teal-mid);
-    line-height: 1;
-    text-align: center;
-  }
-
-  .phase h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 4px;
-  }
-
-  .phase .weeks {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--teal);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .phase ul { list-style: none; padding: 0; }
-  .phase ul li {
-    font-size: 13px;
-    color: var(--gray-600);
-    padding: 3px 0;
-    padding-left: 14px;
-    position: relative;
-  }
-  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
-
-  /* ── NOTES AREA ── */
-  .note-block {
-    background: #fffef0;
-    border: 1px solid #e6d96b;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-  }
-
-  .note-block .note-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: #a07d00;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .sidebar { width: 200px; }
-    .main { margin-left: 200px; }
-    .two-col, .three-col { grid-template-columns: 1fr; }
-    .page-header, .content { padding-left: 32px; padding-right: 32px; }
-    .phase { grid-template-columns: 56px 1fr; }
-  }
-
-  @media (max-width: 680px) {
-    .sidebar { display: none; }
-    .main { margin-left: 0; }
-    .page-header, .content { padding-left: 20px; padding-right: 20px; }
-  }
-</style>
-</head>
-<body>
-
-<!-- SIDEBAR -->
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <div class="lwd">Latz Web Design</div>
-    <div class="client-name">Village of Hancock</div>
-    <div class="status-pill">Active Project</div>
-  </div>
-
-  <div class="nav-section-label">Overview</div>
-  <a href="#client" class="nav-link active"><span class="nav-icon">🏛️</span> Client Info</a>
-  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
-  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
-  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
-
-  <div class="nav-section-label">Build</div>
-  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
-  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
-  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
-  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
-
-  <div class="nav-section-label">Strategy</div>
-  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
-  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
-
-  <div class="sidebar-footer">
-    Latz Web Design LLC<br>
-    Stevens Point, WI<br>
-    jordan@latzwebdesign.com<br><br>
-    No fluff. Just results.
-  </div>
-</nav>
-
-<!-- MAIN -->
-<div class="main">
-
-  <!-- PAGE HEADER -->
-  <div class="page-header">
-    <div class="overline">Project Overview · Source of Truth</div>
-    <h1>Village of Hancock</h1>
-    <div class="sub">villageofhancock.org · Foundation + Documents Package</div>
-
-    <div class="header-meta">
-      <div class="header-meta-item">
-        <span class="label">Client</span>
-        <span class="value">Jillian Steele, Trustee</span>
-      </div>
-      <div class="header-meta-item">
-        <span class="label">Contract Value</span>
-        <span class="value">$4,200</span>
-      </div>
-      <div class="header-meta-item">
-        <span class="label">Deposit Received</span>
-        <span class="value">$2,100 ✓</span>
-      </div>
-      <div class="header-meta-item">
-        <span class="label">Balance Due at Launch</span>
-        <span class="value">$2,100</span>
-      </div>
-      <div class="header-meta-item">
-        <span class="label">Domain</span>
-        <span class="value"><a href="https://villageofhancock.org" target="_blank">villageofhancock.org</a></span>
-      </div>
-      <div class="header-meta-item">
-        <span class="label">Contact</span>
-        <span class="value">262-716-3328</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
-
-    <!-- CLIENT INFO -->
-    <section id="client">
-      <div class="section-header">
-        <div class="section-icon">🏛️</div>
-        <h2>Client Information</h2>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <h3>Primary Contact</h3>
-          <div class="data-row">
-            <span class="data-label">Name</span>
-            <span class="data-value">Jillian Steele</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Role</span>
-            <span class="data-value">Village Trustee</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Email</span>
-            <span class="data-value"><a href="mailto:jillianamorton16@gmail.com">jillianamorton16@gmail.com</a></span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Phone</span>
-            <span class="data-value">262-716-3328</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Day-to-Day Point of Contact</span>
-            <span class="data-value">Jillian — all design + info questions go through her</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Organization</h3>
-          <div class="data-row">
-            <span class="data-label">Client Type</span>
-            <span class="data-value">Municipal Government (Village)</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Population</span>
-            <span class="data-value">~416 residents</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Founded</span>
-            <span class="data-value">1902</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Decision Maker</span>
-            <span class="data-value">Village Board (board vote required)</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Clerk</span>
-            <span class="data-value">Unnamed — Jillian's point of contact; mailed deposit check</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Current Domain</span>
-            <span class="data-value">villageofhancock.org (to be transferred)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>About the Community</h3>
-        <div class="data-row">
-          <span class="data-label">Primary Audience</span>
-          <span class="data-value">60+ demographic — design for clarity, large fonts, high contrast, ADA/WCAG compliant</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Local Amenities</span>
-          <span class="data-value">Pine Lake, Fish Lake, Whistler Mounds Park</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Community Events</span>
-          <span class="data-value">Street dance, farmers market, trick-or-treat (relevant for events + photo content)</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Board Challenge</span>
-          <span class="data-value">High trustee turnover — CMS must be designed so any new volunteer can take over with minimal training</span>
-        </div>
-      </div>
-
-      <div class="callout warn">
-        <span class="callout-icon">📬</span>
-        <div class="callout-body">
-          <strong>Deposit Package Note</strong>
-          <span>Envelope arrived ripped open. Confirmed contents: check + one USB drive. Jillian confirming nothing else was included — follow up if needed.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECT SUMMARY -->
-    <section id="project">
-      <div class="section-header">
-        <div class="section-icon">📋</div>
-        <h2>Project Summary</h2>
-      </div>
-
-      <div class="highlight-box">
-        <strong>What was approved: Option B — Foundation + Documents Package @ $4,200</strong>
-        <p>5-page custom website with document management (agendas/minutes/ordinances), announcement system, board directory, and CMS. Board voted to approve March 24, 2025. First-class mail deposit received March 31, 2025.</p>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <h3>Why They Came to Us</h3>
-          <ul class="checklist">
-            <li><span class="check-icon">🔴</span> Current site has SSL certificate errors — residents can't access it</li>
-            <li><span class="check-icon">🔴</span> Paying ~$550/yr combined (platform $300 + domain $250) for a broken site</li>
-            <li><span class="check-icon">🔴</span> Paper-based payment process (water bills, recycling fees)</li>
-            <li><span class="check-icon">🔴</span> No easy access to agendas, minutes, ordinances for residents</li>
-            <li><span class="check-icon">🔴</span> Board turnover creates institutional knowledge gaps</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>What Success Looks Like</h3>
-          <ul class="checklist">
-            <li><span class="check-icon">✅</span> Residents can actually reach the site — SSL fixed permanently</li>
-            <li><span class="check-icon">✅</span> Clerk/trustees can update content without Jordan's help</li>
-            <li><span class="check-icon">✅</span> Documents (agendas, minutes, ordinances) accessible 24/7</li>
-            <li><span class="check-icon">✅</span> New board members onboard themselves with minimal friction</li>
-            <li><span class="check-icon">✅</span> No ongoing software fees — just $20/mo hosting to Vercel</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="callout info">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Payment Integration: NOT in current scope</strong>
-          <span>Online bill pay (water/recycling via Square) was in the original $6,200 proposal but not in Option B. This is a clear future upsell. Note: Village bank does not have a municipal bill pay portal.</span>
-        </div>
-      </div>
-
-      <div class="callout info">
-        <span class="callout-icon">🎨</span>
-        <div class="callout-body">
-          <strong>Design Direction: Ask Jillian which mockup concept she preferred</strong>
-          <span>Two homepage concepts were built at village-of-hancock.latzwebdesign.com — Jillian hasn't responded yet on which direction felt more like "Hancock." Get this answer before building fresh.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FINANCIALS -->
-    <section id="financials">
-      <div class="section-header">
-        <div class="section-icon">💰</div>
-        <h2>Financials</h2>
-      </div>
-
-      <table class="budget-table">
-        <thead>
-          <tr>
-            <th>Line Item</th>
-            <th>Notes</th>
-            <th class="amount">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Foundation + Documents Package</strong></td>
-            <td>5 pages, CMS, document management, announcements, board directory</td>
-            <td class="amount">$4,200</td>
-          </tr>
-          <tr class="total-row">
-            <td><strong>Total Contract</strong></td>
-            <td></td>
-            <td class="amount"><strong>$4,200</strong></td>
-          </tr>
-          <tr class="paid-row">
-            <td>✅ Deposit Received</td>
-            <td>Check via mail — arrived ~March 31, 2025. USB drive also included.</td>
-            <td class="amount">$2,100</td>
-          </tr>
-          <tr>
-            <td><strong>Balance Due at Launch</strong></td>
-            <td>Due when site goes live</td>
-            <td class="amount"><strong>$2,100</strong></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="card" style="margin-top:16px;">
-        <h3>Ongoing / Separate Costs (client pays directly)</h3>
-        <div class="data-row">
-          <span class="data-label">Hosting</span>
-          <span class="data-value">$20/month — paid directly to Vercel by village (includes SSL, analytics)</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Domain</span>
-          <span class="data-value">villageofhancock.org — being transferred; client was paying ~$250/yr. They can keep renewing wherever or transfer to new registrar.</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Previous Platform</span>
-          <span class="data-value">~$300/yr — client needs to cancel this. Remind them to not let it renew.</span>
-        </div>
-      </div>
-
-      <div class="callout success">
-        <span class="callout-icon">📊</span>
-        <div class="callout-body">
-          <strong>Value Story (for future reference)</strong>
-          <span>They were paying ~$550/yr for a broken site. New cost: $20/month ($240/yr) for a custom site they own. That's a savings of $310/year, every year, forever — on top of actually having a site that works.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- CLIENT HISTORY TIMELINE -->
-    <section id="history">
-      <div class="section-header">
-        <div class="section-icon">🗓️</div>
-        <h2>Client Journey Timeline</h2>
-      </div>
-
-      <div class="callout yellow">
-        <span class="callout-icon">⏱️</span>
-        <div class="callout-body">
-          <strong>6-month sale cycle</strong>
-          <span>First contact September 24, 2025. Board approved Option B on March 24, 2025. Deposit in hand March 31, 2025. Long runway driven by board decision-making process, budget hesitation, and a rescheduled board meeting due to weather.</span>
-        </div>
-      </div>
-
-      <div class="timeline">
-        <div class="timeline-item complete">
-          <div class="timeline-date">Sep 24, 2025</div>
-          <div class="timeline-title">Initial Contact</div>
-          <div class="timeline-desc">Jillian Steele submitted contact form. Trustee requesting quote for village website. Replied same day, scheduled call for Sep 25 at 1pm.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Sep 25, 2025</div>
-          <div class="timeline-title">Discovery Call</div>
-          <div class="timeline-desc">Missed 1pm call — Jillian was on another call. Connected at 2pm. Discussed needs, SSL issues, payment processing. Follow-up: asked about bank's municipal bill pay portal (they don't have one).</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Oct 1, 2025</div>
-          <div class="timeline-title">Full Proposal Sent</div>
-          <div class="timeline-desc">Delivered $6,200 proposal (7 pages + payment integration + photography). Targeted October 20 board meeting for approval.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Oct 14, 2025</div>
-          <div class="timeline-title">Pre-Meeting Check-In</div>
-          <div class="timeline-desc">Jillian asked for sample site to show board — nothing like this in portfolio. Built two custom homepage concepts at village-of-hancock.latzwebdesign.com instead. She loved it.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Oct 17, 2025</div>
-          <div class="timeline-title">Mockup Concepts Delivered</div>
-          <div class="timeline-desc">Two live concept designs sent. Jillian confirmed domain transfer (villageofhancock.org) is possible. Board meeting was Oct 20.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Oct–Nov 2025</div>
-          <div class="timeline-title">Follow-Up Period</div>
-          <div class="timeline-desc">Oct 27 + Nov 12 check-ins. Board discussion ongoing — no response. Budget was the barrier.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Mar 10, 2026</div>
-          <div class="timeline-title">Jillian Re-Engages</div>
-          <div class="timeline-desc">Jillian reached back out asking if scope could be trimmed to fit budget. Responded same day with 3 tiered options ($2,800 / $4,200 / custom). Board meeting scheduled for following Monday.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Mar 18, 2026</div>
-          <div class="timeline-title">Board Meeting Rescheduled</div>
-          <div class="timeline-desc">Weather caused rescheduled meeting. Jillian said she'd follow up the next week.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Mar 24, 2026</div>
-          <div class="timeline-title">🎉 Board Approved Option B</div>
-          <div class="timeline-desc">Board voted to approve Foundation + Documents package at $4,200. Jillian confirmed via email. Payment structure confirmed: 50/50 split. Invoice sent via PayPal ($2,100).</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Mar 25, 2026</div>
-          <div class="timeline-title">Kickoff Email Sent</div>
-          <div class="timeline-desc">Invoice sent. Content wishlist given to Jillian (photos, board info, agendas/minutes, ordinances, domain login). Offered to pick up check in Plainfield on the 26th.</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-date">Mar 26, 2026</div>
-          <div class="timeline-title">Check Mailed by Clerk</div>
-          <div class="timeline-desc">Clerk had check ready — mailed instead of in-person pickup.</div>
-        </div>
-        <div class="timeline-item active">
-          <div class="timeline-date">Mar 31, 2026</div>
-          <div class="timeline-title">✅ Deposit Received — PROJECT LIVE</div>
-          <div class="timeline-desc">Check + USB drive arrived. Envelope was ripped open — confirming with Jillian nothing was lost. USB drive contents TBD. Project is now active.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCOPE & PAGES -->
-    <section id="scope">
-      <div class="section-header">
-        <div class="section-icon">📐</div>
-        <h2>Scope & Pages</h2>
-      </div>
-
-      <div class="callout info">
-        <span class="callout-icon">📋</span>
-        <div class="callout-body">
-          <strong>Approved Scope: Foundation + Documents (Option B)</strong>
-          <span>5 pages. CMS-managed content throughout. Designed for 60+ audience: large fonts, high contrast, ADA/WCAG compliant. Mobile-responsive. Board transition-proof.</span>
-        </div>
-      </div>
-
-      <div class="two-col">
-        <div class="page-card">
-          <span class="page-badge badge-static">Static</span>
-          <h4>Home</h4>
-          <ul>
-            <li>Welcome message / village overview</li>
-            <li>Hero image (Pine Lake or Whistler Mounds)</li>
-            <li>Quick links: announcements, meeting dates</li>
-            <li>Upcoming events preview</li>
-            <li>Mobile-first, accessible design</li>
-          </ul>
-        </div>
-
-        <div class="page-card">
-          <span class="page-badge badge-static">Static</span>
-          <h4>About Hancock</h4>
-          <ul>
-            <li>Village history + character</li>
-            <li>Pine Lake, Fish Lake, Whistler Mounds Park info</li>
-            <li>Services and amenities overview</li>
-            <li>What makes Hancock special</li>
-          </ul>
-        </div>
-
-        <div class="page-card">
-          <span class="page-badge badge-cms">CMS Managed</span>
-          <h4>Contact</h4>
-          <ul>
-            <li>Board members: name, role, click-to-email</li>
-            <li>Click-to-call phone numbers</li>
-            <li>Office hours + location</li>
-            <li>Simple contact form (general inquiries)</li>
-          </ul>
-        </div>
-
-        <div class="page-card">
-          <span class="page-badge badge-cms">CMS Managed</span>
-          <h4>Agendas & Minutes</h4>
-          <ul>
-            <li>Three sections: Upcoming, Recent, Archive by Year</li>
-            <li>Simple PDF upload via CMS</li>
-            <li>Each entry: title, meeting date, PDF download</li>
-            <li>Organized — no clutter</li>
-          </ul>
-        </div>
-
-        <div class="page-card">
-          <span class="page-badge badge-cms">CMS Managed</span>
-          <h4>Ordinances</h4>
-          <ul>
-            <li>Table: Number | Title | Date Passed | Download</li>
-            <li>PDF upload system for clerk</li>
-            <li>Clear organization for resident reference</li>
-          </ul>
-        </div>
-
-        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
-          <span class="page-badge badge-gray">Not in Scope</span>
-          <h4>News &amp; Notices / Events</h4>
-          <ul>
-            <li>Was in $6,200 proposal — not in Option B</li>
-            <li>Could be added as upsell after launch</li>
-            <li>Payment integration also not in scope</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:8px;">
-        <h3>CMS Overview</h3>
-        <div class="data-row">
-          <span class="data-label">Platform</span>
-          <span class="data-value">Sanity — custom schema, simple forms designed for clerk/volunteer use</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Who Uses It</span>
-          <span class="data-value">Clerk + trustees. Any new board member should be able to pick it up with the CMS guide.</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Manageable Content</span>
-          <span class="data-value">Board directory, agendas/minutes, ordinances</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Training</span>
-          <span class="data-value">CMS guide (HTML + .docx) to be delivered at launch. Training session to be scheduled.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTENT NEEDED -->
-    <section id="content">
-      <div class="section-header">
-        <div class="section-icon">📦</div>
-        <h2>Content Needed from Client</h2>
-      </div>
-
-      <div class="callout warn">
-        <span class="callout-icon">⚠️</span>
-        <div class="callout-body">
-          <strong>Content delivery = timeline driver</strong>
-          <span>The faster Jillian delivers this, the faster we launch. Prompt content = 3–4 weeks. Slow content = 6–8 weeks. Set clear expectations.</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Content Checklist</h3>
-        <ul class="checklist">
-          <li>
-            <span class="check-icon">📸</span>
-            <div>
-              <strong>Photos</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Village scenes, lakes, park, community events (street dance, farmers market). Jillian has some. USB drive may have more — check contents.</span>
-            </div>
-            <span class="check-status"><span class="pill pill-orange">Partial — USB arrived</span></span>
-          </li>
-          <li>
-            <span class="check-icon">👥</span>
-            <div>
-              <strong>Board Member Directory</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Names, roles, email addresses for all current board members</span>
-            </div>
-            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
-          </li>
-          <li>
-            <span class="check-icon">📄</span>
-            <div>
-              <strong>Meeting Agendas & Minutes (PDFs)</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Recent ones to start — don't need full archive before launch</span>
-            </div>
-            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
-          </li>
-          <li>
-            <span class="check-icon">📜</span>
-            <div>
-              <strong>Ordinances (PDFs)</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Current ordinances with ordinance numbers, titles, dates passed</span>
-            </div>
-            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
-          </li>
-          <li>
-            <span class="check-icon">✍️</span>
-            <div>
-              <strong>Welcome Message / Village Overview</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Doesn't need to be perfect — rough thoughts, bullet points, phrases. Jordan will craft the copy.</span>
-            </div>
-            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
-          </li>
-          <li>
-            <span class="check-icon">🌐</span>
-            <div>
-              <strong>Domain Registrar Login</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Login credentials for wherever villageofhancock.org is registered. Jordan will walk them through what's needed.</span>
-            </div>
-            <span class="check-status"><span class="pill pill-orange">Requested — awaiting</span></span>
-          </li>
-          <li>
-            <span class="check-icon">🎨</span>
-            <div>
-              <strong>Design Direction Preference</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Which of the two mockup concepts (village-of-hancock.latzwebdesign.com) felt more like Hancock? Get this ASAP.</span>
-            </div>
-            <span class="check-status"><span class="pill pill-orange">Requested — awaiting</span></span>
-          </li>
-          <li>
-            <span class="check-icon">💾</span>
-            <div>
-              <strong>USB Drive Contents</strong><br>
-              <span style="font-size:12px;color:var(--gray-600);">Unknown — arrived with deposit. May contain documents, photos, existing content. Review immediately.</span>
-            </div>
-            <span class="check-status"><span class="pill pill-teal">In Hand — Review</span></span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- TECHNICAL -->
-    <section id="technical">
-      <div class="section-header">
-        <div class="section-icon">⚙️</div>
-        <h2>Technical Specifications</h2>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <h3>Stack</h3>
-          <div class="data-row">
-            <span class="data-label">Framework</span>
-            <span class="data-value">Next.js 13+ (App Router)</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Frontend</span>
-            <span class="data-value">React + Tailwind CSS</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">CMS</span>
-            <span class="data-value">Sanity — custom schemas</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Hosting</span>
-            <span class="data-value">Vercel ($20/mo, client pays directly)</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">SSL</span>
-            <span class="data-value">Auto-renewal via Vercel (fixes current error permanently)</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Domain & Migration</h3>
-          <div class="data-row">
-            <span class="data-label">Current Domain</span>
-            <span class="data-value">villageofhancock.org</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Transfer Plan</span>
-            <span class="data-value">Transfer or point DNS to Vercel. Jordan handles logistics.</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Old Platform</span>
-            <span class="data-value">Client needs to cancel existing $300/yr plan — advise them before domain transfer</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">Dev URL</span>
-            <span class="data-value">village-of-hancock.latzwebdesign.com (mockups live here)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Accessibility Requirements</h3>
-        <div class="data-row">
-          <span class="data-label">Standard</span>
-          <span class="data-value">ADA / WCAG 2.1 AA compliant</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Typography</span>
-          <span class="data-value">Large readable fonts — no squinting. Minimum 16px body text.</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Color Contrast</span>
-          <span class="data-value">High contrast — readable in any lighting on any device</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Navigation</span>
-          <span class="data-value">Simple, clear — no hidden menus, no tech barriers</span>
-        </div>
-        <div class="data-row">
-          <span class="data-label">Mobile</span>
-          <span class="data-value">Click-to-call numbers, touch-friendly buttons — works on any device without apps</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- TIMELINE -->
-    <section id="timeline">
-      <div class="section-header">
-        <div class="section-icon">🚀</div>
-        <h2>Project Timeline</h2>
-      </div>
-
-      <div class="callout success">
-        <span class="callout-icon">✅</span>
-        <div class="callout-body">
-          <strong>Project started March 31, 2026 — deposit in hand</strong>
-          <span>Target: 3–5 weeks with prompt content delivery. Max 8 weeks if content is slow.</span>
-        </div>
-      </div>
-
-      <div class="phase">
-        <div class="phase-num">01</div>
-        <div>
-          <div class="weeks">Week 1 — NOW</div>
-          <h4>Setup & Content Gathering</h4>
-          <ul>
-            <li>Review USB drive contents</li>
-            <li>Get design direction preference from Jillian (which mockup felt like Hancock)</li>
-            <li>Send formal content checklist to Jillian</li>
-            <li>Set up project repo, Vercel project, Sanity project</li>
-            <li>Coordinate domain transfer logistics</li>
-            <li>Advise client to cancel old platform before it renews</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="phase">
-        <div class="phase-num">02</div>
-        <div>
-          <div class="weeks">Weeks 1–3</div>
-          <h4>Design & Development</h4>
-          <ul>
-            <li>Build homepage + about page (static)</li>
-            <li>Build contact page with board directory (CMS)</li>
-            <li>Build agendas/minutes system (CMS + PDF upload)</li>
-            <li>Build ordinances system (CMS + PDF upload)</li>
-            <li>Share live dev link for Jillian to review as it's built</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="phase">
-        <div class="phase-num">03</div>
-        <div>
-          <div class="weeks">Weeks 3–4</div>
-          <h4>Content Integration & Refinement</h4>
-          <ul>
-            <li>Populate real content as it arrives from Jillian</li>
-            <li>Integrate photos (from USB + any sourced images)</li>
-            <li>Implement feedback from Jillian's reviews</li>
-            <li>Accessibility pass — fonts, contrast, mobile</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="phase">
-        <div class="phase-num">04</div>
-        <div>
-          <div class="weeks">Week 4–5</div>
-          <h4>Finalization & Launch</h4>
-          <ul>
-            <li>Final review with Jillian</li>
-            <li>Domain transfer / DNS cutover</li>
-            <li>Training session with clerk/board</li>
-            <li>CMS guide delivered (HTML + .docx)</li>
-            <li>Site goes live — final $2,100 invoice sent</li>
-            <li>Post-launch check-in scheduled</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- UPSELLS -->
-    <section id="upsells">
-      <div class="section-header">
-        <div class="section-icon">📈</div>
-        <h2>Future Upsells & Add-Ons</h2>
-      </div>
-
-      <div class="callout info">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Best window: 3–6 months post-launch, once they're comfortable using the CMS</strong>
-          <span>Don't pitch these at launch — let the site prove its value first. Come back with a check-in email and plant the seed.</span>
-        </div>
-      </div>
-
-      <div class="three-col">
-        <div class="upsell-card">
-          <h4>💳 Online Payment Integration</h4>
-          <div class="price">~$800–$1,200</div>
-          <p>Square integration for water bills + recycling fees. Was in original $6,200 proposal. Most natural upsell — they mentioned it early as a need. Bank has no municipal portal, so Square is the path.</p>
-        </div>
-        <div class="upsell-card">
-          <h4>📰 News & Notices System</h4>
-          <div class="price">~$400–$600</div>
-          <p>CMS-managed village bulletin — road closures, recycling updates, meeting notices. Was in original scope, cut from Option B. Clerk would love this tool once they're comfortable with the site.</p>
-        </div>
-        <div class="upsell-card">
-          <h4>📅 Events Calendar</h4>
-          <div class="price">~$400–$600</div>
-          <p>Upcoming village events, board meeting schedule, links to agendas. Street dance, farmers market, trick-or-treat hours. Also cut from Option B — easy add-on.</p>
-        </div>
-        <div class="upsell-card">
-          <h4>🔍 Enhanced Document Archive</h4>
-          <div class="price">$450</div>
-          <p>Advanced search + filtering for historical agendas, minutes, and ordinances by year/keyword. Directly from original proposal. Worth pitching once the document library grows.</p>
-        </div>
-        <div class="upsell-card">
-          <h4>📸 Professional Photography</h4>
-          <div class="price">~$600–$800</div>
-          <p>Was included in original $6,200 proposal — cut when scope was reduced. 15–20 images of Pine Lake, Fish Lake, Whistler Mounds, village scenes. Licensed for web + print.</p>
-        </div>
-        <div class="upsell-card">
-          <h4>🔧 Annual Maintenance / Retainer</h4>
-          <div class="price">~$500–$800/yr</div>
-          <p>Light annual retainer: updates, page additions, adjustments as village needs grow. Good fit for a board that has high turnover and limited internal tech capacity.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- NOTES -->
-    <section id="notes">
-      <div class="section-header">
-        <div class="section-icon">📝</div>
-        <h2>Notes & Observations</h2>
-      </div>
-
-      <div class="note-block">
-        <div class="note-date">March 31, 2026 — Project Kickoff</div>
-        <p>6 months from first contact to deposit. Long cycle driven entirely by board decision process — not disinterest. Jillian was always engaged and responsive; the board needed time and a lower price point. Re-engagement in March came from Jillian herself, which is a great sign — she believed in this.</p>
-      </div>
-
-      <div class="note-block">
-        <div class="note-date">Design Concept Gamble — Oct 17, 2025</div>
-        <p>Built two live mockup concepts at village-of-hancock.latzwebdesign.com with no charge, specifically because Jillian needed something to show the board. No municipal portfolio to reference. Risky move but it paid off — Jillian said "this is wonderful, thank you for going above and beyond." That likely kept us in the running during the 5-month gap.</p>
-      </div>
-
-      <div class="note-block">
-        <div class="note-date">Content Strategy Note</div>
-        <p>Copy will need to be written from scratch or near-scratch. Jillian mentioned they'd work on a welcome message but it won't be polished. Budget for copywriting time into the build — this is a municipality with no marketing background. The "rough thoughts / bullet points" approach is the right ask.</p>
-      </div>
-
-      <div class="note-block">
-        <div class="note-date">Board Communication Note</div>
-        <p>All communication goes through Jillian. She's the liaison to the full board. The clerk handles financials (mailed check). Don't contact the clerk directly unless Jillian introduces her. Be mindful that anything major may need board approval — especially add-ons.</p>
-      </div>
-
-      <div class="note-block">
-        <div class="note-date">USB Drive — Unknown Contents</div>
-        <p>A USB drive arrived with the deposit envelope. Envelope was ripped. Contents unknown — could be photos, documents, existing content. Check immediately and confirm with Jillian what it contains and that nothing was lost in transit.</p>
-      </div>
-    </section>
-
-  </div>
-</div>
-
-<script>
-  // Active nav on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === '#' + entry.target.id) {
-            link.classList.add('active');
-          }
-        });
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-
-  sections.forEach(s => observer.observe(s));
-</script>
-
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Village of Hancock — Project Overview | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--navy: #0d1b2a;
+				--teal: #18a1ad;
+				--teal-light: #e8f7f8;
+				--teal-mid: #b3e5e9;
+				--yellow: #ffee65;
+				--white: #ffffff;
+				--off-white: #f7f9fa;
+				--gray-100: #f0f2f4;
+				--gray-200: #e2e8f0;
+				--gray-400: #94a3b8;
+				--gray-600: #475569;
+				--gray-800: #1e293b;
+				--text: #0d1b2a;
+				--green: #16a34a;
+				--green-light: #dcfce7;
+				--orange: #ea580c;
+				--orange-light: #fff7ed;
+				--red: #dc2626;
+				--red-light: #fef2f2;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--off-white);
+				color: var(--text);
+				line-height: 1.6;
+				font-size: 15px;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 240px;
+				height: 100vh;
+				background: var(--navy);
+				padding: 32px 0;
+				overflow-y: auto;
+				z-index: 100;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.sidebar-brand {
+				padding: 0 24px 24px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				margin-bottom: 20px;
+			}
+
+			.sidebar-brand .lwd {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--teal);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-brand .client-name {
+				font-family: 'Fraunces', serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--white);
+				line-height: 1.2;
+			}
+
+			.sidebar-brand .status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: var(--green);
+				color: white;
+				font-size: 10px;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 3px 10px;
+				border-radius: 20px;
+				margin-top: 10px;
+			}
+
+			.status-pill::before {
+				content: '';
+				width: 6px;
+				height: 6px;
+				background: white;
+				border-radius: 50%;
+				animation: pulse 2s infinite;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.4;
+				}
+			}
+
+			.nav-section-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--gray-400);
+				padding: 8px 24px 4px;
+				margin-top: 8px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 9px 24px;
+				color: rgba(255, 255, 255, 0.6);
+				text-decoration: none;
+				font-size: 13px;
+				font-weight: 400;
+				transition: all 0.15s;
+				border-left: 3px solid transparent;
+			}
+
+			.nav-link:hover {
+				color: white;
+				background: rgba(255, 255, 255, 0.05);
+				border-left-color: rgba(24, 161, 173, 0.5);
+			}
+
+			.nav-link.active {
+				color: var(--teal);
+				background: rgba(24, 161, 173, 0.08);
+				border-left-color: var(--teal);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 14px;
+				width: 18px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				margin-top: auto;
+				padding: 20px 24px;
+				border-top: 1px solid rgba(255, 255, 255, 0.08);
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: rgba(255, 255, 255, 0.3);
+				letter-spacing: 0.08em;
+				line-height: 1.8;
+			}
+
+			/* ── MAIN CONTENT ── */
+			.main {
+				margin-left: 240px;
+				min-height: 100vh;
+			}
+
+			/* ── PAGE HEADER ── */
+			.page-header {
+				background: var(--navy);
+				padding: 48px 56px 40px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.page-header::after {
+				content: 'HANCOCK';
+				position: absolute;
+				right: -20px;
+				top: 50%;
+				transform: translateY(-50%);
+				font-family: 'Fraunces', serif;
+				font-size: 120px;
+				font-weight: 700;
+				color: rgba(255, 255, 255, 0.03);
+				letter-spacing: -4px;
+				pointer-events: none;
+				user-select: none;
+			}
+
+			.page-header .overline {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--teal);
+				margin-bottom: 12px;
+			}
+
+			.page-header h1 {
+				font-family: 'Fraunces', serif;
+				font-size: 36px;
+				font-weight: 600;
+				color: white;
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.page-header .sub {
+				color: rgba(255, 255, 255, 0.5);
+				font-size: 14px;
+			}
+
+			.header-meta {
+				display: flex;
+				gap: 32px;
+				margin-top: 28px;
+				flex-wrap: wrap;
+			}
+
+			.header-meta-item {
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+
+			.header-meta-item .label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+			}
+
+			.header-meta-item .value {
+				font-size: 14px;
+				font-weight: 500;
+				color: white;
+			}
+
+			.header-meta-item .value a {
+				color: var(--teal);
+				text-decoration: none;
+			}
+
+			/* ── CONTENT SECTIONS ── */
+			.content {
+				padding: 40px 56px 80px;
+			}
+
+			section {
+				margin-bottom: 56px;
+				scroll-margin-top: 24px;
+			}
+
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 24px;
+				padding-bottom: 12px;
+				border-bottom: 2px solid var(--teal);
+			}
+
+			.section-header h2 {
+				font-family: 'Fraunces', serif;
+				font-size: 22px;
+				font-weight: 600;
+				color: var(--navy);
+			}
+
+			.section-icon {
+				width: 32px;
+				height: 32px;
+				background: var(--teal);
+				border-radius: 8px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 15px;
+				flex-shrink: 0;
+			}
+
+			/* ── CARDS & GRIDS ── */
+			.card {
+				background: white;
+				border-radius: 10px;
+				padding: 24px;
+				border: 1px solid var(--gray-200);
+				margin-bottom: 16px;
+			}
+
+			.card h3 {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--teal);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				margin-bottom: 12px;
+			}
+
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16px;
+			}
+
+			.three-col {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16px;
+			}
+
+			/* ── DATA ROWS ── */
+			.data-row {
+				display: grid;
+				grid-template-columns: 180px 1fr;
+				gap: 12px;
+				align-items: start;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.data-row:last-child {
+				border-bottom: none;
+			}
+
+			.data-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 11px;
+				color: var(--gray-400);
+				letter-spacing: 0.06em;
+				padding-top: 1px;
+				text-transform: uppercase;
+			}
+
+			.data-value {
+				font-size: 14px;
+				color: var(--text);
+				font-weight: 500;
+			}
+
+			.data-value a {
+				color: var(--teal);
+				text-decoration: none;
+			}
+
+			/* ── CALLOUT BOXES ── */
+			.callout {
+				border-radius: 8px;
+				padding: 16px 20px;
+				margin-bottom: 16px;
+				display: flex;
+				gap: 12px;
+				align-items: flex-start;
+			}
+
+			.callout-icon {
+				font-size: 18px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.callout-body {
+				flex: 1;
+			}
+			.callout-body strong {
+				display: block;
+				font-size: 13px;
+				font-weight: 600;
+				margin-bottom: 4px;
+			}
+			.callout-body p,
+			.callout-body span {
+				font-size: 13px;
+				line-height: 1.5;
+			}
+
+			.callout.info {
+				background: var(--teal-light);
+				border-left: 4px solid var(--teal);
+			}
+			.callout.warn {
+				background: var(--orange-light);
+				border-left: 4px solid var(--orange);
+			}
+			.callout.success {
+				background: var(--green-light);
+				border-left: 4px solid var(--green);
+			}
+			.callout.alert {
+				background: var(--red-light);
+				border-left: 4px solid var(--red);
+			}
+			.callout.yellow {
+				background: #fffbcc;
+				border-left: 4px solid #d4a800;
+			}
+
+			/* ── HIGHLIGHT BOX ── */
+			.highlight-box {
+				background: var(--yellow);
+				border: 2px solid var(--navy);
+				border-radius: 8px;
+				padding: 20px 24px;
+				margin-bottom: 16px;
+			}
+
+			.highlight-box strong {
+				font-weight: 700;
+			}
+			.highlight-box p {
+				font-size: 14px;
+				margin-top: 8px;
+			}
+
+			/* ── TIMELINE ── */
+			.timeline {
+				position: relative;
+				padding-left: 24px;
+			}
+
+			.timeline::before {
+				content: '';
+				position: absolute;
+				left: 6px;
+				top: 8px;
+				bottom: 8px;
+				width: 2px;
+				background: var(--teal-mid);
+			}
+
+			.timeline-item {
+				position: relative;
+				margin-bottom: 20px;
+				padding-left: 20px;
+			}
+
+			.timeline-item::before {
+				content: '';
+				position: absolute;
+				left: -18px;
+				top: 6px;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: var(--teal);
+				border: 2px solid white;
+				box-shadow: 0 0 0 2px var(--teal);
+			}
+
+			.timeline-item.complete::before {
+				background: var(--green);
+				box-shadow: 0 0 0 2px var(--green);
+			}
+			.timeline-item.pending::before {
+				background: var(--gray-400);
+				box-shadow: 0 0 0 2px var(--gray-400);
+			}
+			.timeline-item.active::before {
+				background: var(--teal);
+				box-shadow: 0 0 0 3px var(--teal-mid);
+			}
+
+			.timeline-date {
+				font-family: 'DM Mono', monospace;
+				font-size: 11px;
+				color: var(--teal);
+				letter-spacing: 0.06em;
+				font-weight: 500;
+			}
+
+			.timeline-title {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+				margin: 2px 0;
+			}
+
+			.timeline-desc {
+				font-size: 13px;
+				color: var(--gray-600);
+				line-height: 1.5;
+			}
+
+			/* ── BUDGET TABLE ── */
+			.budget-table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: 14px;
+			}
+
+			.budget-table th {
+				background: var(--navy);
+				color: white;
+				padding: 10px 16px;
+				text-align: left;
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 500;
+			}
+
+			.budget-table td {
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.budget-table tr:last-child td {
+				border-bottom: none;
+			}
+			.budget-table tr:nth-child(even) td {
+				background: var(--off-white);
+			}
+
+			.budget-table .total-row td {
+				background: var(--teal-light) !important;
+				font-weight: 700;
+				border-top: 2px solid var(--teal);
+				font-size: 15px;
+			}
+
+			.budget-table .paid-row td {
+				background: var(--green-light) !important;
+				color: var(--green);
+				font-weight: 600;
+			}
+
+			.amount {
+				text-align: right;
+				font-family: 'DM Mono', monospace;
+				font-weight: 500;
+			}
+
+			/* ── PAGE SCOPE GRID ── */
+			.page-card {
+				background: white;
+				border: 1px solid var(--gray-200);
+				border-radius: 10px;
+				padding: 20px;
+				border-top: 3px solid var(--teal);
+			}
+
+			.page-card h4 {
+				font-family: 'Fraunces', serif;
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--navy);
+				margin-bottom: 10px;
+			}
+
+			.page-card ul {
+				list-style: none;
+				padding: 0;
+			}
+
+			.page-card ul li {
+				font-size: 13px;
+				color: var(--gray-600);
+				padding: 4px 0;
+				padding-left: 16px;
+				position: relative;
+				line-height: 1.4;
+			}
+
+			.page-card ul li::before {
+				content: '→';
+				position: absolute;
+				left: 0;
+				color: var(--teal);
+				font-size: 11px;
+			}
+
+			.page-badge {
+				display: inline-block;
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				font-weight: 500;
+				padding: 2px 8px;
+				border-radius: 20px;
+				margin-bottom: 8px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			.badge-cms {
+				background: var(--teal-light);
+				color: var(--teal);
+			}
+			.badge-static {
+				background: var(--gray-100);
+				color: var(--gray-600);
+			}
+
+			/* ── CONTENT CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+			.checklist li {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+				padding: 8px 0;
+				border-bottom: 1px solid var(--gray-100);
+				font-size: 13px;
+			}
+			.checklist li:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 15px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.check-status {
+				margin-left: auto;
+				flex-shrink: 0;
+			}
+
+			.pill {
+				display: inline-block;
+				font-size: 10px;
+				font-weight: 600;
+				padding: 2px 8px;
+				border-radius: 20px;
+				font-family: 'DM Mono', monospace;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.pill-green {
+				background: var(--green-light);
+				color: var(--green);
+			}
+			.pill-orange {
+				background: var(--orange-light);
+				color: var(--orange);
+			}
+			.pill-gray {
+				background: var(--gray-100);
+				color: var(--gray-600);
+			}
+			.pill-teal {
+				background: var(--teal-light);
+				color: var(--teal);
+			}
+
+			/* ── UPSELL ── */
+			.upsell-card {
+				background: white;
+				border: 2px dashed var(--gray-200);
+				border-radius: 10px;
+				padding: 20px;
+				transition: border-color 0.2s;
+			}
+
+			.upsell-card:hover {
+				border-color: var(--teal);
+			}
+
+			.upsell-card h4 {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.upsell-card .price {
+				font-family: 'DM Mono', monospace;
+				font-size: 13px;
+				color: var(--teal);
+				font-weight: 500;
+				margin-bottom: 8px;
+			}
+
+			.upsell-card p {
+				font-size: 13px;
+				color: var(--gray-600);
+			}
+
+			/* ── PHASE BLOCKS ── */
+			.phase {
+				background: white;
+				border: 1px solid var(--gray-200);
+				border-radius: 10px;
+				padding: 20px 24px;
+				margin-bottom: 12px;
+				display: grid;
+				grid-template-columns: 80px 1fr;
+				gap: 20px;
+				align-items: start;
+			}
+
+			.phase-num {
+				font-family: 'Fraunces', serif;
+				font-size: 48px;
+				font-weight: 700;
+				color: var(--teal-mid);
+				line-height: 1;
+				text-align: center;
+			}
+
+			.phase h4 {
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--navy);
+				margin-bottom: 4px;
+			}
+
+			.phase .weeks {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--teal);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.phase ul {
+				list-style: none;
+				padding: 0;
+			}
+			.phase ul li {
+				font-size: 13px;
+				color: var(--gray-600);
+				padding: 3px 0;
+				padding-left: 14px;
+				position: relative;
+			}
+			.phase ul li::before {
+				content: '·';
+				position: absolute;
+				left: 4px;
+				color: var(--teal);
+			}
+
+			/* ── NOTES AREA ── */
+			.note-block {
+				background: #fffef0;
+				border: 1px solid #e6d96b;
+				border-radius: 8px;
+				padding: 16px 20px;
+				margin-bottom: 12px;
+			}
+
+			.note-block .note-date {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: #a07d00;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+			}
+
+			.note-block p {
+				font-size: 13px;
+				color: var(--gray-800);
+				line-height: 1.6;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 900px) {
+				.sidebar {
+					width: 200px;
+				}
+				.main {
+					margin-left: 200px;
+				}
+				.two-col,
+				.three-col {
+					grid-template-columns: 1fr;
+				}
+				.page-header,
+				.content {
+					padding-left: 32px;
+					padding-right: 32px;
+				}
+				.phase {
+					grid-template-columns: 56px 1fr;
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.main {
+					margin-left: 0;
+				}
+				.page-header,
+				.content {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+
+				/* Stack label/value pairs vertically on mobile */
+				.data-row {
+					grid-template-columns: 1fr;
+					gap: 2px;
+					padding: 10px 0;
+				}
+
+				.data-label {
+					font-size: 10px;
+				}
+
+				/* Stack header meta items in a 2-col grid */
+				.header-meta {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					gap: 16px;
+				}
+
+				/* Stack checklist items nicely */
+				.checklist li {
+					flex-wrap: wrap;
+				}
+
+				.check-status {
+					margin-left: 0;
+					margin-top: 4px;
+					width: 100%;
+				}
+
+				/* Budget table: shrink padding */
+				.budget-table th,
+				.budget-table td {
+					padding: 8px 10px;
+					font-size: 12px;
+				}
+
+				.amount {
+					font-size: 12px;
+				}
+
+				/* Phase block: stack number on top */
+				.phase {
+					grid-template-columns: 1fr;
+					gap: 0;
+					padding: 16px;
+				}
+
+				.phase-num {
+					font-size: 36px;
+					text-align: left;
+					line-height: 1;
+					margin-bottom: 4px;
+				}
+
+				/* Page header title */
+				.page-header h1 {
+					font-size: 26px;
+				}
+				.page-header {
+					padding: 32px 20px 28px;
+				}
+
+				/* Stack callout icon above body text */
+				.callout {
+					flex-direction: column;
+					gap: 6px;
+				}
+
+				.callout-icon {
+					margin-top: 0;
+				}
+			}
+
+			/* ── MOBILE FAB & OVERLAY ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--teal);
+				color: white;
+				border: none;
+				font-size: 22px;
+				line-height: 52px;
+				text-align: center;
+				cursor: pointer;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+				transition:
+					background 0.15s,
+					transform 0.15s;
+			}
+
+			.mobile-fab:active {
+				transform: scale(0.93);
+			}
+
+			.mobile-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 150;
+				opacity: 0;
+				transition: opacity 0.25s;
+				pointer-events: none;
+			}
+
+			.mobile-overlay.active {
+				opacity: 1;
+				pointer-events: all;
+			}
+
+			.sidebar {
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			@media (max-width: 680px) {
+				.mobile-fab {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+				.mobile-overlay {
+					display: block;
+				}
+
+				/* Sidebar slides in from left when open */
+				.sidebar {
+					transform: translateX(-100%);
+					z-index: 200;
+				}
+
+				.sidebar.mobile-open {
+					transform: translateX(0);
+					display: flex;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- SIDEBAR -->
+		<nav class="sidebar">
+			<div class="sidebar-brand">
+				<div class="lwd">Latz Web Design</div>
+				<div class="client-name">Village of Hancock</div>
+				<div class="status-pill">Active Project</div>
+			</div>
+
+			<div class="nav-section-label">Overview</div>
+			<a href="#client" class="nav-link active"
+				><span class="nav-icon">🏛️</span> Client Info</a
+			>
+			<a href="#project" class="nav-link"
+				><span class="nav-icon">📋</span> Project Summary</a
+			>
+			<a href="#financials" class="nav-link"
+				><span class="nav-icon">💰</span> Financials</a
+			>
+			<a href="#history" class="nav-link"
+				><span class="nav-icon">🗓️</span> Client History</a
+			>
+
+			<div class="nav-section-label">Build</div>
+			<a href="#scope" class="nav-link"
+				><span class="nav-icon">📐</span> Scope & Pages</a
+			>
+			<a href="#content" class="nav-link"
+				><span class="nav-icon">📦</span> Content Needed</a
+			>
+			<a href="#technical" class="nav-link"
+				><span class="nav-icon">⚙️</span> Technical</a
+			>
+			<a href="#timeline" class="nav-link"
+				><span class="nav-icon">🚀</span> Timeline</a
+			>
+
+			<div class="nav-section-label">Strategy</div>
+			<a href="#upsells" class="nav-link"
+				><span class="nav-icon">📈</span> Future Upsells</a
+			>
+			<a href="#notes" class="nav-link"
+				><span class="nav-icon">📝</span> Notes</a
+			>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- MAIN -->
+		<div class="main">
+			<!-- PAGE HEADER -->
+			<div class="page-header">
+				<div class="overline">Project Overview · Source of Truth</div>
+				<h1>Village of Hancock</h1>
+				<div class="sub">
+					villageofhancock.org · Foundation + Documents Package
+				</div>
+
+				<div class="header-meta">
+					<div class="header-meta-item">
+						<span class="label">Client</span>
+						<span class="value">Jillian Steele, Trustee</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Contract Value</span>
+						<span class="value">$4,200</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Deposit Received</span>
+						<span class="value">$2,100 ✓</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Balance Due at Launch</span>
+						<span class="value">$2,100</span>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Domain</span>
+						<span class="value"
+							><a href="https://villageofhancock.org" target="_blank"
+								>villageofhancock.org</a
+							></span
+						>
+					</div>
+					<div class="header-meta-item">
+						<span class="label">Contact</span>
+						<span class="value">262-716-3328</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- CONTENT -->
+			<div class="content">
+				<!-- CLIENT INFO -->
+				<section id="client">
+					<div class="section-header">
+						<div class="section-icon">🏛️</div>
+						<h2>Client Information</h2>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<h3>Primary Contact</h3>
+							<div class="data-row">
+								<span class="data-label">Name</span>
+								<span class="data-value">Jillian Steele</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Role</span>
+								<span class="data-value">Village Trustee</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Email</span>
+								<span class="data-value"
+									><a href="mailto:jillianamorton16@gmail.com"
+										>jillianamorton16@gmail.com</a
+									></span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Phone</span>
+								<span class="data-value">262-716-3328</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Day-to-Day Point of Contact</span>
+								<span class="data-value"
+									>Jillian — all design + info questions go through her</span
+								>
+							</div>
+						</div>
+
+						<div class="card">
+							<h3>Organization</h3>
+							<div class="data-row">
+								<span class="data-label">Client Type</span>
+								<span class="data-value">Municipal Government (Village)</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Population</span>
+								<span class="data-value">~416 residents</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Founded</span>
+								<span class="data-value">1902</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Decision Maker</span>
+								<span class="data-value"
+									>Village Board (board vote required)</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Clerk</span>
+								<span class="data-value"
+									>Unnamed — Jillian's point of contact; mailed deposit
+									check</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Current Domain</span>
+								<span class="data-value"
+									>villageofhancock.org (to be transferred)</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>About the Community</h3>
+						<div class="data-row">
+							<span class="data-label">Primary Audience</span>
+							<span class="data-value"
+								>60+ demographic — design for clarity, large fonts, high
+								contrast, ADA/WCAG compliant</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Local Amenities</span>
+							<span class="data-value"
+								>Pine Lake, Fish Lake, Whistler Mounds Park</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Community Events</span>
+							<span class="data-value"
+								>Street dance, farmers market, trick-or-treat (relevant for
+								events + photo content)</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Board Challenge</span>
+							<span class="data-value"
+								>High trustee turnover — CMS must be designed so any new
+								volunteer can take over with minimal training</span
+							>
+						</div>
+					</div>
+
+					<div class="callout warn">
+						<span class="callout-icon">📬</span>
+						<div class="callout-body">
+							<strong>Deposit Package Note</strong>
+							<span
+								>Envelope arrived ripped open. Confirmed contents: check + one
+								USB drive. Jillian confirming nothing else was included — follow
+								up if needed.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- PROJECT SUMMARY -->
+				<section id="project">
+					<div class="section-header">
+						<div class="section-icon">📋</div>
+						<h2>Project Summary</h2>
+					</div>
+
+					<div class="highlight-box">
+						<strong
+							>What was approved: Option B — Foundation + Documents Package @
+							$4,200</strong
+						>
+						<p>
+							5-page custom website with document management
+							(agendas/minutes/ordinances), announcement system, board
+							directory, and CMS. Board voted to approve March 24, 2025.
+							First-class mail deposit received March 31, 2025.
+						</p>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<h3>Why They Came to Us</h3>
+							<ul class="checklist">
+								<li>
+									<span class="check-icon">🔴</span> Current site has SSL
+									certificate errors — residents can't access it
+								</li>
+								<li>
+									<span class="check-icon">🔴</span> Paying ~$550/yr combined
+									(platform $300 + domain $250) for a broken site
+								</li>
+								<li>
+									<span class="check-icon">🔴</span> Paper-based payment process
+									(water bills, recycling fees)
+								</li>
+								<li>
+									<span class="check-icon">🔴</span> No easy access to agendas,
+									minutes, ordinances for residents
+								</li>
+								<li>
+									<span class="check-icon">🔴</span> Board turnover creates
+									institutional knowledge gaps
+								</li>
+							</ul>
+						</div>
+						<div class="card">
+							<h3>What Success Looks Like</h3>
+							<ul class="checklist">
+								<li>
+									<span class="check-icon">✅</span> Residents can actually
+									reach the site — SSL fixed permanently
+								</li>
+								<li>
+									<span class="check-icon">✅</span> Clerk/trustees can update
+									content without Jordan's help
+								</li>
+								<li>
+									<span class="check-icon">✅</span> Documents (agendas,
+									minutes, ordinances) accessible 24/7
+								</li>
+								<li>
+									<span class="check-icon">✅</span> New board members onboard
+									themselves with minimal friction
+								</li>
+								<li>
+									<span class="check-icon">✅</span> No ongoing software fees —
+									just $20/mo hosting to Vercel
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">💡</span>
+						<div class="callout-body">
+							<strong>Payment Integration: NOT in current scope</strong>
+							<span
+								>Online bill pay (water/recycling via Square) was in the
+								original $6,200 proposal but not in Option B. This is a clear
+								future upsell. Note: Village bank does not have a municipal bill
+								pay portal.</span
+							>
+						</div>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">🎨</span>
+						<div class="callout-body">
+							<strong
+								>Design Direction: Ask Jillian which mockup concept she
+								preferred</strong
+							>
+							<span
+								>Two homepage concepts were built at
+								village-of-hancock.latzwebdesign.com — Jillian hasn't responded
+								yet on which direction felt more like "Hancock." Get this answer
+								before building fresh.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- FINANCIALS -->
+				<section id="financials">
+					<div class="section-header">
+						<div class="section-icon">💰</div>
+						<h2>Financials</h2>
+					</div>
+
+					<table class="budget-table">
+						<thead>
+							<tr>
+								<th>Line Item</th>
+								<th>Notes</th>
+								<th class="amount">Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>Foundation + Documents Package</strong></td>
+								<td>
+									5 pages, CMS, document management, announcements, board
+									directory
+								</td>
+								<td class="amount">$4,200</td>
+							</tr>
+							<tr class="total-row">
+								<td><strong>Total Contract</strong></td>
+								<td></td>
+								<td class="amount"><strong>$4,200</strong></td>
+							</tr>
+							<tr class="paid-row">
+								<td>✅ Deposit Received</td>
+								<td>
+									Check via mail — arrived ~March 31, 2025. USB drive also
+									included.
+								</td>
+								<td class="amount">$2,100</td>
+							</tr>
+							<tr>
+								<td><strong>Balance Due at Launch</strong></td>
+								<td>Due when site goes live</td>
+								<td class="amount"><strong>$2,100</strong></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="card" style="margin-top: 16px">
+						<h3>Ongoing / Separate Costs (client pays directly)</h3>
+						<div class="data-row">
+							<span class="data-label">Hosting</span>
+							<span class="data-value"
+								>$20/month — paid directly to Vercel by village (includes SSL,
+								analytics)</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Domain</span>
+							<span class="data-value"
+								>villageofhancock.org — being transferred; client was paying
+								~$250/yr. They can keep renewing wherever or transfer to new
+								registrar.</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Previous Platform</span>
+							<span class="data-value"
+								>~$300/yr — client needs to cancel this. Remind them to not let
+								it renew.</span
+							>
+						</div>
+					</div>
+
+					<div class="callout success">
+						<span class="callout-icon">📊</span>
+						<div class="callout-body">
+							<strong>Value Story (for future reference)</strong>
+							<span
+								>They were paying ~$550/yr for a broken site. New cost:
+								$20/month ($240/yr) for a custom site they own. That's a savings
+								of $310/year, every year, forever — on top of actually having a
+								site that works.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- CLIENT HISTORY TIMELINE -->
+				<section id="history">
+					<div class="section-header">
+						<div class="section-icon">🗓️</div>
+						<h2>Client Journey Timeline</h2>
+					</div>
+
+					<div class="callout yellow">
+						<span class="callout-icon">⏱️</span>
+						<div class="callout-body">
+							<strong>6-month sale cycle</strong>
+							<span
+								>First contact September 24, 2025. Board approved Option B on
+								March 24, 2025. Deposit in hand March 31, 2025. Long runway
+								driven by board decision-making process, budget hesitation, and
+								a rescheduled board meeting due to weather.</span
+							>
+						</div>
+					</div>
+
+					<div class="timeline">
+						<div class="timeline-item complete">
+							<div class="timeline-date">Sep 24, 2025</div>
+							<div class="timeline-title">Initial Contact</div>
+							<div class="timeline-desc">
+								Jillian Steele submitted contact form. Trustee requesting quote
+								for village website. Replied same day, scheduled call for Sep 25
+								at 1pm.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Sep 25, 2025</div>
+							<div class="timeline-title">Discovery Call</div>
+							<div class="timeline-desc">
+								Missed 1pm call — Jillian was on another call. Connected at 2pm.
+								Discussed needs, SSL issues, payment processing. Follow-up:
+								asked about bank's municipal bill pay portal (they don't have
+								one).
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Oct 1, 2025</div>
+							<div class="timeline-title">Full Proposal Sent</div>
+							<div class="timeline-desc">
+								Delivered $6,200 proposal (7 pages + payment integration +
+								photography). Targeted October 20 board meeting for approval.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Oct 14, 2025</div>
+							<div class="timeline-title">Pre-Meeting Check-In</div>
+							<div class="timeline-desc">
+								Jillian asked for sample site to show board — nothing like this
+								in portfolio. Built two custom homepage concepts at
+								village-of-hancock.latzwebdesign.com instead. She loved it.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Oct 17, 2025</div>
+							<div class="timeline-title">Mockup Concepts Delivered</div>
+							<div class="timeline-desc">
+								Two live concept designs sent. Jillian confirmed domain transfer
+								(villageofhancock.org) is possible. Board meeting was Oct 20.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Oct–Nov 2025</div>
+							<div class="timeline-title">Follow-Up Period</div>
+							<div class="timeline-desc">
+								Oct 27 + Nov 12 check-ins. Board discussion ongoing — no
+								response. Budget was the barrier.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 10, 2026</div>
+							<div class="timeline-title">Jillian Re-Engages</div>
+							<div class="timeline-desc">
+								Jillian reached back out asking if scope could be trimmed to fit
+								budget. Responded same day with 3 tiered options ($2,800 /
+								$4,200 / custom). Board meeting scheduled for following Monday.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 18, 2026</div>
+							<div class="timeline-title">Board Meeting Rescheduled</div>
+							<div class="timeline-desc">
+								Weather caused rescheduled meeting. Jillian said she'd follow up
+								the next week.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 24, 2026</div>
+							<div class="timeline-title">🎉 Board Approved Option B</div>
+							<div class="timeline-desc">
+								Board voted to approve Foundation + Documents package at $4,200.
+								Jillian confirmed via email. Payment structure confirmed: 50/50
+								split. Invoice sent via PayPal ($2,100).
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 25, 2026</div>
+							<div class="timeline-title">Kickoff Email Sent</div>
+							<div class="timeline-desc">
+								Invoice sent. Content wishlist given to Jillian (photos, board
+								info, agendas/minutes, ordinances, domain login). Offered to
+								pick up check in Plainfield on the 26th.
+							</div>
+						</div>
+						<div class="timeline-item complete">
+							<div class="timeline-date">Mar 26, 2026</div>
+							<div class="timeline-title">Check Mailed by Clerk</div>
+							<div class="timeline-desc">
+								Clerk had check ready — mailed instead of in-person pickup.
+							</div>
+						</div>
+						<div class="timeline-item active">
+							<div class="timeline-date">Mar 31, 2026</div>
+							<div class="timeline-title">
+								✅ Deposit Received — PROJECT LIVE
+							</div>
+							<div class="timeline-desc">
+								Check + USB drive arrived. Envelope was ripped open — confirming
+								with Jillian nothing was lost. USB drive contents TBD. Project
+								is now active.
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- SCOPE & PAGES -->
+				<section id="scope">
+					<div class="section-header">
+						<div class="section-icon">📐</div>
+						<h2>Scope & Pages</h2>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">📋</span>
+						<div class="callout-body">
+							<strong>Approved Scope: Foundation + Documents (Option B)</strong>
+							<span
+								>5 pages. CMS-managed content throughout. Designed for 60+
+								audience: large fonts, high contrast, ADA/WCAG compliant.
+								Mobile-responsive. Board transition-proof.</span
+							>
+						</div>
+					</div>
+
+					<div class="two-col">
+						<div class="page-card">
+							<span class="page-badge badge-static">Static</span>
+							<h4>Home</h4>
+							<ul>
+								<li>Welcome message / village overview</li>
+								<li>Hero image (Pine Lake or Whistler Mounds)</li>
+								<li>Quick links: announcements, meeting dates</li>
+								<li>Upcoming events preview</li>
+								<li>Mobile-first, accessible design</li>
+							</ul>
+						</div>
+
+						<div class="page-card">
+							<span class="page-badge badge-static">Static</span>
+							<h4>About Hancock</h4>
+							<ul>
+								<li>Village history + character</li>
+								<li>Pine Lake, Fish Lake, Whistler Mounds Park info</li>
+								<li>Services and amenities overview</li>
+								<li>What makes Hancock special</li>
+							</ul>
+						</div>
+
+						<div class="page-card">
+							<span class="page-badge badge-cms">CMS Managed</span>
+							<h4>Contact</h4>
+							<ul>
+								<li>Board members: name, role, click-to-email</li>
+								<li>Click-to-call phone numbers</li>
+								<li>Office hours + location</li>
+								<li>Simple contact form (general inquiries)</li>
+							</ul>
+						</div>
+
+						<div class="page-card">
+							<span class="page-badge badge-cms">CMS Managed</span>
+							<h4>Agendas & Minutes</h4>
+							<ul>
+								<li>Three sections: Upcoming, Recent, Archive by Year</li>
+								<li>Simple PDF upload via CMS</li>
+								<li>Each entry: title, meeting date, PDF download</li>
+								<li>Organized — no clutter</li>
+							</ul>
+						</div>
+
+						<div class="page-card">
+							<span class="page-badge badge-cms">CMS Managed</span>
+							<h4>Ordinances</h4>
+							<ul>
+								<li>Table: Number | Title | Date Passed | Download</li>
+								<li>PDF upload system for clerk</li>
+								<li>Clear organization for resident reference</li>
+							</ul>
+						</div>
+
+						<div
+							class="page-card"
+							style="border-top-color: var(--gray-400); opacity: 0.6"
+						>
+							<span class="page-badge badge-gray">Not in Scope</span>
+							<h4>News &amp; Notices / Events</h4>
+							<ul>
+								<li>Was in $6,200 proposal — not in Option B</li>
+								<li>Could be added as upsell after launch</li>
+								<li>Payment integration also not in scope</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="card" style="margin-top: 8px">
+						<h3>CMS Overview</h3>
+						<div class="data-row">
+							<span class="data-label">Platform</span>
+							<span class="data-value"
+								>Sanity — custom schema, simple forms designed for
+								clerk/volunteer use</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Who Uses It</span>
+							<span class="data-value"
+								>Clerk + trustees. Any new board member should be able to pick
+								it up with the CMS guide.</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Manageable Content</span>
+							<span class="data-value"
+								>Board directory, agendas/minutes, ordinances</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Training</span>
+							<span class="data-value"
+								>CMS guide (HTML + .docx) to be delivered at launch. Training
+								session to be scheduled.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- CONTENT NEEDED -->
+				<section id="content">
+					<div class="section-header">
+						<div class="section-icon">📦</div>
+						<h2>Content Needed from Client</h2>
+					</div>
+
+					<div class="callout warn">
+						<span class="callout-icon">⚠️</span>
+						<div class="callout-body">
+							<strong>Content delivery = timeline driver</strong>
+							<span
+								>The faster Jillian delivers this, the faster we launch. Prompt
+								content = 3–4 weeks. Slow content = 6–8 weeks. Set clear
+								expectations.</span
+							>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>Content Checklist</h3>
+						<ul class="checklist">
+							<li>
+								<span class="check-icon">📸</span>
+								<div>
+									<strong>Photos</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Village scenes, lakes, park, community events (street
+										dance, farmers market). Jillian has some. USB drive may have
+										more — check contents.</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-orange"
+										>Partial — USB arrived</span
+									></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">👥</span>
+								<div>
+									<strong>Board Member Directory</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Names, roles, email addresses for all current board
+										members</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-gray">Pending</span></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">📄</span>
+								<div>
+									<strong>Meeting Agendas & Minutes (PDFs)</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Recent ones to start — don't need full archive before
+										launch</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-gray">Pending</span></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">📜</span>
+								<div>
+									<strong>Ordinances (PDFs)</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Current ordinances with ordinance numbers, titles, dates
+										passed</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-gray">Pending</span></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">✍️</span>
+								<div>
+									<strong>Welcome Message / Village Overview</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Doesn't need to be perfect — rough thoughts, bullet points,
+										phrases. Jordan will craft the copy.</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-gray">Pending</span></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">🌐</span>
+								<div>
+									<strong>Domain Registrar Login</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Login credentials for wherever villageofhancock.org is
+										registered. Jordan will walk them through what's
+										needed.</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-orange"
+										>Requested — awaiting</span
+									></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">🎨</span>
+								<div>
+									<strong>Design Direction Preference</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Which of the two mockup concepts
+										(village-of-hancock.latzwebdesign.com) felt more like
+										Hancock? Get this ASAP.</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-orange"
+										>Requested — awaiting</span
+									></span
+								>
+							</li>
+							<li>
+								<span class="check-icon">💾</span>
+								<div>
+									<strong>USB Drive Contents</strong><br />
+									<span style="font-size: 12px; color: var(--gray-600)"
+										>Unknown — arrived with deposit. May contain documents,
+										photos, existing content. Review immediately.</span
+									>
+								</div>
+								<span class="check-status"
+									><span class="pill pill-teal">In Hand — Review</span></span
+								>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<!-- TECHNICAL -->
+				<section id="technical">
+					<div class="section-header">
+						<div class="section-icon">⚙️</div>
+						<h2>Technical Specifications</h2>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<h3>Stack</h3>
+							<div class="data-row">
+								<span class="data-label">Framework</span>
+								<span class="data-value">Next.js 13+ (App Router)</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Frontend</span>
+								<span class="data-value">React + Tailwind CSS</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">CMS</span>
+								<span class="data-value">Sanity — custom schemas</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Hosting</span>
+								<span class="data-value"
+									>Vercel ($20/mo, client pays directly)</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">SSL</span>
+								<span class="data-value"
+									>Auto-renewal via Vercel (fixes current error
+									permanently)</span
+								>
+							</div>
+						</div>
+
+						<div class="card">
+							<h3>Domain & Migration</h3>
+							<div class="data-row">
+								<span class="data-label">Current Domain</span>
+								<span class="data-value">villageofhancock.org</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Transfer Plan</span>
+								<span class="data-value"
+									>Transfer or point DNS to Vercel. Jordan handles
+									logistics.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Old Platform</span>
+								<span class="data-value"
+									>Client needs to cancel existing $300/yr plan — advise them
+									before domain transfer</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Dev URL</span>
+								<span class="data-value"
+									>village-of-hancock.latzwebdesign.com (mockups live
+									here)</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>Accessibility Requirements</h3>
+						<div class="data-row">
+							<span class="data-label">Standard</span>
+							<span class="data-value">ADA / WCAG 2.1 AA compliant</span>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Typography</span>
+							<span class="data-value"
+								>Large readable fonts — no squinting. Minimum 16px body
+								text.</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Color Contrast</span>
+							<span class="data-value"
+								>High contrast — readable in any lighting on any device</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Navigation</span>
+							<span class="data-value"
+								>Simple, clear — no hidden menus, no tech barriers</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Mobile</span>
+							<span class="data-value"
+								>Click-to-call numbers, touch-friendly buttons — works on any
+								device without apps</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- TIMELINE -->
+				<section id="timeline">
+					<div class="section-header">
+						<div class="section-icon">🚀</div>
+						<h2>Project Timeline</h2>
+					</div>
+
+					<div class="callout success">
+						<span class="callout-icon">✅</span>
+						<div class="callout-body">
+							<strong>Project started March 31, 2026 — deposit in hand</strong>
+							<span
+								>Target: 3–5 weeks with prompt content delivery. Max 8 weeks if
+								content is slow.</span
+							>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">01</div>
+						<div>
+							<div class="weeks">Week 1 — NOW</div>
+							<h4>Setup & Content Gathering</h4>
+							<ul>
+								<li>Review USB drive contents</li>
+								<li>
+									Get design direction preference from Jillian (which mockup
+									felt like Hancock)
+								</li>
+								<li>Send formal content checklist to Jillian</li>
+								<li>Set up project repo, Vercel project, Sanity project</li>
+								<li>Coordinate domain transfer logistics</li>
+								<li>Advise client to cancel old platform before it renews</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">02</div>
+						<div>
+							<div class="weeks">Weeks 1–3</div>
+							<h4>Design & Development</h4>
+							<ul>
+								<li>Build homepage + about page (static)</li>
+								<li>Build contact page with board directory (CMS)</li>
+								<li>Build agendas/minutes system (CMS + PDF upload)</li>
+								<li>Build ordinances system (CMS + PDF upload)</li>
+								<li>Share live dev link for Jillian to review as it's built</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">03</div>
+						<div>
+							<div class="weeks">Weeks 3–4</div>
+							<h4>Content Integration & Refinement</h4>
+							<ul>
+								<li>Populate real content as it arrives from Jillian</li>
+								<li>Integrate photos (from USB + any sourced images)</li>
+								<li>Implement feedback from Jillian's reviews</li>
+								<li>Accessibility pass — fonts, contrast, mobile</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="phase">
+						<div class="phase-num">04</div>
+						<div>
+							<div class="weeks">Week 4–5</div>
+							<h4>Finalization & Launch</h4>
+							<ul>
+								<li>Final review with Jillian</li>
+								<li>Domain transfer / DNS cutover</li>
+								<li>Training session with clerk/board</li>
+								<li>CMS guide delivered (HTML + .docx)</li>
+								<li>Site goes live — final $2,100 invoice sent</li>
+								<li>Post-launch check-in scheduled</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- UPSELLS -->
+				<section id="upsells">
+					<div class="section-header">
+						<div class="section-icon">📈</div>
+						<h2>Future Upsells & Add-Ons</h2>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">💡</span>
+						<div class="callout-body">
+							<strong
+								>Best window: 3–6 months post-launch, once they're comfortable
+								using the CMS</strong
+							>
+							<span
+								>Don't pitch these at launch — let the site prove its value
+								first. Come back with a check-in email and plant the seed.</span
+							>
+						</div>
+					</div>
+
+					<div class="three-col">
+						<div class="upsell-card">
+							<h4>💳 Online Payment Integration</h4>
+							<div class="price">~$800–$1,200</div>
+							<p>
+								Square integration for water bills + recycling fees. Was in
+								original $6,200 proposal. Most natural upsell — they mentioned
+								it early as a need. Bank has no municipal portal, so Square is
+								the path.
+							</p>
+						</div>
+						<div class="upsell-card">
+							<h4>📰 News & Notices System</h4>
+							<div class="price">~$400–$600</div>
+							<p>
+								CMS-managed village bulletin — road closures, recycling updates,
+								meeting notices. Was in original scope, cut from Option B. Clerk
+								would love this tool once they're comfortable with the site.
+							</p>
+						</div>
+						<div class="upsell-card">
+							<h4>📅 Events Calendar</h4>
+							<div class="price">~$400–$600</div>
+							<p>
+								Upcoming village events, board meeting schedule, links to
+								agendas. Street dance, farmers market, trick-or-treat hours.
+								Also cut from Option B — easy add-on.
+							</p>
+						</div>
+						<div class="upsell-card">
+							<h4>🔍 Enhanced Document Archive</h4>
+							<div class="price">$450</div>
+							<p>
+								Advanced search + filtering for historical agendas, minutes, and
+								ordinances by year/keyword. Directly from original proposal.
+								Worth pitching once the document library grows.
+							</p>
+						</div>
+						<div class="upsell-card">
+							<h4>📸 Professional Photography</h4>
+							<div class="price">~$600–$800</div>
+							<p>
+								Was included in original $6,200 proposal — cut when scope was
+								reduced. 15–20 images of Pine Lake, Fish Lake, Whistler Mounds,
+								village scenes. Licensed for web + print.
+							</p>
+						</div>
+						<div class="upsell-card">
+							<h4>🔧 Annual Maintenance / Retainer</h4>
+							<div class="price">~$500–$800/yr</div>
+							<p>
+								Light annual retainer: updates, page additions, adjustments as
+								village needs grow. Good fit for a board that has high turnover
+								and limited internal tech capacity.
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<!-- NOTES -->
+				<section id="notes">
+					<div class="section-header">
+						<div class="section-icon">📝</div>
+						<h2>Notes & Observations</h2>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">March 31, 2026 — Project Kickoff</div>
+						<p>
+							6 months from first contact to deposit. Long cycle driven entirely
+							by board decision process — not disinterest. Jillian was always
+							engaged and responsive; the board needed time and a lower price
+							point. Re-engagement in March came from Jillian herself, which is
+							a great sign — she believed in this.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">Design Concept Gamble — Oct 17, 2025</div>
+						<p>
+							Built two live mockup concepts at
+							village-of-hancock.latzwebdesign.com with no charge, specifically
+							because Jillian needed something to show the board. No municipal
+							portfolio to reference. Risky move but it paid off — Jillian said
+							"this is wonderful, thank you for going above and beyond." That
+							likely kept us in the running during the 5-month gap.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">Content Strategy Note</div>
+						<p>
+							Copy will need to be written from scratch or near-scratch. Jillian
+							mentioned they'd work on a welcome message but it won't be
+							polished. Budget for copywriting time into the build — this is a
+							municipality with no marketing background. The "rough thoughts /
+							bullet points" approach is the right ask.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">Board Communication Note</div>
+						<p>
+							All communication goes through Jillian. She's the liaison to the
+							full board. The clerk handles financials (mailed check). Don't
+							contact the clerk directly unless Jillian introduces her. Be
+							mindful that anything major may need board approval — especially
+							add-ons.
+						</p>
+					</div>
+
+					<div class="note-block">
+						<div class="note-date">USB Drive — Unknown Contents</div>
+						<p>
+							A USB drive arrived with the deposit envelope. Envelope was
+							ripped. Contents unknown — could be photos, documents, existing
+							content. Check immediately and confirm with Jillian what it
+							contains and that nothing was lost in transit.
+						</p>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- MOBILE NAV FAB -->
+		<button class="mobile-fab" id="mobileMenuBtn" aria-label="Open navigation">
+			☰
+		</button>
+		<div class="mobile-overlay" id="mobileOverlay"></div>
+
+		<script>
+			// ── MOBILE MENU ──
+			const fab = document.getElementById('mobileMenuBtn');
+			const overlay = document.getElementById('mobileOverlay');
+			const sidebar = document.querySelector('.sidebar');
+
+			function openMenu() {
+				sidebar.classList.add('mobile-open');
+				overlay.classList.add('active');
+				fab.textContent = '✕';
+			}
+
+			function closeMenu() {
+				sidebar.classList.remove('mobile-open');
+				overlay.classList.remove('active');
+				fab.textContent = '☰';
+			}
+
+			fab.addEventListener('click', () => {
+				sidebar.classList.contains('mobile-open') ? closeMenu() : openMenu();
+			});
+
+			overlay.addEventListener('click', closeMenu);
+
+			// Close + scroll when a nav link is tapped on mobile
+			document.querySelectorAll('.nav-link').forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680) {
+						e.preventDefault();
+						const target = document.querySelector(link.getAttribute('href'));
+						closeMenu();
+						setTimeout(() => {
+							target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						}, 280);
+					}
+				});
+			});
+
+			// ── SCROLLSPY ──
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' },
+			);
+
+			sections.forEach((s) => observer.observe(s));
+		</script>
+	</body>
 </html>
