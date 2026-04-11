@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { TbSearch, TbX } from 'react-icons/tb';
 
@@ -11,23 +11,29 @@ export default function GlobalSearch() {
 	const [selected, setSelected] = useState(0);
 	const router = useRouter();
 
-	// Fetch + reset on open/close
+	// Reset on close
 	useEffect(() => {
-		if (!open) {
+		if (open) return;
+		const timer = setTimeout(() => {
 			setQuery('');
 			setSelected(0);
-			return;
-		}
-		if (clients.length) return;
+		}, 0);
+		return () => clearTimeout(timer);
+	}, [open]);
+
+	// Fetch on open
+	useEffect(() => {
+		if (!open || clients.length) return;
 		fetch('/api/clients')
 			.then((res) => res.json())
 			.then((data) => setClients(data));
 	}, [open, clients.length]);
 
-	// Cmd+K shortcut
+	// Cmd+K / Ctrl+K shortcut
 	useEffect(() => {
 		const handler = (e) => {
-			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+			if (e.key === '/') {
+				if (e.target.tagName === 'INPUT') return;
 				e.preventDefault();
 				setOpen((prev) => !prev);
 			}
@@ -37,14 +43,19 @@ export default function GlobalSearch() {
 		return () => window.removeEventListener('keydown', handler);
 	}, []);
 
-	const filtered = clients.filter((c) =>
-		c.name.toLowerCase().includes(query.toLowerCase()),
+	const filtered = useMemo(
+		() =>
+			clients.filter((c) => c.name.toLowerCase().includes(query.toLowerCase())),
+		[clients, query],
 	);
 
-	const sorted = [
-		...filtered.filter((c) => c.activeProjects > 0),
-		...filtered.filter((c) => c.activeProjects === 0),
-	];
+	const sorted = useMemo(
+		() => [
+			...filtered.filter((c) => c.activeProjects > 0),
+			...filtered.filter((c) => c.activeProjects === 0),
+		],
+		[filtered],
+	);
 
 	// Keyboard navigation
 	useEffect(() => {
@@ -100,6 +111,9 @@ export default function GlobalSearch() {
 									setQuery(e.target.value);
 									setSelected(0);
 								}}
+								onKeyDown={(e) => {
+									if (e.key === 'Escape') setOpen(false);
+								}}
 								className='flex-1 bg-transparent text-white placeholder-white/20 font-mono text-sm outline-none'
 							/>
 							<button
@@ -139,7 +153,7 @@ export default function GlobalSearch() {
 						{/* Footer hint */}
 						<div className='hidden lg:block px-4 py-3 border-t border-white/10'>
 							<p className='font-mono text-[12px] text-center text-warning/60'>
-								↑↓ navigate · Enter to go · Esc to close · Ctrl-K to toggle
+								↑↓ navigate · Enter to go · Esc to close · / to open
 							</p>
 						</div>
 					</div>
