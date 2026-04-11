@@ -63,8 +63,11 @@
 				border-right: 1px solid var(--sidebar-border);
 				display: flex;
 				flex-direction: column;
-				z-index: 100;
+				z-index: 200;
 				overflow-y: auto;
+				/* Always in DOM — desktop: normal flow; mobile: slide from left */
+				transform: translateX(0);
+				transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
 			}
 
 			.sidebar-top {
@@ -209,6 +212,50 @@
 				color: rgba(255, 255, 255, 0.18);
 				letter-spacing: 0.06em;
 				line-height: 2;
+			}
+
+			/* OVERLAY */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 150;
+				opacity: 0;
+				transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-overlay.visible {
+				opacity: 1;
+			}
+
+			/* FAB */
+			.fab-menu {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 20px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--teal);
+				border: none;
+				color: #fff;
+				font-size: 20px;
+				line-height: 1;
+				cursor: pointer;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(24, 161, 173, 0.4);
+				align-items: center;
+				justify-content: center;
+				transition:
+					background 0.15s,
+					transform 0.15s;
+			}
+
+			.fab-menu:active {
+				transform: scale(0.93);
+				background: #13848e;
 			}
 
 			/* MAIN */
@@ -785,7 +832,9 @@
 				top: 5px;
 			}
 
-			/* RESPONSIVE */
+			/* =====================
+     RESPONSIVE — 1024px
+  ===================== */
 			@media (max-width: 1024px) {
 				.sidebar {
 					width: 200px;
@@ -800,37 +849,134 @@
 				}
 			}
 
+			/* =====================
+     RESPONSIVE — 768px
+     Sidebar hidden off-screen, FAB shown
+  ===================== */
 			@media (max-width: 768px) {
 				.sidebar {
-					display: none;
+					width: 260px;
+					transform: translateX(-100%);
 				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+
+				.sidebar-overlay {
+					display: block;
+				}
+
+				.fab-menu {
+					display: flex;
+				}
+
 				.main {
 					margin-left: 0;
 				}
+
 				.two-col {
 					grid-template-columns: 1fr;
 				}
+
 				.page-header,
 				.content {
 					padding-left: 20px;
 					padding-right: 20px;
 				}
+
 				.header-meta {
-					flex-direction: column;
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					gap: 0;
 					width: 100%;
+					border-radius: 7px;
+					overflow: hidden;
 				}
+
 				.meta-item {
-					border-right: none;
+					border-right: 1px solid rgba(255, 255, 255, 0.07);
 					border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 				}
-				.meta-item:last-child {
+
+				.meta-item:nth-child(even) {
+					border-right: none;
+				}
+				.meta-item:nth-last-child(-n + 2) {
 					border-bottom: none;
+				}
+			}
+
+			/* =====================
+     RESPONSIVE — 680px
+     Stacked layouts & smaller type
+  ===================== */
+			@media (max-width: 680px) {
+				/* Page header */
+				.page-header {
+					padding: 32px 20px 28px;
+				}
+
+				.page-header h1 {
+					font-size: 26px;
+				}
+
+				/* Data rows stack */
+				.data-row {
+					grid-template-columns: 1fr;
+					gap: 2px;
+				}
+
+				.data-label {
+					font-size: 10px;
+				}
+
+				/* Callouts stack */
+				.callout {
+					flex-direction: column;
+					gap: 6px;
+				}
+
+				/* Checklist items wrap */
+				.checklist li {
+					flex-wrap: wrap;
+				}
+
+				.check-status {
+					margin-left: 0;
+					margin-top: 4px;
+					width: 100%;
+				}
+
+				/* Budget table tighter */
+				.budget-table th,
+				.budget-table td {
+					padding: 8px 10px;
+					font-size: 12px;
+				}
+
+				/* Phase blocks */
+				.phase {
+					grid-template-columns: 44px 1fr;
+					gap: 12px;
+					padding: 16px;
+				}
+
+				.phase-num {
+					font-size: 36px;
 				}
 			}
 		</style>
 	</head>
 	<body>
-		<nav class="sidebar">
+		<!-- Dark overlay behind open sidebar on mobile -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- Mobile FAB menu toggle -->
+		<button class="fab-menu" id="fabMenu" aria-label="Toggle navigation">
+			☰
+		</button>
+
+		<nav class="sidebar" id="sidebar">
 			<div class="sidebar-top">
 				<div class="sidebar-wordmark">
 					<div class="dot"></div>
@@ -1095,7 +1241,7 @@
 						<div class="seal-row">
 							<img
 								class="seal-img"
-								src="https://village-of-hancock.latzwebdesign.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbusiness-name.6e585be2.png&w=256&q=75"
+								src="https://scontent-ord5-3.xx.fbcdn.net/v/t39.30808-1/305573509_489817029820801_6040086597281765642_n.jpg?stp=c39.0.1970.1970a_dst-jpg_s200x200_tt6&_nc_cat=109&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=g8E5-XRDnW8Q7kNvwEm_AO2&_nc_oc=Adrqo5FvtGmqKHBOvu9XCwIZoeoGMNEo-K3gCatOYTqaBvCtmKsS3fm_xc9D4H1VM&_nc_zt=24&_nc_ht=scontent-ord5-3.xx&_nc_gid=St_NiDORd_xnt7K_1W_C1g&_nc_ss=7a3a8&oh=00_Af2ulhnRWiKQ_mO3E774aUPq5ziw_MbtI-oFGpid43nNfA&oe=69DB0DDB"
 								alt="Village of Hancock official seal"
 							/>
 							<div class="seal-desc">
@@ -1466,6 +1612,7 @@
 		</div>
 
 		<script>
+			// ── Scrollspy ──────────────────────────────────────────────
 			const sections = document.querySelectorAll('section[id]');
 			const navLinks = document.querySelectorAll('.nav-link');
 
@@ -1486,6 +1633,55 @@
 			);
 
 			sections.forEach((s) => observer.observe(s));
+
+			// ── Mobile sidebar ─────────────────────────────────────────
+			const sidebar = document.getElementById('sidebar');
+			const overlay = document.getElementById('sidebarOverlay');
+			const fab = document.getElementById('fabMenu');
+			let isOpen = false;
+
+			function openSidebar() {
+				isOpen = true;
+				sidebar.classList.add('mobile-open');
+				overlay.style.display = 'block';
+				// Trigger reflow so transition fires
+				overlay.getBoundingClientRect();
+				overlay.classList.add('visible');
+				fab.textContent = '✕';
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeSidebar() {
+				isOpen = false;
+				sidebar.classList.remove('mobile-open');
+				overlay.classList.remove('visible');
+				fab.textContent = '☰';
+				document.body.style.overflow = '';
+				// Hide overlay after transition
+				setTimeout(() => {
+					if (!isOpen) overlay.style.display = 'none';
+				}, 280);
+			}
+
+			fab.addEventListener('click', () =>
+				isOpen ? closeSidebar() : openSidebar(),
+			);
+			overlay.addEventListener('click', closeSidebar);
+
+			// Nav links on mobile: close sidebar then smooth-scroll
+			navLinks.forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 768 && isOpen) {
+						e.preventDefault();
+						const targetId = link.getAttribute('href').slice(1);
+						closeSidebar();
+						setTimeout(() => {
+							const target = document.getElementById(targetId);
+							if (target) target.scrollIntoView({ behavior: 'smooth' });
+						}, 280);
+					}
+				});
+			});
 		</script>
 	</body>
 </html>
