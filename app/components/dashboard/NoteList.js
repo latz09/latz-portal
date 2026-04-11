@@ -102,7 +102,7 @@ export default function NoteList({ notes }) {
 						target='_blank'
 						className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/30 px-2 py-0.5 rounded'
 					>
-						<TbPlus className='text-sm lg:text-lg text-warning' />
+						<TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
 						Add Note
 					</a>
 				</div>
@@ -115,9 +115,9 @@ export default function NoteList({ notes }) {
 						<a
 							href='https://latz-portal.sanity.studio/structure/note;new'
 							target='_blank'
-							className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-teal transition-colors border px-2 py-0.5 rounded'
+							className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/30 px-2 py-0.5 rounded'
 						>
-							<TbPlus className='text-sm lg:text-lg' />
+							<TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
 							Add Note
 						</a>
 					</div>
