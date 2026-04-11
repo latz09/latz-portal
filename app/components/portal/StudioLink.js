@@ -1,9 +1,9 @@
 import { TbEdit } from 'react-icons/tb'
 
-const BASE = 'https://latz-portal.sanity.studio/structure'
+const BASE = 'https://latz-portal.sanity.studio/structure/client'
 
 export default function StudioLink({ id }) {
-  const href = id ? `${BASE}/client;${id}` : BASE
+  const href = id ? `${BASE};${id}` : `${BASE};new`
 
   return (
     <a
@@ -12,7 +12,7 @@ export default function StudioLink({ id }) {
       className="inline-flex items-center gap-2 bg-dark font-mono text-xs px-4 py-2 rounded-full border border-white/10 text-white/80 hover:bg-white/5 transition-colors"
     >
       <TbEdit className="text-sm" />
-      {id ? 'Edit in Studio' : 'Edit Portal'}
+      {id ? 'Edit' : 'New Client'}
     </a>
   )
 }

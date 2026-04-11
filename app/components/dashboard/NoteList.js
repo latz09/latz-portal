@@ -49,7 +49,7 @@ function NoteCard({ note }) {
 						{note.type}
 					</span>
 					<a
-						href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
+						href={`https://latz-portal.sanity.studio/structure/note;new;${note._id}`}
 						target='_blank'
 						onClick={(e) => e.stopPropagation()}
 						className='text-warning/70 hover:text-warning transition-colors p-2'
@@ -98,7 +98,7 @@ export default function NoteList({ notes }) {
 			{!notes?.length ? (
 				<div className='flex justify-center'>
 					<a
-						href='https://latz-portal.sanity.studio/structure/note'
+						href='https://latz-portal.sanity.studio/structure/note;new'
 						target='_blank'
 						className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-teal transition-colors border px-2 py-0.5 rounded'
 					>
@@ -113,7 +113,7 @@ export default function NoteList({ notes }) {
 							Notes
 						</p>
 						<a
-							href='https://latz-portal.sanity.studio/structure/note'
+							href='https://latz-portal.sanity.studio/structure/note;new'
 							target='_blank'
 							className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-teal transition-colors border px-2 py-0.5 rounded'
 						>
