@@ -13,7 +13,7 @@ export default async function DesignerPortalIndex() {
   <main className='max-w-3xl   mx-auto px-3 lg:px-6 py-8 lg:py-16  w-full'>
       <PortalPageHeader
         variant="designer"
-        label="Latz Web Design · Alyssa"
+        label="Studio Latz· Alyssa"
         title="Active Projects"
       />
       <ClientProjectList

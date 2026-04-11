@@ -11,7 +11,7 @@ export default function PortalPageHeader({ variant, label, title }) {
       <p className={`font-mono text-xs ${color} opacity-75 tracking-widest uppercase mb-4`}>
         {label}
       </p>
-      <h1 className="text-4xl font-semibold">{title}</h1>
+      <h1 className="text-3xl opacity-80 font-semibold">{title}</h1>
     </div>
   )
 }

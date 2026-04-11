@@ -1,6 +1,7 @@
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_CLIENT_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENT_QUERY';
 import Link from 'next/link';
+import NoteList from '@/app/components/dashboard/NoteList';
 
 const statusColors = {
 	active: 'text-teal ',
@@ -11,7 +12,7 @@ const statusColors = {
 export default async function ClientPage({ params }) {
 	const { clientSlug } = await params;
 	const data = await f(Q, { clientSlug });
-	const { name, slug, projects } = data;
+	const { name, slug, projects, notes } = data;
 
 	return (
 		<main className='px-6 py-16'>
@@ -50,6 +51,9 @@ export default async function ClientPage({ params }) {
 						</div>
 					</Link>
 				))}
+			</div>
+			<div className='max-w-5xl mx-auto w-full mt-16'>
+				<NoteList notes={notes} />
 			</div>
 		</main>
 	);

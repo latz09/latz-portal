@@ -10,6 +10,22 @@ export const FETCH_CLIENT_QUERY = `
       month,
       year,
       "docCount": count(docs)
+    },
+    "notes": *[_type == "note" && references(^._id)] | order(_createdAt desc) {
+      _id,
+      title,
+      type,
+      url,
+      pinned,
+      "clientName": client->name,
+      "clientSlug": client->slug.current,
+      body[] {
+        ...,
+        _type == "image" => {
+          ...,
+          "url": asset->url
+        }
+      }
     }
   }
 `
