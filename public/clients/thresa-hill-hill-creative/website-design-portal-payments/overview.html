@@ -5,741 +5,204 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="robots" content="noindex" />
 		<title>Hill Creative LLC — Lead Overview | Latz Web Design</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
-			rel="stylesheet"
-		/>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 		<style>
 			:root {
-				--navy: #0d1b2a;
-				--teal: #18a1ad;
-				--teal-light: #e8f7f8;
-				--teal-mid: #b3e5e9;
-				--yellow: #ffee65;
-				--white: #ffffff;
-				--off-white: #f7f9fa;
-				--gray-100: #f0f2f4;
-				--gray-200: #e2e8f0;
-				--gray-400: #94a3b8;
-				--gray-600: #475569;
-				--gray-800: #1e293b;
-				--text: #0d1b2a;
-				--green: #16a34a;
-				--green-light: #dcfce7;
-				--orange: #ea580c;
-				--orange-light: #fff7ed;
-				--red: #dc2626;
-				--red-light: #fef2f2;
+				--navy: #0d1b2a; --teal: #18a1ad; --teal-light: #e8f7f8; --teal-mid: #b3e5e9;
+				--yellow: #ffee65; --white: #ffffff; --off-white: #f7f9fa;
+				--gray-100: #f0f2f4; --gray-200: #e2e8f0; --gray-400: #94a3b8;
+				--gray-600: #475569; --gray-800: #1e293b; --text: #0d1b2a;
+				--green: #16a34a; --green-light: #dcfce7;
+				--orange: #ea580c; --orange-light: #fff7ed;
+				--red: #dc2626; --red-light: #fef2f2;
 			}
-
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-
-			body {
-				font-family: 'DM Sans', sans-serif;
-				background: var(--off-white);
-				color: var(--text);
-				line-height: 1.6;
-				font-size: 15px;
-			}
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text); line-height: 1.6; font-size: 15px; }
 
 			/* ── SIDEBAR ── */
 			.sidebar {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 240px;
-				height: 100vh;
-				background: var(--navy);
-				padding: 32px 0;
-				overflow-y: auto;
-				z-index: 100;
-				display: flex;
-				flex-direction: column;
+				position: fixed; top: 0; left: 0; width: 240px; height: 100vh;
+				background: var(--navy); padding: 32px 0; overflow-y: auto; z-index: 100;
+				display: flex; flex-direction: column;
+				transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
 			}
+			.sidebar-brand { padding: 0 24px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px; }
+			.sidebar-brand .lwd { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+			.sidebar-brand .client-name { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; color: var(--white); line-height: 1.2; }
+			.sidebar-brand .status-pill { display: inline-flex; align-items: center; gap: 6px; background: #7c3aed; color: white; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-top: 10px; }
+			.status-pill::before { content: ''; width: 6px; height: 6px; background: white; border-radius: 50%; animation: pulse 2s infinite; }
+			@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+			.nav-section-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400); padding: 8px 24px 4px; margin-top: 8px; }
+			.nav-link { display: flex; align-items: center; gap: 10px; padding: 9px 24px; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 400; transition: all 0.15s; border-left: 3px solid transparent; }
+			.nav-link:hover { color: white; background: rgba(255,255,255,0.05); border-left-color: rgba(24,161,173,0.5); }
+			.nav-link.active { color: var(--teal); background: rgba(24,161,173,0.08); border-left-color: var(--teal); font-weight: 500; }
+			.nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+			.sidebar-footer { margin-top: auto; padding: 20px 24px; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; line-height: 1.8; }
 
-			.sidebar-brand {
-				padding: 0 24px 24px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-				margin-bottom: 20px;
-			}
-
-			.sidebar-brand .lwd {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				color: var(--teal);
-				letter-spacing: 0.12em;
-				text-transform: uppercase;
-				margin-bottom: 6px;
-			}
-
-			.sidebar-brand .client-name {
-				font-family: 'Fraunces', serif;
-				font-size: 17px;
-				font-weight: 600;
-				color: var(--white);
-				line-height: 1.2;
-			}
-
-			.sidebar-brand .status-pill {
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-				background: #7c3aed;
-				color: white;
-				font-size: 10px;
-				font-weight: 600;
-				letter-spacing: 0.08em;
-				text-transform: uppercase;
-				padding: 3px 10px;
-				border-radius: 20px;
-				margin-top: 10px;
-			}
-
-			.status-pill::before {
-				content: '';
-				width: 6px;
-				height: 6px;
-				background: white;
-				border-radius: 50%;
-				animation: pulse 2s infinite;
-			}
-
-			@keyframes pulse {
-				0%,
-				100% {
-					opacity: 1;
-				}
-				50% {
-					opacity: 0.4;
-				}
-			}
-
-			.nav-section-label {
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				letter-spacing: 0.15em;
-				text-transform: uppercase;
-				color: var(--gray-400);
-				padding: 8px 24px 4px;
-				margin-top: 8px;
-			}
-
-			.nav-link {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-				padding: 9px 24px;
-				color: rgba(255, 255, 255, 0.6);
-				text-decoration: none;
-				font-size: 13px;
-				font-weight: 400;
-				transition: all 0.15s;
-				border-left: 3px solid transparent;
-			}
-
-			.nav-link:hover {
-				color: white;
-				background: rgba(255, 255, 255, 0.05);
-				border-left-color: rgba(24, 161, 173, 0.5);
-			}
-
-			.nav-link.active {
-				color: var(--teal);
-				background: rgba(24, 161, 173, 0.08);
-				border-left-color: var(--teal);
-				font-weight: 500;
-			}
-
-			.nav-icon {
-				font-size: 14px;
-				width: 18px;
-				text-align: center;
-				flex-shrink: 0;
-			}
-
-			.sidebar-footer {
-				margin-top: auto;
-				padding: 20px 24px;
-				border-top: 1px solid rgba(255, 255, 255, 0.08);
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				color: rgba(255, 255, 255, 0.3);
-				letter-spacing: 0.08em;
-				line-height: 1.8;
-			}
-
-			/* ── MAIN CONTENT ── */
-			.main {
-				margin-left: 240px;
-				min-height: 100vh;
-			}
+			/* ── MAIN ── */
+			.main { margin-left: 240px; min-height: 100vh; }
 
 			/* ── PAGE HEADER ── */
-			.page-header {
-				background: var(--navy);
-				padding: 48px 56px 40px;
-				position: relative;
-				overflow: hidden;
-			}
+			.page-header { background: var(--navy); padding: 48px 56px 40px; position: relative; overflow: hidden; }
+			.page-header::after { content: 'HILL'; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-family: 'Fraunces', serif; font-size: 140px; font-weight: 700; color: rgba(255,255,255,0.03); letter-spacing: -4px; pointer-events: none; user-select: none; }
+			.page-header .overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+			.page-header h1 { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 600; color: white; margin-bottom: 8px; line-height: 1.15; }
+			.page-header .sub { color: rgba(255,255,255,0.5); font-size: 14px; }
+			.header-meta { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+			.header-meta-item { display: flex; flex-direction: column; gap: 3px; }
+			.header-meta-item .label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+			.header-meta-item .value { font-size: 14px; font-weight: 500; color: white; }
+			.header-meta-item .value a { color: var(--teal); text-decoration: none; }
 
-			.page-header::after {
-				content: 'HILL';
-				position: absolute;
-				right: -20px;
-				top: 50%;
-				transform: translateY(-50%);
-				font-family: 'Fraunces', serif;
-				font-size: 140px;
-				font-weight: 700;
-				color: rgba(255, 255, 255, 0.03);
-				letter-spacing: -4px;
-				pointer-events: none;
-				user-select: none;
-			}
+			/* ── CONTENT ── */
+			.content { padding: 40px 56px 80px; }
+			section { margin-bottom: 56px; scroll-margin-top: 24px; }
+			.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--teal); }
+			.section-header h2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: var(--navy); }
+			.section-icon { width: 32px; height: 32px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
 
-			.page-header .overline {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				letter-spacing: 0.2em;
-				text-transform: uppercase;
-				color: var(--teal);
-				margin-bottom: 12px;
-			}
-
-			.page-header h1 {
-				font-family: 'Fraunces', serif;
-				font-size: 36px;
-				font-weight: 600;
-				color: white;
-				margin-bottom: 8px;
-				line-height: 1.15;
-			}
-
-			.page-header .sub {
-				color: rgba(255, 255, 255, 0.5);
-				font-size: 14px;
-			}
-
-			.header-meta {
-				display: flex;
-				gap: 32px;
-				margin-top: 28px;
-				flex-wrap: wrap;
-			}
-
-			.header-meta-item {
-				display: flex;
-				flex-direction: column;
-				gap: 3px;
-			}
-
-			.header-meta-item .label {
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				letter-spacing: 0.12em;
-				text-transform: uppercase;
-				color: rgba(255, 255, 255, 0.3);
-			}
-
-			.header-meta-item .value {
-				font-size: 14px;
-				font-weight: 500;
-				color: white;
-			}
-
-			.header-meta-item .value a {
-				color: var(--teal);
-				text-decoration: none;
-			}
-
-			/* ── CONTENT SECTIONS ── */
-			.content {
-				padding: 40px 56px 80px;
-			}
-
-			section {
-				margin-bottom: 56px;
-				scroll-margin-top: 24px;
-			}
-
-			.section-header {
-				display: flex;
-				align-items: center;
-				gap: 12px;
-				margin-bottom: 24px;
-				padding-bottom: 12px;
-				border-bottom: 2px solid var(--teal);
-			}
-
-			.section-header h2 {
-				font-family: 'Fraunces', serif;
-				font-size: 22px;
-				font-weight: 600;
-				color: var(--navy);
-			}
-
-			.section-icon {
-				width: 32px;
-				height: 32px;
-				background: var(--teal);
-				border-radius: 8px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 15px;
-				flex-shrink: 0;
-			}
-
-			/* ── CARDS & GRIDS ── */
-			.card {
-				background: white;
-				border-radius: 10px;
-				padding: 24px;
-				border: 1px solid var(--gray-200);
-				margin-bottom: 16px;
-			}
-
-			.card h3 {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--teal);
-				text-transform: uppercase;
-				letter-spacing: 0.06em;
-				margin-bottom: 12px;
-			}
-
-			.two-col {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 16px;
-			}
-
-			.three-col {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 16px;
-			}
+			/* ── CARDS ── */
+			.card { background: white; border-radius: 10px; padding: 24px; border: 1px solid var(--gray-200); margin-bottom: 16px; }
+			.card h3 { font-size: 14px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+			.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+			.three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 
 			/* ── DATA ROWS ── */
-			.data-row {
-				display: grid;
-				grid-template-columns: 180px 1fr;
-				gap: 12px;
-				align-items: start;
-				padding: 10px 0;
-				border-bottom: 1px solid var(--gray-100);
-			}
+			.data-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px; align-items: start; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
+			.data-row:last-child { border-bottom: none; }
+			.data-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray-400); letter-spacing: 0.06em; padding-top: 1px; text-transform: uppercase; }
+			.data-value { font-size: 14px; color: var(--text); font-weight: 500; }
+			.data-value a { color: var(--teal); text-decoration: none; }
 
-			.data-row:last-child {
-				border-bottom: none;
-			}
-
-			.data-label {
-				font-family: 'DM Mono', monospace;
-				font-size: 11px;
-				color: var(--gray-400);
-				letter-spacing: 0.06em;
-				padding-top: 1px;
-				text-transform: uppercase;
-			}
-
-			.data-value {
-				font-size: 14px;
-				color: var(--text);
-				font-weight: 500;
-			}
-
-			.data-value a {
-				color: var(--teal);
-				text-decoration: none;
-			}
-
-			/* ── CALLOUT BOXES ── */
-			.callout {
-				border-radius: 8px;
-				padding: 16px 20px;
-				margin-bottom: 16px;
-				display: flex;
-				gap: 12px;
-				align-items: flex-start;
-			}
-
-			.callout-icon {
-				font-size: 18px;
-				flex-shrink: 0;
-				margin-top: 1px;
-			}
-			.callout-body {
-				flex: 1;
-			}
-			.callout-body strong {
-				display: block;
-				font-size: 13px;
-				font-weight: 600;
-				margin-bottom: 4px;
-			}
-			.callout-body p,
-			.callout-body span {
-				font-size: 13px;
-				line-height: 1.5;
-			}
-
-			.callout.info {
-				background: var(--teal-light);
-				border-left: 4px solid var(--teal);
-			}
-			.callout.warn {
-				background: var(--orange-light);
-				border-left: 4px solid var(--orange);
-			}
-			.callout.success {
-				background: var(--green-light);
-				border-left: 4px solid var(--green);
-			}
-			.callout.alert {
-				background: var(--red-light);
-				border-left: 4px solid var(--red);
-			}
-			.callout.yellow {
-				background: #fffbcc;
-				border-left: 4px solid #d4a800;
-			}
+			/* ── CALLOUTS ── */
+			.callout { border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; display: flex; gap: 12px; align-items: flex-start; }
+			.callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+			.callout-body { flex: 1; }
+			.callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+			.callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+			.callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+			.callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+			.callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+			.callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+			.callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
 
 			/* ── HIGHLIGHT BOX ── */
-			.highlight-box {
-				background: var(--yellow);
-				border: 2px solid var(--navy);
-				border-radius: 8px;
-				padding: 20px 24px;
-				margin-bottom: 16px;
-			}
-
-			.highlight-box strong {
-				font-weight: 700;
-			}
-			.highlight-box p {
-				font-size: 14px;
-				margin-top: 8px;
-			}
+			.highlight-box { background: var(--yellow); border: 2px solid var(--navy); border-radius: 8px; padding: 20px 24px; margin-bottom: 16px; }
+			.highlight-box strong { font-weight: 700; }
+			.highlight-box p { font-size: 14px; margin-top: 8px; }
 
 			/* ── TIMELINE ── */
-			.timeline {
-				position: relative;
-				padding-left: 24px;
-			}
+			.timeline { position: relative; padding-left: 24px; }
+			.timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--teal-mid); }
+			.timeline-item { position: relative; margin-bottom: 20px; padding-left: 20px; }
+			.timeline-item::before { content: ''; position: absolute; left: -18px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); border: 2px solid white; box-shadow: 0 0 0 2px var(--teal); }
+			.timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+			.timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+			.timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+			.timeline-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--teal); letter-spacing: 0.06em; font-weight: 500; }
+			.timeline-title { font-size: 14px; font-weight: 600; color: var(--navy); margin: 2px 0; }
+			.timeline-desc { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
 
-			.timeline::before {
-				content: '';
-				position: absolute;
-				left: 6px;
-				top: 8px;
-				bottom: 8px;
-				width: 2px;
-				background: var(--teal-mid);
-			}
-
-			.timeline-item {
-				position: relative;
-				margin-bottom: 20px;
-				padding-left: 20px;
-			}
-
-			.timeline-item::before {
-				content: '';
-				position: absolute;
-				left: -18px;
-				top: 6px;
-				width: 10px;
-				height: 10px;
-				border-radius: 50%;
-				background: var(--teal);
-				border: 2px solid white;
-				box-shadow: 0 0 0 2px var(--teal);
-			}
-
-			.timeline-item.complete::before {
-				background: var(--green);
-				box-shadow: 0 0 0 2px var(--green);
-			}
-			.timeline-item.pending::before {
-				background: var(--gray-400);
-				box-shadow: 0 0 0 2px var(--gray-400);
-			}
-			.timeline-item.active::before {
-				background: var(--teal);
-				box-shadow: 0 0 0 3px var(--teal-mid);
-			}
-
-			.timeline-date {
-				font-family: 'DM Mono', monospace;
-				font-size: 11px;
-				color: var(--teal);
-				letter-spacing: 0.06em;
-				font-weight: 500;
-			}
-
-			.timeline-title {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--navy);
-				margin: 2px 0;
-			}
-
-			.timeline-desc {
-				font-size: 13px;
-				color: var(--gray-600);
-				line-height: 1.5;
-			}
-
-			/* ── OPPORTUNITY TABLE ── */
-			.budget-table {
-				width: 100%;
-				border-collapse: collapse;
-				font-size: 14px;
-			}
-
-			.budget-table th {
-				background: var(--navy);
-				color: white;
-				padding: 10px 16px;
-				text-align: left;
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				letter-spacing: 0.1em;
-				text-transform: uppercase;
-				font-weight: 500;
-			}
-
-			.budget-table td {
-				padding: 12px 16px;
-				border-bottom: 1px solid var(--gray-100);
-			}
-
-			.budget-table tr:last-child td {
-				border-bottom: none;
-			}
-			.budget-table tr:nth-child(even) td {
-				background: var(--off-white);
-			}
-
-			.budget-table .total-row td {
-				background: var(--teal-light) !important;
-				font-weight: 700;
-				border-top: 2px solid var(--teal);
-				font-size: 15px;
-			}
-
-			.amount {
-				text-align: right;
-				font-family: 'DM Mono', monospace;
-				font-weight: 500;
-			}
+			/* ── BUDGET TABLE ── */
+			.budget-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+			.budget-table th { background: var(--navy); color: white; padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+			.budget-table td { padding: 12px 16px; border-bottom: 1px solid var(--gray-100); }
+			.budget-table tr:last-child td { border-bottom: none; }
+			.budget-table tr:nth-child(even) td { background: var(--off-white); }
+			.budget-table .total-row td { background: var(--teal-light) !important; font-weight: 700; border-top: 2px solid var(--teal); font-size: 15px; }
+			.amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
 
 			/* ── CHECKLIST ── */
-			.checklist {
-				list-style: none;
-				padding: 0;
-			}
-			.checklist li {
-				display: flex;
-				align-items: flex-start;
-				gap: 10px;
-				padding: 8px 0;
-				border-bottom: 1px solid var(--gray-100);
-				font-size: 13px;
-			}
-			.checklist li:last-child {
-				border-bottom: none;
-			}
+			.checklist { list-style: none; padding: 0; }
+			.checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-100); font-size: 13px; }
+			.checklist li:last-child { border-bottom: none; }
+			.check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+			.check-status { margin-left: auto; flex-shrink: 0; }
 
-			.check-icon {
-				font-size: 15px;
-				flex-shrink: 0;
-				margin-top: 1px;
-			}
-			.check-status {
-				margin-left: auto;
-				flex-shrink: 0;
-			}
+			.pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+			.pill-green { background: var(--green-light); color: var(--green); }
+			.pill-orange { background: var(--orange-light); color: var(--orange); }
+			.pill-gray { background: var(--gray-100); color: var(--gray-600); }
+			.pill-teal { background: var(--teal-light); color: var(--teal); }
 
-			.pill {
-				display: inline-block;
-				font-size: 10px;
-				font-weight: 600;
-				padding: 2px 8px;
-				border-radius: 20px;
-				font-family: 'DM Mono', monospace;
-				letter-spacing: 0.04em;
-				text-transform: uppercase;
-			}
-
-			.pill-green {
-				background: var(--green-light);
-				color: var(--green);
-			}
-			.pill-orange {
-				background: var(--orange-light);
-				color: var(--orange);
-			}
-			.pill-gray {
-				background: var(--gray-100);
-				color: var(--gray-600);
-			}
-			.pill-teal {
-				background: var(--teal-light);
-				color: var(--teal);
-			}
-
-			/* ── UPSELL / OPPORTUNITY CARDS ── */
-			.upsell-card {
-				background: white;
-				border: 2px dashed var(--gray-200);
-				border-radius: 10px;
-				padding: 20px;
-				transition: border-color 0.2s;
-			}
-
-			.upsell-card:hover {
-				border-color: var(--teal);
-			}
-
-			.upsell-card h4 {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--navy);
-				margin-bottom: 6px;
-			}
-
-			.upsell-card .price {
-				font-family: 'DM Mono', monospace;
-				font-size: 13px;
-				color: var(--teal);
-				font-weight: 500;
-				margin-bottom: 8px;
-			}
-
-			.upsell-card p {
-				font-size: 13px;
-				color: var(--gray-600);
-			}
+			/* ── UPSELL CARDS ── */
+			.upsell-card { background: white; border: 2px dashed var(--gray-200); border-radius: 10px; padding: 20px; transition: border-color 0.2s; }
+			.upsell-card:hover { border-color: var(--teal); }
+			.upsell-card h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+			.upsell-card .price { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--teal); font-weight: 500; margin-bottom: 8px; }
+			.upsell-card p { font-size: 13px; color: var(--gray-600); }
 
 			/* ── QUESTION BLOCKS ── */
-			.question-block {
-				background: white;
-				border: 1px solid var(--gray-200);
-				border-left: 4px solid var(--teal);
-				border-radius: 8px;
-				padding: 14px 18px;
-				margin-bottom: 10px;
-				font-size: 13px;
-				color: var(--gray-800);
-				line-height: 1.5;
-			}
+			.question-block { background: white; border: 1px solid var(--gray-200); border-left: 4px solid var(--teal); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; font-size: 13px; color: var(--gray-800); line-height: 1.5; }
+			.question-block .q-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; }
 
-			.question-block .q-label {
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				letter-spacing: 0.12em;
-				text-transform: uppercase;
-				color: var(--teal);
-				margin-bottom: 4px;
-			}
-
-			/* ── SITE AUDIT ROWS ── */
-			.audit-row {
-				display: grid;
-				grid-template-columns: 28px 160px 1fr auto;
-				gap: 12px;
-				align-items: start;
-				padding: 10px 0;
-				border-bottom: 1px solid var(--gray-100);
-				font-size: 13px;
-			}
-
-			.audit-row:last-child {
-				border-bottom: none;
-			}
-
-			.audit-icon {
-				font-size: 15px;
-				margin-top: 1px;
-			}
-			.audit-area {
-				font-weight: 600;
-				color: var(--navy);
-				font-size: 13px;
-			}
-			.audit-note {
-				color: var(--gray-600);
-				line-height: 1.5;
-			}
+			/* ── AUDIT ROWS ── */
+			.audit-row { display: grid; grid-template-columns: 28px 160px 1fr auto; gap: 12px; align-items: start; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 13px; }
+			.audit-row:last-child { border-bottom: none; }
+			.audit-icon { font-size: 15px; margin-top: 1px; }
+			.audit-area { font-weight: 600; color: var(--navy); font-size: 13px; }
+			.audit-note { color: var(--gray-600); line-height: 1.5; }
 
 			/* ── NOTES ── */
-			.note-block {
-				background: #fffef0;
-				border: 1px solid #e6d96b;
-				border-radius: 8px;
-				padding: 16px 20px;
-				margin-bottom: 12px;
-			}
+			.note-block { background: #fffef0; border: 1px solid #e6d96b; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
+			.note-block .note-date { font-family: 'DM Mono', monospace; font-size: 10px; color: #a07d00; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+			.note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
 
-			.note-block .note-date {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				color: #a07d00;
-				letter-spacing: 0.08em;
-				text-transform: uppercase;
-				margin-bottom: 6px;
-			}
-
-			.note-block p {
-				font-size: 13px;
-				color: var(--gray-800);
-				line-height: 1.6;
-			}
+			/* ── MOBILE FAB & OVERLAY ── */
+			.mobile-fab { display: none; position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; border-radius: 50%; background: var(--teal); color: white; border: none; font-size: 22px; line-height: 52px; text-align: center; cursor: pointer; z-index: 300; box-shadow: 0 4px 16px rgba(0,0,0,0.28); transition: background 0.15s, transform 0.15s; }
+			.mobile-fab:active { transform: scale(0.93); }
+			.mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 150; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+			.mobile-overlay.active { opacity: 1; pointer-events: all; }
 
 			/* ── RESPONSIVE ── */
 			@media (max-width: 900px) {
-				.sidebar {
-					width: 200px;
-				}
-				.main {
-					margin-left: 200px;
-				}
-				.two-col,
-				.three-col {
-					grid-template-columns: 1fr;
-				}
-				.page-header,
-				.content {
-					padding-left: 32px;
-					padding-right: 32px;
-				}
-				.audit-row {
-					grid-template-columns: 28px 1fr;
-				}
-				.audit-row .audit-note,
-				.audit-row .check-status {
-					grid-column: 2;
-				}
+				.sidebar { width: 200px; }
+				.main { margin-left: 200px; }
+				.two-col, .three-col { grid-template-columns: 1fr; }
+				.page-header, .content { padding-left: 32px; padding-right: 32px; }
+				.audit-row { grid-template-columns: 28px 1fr; }
+				.audit-row .audit-note, .audit-row .check-status { grid-column: 2; }
 			}
 
 			@media (max-width: 680px) {
-				.sidebar {
-					display: none;
-				}
-				.main {
-					margin-left: 0;
-				}
-				.page-header,
-				.content {
-					padding-left: 20px;
-					padding-right: 20px;
-				}
+				/* Sidebar: slide in from left */
+				.sidebar { transform: translateX(-100%); z-index: 200; width: 240px; }
+				.sidebar.mobile-open { transform: translateX(0); }
+
+				.main { margin-left: 0; }
+				.page-header, .content { padding-left: 20px; padding-right: 20px; }
+
+				/* Show FAB + overlay */
+				.mobile-fab { display: flex; align-items: center; justify-content: center; }
+				.mobile-overlay { display: block; }
+
+				/* Stack data rows */
+				.data-row { grid-template-columns: 1fr; gap: 2px; }
+				.data-label { font-size: 10px; }
+
+				/* Header meta 2-col grid */
+				.header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+				/* Checklist status drops below */
+				.checklist li { flex-wrap: wrap; }
+				.check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+				/* Budget table */
+				.budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+				.amount { font-size: 12px; }
+
+				/* Audit rows: stack fully */
+				.audit-row { grid-template-columns: 28px 1fr; gap: 8px; }
+				.audit-row .audit-note, .audit-row .check-status { grid-column: 2; }
+				.audit-row .check-status { margin-top: 4px; }
+
+				/* Page header */
+				.page-header h1 { font-size: 26px; }
+				.page-header { padding: 32px 20px 28px; }
+
+				/* Callouts: stack icon above text */
+				.callout { flex-direction: column; gap: 6px; }
+				.callout-icon { margin-top: 0; }
 			}
 		</style>
 	</head>
@@ -753,61 +216,38 @@
 			</div>
 
 			<div class="nav-section-label">Overview</div>
-			<a href="#contact" class="nav-link active"
-				><span class="nav-icon">👤</span> Contact Info</a
-			>
-			<a href="#relationship" class="nav-link"
-				><span class="nav-icon">🤝</span> Relationship</a
-			>
-			<a href="#history" class="nav-link"
-				><span class="nav-icon">🗓️</span> Timeline</a
-			>
+			<a href="#contact" class="nav-link active"><span class="nav-icon">👤</span> Contact Info</a>
+			<a href="#relationship" class="nav-link"><span class="nav-icon">🤝</span> Relationship</a>
+			<a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Timeline</a>
 
 			<div class="nav-section-label">Pre-Sale Intel</div>
-			<a href="#audit" class="nav-link"
-				><span class="nav-icon">🔍</span> Site Audit</a
-			>
-			<a href="#opportunities" class="nav-link"
-				><span class="nav-icon">💡</span> Opportunities</a
-			>
-			<a href="#questions" class="nav-link"
-				><span class="nav-icon">❓</span> Questions to Ask</a
-			>
-			<a href="#designer-notes" class="nav-link"
-				><span class="nav-icon">🎨</span> Designer Notes</a
-			>
+			<a href="#audit" class="nav-link"><span class="nav-icon">🔍</span> Site Audit</a>
+			<a href="#opportunities" class="nav-link"><span class="nav-icon">💡</span> Opportunities</a>
+			<a href="#questions" class="nav-link"><span class="nav-icon">❓</span> Questions to Ask</a>
+			<a href="#designer-notes" class="nav-link"><span class="nav-icon">🎨</span> Designer Notes</a>
 
 			<div class="nav-section-label">Strategy</div>
-			<a href="#collab" class="nav-link"
-				><span class="nav-icon">📸</span> Referral / Collab</a
-			>
-			<a href="#notes" class="nav-link"
-				><span class="nav-icon">📝</span> Notes</a
-			>
+			<a href="#collab" class="nav-link"><span class="nav-icon">📸</span> Referral / Collab</a>
+			<a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
 
 			<div class="sidebar-footer">
 				Latz Web Design LLC<br />
 				Stevens Point, WI<br />
-				<a
-					href="/cdn-cgi/l/email-protection"
-					class="__cf_email__"
-					data-cfemail="87ede8f5e3e6e9c7ebe6f3fdf0e2e5e3e2f4eee0e9a9e4e8ea"
-					>[email&#160;protected]</a
-				><br /><br />
+				jordan@latzwebdesign.com<br /><br />
 				No fluff. Just results.
 			</div>
 		</nav>
 
+		<!-- MOBILE FAB + OVERLAY -->
+		<button class="mobile-fab" id="mobileMenuBtn" aria-label="Open navigation">☰</button>
+		<div class="mobile-overlay" id="mobileOverlay"></div>
+
 		<!-- MAIN -->
 		<div class="main">
-			<!-- PAGE HEADER -->
 			<div class="page-header">
 				<div class="overline">Lead Overview · Post-Meeting Update</div>
 				<h1>Hill Creative LLC</h1>
-				<div class="sub">
-					hillcreativellc.com · Website + Client Portal + Payment Integration —
-					Phased Approach
-				</div>
+				<div class="sub">hillcreativellc.com · Website + Client Portal + Payment Integration — Phased Approach</div>
 
 				<div class="header-meta">
 					<div class="header-meta-item">
@@ -824,9 +264,7 @@
 					</div>
 					<div class="header-meta-item">
 						<span class="label">Status</span>
-						<span class="value" style="color: #a78bfa"
-							>⏳ Awaiting Tool/Journey Breakdown</span
-						>
+						<span class="value" style="color: #a78bfa">⏳ Awaiting Tool/Journey Breakdown</span>
 					</div>
 					<div class="header-meta-item">
 						<span class="label">Website Ballpark</span>
@@ -838,17 +276,13 @@
 					</div>
 					<div class="header-meta-item">
 						<span class="label">Current Site</span>
-						<span class="value"
-							><a href="https://hillcreativellc.com" target="_blank"
-								>hillcreativellc.com</a
-							></span
-						>
+						<span class="value"><a href="https://hillcreativellc.com" target="_blank">hillcreativellc.com</a></span>
 					</div>
 				</div>
 			</div>
 
-			<!-- CONTENT -->
 			<div class="content">
+
 				<!-- CONTACT INFO -->
 				<section id="contact">
 					<div class="section-header">
@@ -859,94 +293,28 @@
 					<div class="two-col">
 						<div class="card">
 							<h3>Primary Contact</h3>
-							<div class="data-row">
-								<span class="data-label">Name</span>
-								<span class="data-value">Thresa Hill</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Business</span>
-								<span class="data-value">Hill Creative LLC</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Role</span>
-								<span class="data-value">Owner / Creator</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Phone</span>
-								<span class="data-value">715-897-4964</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Email</span>
-								<span class="data-value"
-									><a
-										href="/cdn-cgi/l/email-protection#d1a5b9a3b4a2b0ffb9b8bdbde3e091b6bcb0b8bdffb2bebc"
-										><span
-											class="__cf_email__"
-											data-cfemail="33475b415640521d5b5a5f5f010273545e525a5f1d505c5e"
-											>[email&#160;protected]</span
-										></a
-									></span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">LinkedIn</span>
-								<span class="data-value"
-									><a
-										href="https://www.linkedin.com/in/thresa-ann/"
-										target="_blank"
-										>linkedin.com/in/thresa-ann</a
-									></span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Hours</span>
-								<span class="data-value">Mon–Fri, 8am–4pm</span>
-							</div>
+							<div class="data-row"><span class="data-label">Name</span><span class="data-value">Thresa Hill</span></div>
+							<div class="data-row"><span class="data-label">Business</span><span class="data-value">Hill Creative LLC</span></div>
+							<div class="data-row"><span class="data-label">Role</span><span class="data-value">Owner / Creator</span></div>
+							<div class="data-row"><span class="data-label">Phone</span><span class="data-value">715-897-4964</span></div>
+							<div class="data-row"><span class="data-label">Email</span><span class="data-value"><a href="mailto:thresa@hillcreativellc.com">thresa@hillcreativellc.com</a></span></div>
+							<div class="data-row"><span class="data-label">LinkedIn</span><span class="data-value"><a href="https://www.linkedin.com/in/thresa-ann/" target="_blank">linkedin.com/in/thresa-ann</a></span></div>
+							<div class="data-row"><span class="data-label">Hours</span><span class="data-value">Mon–Fri, 8am–4pm</span></div>
 						</div>
 
 						<div class="card">
 							<h3>Business Overview</h3>
-							<div class="data-row">
-								<span class="data-label">Business Type</span>
-								<span class="data-value">Solo photography business — LLC</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Current Services</span>
-								<span class="data-value"
-									>Real estate photography, family photography</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Expanding Into</span>
-								<span class="data-value"
-									>Branding photography + asset photography for businesses
-									(active push this year)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Location</span>
-								<span class="data-value"
-									>Stevens Point area (she mentioned Plover — local)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Current Stack</span>
-								<span class="data-value"
-									>Self-described "rough" website — platform unknown</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Developer History</span>
-								<span class="data-value"
-									>Has worked with "a couple local website developers" — both
-									used WordPress + Bluehost</span
-								>
-							</div>
+							<div class="data-row"><span class="data-label">Business Type</span><span class="data-value">Solo photography business — LLC</span></div>
+							<div class="data-row"><span class="data-label">Current Services</span><span class="data-value">Real estate photography, family photography</span></div>
+							<div class="data-row"><span class="data-label">Expanding Into</span><span class="data-value">Branding photography + asset photography for businesses (active push this year)</span></div>
+							<div class="data-row"><span class="data-label">Location</span><span class="data-value">Stevens Point area (she mentioned Plover — local)</span></div>
+							<div class="data-row"><span class="data-label">Current Stack</span><span class="data-value">Self-described "rough" website — platform unknown</span></div>
+							<div class="data-row"><span class="data-label">Developer History</span><span class="data-value">Has worked with "a couple local website developers" — both used WordPress + Bluehost</span></div>
 						</div>
 					</div>
 				</section>
 
-				<!-- RELATIONSHIP CONTEXT -->
+				<!-- RELATIONSHIP -->
 				<section id="relationship">
 					<div class="section-header">
 						<div class="section-icon">🤝</div>
@@ -954,52 +322,23 @@
 					</div>
 
 					<div class="highlight-box">
-						<strong
-							>The real opportunity is bigger than a website — but start
-							there.</strong
-						>
-						<p>
-							She has a scattered tech stack (AI tools, Honeybook, Base44-built
-							pages) and wants it all consolidated. The website is Phase 1 and
-							the easiest yes to get. The full vision — website + client portal
-							+ photo/document delivery + payment integration — is a $10k+
-							project. Don't lead with that number. Lead with Phase 1 and let
-							the rest follow naturally.
-						</p>
+						<strong>The real opportunity is bigger than a website — but start there.</strong>
+						<p>She has a scattered tech stack (AI tools, Honeybook, Base44-built pages) and wants it all consolidated. The website is Phase 1 and the easiest yes to get. The full vision — website + client portal + photo/document delivery + payment integration — is a $10k+ project. Don't lead with that number. Lead with Phase 1 and let the rest follow naturally.</p>
 					</div>
 
 					<div class="callout warn">
 						<span class="callout-icon">⚠️</span>
 						<div class="callout-body">
 							<strong>Price sensitivity is real</strong>
-							<span
-								>She understood the $3–3.5k website number but didn't
-								immediately commit. She's been using AI tools to build things
-								herself (Base44) which means she's cost-conscious and
-								DIY-inclined. The proposal needs to make the value crystal clear
-								— not just "nice website" but "this replaces 3 platforms and
-								actually converts clients."</span
-							>
+							<span>She understood the $3–3.5k website number but didn't immediately commit. She's been using AI tools to build things herself (Base44) which means she's cost-conscious and DIY-inclined. The proposal needs to make the value crystal clear — not just "nice website" but "this replaces 3 platforms and actually converts clients."</span>
 						</div>
 					</div>
 
 					<div class="callout info">
 						<span class="callout-icon">🤖</span>
 						<div class="callout-body">
-							<strong
-								>She's been using AI tools — that's not a threat, it's a
-								qualifier</strong
-							>
-							<span
-								>She showed you a site she built with Base44 based on
-								Stonebridge Marketing's design. She said "but I don't know where
-								the info is stored." That one sentence tells you everything —
-								she can get something that looks okay with AI, but she doesn't
-								understand what she's building or who owns it. That's your
-								opening. Custom code, her domain, Vercel hosting she controls.
-								She owns it. That matters to someone already burned by mystery
-								platforms.</span
-							>
+							<strong>She's been using AI tools — that's not a threat, it's a qualifier</strong>
+							<span>She showed you a site she built with Base44 based on Stonebridge Marketing's design. She said "but I don't know where the info is stored." That one sentence tells you everything — she can get something that looks okay with AI, but she doesn't understand what she's building or who owns it. That's your opening. Custom code, her domain, Vercel hosting she controls. She owns it. That matters to someone already burned by mystery platforms.</span>
 						</div>
 					</div>
 
@@ -1007,81 +346,21 @@
 						<div class="card">
 							<h3>What She Actually Needs (Post-Meeting)</h3>
 							<ul class="checklist">
-								<li>
-									<span class="check-icon">🌐</span>
-									<div>
-										<strong>New website</strong> — current site is rough, she's
-										already tried AI-building a better one
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">🗂️</span>
-									<div>
-										<strong>Client portal</strong> — a way to deliver photos and
-										documents to clients without cobbling together tools
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">💳</span>
-									<div>
-										<strong>Payment integration</strong> — currently using
-										Honeybook; wants this cleaner and connected
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">🔗</span>
-									<div>
-										<strong>Platform consolidation</strong> — she has too many
-										disconnected tools and wants one cohesive system
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">🧭</span>
-									<div>
-										<strong>A clear client journey</strong> — inquiry → booking
-										→ shoot → delivery → payment, all in one place
-									</div>
-								</li>
+								<li><span class="check-icon">🌐</span><div><strong>New website</strong> — current site is rough, she's already tried AI-building a better one</div></li>
+								<li><span class="check-icon">🗂️</span><div><strong>Client portal</strong> — a way to deliver photos and documents to clients without cobbling together tools</div></li>
+								<li><span class="check-icon">💳</span><div><strong>Payment integration</strong> — currently using Honeybook; wants this cleaner and connected</div></li>
+								<li><span class="check-icon">🔗</span><div><strong>Platform consolidation</strong> — she has too many disconnected tools and wants one cohesive system</div></li>
+								<li><span class="check-icon">🧭</span><div><strong>A clear client journey</strong> — inquiry → booking → shoot → delivery → payment, all in one place</div></li>
 							</ul>
 						</div>
 						<div class="card">
 							<h3>Why This Is Interesting</h3>
 							<ul class="checklist">
-								<li>
-									<span class="check-icon">✅</span>
-									<div>
-										She's expanding into commercial/branding photography — a
-										growing service line needs a site that reflects it
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">✅</span>
-									<div>
-										Her current site is "rough" by her own admission — low bar
-										to clear, high upside
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">✅</span>
-									<div>
-										Already knows you do custom code (not WP/Bluehost) — that's
-										your differentiator, already planted
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">✅</span>
-									<div>
-										Strong referral potential — she's in Founders Network and
-										knows other developers' client bases
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">✅</span>
-									<div>
-										Could be a direct client AND a referral source AND a
-										photography vendor for your clients
-									</div>
-								</li>
+								<li><span class="check-icon">✅</span><div>She's expanding into commercial/branding photography — a growing service line needs a site that reflects it</div></li>
+								<li><span class="check-icon">✅</span><div>Her current site is "rough" by her own admission — low bar to clear, high upside</div></li>
+								<li><span class="check-icon">✅</span><div>Already knows you do custom code (not WP/Bluehost) — that's your differentiator, already planted</div></li>
+								<li><span class="check-icon">✅</span><div>Strong referral potential — she's in Founders Network and knows other developers' client bases</div></li>
+								<li><span class="check-icon">✅</span><div>Could be a direct client AND a referral source AND a photography vendor for your clients</div></li>
 							</ul>
 						</div>
 					</div>
@@ -1090,13 +369,7 @@
 						<span class="callout-icon">📸</span>
 						<div class="callout-body">
 							<strong>Collaboration angle is real</strong>
-							<span
-								>Thresa is actively building her commercial/branding photography
-								business. Your clients need photography. If she's good and
-								reasonably priced, this could be a clean referral loop — you
-								send her photography work, she sends you web work. Worth
-								exploring over coffee.</span
-							>
+							<span>Thresa is actively building her commercial/branding photography business. Your clients need photography. If she's good and reasonably priced, this could be a clean referral loop — you send her photography work, she sends you web work. Worth exploring over coffee.</span>
 						</div>
 					</div>
 
@@ -1104,13 +377,7 @@
 						<span class="callout-icon">⚠️</span>
 						<div class="callout-body">
 							<strong>Don't over-pitch at the meeting</strong>
-							<span
-								>She asked for pointers on her site, not a sales presentation.
-								Come with 2–3 sharp observations, ask questions about her
-								business goals, and let her lead the conversation about whether
-								she wants a quote. If you lead with the pitch, you lose the
-								relationship.</span
-							>
+							<span>She asked for pointers on her site, not a sales presentation. Come with 2–3 sharp observations, ask questions about her business goals, and let her lead the conversation about whether she wants a quote. If you lead with the pitch, you lose the relationship.</span>
 						</div>
 					</div>
 				</section>
@@ -1126,99 +393,47 @@
 						<div class="timeline-item complete">
 							<div class="timeline-date">~Late March 2026</div>
 							<div class="timeline-title">Met at Founders Network</div>
-							<div class="timeline-desc">
-								In-person meeting. Exchanged cards. Briefly talked about what
-								each other does. Memorable enough that she tracked down your
-								card a couple weeks later.
-							</div>
+							<div class="timeline-desc">In-person meeting. Exchanged cards. Briefly talked about what each other does. Memorable enough that she tracked down your card a couple weeks later.</div>
 						</div>
 						<div class="timeline-item complete">
 							<div class="timeline-date">Apr 1, 2026 — Wed</div>
 							<div class="timeline-title">Thresa Initiates Contact</div>
-							<div class="timeline-desc">
-								Sent email referencing the Founders Network meeting. Introduced
-								Hill Creative — real estate + family photography, expanding into
-								branding/commercial. Mentioned existing WP developer contacts.
-								Asked about coffee to "talk shop," offered feedback on her site,
-								floated possibility of a quote. Warm, low-pressure tone.
-							</div>
+							<div class="timeline-desc">Sent email referencing the Founders Network meeting. Introduced Hill Creative — real estate + family photography, expanding into branding/commercial. Mentioned existing WP developer contacts. Asked about coffee to "talk shop," offered feedback on her site, floated possibility of a quote. Warm, low-pressure tone.</div>
 						</div>
 						<div class="timeline-item complete">
 							<div class="timeline-date">Apr 1 — 10:55am</div>
 							<div class="timeline-title">Jordan Replies Immediately</div>
-							<div class="timeline-desc">
-								Said you were going to look her up anyway. Offered next week,
-								any day after 9am. Good tone — enthusiastic but not desperate.
-							</div>
+							<div class="timeline-desc">Said you were going to look her up anyway. Offered next week, any day after 9am. Good tone — enthusiastic but not desperate.</div>
 						</div>
 						<div class="timeline-item complete">
 							<div class="timeline-date">Apr 1 — 11:08am</div>
 							<div class="timeline-title">Friday 1pm Suggested</div>
-							<div class="timeline-desc">
-								Thresa proposed Friday afternoon — referenced it being "a little
-								late for coffee." Relaxed vibe.
-							</div>
+							<div class="timeline-desc">Thresa proposed Friday afternoon — referenced it being "a little late for coffee." Relaxed vibe.</div>
 						</div>
 						<div class="timeline-item complete">
 							<div class="timeline-date">Apr 1 — 11:24am</div>
 							<div class="timeline-title">Jordan Confirms April 10 at 1pm</div>
-							<div class="timeline-desc">
-								Jokingly mentioned Point Brewery being an option. She suggested
-								Mission Coffee House in Plover (with Oso's or Mikey's as beer
-								backups). Good energy established.
-							</div>
+							<div class="timeline-desc">Jokingly mentioned Point Brewery being an option. She suggested Mission Coffee House in Plover (with Oso's or Mikey's as beer backups). Good energy established.</div>
 						</div>
 						<div class="timeline-item complete">
 							<div class="timeline-date">Apr 6 — 11:10am</div>
 							<div class="timeline-title">Jordan Confirms Location</div>
-							<div class="timeline-desc">
-								Noted delayed response (weekend gap). Confirmed Mission Coffee,
-								Plover, Friday 1pm. Clean close.
-							</div>
+							<div class="timeline-desc">Noted delayed response (weekend gap). Confirmed Mission Coffee, Plover, Friday 1pm. Clean close.</div>
 						</div>
 						<div class="timeline-item complete">
-							<div class="timeline-date">Apr 10, 2026 — TODAY</div>
-							<div class="timeline-title">
-								✅ Coffee Meeting — Mission Coffee House, Plover
-							</div>
-							<div class="timeline-desc">
-								Met for ~1hr. Good energy, relaxed conversation. She's been
-								experimenting with AI tools (Base44) and has built parts of a
-								site herself — liked Stonebridge Marketing's design and
-								replicated it with AI. Showed it at the meeting. Uses Honeybook
-								for payment. Has a lot of platforms/tools spread across her
-								business and wants to bring them together. Jordan mentioned
-								phased approach — website first, then portal + integrations.
-								Showed her Meghan Mary's photography site as a comparable — she
-								asked how much something like that would be. Jordan said
-								$3–3.5k. She understood the number but price sensitivity is
-								real. She is going to send a breakdown of all her tools and her
-								ideal client journey. Jordan will build a vision plan from that.
-							</div>
+							<div class="timeline-date">Apr 10, 2026</div>
+							<div class="timeline-title">✅ Coffee Meeting — Mission Coffee House, Plover</div>
+							<div class="timeline-desc">Met for ~1hr. Good energy, relaxed conversation. She's been experimenting with AI tools (Base44) and has built parts of a site herself — liked Stonebridge Marketing's design and replicated it with AI. Showed it at the meeting. Uses Honeybook for payment. Has a lot of platforms/tools spread across her business and wants to bring them together. Jordan mentioned phased approach — website first, then portal + integrations. Showed her Meghan Mary's photography site as a comparable — she asked how much something like that would be. Jordan said $3–3.5k. She understood the number but price sensitivity is real. She is going to send a breakdown of all her tools and her ideal client journey. Jordan will build a vision plan from that.</div>
 						</div>
 						<div class="timeline-item active">
 							<div class="timeline-date">Pending — Her Move</div>
-							<div class="timeline-title">
-								⏳ Thresa Sends Tool Stack + Client Journey Breakdown
-							</div>
-							<div class="timeline-desc">
-								She committed to sending a breakdown of every platform she uses
-								and what she wants the client experience to look like
-								end-to-end. This is the input Jordan needs to build a proper
-								phased proposal.
-							</div>
+							<div class="timeline-title">⏳ Thresa Sends Tool Stack + Client Journey Breakdown</div>
+							<div class="timeline-desc">She committed to sending a breakdown of every platform she uses and what she wants the client experience to look like end-to-end. This is the input Jordan needs to build a proper phased proposal.</div>
 						</div>
 						<div class="timeline-item pending">
 							<div class="timeline-date">After Breakdown Received</div>
-							<div class="timeline-title">
-								Jordan Builds Vision Plan + Phased Proposal
-							</div>
-							<div class="timeline-desc">
-								Phase 1: Website rebuild ($3–3.5k). Phase 2+: Client portal,
-								document/photo delivery, payment integration. Full vision est.
-								$10k+. Proposal should show the whole picture but make Phase 1
-								feel like an easy first step.
-							</div>
+							<div class="timeline-title">Jordan Builds Vision Plan + Phased Proposal</div>
+							<div class="timeline-desc">Phase 1: Website rebuild ($3–3.5k). Phase 2+: Client portal, document/photo delivery, payment integration. Full vision est. $10k+. Proposal should show the whole picture but make Phase 1 feel like an easy first step.</div>
 						</div>
 					</div>
 				</section>
@@ -1234,116 +449,55 @@
 						<span class="callout-icon">⚠️</span>
 						<div class="callout-body">
 							<strong>She knows it's rough — don't pile on</strong>
-							<span
-								>Thresa self-described her site as "rough right now." Come with
-								2–3 crisp, constructive observations framed around her business
-								goals. Don't bullet-point every problem. Pick the ones that tie
-								directly to her expansion into commercial/branding work.</span
-							>
+							<span>Thresa self-described her site as "rough right now." Come with 2–3 crisp, constructive observations framed around her business goals. Don't bullet-point every problem. Pick the ones that tie directly to her expansion into commercial/branding work.</span>
 						</div>
 					</div>
 
 					<div class="card">
 						<h3>Alyssa's Pre-Meeting Design Assessment</h3>
-						<p
-							style="
-								font-size: 13px;
-								color: var(--gray-600);
-								margin-bottom: 16px;
-							"
-						>
-							Notes from Alyssa Shurbert-Hetzel (your designer), reviewed before
-							the meeting. Use these as internal context — don't read from a
-							list at coffee.
-						</p>
+						<p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;">Notes from Alyssa Shurbert-Hetzel (your designer), reviewed before the meeting. Use these as internal context — don't read from a list at coffee.</p>
 
 						<div class="audit-row">
 							<span class="audit-icon">🏢</span>
 							<span class="audit-area">Overall Feel</span>
-							<span class="audit-note"
-								>Leans too casual/personal for the commercial/branding push
-								she's making. Needs to feel more professional without going
-								cold. Family photography page can stay warmer — the two
-								audiences need different treatment.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-orange">Priority</span></span
-							>
+							<span class="audit-note">Leans too casual/personal for the commercial/branding push she's making. Needs to feel more professional without going cold. Family photography page can stay warmer — the two audiences need different treatment.</span>
+							<span class="check-status"><span class="pill pill-orange">Priority</span></span>
 						</div>
 						<div class="audit-row">
 							<span class="audit-icon">📣</span>
 							<span class="audit-area">Homepage Structure</span>
-							<span class="audit-note"
-								>Lead with expertise and differentiators, then show the work,
-								then build trust with testimonials/about. Right now it probably
-								leads with "who I am" instead of "what I can do for you."
-								Classic solo business trap.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-orange">Priority</span></span
-							>
+							<span class="audit-note">Lead with expertise and differentiators, then show the work, then build trust with testimonials/about. Right now it probably leads with "who I am" instead of "what I can do for you." Classic solo business trap.</span>
+							<span class="check-status"><span class="pill pill-orange">Priority</span></span>
 						</div>
 						<div class="audit-row">
 							<span class="audit-icon">💲</span>
 							<span class="audit-area">Pricing</span>
-							<span class="audit-note"
-								>No pricing shown. Small local businesses want to see ballpark
-								numbers upfront — saves everyone time. Larger/custom clients can
-								be directed to contact. Worth discussing whether she's open to
-								adding starting prices.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-teal">Discuss</span></span
-							>
+							<span class="audit-note">No pricing shown. Small local businesses want to see ballpark numbers upfront — saves everyone time. Larger/custom clients can be directed to contact. Worth discussing whether she's open to adding starting prices.</span>
+							<span class="check-status"><span class="pill pill-teal">Discuss</span></span>
 						</div>
 						<div class="audit-row">
 							<span class="audit-icon">🏷️</span>
-							<span class="audit-area">Section Headings / Organization</span>
-							<span class="audit-note"
-								>Text-heavy areas need clear section headings — both for
-								readability and SEO. Pages may be doing too much without enough
-								visual chunking.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-gray">Noted</span></span
-							>
+							<span class="audit-area">Section Headings</span>
+							<span class="audit-note">Text-heavy areas need clear section headings — both for readability and SEO. Pages may be doing too much without enough visual chunking.</span>
+							<span class="check-status"><span class="pill pill-gray">Noted</span></span>
 						</div>
 						<div class="audit-row">
 							<span class="audit-icon">♿</span>
-							<span class="audit-area">Accessibility / Legibility</span>
-							<span class="audit-note"
-								>Text is likely centered in places where it shouldn't be — kills
-								readability at length. Font sizing and contrast may be under
-								spec. Left-aligned body text is a non-negotiable for
-								accessibility.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-gray">Noted</span></span
-							>
+							<span class="audit-area">Accessibility</span>
+							<span class="audit-note">Text is likely centered in places where it shouldn't be — kills readability at length. Font sizing and contrast may be under spec. Left-aligned body text is a non-negotiable for accessibility.</span>
+							<span class="check-status"><span class="pill pill-gray">Noted</span></span>
 						</div>
 						<div class="audit-row">
 							<span class="audit-icon">📄</span>
 							<span class="audit-area">Services Structure</span>
-							<span class="audit-note"
-								>As she adds branding/commercial photography, services may need
-								their own page or clear sub-sections. The current structure may
-								not have room to grow cleanly.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-teal">Discuss</span></span
-							>
+							<span class="audit-note">As she adds branding/commercial photography, services may need their own page or clear sub-sections. The current structure may not have room to grow cleanly.</span>
+							<span class="check-status"><span class="pill pill-teal">Discuss</span></span>
 						</div>
 						<div class="audit-row">
 							<span class="audit-icon">📋</span>
 							<span class="audit-area">Shoot Prep PDF</span>
-							<span class="audit-note"
-								>Alyssa specifically called this out as a good feature to keep
-								and highlight — it shows process and professionalism. Whatever
-								the rebuild looks like, preserve this.</span
-							>
-							<span class="check-status"
-								><span class="pill pill-green">Keep</span></span
-							>
+							<span class="audit-note">Alyssa specifically called this out as a good feature to keep and highlight — it shows process and professionalism. Whatever the rebuild looks like, preserve this.</span>
+							<span class="check-status"><span class="pill pill-green">Keep</span></span>
 						</div>
 					</div>
 
@@ -1351,13 +505,7 @@
 						<span class="callout-icon">🔑</span>
 						<div class="callout-body">
 							<strong>The core problem to name at coffee</strong>
-							<span
-								>Her site was built for the photographer she was. She's becoming
-								something different — adding commercial/branding work — and the
-								site doesn't reflect that positioning. That's the line. It's not
-								about design, it's about whether her site is helping or hurting
-								her when a business client lands on it.</span
-							>
+							<span>Her site was built for the photographer she was. She's becoming something different — adding commercial/branding work — and the site doesn't reflect that positioning. That's the line. It's not about design, it's about whether her site is helping or hurting her when a business client lands on it.</span>
 						</div>
 					</div>
 				</section>
@@ -1372,96 +520,54 @@
 					<div class="callout yellow">
 						<span class="callout-icon">⏱️</span>
 						<div class="callout-body">
-							<strong
-								>Phased approach was pitched and landed — use that framing in
-								the proposal</strong
-							>
-							<span
-								>Jordan introduced phases at the meeting. She responded well.
-								Lead the proposal with Phase 1 as a standalone win, then show
-								the full roadmap so she can see where it's going. Don't hide the
-								big number — just don't make her commit to it today.</span
-							>
+							<strong>Phased approach was pitched and landed — use that framing in the proposal</strong>
+							<span>Jordan introduced phases at the meeting. She responded well. Lead the proposal with Phase 1 as a standalone win, then show the full roadmap so she can see where it's going. Don't hide the big number — just don't make her commit to it today.</span>
 						</div>
 					</div>
 
 					<table class="budget-table">
 						<thead>
-							<tr>
-								<th>Phase</th>
-								<th>Scope</th>
-								<th class="amount">Est. Range</th>
-							</tr>
+							<tr><th>Phase</th><th>Scope</th><th class="amount">Est. Range</th></tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td><strong>Phase 1 — Website Rebuild</strong></td>
-								<td>
-									Full custom site. Homepage, services (real estate / family /
-									branding-commercial), portfolio galleries, contact/inquiry
-									form, shoot prep PDF preserved, mobile-first, she owns it.
-									Comparable: Meghan Mary's photography site. Honeybook can
-									still run in the background — we're not replacing it yet, just
-									giving her a site that's actually converting.
-								</td>
+								<td>Full custom site. Homepage, services (real estate / family / branding-commercial), portfolio galleries, contact/inquiry form, shoot prep PDF preserved, mobile-first, she owns it. Comparable: Meghan Mary's photography site. Honeybook can still run in the background — we're not replacing it yet, just giving her a site that's actually converting.</td>
 								<td class="amount">$3,000–$3,500</td>
 							</tr>
 							<tr>
 								<td><strong>Phase 2 — Client Portal</strong></td>
-								<td>
-									Password-protected client area. Upload and deliver photos and
-									documents per client. Replaces whatever cobbled-together
-									solution she's using now. CMS-managed so she runs it herself.
-								</td>
+								<td>Password-protected client area. Upload and deliver photos and documents per client. Replaces whatever cobbled-together solution she's using now. CMS-managed so she runs it herself.</td>
 								<td class="amount">$2,500–$3,500</td>
 							</tr>
 							<tr>
 								<td><strong>Phase 3 — Payment Integration</strong></td>
-								<td>
-									Integrated payment flow — invoicing, deposits, final payments.
-									Possibly replacing or supplementing Honeybook depending on
-									what her tool breakdown reveals. Need to understand her full
-									current stack first.
-								</td>
+								<td>Integrated payment flow — invoicing, deposits, final payments. Possibly replacing or supplementing Honeybook depending on what her tool breakdown reveals. Need to understand her full current stack first.</td>
 								<td class="amount">$1,500–$2,500</td>
 							</tr>
 							<tr>
 								<td><strong>Phase 4 — Full Platform Consolidation</strong></td>
-								<td>
-									Once Phases 1–3 are live: consolidate remaining tools,
-									streamline the full client journey from inquiry to delivery to
-									payment in one system. Scope TBD after tool breakdown arrives.
-								</td>
+								<td>Once Phases 1–3 are live: consolidate remaining tools, streamline the full client journey from inquiry to delivery to payment in one system. Scope TBD after tool breakdown arrives.</td>
 								<td class="amount">TBD</td>
 							</tr>
 							<tr class="total-row">
 								<td><strong>Full Vision Estimate</strong></td>
-								<td>
-									All phases. Website + portal + payment + consolidation. Scope
-									will sharpen once her tool breakdown arrives.
-								</td>
+								<td>All phases. Website + portal + payment + consolidation. Scope will sharpen once her tool breakdown arrives.</td>
 								<td class="amount"><strong>$10,000+</strong></td>
 							</tr>
 						</tbody>
 					</table>
 
-					<div class="callout warn" style="margin-top: 16px">
+					<div class="callout warn" style="margin-top:16px">
 						<span class="callout-icon">⚠️</span>
 						<div class="callout-body">
-							<strong
-								>Don't quote Phase 2+ until you see her tool breakdown</strong
-							>
-							<span
-								>She's sending a full list of platforms she uses and her ideal
-								client journey. That document is what determines scope for
-								everything past Phase 1. Don't guess at the portal or payment
-								scope until you know what she's actually running.</span
-							>
+							<strong>Don't quote Phase 2+ until you see her tool breakdown</strong>
+							<span>She's sending a full list of platforms she uses and her ideal client journey. That document is what determines scope for everything past Phase 1. Don't guess at the portal or payment scope until you know what she's actually running.</span>
 						</div>
 					</div>
 				</section>
 
-				<!-- NEXT STEPS / AWAITING -->
+				<!-- NEXT STEPS -->
 				<section id="questions">
 					<div class="section-header">
 						<div class="section-icon">⏳</div>
@@ -1469,51 +575,29 @@
 					</div>
 
 					<div class="highlight-box">
-						<strong
-							>Her move: send the tool stack breakdown and client journey
-							description.</strong
-						>
-						<p>
-							She committed to this at the meeting. Everything past Phase 1
-							scoping depends on it. Follow up if you haven't heard in 5–7 days.
-						</p>
+						<strong>Her move: send the tool stack breakdown and client journey description.</strong>
+						<p>She committed to this at the meeting. Everything past Phase 1 scoping depends on it. Follow up if you haven't heard in 5–7 days.</p>
 					</div>
 
 					<div class="question-block">
 						<div class="q-label">Waiting On — Her</div>
-						Full list of every platform/tool she currently uses (Base44,
-						Honeybook, any others) — what each one does and what she wishes it
-						did instead.
+						Full list of every platform/tool she currently uses (Base44, Honeybook, any others) — what each one does and what she wishes it did instead.
 					</div>
-
 					<div class="question-block">
 						<div class="q-label">Waiting On — Her</div>
-						Ideal client journey description: what does the experience look like
-						from first inquiry through photo delivery and final payment? Where
-						are the friction points?
+						Ideal client journey description: what does the experience look like from first inquiry through photo delivery and final payment? Where are the friction points?
 					</div>
-
 					<div class="question-block">
 						<div class="q-label">Jordan's Move — After Breakdown Arrives</div>
-						Build the phased vision plan. Lead with Phase 1 (website, $3–3.5k).
-						Show the full roadmap through portal + payments. Let her decide how
-						far she wants to go and when.
+						Build the phased vision plan. Lead with Phase 1 (website, $3–3.5k). Show the full roadmap through portal + payments. Let her decide how far she wants to go and when.
 					</div>
-
 					<div class="question-block">
 						<div class="q-label">Jordan's Move — Now</div>
-						Send post-meeting follow-up email today or tomorrow. Warm, brief.
-						Reference the Stonebridge / Jenna B inspiration she mentioned,
-						confirm you're waiting on her breakdown, and maybe include the
-						Meghan Mary site link again as the comparable she responded to.
+						Send post-meeting follow-up email today or tomorrow. Warm, brief. Reference the Stonebridge / Jenna B inspiration she mentioned, confirm you're waiting on her breakdown, and maybe include the Meghan Mary site link again as the comparable she responded to.
 					</div>
-
 					<div class="question-block">
 						<div class="q-label">Open Question — Honeybook</div>
-						Is she trying to replace Honeybook entirely or just supplement it?
-						This determines whether Phase 3 is a full custom payment/CRM build
-						or just a cleaner integration. Her breakdown should clarify this —
-						but worth asking directly if it doesn't.
+						Is she trying to replace Honeybook entirely or just supplement it? This determines whether Phase 3 is a full custom payment/CRM build or just a cleaner integration. Her breakdown should clarify this — but worth asking directly if it doesn't.
 					</div>
 				</section>
 
@@ -1525,74 +609,23 @@
 					</div>
 
 					<div class="highlight-box">
-						<strong
-							>Two reference sites from Thresa herself — use these as the design
-							brief anchor.</strong
-						>
-						<p>
-							She showed you Stonebridge Marketing at the meeting and said she
-							loved the design enough to try to recreate it with AI. Jenna B
-							Photography is "who she wants to be." That's your brief right
-							there.
-						</p>
+						<strong>Two reference sites from Thresa herself — use these as the design brief anchor.</strong>
+						<p>She showed you Stonebridge Marketing at the meeting and said she loved the design enough to try to recreate it with AI. Jenna B Photography is "who she wants to be." That's your brief right there.</p>
 					</div>
 
 					<div class="two-col">
 						<div class="card">
 							<h3>🔗 Stonebridge Marketing</h3>
-							<div class="data-row">
-								<span class="data-label">URL</span>
-								<span class="data-value"
-									><a href="https://stonebridgemarketing.com/" target="_blank"
-										>stonebridgemarketing.com</a
-									></span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Why She Loves It</span>
-								<span class="data-value"
-									>Loved the design enough to build an AI version of it herself
-									with Base44. This is the visual language she's drawn to.</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Design Notes</span>
-								<span class="data-value"
-									>Study the layout, typography, color use, and overall feel.
-									This is the aesthetic direction she'd respond to — not
-									necessarily a copy, but same energy.</span
-								>
-							</div>
+							<div class="data-row"><span class="data-label">URL</span><span class="data-value"><a href="https://stonebridgemarketing.com/" target="_blank">stonebridgemarketing.com</a></span></div>
+							<div class="data-row"><span class="data-label">Why She Loves It</span><span class="data-value">Loved the design enough to build an AI version of it herself with Base44. This is the visual language she's drawn to.</span></div>
+							<div class="data-row"><span class="data-label">Design Notes</span><span class="data-value">Study the layout, typography, color use, and overall feel. This is the aesthetic direction she'd respond to — not necessarily a copy, but same energy.</span></div>
 						</div>
 
 						<div class="card">
 							<h3>🔗 Jenna B Photography</h3>
-							<div class="data-row">
-								<span class="data-label">URL</span>
-								<span class="data-value"
-									><a href="https://www.jennabphotography.com/" target="_blank"
-										>jennabphotography.com</a
-									></span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Why She Loves It</span>
-								<span class="data-value"
-									>"Who she wants to be" — Thresa's words. Brand photographer
-									for female entrepreneurs. Bold, personality-driven
-									positioning. Branding + portrait photography with clear
-									audience targeting.</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Key Observations</span>
-								<span class="data-value"
-									>Jenna B leads with "bold, creative, passionate." Separate
-									branding vs portraits sections. Strong personality — not just
-									a portfolio, a brand. Services clearly delineated. This is the
-									positioning Thresa wants to move toward.</span
-								>
-							</div>
+							<div class="data-row"><span class="data-label">URL</span><span class="data-value"><a href="https://www.jennabphotography.com/" target="_blank">jennabphotography.com</a></span></div>
+							<div class="data-row"><span class="data-label">Why She Loves It</span><span class="data-value">"Who she wants to be" — Thresa's words. Brand photographer for female entrepreneurs. Bold, personality-driven positioning. Branding + portrait photography with clear audience targeting.</span></div>
+							<div class="data-row"><span class="data-label">Key Observations</span><span class="data-value">Jenna B leads with "bold, creative, passionate." Separate branding vs portraits sections. Strong personality — not just a portfolio, a brand. Services clearly delineated. This is the positioning Thresa wants to move toward.</span></div>
 						</div>
 					</div>
 
@@ -1600,53 +633,17 @@
 						<span class="callout-icon">🧠</span>
 						<div class="callout-body">
 							<strong>What these two refs tell you together</strong>
-							<span
-								>Stonebridge = the aesthetic (clean, professional, maybe some
-								warmth). Jenna B = the positioning and confidence (bold
-								personality, clear audience, not hiding what she does or who
-								it's for). Thresa's site needs to land somewhere between those
-								two: professional enough for business clients, personal enough
-								to feel like her.</span
-							>
+							<span>Stonebridge = the aesthetic (clean, professional, maybe some warmth). Jenna B = the positioning and confidence (bold personality, clear audience, not hiding what she does or who it's for). Thresa's site needs to land somewhere between those two: professional enough for business clients, personal enough to feel like her.</span>
 						</div>
 					</div>
 
-					<div class="card" style="margin-top: 8px">
+					<div class="card" style="margin-top:8px">
 						<h3>Alyssa's Pre-Meeting Design Notes — Still Relevant</h3>
-						<div class="data-row">
-							<span class="data-label">Overall Feel</span>
-							<span class="data-value"
-								>Lean more professional — not cold. Family page can stay warmer.
-								Business/branding pages need to feel polished.</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Homepage Structure</span>
-							<span class="data-value"
-								>Lead with expertise/differentiators → work → trust
-								(testimonials/about). Not "who I am" first.</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Pricing</span>
-							<span class="data-value"
-								>Show starting prices. Filters bad leads, signals
-								confidence.</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Accessibility</span>
-							<span class="data-value"
-								>Left-align body text. Review font size + contrast.</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Keep</span>
-							<span class="data-value"
-								>The shoot prep PDF — great feature, preserve it in the
-								rebuild.</span
-							>
-						</div>
+						<div class="data-row"><span class="data-label">Overall Feel</span><span class="data-value">Lean more professional — not cold. Family page can stay warmer. Business/branding pages need to feel polished.</span></div>
+						<div class="data-row"><span class="data-label">Homepage Structure</span><span class="data-value">Lead with expertise/differentiators → work → trust (testimonials/about). Not "who I am" first.</span></div>
+						<div class="data-row"><span class="data-label">Pricing</span><span class="data-value">Show starting prices. Filters bad leads, signals confidence.</span></div>
+						<div class="data-row"><span class="data-label">Accessibility</span><span class="data-value">Left-align body text. Review font size + contrast.</span></div>
+						<div class="data-row"><span class="data-label">Keep</span><span class="data-value">The shoot prep PDF — great feature, preserve it in the rebuild.</span></div>
 					</div>
 				</section>
 
@@ -1659,61 +656,24 @@
 
 					<div class="highlight-box">
 						<strong>Three possible outcomes — any one of them is a win.</strong>
-						<p>
-							She becomes a web client. She sends you referrals from her network
-							(WP dev clients who are unhappy). You send her photography work
-							from your clients. Ideally all three eventually, but don't push
-							for all of them at once.
-						</p>
+						<p>She becomes a web client. She sends you referrals from her network (WP dev clients who are unhappy). You send her photography work from your clients. Ideally all three eventually, but don't push for all of them at once.</p>
 					</div>
 
 					<div class="two-col">
 						<div class="card">
 							<h3>She Could Send You</h3>
 							<ul class="checklist">
-								<li>
-									<span class="check-icon">🔗</span>
-									<div>
-										WP/Bluehost clients of hers who are frustrated or want
-										something better — she explicitly offered this
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">🔗</span>
-									<div>
-										Founders Network connections — she's clearly active in that
-										community
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">🔗</span>
-									<div>
-										Business clients she photographs who then mention needing a
-										website
-									</div>
-								</li>
+								<li><span class="check-icon">🔗</span><div>WP/Bluehost clients of hers who are frustrated or want something better — she explicitly offered this</div></li>
+								<li><span class="check-icon">🔗</span><div>Founders Network connections — she's clearly active in that community</div></li>
+								<li><span class="check-icon">🔗</span><div>Business clients she photographs who then mention needing a website</div></li>
 							</ul>
 						</div>
 						<div class="card">
 							<h3>You Could Send Her</h3>
 							<ul class="checklist">
-								<li>
-									<span class="check-icon">📷</span>
-									<div>
-										Your clients who need brand photography for their new sites
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">📷</span>
-									<div>
-										Real estate clients in your network (she already does real
-										estate work)
-									</div>
-								</li>
-								<li>
-									<span class="check-icon">📷</span>
-									<div>Headshots for business owners you work with</div>
-								</li>
+								<li><span class="check-icon">📷</span><div>Your clients who need brand photography for their new sites</div></li>
+								<li><span class="check-icon">📷</span><div>Real estate clients in your network (she already does real estate work)</div></li>
+								<li><span class="check-icon">📷</span><div>Headshots for business owners you work with</div></li>
 							</ul>
 						</div>
 					</div>
@@ -1722,15 +682,7 @@
 						<span class="callout-icon">💡</span>
 						<div class="callout-body">
 							<strong>The natural pitch for photography on client sites</strong>
-							<span
-								>One of the biggest problems with small business websites is
-								stock photos that don't convert. If you can start bundling a
-								referral to Thresa into your proposals — "I work with a local
-								photographer who can shoot brand-specific images for the site" —
-								that's a differentiator for both of you. Worth exploring whether
-								you'd want to build that into a package or just keep it
-								informal.</span
-							>
+							<span>One of the biggest problems with small business websites is stock photos that don't convert. If you can start bundling a referral to Thresa into your proposals — "I work with a local photographer who can shoot brand-specific images for the site" — that's a differentiator for both of you. Worth exploring whether you'd want to build that into a package or just keep it informal.</span>
 						</div>
 					</div>
 
@@ -1738,13 +690,7 @@
 						<span class="callout-icon">⚠️</span>
 						<div class="callout-body">
 							<strong>Vet her work quality before sending referrals</strong>
-							<span
-								>Look at her portfolio before the meeting. If her
-								commercial/branding work is strong, the referral is easy to
-								give. If it's mostly family portraits and real estate, the
-								branding push is newer and you'd want to see more samples before
-								recommending her to a business client who's paying you.</span
-							>
+							<span>Look at her portfolio before the meeting. If her commercial/branding work is strong, the referral is easy to give. If it's mostly family portraits and real estate, the branding push is newer and you'd want to see more samples before recommending her to a business client who's paying you.</span>
 						</div>
 					</div>
 				</section>
@@ -1758,73 +704,71 @@
 
 					<div class="note-block">
 						<div class="note-date">April 10, 2026 — Post-Meeting</div>
-						<p>
-							Good meeting. Relaxed, genuine, no pressure. She's clearly a
-							smart, self-sufficient person who's been figuring things out on
-							her own — AI tools, Honeybook, building her own pages. That's
-							actually a good sign for a client: she's not helpless and she's
-							not going to ghost you between meetings. She'll have opinions.
-							Work with that, not against it.
-						</p>
+						<p>Good meeting. Relaxed, genuine, no pressure. She's clearly a smart, self-sufficient person who's been figuring things out on her own — AI tools, Honeybook, building her own pages. That's actually a good sign for a client: she's not helpless and she's not going to ghost you between meetings. She'll have opinions. Work with that, not against it.</p>
 					</div>
 
 					<div class="note-block">
 						<div class="note-date">The AI Tool Situation</div>
-						<p>
-							She's been using Base44 to build things. She showed you a page she
-							made inspired by Stonebridge Marketing's design. Her concern: "I
-							don't know where the info is stored." That's a real and valid
-							concern — AI-generated sites on mystery hosting with unclear data
-							ownership is a liability for a business. Your pitch practically
-							writes itself: custom-built, Vercel hosting she controls, her
-							domain, no platform lock-in. Don't make her feel dumb for using AI
-							— just show her what she gets when a real developer builds it.
-						</p>
+						<p>She's been using Base44 to build things. She showed you a page she made inspired by Stonebridge Marketing's design. Her concern: "I don't know where the info is stored." That's a real and valid concern — AI-generated sites on mystery hosting with unclear data ownership is a liability for a business. Your pitch practically writes itself: custom-built, Vercel hosting she controls, her domain, no platform lock-in. Don't make her feel dumb for using AI — just show her what she gets when a real developer builds it.</p>
 					</div>
 
 					<div class="note-block">
 						<div class="note-date">Honeybook Note</div>
-						<p>
-							She uses Honeybook for payment. She didn't say she hates it, but
-							it's clearly part of a larger "too many platforms" problem. Don't
-							assume she wants to replace it — she might just want everything
-							connected better. Her tool breakdown will clarify this. Don't
-							scope a custom payment system until you know whether she's trying
-							to replace Honeybook or supplement it.
-						</p>
+						<p>She uses Honeybook for payment. She didn't say she hates it, but it's clearly part of a larger "too many platforms" problem. Don't assume she wants to replace it — she might just want everything connected better. Her tool breakdown will clarify this. Don't scope a custom payment system until you know whether she's trying to replace Honeybook or supplement it.</p>
 					</div>
 
 					<div class="note-block">
 						<div class="note-date">The $3–3.5k Moment</div>
-						<p>
-							You showed her Meghan Mary's photography site. She asked the
-							price. You said $3–3.5k. She understood it. She didn't flinch
-							hard, but she also didn't say "let's do it." That tells you the
-							number is in range but not a slam dunk. The proposal needs to make
-							the value undeniable — not just a pretty site but a site that
-							replaces the friction she's dealing with across multiple
-							platforms. If she's paying monthly for 3–4 tools that don't talk
-							to each other, Phase 1 alone might be cheaper in the long run.
-						</p>
+						<p>You showed her Meghan Mary's photography site. She asked the price. You said $3–3.5k. She understood it. She didn't flinch hard, but she also didn't say "let's do it." That tells you the number is in range but not a slam dunk. The proposal needs to make the value undeniable — not just a pretty site but a site that replaces the friction she's dealing with across multiple platforms. If she's paying monthly for 3–4 tools that don't talk to each other, Phase 1 alone might be cheaper in the long run.</p>
 					</div>
 
 					<div class="note-block">
-						<div class="note-date">
-							Platform Consolidation — The Real Vision
-						</div>
-						<p>
-							The $10k+ number is real but it lives in the future. Don't lead
-							with it in the proposal. Frame it as: here's Phase 1 (website, she
-							can say yes today), here's what the full picture looks like when
-							she's ready. Give her a roadmap, not a quote to choke on. The
-							worst outcome is she sees $10k and goes back to Base44.
-						</p>
+						<div class="note-date">Platform Consolidation — The Real Vision</div>
+						<p>The $10k+ number is real but it lives in the future. Don't lead with it in the proposal. Frame it as: here's Phase 1 (website, she can say yes today), here's what the full picture looks like when she's ready. Give her a roadmap, not a quote to choke on. The worst outcome is she sees $10k and goes back to Base44.</p>
 					</div>
 				</section>
+
 			</div>
 		</div>
 
 		<script>
+			// ── MOBILE MENU ──
+			const fab = document.getElementById('mobileMenuBtn');
+			const overlay = document.getElementById('mobileOverlay');
+			const sidebar = document.querySelector('.sidebar');
+
+			function openMenu() {
+				sidebar.classList.add('mobile-open');
+				overlay.classList.add('active');
+				fab.textContent = '✕';
+			}
+
+			function closeMenu() {
+				sidebar.classList.remove('mobile-open');
+				overlay.classList.remove('active');
+				fab.textContent = '☰';
+			}
+
+			fab.addEventListener('click', () => {
+				sidebar.classList.contains('mobile-open') ? closeMenu() : openMenu();
+			});
+
+			overlay.addEventListener('click', closeMenu);
+
+			document.querySelectorAll('.nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680) {
+						e.preventDefault();
+						const target = document.querySelector(link.getAttribute('href'));
+						closeMenu();
+						setTimeout(() => {
+							target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						}, 280);
+					}
+				});
+			});
+
+			// ── SCROLLSPY ──
 			const sections = document.querySelectorAll('section[id]');
 			const navLinks = document.querySelectorAll('.nav-link');
 

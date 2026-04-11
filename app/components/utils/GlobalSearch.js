@@ -1,16 +1,23 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { TbSearch, TbX } from 'react-icons/tb';
 
 export default function GlobalSearch() {
+     
+ 
+  const pathname = usePathname()
+ 
+
+
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState('');
 	const [clients, setClients] = useState([]);
 	const [selected, setSelected] = useState(0);
 	const router = useRouter();
 	const navigating = useRef(false);
+  
 
 	// Reset on close
 	useEffect(() => {
@@ -101,6 +108,9 @@ export default function GlobalSearch() {
 			};
 		}
 	}, [open]);
+
+   if (pathname.startsWith('/view')) return null
+
 
 	return (
 		<>
