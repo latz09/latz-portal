@@ -25,16 +25,16 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 		<div className='mt-2 lg:mt-4'>
 			<button
 				onClick={() => setOpen(!open)}
-				className='flex items-center justify-center gap-2 w-full mb-3 group'
+				className='flex items-center  justify-start lg:justify-center gap-2 w-full mb-3 group'
 			>
 				<span className='font-mono text-xs text-warning tracking-widest uppercase'>
 					{label}
 				</span>
-				<span className='font-mono text-xs text-white/20'>
+				<span className='font-mono text-sm  text-white/40'>
 					{clients.length}
 				</span>
 				<TbChevronDown
-					className={`text-warning/70 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+					className={`text-white transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
 				/>
 			</button>
 			{open && (
