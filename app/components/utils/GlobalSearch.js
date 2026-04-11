@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { TbSearch, TbX } from 'react-icons/tb';
 
@@ -10,6 +10,7 @@ export default function GlobalSearch() {
 	const [clients, setClients] = useState([]);
 	const [selected, setSelected] = useState(0);
 	const router = useRouter();
+	const navigating = useRef(false);
 
 	// Reset on close
 	useEffect(() => {
@@ -29,7 +30,7 @@ export default function GlobalSearch() {
 			.then((data) => setClients(data));
 	}, [open, clients.length]);
 
-	// Cmd+K / Ctrl+K shortcut
+	// / shortcut + Escape
 	useEffect(() => {
 		const handler = (e) => {
 			if (e.key === '/') {
@@ -45,7 +46,9 @@ export default function GlobalSearch() {
 
 	const filtered = useMemo(
 		() =>
-			clients.filter((c) => c.name.toLowerCase().includes(query.toLowerCase())),
+			clients.filter((c) =>
+				c.name.toLowerCase().includes(query.toLowerCase()),
+			),
 		[clients, query],
 	);
 
@@ -70,6 +73,7 @@ export default function GlobalSearch() {
 				setSelected((s) => Math.max(s - 1, 0));
 			}
 			if (e.key === 'Enter' && sorted[selected]) {
+				navigating.current = true;
 				router.push(`/clients/${sorted[selected].slug}`);
 				setOpen(false);
 			}
@@ -77,6 +81,8 @@ export default function GlobalSearch() {
 		window.addEventListener('keydown', handler);
 		return () => window.removeEventListener('keydown', handler);
 	}, [open, sorted, selected, router]);
+
+	// Mobile swipe back
 	useEffect(() => {
 		if (open) {
 			window.history.pushState({ searchOpen: true }, '');
@@ -88,10 +94,10 @@ export default function GlobalSearch() {
 			window.addEventListener('popstate', handler);
 			return () => {
 				window.removeEventListener('popstate', handler);
-				// If closed by X/backdrop, clean up the fake history entry
-				if (window.history.state?.searchOpen) {
+				if (!navigating.current && window.history.state?.searchOpen) {
 					window.history.back();
 				}
+				navigating.current = false;
 			};
 		}
 	}, [open]);
@@ -153,6 +159,7 @@ export default function GlobalSearch() {
 								<button
 									key={client.slug}
 									onClick={() => {
+										navigating.current = true;
 										router.push(`/clients/${client.slug}`);
 										setOpen(false);
 									}}
