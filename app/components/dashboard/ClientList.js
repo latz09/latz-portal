@@ -25,7 +25,7 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 		<div className='mt-2 lg:mt-4'>
 			<button
 				onClick={() => setOpen(!open)}
-				className='flex items-center  justify-start lg:justify-center gap-2 w-full mb-3 group'
+				className='flex items-center ml-3  justify-start lg:justify-center gap-2 w-full mb-3 group'
 			>
 				<span className='font-mono text-xs text-warning tracking-widest uppercase'>
 					{label}
