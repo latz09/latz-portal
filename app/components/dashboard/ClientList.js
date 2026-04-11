@@ -22,10 +22,10 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 	const [open, setOpen] = useState(defaultOpen);
 
 	return (
-		<div className=' mt-2 lg:mt-4'>
+		<div className='mt-2 lg:mt-4'>
 			<button
 				onClick={() => setOpen(!open)}
-				className='flex items-center gap-2 w-full mb-3 group'
+				className='flex items-center justify-center gap-2 w-full mb-3 group'
 			>
 				<span className='font-mono text-xs text-warning tracking-widest uppercase'>
 					{label}
@@ -34,7 +34,7 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 					{clients.length}
 				</span>
 				<TbChevronDown
-					className={`text-warning/70 ml-auto transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+					className={`text-warning/70 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
 				/>
 			</button>
 			{open && (
@@ -68,7 +68,7 @@ export default function ClientList({ clients }) {
 	);
 
 	return (
-		<div className='flex flex-col lg:mb-12'>
+		<div className='flex flex-col lg:mb-12 '>
 			{active.length > 0 && (
 				<>
 					<p className='font-mono text-xs text-white/40 tracking-widest uppercase mb-3'>

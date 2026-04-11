@@ -45,7 +45,7 @@ export default async function Home() {
 			</div>
 
 			<ClientList clients={clients} />
-      <div className="mt-16"></div>
+			<div className='mt-16'></div>
 			<NoteList notes={notes} />
 			<UpcomingDeadlines clients={clients} variant='internal' />
 			<PortalFooter />
