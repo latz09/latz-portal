@@ -77,6 +77,24 @@ export default function GlobalSearch() {
 		window.addEventListener('keydown', handler);
 		return () => window.removeEventListener('keydown', handler);
 	}, [open, sorted, selected, router]);
+	useEffect(() => {
+		if (open) {
+			window.history.pushState({ searchOpen: true }, '');
+			const handler = (e) => {
+				if (e.state?.searchOpen !== true) {
+					setOpen(false);
+				}
+			};
+			window.addEventListener('popstate', handler);
+			return () => {
+				window.removeEventListener('popstate', handler);
+				// If closed by X/backdrop, clean up the fake history entry
+				if (window.history.state?.searchOpen) {
+					window.history.back();
+				}
+			};
+		}
+	}, [open]);
 
 	return (
 		<>
