@@ -46,16 +46,22 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 								? `/clients/${d.clientSlug}/${d.projectSlug}`
 								: `/portal/designer/${d.clientSlug}/${d.projectSlug}`
 						}
-						className={`group flex flex-col  border rounded px-6 py-4 gap-4 transition-colors ${
-							d.audience?.includes('designer')
-								? 'border-purple/60 bg-purple/10 '
-								: 'border-teal/60 bg-teal/10'
+						className={`group flex flex-col border rounded px-6 py-4 gap-4 transition-colors ${
+							variant === 'designer'
+								? 'border-purple/60 bg-purple/10'
+								: d.audience?.includes('designer')
+									? 'border-purple/60 bg-purple/10'
+									: 'border-teal/60 bg-teal/10'
 						}`}
 					>
 						<div className='flex items-start justify-between gap-6'>
 							<div className='flex flex-col gap-1'>
 								<span className={`font-mono text-sm text-white/70 `}>
-								<span className='text-base lg:text-lg text-white/80 '>	{d.clientName}</span> · {d.projectName}
+									<span className='text-base lg:text-lg text-white/80 '>
+										{' '}
+										{d.clientName}
+									</span>{' '}
+									· {d.projectName}
 								</span>
 								<span className='font-medium text-lg mt-2'>{d.title}</span>
 								{d.description && (

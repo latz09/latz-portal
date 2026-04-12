@@ -21,11 +21,13 @@ export default function DeadlineList({ deadlines, variant = 'internal' }) {
 					return (
 						<div
 							key={i}
-							className={`flex items-start justify-between  border rounded px-6 py-4 gap-6 ${
-								d.audience?.includes('designer')
-									? 'border-purple/60 bg-purple/10 '
-								: 'border-teal/60 bg-teal/10'
-							}`}
+							className={`flex items-start justify-between border rounded px-6 py-4 gap-6 ${
+    variant === 'designer'
+        ? 'border-purple/60 bg-purple/10'
+        : d.audience?.includes('designer')
+            ? 'border-purple/60 bg-purple/10'
+            : 'border-teal/60 bg-teal/10'
+}`}
 						>
 							<div className='flex flex-col gap-1'>
 								<span className='font-medium text-lg'>{d.title}</span>
