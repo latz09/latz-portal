@@ -1,3 +1,5 @@
+// DASHBOARD DEADLINES
+
 import Link from 'next/link';
 import { TbArrowRight } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate, DaysIndicator } from './deadlineUtils';
@@ -30,10 +32,12 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 
 	return (
 		<div className='inline-flex flex-col mt-16 pt-8 border-t border-white/10 w-full'>
-			<p className={` ${accentColor} font-mono text-sm lg:text-base tracking-widest uppercase mb-4`}>
+			<p
+				className={` ${accentColor} font-mono text-sm lg:text-base tracking-widest uppercase mb-4`}
+			>
 				Upcoming milestones
 			</p>
-			<div className='flex flex-col gap-3 lg:pl-4'>
+			<div className='flex flex-col gap-5 lg:pl-4'>
 				{deadlines.map((d, i) => (
 					<Link
 						key={i}
@@ -42,16 +46,20 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 								? `/clients/${d.clientSlug}/${d.projectSlug}`
 								: `/portal/designer/${d.clientSlug}/${d.projectSlug}`
 						}
-						className='group flex flex-col bg-white/5 hover:bg-white/10 border border-white/10 rounded px-6 py-4 gap-4 transition-colors'
+						className={`group flex flex-col  border rounded px-6 py-4 gap-4 transition-colors ${
+							d.audience?.includes('designer')
+								? 'border-purple/60 bg-purple/10 '
+								: 'border-teal/60 bg-teal/10'
+						}`}
 					>
 						<div className='flex items-start justify-between gap-6'>
 							<div className='flex flex-col gap-1'>
 								<span className={`font-mono text-sm text-white/70 `}>
-									{d.clientName} · {d.projectName}
+								<span className='text-base lg:text-lg text-white/80 '>	{d.clientName}</span> · {d.projectName}
 								</span>
 								<span className='font-medium text-lg mt-2'>{d.title}</span>
 								{d.description && (
-									<span className='text-sm text-white/70 mt-0.5 line-clamp-2 '>
+									<span className='text-sm text-white/70 mt-0.5 lg:mt-1 line-clamp-2 '>
 										{d.description}
 									</span>
 								)}

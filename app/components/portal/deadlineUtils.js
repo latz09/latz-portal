@@ -40,16 +40,20 @@ export function DaysIndicator({ isPast, isToday, daysUntil, accentColor }) {
 				<p className='text-2xl font-semibold leading-none text-danger'>
 					{Math.abs(daysUntil)}
 				</p>
-				<p className='font-mono text-xs text-danger mt-1'>days ago</p>
+				<p className='font-mono text-xs text-danger mt-1'>
+					{Math.abs(daysUntil) === 1 ? 'day ago' : 'days ago'}
+				</p>
 			</div>
 		);
 
 	return (
 		<div className='text-center shrink-0'>
-			<p className={`text-2xl font-semibold leading-none ${accentColor}`}>
+			<p className={`text-2xl font-semibold leading-none text-white/80`}>
 				{daysUntil}
 			</p>
-			<p className={`font-mono text-xs ${accentColor} mt-1`}>days</p>
+			<p className={`font-mono text-xs ${accentColor} mt-1`}>
+				{daysUntil === 1 ? 'day' : 'days'}
+			</p>
 		</div>
 	);
 }

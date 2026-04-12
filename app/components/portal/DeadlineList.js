@@ -1,10 +1,12 @@
-import Link from 'next/link'
-import { getDeadlineStatus, formatDate, DaysIndicator } from './deadlineUtils'
+// clients/[clientSlug]/[projectSlug]
+
+import Link from 'next/link';
+import { getDeadlineStatus, formatDate, DaysIndicator } from './deadlineUtils';
 
 export default function DeadlineList({ deadlines, variant = 'internal' }) {
-	if (!deadlines?.length) return null
+	if (!deadlines?.length) return null;
 
-	const accentColor = variant === 'designer' ? 'text-purple' : 'text-teal'
+	const accentColor = variant === 'designer' ? 'text-purple' : 'text-teal';
 
 	return (
 		<div className='mt-12'>
@@ -13,11 +15,17 @@ export default function DeadlineList({ deadlines, variant = 'internal' }) {
 			</p>
 			<div className='flex flex-col gap-3'>
 				{deadlines.map((d, i) => {
-					const { isPast, isToday, daysUntil, date } = getDeadlineStatus(d.date)
+					const { isPast, isToday, daysUntil, date } = getDeadlineStatus(
+						d.date,
+					);
 					return (
 						<div
 							key={i}
-							className='flex items-start justify-between bg-white/5 border border-white/10 rounded px-6 py-4 gap-6'
+							className={`flex items-start justify-between  border rounded px-6 py-4 gap-6 ${
+								d.audience?.includes('designer')
+									? 'border-purple/60 bg-purple/10 '
+								: 'border-teal/60 bg-teal/10'
+							}`}
 						>
 							<div className='flex flex-col gap-1'>
 								<span className='font-medium text-lg'>{d.title}</span>
@@ -26,7 +34,7 @@ export default function DeadlineList({ deadlines, variant = 'internal' }) {
 										{d.description}
 									</span>
 								)}
-								<span className='font-mono text-xs text-white/30 mt-1'>
+								<span className='font-mono text-xs text-white/30 mt-1 lg:mt-2'>
 									{formatDate(date)}
 								</span>
 							</div>
@@ -37,9 +45,9 @@ export default function DeadlineList({ deadlines, variant = 'internal' }) {
 								accentColor={accentColor}
 							/>
 						</div>
-					)
+					);
 				})}
 			</div>
 		</div>
-	)
+	);
 }
