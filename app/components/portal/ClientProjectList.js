@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { TbChevronRight } from 'react-icons/tb'
 
 const variantStyles = {
   internal: { accent: 'text-teal' },
@@ -28,13 +29,16 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
               <Link
                 key={project.slug}
                 href={hrefBuilder(client.slug, project.slug)}
-                className="w-full flex flex-col gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-6 py-4 transition-colors"
+                className="group w-full flex flex-col gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-6 py-4 transition-colors"
               >
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="font-medium lg:text-lg text-white">{project.name}</span>
-                  <span className={`font-mono text-xs lg:text-sm font-bold uppercase ${statusColors[project.status]}`}>
-                    {project.status}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className={`font-mono text-xs lg:text-sm font-bold uppercase ${statusColors[project.status]}`}>
+                      {project.status}
+                    </span>
+                    <TbChevronRight className="text-lg text-purple opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                  </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs lg:text-sm text-white/70">

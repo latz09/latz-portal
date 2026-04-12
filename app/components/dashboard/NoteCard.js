@@ -118,7 +118,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-base lg:text-lg pb-4 text-white/80 max-w-none ${open ? '' : 'line-clamp-2'}`}
+			className={`text-sm lg:text-lg pb-2 lg:pb-4 text-white/80 max-w-none ${open ? '' : 'line-clamp-2'}`}
 		>
 			<PortableText value={body} components={PORTABLE_TEXT_COMPONENTS} />
 		</div>
