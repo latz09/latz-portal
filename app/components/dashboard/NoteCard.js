@@ -31,6 +31,34 @@ const PORTABLE_TEXT_COMPONENTS = {
 			);
 		},
 	},
+	marks: {
+		link: ({ value, children }) => (
+			<a
+				href={value?.href}
+				target='_blank'
+				rel='noopener noreferrer'
+				onClick={(e) => e.stopPropagation()}
+				className='text-teal underline hover:text-white transition-colors'
+			>
+				{children}
+			</a>
+		),
+	},
+	list: {
+		bullet: ({ children }) => (
+			<ul className='list-disc list-outside ml-4 space-y-1'>{children}</ul>
+		),
+		number: ({ children }) => (
+			<ol className='list-decimal list-outside ml-4 space-y-1'>{children}</ol>
+		),
+	},
+	listItem: {
+		bullet: ({ children }) => <li className='text-white/80'>{children}</li>,
+		number: ({ children }) => <li className='text-white/80'>{children}</li>,
+	},
+	block: {
+		normal: ({ children }) => <p className='mb-2 last:mb-0'>{children}</p>,
+	},
 };
 
 // ─── Subcomponents ───────────────────────────────────────────────────────────
@@ -90,7 +118,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`mb-4 text-base lg:text-lg text-white/80 prose prose-invert prose-sm max-w-none ${open ? '' : 'line-clamp-2'}`}
+			className={`text-base lg:text-lg pb-4 text-white/80 max-w-none ${open ? '' : 'line-clamp-2'}`}
 		>
 			<PortableText value={body} components={PORTABLE_TEXT_COMPONENTS} />
 		</div>
