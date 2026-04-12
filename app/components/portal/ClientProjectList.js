@@ -37,7 +37,7 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
                     <span className={`font-mono text-xs lg:text-sm font-bold uppercase ${statusColors[project.status]}`}>
                       {project.status}
                     </span>
-                    <TbChevronRight className="text-lg text-purple opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                    <TbChevronRight className="lg:text-lg text-purple opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
