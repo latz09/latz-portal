@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Premier Federal Logistics — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB & OVERLAY ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.15s;
+    line-height: 1;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'PFL';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+      z-index: 200;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .mobile-fab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sidebar-overlay {
+      display: block;
+      pointer-events: none;
+    }
+    .sidebar-overlay.visible {
+      pointer-events: auto;
+    }
+    .main { margin-left: 0; }
+    .page-header {
+      padding: 32px 20px 28px;
+    }
+    .page-header h1 { font-size: 26px; }
+    .content { padding-left: 20px; padding-right: 20px; }
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .checklist li {
+      flex-wrap: wrap;
+    }
+    .check-status {
+      margin-left: 0;
+      margin-top: 4px;
+      width: 100%;
+    }
+    .budget-table th,
+    .budget-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+    .callout {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Premier Federal Logistics</div>
+    <div class="status-pill">Pre-Proposal</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏢</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Premier Federal Logistics, LLC</h1>
+    <div class="sub">Federal Compliance & Logistics · Full Site Build (Proposed)</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Bill Krenz, Exec. Dir. of Ops</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Proposed Value</span>
+        <span class="value">$3,500–$5,000</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Status</span>
+        <span class="value" style="color: var(--orange);">Not Yet — Pre-Proposal</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value">TBD — none referenced</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">907-575-7705</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Location</span>
+        <span class="value">Wausau, WI (AK phone number)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏢</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Bill Krenz</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Executive Director of Operations</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">907-575-7705 (Alaska area code — lives in Wausau)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value">Not yet collected — follow up</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Point of Contact</span>
+            <span class="data-value">Bill — handles all communication. Tracy (wife/founder) likely signs off on final decisions.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Company</span>
+            <span class="data-value">Premier Federal Logistics, LLC</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Type</span>
+            <span class="data-value">Federal compliance & logistics firm</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Ownership</span>
+            <span class="data-value">Veteran-owned, woman-owned (Tracy Krenz — Owner/Founder)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CAGE Code</span>
+            <span class="data-value">18JK9</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Business Model</span>
+            <span class="data-value">Subcontracts under prime federal contractors (Boeing, Halliburton, UPS)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">HQ</span>
+            <span class="data-value">Wausau, WI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>About the Business</h3>
+        <div class="data-row">
+          <span class="data-label">Primary Audience</span>
+          <span class="data-value">Fortune 500 procurement teams, federal contracting officers, prime contractors</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Goal</span>
+          <span class="data-value">Credibility & authority — NOT lead gen. Site must look like a serious federal operation, not a local small business.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Design Reference</span>
+          <span class="data-value"><a href="https://universallogistics.com" target="_blank">universallogistics.com</a> — "that vibe, but doesn't need to be as big"</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Past Experience</span>
+          <span class="data-value">Burned before — had a site built that was "never what I wanted." Trust is a factor.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Certifications</span>
+          <span class="data-value">Woman-owned, veteran-owned — these need prominent placement (trust badges)</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Budget Tension — $1,500 vs. actual scope</strong>
+          <span>Bill's initial budget was $1,500. Actual scope from his PDFs is a 5–6 page site with detailed service breakdowns, leadership bios, capability statement, and multi-field contact form. Jordan floated a 3-page phase approach to keep him engaged, but this project is worth $3,500–$5,000. Wireframe + email pitch is the next move to realign expectations.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Status: Pre-Proposal — Wireframe + pitch email pending</strong>
+        <p>Bill sent 3 PDFs of complete copy. Scope is substantially larger than his $1,500 budget. Next step is a wireframe showing all pages + a pitch at $3,500–$5,000 for Phase 1. No contract, no deposit, no formal proposal yet.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Need This</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> No website currently — or previous one was inadequate and abandoned</li>
+            <li><span class="check-icon">🔴</span> Previous developer built something that was "never what I wanted"</li>
+            <li><span class="check-icon">🔴</span> Subcontracting under Boeing/Halliburton/UPS with no web presence</li>
+            <li><span class="check-icon">🔴</span> Procurement officers researching PFL find nothing or something embarrassing</li>
+            <li><span class="check-icon">🔴</span> Impressive credentials (Secret-level DoD missions, ARCOM medals) not being presented anywhere</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Procurement teams land on the site and instantly see credibility</li>
+            <li><span class="check-icon">✅</span> Capability statement + CAGE/NAICS codes easily accessible</li>
+            <li><span class="check-icon">✅</span> Tracy + Bill's backgrounds speak for themselves on the About page</li>
+            <li><span class="check-icon">✅</span> Service offerings are clear and specific — not vague corporate filler</li>
+            <li><span class="check-icon">✅</span> Bill actually feels proud sending the URL to a prime contractor</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>CMS: Not needed</strong>
+          <span>Bill explicitly said no CMS. Content is static — he has his copy and it's not changing frequently. This simplifies the build and the cost. Static Next.js site on Vercel.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>Key pitch angle: Copy is already done</strong>
+          <span>Bill delivered 3 PDFs with fully written content for every page. That's unusual and saves significant time. Lean into this in the proposal — "your content is ready, which means a faster timeline and a lower price than a typical project of this scope."</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">💸</span>
+        <div class="callout-body">
+          <strong>No contract or pricing agreed upon yet</strong>
+          <span>Bill said $1,500. Jordan mentioned $3k–$15k range on the call. The actual scope warrants $3,500–$5,000 for Phase 1. Budget alignment is the single biggest open issue. The wireframe pitch email needs to make the value case without scaring him off.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Proposed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Phase 1 — Full Site Build</strong></td>
+            <td>5–6 pages: Home, Services, Industries, About, Capability Statement, Contact</td>
+            <td class="amount">$3,500–$5,000</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Proposed Phase 1 Total</strong></td>
+            <td></td>
+            <td class="amount"><strong>$3,500–$5,000</strong></td>
+          </tr>
+          <tr>
+            <td>Phase 2 — Service Landing Pages</td>
+            <td>3 dedicated deep-dive pages ($400–$600 each), SEO + conversion optimized</td>
+            <td class="amount">$1,200–$1,800</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">$20/month — Vercel (includes SSL, analytics). Pitch this vs. $100–$300/mo elsewhere.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">TBD — no domain referenced. Client may need to purchase one. Suggest: premierfederallogistics.com or similar.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story for pitch email</strong>
+          <span>Copy is already written (saves $1,500+ in content work). No CMS means simpler build. $20/mo hosting vs. $100–$300/mo at typical agencies. No monthly fees, no contracts — they own it forever. And their team's credentials are genuinely elite; a $4k site presenting that properly is the cheapest insurance policy in federal contracting.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">~April 2026</div>
+          <div class="timeline-title">Voicemail from Bill Krenz</div>
+          <div class="timeline-desc">Bill called from 907-575-7705 (Alaska number, he's in Wausau). Looking to get a website built. Requested callback.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">~April 2026</div>
+          <div class="timeline-title">Discovery Call</div>
+          <div class="timeline-desc">Bill explained the business: veteran-led federal compliance/logistics, subcontracts under Boeing/Halliburton/UPS. Wants credibility site, not lead gen. Referenced universallogistics.com as design benchmark. Burned by a previous developer. Mentioned 2–3 month timeline. Budget discussion: he said $1,500 — Jordan mentioned $3k–$15k range and floated a phased approach to stay in conversation.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">~April 2026</div>
+          <div class="timeline-title">3 PDFs Received — Full Copy</div>
+          <div class="timeline-desc">Bill sent complete copy for all pages: Home, Services (3 detailed service breakdowns), Industries (4 verticals), About (Tracy + Bill bios with genuinely impressive credentials), Capability Statement (CAGE 18JK9, NAICS codes), Contact (multi-field form with dropdowns). Scope is significantly larger than $1,500 warrants.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Next Step</div>
+          <div class="timeline-title">Wireframe + Pitch Email</div>
+          <div class="timeline-desc">Jordan building a quick wireframe showing all pages visually. Email will include: wireframe, Phase 1 pricing ($3,500–$5,000), no-monthly-fees pitch, and the fact that copy being done saves time/money. Goal: realign budget expectations while showing the value of doing it right.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Formal Proposal</div>
+          <div class="timeline-desc">Once Bill responds to wireframe/pitch and pricing is aligned, send formal proposal with contract terms, 50/50 payment structure, and project timeline.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Proposed Phase 1: Full Site — 5–6 pages, static (no CMS)</strong>
+          <span>All copy provided by client. Design inspired by universallogistics.com — authoritative, clean, corporate-federal aesthetic. Mobile-responsive. Built for credibility with procurement teams.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Hero with strong headline + authority statement</li>
+            <li>Trust badges: woman-owned, veteran-owned</li>
+            <li>About preview (company overview)</li>
+            <li>"Why Choose Us" section</li>
+            <li>Capability statement teaser</li>
+            <li>Services overview with links to details</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Services</h4>
+          <ul>
+            <li>Secure Mission Tracking & Logistics Oversight</li>
+            <li>Subcontractor Vetting & Management</li>
+            <li>Federal and DOT Compliance & Administrative Services</li>
+            <li>Each with full bullet-point breakdowns from client PDFs</li>
+            <li>Designed to show depth — not generic descriptions</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Industries</h4>
+          <ul>
+            <li>Federal Prime Contractors</li>
+            <li>Department of Defense</li>
+            <li>Emergency Response & FEMA</li>
+            <li>Trucking & Logistics</li>
+            <li>Each vertical positioned to show PFL's relevance</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>About / Leadership</h4>
+          <ul>
+            <li>Full bios: Tracy Krenz (Owner/Founder) + Bill Krenz (Exec. Dir. of Ops)</li>
+            <li>Tracy: Secret-level DoD missions, M1 Abrams transport, Army veteran</li>
+            <li>Bill: ARCOM medals, 1M+ accident-free miles, certified bookkeeper</li>
+            <li>Company mission + values</li>
+            <li>This page does a LOT of heavy lifting for credibility</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Capability Statement</h4>
+          <ul>
+            <li>CAGE Code: 18JK9</li>
+            <li>NAICS codes listing</li>
+            <li>Downloadable PDF version</li>
+            <li>Key differentiators / core competencies summary</li>
+            <li>Critical for federal procurement — must be easy to find and download</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Contact / Request Consultation</h4>
+          <ul>
+            <li>Multi-field form: name, org, email, phone, message</li>
+            <li>Dropdown: organization type (prime contractor, gov agency, etc.)</li>
+            <li>Dropdown: services of interest</li>
+            <li>Direct contact info for Bill/Tracy</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:8px;">
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge" style="background:var(--orange-light);color:var(--orange);">Phase 2</span>
+          <h4>Dedicated Service Landing Pages</h4>
+          <ul>
+            <li>3 standalone pages — one per service line</li>
+            <li>SEO-optimized deep dives for targeted search</li>
+            <li>Conversion-focused for ads or direct outreach links</li>
+            <li>$400–$600 each ($1,200–$1,800 total)</li>
+            <li>Pitch 6 months post-launch</li>
+          </ul>
+        </div>
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge" style="background:var(--gray-100);color:var(--gray-600);">Not Discussed</span>
+          <h4>Blog / News / Resources</h4>
+          <ul>
+            <li>Not in scope and not mentioned by client</li>
+            <li>Could be relevant later for SEO authority in federal space</li>
+            <li>Would require CMS — keep in back pocket</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Copy is essentially done — massive head start</strong>
+          <span>Bill sent 3 PDFs covering every page. This is rare. Copy may need light editing/formatting for web, but the heavy lifting is done. This should be a key selling point in the proposal.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>Website Copy (3 PDFs)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Home, Services, Industries, About/Bios, Capability Statement, Contact form specs. All received.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Received</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Photos / Headshots</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Professional headshots for Tracy + Bill. Company photos if available. May need stock images for hero/services if nothing exists.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Requested Yet</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏷️</span>
+            <div>
+              <strong>Logo / Branding</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Bill sent current logo. He's open to other options — potential refinement or redesign is on the table if the conversation develops. Review what he sent and assess quality.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Received — Review</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📋</span>
+            <div>
+              <strong>Capability Statement PDF</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Downloadable PDF for the capability statement page. May need to be created or reformatted from existing materials.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Requested Yet</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Domain Name</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">No domain referenced. Need to confirm if one exists or if we need to purchase. premierfederallogistics.com or similar.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Unresolved</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✉️</span>
+            <div>
+              <strong>Bill's Email Address</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Only have phone number. Need email for wireframe delivery and ongoing communication.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Unresolved</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎖️</span>
+            <div>
+              <strong>Trust Badge Assets</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Woman-owned + veteran-owned certification badges/logos. Official versions if available; otherwise Jordan designs custom ones.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Requested Yet</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📊</span>
+            <div>
+              <strong>NAICS Codes List</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Full list for capability statement page. Referenced in PDFs but need the complete set.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Partial — In PDFs</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">None — static site. Client has all copy ready.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel ($20/mo, client pays directly)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel — included</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Animations</span>
+            <span class="data-value">Framer Motion — subtle, authority-appropriate. No flashy stuff.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain & Setup</h3>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">TBD — check availability of premierfederallogistics.com and variants</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value">May want professional email (info@domain) — discuss with client</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Contact Form</span>
+            <span class="data-value">Multi-field with dropdowns — needs backend (Formspree, Resend, or custom API route)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Dev URL</span>
+            <span class="data-value">TBD — will be premier-federal-logistics.latzwebdesign.com or similar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Design Requirements</h3>
+        <div class="data-row">
+          <span class="data-label">Aesthetic</span>
+          <span class="data-value">Corporate-federal authority. Clean, sharp, confident. Think universallogistics.com but scaled to a smaller operation.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Color Direction</span>
+          <span class="data-value">Likely navy/dark blue base, patriotic undertones (red/white/blue), gold/brass accents. TBD pending branding discussion.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Typography</span>
+          <span class="data-value">Strong, modern sans-serif. No playful or casual fonts — this is a federal-facing brand.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Trust Signals</span>
+          <span class="data-value">Woman-owned + veteran-owned badges, CAGE code, prime contractor names (Boeing, Halliburton, UPS), credentials in bios</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Mobile</span>
+          <span class="data-value">Responsive — procurement officers will check on phones. Capability statement PDF must be easily downloadable on mobile.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Timeline contingent on budget alignment and contract signing</strong>
+          <span>Bill said 2–3 months. With copy already done, actual build is 3–4 weeks once we start. But nothing starts until pricing is agreed on and deposit lands.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">00</div>
+        <div>
+          <div class="weeks">NOW — Pre-Proposal</div>
+          <h4>Wireframe & Pitch</h4>
+          <ul>
+            <li>Build quick wireframe showing all pages from the PDFs</li>
+            <li>Write pitch email: wireframe, Phase 1 pricing, value angles</li>
+            <li>Send to Bill — get his reaction to scope + price</li>
+            <li>If aligned: send formal proposal with contract</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Week 1 (post-deposit)</div>
+          <h4>Setup & Design</h4>
+          <ul>
+            <li>Collect remaining assets: photos, logo, branding, domain</li>
+            <li>Set up repo, Vercel project</li>
+            <li>Design homepage concept — get Bill's sign-off before building out</li>
+            <li>Establish design system (colors, typography, component patterns)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Weeks 2–3</div>
+          <h4>Full Build</h4>
+          <ul>
+            <li>Build all pages: Home, Services, Industries, About, Capability Statement, Contact</li>
+            <li>Integrate copy from PDFs — format for web</li>
+            <li>Build contact form with dropdowns</li>
+            <li>Source/integrate imagery (stock or provided)</li>
+            <li>Share live dev link for Bill to review as it comes together</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Week 3–4</div>
+          <h4>Refinement & Launch</h4>
+          <ul>
+            <li>Implement Bill's feedback</li>
+            <li>Mobile optimization pass</li>
+            <li>Performance + SEO fundamentals</li>
+            <li>Domain setup + DNS</li>
+            <li>Final review with Bill</li>
+            <li>Go live — final invoice sent</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Phase 2 is already defined — pitch at 6 months post-launch</strong>
+          <span>Service landing pages are the most natural next step. Everything else below is further out. Don't overwhelm Bill — he's budget-conscious and trust-sensitive.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📄 Dedicated Service Landing Pages</h4>
+          <div class="price">$1,200–$1,800 (3 pages)</div>
+          <p>One deep-dive page per service line. SEO-optimized, conversion-focused. Built for targeted outreach or paid ads. Already structured as Phase 2 in the proposal.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔍 SEO & Content Strategy</h4>
+          <div class="price">~$800–$1,200</div>
+          <p>Federal contracting SEO is a niche with real opportunity. Keyword research, meta optimization, schema markup for government contracting terms. Service landing pages + SEO together is a strong package.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📰 Blog / Resources Section</h4>
+          <div class="price">~$600–$1,000</div>
+          <p>Would require adding CMS (Sanity). Federal compliance tips, industry insights, case studies. Builds authority in search and gives Bill content to share with prospects.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎨 Logo & Brand Identity</h4>
+          <div class="price">~$500–$800</div>
+          <p>Bill sent the current logo but said he's open to other options. Review what he has — if it doesn't hold up at the level of the site, a refinement or full redesign is a natural add-on. Don't push it; let the conversation develop organically once he sees the wireframe.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📋 Capability Statement Design</h4>
+          <div class="price">~$300–$500</div>
+          <p>Professionally designed downloadable PDF. Most federal contractors have one — if PFL's current version is plain or doesn't exist, this is a quick win for their procurement toolkit.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance</h4>
+          <div class="price">~$500–$800/yr</div>
+          <p>Content updates, page additions, tech maintenance. Light retainer. Good fit if PFL grows and starts needing regular site updates as they land new contracts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Budget Reality Check</div>
+        <p>Bill came in at $1,500. The scope he sent is a 5–6 page site with detailed service breakdowns, dual leadership bios, a capability statement system, and a multi-field contact form. That's $3,500–$5,000 work. The wireframe needs to show him what this site actually IS — and then the pricing needs to feel justified by the quality of what he sees. Don't lead with the number; lead with the vision.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Trust Factor — Handle with Care</div>
+        <p>Bill explicitly said he was burned by a previous developer who built something that was "never what I wanted." This means: (1) show, don't tell — the wireframe is critical, (2) get sign-off early and often, (3) share the dev link as you build so he sees progress, (4) don't overpromise. Earning trust is more important than closing fast.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The Credentials Are Legit</div>
+        <p>Tracy's background: Secret-level DoD missions, M1 Abrams tank transport, Army veteran. Bill: ARCOM medals, 1M+ accident-free miles, certified bookkeeper. These aren't puffed-up LinkedIn bios — this is real. The About page is potentially the most important page on the site. Procurement officers reading those bios will take PFL seriously. Design the About page to do maximum work.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pitch Email Strategy</div>
+        <p>Lead with the wireframe (visual impact). Then: "Your content is already written — that saves significant time and brings the cost down. Here's what I'd recommend for Phase 1." Frame $3,500–$5,000 as the value play, not the anchor. Emphasize: no monthly fees ($20/mo hosting vs. $100–$300/mo), they own it forever, and their team's background deserves to be presented at the level of the companies they work alongside (Boeing, Halliburton, UPS).</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Alaska Phone Number</div>
+        <p>Bill's number is 907 (Alaska area code) but he's based in Wausau, WI. Likely a number from prior military or work. Don't assume anything — just note it so it doesn't cause confusion if someone else sees it in the system.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The $1,500 Fallback — 3 Pages</div>
+        <p>Jordan floated a 3-page version at $1,500 to keep Bill in the conversation. If the full build doesn't land, the fallback is: Home + About + Contact for $1,500. It wouldn't include Services, Industries, or Capability Statement — which guts the project's value. Try hard to land the full build. The 3-page version is a last resort, not the pitch.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Logo Received — Open to Changes</div>
+        <p>Bill sent over the current PFL logo but noted he's open to other options. Don't pitch a redesign unprompted — review what he sent, assess whether it holds up in a professional federal-facing site context, and let the conversation develop naturally. If the logo looks dated or doesn't scale well for web, that becomes a soft upsell opportunity during the design phase. Refinement or full redesign could be bundled or done as a standalone add-on.</p>
+      </div>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile FAB navigation
+  const fab = document.getElementById('mobileFab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeMenu(callback) {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      if (callback) callback();
+    }, 280);
+  }
+
+  fab.addEventListener('click', () => {
+    if (menuOpen) { closeMenu(); } else { openMenu(); }
+  });
+
+  overlay.addEventListener('click', () => closeMenu());
+
+  // Nav link tap on mobile: close menu, then scroll
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
