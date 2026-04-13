@@ -1,29 +1,2375 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Premier Federal Logistics — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Barlow+Condensed:wght@500;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--navy: #0d1b2a;
+				--navy-dark: #060e17;
+				--navy-mid: #1b2d45;
+				--gold: #c5a55a;
+				--gold-dark: #a8893e;
+				--gold-light: rgba(197, 165, 90, 0.1);
+				--slate: #e8ecf1;
+				--slate-dark: #d1d9e3;
+				--slate-mid: #c4cdd8;
+				--green: #2e6b4f;
+				--green-light: rgba(46, 107, 79, 0.1);
+				--red: #8b1a1a;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Source Sans 3', sans-serif;
+				background: var(--slate);
+				background-image:
+					linear-gradient(rgba(13, 27, 42, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(13, 27, 42, 0.04) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--navy);
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--navy);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--navy-mid);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 19px;
+				color: var(--slate);
+				font-weight: 700;
+				text-transform: uppercase;
+				line-height: 1.15;
+				margin-bottom: 4px;
+				letter-spacing: 0.03em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 10px;
+				color: rgba(232, 236, 241, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(197, 165, 90, 0.15);
+				border: 1px solid rgba(197, 165, 90, 0.4);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: var(--gold);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.3;
+				}
+			}
+
+			.status-pill span {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--gold);
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(232, 236, 241, 0.45);
+				text-decoration: none;
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--slate);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--slate);
+				background: rgba(197, 165, 90, 0.1);
+				border-left-color: var(--gold);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 52px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--gold);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 38px;
+				color: var(--navy);
+				font-weight: 800;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+				line-height: 1.05;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-sub {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 27, 42, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(13, 27, 42, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(13, 27, 42, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(13, 27, 42, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--navy);
+			}
+
+			.meta-value.warn {
+				color: var(--gold-dark);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--navy);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--navy);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--navy);
+				color: var(--slate);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--navy);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(13, 27, 42, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--navy);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 15px;
+				color: var(--navy);
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 11.5px;
+				color: rgba(13, 27, 42, 0.5);
+			}
+
+			.wf-nav-links span.active {
+				color: var(--navy);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				text-decoration-color: var(--gold);
+			}
+
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--navy);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(13, 27, 42, 0.04);
+				border-left: 3px solid rgba(13, 27, 42, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--gold);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(197, 165, 90, 0.05);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--gold-dark);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── STATIC TAG ── */
+			.static-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--navy-mid);
+				border: 1px solid var(--navy-mid);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(232, 236, 241, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 28px;
+				color: var(--navy);
+				font-weight: 800;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+				letter-spacing: 0.02em;
+				line-height: 1.1;
+			}
+
+			.wf-heading-md {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 20px;
+				color: var(--navy);
+				font-weight: 700;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 16px;
+				color: var(--navy);
+				font-weight: 700;
+				text-transform: uppercase;
+				margin-bottom: 4px;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-subtext {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 27, 42, 0.5);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				color: rgba(13, 27, 42, 0.6);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(13, 27, 42, 0.15);
+				margin: 20px 0;
+			}
+
+			.wf-cta {
+				display: inline-block;
+				background: var(--navy);
+				color: var(--slate);
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+			}
+
+			.wf-cta.gold {
+				background: var(--gold);
+				color: var(--navy);
+			}
+
+			.wf-footer {
+				border-top: 2px solid var(--navy);
+				padding: 14px 22px;
+				background: var(--navy);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 11px;
+				color: rgba(232, 236, 241, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(13, 27, 42, 0.07);
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.3;
+				color: var(--navy);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(13, 27, 42, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── TRUST BADGES ── */
+			.trust-badges {
+				display: flex;
+				gap: 10px;
+				margin: 12px 0;
+				flex-wrap: wrap;
+			}
+
+			.trust-badge {
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				padding: 10px 16px;
+				background: rgba(255, 255, 255, 0.5);
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--navy);
+			}
+
+			.trust-badge .badge-icon {
+				font-size: 18px;
+			}
+
+			/* ── SERVICE / DIFF / INDUSTRY CARDS ── */
+			.service-grid,
+			.diff-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.service-card,
+			.diff-card {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.service-card .service-title,
+			.diff-card .diff-title {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 14px;
+				color: var(--navy);
+				font-weight: 700;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+				letter-spacing: 0.02em;
+			}
+
+			.diff-card .diff-title {
+				font-size: 13px;
+				margin-bottom: 4px;
+			}
+
+			.service-card .service-desc,
+			.diff-card .diff-desc {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				color: rgba(13, 27, 42, 0.5);
+				line-height: 1.5;
+			}
+
+			.diff-card .diff-desc {
+				font-size: 11px;
+			}
+
+			.industry-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.industry-card {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 12px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.industry-card .ind-icon {
+				font-size: 22px;
+				margin-bottom: 6px;
+			}
+			.industry-card .ind-name {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 13px;
+				color: var(--navy);
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			/* ── BIO CARDS ── */
+			.bio-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.bio-card {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				padding: 16px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.bio-card .bio-name {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 18px;
+				color: var(--navy);
+				font-weight: 700;
+				text-transform: uppercase;
+				margin-bottom: 2px;
+				letter-spacing: 0.02em;
+			}
+
+			.bio-card .bio-role {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				color: var(--gold-dark);
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				margin-bottom: 8px;
+			}
+
+			.bio-card .bio-text {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				color: rgba(13, 27, 42, 0.55);
+				line-height: 1.5;
+			}
+
+			/* ── CAPABILITY ROWS ── */
+			.cap-row {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(13, 27, 42, 0.12);
+			}
+			.cap-row:last-child {
+				border-bottom: none;
+			}
+
+			.cap-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 11px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: rgba(13, 27, 42, 0.4);
+				min-width: 140px;
+				flex-shrink: 0;
+			}
+
+			.cap-value {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				color: var(--navy);
+				font-weight: 500;
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 10px 12px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field .field-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 10px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: rgba(13, 27, 42, 0.4);
+				margin-bottom: 4px;
+			}
+
+			.form-field .field-input {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				color: rgba(13, 27, 42, 0.3);
+				font-style: italic;
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			/* ── BULLET LIST ── */
+			.wf-bullets {
+				list-style: none;
+				padding: 0;
+				margin-top: 6px;
+			}
+
+			.wf-bullets li {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				color: rgba(13, 27, 42, 0.55);
+				padding: 3px 0 3px 14px;
+				position: relative;
+				line-height: 1.5;
+			}
+
+			.wf-bullets li::before {
+				content: '→';
+				position: absolute;
+				left: 0;
+				color: var(--gold);
+				font-size: 10px;
+			}
+
+			/* ── SUB-LABEL ── */
+			.sub-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 11px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--gold-dark);
+				margin: 10px 0 6px;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--navy);
+				color: var(--slate);
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 13px;
+				padding: 8px 14px;
+				font-weight: 700;
+				text-transform: uppercase;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 110px;
+				letter-spacing: 0.03em;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(13, 27, 42, 0.1);
+				color: var(--navy);
+				border: 1.5px dashed var(--navy);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(13, 27, 42, 0.3);
+				padding: 0 6px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			.sitemap-slug {
+				font-size: 10px;
+				font-family: 'Source Sans 3', sans-serif;
+				font-weight: 400;
+				opacity: 0.7;
+			}
+
+			/* ── CHECKLISTS ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(13, 27, 42, 0.12);
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				color: var(--navy);
+			}
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 10px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--gold-dark);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.service-grid,
+				.diff-grid {
+					grid-template-columns: 1fr;
+				}
+				.industry-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					display: none;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 60px;
+				}
+				.option-grid,
+				.bio-grid,
+				.form-grid {
+					grid-template-columns: 1fr;
+				}
+				.industry-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+				.service-grid,
+				.diff-grid {
+					grid-template-columns: 1fr;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Premier Federal Logistics</div>
+				<div class="sidebar-doctype">Site Wireframes</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Pre-Proposal</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"
+					><span class="nav-icon">🗺️</span> Site Map</a
+				>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"
+					><span class="nav-icon">🏠</span> Home</a
+				>
+				<a href="#services" class="nav-link"
+					><span class="nav-icon">⚙️</span> Services</a
+				>
+				<a href="#industries" class="nav-link"
+					><span class="nav-icon">🏗️</span> Industries</a
+				>
+				<a href="#about" class="nav-link"
+					><span class="nav-icon">🎖️</span> About / Leadership</a
+				>
+				<a href="#capability" class="nav-link"
+					><span class="nav-icon">📋</span> Capability Statement</a
+				>
+				<a href="#contact" class="nav-link"
+					><span class="nav-icon">📬</span> Contact</a
+				>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"
+					><span class="nav-icon">✅</span> Confirmed</a
+				>
+				<a href="#discussion" class="nav-link"
+					><span class="nav-icon">💬</span> Discussion</a
+				>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				<a
+					href="/cdn-cgi/l/email-protection"
+					class="__cf_email__"
+					data-cfemail="adc7c2dfc9ccc3edc1ccd9d7dac8cfc9c8dec4cac383cec2c0"
+					>[email&#160;protected]</a
+				><br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content & Structure</div>
+				<div class="doc-title">Premier Federal Logistics, LLC</div>
+				<div class="doc-sub">
+					6-Page Federal Authority Website &nbsp;·&nbsp; Phase 1 Full Build
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Pre-Proposal</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">6 in scope</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Bill Krenz</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">CMS</span>
+						<span class="meta-value">None — static</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Copy</span>
+						<span class="meta-value ok">✓ Received (3 PDFs)</span>
+					</div>
+				</div>
+			</div>
+
+			<div
+				class="annotation"
+				style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px"
+			>
+				✏️ Layouts shown are illustrative — they communicate what content needs
+				to exist on each page and how it should behave, not how it should be
+				designed. Layout, hierarchy, and visual treatment are in the designer's
+				hands.
+			</div>
+
+			<!-- ═══ SITE MAP ═══ -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">
+								Premier Federal Logistics, LLC
+							</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								6 pages · static build · no CMS · all copy provided by client
+							</div>
+						</div>
+						<div class="sitemap" style="gap: 6px; align-items: center">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span class="sitemap-slug">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Services<br /><span class="sitemap-slug">/services</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Industries<br /><span class="sitemap-slug">/industries</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									About<br /><span class="sitemap-slug">/about</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Capability<br /><span class="sitemap-slug"
+										>/capability-statement</span
+									>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Contact<br /><span class="sitemap-slug">/contact</span>
+								</div>
+							</div>
+						</div>
+						<div class="annotation" style="margin-top: 20px">
+							All 6 pages on www.premierfederallogistics.com. Nav is consistent
+							across all pages. Logo click returns to Home. This is a
+							credibility site — procurement teams need to move through it
+							quickly and come away trusting PFL.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ PAGE 1: HOME ═══ -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home Page &mdash; /
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Premier Federal Logistics</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span><span>Services</span
+							><span>Industries</span><span>About</span
+							><span>Capability Statement</span><span>Contact</span>
+						</div>
+					</div>
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="img-placeholder" style="height: 200px">
+								<div class="img-icon">🏛️</div>
+								<div class="img-label">
+									Hero image — federal/logistics authority<br />Stock: fleet
+									ops, logistics command center, military transport<br />Dark
+									overlay with headline text on top
+								</div>
+							</div>
+							<div style="margin-top: 16px; text-align: center">
+								<div class="wf-heading-lg">
+									Compliance and Coordination<br />You Can Count On
+								</div>
+								<div class="wf-subtext">
+									Veteran-led compliance, logistics oversight, and subcontractor
+									management for federal contractors, government agencies, and
+									transportation partners.
+								</div>
+								<div class="wf-cta">Request a Consultation →</div>
+							</div>
+							<div class="annotation">
+								"Compliance and Coordination You Can Count On" is Bill's tagline
+								— it becomes the hero headline. Subline pulled from the
+								capability statement overview. CTA sends to the
+								contact/consultation form.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Trust Badges -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Trust Signals — Above the Fold</div>
+							</div>
+							<div class="trust-badges">
+								<div class="trust-badge">
+									<span class="badge-icon">🎖️</span> Veteran-Owned
+								</div>
+								<div class="trust-badge">
+									<span class="badge-icon">👩‍✈️</span> Woman-Owned
+								</div>
+								<div class="trust-badge">
+									<span class="badge-icon">🔒</span> Secret-Level DoD Clearance
+								</div>
+								<div class="trust-badge">
+									<span class="badge-icon">📋</span> CAGE: 18JK9
+								</div>
+							</div>
+							<div class="annotation">
+								Bill's outline calls for trust badges on the home screen —
+								woman-owned, veteran-owned, "possibly more." Secret-level
+								clearance and CAGE code are the "more." Procurement officers
+								need to see these without scrolling.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- About Preview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">About Us — Home Screen</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="wf-body-text">
+								Premier Federal Logistics, LLC (PFL) is a veteran-led
+								administrative and logistics support firm specializing in
+								federal compliance, subcontractor management, and secure mission
+								oversight. We partner with government agencies and prime
+								contractors to deliver transparent, audit-ready solutions that
+								reduce risk, streamline operations, and ensure adherence to
+								federal regulations.
+							</div>
+							<div style="margin-top: 8px">
+								<span
+									style="
+										font-family: 'Source Sans 3', sans-serif;
+										font-size: 13px;
+										color: var(--navy);
+										font-weight: 600;
+									"
+									>Meet our leadership →</span
+								>
+							</div>
+							<div class="annotation">
+								Bill's outline specifies "About us — just home screen." This
+								teaser is from his About Us copy — the full story and bios live
+								on the About page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Why Choose PFL -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Why Choose PFL</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="wf-body-text">
+								Premier Federal Logistics delivers compliance-driven
+								administrative and logistics support designed to reduce risk,
+								enhance efficiency, and ensure regulatory alignment. Our
+								veteran-led team combines industry expertise with structured,
+								audit-ready processes to support federal contractors, government
+								agencies, and transportation partners.
+							</div>
+							<div class="wf-body-text">
+								Through scalable, asset-light solutions and a network of
+								pre-vetted subcontractors and carriers, we provide reliable
+								coordination, transparency, and focused support for critical
+								operations.
+							</div>
+							<div class="diff-grid">
+								<div class="diff-card">
+									<div class="diff-title">Compliance-First Approach</div>
+									<div class="diff-desc">
+										Every process built around regulatory alignment and
+										audit-readiness
+									</div>
+								</div>
+								<div class="diff-card">
+									<div class="diff-title">Veteran-Led Leadership</div>
+									<div class="diff-desc">
+										20+ years managing high-stakes operations across
+										transportation and logistics
+									</div>
+								</div>
+								<div class="diff-card">
+									<div class="diff-title">Asset-Light, Scalable</div>
+									<div class="diff-desc">
+										Flexible support through pre-vetted subcontractor and
+										carrier networks
+									</div>
+								</div>
+								<div class="diff-card">
+									<div class="diff-title">Pre-Vetted Partners</div>
+									<div class="diff-desc">
+										Qualified, compliant subcontractors and carriers ready to
+										deploy
+									</div>
+								</div>
+								<div class="diff-card">
+									<div class="diff-title">Audit-Ready Processes</div>
+									<div class="diff-desc">
+										Documentation and reporting built for federal scrutiny from
+										day one
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Bill's "Why Choose Us" section — both paragraphs and all five
+								differentiators from his PDF. This section does the selling on
+								the home page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Services Overview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Services Overview</div>
+							</div>
+							<div class="service-grid">
+								<div class="service-card">
+									<div class="service-title">
+										Secure Mission Tracking & Logistics Oversight
+									</div>
+									<div class="service-desc">
+										Real-time visibility, coordinated oversight, and secure
+										documentation for compliant operations.
+									</div>
+								</div>
+								<div class="service-card">
+									<div class="service-title">
+										Subcontractor Vetting & Management
+									</div>
+									<div class="service-desc">
+										Ensuring qualified, compliant, and reliable partners for
+										every contract.
+									</div>
+								</div>
+								<div class="service-card">
+									<div class="service-title">Federal & DOT Compliance</div>
+									<div class="service-desc">
+										Streamlining regulatory compliance and administrative
+										operations for federal contractors.
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Bill's three service lines — each card uses his taglines. Cards
+								link to the full Services page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Capability Teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">
+									Capability Statement — Home Screen
+								</div>
+							</div>
+							<div
+								style="
+									background: var(--navy);
+									border-radius: 6px;
+									padding: 18px 22px;
+									display: flex;
+									align-items: center;
+									justify-content: space-between;
+									gap: 16px;
+								"
+							>
+								<div>
+									<div
+										style="
+											font-family: 'Barlow Condensed', sans-serif;
+											font-size: 18px;
+											color: var(--slate);
+											letter-spacing: 0.02em;
+											font-weight: 700;
+											text-transform: uppercase;
+										"
+									>
+										Download Our Capability Statement
+									</div>
+									<div
+										style="
+											font-family: 'Source Sans 3', sans-serif;
+											font-size: 12px;
+											color: rgba(232, 236, 241, 0.5);
+										"
+									>
+										CAGE Code 18JK9 · NAICS: 541614, 488510, 561110
+									</div>
+								</div>
+								<div
+									class="wf-cta gold"
+									style="margin-top: 0; white-space: nowrap"
+								>
+									Download PDF →
+								</div>
+							</div>
+							<div class="annotation">
+								Bill's outline puts the Capability Statement on the home screen.
+								CAGE and NAICS codes visible at a glance. Links to the dedicated
+								Capability Statement page.
+							</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 Premier Federal Logistics, LLC</span
+						><span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ PAGE 2: SERVICES ═══ -->
+			<section class="wf-section" id="services">
+				<div class="section-label">
+					<span class="section-num">2</span> Services &mdash; /services
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Premier Federal Logistics</div>
+						<div class="wf-nav-links">
+							<span>Home</span><span class="active">Services</span
+							><span>Industries</span><span>About</span
+							><span>Capability Statement</span><span>Contact</span>
+						</div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Our Services</div>
+							<div class="wf-subtext">
+								Mission-critical logistics, compliance, and subcontractor
+								management for federal operations.
+							</div>
+						</div>
+
+						<!-- Service 1 -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">
+									Secure Mission Tracking & Logistics Oversight
+								</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="wf-body-text">
+								We provide real-time visibility, coordinated oversight, and
+								secure documentation to ensure compliant, efficient operations.
+							</div>
+							<div class="sub-label">Core Services</div>
+							<ul class="wf-bullets">
+								<li>
+									Real-Time Shipment Visibility — Monitoring and status updates
+									for critical operations
+								</li>
+								<li>
+									Logistics Coordination & Oversight — Centralized management of
+									transportation and project activities
+								</li>
+								<li>
+									Chain-of-Custody Documentation — Secure tracking and reporting
+									throughout the lifecycle of each mission
+								</li>
+								<li>
+									Risk Mitigation & Compliance Support — Ensuring adherence to
+									contractual and regulatory requirements
+								</li>
+								<li>
+									Performance Monitoring & Reporting — Accurate, audit-ready
+									documentation and progress updates
+								</li>
+								<li>
+									Stakeholder Communication — Seamless coordination between
+									primes, subcontractors, and partners
+								</li>
+							</ul>
+							<div class="annotation">
+								Bill's full service copy — every bullet point from his PDF. The
+								depth here is what separates PFL from competitors who describe
+								services in one sentence.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Service 2 -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">
+									Subcontractor Vetting & Management
+								</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="wf-body-text">
+								Ensuring qualified, compliant, and reliable partners for every
+								contract.
+							</div>
+							<div class="sub-label">Core Services</div>
+							<ul class="wf-bullets">
+								<li>Subcontractor Qualification & Verification</li>
+								<li>
+									Compliance Oversight — Alignment with federal, state, and
+									industry regulations
+								</li>
+								<li>
+									Insurance Review — Verification of coverage and documentation
+								</li>
+								<li>
+									Onboarding & Documentation Management — Secure collection and
+									maintenance of required records
+								</li>
+								<li>
+									Contract Administration Support — Coordination, tracking, and
+									compliance with contractual requirements
+								</li>
+								<li>
+									Vendor & Carrier Database Management — Development and
+									maintenance of a network of approved partners
+								</li>
+							</ul>
+							<div class="annotation">
+								Every bullet from Bill's PDF. Designer decides visual treatment
+								— accordions, cards, or prose with headings. The content
+								structure is what matters.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Service 3 -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">
+									Federal & DOT Compliance & Administrative Services
+								</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="wf-body-text">
+								Streamlining regulatory compliance and administrative operations
+								for federal contractors and transportation providers.
+							</div>
+							<div class="sub-label">
+								Federal Compliance & Administrative Support
+							</div>
+							<ul class="wf-bullets">
+								<li>FAR and DFARS compliance assistance</li>
+								<li>Federal reporting support (ISR/SSR and eSRS)</li>
+								<li>Contract administration and documentation</li>
+								<li>Audit-ready recordkeeping</li>
+								<li>Small business subcontracting support</li>
+							</ul>
+							<div class="sub-label">DOT & FMCSA Compliance Support</div>
+							<ul class="wf-bullets">
+								<li>DOT and FMCSA regulatory compliance</li>
+								<li>Carrier Qualification</li>
+								<li>Insurance and credential verification</li>
+								<li>Safety audit preparation</li>
+								<li>Policy and documentation support</li>
+								<li>Recordkeeping and compliance monitoring</li>
+							</ul>
+							<div class="annotation">
+								This service has two sub-sections in Bill's PDF — Federal
+								Compliance and DOT/FMCSA. Both shown with full bullet lists.
+								This specificity is what makes a procurement officer confident
+								PFL knows this space.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+						<div style="text-align: center; padding: 12px 0">
+							<div class="wf-heading-md">
+								Ready to discuss your compliance needs?
+							</div>
+							<div class="wf-cta" style="margin-top: 10px">
+								Request a Consultation →
+							</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 Premier Federal Logistics, LLC</span
+						><span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ PAGE 3: INDUSTRIES ═══ -->
+			<section class="wf-section" id="industries">
+				<div class="section-label">
+					<span class="section-num">3</span> Industries &mdash; /industries
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Premier Federal Logistics</div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span
+							><span class="active">Industries</span><span>About</span
+							><span>Capability Statement</span><span>Contact</span>
+						</div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Industries We Serve</div>
+							<div class="wf-subtext">
+								Delivering compliance-driven support for government and
+								industry.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Industry Verticals</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="industry-grid">
+								<div class="industry-card">
+									<div class="ind-icon">🏛️</div>
+									<div class="ind-name">Federal Prime Contractors</div>
+								</div>
+								<div class="industry-card">
+									<div class="ind-icon">🎖️</div>
+									<div class="ind-name">Department of Defense</div>
+								</div>
+								<div class="industry-card">
+									<div class="ind-icon">🚨</div>
+									<div class="ind-name">Emergency Response & FEMA</div>
+								</div>
+								<div class="industry-card">
+									<div class="ind-icon">🚛</div>
+									<div class="ind-name">Trucking & Logistics</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Federal Prime Contractors</div>
+							</div>
+							<div class="wf-body-text">
+								We support prime contractors with compliant subcontractor
+								management, administrative oversight, and logistics
+								coordination. Our services help reduce risk, ensure regulatory
+								alignment, and strengthen contract performance.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Department of Defense (DoD)</div>
+							</div>
+							<div class="wf-body-text">
+								We provide secure, compliance-driven support for defense-related
+								operations requiring precision, accountability, and
+								transparency. Our expertise ensures readiness and adherence to
+								federal standards.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Emergency Response & FEMA</div>
+							</div>
+							<div class="wf-body-text">
+								We support disaster relief and emergency response operations
+								through rapid coordination, compliant subcontractor management,
+								and organized documentation. Our services help ensure timely and
+								efficient support.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Trucking & Logistics Companies</div>
+							</div>
+							<div class="wf-body-text">
+								We offer back-office, compliance, and carrier qualification
+								services to transportation providers. Our solutions help
+								companies meet DOT and FMCSA requirements, reduce administrative
+								burdens, and operate with confidence.
+							</div>
+						</div>
+
+						<div class="annotation">
+							All four industry descriptions are Bill's copy. His outline noted
+							"may add more info for each under services page" — designer should
+							consider whether these live here or fold into the Services page.
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">
+								Decision — Industries Page Structure
+							</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A</div>
+									<div class="wf-body-text" style="font-size: 12px">
+										Keep Industries as its own page. Clean separation — Services
+										= WHAT PFL does. Industries = WHO they do it for.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B</div>
+									<div class="wf-body-text" style="font-size: 12px">
+										Fold industry content into the Services page as a "Who We
+										Serve" section. Reduces page count to 5, keeps
+										service-related info in one place.
+									</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 10px">
+								Bill's outline left this open. If the industry copy stays short
+								(as it is now), Option B might be tighter. If he wants to expand
+								each vertical, Option A gives room to grow.
+							</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 Premier Federal Logistics, LLC</span
+						><span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ PAGE 4: ABOUT / LEADERSHIP ═══ -->
+			<section class="wf-section" id="about">
+				<div class="section-label">
+					<span class="section-num">4</span> About / Leadership &mdash; /about
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Premier Federal Logistics</div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span>Industries</span
+							><span class="active">About</span><span>Capability Statement</span
+							><span>Contact</span>
+						</div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">About Premier Federal Logistics</div>
+							<div class="wf-subtext">
+								Veteran-led. Woman-owned. Built for the mission.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Company Overview</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div class="wf-body-text">
+								Premier Federal Logistics, LLC (PFL) is a veteran-led
+								administrative and logistics support firm specializing in
+								federal compliance, subcontractor management, and secure mission
+								oversight. We partner with government agencies and prime
+								contractors to deliver transparent, audit-ready solutions that
+								reduce risk, streamline operations, and ensure adherence to
+								federal regulations.
+							</div>
+							<div class="wf-body-text">
+								With over 20 years of experience managing high-stakes operations
+								across transportation, logistics, and redevelopment, our
+								leadership team brings a rare combination of field-proven
+								expertise and regulatory precision. Our capabilities span from
+								supporting mission-critical defense logistics in extreme
+								environments to providing elite administrative and compliance
+								services for federal contractors nationwide.
+							</div>
+							<div class="annotation">
+								Bill's About Us copy — both paragraphs. "20 years of experience
+								managing high-stakes operations" and "mission-critical defense
+								logistics in extreme environments" set the tone before the bios.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Meet Our Leadership</div>
+							</div>
+							<div class="bio-grid">
+								<div class="bio-card">
+									<div
+										class="img-placeholder"
+										style="height: 100px; margin-bottom: 12px"
+									>
+										<div class="img-icon">📷</div>
+										<div class="img-label">
+											Professional headshot — Tracy Krenz
+										</div>
+									</div>
+									<div class="bio-name">Tracy Krenz</div>
+									<div class="bio-role">
+										Owner & Founder · Director of Administration & Compliance
+									</div>
+									<div class="bio-text" style="margin-bottom: 8px">
+										U.S. Army veteran and founder of Premier Federal Logistics.
+										Provides the disciplined leadership and rigorous compliance
+										standards required to support high-level federal
+										contractors.
+									</div>
+									<ul class="wf-bullets">
+										<li>
+											<strong>Military Service:</strong> U.S. Army
+											Transportation Corps; two-time ARCOM recipient
+										</li>
+										<li>
+											<strong>Federal Compliance:</strong> Specialist in federal
+											logistics administration, FMCSA/DOT compliance, and
+											audit-ready documentation
+										</li>
+										<li>
+											<strong>Financial Stewardship:</strong> Certified Public
+											Bookkeeper (NACPB) and QuickBooks Certified User with
+											multi-state project oversight
+										</li>
+										<li>
+											<strong>Federal Readiness:</strong> Expert in
+											subcontractor onboarding, capability statement
+											development, and transparent administrative systems
+										</li>
+									</ul>
+								</div>
+								<div class="bio-card">
+									<div
+										class="img-placeholder"
+										style="height: 100px; margin-bottom: 12px"
+									>
+										<div class="img-icon">📷</div>
+										<div class="img-label">
+											Professional headshot — William Krenz
+										</div>
+									</div>
+									<div class="bio-name">William K. Krenz</div>
+									<div class="bio-role">Executive Director of Operations</div>
+									<div class="bio-text" style="margin-bottom: 8px">
+										Highly accomplished transportation and logistics executive
+										specializing in ultra-heavy haul and complex project
+										leadership. Career defined by precision, safety, and
+										operational excellence in extreme environments.
+									</div>
+									<ul class="wf-bullets">
+										<li>
+											<strong>Heavy-Haul & Industrial:</strong> Expert in
+											ultra-heavy haul exceeding 345,000 lbs, 14-axle
+											configurations and specialized Arctic ice-road transport
+										</li>
+										<li>
+											<strong>Defense & Secure Transport:</strong> Secret-level
+											DoD missions including M1 Abrams tank transport across
+											international borders under chain-of-custody and FAST-card
+											protocols
+										</li>
+										<li>
+											<strong>Elite Safety:</strong> Over 1,000,000
+											accident-free miles across Alaska, Canada, and the Lower
+											48 over a 20-year career
+										</li>
+										<li>
+											<strong>Project Leadership:</strong> Directed 40+ property
+											rehabilitations involving structural stabilization,
+											environmental remediation, and code compliance
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="annotation">
+								This is the most important section on the entire site. These
+								bios are from Bill's PDFs and the credentials are genuinely
+								elite — Secret-level DoD, M1 Abrams transport, 1M+ accident-free
+								miles, two-time ARCOM, NACPB certified. Professional headshots
+								needed. The bios should breathe — give them space.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Our Mission</div>
+							</div>
+							<div class="wf-body-text">
+								We bridge the gap between complex operational demands and
+								rigorous regulatory requirements. Whether supporting oversize
+								freight operations in extreme environments or navigating the
+								administrative intricacies of federal subcontracting, Premier
+								Federal Logistics delivers reliability, transparency, and elite
+								performance.
+							</div>
+							<div
+								class="wf-body-text"
+								style="font-weight: 500; color: var(--navy)"
+							>
+								Our goal is to serve as the professional compliance and
+								administrative layer that protects our partners' contracts,
+								reputations, and mission success.
+							</div>
+							<div class="annotation">
+								Bill's mission statement. "The professional compliance and
+								administrative layer that protects our partners' contracts,
+								reputations, and mission success" — that line does real work.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Certifications</div>
+							</div>
+							<div class="trust-badges">
+								<div class="trust-badge">
+									<span class="badge-icon">👩‍✈️</span> Woman-Owned Business
+								</div>
+								<div class="trust-badge">
+									<span class="badge-icon">🎖️</span> Veteran-Owned Business
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 Premier Federal Logistics, LLC</span
+						><span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ PAGE 5: CAPABILITY STATEMENT ═══ -->
+			<section class="wf-section" id="capability">
+				<div class="section-label">
+					<span class="section-num">5</span> Capability Statement &mdash;
+					/capability-statement
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Premier Federal Logistics</div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span>Industries</span
+							><span>About</span><span class="active">Capability Statement</span
+							><span>Contact</span>
+						</div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Capability Statement</div>
+							<div class="wf-subtext">
+								CAGE Code 18JK9 · Federal contracting profile and core
+								competencies.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">
+									One-Page Capability Statement (PDF)
+								</div>
+								<span class="static-tag">Static</span>
+							</div>
+							<div
+								style="
+									background: var(--navy);
+									border-radius: 6px;
+									padding: 16px 20px;
+									display: flex;
+									align-items: center;
+									justify-content: space-between;
+									gap: 16px;
+								"
+							>
+								<div>
+									<div
+										style="
+											font-family: 'Barlow Condensed', sans-serif;
+											font-size: 16px;
+											color: var(--slate);
+											font-weight: 700;
+											text-transform: uppercase;
+										"
+									>
+										PFL Capability Statement (PDF)
+									</div>
+									<div
+										style="
+											font-family: 'Source Sans 3', sans-serif;
+											font-size: 11px;
+											color: rgba(232, 236, 241, 0.5);
+										"
+									>
+										Download or view — opens in new tab
+									</div>
+								</div>
+								<div class="wf-cta gold" style="margin-top: 0">Download →</div>
+							</div>
+							<div class="annotation">
+								Bill's outline lists a "One-Page Capability Statement (PDF)" —
+								opens in new tab, not force-download. If a polished PDF doesn't
+								exist yet, that's a potential add-on.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Overview</div>
+							</div>
+							<div class="wf-body-text">
+								Premier Federal Logistics delivers compliance-driven
+								administrative and logistics solutions for federal contractors,
+								government agencies, and transportation partners. Our expertise
+								in subcontractor vetting, regulatory compliance, and
+								mission-critical coordination ensures efficient, transparent,
+								and audit-ready operations. We support organizations in reducing
+								risk, maintaining compliance, and executing projects with
+								confidence.
+							</div>
+							<div class="annotation">
+								Bill's capability statement overview — straight from his PDF.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Company Profile</div>
+							</div>
+							<div class="cap-row">
+								<div class="cap-label">CAGE Code</div>
+								<div class="cap-value">18JK9</div>
+							</div>
+							<div class="cap-row">
+								<div class="cap-label">NAICS Codes</div>
+								<div class="cap-value">541614 · 488510 · 561110</div>
+							</div>
+							<div class="cap-row">
+								<div class="cap-label">Business Type</div>
+								<div class="cap-value">Veteran-Owned, Woman-Owned</div>
+							</div>
+							<div class="cap-row">
+								<div class="cap-label">Headquarters</div>
+								<div class="cap-value">
+									607 S 24th Ave #316, Wausau, WI 54401
+								</div>
+							</div>
+							<div class="cap-row">
+								<div class="cap-label">Core Competencies</div>
+								<div class="cap-value">
+									Secure logistics oversight · Subcontractor vetting &
+									management · Federal & DOT compliance · Audit-ready
+									administrative services
+								</div>
+							</div>
+							<div class="annotation">
+								CAGE, NAICS, and address all from Bill's PDFs. This structured
+								data is what contracting officers search for — scannable, not
+								buried in paragraphs.
+							</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 Premier Federal Logistics, LLC</span
+						><span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ PAGE 6: CONTACT ═══ -->
+			<section class="wf-section" id="contact">
+				<div class="section-label">
+					<span class="section-num">6</span> Contact / Request a Consultation
+					&mdash; /contact
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Premier Federal Logistics</div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span>Industries</span
+							><span>About</span><span>Capability Statement</span
+							><span class="active">Contact</span>
+						</div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Request a Consultation</div>
+							<div class="wf-subtext">
+								Get in touch with Premier Federal Logistics.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Consultation Request Form</div>
+								<span class="static-tag">Form → email</span>
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Full Name</div>
+									<div class="field-input">John Smith</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Company Name</div>
+									<div class="field-input">Organization or Agency</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email Address</div>
+									<div class="field-input">
+										<a
+											href="/cdn-cgi/l/email-protection"
+											class="__cf_email__"
+											data-cfemail="6a000502042a0f120b071a060f44090507"
+											>[email&#160;protected]</a
+										>
+									</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Phone Number</div>
+									<div class="field-input">(555) 555-5555</div>
+								</div>
+								<div class="form-field dropdown">
+									<div class="field-label">Organization Type</div>
+									<div class="field-input">
+										Prime Contractor / Subcontractor / Trucking or Logistics Co.
+										/ Other ▾
+									</div>
+								</div>
+								<div class="form-field dropdown">
+									<div class="field-label">Services of Interest</div>
+									<div class="field-input">
+										Mission Tracking / Subcontractor Vetting / Federal & DOT
+										Compliance ▾
+									</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Project Details or Message</div>
+									<div class="field-input">
+										Tell us about your project or requirements…
+									</div>
+								</div>
+								<div class="form-field dropdown">
+									<div class="field-label">Preferred Method of Contact</div>
+									<div class="field-input">Email / Phone ▾</div>
+								</div>
+							</div>
+							<div style="margin-top: 12px">
+								<div class="wf-cta">Submit Request →</div>
+							</div>
+							<div class="annotation">
+								Exact form fields from Bill's outline — including both dropdowns
+								(Organization Type and Services of Interest), the message field,
+								and Preferred Method of Contact. Submissions route to
+								<a
+									href="/cdn-cgi/l/email-protection"
+									class="__cf_email__"
+									data-cfemail="dbb2b5bdb49baba9beb6b2bea9bdbebfbea9bab7b7b4bcb2a8afb2b8a8f5b8b4b6"
+									>[email&#160;protected]</a
+								>.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Direct Contact</div>
+							</div>
+							<div class="wf-body-text">
+								<strong>Premier Federal Logistics, LLC</strong><br />
+								607 S 24th Ave #316<br />
+								Wausau, Wisconsin 54401<br /><br />
+								<strong>Email:</strong>
+								<a
+									href="/cdn-cgi/l/email-protection"
+									class="__cf_email__"
+									data-cfemail="761f181019360604131b1f13041013121304171a1a19111f05021f15055815191b"
+									>[email&#160;protected]</a
+								><br />
+								<strong>Phone:</strong> 715-721-3191
+								<span
+									style="
+										font-size: 11px;
+										color: rgba(13, 27, 42, 0.4);
+										margin-left: 4px;
+									"
+									>click-to-call on mobile</span
+								><br />
+								<strong>Website:</strong>
+								www.premierfederallogistics.com<br /><br />
+								<strong>Business Hours:</strong> Monday – Friday: 8:00 AM – 5:00
+								PM (Central Time)
+							</div>
+							<div class="annotation">
+								All contact details from Bill's outline — real address, real
+								phone, real email, real hours. Phone is click-to-call on mobile.
+							</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 Premier Federal Logistics, LLC</span
+						><span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ CONFIRMED DECISIONS ═══ -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>6-Page Scope</strong> — Home, Services, Industries,
+									About/Leadership, Capability Statement, Contact. All pages in
+									Phase 1.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No CMS</strong> — Static site. Content won't change
+									frequently. Simplifies build and keeps cost down.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>All Copy Provided</strong> — 3 PDFs with complete
+									content for every page. Light web formatting needed, but the
+									heavy lifting is done. Saves significant time and cost.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Static Next.js on Vercel</strong> — $20/month hosting
+									(client pays directly). SSL and analytics included. No monthly
+									developer fees. They own the site forever.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Design Direction</strong> — Corporate-federal
+									authority. Clean, sharp, confident. Inspired by
+									universallogistics.com but scaled to PFL. Not flashy —
+									authoritative.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Mobile-Responsive</strong> — Procurement officers
+									check on phones. Capability statement PDF downloadable on
+									mobile. Click-to-call on 715-721-3191.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Multi-Field Contact Form</strong> — Full Name, Company
+									Name, Email, Phone, Organization Type (dropdown), Services of
+									Interest (dropdown), Project Details, Preferred Contact
+									Method. Submissions to
+									<a
+										href="/cdn-cgi/l/email-protection"
+										class="__cf_email__"
+										data-cfemail="0d64636b624d7d7f686064687f6b6869687f6c6161626a647e79646e7e236e6260"
+										>[email&#160;protected]</a
+									>.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Trust Badges</strong> — Woman-owned and veteran-owned
+									on Home and About pages. CAGE 18JK9 on Home and Capability
+									Statement. Secret-level clearance called out.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Capability Statement PDF</strong> — One-page
+									downloadable per Bill's outline. Opens in new tab.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Domain</strong> — www.premierfederallogistics.com
+									(email already active at this domain).
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ DISCUSSION CHECKLIST ═══ -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Photos / Headshots</strong> — Professional headshots
+									needed for Tracy and Bill for the About page. Company/fleet
+									photos if available. Stock images are the fallback for hero
+									and services, but real photos would make this significantly
+									stronger.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Industries Page Structure (Option A vs B)</strong> —
+									Keep Industries as its own page, or fold into Services? Bill's
+									outline left this open. Decision depends on how much content
+									each vertical gets.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Logo Quality</strong> — Bill sent the current PFL logo
+									and said he's open to other options. Need to assess whether it
+									holds up on a professional federal-facing site. Refinement or
+									redesign is a potential add-on.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Capability Statement PDF</strong> — Does a polished
+									one-page PDF exist? If it needs to be created or reformatted,
+									that's a potential add-on ($300–$500).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Trust Badge Assets</strong> — Official woman-owned and
+									veteran-owned certification badges/logos. If official versions
+									aren't available, Jordan designs custom ones.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Color Palette</strong> — Leaning navy/dark blue base
+									with patriotic undertones and gold/brass accents. Finalize
+									once logo is reviewed.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Nav Structure</strong> — Bill's outline shows "Home -
+									Services - Contact/Request Consultation" as nav bar buttons.
+									Wireframe currently includes all 6 pages in nav. Confirm
+									whether all pages are in main nav or some are secondary.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Prime Contractor Names</strong> — Materials reference
+									Boeing, Halliburton, and UPS. Confirm whether these names can
+									appear on the site — they're powerful credibility signals for
+									procurement teams.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<script>
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id)
+									link.classList.add('active');
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' },
+			);
+			sections.forEach((s) => observer.observe(s));
+		</script>
+	</body>
 </html>
