@@ -14,6 +14,7 @@ export const FETCH_CLIENT_QUERY = `
     "notes": *[_type == "note" && references(^._id)] | order(_createdAt desc) {
       _id,
       title,
+      sentAt,
       type,
       url,
       pinned,

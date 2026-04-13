@@ -189,10 +189,9 @@ function NoteBody({ body, open }) {
 }
 
 function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
-	if (!open) return null;
-
 	const isEmail = note.type === 'email';
-	const isSent = !!note.sentAt;
+const isSent = !!note.sentAt;
+if (!open && !(isEmail && isSent)) return null;
 
 	return (
 		<div
