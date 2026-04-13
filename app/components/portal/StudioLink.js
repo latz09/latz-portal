@@ -3,7 +3,7 @@ import { TbEdit } from 'react-icons/tb'
 const BASE = 'https://latz-portal.sanity.studio/structure/client'
 
 export default function StudioLink({ id }) {
-  const href = id ? `${BASE};${id}` : `${BASE};new`
+  const href = id ? `${BASE};${id}` : `${BASE}`
 
   return (
     <a
