@@ -21,7 +21,7 @@ function AddNoteButton({ onClick }) {
 			className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/30 px-2 py-0.5 rounded'
 		>
 			<TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
-			Add Note
+			Add Item
 		</button>
 	);
 }
@@ -38,7 +38,7 @@ function NoteListHeader({ onAdd }) {
 	return (
 		<div className='flex items-center justify-between mb-4 lg:mb-6'>
 			<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase'>
-				Notes
+				Notes & Todos
 			</p>
 			<AddNoteButton onClick={onAdd} />
 		</div>
