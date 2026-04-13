@@ -56,6 +56,7 @@
 				z-index: 200;
 				overflow-y: auto;
 				border-right: 3px solid var(--navy-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 			}
 
 			.sidebar-brand {
@@ -187,6 +188,44 @@
 				line-height: 2;
 			}
 
+			/* ── MOBILE FAB & OVERLAY ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--gold);
+				color: var(--navy);
+				border: none;
+				font-size: 22px;
+				cursor: pointer;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				transition: transform 0.15s;
+				line-height: 1;
+			}
+
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-overlay.visible {
+				opacity: 1;
+			}
+
 			/* ── MAIN ── */
 			.main {
 				margin-left: var(--sidebar-w);
@@ -255,14 +294,12 @@
 				text-transform: uppercase;
 				color: rgba(13, 27, 42, 0.4);
 			}
-
 			.meta-value {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 12px;
 				font-weight: 500;
 				color: var(--navy);
 			}
-
 			.meta-value.warn {
 				color: var(--gold-dark);
 			}
@@ -392,7 +429,6 @@
 				align-items: center;
 				gap: 6px;
 			}
-
 			.decision-label::before {
 				content: '⚑';
 			}
@@ -422,6 +458,8 @@
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 12px;
+				flex-wrap: wrap;
+				gap: 8px;
 			}
 
 			/* ── TYPOGRAPHY ── */
@@ -435,7 +473,6 @@
 				letter-spacing: 0.02em;
 				line-height: 1.1;
 			}
-
 			.wf-heading-md {
 				font-family: 'Barlow Condensed', sans-serif;
 				font-size: 20px;
@@ -445,7 +482,6 @@
 				margin-bottom: 6px;
 				letter-spacing: 0.02em;
 			}
-
 			.wf-heading-sm {
 				font-family: 'Barlow Condensed', sans-serif;
 				font-size: 16px;
@@ -455,7 +491,6 @@
 				margin-bottom: 4px;
 				letter-spacing: 0.02em;
 			}
-
 			.wf-subtext {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 14px;
@@ -464,7 +499,6 @@
 				margin-bottom: 14px;
 				line-height: 1.5;
 			}
-
 			.wf-body-text {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 13px;
@@ -472,7 +506,6 @@
 				line-height: 1.6;
 				margin-bottom: 10px;
 			}
-
 			.section-divider {
 				border: none;
 				border-top: 1px dashed rgba(13, 27, 42, 0.15);
@@ -490,7 +523,6 @@
 				border-radius: 4px;
 				margin-top: 8px;
 			}
-
 			.wf-cta.gold {
 				background: var(--gold);
 				color: var(--navy);
@@ -503,8 +535,9 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
+				flex-wrap: wrap;
+				gap: 8px;
 			}
-
 			.wf-footer span {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 11px;
@@ -523,14 +556,12 @@
 				gap: 8px;
 				padding: 20px;
 			}
-
 			.img-placeholder .img-icon {
 				font-family: 'Architects Daughter', cursive;
 				font-size: 28px;
 				opacity: 0.3;
 				color: var(--navy);
 			}
-
 			.img-placeholder .img-label {
 				font-family: 'Architects Daughter', cursive;
 				font-size: 12px;
@@ -546,7 +577,6 @@
 				margin: 12px 0;
 				flex-wrap: wrap;
 			}
-
 			.trust-badge {
 				border: 2px dashed rgba(13, 27, 42, 0.2);
 				border-radius: 6px;
@@ -560,12 +590,11 @@
 				font-weight: 600;
 				color: var(--navy);
 			}
-
 			.trust-badge .badge-icon {
 				font-size: 18px;
 			}
 
-			/* ── SERVICE / DIFF / INDUSTRY CARDS ── */
+			/* ── GRIDS ── */
 			.service-grid,
 			.diff-grid {
 				display: grid;
@@ -573,7 +602,6 @@
 				gap: 10px;
 				margin-top: 12px;
 			}
-
 			.service-card,
 			.diff-card {
 				border: 1.5px dashed rgba(13, 27, 42, 0.2);
@@ -581,7 +609,6 @@
 				padding: 14px;
 				background: rgba(255, 255, 255, 0.6);
 			}
-
 			.service-card .service-title,
 			.diff-card .diff-title {
 				font-family: 'Barlow Condensed', sans-serif;
@@ -592,12 +619,10 @@
 				margin-bottom: 6px;
 				letter-spacing: 0.02em;
 			}
-
 			.diff-card .diff-title {
 				font-size: 13px;
 				margin-bottom: 4px;
 			}
-
 			.service-card .service-desc,
 			.diff-card .diff-desc {
 				font-family: 'Source Sans 3', sans-serif;
@@ -605,7 +630,6 @@
 				color: rgba(13, 27, 42, 0.5);
 				line-height: 1.5;
 			}
-
 			.diff-card .diff-desc {
 				font-size: 11px;
 			}
@@ -616,7 +640,6 @@
 				gap: 10px;
 				margin-top: 12px;
 			}
-
 			.industry-card {
 				border: 1.5px dashed rgba(13, 27, 42, 0.2);
 				border-radius: 5px;
@@ -624,7 +647,6 @@
 				background: rgba(255, 255, 255, 0.6);
 				text-align: center;
 			}
-
 			.industry-card .ind-icon {
 				font-size: 22px;
 				margin-bottom: 6px;
@@ -645,14 +667,12 @@
 				gap: 12px;
 				margin-top: 12px;
 			}
-
 			.bio-card {
 				border: 1.5px dashed rgba(13, 27, 42, 0.2);
 				border-radius: 6px;
 				padding: 16px;
 				background: rgba(255, 255, 255, 0.6);
 			}
-
 			.bio-card .bio-name {
 				font-family: 'Barlow Condensed', sans-serif;
 				font-size: 18px;
@@ -662,7 +682,6 @@
 				margin-bottom: 2px;
 				letter-spacing: 0.02em;
 			}
-
 			.bio-card .bio-role {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 12px;
@@ -672,7 +691,6 @@
 				letter-spacing: 0.06em;
 				margin-bottom: 8px;
 			}
-
 			.bio-card .bio-text {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 12px;
@@ -691,7 +709,6 @@
 			.cap-row:last-child {
 				border-bottom: none;
 			}
-
 			.cap-label {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 11px;
@@ -702,7 +719,6 @@
 				min-width: 140px;
 				flex-shrink: 0;
 			}
-
 			.cap-value {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 13px;
@@ -717,14 +733,12 @@
 				gap: 10px;
 				margin-top: 12px;
 			}
-
 			.form-field {
 				border: 1.5px dashed rgba(13, 27, 42, 0.2);
 				border-radius: 5px;
 				padding: 10px 12px;
 				background: rgba(255, 255, 255, 0.6);
 			}
-
 			.form-field .field-label {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 10px;
@@ -734,16 +748,14 @@
 				color: rgba(13, 27, 42, 0.4);
 				margin-bottom: 4px;
 			}
-
 			.form-field .field-input {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 13px;
 				color: rgba(13, 27, 42, 0.3);
 				font-style: italic;
 			}
-
 			.form-field.full {
-				grid-column: 1 / -1;
+				grid-column: 1/-1;
 			}
 
 			/* ── BULLET LIST ── */
@@ -752,7 +764,6 @@
 				padding: 0;
 				margin-top: 6px;
 			}
-
 			.wf-bullets li {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 12px;
@@ -761,7 +772,6 @@
 				position: relative;
 				line-height: 1.5;
 			}
-
 			.wf-bullets li::before {
 				content: '→';
 				position: absolute;
@@ -770,7 +780,6 @@
 				font-size: 10px;
 			}
 
-			/* ── SUB-LABEL ── */
 			.sub-label {
 				font-family: 'Source Sans 3', sans-serif;
 				font-size: 11px;
@@ -790,14 +799,12 @@
 				margin: 20px 0;
 				flex-wrap: wrap;
 			}
-
 			.sitemap-node {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				gap: 6px;
 			}
-
 			.sitemap-box {
 				background: var(--navy);
 				color: var(--slate);
@@ -811,13 +818,11 @@
 				min-width: 110px;
 				letter-spacing: 0.03em;
 			}
-
 			.sitemap-box.secondary {
 				background: rgba(13, 27, 42, 0.1);
 				color: var(--navy);
 				border: 1.5px dashed var(--navy);
 			}
-
 			.sitemap-arrow {
 				font-family: 'Architects Daughter', cursive;
 				font-size: 18px;
@@ -826,7 +831,6 @@
 				align-self: center;
 				margin-top: -14px;
 			}
-
 			.sitemap-slug {
 				font-size: 10px;
 				font-family: 'Source Sans 3', sans-serif;
@@ -839,7 +843,6 @@
 				list-style: none;
 				padding: 0;
 			}
-
 			.check-item {
 				display: flex;
 				align-items: flex-start;
@@ -866,14 +869,12 @@
 				gap: 12px;
 				margin-top: 10px;
 			}
-
 			.option-card {
 				border: 2px dashed rgba(13, 27, 42, 0.2);
 				border-radius: 6px;
 				padding: 14px;
 				background: rgba(255, 255, 255, 0.5);
 			}
-
 			.option-label {
 				font-family: 'Architects Daughter', cursive;
 				font-size: 11px;
@@ -883,7 +884,32 @@
 				margin-bottom: 8px;
 			}
 
-			/* ── RESPONSIVE ── */
+			/* ── DARK CTA BAR ── */
+			.cta-bar {
+				background: var(--navy);
+				border-radius: 6px;
+				padding: 18px 22px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+			.cta-bar-title {
+				font-family: 'Barlow Condensed', sans-serif;
+				font-size: 18px;
+				color: var(--slate);
+				letter-spacing: 0.02em;
+				font-weight: 700;
+				text-transform: uppercase;
+			}
+			.cta-bar-sub {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				color: rgba(232, 236, 241, 0.5);
+			}
+
+			/* ── RESPONSIVE: TABLET ── */
 			@media (max-width: 960px) {
 				:root {
 					--sidebar-w: 200px;
@@ -893,20 +919,68 @@
 				}
 				.service-grid,
 				.diff-grid {
-					grid-template-columns: 1fr;
+					grid-template-columns: 1fr 1fr;
 				}
 				.industry-grid {
 					grid-template-columns: repeat(2, 1fr);
 				}
 			}
 
+			/* ── RESPONSIVE: MOBILE ── */
 			@media (max-width: 680px) {
 				.sidebar {
-					display: none;
+					transform: translateX(-100%);
+					width: 240px;
+					z-index: 200;
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.mobile-fab {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+				.sidebar-overlay {
+					display: block;
+					pointer-events: none;
+				}
+				.sidebar-overlay.visible {
+					pointer-events: auto;
 				}
 				.main {
 					margin-left: 0;
-					padding: 24px 16px 60px;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(13, 27, 42, 0.1);
+					padding: 8px 16px;
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.wf-heading-lg {
+					font-size: 22px;
+				}
+				.wf-heading-md {
+					font-size: 17px;
 				}
 				.option-grid,
 				.bio-grid,
@@ -920,19 +994,52 @@
 				.diff-grid {
 					grid-template-columns: 1fr;
 				}
-				.doc-meta-strip {
+				.sitemap {
 					flex-direction: column;
-					width: 100%;
+					align-items: center;
+					gap: 4px;
 				}
-				.wf-nav-links {
-					display: none;
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					padding: 2px 0;
+					margin-top: 0;
+				}
+				.sitemap-box {
+					min-width: 180px;
+				}
+				.cap-row {
+					flex-direction: column;
+					gap: 2px;
+				}
+				.cap-label {
+					min-width: unset;
+				}
+				.cta-bar {
+					flex-direction: column;
+					text-align: center;
+				}
+				.trust-badge {
+					font-size: 11px;
+					padding: 8px 12px;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
 				}
 			}
 		</style>
 	</head>
 	<body>
-		<!-- ── SIDEBAR ── -->
-		<nav class="sidebar">
+		<!-- SIDEBAR OVERLAY -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- SIDEBAR -->
+		<nav class="sidebar" id="sidebar">
 			<div class="sidebar-brand">
 				<div class="sidebar-lwd">Latz Web Design</div>
 				<div class="sidebar-client">Premier Federal Logistics</div>
@@ -942,13 +1049,11 @@
 					<span>Pre-Proposal</span>
 				</div>
 			</div>
-
 			<div class="sidebar-nav">
 				<div class="nav-group-label">Overview</div>
 				<a href="#sitemap" class="nav-link active"
 					><span class="nav-icon">🗺️</span> Site Map</a
 				>
-
 				<div class="nav-group-label">Pages</div>
 				<a href="#home" class="nav-link"
 					><span class="nav-icon">🏠</span> Home</a
@@ -968,7 +1073,6 @@
 				<a href="#contact" class="nav-link"
 					><span class="nav-icon">📬</span> Contact</a
 				>
-
 				<div class="nav-group-label">Decisions</div>
 				<a href="#decisions" class="nav-link"
 					><span class="nav-icon">✅</span> Confirmed</a
@@ -977,21 +1081,18 @@
 					><span class="nav-icon">💬</span> Discussion</a
 				>
 			</div>
-
 			<div class="sidebar-footer">
-				Latz Web Design LLC<br />
-				Stevens Point, WI<br />
-				<a
-					href="/cdn-cgi/l/email-protection"
-					class="__cf_email__"
-					data-cfemail="adc7c2dfc9ccc3edc1ccd9d7dac8cfc9c8dec4cac383cec2c0"
-					>[email&#160;protected]</a
-				><br /><br />
-				No fluff. Just results.
+				Latz Web Design LLC<br />Stevens Point, WI<br />jordan@latzwebdesign.com<br /><br />No
+				fluff. Just results.
 			</div>
 		</nav>
 
-		<!-- ── MAIN ── -->
+		<!-- MOBILE FAB -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">
+			☰
+		</button>
+
+		<!-- MAIN -->
 		<div class="main">
 			<div class="doc-header">
 				<div class="doc-overline">Site Wireframes · Content & Structure</div>
@@ -999,27 +1100,26 @@
 				<div class="doc-sub">
 					6-Page Federal Authority Website &nbsp;·&nbsp; Phase 1 Full Build
 				</div>
-
 				<div class="doc-meta-strip">
 					<div class="meta-item">
-						<span class="meta-label">Status</span>
-						<span class="meta-value warn">Pre-Proposal</span>
+						<span class="meta-label">Status</span
+						><span class="meta-value warn">Pre-Proposal</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">Pages</span>
-						<span class="meta-value">6 in scope</span>
+						<span class="meta-label">Pages</span
+						><span class="meta-value">6 in scope</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">Contact</span>
-						<span class="meta-value">Bill Krenz</span>
+						<span class="meta-label">Contact</span
+						><span class="meta-value">Bill Krenz</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">CMS</span>
-						<span class="meta-value">None — static</span>
+						<span class="meta-label">CMS</span
+						><span class="meta-value">None — static</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">Copy</span>
-						<span class="meta-value ok">✓ Received (3 PDFs)</span>
+						<span class="meta-label">Copy</span
+						><span class="meta-value ok">✓ Received (3 PDFs)</span>
 					</div>
 				</div>
 			</div>
@@ -1101,7 +1201,7 @@
 			<!-- ═══ PAGE 1: HOME ═══ -->
 			<section class="wf-section" id="home">
 				<div class="section-label">
-					<span class="section-num">1</span> Home Page &mdash; /
+					<span class="section-num">1</span> Home Page — /
 				</div>
 				<div class="wireframe-card">
 					<div class="wf-nav">
@@ -1113,7 +1213,6 @@
 						</div>
 					</div>
 					<div class="wf-body">
-						<!-- Hero -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Hero — Full Width</div>
@@ -1145,10 +1244,7 @@
 								contact/consultation form.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Trust Badges -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Trust Signals — Above the Fold</div>
@@ -1174,10 +1270,7 @@
 								need to see these without scrolling.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- About Preview -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">About Us — Home Screen</div>
@@ -1209,10 +1302,7 @@
 								on the About page.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Why Choose PFL -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Why Choose PFL</div>
@@ -1275,10 +1365,7 @@
 								the home page.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Services Overview -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Services Overview</div>
@@ -1315,47 +1402,19 @@
 								link to the full Services page.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Capability Teaser -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">
 									Capability Statement — Home Screen
 								</div>
 							</div>
-							<div
-								style="
-									background: var(--navy);
-									border-radius: 6px;
-									padding: 18px 22px;
-									display: flex;
-									align-items: center;
-									justify-content: space-between;
-									gap: 16px;
-								"
-							>
+							<div class="cta-bar">
 								<div>
-									<div
-										style="
-											font-family: 'Barlow Condensed', sans-serif;
-											font-size: 18px;
-											color: var(--slate);
-											letter-spacing: 0.02em;
-											font-weight: 700;
-											text-transform: uppercase;
-										"
-									>
+									<div class="cta-bar-title">
 										Download Our Capability Statement
 									</div>
-									<div
-										style="
-											font-family: 'Source Sans 3', sans-serif;
-											font-size: 12px;
-											color: rgba(232, 236, 241, 0.5);
-										"
-									>
+									<div class="cta-bar-sub">
 										CAGE Code 18JK9 · NAICS: 541614, 488510, 561110
 									</div>
 								</div>
@@ -1383,7 +1442,7 @@
 			<!-- ═══ PAGE 2: SERVICES ═══ -->
 			<section class="wf-section" id="services">
 				<div class="section-label">
-					<span class="section-num">2</span> Services &mdash; /services
+					<span class="section-num">2</span> Services — /services
 				</div>
 				<div class="wireframe-card">
 					<div class="wf-nav">
@@ -1402,8 +1461,6 @@
 								management for federal operations.
 							</div>
 						</div>
-
-						<!-- Service 1 -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">
@@ -1448,10 +1505,7 @@
 								services in one sentence.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Service 2 -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">
@@ -1492,10 +1546,7 @@
 								structure is what matters.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Service 3 -->
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">
@@ -1533,7 +1584,6 @@
 								PFL knows this space.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
 						<div style="text-align: center; padding: 12px 0">
 							<div class="wf-heading-md">
@@ -1554,7 +1604,7 @@
 			<!-- ═══ PAGE 3: INDUSTRIES ═══ -->
 			<section class="wf-section" id="industries">
 				<div class="section-label">
-					<span class="section-num">3</span> Industries &mdash; /industries
+					<span class="section-num">3</span> Industries — /industries
 				</div>
 				<div class="wireframe-card">
 					<div class="wf-nav">
@@ -1573,7 +1623,6 @@
 								industry.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Industry Verticals</div>
@@ -1598,7 +1647,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Federal Prime Contractors</div>
@@ -1610,7 +1658,6 @@
 								alignment, and strengthen contract performance.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Department of Defense (DoD)</div>
@@ -1622,7 +1669,6 @@
 								federal standards.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Emergency Response & FEMA</div>
@@ -1634,7 +1680,6 @@
 								efficient support.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Trucking & Logistics Companies</div>
@@ -1646,13 +1691,11 @@
 								burdens, and operate with confidence.
 							</div>
 						</div>
-
 						<div class="annotation">
 							All four industry descriptions are Bill's copy. His outline noted
 							"may add more info for each under services page" — designer should
 							consider whether these live here or fold into the Services page.
 						</div>
-
 						<div class="decision-box">
 							<div class="decision-label">
 								Decision — Industries Page Structure
@@ -1691,7 +1734,7 @@
 			<!-- ═══ PAGE 4: ABOUT / LEADERSHIP ═══ -->
 			<section class="wf-section" id="about">
 				<div class="section-label">
-					<span class="section-num">4</span> About / Leadership &mdash; /about
+					<span class="section-num">4</span> About / Leadership — /about
 				</div>
 				<div class="wireframe-card">
 					<div class="wf-nav">
@@ -1709,7 +1752,6 @@
 								Veteran-led. Woman-owned. Built for the mission.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Company Overview</div>
@@ -1739,9 +1781,7 @@
 								logistics in extreme environments" set the tone before the bios.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Meet Our Leadership</div>
@@ -1840,9 +1880,7 @@
 								needed. The bios should breathe — give them space.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Our Mission</div>
@@ -1869,9 +1907,7 @@
 								reputations, and mission success" — that line does real work.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Certifications</div>
@@ -1896,7 +1932,7 @@
 			<!-- ═══ PAGE 5: CAPABILITY STATEMENT ═══ -->
 			<section class="wf-section" id="capability">
 				<div class="section-label">
-					<span class="section-num">5</span> Capability Statement &mdash;
+					<span class="section-num">5</span> Capability Statement —
 					/capability-statement
 				</div>
 				<div class="wireframe-card">
@@ -1916,7 +1952,6 @@
 								competencies.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">
@@ -1924,36 +1959,12 @@
 								</div>
 								<span class="static-tag">Static</span>
 							</div>
-							<div
-								style="
-									background: var(--navy);
-									border-radius: 6px;
-									padding: 16px 20px;
-									display: flex;
-									align-items: center;
-									justify-content: space-between;
-									gap: 16px;
-								"
-							>
+							<div class="cta-bar">
 								<div>
-									<div
-										style="
-											font-family: 'Barlow Condensed', sans-serif;
-											font-size: 16px;
-											color: var(--slate);
-											font-weight: 700;
-											text-transform: uppercase;
-										"
-									>
+									<div class="cta-bar-title" style="font-size: 16px">
 										PFL Capability Statement (PDF)
 									</div>
-									<div
-										style="
-											font-family: 'Source Sans 3', sans-serif;
-											font-size: 11px;
-											color: rgba(232, 236, 241, 0.5);
-										"
-									>
+									<div class="cta-bar-sub">
 										Download or view — opens in new tab
 									</div>
 								</div>
@@ -1965,9 +1976,7 @@
 								exist yet, that's a potential add-on.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Overview</div>
@@ -1986,9 +1995,7 @@
 								Bill's capability statement overview — straight from his PDF.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Company Profile</div>
@@ -2036,8 +2043,8 @@
 			<!-- ═══ PAGE 6: CONTACT ═══ -->
 			<section class="wf-section" id="contact">
 				<div class="section-label">
-					<span class="section-num">6</span> Contact / Request a Consultation
-					&mdash; /contact
+					<span class="section-num">6</span> Contact / Request a Consultation —
+					/contact
 				</div>
 				<div class="wireframe-card">
 					<div class="wf-nav">
@@ -2055,7 +2062,6 @@
 								Get in touch with Premier Federal Logistics.
 							</div>
 						</div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Consultation Request Form</div>
@@ -2072,27 +2078,20 @@
 								</div>
 								<div class="form-field">
 									<div class="field-label">Email Address</div>
-									<div class="field-input">
-										<a
-											href="/cdn-cgi/l/email-protection"
-											class="__cf_email__"
-											data-cfemail="6a000502042a0f120b071a060f44090507"
-											>[email&#160;protected]</a
-										>
-									</div>
+									<div class="field-input">john@example.com</div>
 								</div>
 								<div class="form-field">
 									<div class="field-label">Phone Number</div>
 									<div class="field-input">(555) 555-5555</div>
 								</div>
-								<div class="form-field dropdown">
+								<div class="form-field">
 									<div class="field-label">Organization Type</div>
 									<div class="field-input">
 										Prime Contractor / Subcontractor / Trucking or Logistics Co.
 										/ Other ▾
 									</div>
 								</div>
-								<div class="form-field dropdown">
+								<div class="form-field">
 									<div class="field-label">Services of Interest</div>
 									<div class="field-input">
 										Mission Tracking / Subcontractor Vetting / Federal & DOT
@@ -2105,7 +2104,7 @@
 										Tell us about your project or requirements…
 									</div>
 								</div>
-								<div class="form-field dropdown">
+								<div class="form-field">
 									<div class="field-label">Preferred Method of Contact</div>
 									<div class="field-input">Email / Phone ▾</div>
 								</div>
@@ -2117,33 +2116,21 @@
 								Exact form fields from Bill's outline — including both dropdowns
 								(Organization Type and Services of Interest), the message field,
 								and Preferred Method of Contact. Submissions route to
-								<a
-									href="/cdn-cgi/l/email-protection"
-									class="__cf_email__"
-									data-cfemail="dbb2b5bdb49baba9beb6b2bea9bdbebfbea9bab7b7b4bcb2a8afb2b8a8f5b8b4b6"
-									>[email&#160;protected]</a
-								>.
+								info@premierfederallogistics.com.
 							</div>
 						</div>
-
 						<div class="section-divider"></div>
-
 						<div class="wf-block">
 							<div class="wf-block-header">
 								<div class="wf-heading-sm">Direct Contact</div>
 							</div>
 							<div class="wf-body-text">
-								<strong>Premier Federal Logistics, LLC</strong><br />
-								607 S 24th Ave #316<br />
-								Wausau, Wisconsin 54401<br /><br />
-								<strong>Email:</strong>
-								<a
-									href="/cdn-cgi/l/email-protection"
-									class="__cf_email__"
-									data-cfemail="761f181019360604131b1f13041013121304171a1a19111f05021f15055815191b"
-									>[email&#160;protected]</a
-								><br />
-								<strong>Phone:</strong> 715-721-3191
+								<strong>Premier Federal Logistics, LLC</strong><br />607 S 24th
+								Ave #316<br />Wausau, Wisconsin 54401<br /><br /><strong
+									>Email:</strong
+								>
+								info@premierfederallogistics.com<br /><strong>Phone:</strong>
+								715-721-3191
 								<span
 									style="
 										font-size: 11px;
@@ -2151,11 +2138,11 @@
 										margin-left: 4px;
 									"
 									>click-to-call on mobile</span
-								><br />
-								<strong>Website:</strong>
-								www.premierfederallogistics.com<br /><br />
-								<strong>Business Hours:</strong> Monday – Friday: 8:00 AM – 5:00
-								PM (Central Time)
+								><br /><strong>Website:</strong>
+								www.premierfederallogistics.com<br /><br /><strong
+									>Business Hours:</strong
+								>
+								Monday – Friday: 8:00 AM – 5:00 PM (Central Time)
 							</div>
 							<div class="annotation">
 								All contact details from Bill's outline — real address, real
@@ -2232,13 +2219,7 @@
 									<strong>Multi-Field Contact Form</strong> — Full Name, Company
 									Name, Email, Phone, Organization Type (dropdown), Services of
 									Interest (dropdown), Project Details, Preferred Contact
-									Method. Submissions to
-									<a
-										href="/cdn-cgi/l/email-protection"
-										class="__cf_email__"
-										data-cfemail="0d64636b624d7d7f686064687f6b6869687f6c6161626a647e79646e7e236e6260"
-										>[email&#160;protected]</a
-									>.
+									Method. Submissions to info@premierfederallogistics.com.
 								</div>
 							</li>
 							<li class="check-item">
@@ -2351,8 +2332,10 @@
 				</div>
 			</section>
 		</div>
+		<!-- /main -->
 
 		<script>
+			// Active nav on scroll
 			const sections = document.querySelectorAll('section[id]');
 			const navLinks = document.querySelectorAll('.nav-link');
 			const observer = new IntersectionObserver(
@@ -2370,6 +2353,55 @@
 				{ rootMargin: '-15% 0px -70% 0px' },
 			);
 			sections.forEach((s) => observer.observe(s));
+
+			// Mobile FAB navigation
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) {
+					closeMenu();
+				} else {
+					openMenu();
+				}
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			// Nav link tap on mobile: close menu, then scroll
+			document.querySelectorAll('.sidebar .nav-link').forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
 		</script>
 	</body>
 </html>

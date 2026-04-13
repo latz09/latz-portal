@@ -29,7 +29,7 @@ export function DaysIndicator({ isPast, isToday, daysUntil, accentColor }) {
 	if (isToday)
 		return (
 			<div className='text-center shrink-0'>
-				<p className='text-2xl font-semibold leading-none text-warning'>!</p>
+				<p className='text-xl font-semibold leading-none text-warning'>!</p>
 				<p className='font-mono text-xs text-warning mt-1'>today</p>
 			</div>
 		);
