@@ -5,6 +5,7 @@ export const FETCH_NOTES_QUERY = `
     type,
     url,
     pinned,
+    sentAt,
     "clientName": client->name,
     "clientSlug": client->slug.current,
     body[] {

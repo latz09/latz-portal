@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { TbEdit, TbCheck, TbX } from 'react-icons/tb';
+import { TbEdit, TbCheck, TbX, TbMailCheck, TbMail } from 'react-icons/tb';
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
 
@@ -14,6 +14,7 @@ const TYPE_COLORS = {
 	task: 'text-teal',
 	link: 'text-warning',
 	asset: 'text-white/40',
+	email: 'text-teal',
 };
 
 const PORTABLE_TEXT_COMPONENTS = {
@@ -80,6 +81,14 @@ const PORTABLE_TEXT_COMPONENTS = {
 		normal: ({ children }) => <p className='mb-2 last:mb-0'>{children}</p>,
 	},
 };
+
+function getSentLabel(sentAt) {
+	if (!sentAt) return null;
+	const days = Math.floor((Date.now() - new Date(sentAt)) / 86_400_000);
+	if (days === 0) return 'Sent today';
+	if (days === 1) return 'Sent yesterday';
+	return `Sent ${days} days ago`;
+}
 
 // ─── Subcomponents ───────────────────────────────────────────────────────────
 
@@ -179,43 +188,93 @@ function NoteBody({ body, open }) {
 	);
 }
 
-function NoteFooter({ onArchiveClick, open }) {
+function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 	if (!open) return null;
+
+	const isEmail = note.type === 'email';
+	const isSent = !!note.sentAt;
+
 	return (
 		<div
-			className='flex justify-end pt-1 border-t border-white/5 mt-1 group'
+			className='flex items-center justify-between pt-1 border-t border-white/5 mt-1'
 			onClick={(e) => e.stopPropagation()}
 		>
-			<button
-				onClick={onArchiveClick}
-				className='flex items-center gap-1.5 font-mono text-xs text-white/70 hover:text-teal transition-colors py-1.5 px-2'
-			>
-				<TbCheck className='text-sm text-teal group-hover:-translate-y-1 transition duration-300' />
-				Mark complete
-			</button>
+			{/* Sent badge — left side */}
+			<div>
+				{isEmail && isSent && (
+					<span className='flex items-center gap-1.5 font-mono text-xs text-white/60'>
+						<TbMailCheck className='text-base text-teal' />
+						{getSentLabel(note.sentAt)} · awaiting reply
+					</span>
+				)}
+			</div>
+
+			{/* Actions — right side */}
+			<div className='flex items-center gap-1'>
+				{isEmail && !isSent && (
+					<button
+						onClick={onSendClick}
+						disabled={sending}
+						className='flex items-center gap-1.5 font-mono text-xs text-white/70 hover:text-teal disabled:opacity-40 transition-colors py-1.5 px-2'
+					>
+						<TbMail className='text-base text-teal' />
+						{sending ? 'Marking…' : 'Mark sent'}
+					</button>
+				)}
+				<button
+					onClick={onArchiveClick}
+					className='flex items-center gap-1.5 font-mono text-xs text-white/70 hover:text-teal transition-colors py-1.5 px-2 group'
+				>
+					<TbCheck className='text-sm text-teal group-hover:-translate-y-1 transition duration-300' />
+					{isEmail && isSent ? 'Got reply' : 'Mark complete'}
+				</button>
+			</div>
 		</div>
 	);
 }
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-export default function NoteCard({ note, onArchive }) {
+export default function NoteCard({ note, onArchive, onSent }) {
 	const [open, setOpen] = useState(false);
 	const [confirming, setConfirming] = useState(false);
 	const [archiving, setArchiving] = useState(false);
+	const [sending, setSending] = useState(false);
+	const [sentAt, setSentAt] = useState(note.sentAt ?? null);
+
+	const hydratedNote = { ...note, sentAt };
 
 	async function handleConfirm() {
-    setArchiving(true);
-    try {
-        const res = await fetch(`/api/notes/${note._id}/archive`, { method: 'POST' });
-        if (!res.ok) throw new Error('Failed');
-        setConfirming(false);
-        onArchive(note._id);
-    } catch {
-        setArchiving(false);
-        setConfirming(false);
-    }
-}
+		setArchiving(true);
+		try {
+			const res = await fetch(`/api/notes/${note._id}/archive`, {
+				method: 'POST',
+			});
+			if (!res.ok) throw new Error('Failed');
+			setConfirming(false);
+			onArchive(note._id);
+		} catch {
+			setArchiving(false);
+			setConfirming(false);
+		}
+	}
+
+	async function handleSend() {
+		setSending(true);
+		try {
+			const res = await fetch(`/api/notes/${note._id}/send`, {
+				method: 'POST',
+			});
+			if (!res.ok) throw new Error('Failed');
+			const now = new Date().toISOString();
+			setSentAt(now);
+			onSent?.(note._id);
+		} catch {
+			// silent fail
+		} finally {
+			setSending(false);
+		}
+	}
 
 	return (
 		<>
@@ -231,13 +290,19 @@ export default function NoteCard({ note, onArchive }) {
 				className='flex flex-col bg-white/5 hover:bg-white/10 border border-white/10 rounded px-4 py-3 transition-colors gap-2 cursor-pointer'
 				onClick={() => setOpen(!open)}
 			>
-				<NoteHeader note={note} />
+				<NoteHeader note={hydratedNote} />
 				<NoteClientLink
 					clientName={note.clientName}
 					clientSlug={note.clientSlug}
 				/>
 				<NoteBody body={note.body} open={open} />
-				<NoteFooter open={open} onArchiveClick={() => setConfirming(true)} />
+				<NoteFooter
+					note={hydratedNote}
+					open={open}
+					onArchiveClick={() => setConfirming(true)}
+					onSendClick={handleSend}
+					sending={sending}
+				/>
 			</div>
 		</>
 	);

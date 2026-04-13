@@ -1,95 +1,177 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { TbChevronDown, TbPlus } from 'react-icons/tb'
-import NoteCard from './NoteCard'
+import { useState } from 'react';
+import { TbChevronDown, TbPlus } from 'react-icons/tb';
+import NoteCard from './NoteCard';
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function getOldestDays(notes) {
+	if (!notes.length) return 0;
+	const oldest = Math.min(...notes.map((n) => new Date(n.sentAt).getTime()));
+	return Math.floor((Date.now() - oldest) / 86_400_000);
+}
 
 // ─── Subcomponents ───────────────────────────────────────────────────────────
 
 function AddNoteButton({ onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/30 px-2 py-0.5 rounded'
-    >
-      <TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
-      Add Note
-    </button>
-  )
+	return (
+		<button
+			onClick={onClick}
+			className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/30 px-2 py-0.5 rounded'
+		>
+			<TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
+			Add Note
+		</button>
+	);
 }
 
 function EmptyState({ onAdd }) {
-  return (
-    <div className='flex justify-center'>
-      <AddNoteButton onClick={onAdd} />
-    </div>
-  )
+	return (
+		<div className='flex justify-center'>
+			<AddNoteButton onClick={onAdd} />
+		</div>
+	);
 }
 
 function NoteListHeader({ onAdd }) {
-  return (
-    <div className='flex items-center justify-between mb-4 lg:mb-6'>
-      <p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase'>
-        Notes
-      </p>
-      <AddNoteButton onClick={onAdd} />
-    </div>
-  )
+	return (
+		<div className='flex items-center justify-between mb-4 lg:mb-6'>
+			<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase'>
+				Notes
+			</p>
+			<AddNoteButton onClick={onAdd} />
+		</div>
+	);
 }
 
 function ExpandToggle({ expanded, count, onToggle }) {
-  return (
-    <button
-      onClick={onToggle}
-      className='flex items-center gap-2 font-mono text-sm lg:text-base text-white/50 hover:text-white/60 transition-colors pt-1'
-    >
-      <TbChevronDown className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} />
-      {expanded ? 'Show less' : `${count} more`}
-    </button>
-  )
+	return (
+		<button
+			onClick={onToggle}
+			className='flex items-center gap-2 font-mono text-sm lg:text-base text-white/50 hover:text-white/60 transition-colors pt-1'
+		>
+			<TbChevronDown
+				className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+			/>
+			{expanded ? 'Show less' : `${count} more`}
+		</button>
+	);
+}
+
+function AwaitingReplies({ notes, onArchive }) {
+	const [open, setOpen] = useState(false);
+	if (!notes.length) return null;
+
+	const oldestDays = getOldestDays(notes);
+	const oldestLabel =
+		oldestDays === 0
+			? 'today'
+			: oldestDays === 1
+				? '1 day ago'
+				: `${oldestDays} days ago`;
+
+	return (
+		<div className='mt-6 border-t border-white/10 pt-6'>
+			<button
+				onClick={() => setOpen(!open)}
+				className='flex items-center justify-between w-full mb-4 group'
+			>
+				<div className='flex items-center gap-3'>
+					<p className='font-mono text-xs lg:text-base text-white/50 tracking-widest uppercase'>
+						Awaiting Reply
+					</p>
+					<span className='font-mono text-xs bg-dark text-teal border border-teal/50 rounded-full px-2 py-0.5'>
+						{notes.length}
+					</span>
+					{!open && (
+						<span className='font-mono text-xs text-white/30'>
+							oldest {oldestLabel}
+						</span>
+					)}
+				</div>
+				<TbChevronDown
+					className={`text-white/30 group-hover:text-white/50 transition-all duration-200 ${open ? 'rotate-180' : ''}`}
+				/>
+			</button>
+
+			{open && (
+				<div className='flex flex-col gap-2'>
+					{notes.map((note) => (
+						<NoteCard key={note._id} note={note} onArchive={onArchive} />
+					))}
+				</div>
+			)}
+		</div>
+	);
 }
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function NoteList({ notes: initialNotes = [] }) {
-  const [notes, setNotes]     = useState(initialNotes)
-  const [expanded, setExpanded] = useState(false)
+	const [notes, setNotes] = useState(initialNotes);
+	const [expanded, setExpanded] = useState(false);
 
-  function handleAddNote() {
-    window.open('https://latz-portal.sanity.studio/structure/note', '_blank')
-  }
+	function handleAddNote() {
+		window.open('https://latz-portal.sanity.studio/structure/note', '_blank');
+	}
 
-  function handleArchive(id) {
-    setNotes(prev => prev.filter(n => n._id !== id))
-  }
+	function handleArchive(id) {
+		setNotes((prev) => prev.filter((n) => n._id !== id));
+	}
 
-  const first = notes[0]
-  const rest  = notes.slice(1)
+	function handleSent(id) {
+		setNotes((prev) =>
+			prev.map((n) =>
+				n._id === id ? { ...n, sentAt: new Date().toISOString() } : n,
+			),
+		);
+	}
 
-  if (notes.length === 0) {
-    return (
-      <div className='mb-12'>
-        <EmptyState onAdd={handleAddNote} />
-      </div>
-    )
-  }
+	const active = notes.filter((n) => !(n.type === 'email' && n.sentAt));
+	const awaiting = notes.filter((n) => n.type === 'email' && n.sentAt);
 
-  return (
-    <div className='mb-12'>
-      <NoteListHeader onAdd={handleAddNote} />
-      <div className='flex flex-col gap-2'>
-        <NoteCard note={first} onArchive={handleArchive} />
-        {expanded && rest.map(note => (
-          <NoteCard key={note._id} note={note} onArchive={handleArchive} />
-        ))}
-        {rest.length > 0 && (
-          <ExpandToggle
-            expanded={expanded}
-            count={rest.length}
-            onToggle={() => setExpanded(!expanded)}
-          />
-        )}
-      </div>
-    </div>
-  )
+	const first = active[0];
+	const rest = active.slice(1);
+
+	if (notes.length === 0) {
+		return (
+			<div className='mb-12'>
+				<EmptyState onAdd={handleAddNote} />
+			</div>
+		);
+	}
+
+	return (
+		<div className='mb-12'>
+			<NoteListHeader onAdd={handleAddNote} />
+			<div className='flex flex-col gap-2'>
+				{first && (
+					<NoteCard
+						note={first}
+						onArchive={handleArchive}
+						onSent={handleSent}
+					/>
+				)}
+				{expanded &&
+					rest.map((note) => (
+						<NoteCard
+							key={note._id}
+							note={note}
+							onArchive={handleArchive}
+							onSent={handleSent}
+						/>
+					))}
+				{rest.length > 0 && (
+					<ExpandToggle
+						expanded={expanded}
+						count={rest.length}
+						onToggle={() => setExpanded(!expanded)}
+					/>
+				)}
+			</div>
+
+			<AwaitingReplies notes={awaiting} onArchive={handleArchive} />
+		</div>
+	);
 }
