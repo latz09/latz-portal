@@ -16,10 +16,13 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
         audience
       },
       deadlines[] | order(date asc) {
+        _key,
         title,
         description,
         date,
-        audience
+        audience,
+        completed,
+        completedAt
       },
       inspiration[] {
         "url": image.asset->url,

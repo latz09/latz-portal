@@ -4,7 +4,8 @@ export const FETCH_PROJECT_QUERY = `
     name,
     "slug": slug.current,
     "project": projects[slug.current == $projectSlug][0] {
-      name,
+      _key,
+       name,
       "slug": slug.current,
       status,
       month,
@@ -19,10 +20,13 @@ export const FETCH_PROJECT_QUERY = `
         audience
       },
       deadlines[] | order(date asc) {
+        _key,
         title,
         description,
         date,
-        audience
+        audience,
+        completed,
+        completedAt
       },
       inspiration[] {
         "url": image.asset->url,

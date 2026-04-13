@@ -12,7 +12,7 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 		client.projects.forEach((project) => {
 			project.deadlines?.forEach((d) => {
 				const status = getDeadlineStatus(d.date);
-				if (status.isPast || status.isUpcoming) {
+				if (!d.completed && (status.isPast || status.isUpcoming)) {
 					deadlines.push({
 						...d,
 						clientName: client.name,

@@ -13,10 +13,13 @@ export const FETCH_CLIENTS_QUERY = `
       month,
       year,
       "deadlines": deadlines[] | order(date asc) {
+        _key,
         title,
         date,
         description,
-        audience
+        audience,
+        completed,
+        completedAt
       }
     }
   }
