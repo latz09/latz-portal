@@ -16,7 +16,7 @@ export default async function Home() {
 		<main className='max-w-3xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
 			<PortalPageHeader
 				variant='internal'
-				label='Latz Web Design'
+				label='All Active Projects - Latz Web Design'
 				title='Studio Latz'
 			/>
 			<div className='flex gap-3 mb-12'>

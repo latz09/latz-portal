@@ -35,7 +35,9 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 			<p
 				className={` ${accentColor} font-mono text-sm lg:text-base tracking-widest uppercase mb-4`}
 			>
-				Upcoming milestones
+				{variant === 'designer'
+					? 'Upcoming design milestones'
+					: 'All upcoming milestones'}
 			</p>
 			<div className='flex flex-col gap-5 lg:pl-4'>
 				{deadlines.map((d, i) => (

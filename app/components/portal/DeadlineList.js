@@ -77,9 +77,9 @@ export default function DeadlineList({
 
 	return (
 		<div className='mt-12'>
-			<p className='font-mono text-xs lg:text-base tracking-widest uppercase mb-4 text-warning'>
-				Upcoming milestones
-			</p>
+		<p className='font-mono text-xs lg:text-base tracking-widest uppercase mb-4 text-warning'>
+    {variant === 'designer' ? 'Upcoming design milestones' : 'All upcoming milestones'}
+</p>
 			<div className='flex flex-col gap-3'>
 				{active.map((d, i) => {
 					const { isPast, isToday, daysUntil, date } = getDeadlineStatus(
