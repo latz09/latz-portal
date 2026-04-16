@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="robots" content="noindex" />
-		<title>Call Prep — Premier Federal Logistics | Latz Web Design</title>
+		<title>Call Complete — Premier Federal Logistics | Latz Web Design</title>
 		<link
 			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
 			rel="stylesheet"
@@ -133,6 +133,10 @@
 				color: var(--orange);
 			}
 
+			.meta-value.success {
+				color: var(--green);
+			}
+
 			.content-area {
 				padding: 24px 32px;
 				max-width: 1800px;
@@ -237,6 +241,12 @@
 				border-color: rgba(24, 161, 173, 0.3);
 			}
 
+			.pricing-tier.accepted {
+				background: rgba(22, 163, 74, 0.08);
+				border-color: rgba(22, 163, 74, 0.3);
+				color: var(--green);
+			}
+
 			.pricing-tier.floor {
 				background: rgba(234, 88, 12, 0.08);
 				border-color: rgba(234, 88, 12, 0.3);
@@ -277,6 +287,11 @@
 			.pricing-tier.quoted .pricing-note {
 				background: var(--primary-dim);
 				color: var(--primary);
+			}
+
+			.pricing-tier.accepted .pricing-note {
+				background: var(--green-light);
+				color: var(--green);
 			}
 
 			.pricing-tier.floor .pricing-note {
@@ -614,45 +629,299 @@
 				font-size: 16px;
 			}
 
+			.call-complete-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.95);
+				z-index: 2000;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				backdrop-filter: blur(8px);
+			}
+
+			.call-complete-content {
+				background: var(--card-bg);
+				border-radius: 16px;
+				padding: 32px 40px;
+				max-width: 900px;
+				max-height: 90vh;
+				overflow-y: auto;
+				box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+				position: relative;
+				margin: 20px;
+			}
+
+			.call-complete-header {
+				display: flex;
+				align-items: center;
+				gap: 16px;
+				margin-bottom: 24px;
+				padding-bottom: 20px;
+				border-bottom: 2px solid var(--green-border);
+			}
+
+			.call-complete-icon {
+				width: 48px;
+				height: 48px;
+				background: var(--green);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24px;
+				color: white;
+			}
+
+			.call-complete-title {
+				font-family: 'Fraunces', serif;
+				font-size: 32px;
+				font-weight: 700;
+				color: var(--green);
+				margin: 0;
+			}
+
+			.call-complete-close {
+				position: absolute;
+				top: 24px;
+				right: 24px;
+				background: none;
+				border: none;
+				font-size: 28px;
+				color: var(--gray-400);
+				cursor: pointer;
+				padding: 8px;
+				border-radius: 8px;
+				transition: all 0.2s ease;
+			}
+
+			.call-complete-close:hover {
+				background: var(--gray-100);
+				color: var(--gray-600);
+			}
+
+			.call-notes {
+				margin-bottom: 24px;
+			}
+
+			.call-notes h3 {
+				font-family: 'DM Mono', monospace;
+				font-size: 12px;
+				color: var(--primary);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 12px;
+			}
+
+			.call-notes-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 20px;
+				margin-bottom: 24px;
+			}
+
+			.call-notes-section {
+				background: var(--gray-50);
+				border-radius: 8px;
+				padding: 16px;
+				border-left: 3px solid var(--primary);
+			}
+
+			.call-notes-section h4 {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-500);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.call-notes-section p {
+				font-size: 15px;
+				color: var(--gray-700);
+				line-height: 1.5;
+				margin-bottom: 8px;
+			}
+
+			.call-notes-section p:last-child {
+				margin-bottom: 0;
+			}
+
+			.call-success {
+				background: var(--green-light);
+				border: 1px solid var(--green-border);
+				border-radius: 8px;
+				padding: 20px;
+				text-align: center;
+				margin-bottom: 20px;
+			}
+
+			.call-success h3 {
+				font-family: 'Fraunces', serif;
+				font-size: 24px;
+				color: var(--green);
+				margin-bottom: 8px;
+			}
+
+			.call-success p {
+				font-size: 16px;
+				color: var(--gray-700);
+			}
+
 			@media (max-width: 768px) {
 				.content-area {
 					padding: 16px;
 				}
-
 				.context-grid {
 					grid-template-columns: 1fr;
 				}
-
 				.seed-plants {
 					grid-template-columns: 1fr;
 				}
-
 				.pricing-tiers {
 					grid-template-columns: 1fr;
 				}
-
 				.scenario-bullets-visible ul {
 					grid-template-columns: 1fr;
 				}
-
 				.scenarios-grid {
 					grid-template-columns: 1fr !important;
 				}
-
 				.meta-strip {
 					flex-direction: column;
 					align-items: flex-start;
 					gap: 8px;
 				}
-
 				.modal-content {
 					margin: 10px;
 					padding: 20px;
+				}
+				.call-complete-content {
+					margin: 10px;
+					padding: 20px;
+				}
+				.call-notes-grid {
+					grid-template-columns: 1fr;
 				}
 			}
 		</style>
 	</head>
 	<body>
+		<div class="call-complete-overlay" id="callCompleteOverlay">
+			<div class="call-complete-content">
+				<button class="call-complete-close" onclick="closeCallComplete()">
+					&times;
+				</button>
+
+				<div class="call-complete-header">
+					<div class="call-complete-icon">✓</div>
+					<h1 class="call-complete-title">Call Complete</h1>
+				</div>
+
+				<div class="call-success">
+					<h3>Contract Signed — $5,000</h3>
+					<p>Full package accepted: 6 main pages + 3 service landing pages</p>
+				</div>
+
+				<div class="call-notes">
+					<h3>Call Notes</h3>
+
+					<div class="call-notes-grid">
+						<div class="call-notes-section">
+							<h4>What Closed It</h4>
+							<p>
+								The wireframe sold it completely. Both Bill and Tracy loved
+								seeing their actual content mapped into the design.
+							</p>
+							<p>
+								Started at $1,500 budget, closed at $5,000 — they're willing to
+								invest in quality.
+							</p>
+						</div>
+
+						<div class="call-notes-section">
+							<h4>Key Contacts</h4>
+							<p>
+								Tracy (wife/business partner) will be primary contact for design
+								decisions moving forward.
+							</p>
+							<p>
+								Bill's email stays copied on everything — both will see
+								communications.
+							</p>
+						</div>
+
+						<div class="call-notes-section">
+							<h4>Timeline & Payment</h4>
+							<p>2-2.5 months delivery (aiming closer to 2 months).</p>
+							<p>
+								Payment delayed 7-14 days due to new business debit card. Will
+								send proposal and invoice, they'll pay when card arrives.
+							</p>
+						</div>
+
+						<div class="call-notes-section">
+							<h4>Additional Opportunities</h4>
+							<p>
+								Interested in headshots and potentially branding photo shoot
+								(equipment/trucks).
+							</p>
+							<p>
+								Need to coordinate with Meghan/Theresa Hill for travel to
+								Wausau.
+							</p>
+						</div>
+
+						<div class="call-notes-section">
+							<h4>Business Updates</h4>
+							<p>
+								Veteran-owned and woman-owned certifications expected within a
+								few weeks, should be ready before launch.
+							</p>
+						</div>
+
+						<div class="call-notes-section">
+							<h4>Client Trust Level</h4>
+							<p>
+								High trust established. Bill mentioned government bureaucracy
+								frustrations (6 form submissions for approval).
+							</p>
+							<p>Appreciates working with a straightforward company.</p>
+						</div>
+					</div>
+				</div>
+
+				<div
+					style="
+						text-align: center;
+						margin-top: 24px;
+						padding-top: 20px;
+						border-top: 1px solid var(--gray-200);
+					"
+				>
+					<button
+						onclick="closeCallComplete()"
+						style="
+							background: var(--primary);
+							color: white;
+							border: none;
+							padding: 12px 24px;
+							border-radius: 6px;
+							font-family: 'DM Sans', sans-serif;
+							font-size: 14px;
+							font-weight: 500;
+							cursor: pointer;
+						"
+					>
+						View Call Prep Dashboard
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<div class="main-content">
 			<div class="page-header">
 				<div class="header-overline">Call Prep Dashboard</div>
@@ -672,16 +941,16 @@
 						<span class="meta-value">Premier Federal Logistics</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">Call Time</span>
-						<span class="meta-value warning">Morning/Early Afternoon</span>
+						<span class="meta-label">Result</span>
+						<span class="meta-value success">$5,000 Signed</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">Stage</span>
-						<span class="meta-value">Quote Sent, Awaiting Close</span>
+						<span class="meta-label">Package</span>
+						<span class="meta-value">Full Bundle</span>
 					</div>
 					<div class="meta-item">
-						<span class="meta-label">Floor</span>
-						<span class="meta-value">$4,200</span>
+						<span class="meta-label">Timeline</span>
+						<span class="meta-value">2-2.5 months</span>
 					</div>
 				</div>
 			</div>
@@ -724,12 +993,12 @@
 				<div class="pricing-ladder">
 					<div class="pricing-ladder-title">Pricing Structure</div>
 					<div class="pricing-tiers">
-						<div class="pricing-tier quoted">
+						<div class="pricing-tier accepted">
 							<div class="pricing-amount">$5,000</div>
 							<div class="pricing-description">
 								Full bundle<br />(6 + 3 service pages)
 							</div>
-							<div class="pricing-note">quoted</div>
+							<div class="pricing-note">ACCEPTED</div>
 						</div>
 
 						<div class="pricing-tier">
@@ -965,7 +1234,7 @@
 					<div class="seed-plant">
 						<h4>The Monthly Fee Math</h4>
 						<p>
-							"Most agencies charge $100-300/mo. You pay Vercel $20 directly."
+							"Most agencies charge $100–300/mo. You pay Vercel $20 directly."
 						</p>
 					</div>
 				</div>
@@ -1017,7 +1286,6 @@
 		</div>
 
 		<script>
-			// Scenario scripts data
 			const scenarios = {
 				'pricing-1': {
 					title: '$5,000 is too much — First Response',
@@ -1042,7 +1310,7 @@
 				hesitant: {
 					title: 'Goes quiet / seems hesitant — Drop the seeds',
 					script:
-						"<p><strong>Option 1 — Procurement Angle:</strong><br>\"One thing worth keeping in mind — you're not selling to consumers. Procurement officers and prime contractors are vetting you before they ever pick up the phone. If this site convinces one of them that Premier Federal Logistics is the real deal, it's already paid for itself. That's not a stretch in your industry — that's just how it works.\"</p><p><strong>Option 2 — Monthly Fee Math:</strong><br>\"Most agencies charge $100-$300 a month just to keep your site running. You're paying Vercel $20 directly. The difference between $1,500 and $4,500 pays for itself in a couple years of not paying those fees — and after that you're ahead every single month.\"</p>",
+						"<p><strong>Option 1 — Procurement Angle:</strong><br>\"One thing worth keeping in mind — you're not selling to consumers. Procurement officers and prime contractors are vetting you before they ever pick up the phone. If this site convinces one of them that Premier Federal Logistics is the real deal, it's already paid for itself. That's not a stretch in your industry — that's just how it works.\"</p><p><strong>Option 2 — Monthly Fee Math:</strong><br>\"Most agencies charge $100–$300 a month just to keep your site running. You're paying Vercel $20 directly. The difference between $1,500 and $4,500 pays for itself in a couple years of not paying those fees — and after that you're ahead every single month.\"</p>",
 				},
 				logo: {
 					title: 'What about the logo?',
@@ -1089,7 +1357,11 @@
 				document.body.style.overflow = '';
 			}
 
-			// Add click listeners to scenario cards
+			function closeCallComplete() {
+				const overlay = document.getElementById('callCompleteOverlay');
+				overlay.style.display = 'none';
+			}
+
 			document.addEventListener('DOMContentLoaded', function () {
 				const scenarioCards = document.querySelectorAll(
 					'.scenario-card[data-scenario]',
@@ -1101,7 +1373,6 @@
 					});
 				});
 
-				// Close modal when clicking outside
 				const modal = document.getElementById('scriptModal');
 				modal.addEventListener('click', function (e) {
 					if (e.target === modal) {
@@ -1109,7 +1380,6 @@
 					}
 				});
 
-				// Close modal on Escape key
 				document.addEventListener('keydown', function (e) {
 					if (e.key === 'Escape') {
 						closeModal();
