@@ -8,8 +8,8 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 	const accentColor = variant === 'designer' ? 'text-purple' : 'text-teal';
 
 	const deadlines = [];
-	clients.forEach((client) => {
-		client.projects.forEach((project) => {
+	clients?.forEach((client) => {
+		client.projects?.forEach((project) => {
 			project.deadlines?.forEach((d) => {
 				const status = getDeadlineStatus(d.date);
 				if (!d.completed && (status.isPast || status.isUpcoming)) {
