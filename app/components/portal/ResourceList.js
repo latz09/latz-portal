@@ -1,5 +1,4 @@
-import { TbBrandNotion, TbBrandGoogleDrive, TbVideo, TbLink } from 'react-icons/tb'
-
+import { TbBrandNotion, TbBrandGoogleDrive, TbBrandPinterest, TbVideo, TbLink } from 'react-icons/tb'
 const variantStyles = {
   internal: { icon: 'text-teal', badge: 'bg-teal/20 text-teal' },
   designer: { icon: 'text-purple', badge: 'bg-purple/20 text-purple' },
@@ -16,6 +15,7 @@ const typeIcon = {
   'google-drive': TbBrandGoogleDrive,
   'notion':       TbBrandNotion,
   'video':        TbVideo,
+  'pinterest':    TbBrandPinterest,
   'other':        TbLink,
 }
 
