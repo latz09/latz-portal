@@ -1,29 +1,376 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>The Glass Room — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #092F33;
+				--primary-mid: #0e4248;
+				--accent: #AF5031;
+				--accent-light: rgba(175, 80, 49, 0.08);
+				--sand: #E4CBA9;
+				--sand-light: #f3ebe0;
+				--light: #FAF6F0;
+				--light-mid: #EDE5D8;
+				--moss: #4B5B34;
+				--moss-light: rgba(75, 91, 52, 0.1);
+				--sky: #7FC7CC;
+				--cherry: #FDA8A5;
+				--wine: #980204;
+				--sunshine: #EA8913;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(9, 47, 51, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(9, 47, 51, 0.04) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--primary);
+			}
+			.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--primary); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; border-right: 3px solid var(--primary-mid); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); }
+			.sidebar-brand { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+			.sidebar-lwd { font-family: 'DM Sans'; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+			.sidebar-client { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: var(--sand); line-height: 1.2; margin-bottom: 4px; }
+			.sidebar-doctype { font-family: 'DM Sans'; font-size: 10px; color: rgba(228,203,169,0.5); letter-spacing: 0.08em; margin-bottom: 12px; }
+			.status-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(75,91,52,0.2); border: 1px solid rgba(75,91,52,0.4); border-radius: 4px; padding: 4px 10px; }
+			.status-dot { width: 5px; height: 5px; background: #6a8a4f; border-radius: 50%; animation: pulse 2.5s infinite; }
+			@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+			.status-pill span { font-family: 'DM Sans'; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #6a8a4f; }
+			.sidebar-nav { padding: 12px 8px; flex: 1; }
+			.nav-group-label { font-family: 'DM Sans'; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 12px 10px 5px; }
+			.nav-link { display: flex; align-items: center; gap: 9px; padding: 7px 10px; color: rgba(228,203,169,0.5); text-decoration: none; font-family: 'DM Sans'; font-size: 12.5px; font-weight: 400; border-radius: 5px; transition: all 0.12s; border-left: 2px solid transparent; margin-bottom: 1px; }
+			.nav-link:hover { color: var(--sand); background: rgba(255,255,255,0.05); }
+			.nav-link.active { color: var(--sand); background: rgba(175,80,49,0.15); border-left-color: var(--accent); font-weight: 500; }
+			.nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; }
+			.sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.06); font-family: 'DM Sans'; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.05em; line-height: 2; }
+			.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1); }
+			.sidebar-overlay.visible { opacity: 1; pointer-events: auto; }
+			.mobile-fab { display: none; position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; background: var(--accent); color: var(--white); border: none; border-radius: 50%; font-size: 22px; cursor: pointer; z-index: 300; box-shadow: 0 4px 16px rgba(0,0,0,0.25); align-items: center; justify-content: center; }
+			.mobile-fab:active { transform: scale(0.92); }
+			.main { margin-left: var(--sidebar-w); min-height: 100vh; padding: 48px 44px 100px; }
+			.doc-header { margin-bottom: 52px; }
+			.doc-overline { font-family: 'Architects Daughter', cursive; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+			.doc-title { font-family: 'Fraunces', serif; font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 6px; line-height: 1.15; }
+			.doc-sub { font-family: 'DM Sans'; font-size: 14px; color: rgba(9,47,51,0.65); font-weight: 400; }
+			.doc-meta-strip { display: flex; gap: 0; margin-top: 24px; border: 1.5px solid rgba(9,47,51,0.2); border-radius: 6px; overflow: hidden; width: fit-content; background: rgba(255,255,255,0.55); }
+			.meta-item { padding: 10px 20px; border-right: 1px solid rgba(9,47,51,0.12); display: flex; flex-direction: column; gap: 3px; }
+			.meta-item:last-child { border-right: none; }
+			.meta-label { font-family: 'Architects Daughter', cursive; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(9,47,51,0.5); }
+			.meta-value { font-family: 'DM Sans'; font-size: 12px; font-weight: 500; color: var(--primary); }
+			.meta-value.warn { color: var(--accent); }
+			.meta-value.ok { color: var(--moss); }
+			.wf-section { margin-bottom: 64px; scroll-margin-top: 32px; }
+			.section-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--primary); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+			.section-label::after { content: ''; flex: 1; height: 1px; background: var(--primary); opacity: 0.2; }
+			.section-num { background: var(--primary); color: var(--sand); font-family: 'Architects Daughter', cursive; font-size: 11px; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+			.wireframe-card { background: rgba(255,255,255,0.7); border: 2px solid var(--primary); border-radius: 6px; box-shadow: 5px 5px 0 rgba(9,47,51,0.1); overflow: hidden; }
+			.wf-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 22px; border-bottom: 2px solid var(--primary); background: var(--white); }
+			.wf-nav-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--primary); }
+			.wf-nav-links { display: flex; gap: 14px; align-items: center; font-family: 'DM Sans'; font-size: 11.5px; color: rgba(9,47,51,0.55); flex-wrap: wrap; }
+			.wf-nav-links span.active { color: var(--primary); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+			.wf-body { padding: 28px 28px 36px; }
+			.annotation { font-family: 'Architects Daughter', cursive; font-size: 12px; color: var(--primary); line-height: 1.5; margin-top: 10px; padding: 8px 14px; background: rgba(9,47,51,0.05); border-left: 3px solid rgba(9,47,51,0.25); border-radius: 0 4px 4px 0; }
+			.decision-box { border: 2px dashed var(--accent); border-radius: 6px; padding: 14px 16px; margin: 14px 0; background: rgba(175,80,49,0.04); }
+			.decision-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+			.decision-label::before { content: '⚑'; }
+			.cms-tag { font-family: 'Architects Daughter', cursive; font-size: 10px; color: var(--moss); border: 1px solid var(--moss); border-radius: 3px; padding: 2px 8px; display: inline-block; white-space: nowrap; }
+			.wf-block { border: 2px dashed rgba(9,47,51,0.18); border-radius: 6px; padding: 18px 16px; margin-bottom: 16px; background: rgba(228,203,169,0.12); }
+			.wf-block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 8px; flex-wrap: wrap; }
+			.wf-heading-lg { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+			.wf-heading-md { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+			.wf-heading-sm { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+			.wf-subtext { font-family: 'DM Sans'; font-size: 14px; color: rgba(9,47,51,0.7); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+			.wf-body-text { font-family: 'DM Sans'; font-size: 13px; color: rgba(9,47,51,0.78); line-height: 1.6; margin-bottom: 10px; }
+			.section-divider { border: none; border-top: 1px dashed rgba(9,47,51,0.18); margin: 20px 0; }
+			.wf-cta { display: inline-block; background: var(--primary); color: var(--sand); font-family: 'DM Sans'; font-size: 13px; font-weight: 600; padding: 9px 22px; border-radius: 4px; margin-top: 8px; }
+			.wf-cta.accent { background: var(--accent); color: var(--white); }
+			.wf-footer { border-top: 2px solid var(--primary); padding: 14px 22px; background: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+			.wf-footer span { font-family: 'DM Sans'; font-size: 11px; color: rgba(228,203,169,0.45); }
+			.img-placeholder { background: rgba(9,47,51,0.06); border: 2px dashed rgba(9,47,51,0.2); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
+			.img-placeholder .img-icon { font-family: 'Architects Daughter', cursive; font-size: 28px; opacity: 0.35; color: var(--primary); }
+			.img-placeholder .img-label { font-family: 'Architects Daughter', cursive; font-size: 12px; color: rgba(9,47,51,0.5); text-align: center; line-height: 1.6; }
+			.quick-links { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 14px 0; }
+			.quick-link-card { border: 2px dashed rgba(9,47,51,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; background: rgba(255,255,255,0.5); }
+			.quick-link-icon { font-size: 20px; margin-bottom: 6px; }
+			.quick-link-label { font-family: 'Fraunces', serif; font-size: 12px; font-weight: 700; color: var(--primary); }
+			.option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+			.option-card { border: 2px dashed rgba(9,47,51,0.2); border-radius: 6px; padding: 14px; background: rgba(255,255,255,0.5); }
+			.option-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+			.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+			.menu-item { border: 1.5px dashed rgba(9,47,51,0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255,255,255,0.6); display: flex; justify-content: space-between; align-items: center; }
+			.menu-item-name { font-family: 'DM Sans'; font-size: 13px; font-weight: 600; color: var(--primary); }
+			.menu-item-price { font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(9,47,51,0.55); }
+			.event-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+			.event-card { border: 1.5px dashed rgba(9,47,51,0.2); border-radius: 6px; padding: 14px 16px; background: rgba(255,255,255,0.6); display: flex; gap: 16px; align-items: center; }
+			.event-date-badge { background: var(--primary); color: var(--sand); border-radius: 6px; padding: 8px 12px; text-align: center; min-width: 56px; flex-shrink: 0; }
+			.event-date-badge .month { font-family: 'DM Sans'; font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
+			.event-date-badge .day { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; }
+			.event-info { flex: 1; }
+			.event-title { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+			.event-meta { font-family: 'DM Sans'; font-size: 12px; color: rgba(9,47,51,0.6); }
+			.event-seats { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 3px 8px; white-space: nowrap; }
+			.gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 10px; }
+			.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+			.form-field { border: 1.5px solid rgba(9,47,51,0.18); border-radius: 5px; padding: 10px 12px; background: var(--white); }
+			.form-field-label { font-family: 'Architects Daughter', cursive; font-size: 10px; color: rgba(9,47,51,0.5); margin-bottom: 2px; }
+			.form-field-value { font-family: 'DM Sans'; font-size: 13px; color: rgba(9,47,51,0.4); }
+			.form-field.full { grid-column: 1 / -1; }
+			.bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+			.bio-card { border: 1.5px dashed rgba(9,47,51,0.2); border-radius: 5px; padding: 14px; background: rgba(255,255,255,0.6); }
+			.bio-name { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 3px; }
+			.bio-role { font-family: 'DM Sans'; font-size: 11px; color: rgba(9,47,51,0.6); margin-bottom: 6px; }
+			.sitemap { display: flex; align-items: flex-start; gap: 0; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+			.sitemap-node { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+			.sitemap-box { background: var(--primary); color: var(--sand); font-family: 'Fraunces', serif; font-size: 11px; font-weight: 700; padding: 8px 14px; border-radius: 4px; text-align: center; min-width: 100px; }
+			.sitemap-box.secondary { background: rgba(9,47,51,0.07); color: var(--primary); border: 1.5px dashed var(--primary); }
+			.sitemap-box.hero-feature { background: var(--accent); color: var(--white); border: none; }
+			.sitemap-arrow { font-family: 'Architects Daughter', cursive; font-size: 18px; color: rgba(9,47,51,0.3); padding: 0 6px; align-self: center; margin-top: -14px; }
+			.checklist { list-style: none; padding: 0; }
+			.check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px dashed rgba(9,47,51,0.14); font-family: 'DM Sans'; font-size: 13px; color: var(--primary); }
+			.check-item:last-child { border-bottom: none; }
+			.check-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+			.flow-steps { display: flex; gap: 0; align-items: stretch; margin-top: 12px; flex-wrap: wrap; }
+			.flow-step { flex: 1; min-width: 120px; border: 1.5px dashed rgba(9,47,51,0.2); border-radius: 6px; padding: 12px; background: rgba(255,255,255,0.6); text-align: center; }
+			.flow-step-num { font-family: 'Architects Daughter', cursive; font-size: 18px; color: var(--accent); margin-bottom: 4px; }
+			.flow-step-label { font-family: 'DM Sans'; font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 2px; }
+			.flow-step-desc { font-family: 'DM Sans'; font-size: 11px; color: rgba(9,47,51,0.6); }
+			.flow-arrow { font-family: 'Architects Daughter', cursive; font-size: 20px; color: rgba(9,47,51,0.25); display: flex; align-items: center; padding: 0 6px; }
+			.landing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 12px; }
+			.landing-card { border: 2px dashed rgba(9,47,51,0.2); border-radius: 6px; padding: 16px 14px; background: rgba(255,255,255,0.5); text-align: center; }
+			.landing-card-icon { font-size: 24px; margin-bottom: 8px; }
+			.landing-card-title { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+			.landing-card-slug { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(9,47,51,0.5); margin-bottom: 6px; }
+			.landing-card-desc { font-family: 'DM Sans'; font-size: 11px; color: rgba(9,47,51,0.65); line-height: 1.4; }
+			.filter-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+			.filter-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: rgba(9,47,51,0.5); }
+			.filter-pill { font-family: 'DM Sans'; font-size: 12px; border: 1.5px solid rgba(9,47,51,0.22); border-radius: 20px; padding: 3px 12px; color: rgba(9,47,51,0.6); }
+			.filter-pill.active { border-color: var(--primary); color: var(--primary); font-weight: 600; }
+			@media (max-width: 960px) { :root { --sidebar-w: 200px; } .main { padding: 32px 24px 80px; } .quick-links,.gallery-grid,.landing-grid { grid-template-columns: repeat(2,1fr); } }
+			@media (max-width: 680px) { .sidebar { transform: translateX(-100%); } .sidebar.mobile-open { transform: translateX(0); } .mobile-fab { display: flex; } .sidebar-overlay { display: block; } .main { margin-left: 0; padding: 24px 16px 80px; } .doc-title { font-size: 28px; } .doc-meta-strip { flex-direction: column; width: 100%; } .meta-item { border-right: none; border-bottom: 1px solid rgba(9,47,51,0.12); } .meta-item:last-child { border-bottom: none; } .wf-nav-links { display: none; } .wf-nav { padding: 10px 14px; } .wf-body { padding: 20px 16px 28px; } .option-grid,.bio-grid,.form-grid,.menu-grid { grid-template-columns: 1fr; } .quick-links { grid-template-columns: 1fr 1fr; } .gallery-grid { grid-template-columns: 1fr 1fr; } .landing-grid { grid-template-columns: 1fr; } .sitemap { flex-direction: column; align-items: center; } .sitemap-arrow { transform: rotate(90deg); margin-top: 0; padding: 4px 0; } .flow-steps { flex-direction: column; } .flow-arrow { transform: rotate(90deg); justify-content: center; padding: 4px 0; } .event-card { flex-direction: column; align-items: flex-start; } .wf-footer { flex-direction: column; text-align: center; gap: 4px; } .check-item { font-size: 12px; gap: 8px; } }
+		</style>
+	</head>
+	<body>
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">The Glass Room</div>
+				<div class="sidebar-doctype">Site Wireframes</div>
+				<div class="status-pill"><div class="status-dot"></div><span>Client Ready</span></div>
+			</div>
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">🎨</span> About</a>
+				<a href="#menu" class="nav-link"><span class="nav-icon">☕</span> Menu</a>
+				<a href="#classes" class="nav-link"><span class="nav-icon">🔥</span> Classes & Events</a>
+				<a href="#gallery" class="nav-link"><span class="nav-icon">🖼️</span> Gallery</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact / Visit</a>
+				<a href="#events" class="nav-link"><span class="nav-icon">🎉</span> Private Events</a>
+				<div class="nav-group-label">Summary</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> What's Locked In</a>
+			</div>
+			<div class="sidebar-footer">Latz Web Design LLC<br>Stevens Point, WI<br>jordan@latzwebdesign.com<br><br>No fluff. Just results.</div>
+		</nav>
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+		<div class="main">
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content & Structure</div>
+				<div class="doc-title">The Glass Room</div>
+				<div class="doc-sub">Stained Glass Classes · Coffee · Gallery &nbsp;·&nbsp; Appleton, WI</div>
+				<div class="doc-meta-strip">
+					<div class="meta-item"><span class="meta-label">Status</span><span class="meta-value ok">Client Ready</span></div>
+					<div class="meta-item"><span class="meta-label">Pages</span><span class="meta-value">7 core + event landing pages</span></div>
+					<div class="meta-item"><span class="meta-label">Contact</span><span class="meta-value">Samantha Zickert</span></div>
+					<div class="meta-item"><span class="meta-label">Target Live</span><span class="meta-value">Mid-June 2026</span></div>
+					<div class="meta-item"><span class="meta-label">Deposit</span><span class="meta-value" style="color:rgba(9,47,51,0.45);">Pending</span></div>
+				</div>
+			</div>
+			<div class="annotation" style="margin-bottom:40px;font-size:13px;padding:12px 16px">✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.</div>
+
+			<!-- SITEMAP -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label"><span class="section-num">0</span> Site Map</div>
+				<div class="wireframe-card"><div class="wf-body">
+					<div style="text-align:center;margin-bottom:20px"><div class="wf-heading-sm" style="margin-bottom:4px">The Glass Room</div><div class="wf-subtext" style="margin-bottom:0">7 core pages + dedicated private event landing pages · custom CMS for classes, menu, gallery, and contact</div></div>
+					<div class="sitemap" style="gap:6px;align-items:center">
+						<div class="sitemap-node"><div class="sitemap-box">Home<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.7">/</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">About<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.7">/about</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Menu<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.7">/menu</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box hero-feature">Classes<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.9">/classes</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Gallery<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.7">/gallery</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Contact<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.7">/contact</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Private Events<br><span style="font-size:10px;font-family:'DM Sans';font-weight:400;opacity:0.7">/private-events/*</span></div></div>
+					</div>
+					<div class="annotation" style="margin-top:20px">All pages live on the same domain. Nav is consistent across all pages. Logo click returns to Home. Classes is the hero feature — drives booking revenue. Each class gets a dynamic detail page at /classes/[slug]. Private Events has a hub page plus dedicated landing pages per event type (/bachelorette, /birthday, /corporate) — each one is a unique SEO-rankable keyword page.</div>
+				</div></div>
+			</section>
+
+			<!-- HOME -->
+			<section class="wf-section" id="home">
+				<div class="section-label"><span class="section-num">1</span> Home Page — /</div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span class="active">Home</span><span>About</span><span>Menu</span><span>Classes</span><span>Gallery</span><span>Contact</span><span>Private Events</span></div></div>
+					<div class="wf-body">
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Hero — Full Width</div></div><div class="img-placeholder" style="height:200px"><div class="img-icon">✨</div><div class="img-label">Hero image — the concept in one frame<br>Sam's staged photography: stained glass work, café space, warm lighting<br>Pre-launch: staged shots from Sam's studio · Post-launch: real class photos</div></div><div style="margin-top:16px;text-align:center"><div class="wf-heading-lg">Coffee. Glass. Community.</div><div class="wf-subtext">Stained glass classes, handmade art, and the best cup of coffee in Appleton — all under one roof.</div><div class="wf-cta accent">Browse Upcoming Classes →</div></div><div class="annotation">Hero copy is placeholder — Jordan writes final from Sam's drafts. CTA drives to Classes page (the money page). Photo: Sam is a photographer, will stage mock class shots pre-launch in her studio. Real class photos replace them once open.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">What We Do — Three Pillars</div></div><div class="quick-links"><div class="quick-link-card"><div class="quick-link-icon">🎨</div><div class="quick-link-label">Stained Glass Classes</div><div style="font-family:'DM Sans';font-size:11px;color:rgba(9,47,51,0.6);margin-top:4px">Monthly series · Pop-ups · Walk-in craft</div></div><div class="quick-link-card"><div class="quick-link-icon">☕</div><div class="quick-link-label">Coffee & Tea</div><div style="font-family:'DM Sans';font-size:11px;color:rgba(9,47,51,0.6);margin-top:4px">Intimate café · Drinks only · Patio seating</div></div><div class="quick-link-card"><div class="quick-link-icon">🖼️</div><div class="quick-link-label">Gallery & Gifts</div><div style="font-family:'DM Sans';font-size:11px;color:rgba(9,47,51,0.6);margin-top:4px">Finished pieces · Etsy storefront · In-store shop</div></div></div><div class="annotation">Three-pillar overview. Each card links to its respective page. Establishes the concept immediately — this isn't just a café and it isn't just a studio.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Featured Upcoming Classes</div><span class="cms-tag">CMS managed</span></div><div class="event-list"><div class="event-card"><div class="event-date-badge"><div class="month">Jun</div><div class="day">4</div></div><div class="event-info"><div class="event-title">[June Design Name] — Monthly Series</div><div class="event-meta">Wednesdays 7–7:30 PM · 4 weeks · All materials included</div></div><div class="event-seats">5 of 8 left</div></div><div class="event-card"><div class="event-date-badge"><div class="month">Jun</div><div class="day">14</div></div><div class="event-info"><div class="event-title">[Summer Pop-Up Name] — One-Night Workshop</div><div class="event-meta">Saturday 6–9 PM · Single session · Beginner friendly</div></div><div class="event-seats">3 of 8 left</div></div></div><div style="margin-top:12px"><span style="font-family:'DM Sans';font-size:13px;color:var(--primary);font-weight:600">View all upcoming classes →</span></div><div class="annotation">CMS-fed — pulls the next 2–3 upcoming classes automatically. Shows live seat count. Clicks through to class detail page. This is the primary conversion path on the entire site.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Visit Us</div><span class="cms-tag">CMS managed</span></div><div class="wf-body-text">Address, hours, and a brief warm invitation to stop in. Embedded map thumbnail or styled address block. Links to the full Contact page.</div><div class="annotation">Keep it simple — address, hours, "come say hi." The contact page has full detail. Hours are CMS-editable for holiday changes.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ABOUT -->
+			<section class="wf-section" id="about">
+				<div class="section-label"><span class="section-num">2</span> About — /about</div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span>Home</span><span class="active">About</span><span>Menu</span><span>Classes</span><span>Gallery</span><span>Contact</span><span>Private Events</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px"><div class="wf-heading-lg">About The Glass Room</div><div class="wf-subtext">Coffee, glass, and the people behind it.</div></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">The Story</div><span class="cms-tag">CMS managed</span></div><div class="img-placeholder" style="height:140px;margin-bottom:14px"><div class="img-icon">📸</div><div class="img-label">The space — interior shots, glass work, the café<br>Sam's photography · staged pre-launch, real post-launch</div></div><div class="wf-body-text">The Glass Room story — how the idea came together, what the space is, why Appleton. An operating coffee shop with stained glass classes in the back room, a gallery and gift shop in the front, and a community space for people who want to make something with their hands. Sam writes the first draft, Jordan rewrites for web.</div><div class="annotation">Jordan writes from Sam's drafts — pull her voice, then rewrite for clarity + conversion. Consider bringing Alyssa in for polish on this page specifically. CMS-editable so they can update the story as the business evolves.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Meet Sam & Derek</div><span class="cms-tag">CMS managed</span></div><div class="bio-grid"><div class="bio-card"><div class="img-placeholder" style="height:100px;margin-bottom:10px"><div class="img-label">Sam portrait — photographer + nurse + co-instructor</div></div><div class="bio-name">Samantha Zickert</div><div class="bio-role">Co-Founder · Operations · Co-Instructor · Photographer</div><div class="wf-body-text" style="font-size:12px;margin-bottom:0">Short bio — her background, what she brings. Sam is a working nurse AND photographer with her own studio. She's co-teaching classes alongside Derek, not just running operations.</div></div><div class="bio-card"><div class="img-placeholder" style="height:100px;margin-bottom:10px"><div class="img-label">Derek portrait — stained glass artisan + painter</div></div><div class="bio-name">Derek Zickert</div><div class="bio-role">Co-Founder · Lead Artisan · Co-Instructor</div><div class="wf-body-text" style="font-size:12px;margin-bottom:0">Short bio — interior painter by trade, stained glass artisan, DZigns By Derek LLC, Etsy storefront. Marketing/Design Arts degree from UW-Green Bay. Teaching alongside Sam.</div></div></div><div class="annotation">Treat them as genuinely co-equal partners — both are instructors, both are founders. Derek's stained glass background gives craft credibility. Sam's photography background means every image on this site is hers.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">The Space</div></div><div class="wf-body-text">A brief description of the physical layout: front room café and retail, back room for classes, patio seating, separate merchandise area. Two streets off Lawrence University in a high foot-traffic neighborhood. The kind of place you walk to.</div><div class="annotation">Optional section — depends on how much content Sam provides about the physical space. If she gives good build-out photos, this becomes a visual section. If not, fold into the story block above.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- MENU -->
+			<section class="wf-section" id="menu">
+				<div class="section-label"><span class="section-num">3</span> Menu — /menu</div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span>Home</span><span>About</span><span class="active">Menu</span><span>Classes</span><span>Gallery</span><span>Contact</span><span>Private Events</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px"><div class="wf-heading-lg">Menu</div><div class="wf-subtext">Coffee, tea, and drinks — nothing else needed.</div></div>
+						<div class="decision-box"><div class="decision-label">Option A / B — Menu Display</div><div class="option-grid"><div class="option-card"><div class="option-label">Option A — PDF Upload</div><div class="img-placeholder" style="height:80px;margin-bottom:8px"><div class="img-label">Embedded PDF menu viewer<br>Sam uploads a designed PDF</div></div><div class="wf-body-text" style="font-size:12px">Cheapest to build. Sam designs the menu in Canva or similar, uploads a PDF. Looks fine on desktop, less great on mobile. Updates require a new PDF upload.</div></div><div class="option-card"><div class="option-label">Option B — CMS-Editable (Recommended)</div><div class="menu-grid" style="margin-top:0;margin-bottom:8px"><div class="menu-item"><span class="menu-item-name">House Drip</span><span class="menu-item-price">$—</span></div><div class="menu-item"><span class="menu-item-name">Lavender Latte</span><span class="menu-item-price">$—</span></div></div><div class="wf-body-text" style="font-size:12px">Sam edits items, prices, specials, and seasonal toggles directly in the CMS. Mobile-friendly. Specials display prominently. More build time, but she never needs to re-upload a PDF.</div></div></div><div class="annotation" style="margin-top:10px">Decision depends on how often Sam wants to update the menu. If she's rotating seasonal specials frequently, CMS-editable pays for itself. If the menu rarely changes, PDF upload is fine.</div></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Menu Items (Option B View)</div><span class="cms-tag">CMS managed</span></div><div class="wf-heading-md" style="font-size:14px;margin-top:8px">Coffee</div><div class="menu-grid"><div class="menu-item"><span class="menu-item-name">[Drink Name]</span><span class="menu-item-price">$—</span></div><div class="menu-item"><span class="menu-item-name">[Drink Name]</span><span class="menu-item-price">$—</span></div><div class="menu-item"><span class="menu-item-name">[Drink Name]</span><span class="menu-item-price">$—</span></div><div class="menu-item" style="border-color:var(--accent)"><span class="menu-item-name" style="color:var(--accent)">⭐ [Special Item]</span><span class="menu-item-price">$—</span></div></div><div class="wf-heading-md" style="font-size:14px;margin-top:16px">Tea & Other</div><div class="menu-grid"><div class="menu-item"><span class="menu-item-name">[Drink Name]</span><span class="menu-item-price">$—</span></div><div class="menu-item"><span class="menu-item-name">[Drink Name]</span><span class="menu-item-price">$—</span></div></div><div class="annotation">Actual menu items TBD — Sam hasn't finalized the drink list yet. Categories, items, prices, and seasonal flags all editable in CMS. Special items display with a visual callout. No food — drinks only.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- CLASSES -->
+			<section class="wf-section" id="classes">
+				<div class="section-label"><span class="section-num">4</span> Classes &amp; Events — /classes &nbsp;<span style="font-family:'Architects Daughter';font-size:10px;background:var(--accent);color:white;padding:2px 8px;border-radius:3px">HERO FEATURE</span></div>
+				<div class="wireframe-card" style="border-color:var(--accent)">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span>Home</span><span>About</span><span>Menu</span><span class="active">Classes</span><span>Gallery</span><span>Contact</span><span>Private Events</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px"><div class="wf-heading-lg">Classes & Events</div><div class="wf-subtext">Stained glass for beginners and beyond — sign up, show up, make something beautiful.</div></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Event Listing — All Upcoming</div><span class="cms-tag">CMS managed</span></div><div class="filter-row"><span class="filter-label">Show:</span><span class="filter-pill active">All</span><span class="filter-pill">Monthly Series</span><span class="filter-pill">Pop-Up Events</span><span class="filter-pill">Open Studio</span></div><div class="event-list"><div class="event-card"><div class="event-date-badge"><div class="month">Jun</div><div class="day">4</div></div><div class="event-info"><div class="event-title">[June Design] — Monthly Stained Glass Series</div><div class="event-meta">Every Wednesday · 7:00–7:30 PM · 4 weeks · Beginner</div></div><div class="event-seats">5 of 8 left</div></div><div class="event-card"><div class="event-date-badge"><div class="month">Jun</div><div class="day">14</div></div><div class="event-info"><div class="event-title">[Summer Pop-Up] — One-Night Workshop</div><div class="event-meta">Saturday · 6:00–9:00 PM · Single session · All levels</div></div><div class="event-seats">3 of 8 left</div></div><div class="event-card" style="opacity:0.5"><div class="event-date-badge"><div class="month">Jul</div><div class="day">2</div></div><div class="event-info"><div class="event-title">[July Design] — Monthly Stained Glass Series</div><div class="event-meta">Every Wednesday · 7:00–7:30 PM · 4 weeks · Beginner</div></div><div class="event-seats">8 of 8 left</div></div></div><div class="annotation">Chronological list of all upcoming events. Each card clicks through to a dynamic detail page (/classes/[slug]). Live seat count is public. Faded cards indicate events further out. Filters are client-side.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block" style="border-color:var(--accent)"><div class="wf-block-header"><div class="wf-heading-sm">Event Detail Page — /classes/[slug]</div><span class="cms-tag">CMS managed</span></div><div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px"><div style="flex:2;min-width:200px"><div class="img-placeholder" style="height:160px"><div class="img-icon">🎨</div><div class="img-label">Month's design image<br>Sam photographs each month's project</div></div></div><div style="flex:1;min-width:180px"><div class="wf-heading-md">[June Design Name]</div><div class="wf-body-text"><strong>Monthly Series</strong> · Beginner</div><div class="wf-body-text">Every Wednesday in June · 7:00–7:30 PM</div><div class="wf-body-text">One design across 4 weeks · All materials included</div><div class="wf-body-text" style="margin-top:8px"><strong>5 of 8 seats remaining</strong></div><div class="wf-body-text" style="font-size:11px;color:rgba(9,47,51,0.5)">Registration closes 2 days before first session</div><div class="wf-cta accent" style="margin-top:12px">Sign Up →</div></div></div><div class="wf-body-text">Class description — what you'll learn, what you'll make, what's included. Beginner-friendly snippet. Jordan writes from Sam's class descriptions.</div><div class="annotation">Each event is a dynamic page built from CMS data. Seat count is live. Cutoff date is configurable per event (default 2 days, Sam can set 1/2/3 days in CMS). "Sign Up" button leads to Stripe checkout with waiver.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block" style="border-color:var(--accent)"><div class="wf-block-header"><div class="wf-heading-sm">Signup Flow — Stripe Checkout</div></div><div class="flow-steps"><div class="flow-step"><div class="flow-step-num">1</div><div class="flow-step-label">Select Class</div><div class="flow-step-desc">Browse → click into detail page</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="flow-step-num">2</div><div class="flow-step-label">Info + Waiver</div><div class="flow-step-desc">Name, email, phone · 18+ waiver checkbox</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="flow-step-num">3</div><div class="flow-step-label">Pay via Stripe</div><div class="flow-step-desc">Full amount upfront · Single transaction</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="flow-step-num">4</div><div class="flow-step-label">Confirmation</div><div class="flow-step-desc">Auto-email via Resend · Reminder emails follow</div></div></div><div class="annotation" style="margin-top:14px">Pay-in-full at signup — no deposit/balance complexity. Mandatory 18+ waiver checkbox with acceptance recorded. Stripe handles payment. Resend handles confirmation + reminder emails (T-7, T-2, T-day — timing TBD). Sam sees who signed up per event in the CMS dashboard.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Capacity & Waitlist Logic</div></div><div class="wf-body-text">Default: 8 seats per class (CMS-editable per event). Live count shows publicly. When full, the signup button switches to a "Notify Me" / waitlist email capture. Waitlist emails feed a list Sam can use to notify people when new classes are scheduled.</div><div class="annotation">Waitlist isn't auto-promote (someone cancels → next person gets in). It's email capture for Sam to notify manually. Keeps it simple and avoids automated refund/recharge complexity.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Two Class Formats in the System</div><span class="cms-tag">CMS managed</span></div><div class="option-grid"><div class="option-card"><div class="option-label">Monthly Series</div><div class="wf-body-text" style="font-size:12px">Every Wednesday for a month · one design across 4 weeks · can't skip · pay for the full month at signup. Each month is a different design. This is the core offering.</div></div><div class="option-card"><div class="option-label">Pop-Up Events</div><div class="wf-body-text" style="font-size:12px">Seasonal/holiday one-offs · pre-cut glass · pick colors · walk out with a finished piece · single session. Simpler format, lower price point, great for first-timers.</div></div></div><div class="annotation">Both formats use the same signup system — Sam creates the event in CMS, sets dates, capacity, cutoff, price, and description. The system handles the rest. Walk-in craft days don't need online booking — those are in-store only.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- GALLERY -->
+			<section class="wf-section" id="gallery">
+				<div class="section-label"><span class="section-num">5</span> Gallery — /gallery</div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span>Home</span><span>About</span><span>Menu</span><span>Classes</span><span class="active">Gallery</span><span>Contact</span><span>Private Events</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px"><div class="wf-heading-lg">Gallery</div><div class="wf-subtext">Finished pieces, class moments, and the work that comes out of this room.</div></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Photo Gallery</div><span class="cms-tag">CMS managed</span></div><div class="gallery-grid"><div class="img-placeholder" style="height:120px"><div class="img-label">Finished piece<br><span style="font-size:10px">→ links to Etsy listing</span></div></div><div class="img-placeholder" style="height:120px"><div class="img-label">Class in progress</div></div><div class="img-placeholder" style="height:120px"><div class="img-label">Close-up detail</div></div><div class="img-placeholder" style="height:120px"><div class="img-label">Student work</div></div><div class="img-placeholder" style="height:120px"><div class="img-label">The space</div></div><div class="img-placeholder" style="height:120px"><div class="img-label">Derek working<br><span style="font-size:10px">→ links to Etsy listing</span></div></div></div><div class="annotation">Sam uploads images via drag-drop in CMS. Each image has an optional Etsy URL field — if filled, the image links to that listing (confirmed OK). Pre-launch: staged shots from Sam's studio + Derek's existing DZigns work. Post-launch: real class photos, student work, candids. Gallery grows over time.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- CONTACT -->
+			<section class="wf-section" id="contact">
+				<div class="section-label"><span class="section-num">6</span> Contact / Visit — /contact</div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span>Home</span><span>About</span><span>Menu</span><span>Classes</span><span>Gallery</span><span class="active">Contact</span><span>Private Events</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px"><div class="wf-heading-lg">Visit Us</div><div class="wf-subtext">Find us, reach us, or just stop by.</div></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Location & Hours</div><span class="cms-tag">CMS managed</span></div><div style="display:flex;gap:16px;flex-wrap:wrap"><div style="flex:1;min-width:200px"><div class="wf-body-text"><strong>Address</strong><br>[Exact address TBD]<br>N. Badger Ave area · Appleton, WI<br><span style="font-size:11px;color:rgba(9,47,51,0.5)">2 streets off Lawrence University</span></div><div class="wf-body-text" style="margin-top:10px"><strong>Hours</strong><br>[Hours from Sam — TBD]</div><div class="wf-body-text" style="margin-top:10px"><strong>Social</strong><br>Instagram · Facebook · [others TBD]</div></div><div style="flex:1;min-width:200px"><div class="img-placeholder" style="height:180px"><div class="img-icon">📍</div><div class="img-label">Embedded Google Map<br>Exact address needed from Sam</div></div></div></div><div class="annotation">Exact address pending — Sam to confirm. Map embeds once we have it. Hours editable in CMS for holiday changes. Social links in footer and here.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Contact Forms</div></div><div class="filter-row"><span class="filter-label">Inquiry type:</span><span class="filter-pill active">General</span><span class="filter-pill">Commission</span><span class="filter-pill">Repair</span></div><div class="form-grid"><div class="form-field"><div class="form-field-label">First Name</div><div class="form-field-value">Jane</div></div><div class="form-field"><div class="form-field-label">Last Name</div><div class="form-field-value">Doe</div></div><div class="form-field"><div class="form-field-label">Email</div><div class="form-field-value">jane@example.com</div></div><div class="form-field"><div class="form-field-label">Phone</div><div class="form-field-value">(920) 555-0000</div></div><div class="form-field full"><div class="form-field-label">Message</div><div class="form-field-value" style="min-height:40px">Tell us what you're looking for...</div></div></div><div class="wf-cta" style="margin-top:14px">Send Message →</div><div class="annotation">Three inquiry types — tab or dropdown selects the type, which changes fields slightly (commission asks for dimensions/budget, repair asks for description/photos). All submissions go to Sam's email.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- PRIVATE EVENTS -->
+			<section class="wf-section" id="events">
+				<div class="section-label"><span class="section-num">7</span> Private Events — /private-events/* &nbsp;<span style="font-family:'Architects Daughter';font-size:10px;background:var(--moss);color:white;padding:2px 8px;border-radius:3px">SEO PLAY</span></div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">The Glass Room</div><div class="wf-nav-links"><span>Home</span><span>About</span><span>Menu</span><span>Classes</span><span>Gallery</span><span>Contact</span><span class="active">Private Events</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px"><div class="wf-heading-lg">Private Events</div><div class="wf-subtext">Bachelorettes, birthdays, team builds — make something together.</div></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Hub Page — /private-events</div></div><div class="wf-body-text">Overview page that introduces private events, then routes visitors to the specific event type that fits them. Each card links to its dedicated landing page. Brief intro: "Planning a group outing? Whether it's a bachelorette party, a kid's birthday, or a corporate team build — we'll set up a private stained glass session just for your group."</div><div class="landing-grid"><div class="landing-card"><div class="landing-card-icon">🥂</div><div class="landing-card-title">Bachelorette Parties</div><div class="landing-card-slug">/private-events/bachelorette</div><div class="landing-card-desc">Ranks for: "bachelorette art party Appleton," "bachelorette stained glass," "unique bachelorette ideas Wisconsin"</div></div><div class="landing-card"><div class="landing-card-icon">🎂</div><div class="landing-card-title">Kids Birthday Parties</div><div class="landing-card-slug">/private-events/birthday</div><div class="landing-card-desc">Ranks for: "kids art birthday party Appleton," "stained glass birthday party," "unique birthday ideas Fox Valley"</div></div><div class="landing-card"><div class="landing-card-icon">🏢</div><div class="landing-card-title">Corporate Team Builds</div><div class="landing-card-slug">/private-events/corporate</div><div class="landing-card-desc">Ranks for: "corporate team building Appleton," "team building art class," "creative team events Fox Cities"</div></div></div><div class="annotation">Each event type gets its own URL = its own page to rank in Google. "Bachelorette stained glass party Appleton" is a search someone actually types in. A single form page can't rank for all of those. Three pages = three chances to show up. More event types can be added later as the business grows.</div></div>
+						<div class="section-divider"></div>
+						<div class="wf-block"><div class="wf-block-header"><div class="wf-heading-sm">Landing Page Template — e.g. /private-events/bachelorette</div><span class="cms-tag">CMS managed</span></div><div class="img-placeholder" style="height:120px;margin-bottom:14px"><div class="img-icon">🥂</div><div class="img-label">Hero photo — bachelorette group having fun making glass<br>Sam's photography · staged pre-launch if possible</div></div><div class="wf-heading-md">Bachelorette Stained Glass Parties</div><div class="wf-body-text">Custom copy per event type — what the experience is like, what the group makes, how long it takes, what's included. This is a persuasion page, not a form. It should sell the experience first, then capture the lead.</div><div class="wf-body-text" style="margin-top:10px"><strong>What's Included:</strong> Private studio for your group · All materials provided · Guided instruction from Sam & Derek · Finished piece to take home · Coffee and drinks for the group</div><div class="wf-body-text"><strong>Group Size:</strong> 6–12 guests · <strong>Duration:</strong> ~2.5 hours</div><div style="margin-top:16px"><div class="wf-heading-sm" style="margin-bottom:10px">Request Your Date</div><div class="form-grid"><div class="form-field"><div class="form-field-label">Your Name</div><div class="form-field-value">Jane Doe</div></div><div class="form-field"><div class="form-field-label">Email</div><div class="form-field-value">jane@example.com</div></div><div class="form-field"><div class="form-field-label">Group Size</div><div class="form-field-value">8–10</div></div><div class="form-field"><div class="form-field-label">Preferred Date(s)</div><div class="form-field-value">June 2026</div></div><div class="form-field full"><div class="form-field-label">Tell Us About Your Event</div><div class="form-field-value" style="min-height:40px">Who's the guest of honor? Any special requests?</div></div></div><div class="wf-cta accent" style="margin-top:14px">Request a Private Event →</div></div><div class="annotation">Same template structure for all event types — hero photo, custom copy, what's included, inquiry form. Each page has unique content targeting specific search terms. Form goes to Sam's email. This is lead capture — Sam and Derek handle scheduling and pricing offline.</div></div>
+					</div>
+					<div class="wf-footer"><span>© 2026 The Glass Room LLC · Appleton, WI</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- WHAT'S LOCKED IN -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label"><span class="section-num">✓</span> What We've Already Locked In</div>
+				<div class="wireframe-card"><div class="wf-body"><ul class="checklist">
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Class Signup Is the Hero Feature</strong> — The entire build is structured around getting people to book a class. Browse classes, pick a date, pay via Stripe, get a confirmation — done.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Pay-in-Full via Stripe</strong> — Single transaction at signup. No deposit/balance complexity. Stripe handles payment for class signups and open studio subscriptions.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Mandatory 18+ Waiver</strong> — Built into the signup flow. Checkbox acceptance is recorded in the system automatically.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>8-Person Capacity with Waitlist</strong> — Editable per event. Live seat count shows publicly. When a class fills, the button switches to "Notify Me" — those emails feed a list you can use for future classes.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Automatic Confirmation & Reminder Emails</strong> — Signup confirmation goes out instantly. Reminder emails go out before class. You never have to send these manually.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>You Own Everything</strong> — The site, the code, the CMS. No monthly subscription to us, no licensing fees. You pay for hosting directly (~$20/mo) and that's it.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>You Update It Yourselves</strong> — Classes, menu items, gallery photos, board info, hours — all editable in a custom CMS built for your daily workflow. No need to call us for routine changes.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Gallery Links to Etsy</strong> — Each gallery image can link directly to a specific Etsy listing. Customers see the piece, click, and buy — without leaving the experience.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Dedicated Private Event Pages</strong> — Separate landing pages for bachelorette parties, birthdays, and corporate events. Each page ranks in Google for its own search terms. More event types can be added anytime.</div></li>
+					<li class="check-item"><span class="check-icon">✅</span><div><strong>Online Shop Is Phase 2</strong> — Not in this build. Once you're open and running classes, we can add a full online shop for finished pieces — but let's get the doors open first.</div></li>
+				</ul></div></div>
+			</section>
+
+		</div>
+
+		<script>
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+			const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { navLinks.forEach((link) => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + entry.target.id) { link.classList.add('active'); } }); } }); }, { rootMargin: '-15% 0px -70% 0px' });
+			sections.forEach((s) => observer.observe(s));
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+			function openMenu() { menuOpen = true; sidebar.classList.add('mobile-open'); sidebarOverlay.style.display = 'block'; requestAnimationFrame(() => sidebarOverlay.classList.add('visible')); fab.textContent = '✕'; }
+			function closeMenu(callback) { menuOpen = false; sidebar.classList.remove('mobile-open'); sidebarOverlay.classList.remove('visible'); fab.textContent = '☰'; setTimeout(() => { sidebarOverlay.style.display = 'none'; if (callback) callback(); }, 280); }
+			fab.addEventListener('click', () => { if (menuOpen) { closeMenu(); } else { openMenu(); } });
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => { link.addEventListener('click', (e) => { if (window.innerWidth <= 680 && menuOpen) { e.preventDefault(); const target = link.getAttribute('href'); closeMenu(() => { const el = document.querySelector(target); if (el) el.scrollIntoView({ behavior: 'smooth' }); }); } }); });
+		</script>
+	</body>
 </html>
