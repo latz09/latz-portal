@@ -10,6 +10,7 @@ export const FETCH_PROJECT_QUERY = `
       status,
       month,
       year,
+      aiProjectLink,
       previewUrl,
       figmaUrl,
       studioUrl,
@@ -41,4 +42,4 @@ export const FETCH_PROJECT_QUERY = `
       }
     }
   }
-`
+`;

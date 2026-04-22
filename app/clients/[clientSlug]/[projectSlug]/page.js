@@ -29,6 +29,7 @@ export default async function ProjectPage({ params }) {
 				figmaUrl={project.figmaUrl}
 				studioUrl={project.studioUrl}
 				vercelUrl={project.vercelUrl}
+				aiProjectLink={project.aiProjectLink}
 			/>
 			<DocumentList
 				variant='internal'
