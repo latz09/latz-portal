@@ -1,2340 +1,1768 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="robots" content="noindex" />
-		<title>Jeannine Kellogg — Project Overview | Latz Web Design</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
-			rel="stylesheet"
-		/>
-		<style>
-			:root {
-				--navy: #0d1b2a;
-				--teal: #18a1ad;
-				--teal-light: #e8f7f8;
-				--teal-mid: #b3e5e9;
-				--yellow: #ffee65;
-				--white: #ffffff;
-				--off-white: #f7f9fa;
-				--gray-100: #f0f2f4;
-				--gray-200: #e2e8f0;
-				--gray-400: #94a3b8;
-				--gray-600: #475569;
-				--gray-800: #1e293b;
-				--text: #0d1b2a;
-				--green: #16a34a;
-				--green-light: #dcfce7;
-				--orange: #ea580c;
-				--orange-light: #fff7ed;
-				--red: #dc2626;
-				--red-light: #fef2f2;
-			}
-
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-
-			body {
-				font-family: 'DM Sans', sans-serif;
-				background: var(--off-white);
-				color: var(--text);
-				line-height: 1.6;
-				font-size: 15px;
-			}
-
-			/* ── SIDEBAR ── */
-			.sidebar {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 240px;
-				height: 100vh;
-				background: var(--navy);
-				padding: 32px 0;
-				overflow-y: auto;
-				z-index: 100;
-				display: flex;
-				flex-direction: column;
-				transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
-			}
-
-			.sidebar-brand {
-				padding: 0 24px 24px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-				margin-bottom: 20px;
-			}
-
-			.sidebar-brand .lwd {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				color: var(--teal);
-				letter-spacing: 0.12em;
-				text-transform: uppercase;
-				margin-bottom: 6px;
-			}
-
-			.sidebar-brand .client-name {
-				font-family: 'Fraunces', serif;
-				font-size: 17px;
-				font-weight: 600;
-				color: var(--white);
-				line-height: 1.2;
-			}
-
-			.sidebar-brand .status-pill {
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-				background: var(--green);
-				color: white;
-				font-size: 10px;
-				font-weight: 600;
-				letter-spacing: 0.08em;
-				text-transform: uppercase;
-				padding: 3px 10px;
-				border-radius: 20px;
-				margin-top: 10px;
-			}
-
-			.status-pill::before {
-				content: '';
-				width: 6px;
-				height: 6px;
-				background: white;
-				border-radius: 50%;
-				animation: pulse 2s infinite;
-			}
-
-			@keyframes pulse {
-				0%,
-				100% {
-					opacity: 1;
-				}
-				50% {
-					opacity: 0.4;
-				}
-			}
-
-			.nav-section-label {
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				letter-spacing: 0.15em;
-				text-transform: uppercase;
-				color: var(--gray-400);
-				padding: 8px 24px 4px;
-				margin-top: 8px;
-			}
-
-			.nav-link {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-				padding: 9px 24px;
-				color: rgba(255, 255, 255, 0.6);
-				text-decoration: none;
-				font-size: 13px;
-				font-weight: 400;
-				transition: all 0.15s;
-				border-left: 3px solid transparent;
-			}
-
-			.nav-link:hover {
-				color: white;
-				background: rgba(255, 255, 255, 0.05);
-				border-left-color: rgba(24, 161, 173, 0.5);
-			}
-
-			.nav-link.active {
-				color: var(--teal);
-				background: rgba(24, 161, 173, 0.08);
-				border-left-color: var(--teal);
-				font-weight: 500;
-			}
-
-			.nav-icon {
-				font-size: 14px;
-				width: 18px;
-				text-align: center;
-				flex-shrink: 0;
-			}
-
-			.sidebar-footer {
-				margin-top: auto;
-				padding: 20px 24px;
-				border-top: 1px solid rgba(255, 255, 255, 0.08);
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				color: rgba(255, 255, 255, 0.3);
-				letter-spacing: 0.08em;
-				line-height: 1.8;
-			}
-
-			/* ── MOBILE NAV FAB ── */
-			.nav-fab {
-				display: none;
-				position: fixed;
-				bottom: 20px;
-				right: 20px;
-				width: 52px;
-				height: 52px;
-				background: var(--teal);
-				color: white;
-				border: none;
-				border-radius: 50%;
-				font-size: 22px;
-				cursor: pointer;
-				z-index: 300;
-				box-shadow: 0 4px 14px rgba(24, 161, 173, 0.4);
-				align-items: center;
-				justify-content: center;
-			}
-
-			.nav-overlay {
-				display: none;
-				position: fixed;
-				inset: 0;
-				background: rgba(0, 0, 0, 0.45);
-				z-index: 90;
-				opacity: 0;
-				transition: opacity 280ms ease;
-			}
-
-			.nav-overlay.visible {
-				opacity: 1;
-			}
-
-			/* ── MAIN CONTENT ── */
-			.main {
-				margin-left: 240px;
-				min-height: 100vh;
-			}
-
-			/* ── PAGE HEADER ── */
-			.page-header {
-				background: var(--navy);
-				padding: 48px 56px 40px;
-				position: relative;
-				overflow: hidden;
-			}
-
-			.page-header::after {
-				content: 'KELLOGG';
-				position: absolute;
-				right: -20px;
-				top: 50%;
-				transform: translateY(-50%);
-				font-family: 'Fraunces', serif;
-				font-size: 120px;
-				font-weight: 700;
-				color: rgba(255, 255, 255, 0.03);
-				letter-spacing: -4px;
-				pointer-events: none;
-				user-select: none;
-			}
-
-			.page-header .overline {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				letter-spacing: 0.2em;
-				text-transform: uppercase;
-				color: var(--teal);
-				margin-bottom: 12px;
-			}
-
-			.page-header h1 {
-				font-family: 'Fraunces', serif;
-				font-size: 36px;
-				font-weight: 600;
-				color: white;
-				margin-bottom: 8px;
-				line-height: 1.15;
-			}
-
-			.page-header .sub {
-				color: rgba(255, 255, 255, 0.5);
-				font-size: 14px;
-			}
-
-			.header-meta {
-				display: flex;
-				gap: 32px;
-				margin-top: 28px;
-				flex-wrap: wrap;
-			}
-
-			.header-meta-item {
-				display: flex;
-				flex-direction: column;
-				gap: 3px;
-			}
-
-			.header-meta-item .label {
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				letter-spacing: 0.12em;
-				text-transform: uppercase;
-				color: rgba(255, 255, 255, 0.3);
-			}
-
-			.header-meta-item .value {
-				font-size: 14px;
-				font-weight: 500;
-				color: white;
-			}
-
-			.header-meta-item .value a {
-				color: var(--teal);
-				text-decoration: none;
-			}
-
-			/* ── CONTENT SECTIONS ── */
-			.content {
-				padding: 40px 56px 80px;
-			}
-
-			section {
-				margin-bottom: 56px;
-				scroll-margin-top: 24px;
-			}
-
-			.section-header {
-				display: flex;
-				align-items: center;
-				gap: 12px;
-				margin-bottom: 24px;
-				padding-bottom: 12px;
-				border-bottom: 2px solid var(--teal);
-			}
-
-			.section-header h2 {
-				font-family: 'Fraunces', serif;
-				font-size: 22px;
-				font-weight: 600;
-				color: var(--navy);
-			}
-
-			.section-icon {
-				width: 32px;
-				height: 32px;
-				background: var(--teal);
-				border-radius: 8px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 15px;
-				flex-shrink: 0;
-			}
-
-			/* ── CARDS & GRIDS ── */
-			.card {
-				background: white;
-				border-radius: 10px;
-				padding: 24px;
-				border: 1px solid var(--gray-200);
-				margin-bottom: 16px;
-			}
-
-			.card h3 {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--teal);
-				text-transform: uppercase;
-				letter-spacing: 0.06em;
-				margin-bottom: 12px;
-			}
-
-			.two-col {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 16px;
-			}
-
-			.three-col {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 16px;
-			}
-
-			/* ── DATA ROWS ── */
-			.data-row {
-				display: grid;
-				grid-template-columns: 180px 1fr;
-				gap: 12px;
-				align-items: start;
-				padding: 10px 0;
-				border-bottom: 1px solid var(--gray-100);
-			}
-
-			.data-row:last-child {
-				border-bottom: none;
-			}
-
-			.data-label {
-				font-family: 'DM Mono', monospace;
-				font-size: 11px;
-				color: var(--gray-400);
-				letter-spacing: 0.06em;
-				padding-top: 1px;
-				text-transform: uppercase;
-			}
-
-			.data-value {
-				font-size: 14px;
-				color: var(--text);
-				font-weight: 500;
-			}
-
-			.data-value a {
-				color: var(--teal);
-				text-decoration: none;
-			}
-
-			/* ── CALLOUT BOXES ── */
-			.callout {
-				border-radius: 8px;
-				padding: 16px 20px;
-				margin-bottom: 16px;
-				display: flex;
-				gap: 12px;
-				align-items: flex-start;
-			}
-
-			.callout-icon {
-				font-size: 18px;
-				flex-shrink: 0;
-				margin-top: 1px;
-			}
-			.callout-body {
-				flex: 1;
-			}
-			.callout-body strong {
-				display: block;
-				font-size: 13px;
-				font-weight: 600;
-				margin-bottom: 4px;
-			}
-			.callout-body p,
-			.callout-body span {
-				font-size: 13px;
-				line-height: 1.5;
-			}
-
-			.callout.info {
-				background: var(--teal-light);
-				border-left: 4px solid var(--teal);
-			}
-			.callout.warn {
-				background: var(--orange-light);
-				border-left: 4px solid var(--orange);
-			}
-			.callout.success {
-				background: var(--green-light);
-				border-left: 4px solid var(--green);
-			}
-			.callout.alert {
-				background: var(--red-light);
-				border-left: 4px solid var(--red);
-			}
-			.callout.yellow {
-				background: #fffbcc;
-				border-left: 4px solid #d4a800;
-			}
-
-			/* ── HIGHLIGHT BOX ── */
-			.highlight-box {
-				background: var(--yellow);
-				border: 2px solid var(--navy);
-				border-radius: 8px;
-				padding: 20px 24px;
-				margin-bottom: 16px;
-			}
-
-			.highlight-box strong {
-				font-weight: 700;
-			}
-			.highlight-box p {
-				font-size: 14px;
-				margin-top: 8px;
-			}
-
-			/* ── TIMELINE ── */
-			.timeline {
-				position: relative;
-				padding-left: 24px;
-			}
-
-			.timeline::before {
-				content: '';
-				position: absolute;
-				left: 6px;
-				top: 8px;
-				bottom: 8px;
-				width: 2px;
-				background: var(--teal-mid);
-			}
-
-			.timeline-item {
-				position: relative;
-				margin-bottom: 20px;
-				padding-left: 20px;
-			}
-
-			.timeline-item::before {
-				content: '';
-				position: absolute;
-				left: -18px;
-				top: 6px;
-				width: 10px;
-				height: 10px;
-				border-radius: 50%;
-				background: var(--teal);
-				border: 2px solid white;
-				box-shadow: 0 0 0 2px var(--teal);
-			}
-
-			.timeline-item.complete::before {
-				background: var(--green);
-				box-shadow: 0 0 0 2px var(--green);
-			}
-			.timeline-item.pending::before {
-				background: var(--gray-400);
-				box-shadow: 0 0 0 2px var(--gray-400);
-			}
-			.timeline-item.active::before {
-				background: var(--teal);
-				box-shadow: 0 0 0 3px var(--teal-mid);
-			}
-
-			.timeline-date {
-				font-family: 'DM Mono', monospace;
-				font-size: 11px;
-				color: var(--teal);
-				letter-spacing: 0.06em;
-				font-weight: 500;
-			}
-
-			.timeline-title {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--navy);
-				margin: 2px 0;
-			}
-
-			.timeline-desc {
-				font-size: 13px;
-				color: var(--gray-600);
-				line-height: 1.5;
-			}
-
-			/* ── BUDGET TABLE ── */
-			.budget-table {
-				width: 100%;
-				border-collapse: collapse;
-				font-size: 14px;
-			}
-
-			.budget-table th {
-				background: var(--navy);
-				color: white;
-				padding: 10px 16px;
-				text-align: left;
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				letter-spacing: 0.1em;
-				text-transform: uppercase;
-				font-weight: 500;
-			}
-
-			.budget-table td {
-				padding: 12px 16px;
-				border-bottom: 1px solid var(--gray-100);
-			}
-
-			.budget-table tr:last-child td {
-				border-bottom: none;
-			}
-			.budget-table tr:nth-child(even) td {
-				background: var(--off-white);
-			}
-
-			.budget-table .total-row td {
-				background: var(--teal-light) !important;
-				font-weight: 700;
-				border-top: 2px solid var(--teal);
-				font-size: 15px;
-			}
-
-			.budget-table .paid-row td {
-				background: var(--green-light) !important;
-				color: var(--green);
-				font-weight: 600;
-			}
-
-			.budget-table .unpaid-row td {
-				background: var(--orange-light) !important;
-				color: var(--orange);
-				font-weight: 600;
-			}
-
-			.amount {
-				text-align: right;
-				font-family: 'DM Mono', monospace;
-				font-weight: 500;
-			}
-
-			/* ── PAGE SCOPE GRID ── */
-			.page-card {
-				background: white;
-				border: 1px solid var(--gray-200);
-				border-radius: 10px;
-				padding: 20px;
-				border-top: 3px solid var(--teal);
-			}
-
-			.page-card h4 {
-				font-family: 'Fraunces', serif;
-				font-size: 16px;
-				font-weight: 600;
-				color: var(--navy);
-				margin-bottom: 10px;
-			}
-
-			.page-card ul {
-				list-style: none;
-				padding: 0;
-			}
-
-			.page-card ul li {
-				font-size: 13px;
-				color: var(--gray-600);
-				padding: 4px 0;
-				padding-left: 16px;
-				position: relative;
-				line-height: 1.4;
-			}
-
-			.page-card ul li::before {
-				content: '→';
-				position: absolute;
-				left: 0;
-				color: var(--teal);
-				font-size: 11px;
-			}
-
-			.page-badge {
-				display: inline-block;
-				font-family: 'DM Mono', monospace;
-				font-size: 9px;
-				font-weight: 500;
-				padding: 2px 8px;
-				border-radius: 20px;
-				margin-bottom: 8px;
-				letter-spacing: 0.06em;
-				text-transform: uppercase;
-			}
-
-			.badge-cms {
-				background: var(--teal-light);
-				color: var(--teal);
-			}
-			.badge-static {
-				background: var(--gray-100);
-				color: var(--gray-600);
-			}
-			.badge-new {
-				background: #fef3c7;
-				color: #92400e;
-			}
-			.badge-existing {
-				background: var(--green-light);
-				color: var(--green);
-			}
-
-			/* ── CONTENT CHECKLIST ── */
-			.checklist {
-				list-style: none;
-				padding: 0;
-			}
-			.checklist li {
-				display: flex;
-				align-items: flex-start;
-				gap: 10px;
-				padding: 8px 0;
-				border-bottom: 1px solid var(--gray-100);
-				font-size: 13px;
-			}
-			.checklist li:last-child {
-				border-bottom: none;
-			}
-
-			.check-icon {
-				font-size: 15px;
-				flex-shrink: 0;
-				margin-top: 1px;
-			}
-			.check-status {
-				margin-left: auto;
-				flex-shrink: 0;
-			}
-
-			.pill {
-				display: inline-block;
-				font-size: 10px;
-				font-weight: 600;
-				padding: 2px 8px;
-				border-radius: 20px;
-				font-family: 'DM Mono', monospace;
-				letter-spacing: 0.04em;
-				text-transform: uppercase;
-			}
-
-			.pill-green {
-				background: var(--green-light);
-				color: var(--green);
-			}
-			.pill-orange {
-				background: var(--orange-light);
-				color: var(--orange);
-			}
-			.pill-gray {
-				background: var(--gray-100);
-				color: var(--gray-600);
-			}
-			.pill-teal {
-				background: var(--teal-light);
-				color: var(--teal);
-			}
-			.pill-red {
-				background: var(--red-light);
-				color: var(--red);
-			}
-
-			/* ── UPSELL ── */
-			.upsell-card {
-				background: white;
-				border: 2px dashed var(--gray-200);
-				border-radius: 10px;
-				padding: 20px;
-				transition: border-color 0.2s;
-			}
-
-			.upsell-card:hover {
-				border-color: var(--teal);
-			}
-
-			.upsell-card h4 {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--navy);
-				margin-bottom: 6px;
-			}
-
-			.upsell-card .price {
-				font-family: 'DM Mono', monospace;
-				font-size: 13px;
-				color: var(--teal);
-				font-weight: 500;
-				margin-bottom: 8px;
-			}
-
-			.upsell-card p {
-				font-size: 13px;
-				color: var(--gray-600);
-			}
-
-			/* ── PHASE BLOCKS ── */
-			.phase {
-				background: white;
-				border: 1px solid var(--gray-200);
-				border-radius: 10px;
-				padding: 20px 24px;
-				margin-bottom: 12px;
-				display: grid;
-				grid-template-columns: 80px 1fr;
-				gap: 20px;
-				align-items: start;
-			}
-
-			.phase-num {
-				font-family: 'Fraunces', serif;
-				font-size: 48px;
-				font-weight: 700;
-				color: var(--teal-mid);
-				line-height: 1;
-				text-align: center;
-			}
-
-			.phase h4 {
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--navy);
-				margin-bottom: 4px;
-			}
-
-			.phase .weeks {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				color: var(--teal);
-				letter-spacing: 0.08em;
-				text-transform: uppercase;
-				margin-bottom: 8px;
-			}
-
-			.phase ul {
-				list-style: none;
-				padding: 0;
-			}
-			.phase ul li {
-				font-size: 13px;
-				color: var(--gray-600);
-				padding: 3px 0;
-				padding-left: 14px;
-				position: relative;
-			}
-			.phase ul li::before {
-				content: '·';
-				position: absolute;
-				left: 4px;
-				color: var(--teal);
-			}
-
-			/* ── NOTES AREA ── */
-			.note-block {
-				background: #fffef0;
-				border: 1px solid #e6d96b;
-				border-radius: 8px;
-				padding: 16px 20px;
-				margin-bottom: 12px;
-			}
-
-			.note-block .note-date {
-				font-family: 'DM Mono', monospace;
-				font-size: 10px;
-				color: #a07d00;
-				letter-spacing: 0.08em;
-				text-transform: uppercase;
-				margin-bottom: 6px;
-			}
-
-			.note-block p {
-				font-size: 13px;
-				color: var(--gray-800);
-				line-height: 1.6;
-			}
-
-			/* ── RESPONSIVE ── */
-			@media (max-width: 900px) {
-				.sidebar {
-					width: 200px;
-				}
-				.main {
-					margin-left: 200px;
-				}
-				.two-col,
-				.three-col {
-					grid-template-columns: 1fr;
-				}
-				.page-header,
-				.content {
-					padding-left: 32px;
-					padding-right: 32px;
-				}
-				.phase {
-					grid-template-columns: 56px 1fr;
-				}
-			}
-
-			@media (max-width: 680px) {
-				.sidebar {
-					transform: translateX(-100%);
-					z-index: 200;
-				}
-				.sidebar.mobile-open {
-					transform: translateX(0);
-				}
-				.main {
-					margin-left: 0;
-				}
-				.nav-fab {
-					display: flex;
-				}
-				.nav-overlay.visible {
-					display: block;
-				}
-
-				.page-header,
-				.content {
-					padding-left: 20px;
-					padding-right: 20px;
-				}
-				.page-header {
-					padding: 32px 20px 28px;
-				}
-				.page-header h1 {
-					font-size: 26px;
-				}
-
-				.header-meta {
-					display: grid;
-					grid-template-columns: 1fr 1fr;
-					gap: 16px;
-				}
-
-				.data-row {
-					grid-template-columns: 1fr;
-					gap: 2px;
-				}
-				.data-label {
-					font-size: 10px;
-				}
-
-				.checklist li {
-					flex-wrap: wrap;
-				}
-				.check-status {
-					margin-left: 0;
-					margin-top: 4px;
-					width: 100%;
-				}
-
-				.budget-table th,
-				.budget-table td {
-					padding: 8px 10px;
-					font-size: 12px;
-				}
-
-				.phase {
-					grid-template-columns: 44px 1fr;
-					gap: 12px;
-					padding: 16px;
-				}
-				.phase-num {
-					font-size: 36px;
-				}
-
-				.callout {
-					flex-direction: column;
-					gap: 6px;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<!-- MOBILE NAV FAB + OVERLAY -->
-		<button class="nav-fab" id="navFab" aria-label="Open menu">☰</button>
-		<div class="nav-overlay" id="navOverlay"></div>
-
-		<!-- SIDEBAR -->
-		<nav class="sidebar" id="sidebar">
-			<div class="sidebar-brand">
-				<div class="lwd">Latz Web Design</div>
-				<div class="client-name">Jeannine Kellogg</div>
-				<div class="status-pill">Active Project</div>
-			</div>
-
-			<div class="nav-section-label">Overview</div>
-			<a href="#client" class="nav-link active"
-				><span class="nav-icon">👤</span> Client Info</a
-			>
-			<a href="#project" class="nav-link"
-				><span class="nav-icon">📋</span> Project Summary</a
-			>
-			<a href="#financials" class="nav-link"
-				><span class="nav-icon">💰</span> Financials</a
-			>
-			<a href="#history" class="nav-link"
-				><span class="nav-icon">🗓️</span> Client History</a
-			>
-
-			<div class="nav-section-label">Build</div>
-			<a href="#scope" class="nav-link"
-				><span class="nav-icon">📐</span> Scope & Pages</a
-			>
-			<a href="#content" class="nav-link"
-				><span class="nav-icon">📦</span> Content Needed</a
-			>
-			<a href="#technical" class="nav-link"
-				><span class="nav-icon">⚙️</span> Technical</a
-			>
-			<a href="#timeline" class="nav-link"
-				><span class="nav-icon">🚀</span> Timeline</a
-			>
-
-			<div class="nav-section-label">Strategy</div>
-			<a href="#upsells" class="nav-link"
-				><span class="nav-icon">📈</span> Future Upsells</a
-			>
-			<a href="#notes" class="nav-link"
-				><span class="nav-icon">📝</span> Notes</a
-			>
-
-			<div class="sidebar-footer">
-				Latz Web Design LLC<br />
-				Stevens Point, WI<br />
-				jordan@latzwebdesign.com<br /><br />
-				No fluff. Just results.
-			</div>
-		</nav>
-
-		<!-- MAIN -->
-		<div class="main">
-			<!-- PAGE HEADER -->
-			<div class="page-header">
-				<div class="overline">Project Overview · Source of Truth</div>
-				<h1>Jeannine Kellogg — The Tukor Series</h1>
-				<div class="sub">
-					jeanninekellogg.com · v2 Active — Ecommerce + Trilogy Expansion
-				</div>
-
-				<div class="header-meta">
-					<div class="header-meta-item">
-						<span class="label">Client</span>
-						<span class="value">Jeannine Kellogg, Author</span>
-					</div>
-					<div class="header-meta-item">
-						<span class="label">Publisher</span>
-						<span class="value">Jagged Compass</span>
-					</div>
-					<div class="header-meta-item">
-						<span class="label">v1 Status</span>
-						<span class="value">Live · $275 rolling into v2</span>
-					</div>
-					<div class="header-meta-item">
-						<span class="label">v2 Contract Value</span>
-						<span class="value">TBD — scoping</span>
-					</div>
-					<div class="header-meta-item">
-						<span class="label">Domain</span>
-						<span class="value"
-							><a href="https://www.jeanninekellogg.com" target="_blank"
-								>jeanninekellogg.com</a
-							></span
-						>
-					</div>
-					<div class="header-meta-item">
-						<span class="label">Contact</span>
-						<span class="value">jmk@jaggedcompass.com</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- CONTENT -->
-			<div class="content">
-				<!-- CLIENT INFO -->
-				<section id="client">
-					<div class="section-header">
-						<div class="section-icon">👤</div>
-						<h2>Client Information</h2>
-					</div>
-
-					<div class="two-col">
-						<div class="card">
-							<h3>Primary Contact</h3>
-							<div class="data-row">
-								<span class="data-label">Name</span>
-								<span class="data-value">Jeannine Kellogg</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Role</span>
-								<span class="data-value"
-									>Author / Owner, Jagged Compass Publishing</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Email</span>
-								<span class="data-value"
-									><a href="mailto:jmk@jaggedcompass.com"
-										>jmk@jaggedcompass.com</a
-									></span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Decision Maker</span>
-								<span class="data-value">Jeannine — direct, no committee</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Relationship</span>
-								<span class="data-value"
-									>Returning client — built v1 in late 2024</span
-								>
-							</div>
-						</div>
-
-						<div class="card">
-							<h3>Business</h3>
-							<div class="data-row">
-								<span class="data-label">Business</span>
-								<span class="data-value"
-									>Jagged Compass Publishing (self-published author)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Product</span>
-								<span class="data-value"
-									>The Tukor Series — middle-school adventure (real world +
-									fantastical element)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Books Published</span>
-								<span class="data-value"
-									>The Tukor's Journey (Book 1, live)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">New Direction</span>
-								<span class="data-value"
-									>Book 2 is being split into two — now a trilogy</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Distributor</span>
-								<span class="data-value"
-									>Itasca Books (with API for
-									Shopify/WooCommerce/Squarespace/BigCommerce)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Marketing Agency</span>
-								<span class="data-value"
-									>Fuzzy Duck (Wayzata, MN) — handling logo, cover design,
-									launch plan</span
-								>
-							</div>
-						</div>
-					</div>
-
-					<div class="card">
-						<h3>Audience & Brand Context</h3>
-						<div class="data-row">
-							<span class="data-label">Primary Audience</span>
-							<span class="data-value"
-								>Parents & middle-school kids who discover her at book fairs and
-								school events</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Website's Job</span>
-							<span class="data-value"
-								>Add legitimacy + capture the interest of anyone who searches
-								after meeting her in person</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Tone</span>
-							<span class="data-value"
-								>Adventure, real-world with fantastical element — visuals carry
-								the story tone</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Communication Style</span>
-							<span class="data-value"
-								>Warm, detailed, plain-spoken. Writes clearly about what she
-								needs. Easy to work with.</span
-							>
-						</div>
-					</div>
-				</section>
-
-				<!-- PROJECT SUMMARY -->
-				<section id="project">
-					<div class="section-header">
-						<div class="section-icon">📋</div>
-						<h2>Project Summary</h2>
-					</div>
-
-					<div class="highlight-box">
-						<strong
-							>What's happening: Jeannine is relaunching. Book 2 became a
-							trilogy. She's hiring a marketing agency and needs the site
-							updated to match — including ecommerce via Itasca's new
-							API.</strong
-						>
-						<p>
-							This is a v2 scoping project. v1 was built late 2024 and went
-							live, but publishing hit a wall (lost a 2,400-book order;
-							catastrophic Jostens print that was fully refunded). She's "risen
-							from the stormy seas" and ready to relaunch. Artist starts
-							expanded illustrations end of April 2026.
-						</p>
-					</div>
-
-					<div class="two-col">
-						<div class="card">
-							<h3>What She's Asking For</h3>
-							<ul class="checklist">
-								<li>
-									<span class="check-icon">🆕</span> Website updates to reflect
-									the new trilogy structure (Book 2 → two books)
-								</li>
-								<li>
-									<span class="check-icon">🛒</span> Ecommerce integration with
-									Itasca Books' new API (drop-ship fulfillment)
-								</li>
-								<li>
-									<span class="check-icon">🎨</span> Coordinate with Fuzzy Duck
-									on new logo + cover designs
-								</li>
-								<li>
-									<span class="check-icon">📚</span> Add new illustrations as
-									they come in from the artist (end of April start)
-								</li>
-								<li>
-									<span class="check-icon">📅</span> Her question: "Do you have
-									availability?" — needs a yes/no + timeline
-								</li>
-							</ul>
-						</div>
-						<div class="card">
-							<h3>What We Need to Figure Out</h3>
-							<ul class="checklist">
-								<li>
-									<span class="check-icon">❓</span> Ecommerce platform: custom
-									Next.js, Shopify, or WooCommerce?
-								</li>
-								<li>
-									<span class="check-icon">❓</span> What Fuzzy Duck is
-									delivering vs what they expect us to produce
-								</li>
-								<li>
-									<span class="check-icon">❓</span> Book 2 → trilogy: rename
-									"The Tukor's Battle"? New titles?
-								</li>
-								<li>
-									<span class="check-icon">❓</span> Budget ceiling — she hasn't
-									mentioned a number yet
-								</li>
-								<li>
-									<span class="check-icon">❓</span> Volume expectation — how
-									many orders/month? (Drives platform decision)
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="callout info">
-						<span class="callout-icon">💡</span>
-						<div class="callout-body">
-							<strong
-								>$275 v1 balance — rolling into v2 proposal as a goodwill
-								play</strong
-							>
-							<span
-								>Strategy: mention the outstanding $275 from Invoice 0118 in the
-								v2 sell as "forgiven" or "applied as credit toward v2."
-								Positions Latz as flexible + partnership-minded without making
-								it feel transactional. Don't lead with it — use it as a soft
-								close. Value: ~$275 writeoff = strong relationship
-								capital.</span
-							>
-						</div>
-					</div>
-
-					<div class="callout warn">
-						<span class="callout-icon">🎨</span>
-						<div class="callout-body">
-							<strong
-								>Fuzzy Duck coordination — establish boundaries early</strong
-							>
-							<span
-								>Marketing agency (Wayzata, MN) is finalizing logo + cover
-								design. Clarify: are they also doing web design? Brand
-								guidelines? Who owns final visual direction on the site? Don't
-								assume — ask.</span
-							>
-						</div>
-					</div>
-
-					<div class="callout info">
-						<span class="callout-icon">💡</span>
-						<div class="callout-body">
-							<strong>3D rotating book graphic — pitch opportunity</strong>
-							<span
-								>This was discussed in v1 but never built (didn't have a
-								designer who could do it). Now that there's a designer
-								available, this could be pitched as a v2 add-on. Need to scope
-								design cost before quoting.</span
-							>
-						</div>
-					</div>
-				</section>
-
-				<!-- FINANCIALS -->
-				<section id="financials">
-					<div class="section-header">
-						<div class="section-icon">💰</div>
-						<h2>Financials</h2>
-					</div>
-
-					<div class="card">
-						<h3>v1 History (Late 2024)</h3>
-						<table class="budget-table">
-							<thead>
-								<tr>
-									<th>Line Item</th>
-									<th>Notes</th>
-									<th class="amount">Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><strong>v1 Website Build</strong></td>
-									<td>
-										Custom site — 7 pages, CMS, Dreamhost → Vercel migration.
-										Proposal was $5,550 w/ unified form or $5,250 w/ generic
-										form. Actual final ~$2,775 (scope was trimmed).
-									</td>
-									<td class="amount">~$2,775</td>
-								</tr>
-								<tr class="paid-row">
-									<td>✅ Invoice 0118 Paid</td>
-									<td>Project completion payment (Dec 16, 2024)</td>
-									<td class="amount">$2,500</td>
-								</tr>
-								<tr class="paid-row">
-									<td>💛 $275 Balance — Applied as Credit to v2</td>
-									<td>
-										Strategic writeoff. Goodwill play — mentioned in v2 sell.
-										Closes v1 cleanly.
-									</td>
-									<td class="amount">$275</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div class="card">
-						<h3>v2 Scope — Pending Discovery</h3>
-						<table class="budget-table">
-							<thead>
-								<tr>
-									<th>Potential Line Item</th>
-									<th>Notes</th>
-									<th class="amount">Rough Range</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Trilogy Content Updates</td>
-									<td>
-										Restructure book pages, update navigation, integrate new
-										illustrations + covers
-									</td>
-									<td class="amount">$800-$1,500</td>
-								</tr>
-								<tr>
-									<td>Ecommerce + Itasca API Integration</td>
-									<td>
-										Core of v2. Cost varies wildly by platform decision (current
-										stack vs Shopify).
-									</td>
-									<td class="amount">$2,500-$5,000+</td>
-								</tr>
-								<tr>
-									<td>3D Rotating Book Graphic (optional)</td>
-									<td>
-										Design + dev. Needs designer quote before firm number.
-									</td>
-									<td class="amount">$600-$1,200</td>
-								</tr>
-								<tr>
-									<td>Fuzzy Duck Brand Integration</td>
-									<td>Apply new logo, color palette, typography to site</td>
-									<td class="amount">$400-$800</td>
-								</tr>
-								<tr class="total-row">
-									<td><strong>Estimated v2 Range</strong></td>
-									<td>
-										Final depends on ecommerce platform + 3D graphic scope
-									</td>
-									<td class="amount"><strong>$3,700-$8,500+</strong></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div class="card" style="margin-top: 16px">
-						<h3>Ongoing Costs (client pays directly)</h3>
-						<div class="data-row">
-							<span class="data-label">Hosting</span>
-							<span class="data-value"
-								>$20/month — Vercel (currently active for v1)</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Domain</span>
-							<span class="data-value"
-								>jeanninekellogg.com — already transferred during v1</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Ecommerce (if Shopify)</span>
-							<span class="data-value"
-								>~$29-$79/month Shopify plan + transaction fees. Significant new
-								cost she needs to know about.</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Itasca Fulfillment</span>
-							<span class="data-value"
-								>Drop-ship fees per order (Itasca rate sheet). Client handles
-								customer invoicing + taxes.</span
-							>
-						</div>
-					</div>
-				</section>
-
-				<!-- CLIENT HISTORY TIMELINE -->
-				<section id="history">
-					<div class="section-header">
-						<div class="section-icon">🗓️</div>
-						<h2>Client Journey Timeline</h2>
-					</div>
-
-					<div class="callout yellow">
-						<span class="callout-icon">⏱️</span>
-						<div class="callout-body">
-							<strong>~18-month relationship, now re-engaged</strong>
-							<span
-								>v1 built late 2024, went live, stalled on final illustrations.
-								Radio silence through 2025 while publishing crisis played out.
-								Re-engaged April 16, 2026 with a clear ask and new
-								direction.</span
-							>
-						</div>
-					</div>
-
-					<div class="timeline">
-						<div class="timeline-item complete">
-							<div class="timeline-date">Oct 2024</div>
-							<div class="timeline-title">Initial Discovery</div>
-							<div class="timeline-desc">
-								Discovery call. Artwork launch in December targeted. Book 2
-								launching early 2025. She wanted easy maintenance, not a full
-								artistic overhaul. Currently on Dreamhost. Happy with
-								content/page structure at the time.
-							</div>
-						</div>
-						<div class="timeline-item complete">
-							<div class="timeline-date">Oct 17, 2024</div>
-							<div class="timeline-title">Proposal Delivered</div>
-							<div class="timeline-desc">
-								Full proposal: $5,550 with unified contact form, $5,250 with
-								generic form. 7 pages (Home, Book Pages for Journey + Battle,
-								About Jeannine, Reviews & Testimonials, Contact, Jagged Compass
-								Publishing). Dreamhost → Vercel migration included. 50% upfront,
-								50% at launch.
-							</div>
-						</div>
-						<div class="timeline-item complete">
-							<div class="timeline-date">Late 2024</div>
-							<div class="timeline-title">Scope Reduced, Project Built</div>
-							<div class="timeline-desc">
-								Scope trimmed to fit budget. Final project total ~$2,775. Site
-								went live on jeanninekellogg.com (still live today). Vercel
-								hosting configured, domain migrated from Dreamhost.
-							</div>
-						</div>
-						<div class="timeline-item complete">
-							<div class="timeline-date">Dec 16, 2024</div>
-							<div class="timeline-title">Invoice 0118 Sent — $2,500</div>
-							<div class="timeline-desc">
-								Project Completion Payment (Pending Illustrations Adjustment).
-								$2,500 paid; $275 balance held for final illustrations that
-								never arrived before publishing issues.
-							</div>
-						</div>
-						<div class="timeline-item complete">
-							<div class="timeline-date">Late 2025</div>
-							<div class="timeline-title">
-								Publishing Crisis (per her email)
-							</div>
-							<div class="timeline-desc">
-								Her customer (a 2,400-book buyer for 2026) went out of business
-								the same week the books were delivered. Jostens print was 100%
-								defective and had to fully refund. Full stop on Book 2.
-							</div>
-						</div>
-						<div class="timeline-item active">
-							<div class="timeline-date">Apr 16, 2026</div>
-							<div class="timeline-title">🎉 Re-Engagement Email</div>
-							<div class="timeline-desc">
-								Jeannine reached out at 9:56 AM. She's ready to relaunch. Book 2
-								is now a trilogy. Artist starts expanded illustrations end of
-								April. Fuzzy Duck is handling brand/marketing. Itasca now has an
-								ecommerce API. Asks: "Do you have availability in your
-								schedule?"
-							</div>
-						</div>
-						<div class="timeline-item pending">
-							<div class="timeline-date">Next</div>
-							<div class="timeline-title">Reply + Discovery Call</div>
-							<div class="timeline-desc">
-								Confirm availability, schedule a call. Discuss: trilogy
-								structure, ecommerce platform decision, Fuzzy Duck coordination,
-								timeline, $275 outstanding, budget.
-							</div>
-						</div>
-					</div>
-				</section>
-
-				<!-- SCOPE & PAGES -->
-				<section id="scope">
-					<div class="section-header">
-						<div class="section-icon">📐</div>
-						<h2>Scope & Pages (v2 Working Draft)</h2>
-					</div>
-
-					<div class="callout info">
-						<span class="callout-icon">📋</span>
-						<div class="callout-body">
-							<strong>v2 scope is a working draft — not approved</strong>
-							<span
-								>Based on v1 structure + her email. Will need discovery call to
-								finalize. Biggest variable: ecommerce platform (Itasca supports
-								Shopify, WooCommerce, Squarespace, BigCommerce).</span
-							>
-						</div>
-					</div>
-
-					<div class="two-col">
-						<div class="page-card">
-							<span class="page-badge badge-existing">Existing — Update</span>
-							<h4>Home</h4>
-							<ul>
-								<li>Hero with new Fuzzy Duck branding</li>
-								<li>Featured books: update to show trilogy (3 titles)</li>
-								<li>Integrate new illustrations as they arrive</li>
-								<li>Existing sections: reviews, about, Jagged Compass blurb</li>
-							</ul>
-						</div>
-
-						<div class="page-card">
-							<span class="page-badge badge-new">New / Rework</span>
-							<h4>Book Pages (×3)</h4>
-							<ul>
-								<li>Book 1: The Tukor's Journey (existing — minor updates)</li>
-								<li>Book 2: new title TBD (was "The Tukor's Battle")</li>
-								<li>Book 3: new title TBD (new addition to trilogy)</li>
-								<li>
-									"Buy Now" buttons → now go to on-site cart, not external
-								</li>
-							</ul>
-						</div>
-
-						<div class="page-card">
-							<span class="page-badge badge-new">New — Core of v2</span>
-							<h4>Shop / Cart / Checkout</h4>
-							<ul>
-								<li>Product listings for all 3 books (when available)</li>
-								<li>Cart + checkout flow</li>
-								<li>Itasca API integration (push orders for drop-ship)</li>
-								<li>
-									Customer invoicing + tax handling (client responsibility per
-									Itasca agreement)
-								</li>
-								<li>Platform TBD: Shopify / WooCommerce / custom on Next.js</li>
-							</ul>
-						</div>
-
-						<div class="page-card">
-							<span class="page-badge badge-existing">Existing</span>
-							<h4>About Jeannine</h4>
-							<ul>
-								<li>Minor updates if new photo / bio content</li>
-								<li>Reflect trilogy + relaunch narrative</li>
-							</ul>
-						</div>
-
-						<div class="page-card">
-							<span class="page-badge badge-existing">Existing</span>
-							<h4>Reviews & Testimonials</h4>
-							<ul>
-								<li>Keep existing reviews</li>
-								<li>Add new reviews as trilogy launches</li>
-							</ul>
-						</div>
-
-						<div class="page-card">
-							<span class="page-badge badge-existing">Existing</span>
-							<h4>Contact</h4>
-							<ul>
-								<li>Existing contact form</li>
-								<li>School visit + classroom guide CTAs</li>
-							</ul>
-						</div>
-
-						<div class="page-card">
-							<span class="page-badge badge-existing">Existing</span>
-							<h4>Jagged Compass Publishing</h4>
-							<ul>
-								<li>Keep existing page</li>
-								<li>Update if Fuzzy Duck revises brand positioning</li>
-							</ul>
-						</div>
-
-						<div class="page-card" style="border-top-color: var(--gray-400)">
-							<span class="page-badge badge-new">Optional Add-On</span>
-							<h4>3D Rotating Book Graphic</h4>
-							<ul>
-								<li>
-									Discussed in v1, never built (no designer available then)
-								</li>
-								<li>Pitch as v2 upsell now that designer is available</li>
-								<li>Need designer quote before firm pricing</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<!-- CONTENT NEEDED -->
-				<section id="content">
-					<div class="section-header">
-						<div class="section-icon">📦</div>
-						<h2>Content Needed from Client</h2>
-					</div>
-
-					<div class="callout warn">
-						<span class="callout-icon">⚠️</span>
-						<div class="callout-body">
-							<strong>Dependency chain: Fuzzy Duck → Artist → Us</strong>
-							<span
-								>Fuzzy Duck finalizes logo/covers. Artist starts illustrations
-								end of April. We can build ecommerce + framework in parallel,
-								but visual integration depends on both. Set expectations about
-								sequencing.</span
-							>
-						</div>
-					</div>
-
-					<div class="card">
-						<h3>Content Checklist</h3>
-						<ul class="checklist">
-							<li>
-								<span class="check-icon">🎨</span>
-								<div>
-									<strong>New Logo (Fuzzy Duck)</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>From marketing agency. Need file formats (SVG preferred),
-										color palette, usage guidelines.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-gray">Fuzzy Duck — TBD</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">📚</span>
-								<div>
-									<strong>New Cover Designs (×3)</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Fuzzy Duck designing. Need high-res files for web. Book 2
-										(new title) + Book 3 (new).</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-gray">Fuzzy Duck — TBD</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">🖼️</span>
-								<div>
-									<strong>Expanded Illustrations</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Artist begins end of April 2026. Rolling delivery
-										expected.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-orange"
-										>Starts End of April</span
-									></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">📖</span>
-								<div>
-									<strong>Book 2 + Book 3 Titles & Synopses</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>"The Tukor's Battle" is being split — need new titles +
-										descriptions.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-gray">Pending</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">🔑</span>
-								<div>
-									<strong>Itasca API Credentials + Docs</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>API key, endpoint docs, rate sheet (drop-ship fees),
-										supported platforms confirmation.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-gray">Pending</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">💰</span>
-								<div>
-									<strong>Tax/Invoicing Setup Info</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Jagged Compass is responsible for invoicing + taxes per
-										Itasca agreement. Need to know: tax rates, invoice flow,
-										payment processor preference.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-gray">Pending</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">📞</span>
-								<div>
-									<strong>Fuzzy Duck Point of Contact</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Direct line to coordinate brand assets without always
-										routing through Jeannine.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-gray">Pending</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">🔐</span>
-								<div>
-									<strong>v1 Access Confirmation</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Confirm current Vercel + domain access still valid. Check
-										what's changed since launch.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-teal">Likely In-Hand</span></span
-								>
-							</li>
-						</ul>
-					</div>
-				</section>
-
-				<!-- TECHNICAL -->
-				<section id="technical">
-					<div class="section-header">
-						<div class="section-icon">⚙️</div>
-						<h2>Technical Specifications</h2>
-					</div>
-
-					<div class="two-col">
-						<div class="card">
-							<h3>Current v1 Stack</h3>
-							<div class="data-row">
-								<span class="data-label">Framework</span>
-								<span class="data-value">Next.js 13+ (App Router)</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Frontend</span>
-								<span class="data-value">React + Tailwind CSS</span>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Hosting</span>
-								<span class="data-value"
-									>Vercel — $20/mo (client paying directly)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Domain</span>
-								<span class="data-value"
-									>jeanninekellogg.com (migrated from Dreamhost in v1)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Email</span>
-								<span class="data-value"
-									>Microsoft 365 (per v1 proposal — confirm still active)</span
-								>
-							</div>
-						</div>
-
-						<div class="card">
-							<h3>v2 Ecommerce — Decision in Progress</h3>
-							<div class="data-row">
-								<span class="data-label">Itasca Supports</span>
-								<span class="data-value"
-									>Shopify · WooCommerce · Squarespace · BigCommerce</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Additional Option</span>
-								<span class="data-value"
-									>Custom Next.js build against Itasca's API (keeps current
-									stack)</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Leaning Toward</span>
-								<span class="data-value"
-									>Custom Next.js — preserves "no monthly fees" brand promise +
-									keeps one stack</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Fallback</span>
-								<span class="data-value"
-									>Shopify if Itasca API docs are weak or she wants fast
-									launch</span
-								>
-							</div>
-							<div class="data-row">
-								<span class="data-label">Payment Processing</span>
-								<span class="data-value"
-									>Stripe (Next.js custom) or Shopify Payments (if
-									Shopify)</span
-								>
-							</div>
-						</div>
-					</div>
-
-					<div class="card">
-						<h3>Platform Comparison (for her — bring to discovery call)</h3>
-						<table class="budget-table">
-							<thead>
-								<tr>
-									<th>Path</th>
-									<th>Upfront</th>
-									<th>Ongoing</th>
-									<th>Fit</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><strong>Custom Next.js + Itasca API</strong></td>
-									<td class="amount">$4,000-$6,500</td>
-									<td class="amount">$20/mo Vercel</td>
-									<td>✅ On-brand · ownership · no fees</td>
-								</tr>
-								<tr>
-									<td>Shopify + Itasca App</td>
-									<td class="amount">$1,500-$2,500</td>
-									<td class="amount">$29-79/mo + 2.9%+30¢/txn</td>
-									<td>⚠️ Breaks "no monthly fees" pitch</td>
-								</tr>
-								<tr>
-									<td>WooCommerce (WordPress)</td>
-									<td class="amount">$2,500-$3,500</td>
-									<td class="amount">Hosting only</td>
-									<td>⚠️ Reintroduces WordPress</td>
-								</tr>
-								<tr>
-									<td>Squarespace / BigCommerce</td>
-									<td class="amount">$1,500-$2,500</td>
-									<td class="amount">$23-49+/mo</td>
-									<td>❌ Template-based · monthly fees</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div class="card">
-						<h3>Pre-Proposal Questions (need answers before firm quote)</h3>
-						<ul class="checklist">
-							<li>
-								<span class="check-icon">📋</span>
-								<div>
-									<strong>Itasca API Documentation</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Get her to forward the docs + rate sheet. Custom Next.js
-										quote depends on how clean the API is. Messy API = bump
-										Shopify up the list.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-orange">Ask in Reply</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">📊</span>
-								<div>
-									<strong>Expected Order Volume</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>50 orders/mo = Shopify fees are nothing. 500+ orders/mo =
-										custom pays for itself fast. Drives the
-										recommendation.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-orange">Ask on Call</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">🎨</span>
-								<div>
-									<strong>Fuzzy Duck's Ecommerce Opinion</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Marketing agencies usually push Shopify (what they know).
-										Worth knowing their lean before quoting — don't want to get
-										overruled post-proposal.</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-orange">Ask on Call</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">💰</span>
-								<div>
-									<strong>Tax Setup</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>She collects tax per Itasca agreement. MN-only?
-										Multi-state? Need tax rates or ready to use TaxJar/Stripe
-										Tax?</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-orange">Ask on Call</span></span
-								>
-							</li>
-							<li>
-								<span class="check-icon">⏱️</span>
-								<div>
-									<strong>Launch Urgency</strong><br />
-									<span style="font-size: 12px; color: var(--gray-600)"
-										>Tied to artist/Fuzzy Duck timeline, but confirm: does she
-										need ecommerce live before illustrations, or
-										simultaneous?</span
-									>
-								</div>
-								<span class="check-status"
-									><span class="pill pill-orange">Ask on Call</span></span
-								>
-							</li>
-						</ul>
-					</div>
-
-					<div class="card">
-						<h3>Itasca API Details (from her email)</h3>
-						<div class="data-row">
-							<span class="data-label">How It Works</span>
-							<span class="data-value"
-								>Site sends order via API → Itasca picks/packs/ships → Jagged
-								Compass invoices + collects from customer</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Packing Materials</span>
-							<span class="data-value">Included in Itasca drop-ship fee</span>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Client Responsibility</span>
-							<span class="data-value"
-								>Customer invoicing, tax collection, maintaining up-to-date
-								catalog of titles</span
-							>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Itasca Responsibility</span>
-							<span class="data-value">API maintenance, fulfillment</span>
-						</div>
-						<div class="data-row">
-							<span class="data-label">Supported Platforms</span>
-							<span class="data-value"
-								>Shopify, WooCommerce, Squarespace, BigCommerce</span
-							>
-						</div>
-					</div>
-				</section>
-
-				<!-- TIMELINE -->
-				<section id="timeline">
-					<div class="section-header">
-						<div class="section-icon">🚀</div>
-						<h2>Project Timeline (Tentative)</h2>
-					</div>
-
-					<div class="callout warn">
-						<span class="callout-icon">⏳</span>
-						<div class="callout-body">
-							<strong>Timeline depends on Fuzzy Duck + Artist delivery</strong>
-							<span
-								>We can start framework work immediately after scope approval.
-								Visual integration is gated by marketing agency + artist output.
-								Artist starts end of April — so earliest realistic launch is
-								mid-summer.</span
-							>
-						</div>
-					</div>
-
-					<div class="phase">
-						<div class="phase-num">00</div>
-						<div>
-							<div class="weeks">Week of Apr 16 — NOW</div>
-							<h4>Reply + Discovery</h4>
-							<ul>
-								<li>
-									Reply to Jeannine today — confirm availability, propose
-									discovery call
-								</li>
-								<li>
-									Ask her to forward Itasca API docs + rate sheet before the
-									call
-								</li>
-								<li>
-									Discovery call: trilogy structure, ecommerce platform, Fuzzy
-									Duck scope, order volume
-								</li>
-								<li>
-									Mention $275 credit applied to v2 as goodwill (soft close
-									move)
-								</li>
-								<li>
-									Get designer quote for 3D book graphic (optional upsell)
-								</li>
-								<li>
-									Send v2 proposal with 2-3 options (Custom Next.js / Shopify /
-									hybrid)
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="phase">
-						<div class="phase-num">01</div>
-						<div>
-							<div class="weeks">Weeks 1-2 Post-Approval</div>
-							<h4>Foundation & Ecommerce Setup</h4>
-							<ul>
-								<li>
-									Platform decision implemented (Shopify setup OR custom dev)
-								</li>
-								<li>Itasca API sandbox testing</li>
-								<li>Cart + checkout flow built</li>
-								<li>Book 1 (Journey) listed as real product</li>
-								<li>Coordinate with Fuzzy Duck on brand asset delivery</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="phase">
-						<div class="phase-num">02</div>
-						<div>
-							<div class="weeks">Weeks 2-4</div>
-							<h4>Trilogy Content Updates</h4>
-							<ul>
-								<li>Restructure homepage + nav for 3 books</li>
-								<li>
-									Build Book 2 + Book 3 pages (placeholder content until covers
-									land)
-								</li>
-								<li>Integrate new logo + brand from Fuzzy Duck</li>
-								<li>Apply expanded illustrations as artist delivers</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="phase">
-						<div class="phase-num">03</div>
-						<div>
-							<div class="weeks">Weeks 4-6</div>
-							<h4>Content Integration & Polish</h4>
-							<ul>
-								<li>Final covers from Fuzzy Duck integrated</li>
-								<li>All illustrations placed</li>
-								<li>3D rotating book graphic built (if approved)</li>
-								<li>Ecommerce end-to-end testing with real Itasca orders</li>
-								<li>Tax + invoicing flow verified with client</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="phase">
-						<div class="phase-num">04</div>
-						<div>
-							<div class="weeks">Week 6+</div>
-							<h4>Launch</h4>
-							<ul>
-								<li>Final client review</li>
-								<li>Deploy to production</li>
-								<li>Monitor first live orders end-to-end</li>
-								<li>Final invoice (v2 balance + $275 if rolled in)</li>
-								<li>Post-launch check-in after 2 weeks</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<!-- UPSELLS -->
-				<section id="upsells">
-					<div class="section-header">
-						<div class="section-icon">📈</div>
-						<h2>Future Upsells & Add-Ons</h2>
-					</div>
-
-					<div class="callout info">
-						<span class="callout-icon">💡</span>
-						<div class="callout-body">
-							<strong
-								>v2 is itself an upsell — be strategic about what else to
-								stack</strong
-							>
-							<span
-								>Don't overload the v2 proposal. Lead with ecommerce + trilogy.
-								Offer 3D graphic as a clear "level up." Hold the rest for
-								post-launch conversations once ecommerce is proving its
-								value.</span
-							>
-						</div>
-					</div>
-
-					<div class="three-col">
-						<div class="upsell-card">
-							<h4>🔄 3D Rotating Book Graphic</h4>
-							<div class="price">~$600-$1,200 (TBD)</div>
-							<p>
-								Discussed in v1, never built. Now possible with new designer.
-								Ecommerce-style product rotation — shows full book cover, spine,
-								back. Premium touch for the trilogy launch. Get designer quote
-								before finalizing.
-							</p>
-						</div>
-						<div class="upsell-card">
-							<h4>📧 Email List / Newsletter</h4>
-							<div class="price">~$400-$700</div>
-							<p>
-								Capture emails from site visitors — parents, teachers, book fair
-								contacts. Integrate with Mailchimp or ConvertKit. Perfect tool
-								for announcing Book 3 launch when it's ready.
-							</p>
-						</div>
-						<div class="upsell-card">
-							<h4>🏫 Teacher/School Portal</h4>
-							<div class="price">~$800-$1,500</div>
-							<p>
-								Gated teacher's guide downloads, classroom visit booking form,
-								bulk order request form. She mentioned classroom guides + school
-								visits in v1 — natural extension once trilogy lands in schools.
-							</p>
-						</div>
-						<div class="upsell-card">
-							<h4>📱 Social Media Integration</h4>
-							<div class="price">~$300-$500</div>
-							<p>
-								Instagram feed, Facebook events, share buttons, Open Graph
-								optimization. Fuzzy Duck likely pushing her to build social
-								presence — site should reinforce it.
-							</p>
-						</div>
-						<div class="upsell-card">
-							<h4>📊 Ecommerce Analytics Dashboard</h4>
-							<div class="price">~$400-$600</div>
-							<p>
-								Once orders start flowing, she'll want to see what's selling,
-								where customers come from, conversion rate. Lightweight
-								reporting layer on top of the store.
-							</p>
-						</div>
-						<div class="upsell-card">
-							<h4>🔧 Annual Maintenance Retainer</h4>
-							<div class="price">~$500-$800/yr</div>
-							<p>
-								Ongoing updates as trilogy rolls out, new illustrations, events,
-								school visits. She's an author with a lot of content churn — a
-								retainer avoids invoice-per-tweak friction.
-							</p>
-						</div>
-					</div>
-				</section>
-
-				<!-- NOTES -->
-				<section id="notes">
-					<div class="section-header">
-						<div class="section-icon">📝</div>
-						<h2>Notes & Observations</h2>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">Apr 16, 2026 — Re-Engagement</div>
-						<p>
-							She came back. That's significant. After an 18-month gap +
-							publishing disaster, she emailed directly with a specific ask (not
-							a vague "checking in"). She's treating me as her web person by
-							default — don't take that for granted, but also don't be coy.
-							Reply today. Confirm availability. Propose a call.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">$275 — Strategic Writeoff</div>
-						<p>
-							Decision: apply the outstanding $275 from Invoice 0118 as a
-							credit/writeoff and mention it in the v2 sell as a goodwill
-							gesture. Framing: "I'm closing out the old invoice as a credit
-							toward v2 — let's focus on getting the relaunch right." Costs
-							nothing in cash terms (it was never collected) but buys meaningful
-							relationship capital right when we need her to say yes to a bigger
-							v2 number. Don't lead with it — drop it at the close.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">
-							Ecommerce Decision — Biggest Lever in v2
-						</div>
-						<p>
-							Custom Next.js preserves the "no monthly fees, own it forever"
-							pitch that landed v1. Shopify breaks that promise. But Shopify is
-							faster/cheaper upfront and has pre-built Itasca integration. The
-							honest recommendation depends on (1) how clean Itasca's API docs
-							are — get them before quoting, (2) her expected order volume — low
-							volume = Shopify makes sense, high volume = custom pays for
-							itself, (3) Fuzzy Duck's opinion — marketing agencies default to
-							Shopify. Bring the comparison table to the discovery call and let
-							her pick with eyes open.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">Fuzzy Duck Dynamic</div>
-						<p>
-							A marketing agency is now in the picture. This can go two ways:
-							(1) they respect the tech/web boundary and we coordinate cleanly,
-							or (2) they try to insert themselves into site design decisions.
-							Early call with Jeannine should clarify who does what. Ideal:
-							Fuzzy Duck = brand/marketing/cover design, Latz = site
-							build/ecommerce. Get a direct contact at FD so coordination
-							doesn't always route through Jeannine.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">
-							Shopify Tradeoff — Worth Naming Directly
-						</div>
-						<p>
-							If she leans Shopify, don't dance around it — be upfront that it
-							introduces monthly fees (contrary to the v1 "no monthly fees"
-							pitch) and frame it as a deliberate tradeoff for
-							speed/simplicity/lower upfront cost. Transparency here protects
-							the brand and respects her intelligence. Don't hide the math.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">
-							She's Resilient — Frame This as a Relaunch
-						</div>
-						<p>
-							Her email is remarkable — matter-of-fact about losing a 2,400-book
-							deal and a catastrophic print run, then "I have risen from the
-							stormy seas." This is someone who's ready to push through. The v2
-							proposal should match that energy: this isn't a patch job, it's a
-							relaunch. Position the website as part of the comeback.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">Original v1 Vision — Still Relevant</div>
-						<p>
-							The v1 proposal emphasized "eye-popping design," "wow factor on
-							landing page," artwork throughout, building credibility for
-							parents searching after book fairs. That vision is still the goal
-							— v2 just adds ecommerce + a third book. Don't reinvent the
-							strategy. Build on it.
-						</p>
-					</div>
-
-					<div class="note-block">
-						<div class="note-date">Client Communication Style</div>
-						<p>
-							Jeannine writes long, clear, detailed emails. She tells you
-							exactly what's going on — publishing issues, marketing agency,
-							artist timeline, distributor's new API, the specific quote from
-							Itasca. That's gold. Match her style: detailed, transparent, no
-							sales fluff. She respects competence.
-						</p>
-					</div>
-				</section>
-			</div>
-		</div>
-
-		<script>
-			// Active nav on scroll
-			const sections = document.querySelectorAll('section[id]');
-			const navLinks = document.querySelectorAll('.nav-link');
-
-			const observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							navLinks.forEach((link) => {
-								link.classList.remove('active');
-								if (link.getAttribute('href') === '#' + entry.target.id) {
-									link.classList.add('active');
-								}
-							});
-						}
-					});
-				},
-				{ rootMargin: '-20% 0px -70% 0px' },
-			);
-
-			sections.forEach((s) => observer.observe(s));
-
-			// Mobile nav FAB
-			const sidebar = document.getElementById('sidebar');
-			const fab = document.getElementById('navFab');
-			const overlay = document.getElementById('navOverlay');
-
-			function openNav() {
-				sidebar.classList.add('mobile-open');
-				overlay.style.display = 'block';
-				requestAnimationFrame(() => overlay.classList.add('visible'));
-				fab.textContent = '✕';
-			}
-
-			function closeNav() {
-				sidebar.classList.remove('mobile-open');
-				overlay.classList.remove('visible');
-				setTimeout(() => {
-					overlay.style.display = 'none';
-				}, 280);
-				fab.textContent = '☰';
-			}
-
-			fab.addEventListener('click', () => {
-				if (sidebar.classList.contains('mobile-open')) {
-					closeNav();
-				} else {
-					openNav();
-				}
-			});
-
-			overlay.addEventListener('click', closeNav);
-
-			// Smooth scroll + close on nav link tap (mobile)
-			navLinks.forEach((link) => {
-				link.addEventListener('click', (e) => {
-					if (
-						window.innerWidth <= 680 &&
-						sidebar.classList.contains('mobile-open')
-					) {
-						e.preventDefault();
-						const target = link.getAttribute('href');
-						closeNav();
-						setTimeout(() => {
-							const el = document.querySelector(target);
-							if (el) el.scrollIntoView({ behavior: 'smooth' });
-						}, 280);
-					}
-				});
-			});
-		</script>
-	</body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Jeannine Kellogg — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB + OVERLAY ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s;
+  }
+
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'TUKORS';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .budget-table .credit-row td {
+    background: #fffbcc !important;
+    color: #a07d00;
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-new { background: #dcfce7; color: var(--green); }
+  .badge-rebuild { background: var(--orange-light); color: var(--orange); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+  .pill-red { background: var(--red-light); color: var(--red); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE — TABLET ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  /* ── RESPONSIVE — MOBILE ── */
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+      z-index: 200;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .sidebar-overlay { display: block; }
+    .main { margin-left: 0; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header { padding: 32px 20px 28px; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .checklist li .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .callout { flex-direction: column; gap: 6px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Jeannine Kellogg</div>
+    <div class="status-pill">Pre-Proposal</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">📚</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#v1" class="nav-link"><span class="nav-icon">🔙</span> V1 History</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client Journey</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Jeannine Kellogg</h1>
+    <div class="sub">jeanninekellogg.com · The Tukor Series v2 — Ecommerce + Trilogy Rebuild</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Jeannine Kellogg, Author</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Estimated Range</span>
+        <span class="value">$4,000–$7,000</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Status</span>
+        <span class="value" style="color:var(--orange);">Pre-Proposal</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">V1 Balance</span>
+        <span class="value" style="color:var(--yellow);">$275 (apply as credit)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://jeanninekellogg.com" target="_blank">jeanninekellogg.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">612-310-6430</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">📚</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Jeannine Kellogg</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Author / Publisher</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:jmk@jaggedcompass.com">jmk@jaggedcompass.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">612-310-6430</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Maker</span>
+            <span class="data-value">Jeannine — solo. No board, no committee. She decides and moves.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Business</span>
+            <span class="data-value">Jagged Compass Publishing (Jagged Compass LLC)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Type</span>
+            <span class="data-value">Self-Published Author / Independent Publisher</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">Minnesota (Twin Cities area)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Distributor</span>
+            <span class="data-value">Itasca Books (division of Bookmobile)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Marketing Agency</span>
+            <span class="data-value">Fuzzy Duck — Wayzata, MN (just hired, kick-off TBD)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>About the Books</h3>
+        <div class="data-row">
+          <span class="data-label">Series</span>
+          <span class="data-value">The Tukors — middle-grade fantasy trilogy</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Target Reader</span>
+          <span class="data-value">Middle-school kids. Parents discover her at book fairs/school events — website adds legitimacy when they search her name later.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Book 1</span>
+          <span class="data-value">The Tukor's Journey — published, ready for immediate sale</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Book 2</span>
+          <span class="data-value">The Tukor's Mission (or "Secret") — title TBD. Cover illustration end of May. Interior B&W early June.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Book 3</span>
+          <span class="data-value">The Tukor's Battle — keeps current stormy sea cover. June timeline for print.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Illustrator</span>
+          <span class="data-value">Madsen — starts expanded illustrations end of April 2026</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Format</span>
+          <span class="data-value">Print books only. No ebook links (halted distribution). No audiobook yet (huge maybe, long-term). Design should accommodate future addition.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🦆</span>
+        <div class="callout-body">
+          <strong>Fuzzy Duck Coordination</strong>
+          <span>Fuzzy Duck (Wayzata, MN) is handling logo, cover design, and marketing plan. Jeannine just agreed to work with them April 16 — kick-off meeting TBD. They use "Teamwork" project management software. Jeannine asked if Jordan should be added there or stick with Trello. Timeline and deliverable specifics are unknown until after their kick-off.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Returning client. V1 site built late 2024 (~$5,500). Now needs v2: ecommerce + trilogy rebuild. Estimated $4,000–$7,000. Proposal NOT yet sent — she has NOT committed.</strong>
+        <p>Jeannine re-engaged April 16, 2026 after a catastrophic 2025 (lost 2,400-book customer, defective print run, full Jostens refund). She's split Book 2 into a trilogy, hired Fuzzy Duck for marketing/branding, and her distributor Itasca Books now offers ecommerce API integration. She wants a shopping cart, trilogy restructure, new brand assets, and CMS for book management.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why She's Coming Back</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> V1 site has no ecommerce — can't sell books directly</li>
+            <li><span class="check-icon">🔴</span> Series expanded from 2 books to trilogy — site structure doesn't fit</li>
+            <li><span class="check-icon">🔴</span> New branding coming from Fuzzy Duck — covers, logo, identity all changing</li>
+            <li><span class="check-icon">🔴</span> Books 2 &amp; 3 need "coming soon" staging as they're produced</li>
+            <li><span class="check-icon">🔴</span> No CMS — can't manage book catalog or product info herself</li>
+            <li><span class="check-icon">🔴</span> Ebook distribution halted — old links/references need cleanup</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Parent meets Jeannine at book fair → searches her name → lands on a real author site with a buy button</li>
+            <li><span class="check-icon">✅</span> Book 1 purchasable immediately via Itasca drop-ship</li>
+            <li><span class="check-icon">✅</span> Books 2 &amp; 3 have polished "coming soon" pages that build anticipation</li>
+            <li><span class="check-icon">✅</span> New Fuzzy Duck branding integrated seamlessly</li>
+            <li><span class="check-icon">✅</span> Jeannine can manage book details, toggle availability, update content via CMS</li>
+            <li><span class="check-icon">✅</span> Site can grow: audiobook links, ebook links, new titles — all addable later</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>She hasn't committed yet</strong>
+          <span>This is pre-proposal. She's interested and engaged but hasn't seen pricing or scope for v2. Sending proposal with wireframe to gauge interest. She already invested $5,500 in v1 — budget sensitivity is real. The $275 outstanding balance from v1 should be applied as goodwill credit toward v2.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Key Constraint: Coordinating Three Parties</strong>
+          <span>Latz (development), Fuzzy Duck (branding/marketing), and Itasca Books (fulfillment API) all need to sync. Fuzzy Duck's kick-off hasn't happened yet. Itasca API integration could be "bumpy" per Jeannine — they took 2.5 years to implement their own system. Build the proposal to handle this uncertainty.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- V1 HISTORY -->
+    <section id="v1">
+      <div class="section-header">
+        <div class="section-icon">🔙</div>
+        <h2>V1 Site History</h2>
+      </div>
+
+      <div class="card">
+        <h3>Original Build (Late 2024)</h3>
+        <div class="data-row">
+          <span class="data-label">Contract Value</span>
+          <span class="data-value">~$5,500</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">What Was Built</span>
+          <span class="data-value">Author website for The Tukor's Journey — landing page, about, book details. No ecommerce. No CMS.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">jeanninekellogg.com (currently live with v1)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Status</span>
+          <span class="data-value">Live — but now outdated. Series expanded, branding changing, no purchase capability.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">💸</span>
+        <div class="callout-body">
+          <strong>Outstanding V1 Balance: $275 (Invoice 0118, Dec 2024)</strong>
+          <span>Never collected due to publishing crisis (Jostens refund, lost 2,400-book customer). Strategy: apply as goodwill credit toward v2 project. Don't chase — she went through hell. This builds trust and keeps the relationship strong.</span>
+        </div>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">📖</span>
+        <div class="callout-body">
+          <strong>The Publishing Crisis (Late 2025)</strong>
+          <span>Customer was going to order 2,400 books in 2026. Jeannine printed to meet that demand. The organization went out of business the same week the books were delivered. The print run was 100% defective (catastrophic print). Jostens had to issue a full refund. This nearly sank her publishing effort entirely — but she came back.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Pre-proposal — no contract yet</strong>
+          <span>These numbers are estimated ranges. Final pricing depends on Itasca API complexity, Fuzzy Duck deliverable scope, and how much v1 work carries over vs. gets rebuilt. Proposal with wireframe to be sent for Jeannine's review.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Est. Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ecommerce Integration (Itasca API)</strong></td>
+            <td>Shopping cart, Itasca drop-ship API, order flow, Book 1 immediate, Books 2&amp;3 staged</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Trilogy Site Restructure</strong></td>
+            <td>3-book architecture, individual book pages, "coming soon" states, series landing</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Brand Asset Integration</strong></td>
+            <td>New Fuzzy Duck logos, covers, typography — full visual refresh</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>CMS Implementation</strong></td>
+            <td>Book/product management, toggleable availability, content editing</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Optional: 3D Book Graphics + Animation</strong></td>
+            <td>Rotating 3D book mockups, entrance animations. Fuzzy Duck may assist.</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Estimated Total Range</strong></td>
+            <td></td>
+            <td class="amount"><strong>$4,000–$7,000</strong></td>
+          </tr>
+          <tr class="credit-row">
+            <td>🔄 V1 Credit (Invoice 0118)</td>
+            <td>Outstanding balance from v1 — apply as goodwill credit toward v2</td>
+            <td class="amount">–$275</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>V1 Financial Context</h3>
+        <div class="data-row">
+          <span class="data-label">V1 Contract</span>
+          <span class="data-value">~$5,500 (paid minus $275 outstanding)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Outstanding</span>
+          <span class="data-value">$275 — Invoice 0118, Dec 2024. Never collected. Apply as v2 credit.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Total Client Investment</span>
+          <span class="data-value">~$5,225 paid to date + $4,000–$7,000 proposed = $9,225–$12,225 lifetime</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Budget Sensitivity</span>
+          <span class="data-value">Real — she just survived a catastrophic year. Price the proposal carefully. Tiered options may help again.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story</strong>
+          <span>V1 gave her legitimacy. V2 gives her revenue. Every book fair, school visit, and social post now has a "buy" destination. The website goes from "business card" to "revenue engine." Itasca handles fulfillment — she just needs the storefront.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT JOURNEY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Returning client — ~18-month relationship</strong>
+          <span>Built v1 late 2024. Publishing crisis killed momentum late 2025. She re-engaged April 16, 2026 on her own — zero prompting. That's a strong signal. She trusts the work.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Late 2024</div>
+          <div class="timeline-title">V1 Site Built &amp; Launched</div>
+          <div class="timeline-desc">Original jeanninekellogg.com — author website for The Tukor's Journey. ~$5,500 contract. Site went live. No ecommerce, no CMS.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Dec 2024</div>
+          <div class="timeline-title">Invoice 0118 Sent — $275 Balance</div>
+          <div class="timeline-desc">Final invoice for v1 work. Never collected — publishing crisis hit almost immediately after.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Late 2025</div>
+          <div class="timeline-title">🌊 Publishing Crisis</div>
+          <div class="timeline-desc">Lost 2,400-book customer (organization went out of business same week books delivered). Catastrophic print run — 100% defective. Jostens issued full refund. Nearly sank the entire publishing effort. No contact during this period — understandably.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 16, 2026 — 9:56 AM</div>
+          <div class="timeline-title">🎉 Jeannine Re-Engages</div>
+          <div class="timeline-desc">Reached out on her own. "I have risen from the stormy seas and ready to relaunch." Announced trilogy expansion, Fuzzy Duck hire, and Itasca ecommerce API capability. Asked about availability.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 16, 2026 — 2:11 PM</div>
+          <div class="timeline-title">Jordan Responds — Same Day</div>
+          <div class="timeline-desc">Confirmed availability. Acknowledged the crisis with empathy. Asked for a couple days to research Itasca API, platform options, and build a proper plan. Professional, enthusiastic, direct.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 16, 2026 — 9:16 PM</div>
+          <div class="timeline-title">Jeannine Sends Detailed Scope</div>
+          <div class="timeline-desc">Massive email with full task list, book details, Fuzzy Duck info, timing notes, and thoughts on project management (Teamwork vs Trello). Extremely organized and thorough. This is how she communicates — long, clear, detailed.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 16, 2026 — 9:44 PM</div>
+          <div class="timeline-title">Follow-up: Itasca API Concerns</div>
+          <div class="timeline-desc">Second email same night. Expressed worry about API integration being "bumpy." Mentioned Itasca's "Stacks" system, her contact Hans. Wants Jordan doing development, not Itasca. "I think we need to be prepared for hiccups."</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Apr 22, 2026</div>
+          <div class="timeline-title">Proposal in Development</div>
+          <div class="timeline-desc">Researching Itasca API, platform options, and pricing. Building proposal with wireframe. $4,000–$7,000 range. Need to send this soon — she's ready to move.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Proposal Sent + Review</div>
+          <div class="timeline-desc">Send rebuild proposal with wireframe for Jeannine's review. Include tiered options if possible — she responded to that approach with v1.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Jeannine Commits / Contract Signed</div>
+          <div class="timeline-desc">Awaiting decision. She's a solo decision-maker — no board approval needed. Could be fast once proposal lands.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Scope is draft — based on Jeannine's emails, not a signed contract</strong>
+          <span>Everything below is reconstructed from her April 16 emails. Final scope depends on proposal approval, Fuzzy Duck deliverables, and Itasca API capabilities. Flagging anything uncertain.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-rebuild">Rebuild</span>
+          <h4>Home / Landing Page</h4>
+          <ul>
+            <li>Trilogy-first design — hook reader on Book 1</li>
+            <li>New Fuzzy Duck branding, logo, visual identity</li>
+            <li>Hero featuring The Tukor's Journey prominently</li>
+            <li>Books 2 &amp; 3 teasers / "coming soon" previews</li>
+            <li>Buy button (Itasca integration) front and center</li>
+            <li>Optional: 3D book mockups, entrance animations</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS + Ecommerce</span>
+          <h4>Book 1 — The Tukor's Journey</h4>
+          <ul>
+            <li>Full book detail page — cover, synopsis, bibliographic info</li>
+            <li>Shopping cart / buy button → Itasca drop-ship</li>
+            <li>Print book only — no ebook/audiobook links</li>
+            <li>Bibliographic details (some updates needed, Jeannine to provide)</li>
+            <li>Available immediately at launch</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-new">New — Coming Soon</span>
+          <h4>Book 2 — The Tukor's Mission (or Secret)</h4>
+          <ul>
+            <li>"Coming soon" state until printed</li>
+            <li>Title TBD — final decision from Fuzzy Duck branding</li>
+            <li>Cover illustration: Madsen, end of May</li>
+            <li>Interior B&W illustrations: early June</li>
+            <li>Toggleable → full product page when ready</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-new">New — Coming Soon</span>
+          <h4>Book 3 — The Tukor's Battle</h4>
+          <ul>
+            <li>"Coming soon" state until printed</li>
+            <li>Keeps current stormy sea cover illustration</li>
+            <li>June timeline for print readiness</li>
+            <li>Toggleable → full product page when ready</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-rebuild">Rebuild</span>
+          <h4>About the Author</h4>
+          <ul>
+            <li>Updated bio with trilogy context</li>
+            <li>New Fuzzy Duck brand photography (if available)</li>
+            <li>Author story / connection to the series</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge" style="background:var(--gray-100);color:var(--gray-600);">Not in Scope — Future</span>
+          <h4>Audiobook / Ebook Pages</h4>
+          <ul>
+            <li>Ebook distribution halted — no links for now</li>
+            <li>Audiobook is "huge maybe" long-term</li>
+            <li>Design should accommodate future addition</li>
+            <li>If added: referral links to 3rd-party sites, not direct sales</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>CMS Overview</h3>
+        <div class="data-row">
+          <span class="data-label">Purpose</span>
+          <span class="data-value">Book/product management — Jeannine can toggle availability, update details, add new titles</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Key Feature</span>
+          <span class="data-value">"Coming soon" ↔ "Available" toggle per book — crucial for phased trilogy rollout</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Content Types</span>
+          <span class="data-value">Book details (title, cover, synopsis, bibliographic info, price, availability state)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Platform</span>
+          <span class="data-value">TBD — depends on ecommerce platform decision (see Technical section)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Ecommerce Integration — Itasca Books API</h3>
+        <div class="data-row">
+          <span class="data-label">Model</span>
+          <span class="data-value">Publisher (Jeannine) collects payment → order pushes to Itasca via API → Itasca picks, packs, ships</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Responsibility</span>
+          <span class="data-value">Jeannine handles invoicing, tax collection, catalog maintenance. Itasca handles fulfillment + API maintenance.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Supported Platforms</span>
+          <span class="data-value">Shopify, WooCommerce, Squarespace, BigCommerce (per Jeannine's email / Itasca docs)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Contact at Itasca</span>
+          <span class="data-value">Hans — Jeannine's technical contact for API specs/requirements</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Products</span>
+          <span class="data-value">Print books only. No ebook. No audiobook. No digital downloads.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Most content depends on Fuzzy Duck deliverables and illustration timeline</strong>
+          <span>This isn't a "send me everything" situation — content will arrive in waves as Fuzzy Duck and Madsen deliver. Build the framework first, populate as assets arrive.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>New Logo &amp; Brand Identity Files</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">From Fuzzy Duck. Logo, color palette, typography direction. Can't finalize site design until this lands.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Waiting — Fuzzy Duck</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📕</span>
+            <div>
+              <strong>Book 1 Cover — New Version</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Front cover + full wrap from Fuzzy Duck. The Tukor's Journey gets a rebrand.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Waiting — Fuzzy Duck</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📗</span>
+            <div>
+              <strong>Book 2 Cover — The Tukor's Mission/Secret</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Madsen illustration end of May. Fuzzy Duck finalizing title. Full wrap needed.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Waiting — Madsen + Fuzzy Duck</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📘</span>
+            <div>
+              <strong>Book 3 Cover — The Tukor's Battle</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Keeps current stormy sea cover illustration. May need rebrand treatment from Fuzzy Duck for consistency.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Partial — art exists</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✏️</span>
+            <div>
+              <strong>Title PNGs for All Three Books</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Isolated title graphics (like the current leaves-around-title on landing page). Needed for each book.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Waiting — Fuzzy Duck</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📖</span>
+            <div>
+              <strong>Bibliographic Details — All Three Books</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Book 1: some updates needed, Jeannine will provide. Books 2&amp;3: partially unavailable until printer specs finalized.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Partial — Book 1 soonish</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔗</span>
+            <div>
+              <strong>Social Media Links (Updated)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Needs to work with Fuzzy Duck on what the "socials" will be. Keep current links as-is for now.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Waiting — Fuzzy Duck</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔌</span>
+            <div>
+              <strong>Itasca API Specs / Integration Docs</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Need to contact Hans at Itasca for API requirements, endpoints, auth, and order format. This is the technical blocker.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-red">Blocker — need specs</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎬</span>
+            <div>
+              <strong>3D Book Mockups / Animations (Optional)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Spinning book, entrance animations. Fuzzy Duck may help brainstorm or produce these. Not confirmed.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Optional — TBD</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🔴</span>
+        <div class="callout-body">
+          <strong>Critical Platform Decision: How to handle ecommerce</strong>
+          <span>Itasca supports Shopify, WooCommerce, Squarespace, and BigCommerce. Current v1 is Next.js. A custom Next.js integration with Itasca's API is possible but not on their "supported" list — meaning more risk and no pre-built connection. This is the biggest technical decision in the proposal.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>V1 Stack (Current)</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">None — static content</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Ecommerce</span>
+            <span class="data-value">None</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>V2 Platform Options</h3>
+          <div class="data-row">
+            <span class="data-label">Option A</span>
+            <span class="data-value"><strong>Shopify + Itasca</strong> — Pre-built integration likely exists. Highest compatibility. Shopify handles cart/checkout/payment. Trade-off: monthly Shopify fees, less design control.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Option B</span>
+            <span class="data-value"><strong>Next.js + Snipcart/Stripe + Itasca API</strong> — Keep current stack, add headless cart. Full design control. Trade-off: custom API work, Itasca integration is unbaked territory.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Option C</span>
+            <span class="data-value"><strong>WooCommerce + Itasca</strong> — Supported platform. WordPress-based. Trade-off: different stack entirely, hosting change, WordPress maintenance.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Recommendation</span>
+            <span class="data-value">TBD — need Itasca API specs from Hans before committing. If Shopify has a clean pre-built connection, that de-risks the whole project.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Itasca Books API — Technical Details</h3>
+        <div class="data-row">
+          <span class="data-label">What Itasca Is</span>
+          <span class="data-value">Book distributor / fulfillment service. Division of Bookmobile. Formed 2004. Serves independent publishers.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">How It Works</span>
+          <span class="data-value">Publisher's ecommerce site pushes electronic orders to Itasca. Itasca picks, packs, ships. Publisher handles payment collection + tax.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Backend System</span>
+          <span class="data-value">iPub distribution system with custom API built by iPro Business Systems. "eFirst" order hub processes orders from any electronic source.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Complexity Warning</span>
+          <span class="data-value">Three systems communicate in real-time: order hub, distribution system, printshop. Itasca's own integration "was not without its bumps" and took 2.5 years. Jeannine is aware — "I think we need to be prepared for hiccups."</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Jeannine's Itasca Account</span>
+          <span class="data-value">Uses "Stacks" system — can see inventory, initiate drop ships. Has existing relationship.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">API Contact</span>
+          <span class="data-value">Hans (Jeannine's contact). Also: Mark Jung (general distribution, per Itasca website).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Key Quote from Jeannine</span>
+          <span class="data-value">"I want you doing the development, not them. Hopefully, they can just hand us the 'specs' for the integration."</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Domain &amp; Hosting</h3>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">jeanninekellogg.com — currently live with v1. No transfer needed unless platform changes.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Hosting</span>
+          <span class="data-value">Vercel (from v1 build)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Hosting Change?</span>
+          <span class="data-value">Depends on platform decision. Shopify = Shopify hosting. Next.js = stay on Vercel. WooCommerce = needs WP hosting.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Timeline is aspirational — three external dependencies control the schedule</strong>
+          <span>1) Fuzzy Duck branding deliverables (unknown timeline). 2) Madsen illustrations (end of May / early June). 3) Itasca API specs (need to contact Hans). Build proposal to handle phased delivery.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Now — Pre-Proposal</div>
+          <h4>Research &amp; Proposal</h4>
+          <ul>
+            <li>Research Itasca API options and platform choices</li>
+            <li>Build proposal with wireframe and pricing tiers</li>
+            <li>Send to Jeannine for review</li>
+            <li>Decide: Shopify vs Next.js vs WooCommerce approach</li>
+            <li>Contact Hans at Itasca for API specs (after Jeannine commits)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Post-Approval — Weeks 1–2</div>
+          <h4>Foundation &amp; Ecommerce Setup</h4>
+          <ul>
+            <li>Set up ecommerce platform (Shopify or custom)</li>
+            <li>Begin Itasca API integration — connect with Hans</li>
+            <li>Build trilogy site structure (3 book pages + series landing)</li>
+            <li>Implement "coming soon" states for Books 2 &amp; 3</li>
+            <li>Get Book 1 purchasable with working cart/checkout</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 2–4 (Parallel with Fuzzy Duck)</div>
+          <h4>Brand Integration &amp; Design</h4>
+          <ul>
+            <li>Integrate Fuzzy Duck brand assets as they arrive (logo, covers, typography)</li>
+            <li>Rebuild visual design with new identity</li>
+            <li>Implement CMS for book management</li>
+            <li>Optional: 3D book mockups + animation work</li>
+            <li>Share live dev link for Jeannine's feedback</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 4–6 (As Illustrations Land)</div>
+          <h4>Content Population &amp; Books 2/3 Staging</h4>
+          <ul>
+            <li>Madsen cover illustration for Book 2 (end of May)</li>
+            <li>Interior B&W illustrations (early June)</li>
+            <li>Populate book pages with real content as it arrives</li>
+            <li>Bibliographic details for all three books</li>
+            <li>Test full purchase flow: cart → Itasca → fulfillment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">Weeks 6–8</div>
+          <h4>Launch &amp; Go-Live</h4>
+          <ul>
+            <li>Final review with Jeannine</li>
+            <li>CMS training — how to toggle book availability, update content</li>
+            <li>Switch "coming soon" → live as books become available</li>
+            <li>DNS / domain cutover (if platform changed)</li>
+            <li>Post-launch check-in</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Phased launch strategy</strong>
+          <span>Site can go live with Book 1 purchasable + Books 2 &amp; 3 "coming soon." Don't wait for everything to be ready. Launch when Book 1 can sell, then toggle books on as they're printed. CMS makes this seamless.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells &amp; Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Best window: after trilogy is fully launched and selling, ~Q4 2026</strong>
+          <span>Let her focus on the relaunch. Once all three books are live and revenue is flowing, she'll naturally want to expand. She thinks long-term — she already mentioned audiobooks as a possibility.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🎧 Audiobook Integration</h4>
+          <div class="price">~$400–$600</div>
+          <p>She called this a "huge maybe." Audiobooks/ebooks distribute separately — would be referral links to 3rd-party sites (Audible, etc.), not direct sales. Light lift but she mentioned it specifically.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📱 Book Fair Landing Page</h4>
+          <div class="price">~$300–$500</div>
+          <p>Mobile-optimized QR-scannable page for book fairs and school events. Parents meet Jeannine → scan QR → instant buy. Her primary sales channel is in-person — this bridges the gap.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📰 Author Blog / News</h4>
+          <div class="price">~$400–$600</div>
+          <p>CMS-managed blog for trilogy updates, behind-the-scenes, school visit announcements. Fuzzy Duck's marketing plan might call for this. Wait until their plan is finalized.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📧 Email List / Newsletter</h4>
+          <div class="price">~$300–$500</div>
+          <p>Capture reader emails at book fairs and on-site. Build audience for future book launches. Integrates with Mailchimp/ConvertKit. Fuzzy Duck may already be planning this.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎨 Expanded Illustration Gallery</h4>
+          <div class="price">~$300–$400</div>
+          <p>Showcase Madsen's interior illustrations in a browsable gallery. Kids love the art — give it a dedicated space. Could tie into marketing as "preview" content.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance</h4>
+          <div class="price">~$400–$600/yr</div>
+          <p>Light retainer for updates, new book additions, seasonal content changes. As the trilogy grows and potentially a 4th book, she'll need ongoing support.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes &amp; Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">April 22, 2026 — Pre-Proposal Stage</div>
+        <p>She came back to us. Zero prompting. After a catastrophic year, she picked up the phone (well, email) and said "I'm ready to relaunch." That's the strongest possible signal — she trusts the work and the relationship. Don't take that for granted. The $275 credit is the right move — it says "I remember what you went through, and I'm here for the long game."</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Jeannine writes long, detailed, clear emails. She tells you exactly what she's thinking — no guessing. Her April 16 emails were three messages in one day, each progressively more detailed. She's organized, thorough, and transparent. Match that energy — give her detailed responses, not one-liners. She appreciates competence and transparency. Don't oversimplify.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Fuzzy Duck Coordination — Potential Friction</div>
+        <p>She just hired Fuzzy Duck the same day she emailed us. Their kick-off hasn't happened yet. There's potential for scope confusion: who's doing what, whose timeline governs, how do brand assets flow from Fuzzy Duck → Jordan → site. Clarify roles early. Jeannine asked about project management tools (Teamwork vs Trello) — get ahead of this. Offer to join a kick-off call with Fuzzy Duck.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Itasca API — The Big Unknown</div>
+        <p>This is the riskiest piece of the project. Itasca took 2.5 years to implement their own system. They support Shopify/WooCommerce/Squarespace/BigCommerce — NOT Next.js directly. If we stay on Next.js, we're building a custom integration with an API that has a documented history of being "bumpy." Factor this risk into pricing. Consider Shopify as the path of least resistance — pre-built connection likely exists. Need to talk to Hans before committing to a platform.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Budget Sensitivity</div>
+        <p>She already spent ~$5,500 on v1. Asking for another $4,000–$7,000 means she's looking at $9,000–$12,000+ total investment for an author website. That's real money for a self-published author who just survived a publishing catastrophe. Tiered options worked before (for Hancock) — consider the same approach here. Give her a lean option and a full option. The $275 credit softens the ask.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The "Stormy Seas" Resilience</div>
+        <p>She lost a 2,400-book customer. The print run was 100% defective. The printer had to refund everything. She nearly went under — and she came back. Decided to split the book into a trilogy, hired a marketing agency, and re-engaged development. This is a client who fights for her work. Respect that. Deliver something exceptional.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Project Management Decision Pending</div>
+        <p>Jeannine asked whether to use Fuzzy Duck's "Teamwork" software or stick with Trello. She wants a strong opinion on this. Recommendation: if Fuzzy Duck adds Jordan to Teamwork, use it — one less tool for Jeannine to manage. If not, keep Trello as the Latz ↔ Jeannine channel and let Teamwork be the Fuzzy Duck channel. Don't make her manage two project boards that overlap.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ── Scrollspy ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Mobile FAB ──
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('mobileFab');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; }, 280);
+  }
+
+  fab.addEventListener('click', () => {
+    menuOpen ? closeMenu() : openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile: close menu, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
 </html>
