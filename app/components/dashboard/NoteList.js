@@ -188,7 +188,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	}
 
 	return (
-		<div className='mb-12'>
+		<div className='mb-12 max-w-3xl mx-auto'>
 			<NoteListHeader onAdd={handleAddNote} />
 
 			<PinnedSection
@@ -219,12 +219,14 @@ export default function NoteList({ notes: initialNotes = [] }) {
 							/>
 						))}
 					{rest.length > 0 && (
-						<ExpandToggle
-							expanded={expanded}
-							count={rest.length}
-							onToggle={() => setExpanded(!expanded)}
-						/>
-					)}
+	<div className='sm:col-span-2'>
+		<ExpandToggle
+			expanded={expanded}
+			count={rest.length}
+			onToggle={() => setExpanded(!expanded)}
+		/>
+	</div>
+)}
 				</div>
 			)}
 
