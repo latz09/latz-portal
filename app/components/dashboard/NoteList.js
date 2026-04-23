@@ -188,7 +188,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	}
 
 	return (
-		<div className='mb-12 max-w-3xl mx-auto'>
+		<div className='mb-12 max-w-7xl mx-auto'>
 			<NoteListHeader onAdd={handleAddNote} />
 
 			<PinnedSection
