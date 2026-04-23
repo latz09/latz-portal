@@ -72,7 +72,7 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 					Do Now
 				</p>
 			</div>
-			<div className='grid md:grid-cols-2 gap-6 lg:gap-4'>
+			<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
 				{notes.map((note) => (
 					<NoteCard
 						key={note._id}
