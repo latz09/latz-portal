@@ -1,29 +1,733 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Website Proposal — Jeannine Kellogg | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    html, body {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+
+    body { background: white; margin: 0; }
+
+    .page-wrap {
+      margin-left: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .cover {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 56px 48px !important;
+      page-break-after: always;
+    }
+
+    .main { padding: 32px 48px 48px !important; }
+
+    section { page-break-inside: avoid; margin-bottom: 40px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+
+    a { color: inherit !important; text-decoration: none !important; }
+    .proof-row { display: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 22px 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+  .sidebar-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 3px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 16px 8px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 8px 10px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12.5px; font-weight: 400; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 10px 14px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 18px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── STICKY CTA ── */
+  a.sticky-cta { display: none; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 220px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 72px 48px 60px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .cover-overline::before { content: ''; width: 32px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .cover-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 14px 24px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 56px 64px 80px; }
+  section { margin-bottom: 60px; scroll-margin-top: 24px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 3px 9px; border-radius: 4px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 28px; margin-top: 12px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 24px; max-width: 680px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 18px; }
+  .opening-wrap p { font-size: 14.5px; color: var(--gray-700); line-height: 1.8; margin-bottom: 14px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PAGE CARDS ── */
+  .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .page-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 7px; padding: 16px 18px; }
+  .page-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .page-card-slug { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--gray-400); letter-spacing: 0.06em; margin-bottom: 10px; display: block; }
+  .page-card ul { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 10px; }
+  .page-card ul li { font-size: 12px; color: var(--gray-600); padding: 2.5px 0 2.5px 14px; position: relative; line-height: 1.45; }
+  .page-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 10px; }
+
+  /* ── ALWAYS INCLUDED ── */
+  .always-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .always-item { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 16px; }
+  .always-label { font-size: 12px; font-weight: 600; color: var(--gray-900); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+  .always-label .dot { width: 4px; height: 4px; background: var(--gray-400); border-radius: 50%; flex-shrink: 0; }
+  .always-desc { font-size: 11.5px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--dark-header); border-radius: 8px; padding: 32px 36px; margin-bottom: 20px; border-left: 3px solid var(--teal); }
+  .highlight-box p { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.8; margin-bottom: 12px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--white); font-weight: 600; }
+
+  /* ── INVESTMENT ── */
+  .invest-cards { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; max-width: 480px; }
+  .invest-card { border: 1px solid var(--gray-100); border-radius: 8px; padding: 24px 22px; background: var(--white); position: relative; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+  .invest-card-desc { font-size: 12.5px; color: var(--gray-500); line-height: 1.55; margin-bottom: 20px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 11px; color: var(--gray-400); margin-bottom: 18px; }
+  .invest-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 14px; }
+  .invest-list li { font-size: 12px; color: var(--gray-600); padding: 3.5px 0 3.5px 16px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 10px; top: 4px; }
+  .invest-summary { background: var(--gray-900); border-radius: 8px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-schedule { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .hosting-row { background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 6px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+  .hosting-row .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .hosting-row p { font-size: 12.5px; color: var(--gray-600); line-height: 1.6; }
+  .hosting-row strong { color: var(--gray-900); font-weight: 600; }
+  .addon-row { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 10px; }
+  .addon-row .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .addon-row p { font-size: 12.5px; color: var(--gray-600); line-height: 1.6; }
+  .addon-row strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── CREDIT LINE ── */
+  .credit-line { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; margin-bottom: 4px; }
+  .credit-line .label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); }
+  .credit-line .amount { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; color: var(--gray-900); }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding-bottom: 28px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 40px; height: 40px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 8px; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note { margin-top: 24px; padding: 14px 18px; background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; font-size: 12.5px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note strong { color: var(--gray-700); }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 10px; padding: 40px 44px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; color: var(--white); margin-bottom: 10px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+  .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; position: relative; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 7px; padding: 12px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .cta-btn.primary { background: var(--teal); color: var(--white); }
+  .cta-btn.primary:hover { background: #1ab2bf; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(24,161,173,0.3); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.1); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.11); }
+  .next-contact { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 16px; position: relative; }
+  .next-contact a { color: var(--teal); text-decoration: none; }
+
+  /* ── PROOF ROW ── */
+  .proof-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 0 0;
+    margin-top: 20px;
+    border-top: 1px solid var(--gray-100);
+    text-align: center;
+  }
+  .proof-row p { font-size: 12px; color: var(--gray-400); }
+  .proof-row a { font-size: 12px; font-weight: 600; color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 52px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2px; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-220px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 36px 20px 80px; }
+    .doc-footer { padding-left: 20px; padding-right: 20px; }
+    .cover-client { font-size: 36px; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-btn { justify-content: center; width: 100%; }
+    a.sticky-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      gap: 6px;
+      padding: 11px 20px;
+      background: var(--teal);
+      color: var(--white) !important;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none !important;
+      box-shadow: 0 4px 20px rgba(24,161,173,0.35);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .page-grid { grid-template-columns: 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .always-grid { grid-template-columns: 1fr 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .next-box { padding: 32px 20px; }
+    .main { padding: 36px 16px 80px; }
+    .proof-row { flex-direction: column; align-items: center; gap: 4px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Jeannine Kellogg</div>
+    <div class="sidebar-doctype">Website Proposal</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#scope" class="nav-link"><span class="num">02</span> What You're Getting</a>
+    <a href="#investment" class="nav-link"><span class="num">03</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">04</span> How It Works</a>
+    <a href="#next-steps" class="nav-link"><span class="num">05</span> Let's Go</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="#next-steps" class="sidebar-cta-btn">Let's Go →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+<a href="#next-steps" class="sticky-cta no-print">Let's Go →</a>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Website Proposal</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">Jeannine Kellogg</div>
+      <div class="cover-sub">The Tukor Series v2 — 9-Page Trilogy + Ecommerce Rebuild &nbsp;·&nbsp; April 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Jeannine Kellogg</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Pages</span>
+          <span class="cover-meta-value">9 in scope</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Investment</span>
+          <span class="cover-meta-value">$2,525</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Jeannine,</div>
+        <p>You came back from something that would have ended most publishing efforts. Lost a 2,400-book customer, survived a catastrophic print run, went quiet for months — and then reached out on your own, ready to relaunch a trilogy. That tells me everything I need to know about what this project deserves.</p>
+        <p>The v1 site gave you legitimacy. Parents met you at book fairs, searched your name, and found a real author with a real site. <strong>But it can't sell a book.</strong> That's the gap — and closing it is the entire point of v2.</p>
+        <p>This proposal covers a complete 9-page rebuild: dedicated pages for each book in the trilogy, Shopify-powered ecommerce with Itasca/Bookmobile fulfillment built in, a CMS so you can manage book details and toggle availability yourself, and full integration of the new Fuzzy Duck branding as assets arrive. Your existing Madsen artwork carries over. We write the web copy for every page. <strong>When a parent searches your name after a school visit, they'll find a site with a buy button.</strong></p>
+        <p>You already reviewed the wireframe — this is the formal scope and investment breakdown. One price, no surprises, and you own it all.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="scope">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">What You're Getting</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="page-grid">
+        <div class="page-card">
+          <div class="page-card-title">Home</div>
+          <span class="page-card-slug">/</span>
+          <ul>
+            <li>Trilogy-first hero with Fuzzy Duck branding</li>
+            <li>Book cards — Book 1 "Available Now," Books 2 &amp; 3 "Coming Soon"</li>
+            <li>Awards &amp; recognitions section</li>
+            <li>Synopsis teaser + featured artwork</li>
+            <li>Where to Buy retailer logos</li>
+            <li>Featured reader reviews</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Book 1: The Tukor's Journey</div>
+          <span class="page-card-slug">/books/tukors-journey</span>
+          <ul>
+            <li>Full cover display + purchase info</li>
+            <li>"Add to Cart" → Shopify checkout → Itasca ships</li>
+            <li>Synopsis + alternating artwork/text panels</li>
+            <li>Illustration gallery</li>
+            <li>Book-specific reader reviews</li>
+            <li>"Next in the Series" cross-sell</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Book 2: The Tukor's Mission</div>
+          <span class="page-card-slug">/books/tukors-mission</span>
+          <ul>
+            <li>Same rich experience as Book 1</li>
+            <li>Full purchase capability at launch</li>
+            <li>New Madsen cover art + illustrations</li>
+            <li>Series navigation — links to Books 1 &amp; 3</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Book 3: The Tukor's Battle</div>
+          <span class="page-card-slug">/books/tukors-battle</span>
+          <ul>
+            <li>Launches as "Coming Soon" teaser page</li>
+            <li>Existing stormy sea artwork</li>
+            <li>Toggle to full book page when ready — no rebuild</li>
+            <li>Series navigation to Books 1 &amp; 2</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Shop</div>
+          <span class="page-card-slug">/shop</span>
+          <ul>
+            <li>All three books in one view</li>
+            <li>"Add to Cart" for available titles</li>
+            <li>Optional "Notify Me" signup for Book 3</li>
+            <li>Shipping &amp; fulfillment info</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">About Jeannine</div>
+          <span class="page-card-slug">/about</span>
+          <ul>
+            <li>Updated bio with trilogy context</li>
+            <li>Author portrait + personal story</li>
+            <li>Link to Jagged Compass Publishing</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Reviews &amp; Testimonials</div>
+          <span class="page-card-slug">/reviews</span>
+          <ul>
+            <li>Reader reviews filterable by book</li>
+            <li>Star ratings, attribution, sources</li>
+            <li>CTA to leave reviews on Amazon/Goodreads</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Contact</div>
+          <span class="page-card-slug">/contact</span>
+          <ul>
+            <li>Contact form → your email</li>
+            <li>Social media links</li>
+            <li>Business &amp; media inquiry section</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Jagged Compass Publishing</div>
+          <span class="page-card-slug">/jagged-compass</span>
+          <ul>
+            <li>Publishing imprint overview</li>
+            <li>Published titles with links</li>
+            <li>Distribution &amp; availability info</li>
+          </ul>
+        </div>
+      </div>
+      <div class="always-grid">
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Mobile-First</div>
+          <div class="always-desc">Parents find you on phones after book fairs. Built for that from day one.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> SEO Foundations</div>
+          <div class="always-desc">Page titles, meta descriptions, clean URLs, fast load times.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Live Dev Link</div>
+          <div class="always-desc">Watch it come together. Give feedback as we build.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Immersive &amp; Warm</div>
+          <div class="always-desc">A site that feels like stepping into the Tukor world — not a generic book page.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> You Own It</div>
+          <div class="always-desc">No retainer, no lock-in, no monthly fees to me. Ever.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> CMS Built In</div>
+          <div class="always-desc">Toggle book availability, update details, add new titles — without contacting us.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="invest-cards">
+        <div class="invest-card">
+          <div class="invest-card-name">Enhanced Rebuild</div>
+          <div class="invest-card-title">The Tukor Series v2</div>
+          <div class="invest-card-desc">Complete redesign and rebuild of jeanninekellogg.com. 9-page trilogy structure, Shopify-powered ecommerce with Itasca/Bookmobile fulfillment, CMS for book management, Fuzzy Duck brand integration, all existing Madsen artwork carried over, web copy written for every page. 3 months post-launch support included.</div>
+          <div class="invest-price">$2,800</div>
+          <div class="invest-price-note">V1 credit applied below.</div>
+          <ul class="invest-list">
+            <li>9 custom pages — trilogy + ecommerce + CMS</li>
+            <li>Shopify cart &amp; checkout integration</li>
+            <li>Itasca/Bookmobile automated fulfillment</li>
+            <li>CMS — toggle "coming soon" ↔ "available" per book</li>
+            <li>Fuzzy Duck brand integration as assets arrive</li>
+            <li>All existing Madsen artwork carries over</li>
+            <li>Web copy written by us for every page</li>
+            <li>Mobile-responsive, SEO foundations</li>
+            <li>3 months post-launch support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Your investment</div>
+          <div class="invest-summary-amount">$2,525</div>
+          <div class="invest-summary-schedule">$2,800 – $275 v1 credit &nbsp;·&nbsp; 50% deposit to start &nbsp;·&nbsp; 50% at launch</div>
+        </div>
+      </div>
+      <div class="hosting-row">
+        <span class="icon">🛒</span>
+        <p><strong>Shopify Basic: $39/month</strong> — paid directly to Shopify by you. Handles your book catalog, payment processing, and the connection to Itasca/Bookmobile for automated fulfillment. This is the only ongoing cost on our end. Bookmobile's connection setup fee is between you and Itasca (separate from this quote).</p>
+      </div>
+      <div class="addon-row">
+        <span class="icon">📦</span>
+        <p><strong>Optional: 3D Book Mockups — $400</strong> — Professional static 3D renders of all three books (angled cover + spine view) using your print files. Polished product images for every book page. Let me know if you'd like these included — I can add them to the invoice.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Deposit &amp; Kickoff</div>
+            <div class="step-desc">50% deposit locks in the project. I'll set up the Shopify store, add your books, send you login credentials, and get the email to Hans at Itasca started so Bookmobile can connect to your store.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Design &amp; Build</div>
+            <div class="step-desc">The wireframe is done — that's a major head start. I'll build from it, integrating Fuzzy Duck brand assets as they arrive. You'll have a live development link to follow along in real time. Shopify cart and checkout get wired in during this phase.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Review &amp; Refine</div>
+            <div class="step-desc">You review the live site. We go through it together, make adjustments until it's right. We'll run a test order end-to-end — purchase on the site, Bookmobile receives it, confirms fulfillment. No guessing, no surprises.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Launch &amp; Handoff</div>
+            <div class="step-desc">Domain connected, site live, Book 1 for sale. Final 50% due at launch. CMS training so you can toggle book availability, update content, and manage reviews yourself. Books 2 &amp; 3 go live when they're ready — you flip the switch, not me. 3 months of support included.</div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-note">
+        <strong>Timeline:</strong> The wireframe is mapped, the ecommerce plan is set, and we know the platform. Realistic build is <strong>6–8 weeks</strong> from deposit to launch — with flexibility built in for Fuzzy Duck deliverables and Madsen's illustration schedule. Book 1 can go live as soon as it's ready; Books 2 &amp; 3 launch on your timeline.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">Ready to Move Forward?</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Next Steps —</div>
+        <div class="next-title">Let's get started.</div>
+        <div class="next-sub">Review this proposal. Let me know if you'd like the 3D book mockups ($400) added to the project. Once you decide, I'll send your deposit invoice and we're off.</div>
+        <div class="cta-row">
+          <a href="mailto:jordan@latzwebdesign.com" class="cta-btn ghost">✉️ Email Jordan</a>
+          <a href="tel:7156305689" class="cta-btn ghost">📞 (715) 630-5689</a>
+        </div>
+        <div class="next-contact">
+          50% deposit to start &nbsp;·&nbsp; 50% at launch<br>
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CLIENT CONFIG — update these before sending
+  // ─────────────────────────────────────────────
+  const PAYPAL_2525 = '';  // 50% deposit link for $2,525 ($1,262.50) — add when ready
+  // ─────────────────────────────────────────────
+
+  const btnDeposit = document.getElementById('btn-deposit');
+  if (btnDeposit) {
+    if (PAYPAL_2525) btnDeposit.href = PAYPAL_2525;
+    else btnDeposit.style.display = 'none';
+  }
+
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
