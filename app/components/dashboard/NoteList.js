@@ -124,7 +124,7 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 			</button>
 
 			{open && (
-				<div className='flex flex-col gap-2'>
+				<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
 					{notes.map((note) => (
 						<NoteCard
 							key={note._id}
