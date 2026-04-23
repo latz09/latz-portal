@@ -240,7 +240,7 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 				{isEmail && isSent && (
 					<span className='flex items-center gap-1.5 font-mono text-xs text-white/60'>
 						<TbMailCheck className='text-base text-teal' />
-						{getSentLabel(note.sentAt)} · awaiting reply
+						{getSentLabel(note.sentAt)} 
 					</span>
 				)}
 			</div>
