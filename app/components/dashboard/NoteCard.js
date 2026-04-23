@@ -96,7 +96,7 @@ function getSentLabel(sentAt) {
 	if (!sentAt) return null;
 	const days = Math.floor((Date.now() - new Date(sentAt)) / 86_400_000);
 	if (days === 0) return 'Sent today';
-	if (days === 1) return 'Sent yesterday';
+	if (days === 1) return 'Sent yest.';
 	return `Sent ${days} days ago`;
 }
 
