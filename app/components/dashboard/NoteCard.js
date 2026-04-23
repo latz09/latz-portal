@@ -270,8 +270,7 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 }
 
 // ─── Main Component ──────────────────────────────────────────────────────────
-
-export default function NoteCard({ note, onArchive, onSent, onPinToggle }) {
+export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue }) {
 	const [open, setOpen] = useState(note.pinned ?? false);
 	const [confirming, setConfirming] = useState(false);
 	const [archiving, setArchiving] = useState(false);
@@ -344,8 +343,10 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle }) {
 			<div
 				className={`flex flex-col border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${
 					pinned
-						? 'bg-dark hover:bg-warning/10 border-warning/10 '
-						: 'bg-white/5 hover:bg-white/10 border-white/10 mx-2'
+						? 'bg-dark hover:bg-warning/10 border-warning/10'
+						: overdue
+							? 'bg-danger/5 hover:bg-danger/10 border-danger/20 mx-2'
+							: 'bg-white/5 hover:bg-white/10 border-white/10 mx-2'
 				}`}
 				onClick={() => setOpen(!open)}
 			>

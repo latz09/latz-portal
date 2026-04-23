@@ -89,7 +89,23 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 
 function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 	const [open, setOpen] = useState(false);
+	const [sorted, setSorted] = useState([]);
 	if (!notes.length) return null;
+
+	function handleOpen() {
+		if (!open) {
+			const now = Date.now();
+			const s = [...notes]
+				.sort((a, b) => new Date(a.sentAt) - new Date(b.sentAt))
+				.map((n) => ({
+					...n,
+					overdue:
+						Math.floor((now - new Date(n.sentAt).getTime()) / 86_400_000) >= 3,
+				}));
+			setSorted(s);
+		}
+		setOpen(!open);
+	}
 
 	const oldestDays = getOldestDays(notes);
 	const oldestLabel =
@@ -102,7 +118,7 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 	return (
 		<div className='mt-6 border-t border-white/10 pt-6'>
 			<button
-				onClick={() => setOpen(!open)}
+				onClick={handleOpen}
 				className='flex items-center justify-between w-full mb-4 group'
 			>
 				<div className='flex items-center gap-3'>
@@ -125,12 +141,13 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 
 			{open && (
 				<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
-					{notes.map((note) => (
+					{sorted.map((note) => (
 						<NoteCard
 							key={note._id}
 							note={note}
 							onArchive={onArchive}
 							onPinToggle={onPinToggle}
+							overdue={note.overdue}
 						/>
 					))}
 				</div>
