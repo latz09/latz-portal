@@ -160,25 +160,35 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 				</span>
 				<span className='text-sm font-medium truncate'>{note.title}</span>
 			</div>
-			<button
-				onClick={(e) => {
-					e.stopPropagation();
-					onPinToggle();
-				}}
-				disabled={pinning}
-				className={`transition-colors p-2 shrink-0 ml-2 ${
-					pinned
-						? 'text-warning hover:text-warning/60'
-						: 'text-white/20 hover:text-warning/70'
-				} ${pinning ? 'opacity-40' : ''}`}
-				title={pinned ? 'Unpin' : 'Pin to Do Now'}
-			>
-				{pinned ? (
-					<TbPinFilled className='text-base lg:text-lg' />
-				) : (
-					<TbPin className='text-base lg:text-lg' />
-				)}
-			</button>
+			<div className='flex items-center shrink-0 ml-2'>
+				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						onPinToggle();
+					}}
+					disabled={pinning}
+					className={`transition-colors p-2 ${
+						pinned
+							? 'text-warning hover:text-warning/60'
+							: 'text-white/20 hover:text-warning/70'
+					} ${pinning ? 'opacity-40' : ''}`}
+					title={pinned ? 'Unpin' : 'Pin to Do Now'}
+				>
+					{pinned ? (
+						<TbPinFilled className='text-base lg:text-lg' />
+					) : (
+						<TbPin className='text-base lg:text-lg' />
+					)}
+				</button>
+				<a
+					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
+					target='_blank'
+					onClick={(e) => e.stopPropagation()}
+					className='hidden sm:block text-warning/70 hover:text-warning transition-colors p-2'
+				>
+					<TbEdit className='text-base lg:text-lg' />
+				</a>
+			</div>
 		</div>
 	);
 }
@@ -223,7 +233,7 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 				<a
 					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
 					target='_blank'
-					className='text-warning/70 hover:text-warning transition-colors p-2'
+					className='sm:hidden text-warning/70 hover:text-warning transition-colors p-2'
 				>
 					<TbEdit className='text-base lg:text-lg' />
 				</a>
