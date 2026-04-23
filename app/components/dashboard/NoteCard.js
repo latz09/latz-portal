@@ -160,35 +160,25 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 				</span>
 				<span className='text-sm font-medium truncate'>{note.title}</span>
 			</div>
-			<div className='flex items-center shrink-0 ml-2'>
-				<button
-					onClick={(e) => {
-						e.stopPropagation();
-						onPinToggle();
-					}}
-					disabled={pinning}
-					className={`transition-colors p-2 ${
-						pinned
-							? 'text-warning hover:text-warning/60'
-							: 'text-white/20 hover:text-warning/70'
-					} ${pinning ? 'opacity-40' : ''}`}
-					title={pinned ? 'Unpin' : 'Pin to Do Now'}
-				>
-					{pinned ? (
-						<TbPinFilled className='text-base lg:text-lg' />
-					) : (
-						<TbPin className='text-base lg:text-lg' />
-					)}
-				</button>
-				<a
-					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
-					target='_blank'
-					onClick={(e) => e.stopPropagation()}
-					className='text-warning/70 hover:text-warning transition-colors p-2'
-				>
-					<TbEdit className='text-base lg:text-lg' />
-				</a>
-			</div>
+			<button
+				onClick={(e) => {
+					e.stopPropagation();
+					onPinToggle();
+				}}
+				disabled={pinning}
+				className={`transition-colors p-2 shrink-0 ml-2 ${
+					pinned
+						? 'text-warning hover:text-warning/60'
+						: 'text-white/20 hover:text-warning/70'
+				} ${pinning ? 'opacity-40' : ''}`}
+				title={pinned ? 'Unpin' : 'Pin to Do Now'}
+			>
+				{pinned ? (
+					<TbPinFilled className='text-base lg:text-lg' />
+				) : (
+					<TbPin className='text-base lg:text-lg' />
+				)}
+			</button>
 		</div>
 	);
 }
@@ -222,15 +212,21 @@ function NoteBody({ body, open }) {
 function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 	const isEmail = note.type === 'email';
 	const isSent = !!note.sentAt;
-	if (!open && !(isEmail && isSent)) return null;
 
 	return (
 		<div
 			className='flex items-center justify-between pt-1 border-t border-white/5 mt-1'
 			onClick={(e) => e.stopPropagation()}
 		>
-			{/* Sent badge — left side */}
-			<div>
+			{/* Edit + sent badge — left side */}
+			<div className='flex items-center gap-2'>
+				<a
+					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
+					target='_blank'
+					className='text-warning/70 hover:text-warning transition-colors p-2'
+				>
+					<TbEdit className='text-base lg:text-lg' />
+				</a>
 				{isEmail && isSent && (
 					<span className='flex items-center gap-1.5 font-mono text-xs text-white/60'>
 						<TbMailCheck className='text-base text-teal' />
