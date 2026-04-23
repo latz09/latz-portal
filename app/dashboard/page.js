@@ -19,7 +19,7 @@ export default async function Home() {
 				label='All Active Projects - Latz Web Design'
 				title='Studio Latz'
 			/>
-			<div className='flex gap-3 mb-12'>
+			<div className='flex gap-3 mb-12 max-w-3xl mx-auto'>
 				<a
 					href='/portal/designer'
 					target='_blank'
@@ -43,27 +43,30 @@ export default async function Home() {
 					</button>
 				</form>
 			</div>
-
-			<ClientList clients={clients} />
+			<div className='max-w-3xl mx-auto'>
+				<ClientList clients={clients} />
+			</div>
 			<div className='mt-16'></div>
 			<NoteList notes={notes} />
-			<UpcomingDeadlines clients={clients} variant='internal' />
-			<PortalFooter />
+			<div className="max-w-3xl mx-auto">
+				<UpcomingDeadlines clients={clients} variant='internal' />
+				<PortalFooter />
 
-			<form
-				action={async () => {
-					'use server';
-					await signOut({ redirectTo: '/login' });
-				}}
-				className='lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50'
-			>
-				<button
-					type='submit'
-					className='font-mono text-xs px-6 py-3 rounded-full bg-white/10 text-white/50 hover:bg-danger/20 hover:text-danger transition-colors shadow-lg backdrop-blur-sm'
+				<form
+					action={async () => {
+						'use server';
+						await signOut({ redirectTo: '/login' });
+					}}
+					className='lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50'
 				>
-					Sign Out
-				</button>
-			</form>
+					<button
+						type='submit'
+						className='font-mono text-xs px-6 py-3 rounded-full bg-white/10 text-white/50 hover:bg-danger/20 hover:text-danger transition-colors shadow-lg backdrop-blur-sm'
+					>
+						Sign Out
+					</button>
+				</form>
+			</div>
 		</main>
 	);
 }
