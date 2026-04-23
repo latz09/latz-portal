@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Village of Hancock — Email Setup Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .project-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 200ms ease;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'EMAIL';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .compare-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .compare-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+  }
+
+  .compare-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .compare-table .winner td {
+    background: var(--green-light) !important;
+    font-weight: 600;
+  }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE — TABLET ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  /* ── RESPONSIVE — MOBILE ── */
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+    }
+
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .sidebar-overlay.visible { display: block; }
+
+    .main { margin-left: 0; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .data-label { font-size: 10px; }
+
+    .two-col, .three-col { grid-template-columns: 1fr; }
+
+    .checklist li {
+      flex-wrap: wrap;
+    }
+
+    .check-status {
+      margin-left: 0;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .budget-table th, .budget-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 8px 10px;
+      font-size: 11px;
+    }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .phase-num { font-size: 36px; }
+
+    .callout {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Village of Hancock</div>
+    <div class="project-label">Email Setup Project</div>
+    <div class="status-pill">Waiting on Client</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏛️</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Communication History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#platform" class="nav-link"><span class="nav-icon">⚖️</span> Platform Decision</a>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Tasks</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Needed from Client</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="menuFab" aria-label="Toggle navigation">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Village of Hancock — Email Setup</h1>
+    <div class="sub">villageofhancock.org · Microsoft 365 / Google Workspace — 15 Mailboxes</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Jillian Steele, Trustee</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Setup Fee</span>
+        <span class="value">$400</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Payment Status</span>
+        <span class="value">Unpaid — billing with website final</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://villageofhancock.org" target="_blank">villageofhancock.org</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Status</span>
+        <span class="value">Waiting on new board members</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Related Project</span>
+        <span class="value"><a href="../website/overview.html">Website Build ($4,200)</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏛️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Jillian Steele</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Village Trustee</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:jillianamorton16@gmail.com">jillianamorton16@gmail.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">262-716-3328</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Point of Contact</span>
+            <span class="data-value">Jillian — all questions go through her</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Key Stakeholders</h3>
+          <div class="data-row">
+            <span class="data-label">Email Admin</span>
+            <span class="data-value">Village Clerk (name unknown) — will manage accounts after handoff</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Maker</span>
+            <span class="data-value">Village Board — Jillian is the liaison</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Blocker</span>
+            <span class="data-value">Two new board members starting — Jillian wants to wait for them before setup</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Election</span>
+            <span class="data-value">April 7, 2026 — election held that day. New board member results needed before kick-off.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔗</span>
+        <div class="callout-body">
+          <strong>This is an add-on to the website project</strong>
+          <span>Same client, same domain. Jillian brought this up organically during the website content collection phase. She asked "do you have any experience setting up Microsoft business emails?" — this wasn't pitched, it was requested. Easy cross-sell because we're already managing their DNS.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Set up government-compliant email for the Village of Hancock — 15 mailboxes, $400 flat fee</strong>
+        <p>No migration needed (they already downloaded old emails). Core requirement: the clerk must be able to search across ALL 15 mailboxes for open records requests. Jillian explicitly said there's no rush — waiting on two new board members to start.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Need This</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Currently not on a government-compliant email platform</li>
+            <li><span class="check-icon">🔴</span> Can't search across all inboxes for open records requests — this is a legal compliance issue</li>
+            <li><span class="check-icon">🔴</span> Jillian tried to set this up herself and couldn't ("I'm not IT friendly at all LOL")</li>
+            <li><span class="check-icon">🔴</span> Board turnover means the system has to be clerk-manageable from day one</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> 15 @villageofhancock.org mailboxes set up and working</li>
+            <li><span class="check-icon">✅</span> Clerk can search across all mailboxes by keyword for records requests</li>
+            <li><span class="check-icon">✅</span> Clerk is admin and can add/remove users + reset passwords</li>
+            <li><span class="check-icon">✅</span> DNS records (MX, SPF, DKIM) configured — we're already managing their DNS</li>
+            <li><span class="check-icon">✅</span> No migration headaches — fresh start with new inboxes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Blocked: Waiting on new board members</strong>
+          <span>Jillian said (April 13) "there is no real rush for the emails. We have two new board members starting so as soon as they are on then we can get all the new emails started." Election was April 7 — she said she'd send the board directory after results are in. Haven't heard back yet with the final list.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Email Setup — 15 Mailboxes</strong></td>
+            <td>Tenant creation, 15 accounts, DNS records, compliance search config, admin setup, clerk training</td>
+            <td class="amount">$400</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Setup Fee</strong></td>
+            <td></td>
+            <td class="amount"><strong>$400</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Payment Status</strong></td>
+            <td>Unpaid — will be billed alongside website final payment ($2,100 + $400 = $2,500 total)</td>
+            <td class="amount"><strong>$400</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Email Platform</span>
+          <span class="data-value">~$6–7/user/month × 15 users = ~$90–$105/month (M365 Business Basic)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Annual Cost</span>
+          <span class="data-value">~$1,080–$1,260/year — village pays Microsoft directly</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Note on Pricing</span>
+          <span class="data-value">M365 Business Basic goes from $6 → $7/user on July 1, 2026. If we set up before then, they lock in $6 for the annual commitment period.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Combined billing simplifies everything</strong>
+          <span>$400 email setup + $2,100 website balance = $2,500 single invoice at website launch. Clean, simple. Village doesn't have to think about two separate payments.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNICATION HISTORY -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Communication History</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>This project came up organically during the website build</strong>
+          <span>Jillian asked unprompted on April 7 if we had experience with Microsoft business emails. She was already trying to handle it herself and couldn't. We're the natural fit — already in their DNS, already trusted. Zero sales effort required.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 7, 2026 — 4:50 PM</div>
+          <div class="timeline-title">Jillian Asks About Email Setup</div>
+          <div class="timeline-desc">During the website content collection email, Jillian asked: "Do you have any experience setting up Microsoft business emails? We need to switch over to this platform to be government compliant but I'm no IT person LOL!" — unprompted, organic request.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 7, 2026 — 5:03 PM</div>
+          <div class="timeline-title">Jordan Responds — Scoping Questions</div>
+          <div class="timeline-desc">Responded same day (13 minutes). Asked four questions: how many accounts, does it have to be Microsoft specifically, any migration needed, and who's managing it after. Quoted $250–$400 range depending on answers. Noted DNS advantage — "I'm already in your DNS anyway."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 7, 2026 — 6:57 PM</div>
+          <div class="timeline-title">Jillian Confirms Scope</div>
+          <div class="timeline-desc">Key details: 15 mailboxes (2 won't be used right away). Doesn't have to be Microsoft specifically — just needs government compliance. Core need: clerk can search all mailboxes for open records requests. No migration needed — they already downloaded old emails. Clerk will manage accounts.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 8, 2026 — 12:27 PM</div>
+          <div class="timeline-title">Jordan Quotes $400 Flat</div>
+          <div class="timeline-desc">Confirmed $400 flat fee. Explained M365 and Google Workspace both work — will research and recommend. Estimated ~$6/user/month (~$90/mo for 15 accounts). Noted no migration simplifies things. Asked about timeline pressure. Also discussed website photos — car show photos led to Fish Lake Festival mention.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Apr 13, 2026 — 10:17 AM</div>
+          <div class="timeline-title">Jillian Confirms No Rush — Waiting on Board Members</div>
+          <div class="timeline-desc">"There is no real rush for the emails. We have two new board members starting so as soon as they are on then we can get all the new emails started." Election was April 7. Board directory still pending.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLATFORM DECISION -->
+    <section id="platform">
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2>Platform Decision: M365 vs Google Workspace</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔑</span>
+        <div class="callout-body">
+          <strong>The deciding factor: cross-mailbox search for open records requests</strong>
+          <span>Jillian's exact words: "if someone open records requests us we need to be able to have the clerk search all of our email boxes for specific topics." Whatever platform we pick, this feature must be included — not an expensive add-on.</span>
+        </div>
+      </div>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Microsoft 365 Business Basic</th>
+            <th>Google Workspace (Vault required)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cross-Mailbox Search</strong></td>
+            <td>✅ Content Search included — admin can search all 15 mailboxes by keyword</td>
+            <td>⚠️ Requires Vault — only included in Business Plus ($22/user)</td>
+          </tr>
+          <tr>
+            <td><strong>Price Per User (current)</strong></td>
+            <td>$6/user/month ($7 after July 1, 2026)</td>
+            <td>$22/user/month (Business Plus — the only tier with Vault)</td>
+          </tr>
+          <tr>
+            <td><strong>Monthly Cost (15 users)</strong></td>
+            <td>$90/mo (→ $105 after July '26)</td>
+            <td>$330/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Annual Cost (15 users)</strong></td>
+            <td>~$1,080/yr (→ $1,260 after July '26)</td>
+            <td>~$3,960/yr</td>
+          </tr>
+          <tr>
+            <td><strong>eDiscovery / Legal Hold</strong></td>
+            <td>Content Search included. Full eDiscovery (Standard) requires E3 — likely overkill for this village.</td>
+            <td>Vault included in Business Plus. Search, retention rules, legal holds, export.</td>
+          </tr>
+          <tr>
+            <td><strong>Government Plans</strong></td>
+            <td>GCC exists but requires entity verification + paperwork. Standard commercial plan is likely sufficient for a ~416-person village.</td>
+            <td>No specific government tier for Workspace.</td>
+          </tr>
+          <tr>
+            <td><strong>Admin Simplicity</strong></td>
+            <td>Admin center is straightforward. Clerk can manage users.</td>
+            <td>Google Admin console is clean and intuitive. Slightly easier UX for non-tech users.</td>
+          </tr>
+          <tr>
+            <td><strong>Jordan's Familiarity</strong></td>
+            <td>Less familiar — would need to learn M365 admin center, Purview portal</td>
+            <td>More familiar with Google ecosystem</td>
+          </tr>
+          <tr class="winner">
+            <td><strong>Verdict</strong></td>
+            <td>🏆 WINNER on price — $240/mo cheaper. Content Search covers the core need.</td>
+            <td>Better UX, but 3.6× the cost for the plan that includes cross-mailbox search.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <strong>Recommendation: Microsoft 365 Business Basic @ $6–7/user/month</strong>
+        <p>Google Workspace only includes the cross-mailbox search (Vault) at the Business Plus tier — $22/user. That's $330/month for 15 users vs $90–105 on M365 Business Basic, which includes Content Search out of the box. The cost difference is $2,700–$3,000/year. For a village of 416 people, that budget difference matters.</p>
+        <p style="margin-top:8px;"><strong>However:</strong> Jordan is more familiar with Google Workspace. If you want to use Google anyway, the village would need to be on Business Plus ($22/user) — make sure the client understands the cost difference. The $400 setup fee is the same either way.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🏛️</span>
+        <div class="callout-body">
+          <strong>GCC (Government Community Cloud) — Likely Not Required</strong>
+          <span>Microsoft has GCC plans for government entities, but these require entity verification and add complexity. For a small Wisconsin village with ~416 residents, standard M365 Business Basic with Content Search should meet their compliance needs for open records requests. GCC is designed for agencies handling controlled unclassified information (CUI) or needing FedRAMP compliance — overkill here. If there's any doubt, verify with the village's legal counsel before setup.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Pricing Lock-In Opportunity</strong>
+          <span>M365 Business Basic goes from $6 → $7/user on July 1, 2026. If the village signs up on an annual commitment before then, they lock in $6/user for the first year. That's $1,080/year instead of $1,260. Worth mentioning to Jillian as a gentle nudge to get the board directory over sooner.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & TASKS -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Tasks</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>$400 flat fee covers everything below — no hourly billing, no surprises</strong>
+          <span>15 mailboxes. Full DNS configuration. Compliance search setup. Admin training for clerk. Handoff documentation.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Task Breakdown</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">1️⃣</span>
+            <div>
+              <strong>Create M365 Tenant</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Set up the organization's Microsoft 365 account, configure admin settings, billing (village pays Microsoft directly).</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">2️⃣</span>
+            <div>
+              <strong>Create 15 Mailboxes</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">All 15 accounts created even though 2 won't be used right away. Need board directory from Jillian for names/roles.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Waiting on Directory</span></span>
+          </li>
+          <li>
+            <span class="check-icon">3️⃣</span>
+            <div>
+              <strong>DNS Configuration</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Add MX records, SPF, DKIM, DMARC, and autodiscover CNAME to villageofhancock.org. Already managing DNS via Vercel — this is straightforward.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">4️⃣</span>
+            <div>
+              <strong>Configure Content Search / Compliance</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Set up Content Search in Microsoft Purview so the clerk can search across all 15 inboxes by keyword for open records requests. This is the core compliance requirement.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">5️⃣</span>
+            <div>
+              <strong>Set Clerk as Admin</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Configure clerk's admin permissions: add/remove users, reset passwords, run compliance searches. Clerk needs to be self-sufficient.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">6️⃣</span>
+            <div>
+              <strong>Test Everything</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Send/receive test emails from every mailbox. Verify DNS propagation (MX, SPF, DKIM pass). Confirm clerk can run a cross-mailbox search successfully.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">7️⃣</span>
+            <div>
+              <strong>Handoff & Training</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Quick walkthrough with clerk on: managing accounts, resetting passwords, running compliance searches. Provide written guide if needed.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Started</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Can't start without the board directory</strong>
+          <span>We need names, roles, and desired email addresses for all 15 accounts. Jillian said she'd send it after the April 7 election — still waiting. This is the same board directory we need for the website's contact page.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">👥</span>
+            <div>
+              <strong>Board Member Directory (15 people)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Names, roles, desired email format (e.g., firstname@villageofhancock.org vs firstname.lastname@). Also needed for the website project.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Waiting — Post-Election</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏛️</span>
+            <div>
+              <strong>Confirmation: Email Domain</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Assumed to be @villageofhancock.org — confirm with Jillian.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Assumed — Confirm</span></span>
+          </li>
+          <li>
+            <span class="check-icon">👩‍💼</span>
+            <div>
+              <strong>Clerk's Name & Contact</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Clerk will be the ongoing admin. Need their name for the admin account. Still unnamed in our records.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💳</span>
+            <div>
+              <strong>Village Payment Method for Microsoft</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Village needs a credit card or billing method to pay Microsoft directly for the monthly subscription (~$90–105/mo). Might need to coordinate this with the clerk.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Discussed Yet</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✅</span>
+            <div>
+              <strong>Go-Ahead from Jillian</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Trigger is "two new board members are on." Once she confirms, we build.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Waiting</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Email Platform</h3>
+          <div class="data-row">
+            <span class="data-label">Recommended</span>
+            <span class="data-value">Microsoft 365 Business Basic</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Cost</span>
+            <span class="data-value">$6/user/month (→$7 after July 1, 2026)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Mailboxes</span>
+            <span class="data-value">15 total (13 active, 2 reserved)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Storage</span>
+            <span class="data-value">50 GB per mailbox (→100 GB with summer 2026 update)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Compliance</span>
+            <span class="data-value">Content Search via Microsoft Purview — cross-mailbox keyword search</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>DNS Changes Required</h3>
+          <div class="data-row">
+            <span class="data-label">MX Record</span>
+            <span class="data-value">Point to Microsoft Exchange Online</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SPF</span>
+            <span class="data-value">TXT record including spf.protection.outlook.com</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">DKIM</span>
+            <span class="data-value">Two CNAME records for DKIM signing</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">DMARC</span>
+            <span class="data-value">TXT record — start with p=none, monitor, then tighten</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Autodiscover</span>
+            <span class="data-value">CNAME for automatic Outlook configuration</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">DNS Location</span>
+            <span class="data-value">Already managed via Vercel — we have access</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">🔧</span>
+        <div class="callout-body">
+          <strong>DNS is the easy part — we're already in there</strong>
+          <span>We're managing villageofhancock.org DNS through Vercel for the website build. Adding MX, SPF, DKIM, DMARC, and autodiscover records is straightforward. No domain transfer or third-party coordination needed.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Project is on hold until Jillian sends the board directory with new members</strong>
+          <span>Once we have the go-ahead + directory, this is a 1–2 day setup. Not complex — just blocked on content.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Day 1 — Once Triggered</div>
+          <h4>Tenant Setup & Account Creation</h4>
+          <ul>
+            <li>Create M365 tenant for villageofhancock.org</li>
+            <li>Create all 15 mailboxes with proper naming convention</li>
+            <li>Set clerk as global admin</li>
+            <li>Configure MX, SPF, DKIM, DMARC, autodiscover in Vercel DNS</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Day 1–2</div>
+          <h4>Compliance & Testing</h4>
+          <ul>
+            <li>Configure Content Search in Microsoft Purview</li>
+            <li>Wait for DNS propagation (up to 24–48 hours)</li>
+            <li>Send/receive test emails from every mailbox</li>
+            <li>Verify SPF/DKIM/DMARC pass (use mail-tester.com or similar)</li>
+            <li>Test: clerk runs a cross-mailbox keyword search successfully</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Day 2–3</div>
+          <h4>Handoff & Training</h4>
+          <ul>
+            <li>Walkthrough with clerk: managing accounts, resetting passwords</li>
+            <li>Walkthrough: how to run a compliance search for records requests</li>
+            <li>Provide login credentials to all board members</li>
+            <li>Optional: quick-reference guide document</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>This is a fast project once it starts</strong>
+          <span>Total active work: ~3–4 hours spread across 2–3 days (DNS propagation is the only wait). Could realistically be done in a single focused day if DNS propagates quickly. The bottleneck is 100% content from the client, not execution time.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Wait until the email is running smoothly + website is launched before pitching anything</strong>
+          <span>Jillian is juggling both projects plus board transitions. Don't overload. Let the tools prove themselves first.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📋 Email Retention Policies</h4>
+          <div class="price">~$200–$300</div>
+          <p>Set up automated retention policies for compliance — auto-archive emails after X years, legal hold presets for active records requests. Natural follow-on once they're using Content Search regularly.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔒 Security Hardening</h4>
+          <div class="price">~$200–$400</div>
+          <p>MFA enforcement for all accounts, conditional access policies, phishing protection setup. Especially relevant for a government entity. Could bundle with a plan upgrade to Business Standard if needed.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📖 Staff Onboarding Guide</h4>
+          <div class="price">~$150–$250</div>
+          <p>Written + visual guide for new board members: how to log in, set up Outlook on their phone/computer, use the shared calendar, and understand basic email etiquette for government accounts. Directly addresses the board turnover problem.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">April 23, 2026 — Platform Research Complete</div>
+        <p>Google Workspace would require Business Plus at $22/user to get Vault (cross-mailbox search) — that's $330/month for 15 users. M365 Business Basic at $6–7/user includes Content Search, which covers the open records requirement, for $90–105/month. The cost difference is $2,700–3,000/year. For a small village already sensitive to budget (they chose Option B over the $6,200 proposal), M365 is the clear recommendation. Jordan is more familiar with Google Workspace, but M365 Business Basic admin is straightforward — tenant creation, user management, DNS records. Content Search in Microsoft Purview is the part that'll need some learning, but it's well-documented.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Zero-Effort Cross-Sell</div>
+        <p>Jillian asked for this unprompted. She'd tried to do it herself and failed. She explicitly said "I would rather have you handle it." This is the dream scenario — client comes to you with a problem, you're already trusted, and you're already managing the infrastructure (DNS). The $400 is almost entirely margin since the technical work overlaps with what we're doing for the website anyway.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Board Directory — Double Duty</div>
+        <p>The board member directory Jillian owes us is needed for BOTH projects: the website's contact page and the email account creation. One ask, two deliverables. When following up, frame it as "I need the directory to set up both the website contact page and all 15 email accounts" — makes the request feel more impactful and urgent.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Clerk Relationship — Still Unknown</div>
+        <p>The clerk is the person who will manage email accounts day-to-day, but we still don't have a name. Jillian is the gatekeeper — don't reach out to the clerk directly. The training/handoff session is the first time we'll likely interact with the clerk. Make it a good experience — this person's comfort level determines whether the system gets used properly.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Timing Strategy</div>
+        <p>M365 Business Basic price goes from $6 to $7/user on July 1, 2026. If the village commits to an annual plan before then, they save $180/year on 15 accounts. This isn't a hard sell — just worth mentioning to Jillian as context when she gives the go-ahead. "No rush, but FYI there's a price increase coming July 1."</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Jillian's Self-Assessment</div>
+        <p>Jillian explicitly said twice that she's "not IT friendly" — used "LOL" both times. This means: keep all explanations simple, don't use jargon in emails, and make the handoff documentation visual and step-by-step. The clerk is the actual admin user, but Jillian will be the one relaying information to us. Make sure anything we document can be forwarded to the clerk without translation.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ── SCROLLSPY ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── MOBILE NAV ──
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('menuFab');
+  const overlay = document.getElementById('sidebarOverlay');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (menuOpen) closeMenu();
+    else openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav links on mobile: close menu, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
