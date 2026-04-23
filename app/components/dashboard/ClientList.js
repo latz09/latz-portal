@@ -22,7 +22,7 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 	const [open, setOpen] = useState(defaultOpen);
 
 	return (
-		<div className='my-2 lg:my-4'>
+		<div className='my-4 lg:my-6 py-2 lg:py-4'>
 			<button
 				onClick={() => setOpen(!open)}
 				className='flex items-center ml-3  justify-start lg:justify-center gap-2 w-full mb-3 group'
