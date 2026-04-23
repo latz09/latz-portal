@@ -176,8 +176,8 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	);
 	const awaiting = notes.filter((n) => n.type === 'email' && n.sentAt);
 
-	const first = active[0];
-	const rest = active.slice(1);
+	const visible = active.slice(0, 2);
+	const rest = active.slice(2);
 
 	if (notes.length === 0) {
 		return (
@@ -200,14 +200,15 @@ export default function NoteList({ notes: initialNotes = [] }) {
 
 			{active.length > 0 && (
 				<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
-					{first && (
+					{visible.map((note) => (
 						<NoteCard
-							note={first}
+							key={note._id}
+							note={note}
 							onArchive={handleArchive}
 							onSent={handleSent}
 							onPinToggle={handlePinToggle}
 						/>
-					)}
+					))}
 					{expanded &&
 						rest.map((note) => (
 							<NoteCard
