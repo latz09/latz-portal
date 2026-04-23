@@ -1,7 +1,9 @@
+// components/dashboard/NoteList.jsx
+
 'use client';
 
 import { useState } from 'react';
-import { TbChevronDown, TbPlus } from 'react-icons/tb';
+import { TbChevronDown, TbPlus, TbPinFilled } from 'react-icons/tb';
 import NoteCard from './NoteCard';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -59,7 +61,33 @@ function ExpandToggle({ expanded, count, onToggle }) {
 	);
 }
 
-function AwaitingReplies({ notes, onArchive }) {
+function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
+	if (!notes.length) return null;
+
+	return (
+		<div className='mb-8 py-4'>
+			<div className='flex items-center gap-2 mb-3'>
+				<TbPinFilled className='text-warning text-sm' />
+				<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase mb-2'>
+					Do Now
+				</p>
+			</div>
+			<div className='grid lg:grid-cols-2 gap-6 lg:gap-3'>
+				{notes.map((note) => (
+					<NoteCard
+						key={note._id}
+						note={note}
+						onArchive={onArchive}
+						onSent={onSent}
+						onPinToggle={onPinToggle}
+					/>
+				))}
+			</div>
+		</div>
+	);
+}
+
+function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 	const [open, setOpen] = useState(false);
 	if (!notes.length) return null;
 
@@ -98,7 +126,12 @@ function AwaitingReplies({ notes, onArchive }) {
 			{open && (
 				<div className='flex flex-col gap-2'>
 					{notes.map((note) => (
-						<NoteCard key={note._id} note={note} onArchive={onArchive} />
+						<NoteCard
+							key={note._id}
+							note={note}
+							onArchive={onArchive}
+							onPinToggle={onPinToggle}
+						/>
 					))}
 				</div>
 			)}
@@ -128,7 +161,19 @@ export default function NoteList({ notes: initialNotes = [] }) {
 		);
 	}
 
-	const active = notes.filter((n) => !(n.type === 'email' && n.sentAt));
+	function handlePinToggle(id, newPinned) {
+		setNotes((prev) =>
+			prev.map((n) => (n._id === id ? { ...n, pinned: newPinned } : n)),
+		);
+	}
+
+	// Split into three groups
+	const pinned = notes.filter(
+		(n) => n.pinned && !(n.type === 'email' && n.sentAt),
+	);
+	const active = notes.filter(
+		(n) => !n.pinned && !(n.type === 'email' && n.sentAt),
+	);
 	const awaiting = notes.filter((n) => n.type === 'email' && n.sentAt);
 
 	const first = active[0];
@@ -145,33 +190,49 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	return (
 		<div className='mb-12'>
 			<NoteListHeader onAdd={handleAddNote} />
-			<div className='flex flex-col gap-2'>
-				{first && (
-					<NoteCard
-						note={first}
-						onArchive={handleArchive}
-						onSent={handleSent}
-					/>
-				)}
-				{expanded &&
-					rest.map((note) => (
+
+			<PinnedSection
+				notes={pinned}
+				onArchive={handleArchive}
+				onSent={handleSent}
+				onPinToggle={handlePinToggle}
+			/>
+
+			{active.length > 0 && (
+				<div className='flex flex-col gap-2'>
+					{first && (
 						<NoteCard
-							key={note._id}
-							note={note}
+							note={first}
 							onArchive={handleArchive}
 							onSent={handleSent}
+							onPinToggle={handlePinToggle}
 						/>
-					))}
-				{rest.length > 0 && (
-					<ExpandToggle
-						expanded={expanded}
-						count={rest.length}
-						onToggle={() => setExpanded(!expanded)}
-					/>
-				)}
-			</div>
+					)}
+					{expanded &&
+						rest.map((note) => (
+							<NoteCard
+								key={note._id}
+								note={note}
+								onArchive={handleArchive}
+								onSent={handleSent}
+								onPinToggle={handlePinToggle}
+							/>
+						))}
+					{rest.length > 0 && (
+						<ExpandToggle
+							expanded={expanded}
+							count={rest.length}
+							onToggle={() => setExpanded(!expanded)}
+						/>
+					)}
+				</div>
+			)}
 
-			<AwaitingReplies notes={awaiting} onArchive={handleArchive} />
+			<AwaitingReplies
+				notes={awaiting}
+				onArchive={handleArchive}
+				onPinToggle={handlePinToggle}
+			/>
 		</div>
 	);
 }

@@ -1,8 +1,18 @@
+// components/dashboard/NoteCard.jsx
+
 'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { TbEdit, TbCheck, TbX, TbMailCheck, TbMail } from 'react-icons/tb';
+import {
+	TbEdit,
+	TbCheck,
+	TbX,
+	TbMailCheck,
+	TbMail,
+	TbPinFilled,
+	TbPin,
+} from 'react-icons/tb';
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
 
@@ -139,7 +149,7 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 	);
 }
 
-function NoteHeader({ note }) {
+function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 	return (
 		<div className='flex items-center justify-between'>
 			<div className='flex items-center gap-2 min-w-0'>
@@ -150,14 +160,35 @@ function NoteHeader({ note }) {
 				</span>
 				<span className='text-sm font-medium truncate'>{note.title}</span>
 			</div>
-			<a
-				href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
-				target='_blank'
-				onClick={(e) => e.stopPropagation()}
-				className='text-warning/70 hover:text-warning transition-colors p-2 shrink-0 ml-2'
-			>
-				<TbEdit className='text-base lg:text-lg' />
-			</a>
+			<div className='flex items-center shrink-0 ml-2'>
+				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						onPinToggle();
+					}}
+					disabled={pinning}
+					className={`transition-colors p-2 ${
+						pinned
+							? 'text-warning hover:text-warning/60'
+							: 'text-white/20 hover:text-warning/70'
+					} ${pinning ? 'opacity-40' : ''}`}
+					title={pinned ? 'Unpin' : 'Pin to Do Now'}
+				>
+					{pinned ? (
+						<TbPinFilled className='text-base lg:text-lg' />
+					) : (
+						<TbPin className='text-base lg:text-lg' />
+					)}
+				</button>
+				<a
+					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
+					target='_blank'
+					onClick={(e) => e.stopPropagation()}
+					className='text-warning/70 hover:text-warning transition-colors p-2'
+				>
+					<TbEdit className='text-base lg:text-lg' />
+				</a>
+			</div>
 		</div>
 	);
 }
@@ -190,8 +221,8 @@ function NoteBody({ body, open }) {
 
 function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 	const isEmail = note.type === 'email';
-const isSent = !!note.sentAt;
-if (!open && !(isEmail && isSent)) return null;
+	const isSent = !!note.sentAt;
+	if (!open && !(isEmail && isSent)) return null;
 
 	return (
 		<div
@@ -234,12 +265,14 @@ if (!open && !(isEmail && isSent)) return null;
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-export default function NoteCard({ note, onArchive, onSent }) {
-	const [open, setOpen] = useState(false);
+export default function NoteCard({ note, onArchive, onSent, onPinToggle }) {
+	const [open, setOpen] = useState(note.pinned ?? false);
 	const [confirming, setConfirming] = useState(false);
 	const [archiving, setArchiving] = useState(false);
 	const [sending, setSending] = useState(false);
 	const [sentAt, setSentAt] = useState(note.sentAt ?? null);
+	const [pinned, setPinned] = useState(note.pinned ?? false);
+	const [pinning, setPinning] = useState(false);
 
 	const hydratedNote = { ...note, sentAt };
 
@@ -275,6 +308,23 @@ export default function NoteCard({ note, onArchive, onSent }) {
 		}
 	}
 
+	async function handlePinToggle() {
+		setPinning(true);
+		const prev = pinned;
+		setPinned(!prev); // optimistic
+		try {
+			const res = await fetch(`/api/notes/${note._id}/pin`, {
+				method: 'POST',
+			});
+			if (!res.ok) throw new Error('Failed');
+			onPinToggle?.(note._id, !prev);
+		} catch {
+			setPinned(prev); // rollback
+		} finally {
+			setPinning(false);
+		}
+	}
+
 	return (
 		<>
 			{confirming && (
@@ -286,10 +336,19 @@ export default function NoteCard({ note, onArchive, onSent }) {
 				/>
 			)}
 			<div
-				className='flex flex-col bg-white/5 hover:bg-white/10 border border-white/10 rounded px-4 py-3 transition-colors gap-2 cursor-pointer'
+				className={`flex flex-col border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${
+					pinned
+						? 'bg-warning/5 hover:bg-warning/10 border-warning/20 scale-105'
+						: 'bg-white/5 hover:bg-white/10 border-white/10 mx-2'
+				}`}
 				onClick={() => setOpen(!open)}
 			>
-				<NoteHeader note={hydratedNote} />
+				<NoteHeader
+					note={hydratedNote}
+					pinned={pinned}
+					onPinToggle={handlePinToggle}
+					pinning={pinning}
+				/>
 				<NoteClientLink
 					clientName={note.clientName}
 					clientSlug={note.clientSlug}
