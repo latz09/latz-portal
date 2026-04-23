@@ -23,7 +23,7 @@ export default async function ClientPage({ params }) {
 
 			<ProjectList projects={projects} clientSlug={slug} />
 
-			<div className=' mt-16'>
+			<div className=' mt-16 w-full'>
 				<NoteList notes={notes} />
 			</div>
 		</main>
