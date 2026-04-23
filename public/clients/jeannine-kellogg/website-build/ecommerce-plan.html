@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecommerce Integration Plan — Jeannine Kellogg | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--navy);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  .header {
+    background: var(--navy);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -20%;
+    width: 140%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(24,161,173,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 640px;
+    margin: 0 auto 10px;
+    position: relative;
+  }
+
+  .header p {
+    color: rgba(255,255,255,0.45);
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.3;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section { margin-bottom: 48px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+
+  p { margin-bottom: 14px; color: var(--gray-800); }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--navy); }
+
+  .callout {
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+
+  .callout-teal { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout-green { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout-warm { background: var(--orange-light); border-left: 4px solid var(--orange); }
+
+  .callout p { font-size: 14px; line-height: 1.65; color: var(--gray-600); margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--navy); }
+
+  /* Flow diagram */
+  .flow-visual {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 28px 24px;
+    margin: 24px 0;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .flow-box {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .flow-box.teal { background: var(--teal); }
+  .flow-box.green { background: var(--green); }
+  .flow-box.outline {
+    background: transparent;
+    border: 2px solid var(--gray-200);
+    color: var(--gray-600);
+    font-weight: 500;
+  }
+
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--gray-400);
+    flex-shrink: 0;
+  }
+
+  .flow-caption {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 14px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .flow-labels {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .flow-label-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--gray-600);
+  }
+
+  .flow-label-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .dot-navy { background: var(--navy); }
+  .dot-teal { background: var(--teal); }
+  .dot-green { background: var(--green); }
+
+  /* Responsibilities */
+  .resp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .resp-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 18px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .resp-card.r-shopify { border-top-color: var(--teal); }
+  .resp-card.r-bm { border-top-color: var(--green); }
+  .resp-card.r-site { border-top-color: var(--navy); }
+
+  .resp-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .resp-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .resp-card li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0 3px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .resp-card li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+  }
+
+  /* Cost row */
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .cost-row:last-child { border-bottom: none; }
+
+  .cost-name { font-weight: 500; font-size: 14px; }
+  .cost-note { font-size: 12px; color: var(--gray-400); width: 100%; }
+
+  .cost-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  /* Next steps */
+  .next-box {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 28px 28px;
+    margin-top: 40px;
+  }
+
+  .next-box h2 { color: var(--white); border-bottom-color: var(--teal); }
+
+  .next-item {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .next-item:last-child { border-bottom: none; }
+
+  .next-item p {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 1.65;
+  }
+
+  .next-item strong { color: var(--white); }
+
+  .next-who {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 2px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 640px) {
+    .resp-grid { grid-template-columns: 1fr; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    .container { padding: 36px 18px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Latz Web Design · Technical Plan</div>
+  <h1>Ecommerce Integration Plan</h1>
+  <p>jeanninekellogg.com — Itasca/Bookmobile Fulfillment via Shopify</p>
+</div>
+
+<div class="container">
+
+  <!-- WHAT I FOUND -->
+  <div class="section">
+    <div class="section-label">Research Findings</div>
+    <h2>What I Found Out About Itasca's System</h2>
+
+    <p>I dug into Bookmobile's documentation and public information about how their fulfillment integration actually works. Here's the key finding:</p>
+
+    <p><strong>Bookmobile doesn't give developers an API to push orders into their system.</strong> It works the other way around — their system automatically pulls pending orders from your ecommerce platform on an hourly basis. And they only support four platforms: <strong>Shopify, WooCommerce, BigCommerce, and SquareSpace.</strong></p>
+
+    <p>Your current site is built on Next.js, which isn't on that list. That means we can't just wire up a direct connection between your website and Itasca. We need one of their supported platforms in the mix.</p>
+
+    <p>If none of those platforms work, the only alternatives are manually uploading orders to their Stacks portal one-by-one or via spreadsheet — which defeats the purpose of having an automated online store.</p>
+
+    <div class="callout callout-teal">
+      <strong>This is actually good news.</strong>
+      <p>It means the integration between your store and Bookmobile is a solved problem. Their IT team has done this setup many times with other publishers. We're not building something experimental — we're plugging into a system that already works.</p>
+    </div>
+  </div>
+
+  <!-- THE RECOMMENDATION -->
+  <div class="section">
+    <div class="section-label">Recommendation</div>
+    <h2>Why Shopify — and How It Fits</h2>
+
+    <p>I know adding Shopify might sound like we're introducing a whole separate website platform. We're not. Here's what Shopify actually does in this setup:</p>
+
+    <p><strong>Shopify is the backend only.</strong> It's the database that holds your book catalog (titles, prices, descriptions, inventory status) and the payment processor that handles credit card transactions. Think of it as the engine under the hood — customers never interact with Shopify directly except for the final checkout screen where they enter payment info.</p>
+
+    <p>Your website — the design, the book pages, the branding, the entire experience — is still fully custom-built by me. Nothing about the look and feel changes. Shopify just provides two things we need: a product database that Bookmobile can connect to, and secure payment processing.</p>
+
+    <p>The reason I'm recommending Shopify specifically over WooCommerce or BigCommerce: it's the most widely used of Bookmobile's supported platforms, which means the most proven integration path. It's also the simplest for you to manage on the backend — adding a book or changing a price is straightforward.</p>
+
+    <div class="callout callout-warm">
+      <strong>Why not build a custom connection?</strong>
+      <p>We could try to build a direct integration between your Next.js site and Itasca's system, but it wouldn't be on their supported platform list. That means their IT team can't set it up through their standard process, there's no guarantee it would work reliably, and if something breaks, we'd be on our own troubleshooting it. Using Shopify means we get their standard, tested connection — and their IT support if anything goes sideways.</p>
+    </div>
+  </div>
+
+  <!-- FLOW DIAGRAM -->
+  <div class="section">
+    <div class="section-label">How It Works</div>
+    <h2>The Order Flow</h2>
+
+    <div class="flow-visual">
+      <div class="flow-row">
+        <div class="flow-box">Customer visits<br>jeanninekellogg.com</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box teal">Clicks "Buy"<br>Shopify processes payment</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box green">Bookmobile pulls order<br>Ships the book</div>
+      </div>
+
+      <div class="flow-labels">
+        <div class="flow-label-item"><div class="flow-label-dot dot-navy"></div> Your custom website</div>
+        <div class="flow-label-item"><div class="flow-label-dot dot-teal"></div> Shopify (backend)</div>
+        <div class="flow-label-item"><div class="flow-label-dot dot-green"></div> Bookmobile / Itasca</div>
+      </div>
+
+      <div class="flow-caption">Bookmobile's system checks Shopify for new orders every hour. Fully automatic.</div>
+    </div>
+
+    <p>The customer browses your website, clicks "Buy Now," a cart opens on your site, and when they're ready to pay they're taken to a Shopify checkout page branded with your name. After purchase, Bookmobile picks up the order automatically from Shopify, pulls the book from their warehouse, and ships it. Money from the sale deposits to your bank account through Shopify.</p>
+  </div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section">
+    <div class="section-label">Responsibilities</div>
+    <h2>What Each Piece Handles</h2>
+
+    <div class="resp-grid">
+      <div class="resp-card r-site">
+        <h4>Your Website</h4>
+        <ul>
+          <li>All design and branding</li>
+          <li>Book pages and content</li>
+          <li>Fuzzy Duck identity</li>
+          <li>Buy buttons and cart</li>
+          <li>"Coming soon" pages</li>
+          <li>About the Author</li>
+        </ul>
+      </div>
+      <div class="resp-card r-shopify">
+        <h4>Shopify</h4>
+        <ul>
+          <li>Book catalog (titles, prices)</li>
+          <li>Payment processing</li>
+          <li>Order confirmation emails</li>
+          <li>Sales reporting</li>
+          <li>Tax collection</li>
+          <li>Bank deposits</li>
+        </ul>
+      </div>
+      <div class="resp-card r-bm">
+        <h4>Bookmobile / Itasca</h4>
+        <ul>
+          <li>Pulls orders from Shopify</li>
+          <li>Warehouse and inventory</li>
+          <li>Picks, packs, ships</li>
+          <li>Tracking info</li>
+          <li>Invoices you for fulfillment</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>For day-to-day management: when Book 2 or 3 is ready to sell, you log into Shopify, switch the book from "Draft" to "Active," and your website reflects the change automatically. Price changes, description updates — same thing. You won't need to contact me for routine product changes.</p>
+  </div>
+
+  <!-- COSTS -->
+  <div class="section">
+    <div class="section-label">Shopify Costs</div>
+    <h2>What This Adds to the Budget</h2>
+
+    <p>Shopify is the only new ongoing cost beyond what you're already paying for hosting and Bookmobile's fulfillment fees.</p>
+
+    <div class="cost-row">
+      <span class="cost-name">Shopify Basic Plan</span>
+      <span class="cost-amount">$39/mo</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-name">Per-transaction fee (Shopify Payments)</span>
+      <span class="cost-amount">2.9% + 30¢</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-name">Bookmobile connection setup (one-time)</span>
+      <span class="cost-amount">TBD from Hans</span>
+      <span class="cost-note">Their IT team connects Shopify to Stacks. They charge a setup fee — we'll know the amount once Hans responds.</span>
+    </div>
+  </div>
+
+  <!-- WHAT I NEED FROM HANS -->
+  <div class="section">
+    <div class="section-label">The Email to Hans</div>
+    <h2>What We Need to Confirm with Bookmobile</h2>
+
+    <p>Yes — please CC me on that email to Hans. When he responds, here's what we need to nail down:</p>
+
+    <p><strong>1.</strong> Confirm that Shopify is supported for your account's fulfillment integration through Stacks.</p>
+
+    <p><strong>2.</strong> What's their setup fee for connecting a Shopify store to their system?</p>
+
+    <p><strong>3.</strong> Are your titles (The Tukor's Journey, and eventually Books 2 and 3) already set up in Stacks with ISBNs? They need to exist in their system before orders can flow through.</p>
+
+    <p><strong>4.</strong> Does order status and tracking information push back to Shopify automatically, or is that a separate process?</p>
+
+    <div class="callout callout-green">
+      <strong>Reframing the conversation with Hans</strong>
+      <p>Rather than asking for "API specs" — which implies we're building a custom integration — we're telling him: we're setting up a Shopify store for your site and want to connect it to Stacks for automated fulfillment. That's a conversation Bookmobile's IT team has had with other publishers before. It's a known, standard process on their end.</p>
+    </div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="next-box">
+    <h2>Next Steps</h2>
+
+    <div class="next-item">
+      <div class="next-who">Jeannine</div>
+      <p><strong>Resend the email to Hans and CC me (jordan@latzwebdesign.com).</strong> I'll follow up with the specific questions above once he responds. This is the first domino — everything else builds from here.</p>
+    </div>
+
+    <div class="next-item">
+      <div class="next-who">Jordan</div>
+      <p><strong>Set up the Shopify store and add your books.</strong> I'll create the account, add The Tukor's Journey as an active product and Books 2 and 3 as drafts. I'll send you login credentials so you can see it and make sure everything looks right.</p>
+    </div>
+
+    <div class="next-item">
+      <div class="next-who">Jordan</div>
+      <p><strong>Begin the website rebuild</strong> with the Shopify integration built in from the start. As Fuzzy Duck delivers brand assets, I'll integrate them into the design. You'll have a live development link to review progress.</p>
+    </div>
+
+    <div class="next-item">
+      <div class="next-who">Bookmobile IT</div>
+      <p><strong>Connect Shopify to Stacks.</strong> Once the store is set up and your titles are confirmed in their system, their IT team logs in, sets up the connection, and runs a test order. This is their standard process.</p>
+    </div>
+
+    <div class="next-item">
+      <div class="next-who">Everyone</div>
+      <p><strong>Test and go live.</strong> We run a real test order end-to-end — purchase on the site, Bookmobile receives it, confirms fulfillment. Once that works, we flip the switch. Book 1 is for sale. Books 2 and 3 go live when they're ready.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Latz Web Design · Stevens Point, WI<br>
+  jordan@latzwebdesign.com · No fluff. Just results.
+</div>
+
+</body>
+</html>
