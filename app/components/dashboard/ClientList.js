@@ -22,15 +22,15 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 	const [open, setOpen] = useState(defaultOpen);
 
 	return (
-		<div className='my-4 lg:my-6 py-2 lg:py-4'>
+		<div>
 			<button
 				onClick={() => setOpen(!open)}
-				className='flex items-center ml-3  justify-start lg:justify-center gap-2 w-full mb-3 group'
+				className='flex items-center ml-3 justify-start lg:justify-center gap-2 w-full mb-3 group'
 			>
 				<span className='font-mono text-xs text-warning tracking-widest uppercase'>
 					{label}
 				</span>
-				<span className='font-mono text-sm  text-white/40'>
+				<span className='font-mono text-sm text-white/40'>
 					{clients.length}
 				</span>
 				<TbChevronDown
@@ -40,6 +40,49 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 			{open && (
 				<div className='flex flex-col gap-3'>
 					{clients.map((client) => (
+						<ClientCard key={client.slug} client={client} />
+					))}
+				</div>
+			)}
+		</div>
+	);
+}
+
+function StatusTabs({ onHold, potential }) {
+	const [activeTab, setActiveTab] = useState(null);
+
+	if (!onHold.length && !potential.length) return null;
+
+	const tabs = [];
+	if (onHold.length)
+		tabs.push({ key: 'onHold', label: 'On Hold', clients: onHold });
+	if (potential.length)
+		tabs.push({ key: 'potential', label: 'Potential', clients: potential });
+
+	const activeClients = tabs.find((t) => t.key === activeTab)?.clients || [];
+
+	return (
+		<div>
+			<div className='flex items-center justify-evenly'>
+				{tabs.map((tab) => (
+					<button
+						key={tab.key}
+						onClick={() => setActiveTab(activeTab === tab.key ? null : tab.key)}
+						className={`font-mono text-xs tracking-widest uppercase px-4 py-2 rounded-t transition-colors ${
+							activeTab === tab.key
+								? 'bg-white/5 text-warning border border-white/10 border-b-0'
+								: 'text-white/70 hover:text-white/60 border border-warning/10'
+						}`}
+					>
+						{tab.label}
+						<span className='ml-2 text-sm'>{tab.clients.length}</span>
+					</button>
+				))}
+			</div>
+
+			{activeTab && (
+				<div className='flex flex-col gap-3 bg-white/5 border border-white/10 rounded-b rounded-tr p-4 mt-2'>
+					{activeClients.map((client) => (
 						<ClientCard key={client.slug} client={client} />
 					))}
 				</div>
@@ -68,7 +111,7 @@ export default function ClientList({ clients }) {
 	);
 
 	return (
-		<div className='flex flex-col lg:mb-12 '>
+		<div className='flex flex-col lg:mb-12 max-w-3xl mx-auto'>
 			{active.length > 0 && (
 				<>
 					<p className='font-mono text-xs text-white/40 tracking-widest uppercase mb-3'>
@@ -81,28 +124,18 @@ export default function ClientList({ clients }) {
 					</div>
 				</>
 			)}
-			<div className="space-y-2">
-			{onHold.length > 0 && (
-				<CollapsibleSection
-					label='On Hold'
-					clients={onHold}
-					defaultOpen={false}
-				/>
-			)}
-			{potential.length > 0 && (
-				<CollapsibleSection
-					label='Potential'
-					clients={potential}
-					defaultOpen={false}
-				/>
-			)}
-			{complete.length > 0 && (
-				<CollapsibleSection
-					label='Complete'
-					clients={complete}
-					defaultOpen={false}
-				/>
-			)}</div>
+
+			<div className='space-y-4'>
+				<StatusTabs onHold={onHold} potential={potential} />
+
+				{complete.length > 0 && (
+					<CollapsibleSection
+						label='Complete'
+						clients={complete}
+						defaultOpen={false}
+					/>
+				)}
+			</div>
 		</div>
 	);
 }
