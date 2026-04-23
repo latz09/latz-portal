@@ -204,7 +204,7 @@ function NoteClientLink({ clientName, clientSlug }) {
 			{clientName} →
 		</Link>
 	) : (
-		<span className='font-mono text-xs text-white/30'>{clientName}</span>
+		<span className='font-mono text-xs text-white/30 mb-1'>{clientName}</span>
 	);
 }
 
@@ -238,8 +238,8 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 					<TbEdit className='text-base lg:text-lg' />
 				</a>
 				{isEmail && isSent && (
-					<span className='flex items-center gap-1.5 font-mono text-xs text-white/60'>
-						<TbMailCheck className='text-base text-teal' />
+					<span className='flex items-center gap-1 lg:gap-1.5 font-mono text-xs text-white/60'>
+						<TbMailCheck className='text-xs lg:text-base text-teal' />
 						{getSentLabel(note.sentAt)} 
 					</span>
 				)}
