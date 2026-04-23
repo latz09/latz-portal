@@ -69,7 +69,7 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 			<div className='flex items-center gap-2 mb-3'>
 				<TbPinFilled className='text-warning text-sm' />
 				<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase mb-2'>
-					Do Now
+					Up Next
 				</p>
 			</div>
 			<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
@@ -199,7 +199,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 			/>
 
 			{active.length > 0 && (
-				<div className='flex flex-col gap-2'>
+				<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
 					{first && (
 						<NoteCard
 							note={first}
@@ -219,14 +219,14 @@ export default function NoteList({ notes: initialNotes = [] }) {
 							/>
 						))}
 					{rest.length > 0 && (
-	<div className='sm:col-span-2'>
-		<ExpandToggle
-			expanded={expanded}
-			count={rest.length}
-			onToggle={() => setExpanded(!expanded)}
-		/>
-	</div>
-)}
+						<div className='sm:col-span-2'>
+							<ExpandToggle
+								expanded={expanded}
+								count={rest.length}
+								onToggle={() => setExpanded(!expanded)}
+							/>
+						</div>
+					)}
 				</div>
 			)}
 
