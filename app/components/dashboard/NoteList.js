@@ -65,7 +65,7 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 	if (!notes.length) return null;
 
 	return (
-		<div className='mb-8 py-4'>
+		<div className='mb-8 sm:mb-16 py-8 sm:py-16'>
 			<div className='flex items-center gap-2 mb-3'>
 				<TbPinFilled className='text-warning text-sm' />
 				<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase mb-2'>

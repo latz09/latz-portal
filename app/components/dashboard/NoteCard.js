@@ -338,7 +338,7 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle }) {
 			<div
 				className={`flex flex-col border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${
 					pinned
-						? 'bg-dark hover:bg-warning/10 border-warning/20 '
+						? 'bg-dark hover:bg-warning/10 border-warning/10 '
 						: 'bg-white/5 hover:bg-white/10 border-white/10 mx-2'
 				}`}
 				onClick={() => setOpen(!open)}
