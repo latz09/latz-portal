@@ -13,7 +13,7 @@ export default async function Home() {
 	const [clients, notes] = await Promise.all([f(Q), f(NQ)]);
 
 	return (
-		<main className='max-w-3xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
+		<main className='max-w-7xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
 			<PortalPageHeader
 				variant='internal'
 				label='All Active Projects - Latz Web Design'
