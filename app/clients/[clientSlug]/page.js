@@ -10,7 +10,7 @@ export default async function ClientPage({ params }) {
 	const { name, slug, projects, notes } = data;
 
 	return (
-		<main className='px-6 py-16'>
+		<main className='px-3 lg:px-6 py-16'>
 			<div className='max-w-4xl mx-auto mb-12'>
 				<Link
 					href='/'
@@ -23,7 +23,7 @@ export default async function ClientPage({ params }) {
 
 			<ProjectList projects={projects} clientSlug={slug} />
 
-			<div className='max-w-5xl mx-auto w-full mt-16'>
+			<div className=' mt-16'>
 				<NoteList notes={notes} />
 			</div>
 		</main>
