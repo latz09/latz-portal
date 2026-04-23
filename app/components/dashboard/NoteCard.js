@@ -160,7 +160,7 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 				</span>
 				<span className='text-sm font-medium truncate'>{note.title}</span>
 			</div>
-			<div className='flex items-center shrink-0 ml-2'>
+			<div className='flex items-center shrink-0 lg:ml-2'>
 				<a
 					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
 					target='_blank'
