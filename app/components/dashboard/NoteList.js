@@ -185,13 +185,13 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	}
 
 	// Split into three groups
-	const pinned = notes.filter(
-		(n) => n.pinned && !(n.type === 'email' && n.sentAt),
-	);
+	const pinned = notes.filter((n) => n.pinned);
 	const active = notes.filter(
 		(n) => !n.pinned && !(n.type === 'email' && n.sentAt),
 	);
-	const awaiting = notes.filter((n) => n.type === 'email' && n.sentAt);
+	const awaiting = notes.filter(
+		(n) => n.type === 'email' && n.sentAt && !n.pinned,
+	);
 
 	const visible = active.slice(0, 2);
 	const rest = active.slice(2);
