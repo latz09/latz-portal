@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>C&amp;J Custom Rods — Technical Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--teal);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.28s;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'C&J';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 160px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+  }
+
+  .code-block .code-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .code-block pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .code-block pre .comment { color: var(--gray-400); }
+  .code-block pre .keyword { color: var(--teal-mid); }
+  .code-block pre .string { color: var(--yellow); }
+  .code-block pre .fn { color: #7dd3fc; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-diagram {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+  }
+
+  .flow-diagram h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .flow-step {
+    background: var(--teal-light);
+    border: 1px solid var(--teal-mid);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--navy);
+    text-align: center;
+    min-width: 100px;
+    line-height: 1.3;
+  }
+
+  .flow-step.shopify {
+    background: #f0fdf4;
+    border-color: var(--green);
+    color: #14532d;
+  }
+
+  .flow-step.custom {
+    background: var(--teal-light);
+    border-color: var(--teal);
+    color: var(--navy);
+  }
+
+  .flow-arrow {
+    font-size: 16px;
+    color: var(--gray-400);
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .compare-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .compare-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .compare-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .compare-table .chosen td {
+    background: var(--green-light) !important;
+    font-weight: 500;
+  }
+
+  /* ── NOTE BLOCKS ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── PILLS ── */
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  /* ── RESPONSIBILITY BADGES ── */
+  .resp-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-shopify { background: #f0fdf4; color: var(--green); }
+  .badge-sanity { background: var(--teal-light); color: var(--teal); }
+  .badge-nextjs { background: var(--gray-100); color: var(--gray-800); }
+  .badge-vercel { background: #f5f3ff; color: #7c3aed; }
+
+  /* ── PAGE CARDS (reused for "what handles what") ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card.shopify-card { border-top-color: var(--green); }
+  .page-card.sanity-card { border-top-color: var(--teal); }
+  .page-card.nextjs-card { border-top-color: var(--navy); }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-card.shopify-card ul li::before { color: var(--green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+    }
+
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .mobile-overlay { display: block; }
+
+    .main { margin-left: 0; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding: 32px 20px 80px; }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .data-label { font-size: 10px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .checklist li {
+      flex-wrap: wrap;
+    }
+
+    .check-status {
+      margin-left: 0;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .budget-table th, .budget-table td,
+    .compare-table th, .compare-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .phase-num { font-size: 36px; }
+
+    .callout {
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .flow-steps { flex-direction: column; align-items: stretch; }
+    .flow-arrow { transform: rotate(90deg); text-align: center; padding: 4px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">C&amp;J Custom Rods</div>
+    <div class="status-pill">Tech Reference</div>
+  </div>
+
+  <div class="nav-section-label">Architecture</div>
+  <a href="#stack" class="nav-link active"><span class="nav-icon">🧱</span> The Stack</a>
+  <a href="#how-it-works" class="nav-link"><span class="nav-icon">⚡</span> How It Works</a>
+  <a href="#responsibilities" class="nav-link"><span class="nav-icon">🔀</span> Who Handles What</a>
+
+  <div class="nav-section-label">Commerce</div>
+  <a href="#checkout-flows" class="nav-link"><span class="nav-icon">🛒</span> Checkout Flows</a>
+  <a href="#rod-builder" class="nav-link"><span class="nav-icon">🎣</span> Rod Builder Logic</a>
+  <a href="#draft-orders" class="nav-link"><span class="nav-icon">📦</span> Why Draft Orders</a>
+
+  <div class="nav-section-label">Setup</div>
+  <a href="#dev-workflow" class="nav-link"><span class="nav-icon">🛠️</span> Dev Workflow</a>
+  <a href="#costs" class="nav-link"><span class="nav-icon">💰</span> Monthly Costs</a>
+  <a href="#previous" class="nav-link"><span class="nav-icon">🔙</span> Previous Site</a>
+
+  <div class="nav-section-label">Open Items</div>
+  <a href="#decisions" class="nav-link"><span class="nav-icon">⚠️</span> Decisions Pending</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Build Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Technical Overview · Shopify + Next.js Architecture</div>
+    <h1>C&amp;J Custom Rods</h1>
+    <div class="sub">How commerce, checkout, and the rod builder connect under the hood</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Stack</span>
+        <span class="value">Next.js + Shopify + Sanity</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Hosting</span>
+        <span class="value">Vercel (free tier)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Client Monthly</span>
+        <span class="value">$39/mo (Shopify Basic)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Doc Type</span>
+        <span class="value">Internal build reference</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- THE STACK -->
+    <section id="stack">
+      <div class="section-header">
+        <div class="section-icon">🧱</div>
+        <h2>The Stack</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Custom Next.js frontend → Shopify backend for commerce → Sanity for everything else → Vercel hosting</strong>
+        <p>Customer sees a fully custom website — your design, your code, nothing templated. Shopify only handles the commerce plumbing and checkout. Sanity handles all content Chris manages himself.</p>
+      </div>
+
+      <div class="card">
+        <h3>Technology Breakdown</h3>
+        <div class="data-row">
+          <span class="data-label">Framework</span>
+          <span class="data-value">Next.js 13+ (App Router)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Frontend</span>
+          <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Commerce Backend</span>
+          <span class="data-value">Shopify — Storefront API (GraphQL) for product data + Admin API for draft orders</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">CMS</span>
+          <span class="data-value">Sanity — pages, copy, marketing, banners, photography, non-commerce content</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">Vercel — free tier (see note in Costs section)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Checkout</span>
+          <span class="data-value">Shopify Hosted Checkout — handles payment, tax, shipping, fraud, emails, tracking</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <h2>How It Works</h2>
+      </div>
+
+      <div class="flow-diagram">
+        <h4>Data Flow — High Level</h4>
+        <div class="flow-steps">
+          <div class="flow-step custom">Customer visits<br><strong>Custom frontend</strong></div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step custom">Next.js fetches<br><strong>Product data</strong></div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step shopify">Shopify<br><strong>Storefront API</strong></div>
+        </div>
+        <div class="flow-steps" style="margin-top: 12px;">
+          <div class="flow-step custom">Next.js fetches<br><strong>Content / copy</strong></div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step" style="background:#e8f7f8;border-color:var(--teal);">Sanity<br><strong>CMS</strong></div>
+        </div>
+        <div class="flow-steps" style="margin-top: 12px;">
+          <div class="flow-step custom">Customer<br><strong>Checks out</strong></div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step shopify">Shopify<br><strong>Hosted Checkout</strong></div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step shopify">Orders in<br><strong>Shopify Admin</strong></div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Key concept: Shopify is invisible to the customer</strong>
+          <span>They never see a Shopify storefront. They see your custom site. They only touch Shopify at checkout — and even that is styled to match. Shopify is the engine under the hood, not the car.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO HANDLES WHAT -->
+    <section id="responsibilities">
+      <div class="section-header">
+        <div class="section-icon">🔀</div>
+        <h2>Who Handles What</h2>
+      </div>
+
+      <div class="three-col">
+        <div class="page-card shopify-card">
+          <span class="resp-badge badge-shopify">Shopify</span>
+          <h4>Commerce Engine</h4>
+          <ul>
+            <li>All standard products — rods, reels, apparel</li>
+            <li>Order management dashboard</li>
+            <li>Inventory tracking</li>
+            <li>Shipping labels — USPS, UPS, FedEx at discounted rates</li>
+            <li>Payment processing — Stripe, PayPal, Apple Pay, Google Pay, Shop Pay</li>
+            <li>Customer data</li>
+            <li>Order confirmation + tracking emails (automated)</li>
+            <li>Tax calculation</li>
+            <li>Fraud protection</li>
+          </ul>
+        </div>
+
+        <div class="page-card sanity-card">
+          <span class="resp-badge badge-sanity">Sanity</span>
+          <h4>Content Management</h4>
+          <ul>
+            <li>All page content — copy, layout blocks</li>
+            <li>Marketing banners + CTAs</li>
+            <li>Photography + image management</li>
+            <li>Any non-commerce updates Chris makes himself</li>
+            <li>No developer needed for content changes</li>
+          </ul>
+        </div>
+
+        <div class="page-card nextjs-card">
+          <span class="resp-badge badge-nextjs">Next.js</span>
+          <h4>Custom Frontend</h4>
+          <ul>
+            <li>All UI/UX — fully custom, no templates</li>
+            <li>Rod builder tool (custom component)</li>
+            <li>Fetches from both Shopify + Sanity</li>
+            <li>Server-side price calculation for rod builder</li>
+            <li>Cart management</li>
+            <li>Redirect to Shopify checkout</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKOUT FLOWS -->
+    <section id="checkout-flows">
+      <div class="section-header">
+        <div class="section-icon">🛒</div>
+        <h2>The Two Checkout Flows</h2>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Both flows end in the same Shopify dashboard</strong>
+          <span>Chris sees everything in one place — standard orders and custom rod orders — regardless of which flow generated the order.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Flow 1 — Standard Products</h3>
+          <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">Reels, apparel, in-stock rods — anything with a fixed price and SKU.</p>
+          <div class="flow-diagram" style="border:none;padding:12px 0;margin:0;">
+            <div class="flow-steps" style="flex-direction:column;align-items:stretch;">
+              <div class="flow-step custom">Customer adds to cart</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step shopify">Shopify Storefront API cart</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step shopify">Shopify Hosted Checkout</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step shopify">Order in dashboard ✅</div>
+            </div>
+          </div>
+          <div class="callout info" style="margin-top:8px;margin-bottom:0;">
+            <span class="callout-icon">📌</span>
+            <div class="callout-body">
+              <strong>Standard Storefront API</strong>
+              <span>No custom work needed beyond standard Storefront API cart and checkout calls. Straightforward.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Flow 2 — Custom Rod Builder</h3>
+          <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">Customer configures a rod — selections validated, price calculated server-side.</p>
+          <div class="flow-diagram" style="border:none;padding:12px 0;margin:0;">
+            <div class="flow-steps" style="flex-direction:column;align-items:stretch;">
+              <div class="flow-step custom">Customer builds rod in UI</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step custom">Next.js validates + prices (server)</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step" style="background:var(--yellow);border-color:var(--navy);">Admin API → Creates Draft Order</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step shopify">Redirect to checkout URL</div>
+              <span class="flow-arrow" style="transform:rotate(90deg);text-align:center;padding:4px 0;">→</span>
+              <div class="flow-step shopify">Structured order in dashboard ✅</div>
+            </div>
+          </div>
+          <div class="callout warn" style="margin-top:8px;margin-bottom:0;">
+            <span class="callout-icon">⚠️</span>
+            <div class="callout-body">
+              <strong>Uses Shopify Admin API — not Storefront API</strong>
+              <span>Draft orders require Admin API access. This is the key difference. Storefront API can't create draft orders.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROD BUILDER LOGIC -->
+    <section id="rod-builder">
+      <div class="section-header">
+        <div class="section-icon">🎣</div>
+        <h2>Rod Builder — Implementation Details</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>The rod builder is the core differentiator of this site — get it right</strong>
+        <p>Valid options only (no impossible combos). Real-time price updates. Server-side price calculation (secure). All selections land in Shopify dashboard as structured data.</p>
+      </div>
+
+      <div class="card">
+        <h3>Rod Builder Requirements</h3>
+        <div class="data-row">
+          <span class="data-label">Frontend</span>
+          <span class="data-value">Custom React component — step-by-step selector or single-page configurator (TBD with Chris)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Validation</span>
+          <span class="data-value">Only show valid combinations — prevents impossible builds that caused issues in v1</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Pricing</span>
+          <span class="data-value">Real-time price display on frontend — but final price calculated server-side before creating draft order</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Selections Needed</span>
+          <span class="data-value">Lengths, blanks, colors, finishes, guides, hardware — full list from Chris (pending)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Output</span>
+          <span class="data-value">Structured draft order via Admin API — every selection is a line item or property, not a note</span>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <span class="code-label">Pseudo-flow — Rod Builder to Checkout</span>
+<pre><span class="comment">// 1. Customer completes rod configuration on frontend</span>
+<span class="keyword">const</span> rodConfig = {
+  blank: <span class="string">"St. Croix SCIII 7'0\" Medium"</span>,
+  guides: <span class="string">"Fuji Alconite"</span>,
+  handle: <span class="string">"Full cork grip"</span>,
+  finish: <span class="string">"Metallic blue thread wrap"</span>,
+  <span class="comment">// ... all selections</span>
+}
+
+<span class="comment">// 2. Send to Next.js API route (server-side)</span>
+<span class="keyword">const</span> response = <span class="keyword">await</span> <span class="fn">fetch</span>(<span class="string">'/api/create-rod-order'</span>, {
+  method: <span class="string">'POST'</span>,
+  body: JSON.<span class="fn">stringify</span>(rodConfig)
+})
+
+<span class="comment">// 3. Server validates selections + calculates price</span>
+<span class="comment">// 4. Server calls Shopify Admin API → creates draft order</span>
+<span class="comment">// 5. Shopify returns checkout URL for that draft order</span>
+<span class="comment">// 6. Redirect customer to Shopify checkout URL</span>
+<span class="comment">// 7. Order completes → lands in Chris's dashboard, fully structured</span></pre>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🔐</span>
+        <div class="callout-body">
+          <strong>Security: Price must be calculated server-side</strong>
+          <span>Never trust frontend-calculated prices. The Next.js API route validates the config and computes the final price before sending to Shopify. This was a weakness in Option 1 (line item properties approach) — don't repeat it.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY DRAFT ORDERS -->
+    <section id="draft-orders">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Why Draft Orders (Option 2)</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">🧠</span>
+        <div class="callout-body">
+          <strong>This was the key architectural decision — document the reasoning</strong>
+          <span>Two options were considered for getting custom rod builds into Shopify checkout. Option 2 (draft orders) was chosen. Here's why.</span>
+        </div>
+      </div>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:30%;">Criteria</th>
+            <th style="width:35%;">Option 1 — Line Item Properties</th>
+            <th style="width:35%;">Option 2 — Draft Orders via Admin API</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>How it works</strong></td>
+            <td>One "Build Your Rod" product in Shopify. Selections passed as notes on the line item.</td>
+            <td>Selections sent as structured data via Admin API. Creates a real draft order.</td>
+          </tr>
+          <tr>
+            <td><strong>Price calculation</strong></td>
+            <td>Calculated on frontend — minor security concern</td>
+            <td>Calculated server-side — secure</td>
+          </tr>
+          <tr>
+            <td><strong>Order structure</strong></td>
+            <td>Selections are unstructured notes — harder to parse</td>
+            <td>Clean, structured data — every selection is a field</td>
+          </tr>
+          <tr>
+            <td><strong>Build complexity</strong></td>
+            <td>Simpler to implement</td>
+            <td>Slightly more complex — requires Admin API</td>
+          </tr>
+          <tr>
+            <td><strong>Future scaling</strong></td>
+            <td>Hard to build reporting or automations on top of note data</td>
+            <td>Ready for reporting, automation, integrations</td>
+          </tr>
+          <tr class="chosen">
+            <td><strong>Verdict</strong></td>
+            <td>Rejected — too fragile for a business that processes orders daily</td>
+            <td>✅ Chosen — right foundation long-term</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout success">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>Why it mattered for Chris specifically</strong>
+          <span>His previous setup was Square for payments + a third-party shipping tool — fragmented, manual, multiple platforms per order. Shopify consolidates everything. Draft orders ensure custom rod orders are just as clean and structured as standard product orders. He processes an order, sees exactly what was built, prints a label, ships — all one place.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEV WORKFLOW -->
+    <section id="dev-workflow">
+      <div class="section-header">
+        <div class="section-icon">🛠️</div>
+        <h2>Development Workflow</h2>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Before Building</div>
+          <h4>Shopify Partner Setup</h4>
+          <ul>
+            <li>Sign up as Shopify Partner — free at shopify.com/partners</li>
+            <li>Create a free development store for C&J — unlimited dev stores, no bank account needed</li>
+            <li>Populate dev store with test products, rod builder options</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">During Build</div>
+          <h4>Dev Store Testing</h4>
+          <ul>
+            <li>Build and test everything against the dev store</li>
+            <li>Use Shopify's test card numbers for fake transactions</li>
+            <li>Test both checkout flows — standard products and rod builder draft orders</li>
+            <li>Verify orders land correctly in dashboard with all structured data</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">At Launch</div>
+          <h4>Transfer to Chris</h4>
+          <ul>
+            <li>Transfer development store to Chris's ownership</li>
+            <li>Chris creates his Shopify account, enters billing, picks Shopify Basic ($39/mo)</li>
+            <li>Everything transfers intact — no rebuild, no migration</li>
+            <li>Update Storefront API keys + Admin API keys in Vercel environment variables</li>
+            <li>Verify checkout works with real payment processing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🔑</span>
+        <div class="callout-body">
+          <strong>Don't forget: Update API keys in Vercel before going live</strong>
+          <span>Dev store keys ≠ production keys. After transfer, Chris's live store will have new Storefront API and Admin API credentials. Update them in Vercel environment variables or checkout will break.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MONTHLY COSTS -->
+    <section id="costs">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Monthly Costs Post-Launch</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Notes</th>
+            <th class="amount">Monthly</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Shopify Basic</strong></td>
+            <td>Commerce engine — paid directly by Chris to Shopify</td>
+            <td class="amount">$39</td>
+          </tr>
+          <tr>
+            <td><strong>Vercel</strong></td>
+            <td>Hosting — free tier</td>
+            <td class="amount">$0</td>
+          </tr>
+          <tr>
+            <td><strong>Sanity</strong></td>
+            <td>CMS — free tier</td>
+            <td class="amount">$0</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Monthly</strong></td>
+            <td></td>
+            <td class="amount"><strong>$39/mo</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Vercel Free Tier — Be Transparent</strong>
+          <span>Technically labeled for non-commercial use per Vercel's terms. Practically never enforced at this traffic scale (est. 30k–50k visits/month before hitting limits). If it ever becomes an issue, upgrading to Pro is $20/month and a one-click change. Worth being upfront with Chris but not a real concern.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREVIOUS SITE CONTEXT -->
+    <section id="previous">
+      <div class="section-header">
+        <div class="section-icon">🔙</div>
+        <h2>Previous Site Context</h2>
+      </div>
+
+      <div class="card">
+        <h3>V1 — What Was Built</h3>
+        <div class="data-row">
+          <span class="data-label">Built</span>
+          <span class="data-value">~1 year ago — first Wisconsin client</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Stack</span>
+          <span class="data-value">Next.js, Sanity CMS, Square payments, custom checkout flow, no native commerce backend</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Cost</span>
+          <span class="data-value">~$4,025 — underpriced given scope, intentional to establish in WI market</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Pain Points Carried Into Rebuild</h3>
+        <ul class="checklist">
+          <li><span class="check-icon">🔴</span> Manual order management — Square + third-party shipping = fragmented</li>
+          <li><span class="check-icon">🔴</span> White background product images vs transparent — looked sloppy on custom layouts</li>
+          <li><span class="check-icon">🔴</span> Product descriptions longer than layout was designed for — broke visual rhythm</li>
+          <li><span class="check-icon">🔴</span> Design showing its age after a year</li>
+          <li><span class="check-icon">🔴</span> Adding new product categories required developer work every time</li>
+        </ul>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Rebuild fixes all of these</strong>
+          <span>Shopify consolidates order + shipping. Photography shoots will deliver transparent-background product images. Sanity schemas will handle variable-length descriptions. Chris can add categories himself.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY DECISIONS -->
+    <section id="decisions">
+      <div class="section-header">
+        <div class="section-icon">⚠️</div>
+        <h2>Decisions Pending Before Building</h2>
+      </div>
+
+      <div class="card">
+        <h3>Open Items</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🔲</span>
+            <div>
+              <strong>Final page structure</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Confirm with Chris once photography assets are in hand — page layout depends on what images are available</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Waiting on Chris</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔲</span>
+            <div>
+              <strong>Rod builder option combinations</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Need full list: lengths, blanks, colors, finishes, guides, hardware. This defines the validation logic and pricing matrix.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Waiting on Chris</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔲</span>
+            <div>
+              <strong>Photography rollout — phased or wait?</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Decide whether to launch with partial photography or wait for both shoots to complete</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Needs Discussion</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔲</span>
+            <div>
+              <strong>Reels & apparel product count + assets</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Are product images ready or coming from the photo shoots? How many SKUs?</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Needs Discussion</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BUILD NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Build Notes & Reminders</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">API Keys — Two Different APIs</div>
+        <p>Storefront API (GraphQL) is used for reading product data and standard cart/checkout. Admin API is used only for the rod builder draft orders — it has write access. Keep these separated mentally. Storefront API keys are public-safe (they go to the browser). Admin API keys are secret (server-side only, never exposed to frontend).</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Draft Order Checkout URL</div>
+        <p>When you create a draft order via Admin API, the response includes an <code>invoice_url</code> — that's the hosted checkout URL for that specific order. Redirect the customer there. Don't try to build your own checkout. Shopify handles everything from that point: payment, tax, shipping, confirmation.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Product Images — Lesson from V1</div>
+        <p>V1 had white-background product images that looked bad on the custom layout. The photography shoots for the rebuild should deliver transparent-background images. Confirm this with Chris / photographer before the shoots happen. This is a design-critical detail.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Sanity Schema Design</div>
+        <p>Design Sanity schemas so Chris can add new product categories, update marketing blocks, swap photography — all without calling Jordan. The whole point of v2 is that Chris runs the content. If a schema requires developer intervention to add a new product type, you failed.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Shopify Partner Dev Store — No Time Limit</div>
+        <p>Free development stores through the Partner program have no time limit and no charge. Don't rush the transfer. Only transfer when the site is fully tested and ready for real transactions. Chris doesn't start paying $39/month until the store is transferred and he picks a plan.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">V1 Pricing Context</div>
+        <p>V1 was $4,025 — intentionally underpriced to break into the WI market. V2 is $4,500–$5,500 for what's honestly a more complex build (Shopify integration, rod builder, dual checkout flows). The price is fair. Don't undersell it.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile FAB
+  const fab = document.getElementById('mobileFab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    menuOpen ? closeMenu() : openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link click — close menu then scroll
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
