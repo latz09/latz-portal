@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>C&J Custom Rods — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE NAV ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 301;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s;
+  }
+
+  .mobile-overlay.visible { opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'C&J';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 160px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-shopify { background: #e8f5e9; color: #2e7d32; }
+  .badge-custom { background: #fff3e0; color: #e65100; }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+      z-index: 200;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .mobile-overlay { display: block; pointer-events: none; }
+    .mobile-overlay.visible { pointer-events: auto; }
+    .main { margin-left: 0; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding-left: 20px; padding-right: 20px; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .checklist li .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE NAV -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">C&amp;J Custom Rods</div>
+    <div class="status-pill">Active Project</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🎣</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope &amp; Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>C&amp;J Custom Rods</h1>
+    <div class="sub">candjcustomrods.com · Full Website Rebuild (v2)</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Christopher Christianson</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value">$4,500–$5,500</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Status</span>
+        <span class="value" style="color:var(--orange);">Pending — proposal not yet sent</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://candjcustomrods.com" target="_blank">candjcustomrods.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value"><a href="mailto:candjcustomrods@gmail.com">candjcustomrods@gmail.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Original Build</span>
+        <span class="value">~$4,025 (v1, ~1 year ago)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🎣</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Christopher Christianson</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Business</span>
+            <span class="data-value">C&amp;J Custom Rods</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:candjcustomrods@gmail.com">candjcustomrods@gmail.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Communication</span>
+            <span class="data-value">Email. Casual, friendly, responsive. Signs off as "Chris." Trust is high.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Maker</span>
+            <span class="data-value">Chris — sole decision maker, no board approval needed</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Business Context</h3>
+          <div class="data-row">
+            <span class="data-label">Industry</span>
+            <span class="data-value">Custom fishing rods — handcrafted, niche product</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">Wisconsin</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Growth Stage</span>
+            <span class="data-value">Expanding — adding reels, apparel, professional photography. Business is growing.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Relationship</span>
+            <span class="data-value">First Wisconsin client when Jordan moved from Twin Cities. Loyalty runs both ways.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Site</span>
+            <span class="data-value"><a href="https://candjcustomrods.com" target="_blank">candjcustomrods.com</a> — v1, live ~1 year, Next.js + Sanity CMS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>This is a rebuild, not a first build</strong>
+          <span>Jordan built the original site ~1 year ago for ~$4,025. Site works but has outgrown the original design and lacks native commerce features. Chris has been a great client — responsive, trusting, engaged. The rebuild is both a business opportunity and a portfolio piece.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Full ground-up rebuild: custom Next.js + Sanity CMS + Shopify commerce backend @ $4,500–$5,500</strong>
+        <p>Redesigned with professional graphic designer. Shopify handles orders, inventory, payments, shipping. Custom rod builder stays custom. Chris agreed verbally at in-person meeting March 31, 2026. Formal proposal pending.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Problems with Current Site (v1)</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Orders are fully manual — no dashboard, no inventory tracking, no shipping integration</li>
+            <li><span class="check-icon">🔴</span> Product descriptions are longer than the layout was designed for — UX strain</li>
+            <li><span class="check-icon">🔴</span> New product images have white backgrounds vs original transparent design</li>
+            <li><span class="check-icon">🔴</span> Adding new product categories (reels, apparel) requires developer work every time</li>
+            <li><span class="check-icon">🔴</span> Design shows its age — doesn't reflect current quality of the business or new photography</li>
+            <li><span class="check-icon">🔴</span> New logo has white circular background — sits differently on nav than original transparent logo</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like (v2)</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Chris can add products, update inventory, print shipping labels — all from Shopify admin, no developer</li>
+            <li><span class="check-icon">✅</span> All major payment methods built in — Stripe, PayPal, Apple Pay, Google Pay, Shop Pay</li>
+            <li><span class="check-icon">✅</span> Professional design that showcases new photography and expanded product line</li>
+            <li><span class="check-icon">✅</span> Reels and apparel have proper sections with filtering, not shoehorned into existing layout</li>
+            <li><span class="check-icon">✅</span> Custom rod builder rebuilt cleaner — valid options only, automatic price updates</li>
+            <li><span class="check-icon">✅</span> Monthly cost drops from $20/mo hosting to just $39/mo Shopify (hosting moves to free tier)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Proposal has NOT been sent yet</strong>
+          <span>Chris verbally agreed at the March 31 meeting. Follow-up email sent April 2 saying proposal would be ready "early next week." Chris responded April 16 saying "Cant wait to see it!" — that was 8 days ago. Need to send the formal proposal ASAP.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Price probably left on the table</strong>
+          <span>Chris said yes to $4,500–$5,500 quickly in the meeting. When a client agrees that fast, there was likely room for more. Not worth revisiting now — but note for future proposals.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="card">
+        <h3>Original Build (v1) — Completed ~2025</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Line Item</th>
+              <th>Notes</th>
+              <th class="amount">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Original Website Build</strong></td>
+              <td>Next.js + Sanity CMS, custom rod builder, product pages, mobile-first</td>
+              <td class="amount">$4,025</td>
+            </tr>
+            <tr>
+              <td>Logo Swap (Mar 2026)</td>
+              <td>No charge — goodwill. Quick win.</td>
+              <td class="amount">$0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Full Website Rebuild (v2)</strong></td>
+            <td>Ground-up redesign, Shopify backend, custom rod builder, designer involved</td>
+            <td class="amount">$4,500–$5,500</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Contract</strong></td>
+            <td>Final number TBD in proposal</td>
+            <td class="amount"><strong>$4,500–$5,500</strong></td>
+          </tr>
+          <tr>
+            <td>Payment 1 — At Signing</td>
+            <td>1/3 of total</td>
+            <td class="amount">~$1,500–$1,833</td>
+          </tr>
+          <tr>
+            <td>Payment 2 — Midpoint Milestone</td>
+            <td>1/3 of total — design approved, dev starts</td>
+            <td class="amount">~$1,500–$1,833</td>
+          </tr>
+          <tr>
+            <td>Payment 3 — At Launch</td>
+            <td>1/3 of total</td>
+            <td class="amount">~$1,500–$1,833</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Shopify Basic</span>
+          <span class="data-value">$39/month — direct to Shopify. Covers orders, inventory, shipping labels, payments, fraud protection.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vercel Hosting</span>
+          <span class="data-value">$0 — moving to free tier on Jordan's account. Was $20/month on v1. Can handle ~30,000–50,000 visits/month.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Sanity CMS</span>
+          <span class="data-value">$0 — free tier covers this use case</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">candjcustomrods.com — ~$15/year, client maintains</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Total Monthly</span>
+          <span class="data-value" style="font-weight:700;color:var(--teal);">~$39/month (down from $20/mo hosting on v1, plus gaining full commerce engine)</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story</strong>
+          <span>A standard Shopify theme store with the apps needed to match this functionality would cost $100–$200/month — and couldn't handle the custom rod builder at all (Shopify's variant system maxes at 100 per product). Over two years that's $2,400–$4,800 in fees alone for an inferior product he doesn't own. Chris pays $39/month and owns everything.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Market Rate Context</strong>
+          <span>The original v1 build (Shopify integration + custom rod builder + CMS + product pages + SEO + copy) would run $6,500–$10,000+ from most agencies today. Chris paid $4,025 — significantly under market. The rebuild at $4,500–$5,500 is also below market given the headless Shopify + custom rod builder scope. This is intentional — portfolio piece + loyal first client.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Rebuild upsell landed in 19 days — from logo swap request to verbal yes</strong>
+          <span>Chris reached out March 12 for a simple logo swap. Jordan turned that into a full rebuild conversation by proactively flagging site issues, pitching improvements, and landing an in-person meeting. The logo swap was the door — the rebuild was behind it.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">~2025</div>
+          <div class="timeline-title">Original Site Built (v1)</div>
+          <div class="timeline-desc">First Wisconsin client. Custom Next.js + Sanity CMS storefront with custom rod builder. Total: ~$4,025. Client had limited budget but believed in Jordan. Jordan was early in his career — the build works but doesn't reflect current capability.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 12, 2026</div>
+          <div class="timeline-title">Logo Swap Request</div>
+          <div class="timeline-desc">Chris emailed asking to replace the logo with an updated version. Offered to pay. Jordan replied same day — swapped it in dev, flagged the white-background issue, and proactively mentioned site improvements, product image cleanup, description layout issues, and planted the rebuild seed.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 13, 2026</div>
+          <div class="timeline-title">Chris Responds — "I'm on board!"</div>
+          <div class="timeline-desc">Chris said the logo swap looks great, push it live. Also: professional photography coming, carrying reels and apparel now, wants a meeting to go over everything. Exactly the response Jordan was looking for.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 13, 2026</div>
+          <div class="timeline-title">Logo Pushed Live + Meeting Requested</div>
+          <div class="timeline-desc">Jordan pushed logo live, asked about Chris's schedule for the next few weeks. No charge for the logo swap — goodwill play.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 13–18, 2026</div>
+          <div class="timeline-title">Scheduling Back and Forth</div>
+          <div class="timeline-desc">Chris offered Mar 20, 23, 27. None worked for Jordan. Jordan countered with Mar 31, Apr 1, Apr 3. Chris confirmed Mar 31 at 4:30pm at Point Brewery.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mar 31, 2026</div>
+          <div class="timeline-title">🎉 In-Person Meeting — Rebuild Approved</div>
+          <div class="timeline-desc">Met at Point Brewery, Stevens Point. Covered immediate needs (photography, reels, apparel), then pitched the rebuild with Shopify backend. Chris agreed to $4,500–$5,500 range. Agreed quickly — probably had room for more. Jordan committed to setting up the entire Shopify account so Chris gets a turnkey system.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 2, 2026</div>
+          <div class="timeline-title">Follow-Up Email Sent</div>
+          <div class="timeline-desc">Jordan emailed — excited to build, working on the full proposal, asked for a few days due to other projects. Said early next week.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Apr 16, 2026</div>
+          <div class="timeline-title">Chris Follows Up — "Can't wait to see it!"</div>
+          <div class="timeline-desc">Chris responded to the April 2 email. Friendly, eager, no pressure but clearly waiting. Proposal needs to go out ASAP — it's been 8+ days since his reply and 24 days since the meeting.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Proposal Sent</div>
+          <div class="timeline-desc">Formal proposal with scope, pages, timeline, investment, and payment terms. Needs to happen immediately.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Proposal Signed + Payment 1</div>
+          <div class="timeline-desc">First third payment received. Shopify dev store setup begins. Designer looped in.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope &amp; Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Full ground-up rebuild — 8 pages, headless Shopify + Sanity CMS + custom rod builder</strong>
+          <span>Professional graphic designer involved in UI/UX. Mobile-first, built to convert. Everything the client needs to run the business day-to-day without calling Jordan.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Hero — showcasing new professional photography</li>
+            <li>Featured products (dynamic from Shopify)</li>
+            <li>Brand story / about preview</li>
+            <li>Product category navigation</li>
+            <li>Mobile-first, fast-loading</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-shopify">Shopify Backend</span>
+          <h4>Shop — In-Stock Rods</h4>
+          <ul>
+            <li>Pre-built rods available for immediate purchase</li>
+            <li>Category filtering</li>
+            <li>Product detail pages with photography</li>
+            <li>Add to cart → Shopify checkout</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-custom">Custom Build</span>
+          <h4>Shop — Custom Rod Builder</h4>
+          <ul>
+            <li>Rebuilt from scratch — cleaner, smarter than v1</li>
+            <li>Valid options only — no impossible combinations</li>
+            <li>Automatic price updates based on selections</li>
+            <li>Length, blank, color, finish, guide, hardware options</li>
+            <li>Checks out through Shopify at the end</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-shopify">Shopify Backend</span>
+          <h4>Shop — Reels</h4>
+          <ul>
+            <li>New product category — Chris now carries fishing reels</li>
+            <li>Managed entirely in Shopify admin</li>
+            <li>Filtering, product pages, photography</li>
+            <li>Chris adds new products himself — no developer needed</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-shopify">Shopify Backend</span>
+          <h4>Shop — Apparel</h4>
+          <ul>
+            <li>New product category — branded clothing / merchandise</li>
+            <li>Size variants handled natively by Shopify</li>
+            <li>Managed entirely in Shopify admin</li>
+            <li>Chris adds new items himself</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>About / Who We Are</h4>
+          <ul>
+            <li>Brand story, craftsmanship, the people behind C&amp;J</li>
+            <li>New professional photography</li>
+            <li>Content managed in Sanity</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Feedback / Testimonials</h4>
+          <ul>
+            <li>Customer testimonials and reviews</li>
+            <li>Social proof for the custom rod builder</li>
+            <li>CMS-managed — Chris can add new testimonials</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Contact / Get in Touch</h4>
+          <ul>
+            <li>Contact form</li>
+            <li>Click-to-call, click-to-email</li>
+            <li>Business location / hours</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>Architecture Overview</h3>
+        <div class="data-row">
+          <span class="data-label">Frontend</span>
+          <span class="data-value">Custom Next.js (App Router) + React + Tailwind CSS — designed by professional graphic designer</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Content CMS</span>
+          <span class="data-value">Sanity — same system Chris already knows. Pages, copy, marketing, testimonials.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Commerce Backend</span>
+          <span class="data-value">Shopify via Storefront API (GraphQL). Products, inventory, orders, payments, shipping.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Rod Builder</span>
+          <span class="data-value">Fully custom — built on frontend, checks out through Shopify. Cannot use Shopify's variant system (100 variant limit blown past immediately by rod configurations).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Checkout</span>
+          <span class="data-value">Shopify hosted checkout — Stripe, PayPal, Apple Pay, Google Pay, Shop Pay all built in. PCI compliant.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Always Included</span>
+          <span class="data-value">Mobile-first design, on-site SEO, copywriting, full Shopify account setup + walkthrough, Vercel hosting setup</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Photography is the timeline driver</strong>
+          <span>Chris has two professional shoots scheduled — one already happened (week of Mar 17), another in 4–6 weeks from that date. Need to confirm what assets are available now and plan around the second shoot.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Professional Photography — Batch 1</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">First shoot was week of ~Mar 17. Should be available now. Need to request these from Chris.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Request from Chris</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Professional Photography — Batch 2</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Second shoot 4–6 weeks after the first (~late April / early May). May need to phase launch around this.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending — shoot TBD</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎣</span>
+            <div>
+              <strong>Reel Product Details</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">How many SKUs? Brands? Pricing? Photos? Need to understand volume to build the right section.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">👕</span>
+            <div>
+              <strong>Apparel Product Details</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">T-shirts, hats, other? Sizes? Pricing? Photos? Need to understand scope.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔧</span>
+            <div>
+              <strong>Rod Builder Configuration Data</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Same options as v1 or have they changed? New blanks, new colors, new hardware? Pricing updates?</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Updated Copy / Brand Story</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Jordan will write copy — just needs bullet points or rough direction from Chris. About page, brand story, homepage messaging.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">⭐</span>
+            <div>
+              <strong>Customer Testimonials</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Any customer reviews, feedback, or quotes Chris wants featured. Social proof for the rod builder.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>New Stack (v2)</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Content CMS</span>
+            <span class="data-value">Sanity — custom schemas</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Commerce</span>
+            <span class="data-value">Shopify Storefront API (GraphQL)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Checkout</span>
+            <span class="data-value">Shopify hosted checkout (PCI compliant)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — free tier (~30k–50k visits/mo headroom)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Old Stack (v1) — Being Replaced</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js + Sanity CMS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Commerce</span>
+            <span class="data-value">Everything in Sanity — no native commerce backend</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel Pro — $20/month (being eliminated)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Payments</span>
+            <span class="data-value">Custom flow — no Shopify, no native payment infrastructure</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Order Mgmt</span>
+            <span class="data-value">Manual — no dashboard, no shipping labels, no inventory tracking</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Shopify Development Workflow</h3>
+        <div class="data-row">
+          <span class="data-label">Dev Store</span>
+          <span class="data-value">Created via Shopify Partners (free). No bank account needed during development.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">At Launch</span>
+          <span class="data-value">Dev store transfers to Chris. He creates Shopify account, enters bank/billing, picks $39/mo Basic plan.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">API Keys</span>
+          <span class="data-value">Storefront API keys come from dev store. Update Vercel env vars when store transfers to Chris before going live.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Setup Included</span>
+          <span class="data-value">Jordan sets up entire Shopify account — products, payment processing, shipping settings. Chris gets a fully running store handed to him. Walkthrough included.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Why custom rod builder can't use native Shopify</strong>
+          <span>Shopify's variant system maxes at 100 variants per product. A fully configurable custom rod with all length, blank, color, finish, guide, and hardware combinations blows past that immediately. The rod builder must stay custom on the frontend and submit to Shopify checkout at the end.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Vercel Free Tier Caveat</strong>
+          <span>Vercel's Hobby (free) tier is technically for non-commercial use per their terms. In practice most small businesses run on it without issue. If Vercel ever enforces or traffic spikes, upgrade to Pro ($20/mo) is instant — no migration needed. Current traffic profile is well within free tier limits.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Proposal still needs to be sent — clock hasn't officially started</strong>
+          <span>Verbal yes at meeting March 31. Follow-up email April 2. Chris followed up April 16. Send proposal immediately. Estimated 6–8 weeks from signed proposal + first payment.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Week 0 — NOW (Overdue)</div>
+          <h4>Proposal &amp; Kickoff</h4>
+          <ul>
+            <li>Finalize and send formal proposal</li>
+            <li>Get proposal signed + first payment (1/3)</li>
+            <li>Sign up as Shopify Partner (free)</li>
+            <li>Create Shopify development store for C&amp;J</li>
+            <li>Loop in graphic designer</li>
+            <li>Request photography batch 1 from Chris</li>
+            <li>Request reel and apparel product details</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Weeks 1–3</div>
+          <h4>Design &amp; Core Development</h4>
+          <ul>
+            <li>Designer creates visual direction and key page layouts</li>
+            <li>Build homepage, about page, contact page</li>
+            <li>Build shop pages — in-stock rods, reels, apparel</li>
+            <li>Connect Shopify Storefront API</li>
+            <li>Begin custom rod builder rebuild</li>
+            <li>Share live dev link for Chris to review</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 3–5</div>
+          <h4>Rod Builder + Content Integration</h4>
+          <ul>
+            <li>Complete custom rod builder — valid options, pricing logic, Shopify checkout</li>
+            <li>Populate real products in Shopify (rods, reels, apparel)</li>
+            <li>Integrate professional photography</li>
+            <li>Write copy for all pages</li>
+            <li>Build testimonials page</li>
+            <li>Midpoint review with Chris — Payment 2 (1/3)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 5–6</div>
+          <h4>Polish &amp; Launch Prep</h4>
+          <ul>
+            <li>Mobile optimization pass</li>
+            <li>SEO implementation</li>
+            <li>Performance optimization — target 90+ Lighthouse</li>
+            <li>Integrate batch 2 photography if available</li>
+            <li>Final review with Chris</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">Weeks 6–8</div>
+          <h4>Shopify Transfer &amp; Launch</h4>
+          <ul>
+            <li>Transfer Shopify dev store to Chris's account</li>
+            <li>Update Vercel env vars with new API keys</li>
+            <li>DNS cutover — candjcustomrods.com points to new build</li>
+            <li>Shopify walkthrough session with Chris — orders, inventory, shipping, products</li>
+            <li>Sanity CMS refresher if needed</li>
+            <li>Site goes live — Payment 3 (1/3)</li>
+            <li>Post-launch check-in scheduled</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells &amp; Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>This is likely the last "rebuild" — make it count as a portfolio piece</strong>
+          <span>Jordan's skills and design quality have leveled up significantly. This rebuild rounds out the portfolio. Future upsells for Chris should be additions, not overhauls.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📸 Background Removal Training</h4>
+          <div class="price">Free (goodwill)</div>
+          <p>Jordan offered to show Chris how to remove product image backgrounds "over a beer." Free tools exist. Jordan uses a paid subscription tool for faster results. Could do a quick walkthrough — builds relationship, doesn't cost anything.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📧 Email Marketing Setup</h4>
+          <div class="price">~$400–$800</div>
+          <p>Shopify has built-in email marketing. Could set up abandoned cart recovery, post-purchase follow-ups, new product announcements. Natural add-on once the store is running and Chris sees order flow.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📰 Blog / Content Marketing</h4>
+          <div class="price">~$400–$600</div>
+          <p>Fishing tips, rod building process, care guides. SEO play — drives organic traffic. Sanity CMS makes this trivial to manage. Pitch after launch when Chris sees the site performing.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance / Retainer</h4>
+          <div class="price">~$500–$800/yr</div>
+          <p>Light annual retainer for updates, adjustments, new features. Good fit as the product line grows and Chris wants to keep the site evolving without learning to code.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📦 Advanced Shipping / Fulfillment</h4>
+          <div class="price">~$300–$500</div>
+          <p>If order volume grows — automated shipping rates, multi-carrier integration, tracking notifications. Shopify supports this natively. Configuration + setup add-on.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎨 Additional Photography Sessions</h4>
+          <div class="price">~$400–$600</div>
+          <p>As product line expands beyond current shoots. Lifestyle photography, action shots, seasonal content. Jordan can coordinate or recommend photographers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes &amp; Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">April 24, 2026 — Current Status</div>
+        <p>Proposal is overdue. Chris verbally agreed March 31. Follow-up email sent April 2 promising "early next week." Chris followed up April 16 enthusiastically. It's now April 24. The trust is there but don't test it — get the proposal out today or tomorrow. Every day without it risks looking disorganized.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The Upsell That Worked — March 12–31, 2026</div>
+        <p>A $0 logo swap turned into a $4,500–$5,500 rebuild in 19 days. The key moves: (1) doing the logo swap immediately and for free — goodwill, (2) proactively flagging issues he didn't ask about — descriptions, image backgrounds, design age, (3) planting the rebuild seed softly in the email, (4) landing the in-person meeting where the pitch landed naturally. This is the playbook for re-engaging past clients.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pricing Lesson</div>
+        <p>Chris agreed to $4,500–$5,500 almost immediately. When a client says yes that fast, there's room for more. For future proposals: say the number, then pause. Let silence do the work. If they say yes in under 10 seconds, you probably had another $500–$1,000 available. Not worth revisiting with Chris — but remember it.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Portfolio Piece Strategy</div>
+        <p>This is being positioned as a portfolio piece — and that's genuine, not just a pricing tactic. The original v1 was Jordan's first custom storefront. The v2 with a professional designer, headless Shopify, and rebuilt rod builder will genuinely showcase current capability. This is likely the last "rebuild" of an older client's site. Make it exceptional.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Client Communication Style</div>
+        <p>Chris is casual, friendly, signs emails "Chris." Responds quickly when engaged. Uses exclamation marks liberally. Trusts Jordan completely — doesn't question technical decisions. Don't overcomplicate communications with him. Short, direct, casual is the right tone. He met at Point Brewery — this is a beer-and-a-handshake relationship.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Sanity → Shopify Migration Note</div>
+        <p>V1 had everything in Sanity including all commerce. Jordan now recognizes that Sanity isn't ideal for commerce — it creates manual order management with no native checkout, shipping, or inventory tools. The v2 architecture fixes this by putting commerce in Shopify where it belongs and keeping content in Sanity where it's strong. The pitch to Chris: "same CMS you already know for content, plus a real commerce engine for the business side."</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Don't Tie Payment to Sales</div>
+        <p>Initially considered tying the final third payment to "first few sales" — decided against it. Jordan has zero control over whether Chris promotes the site, and defining "first few sales" gets messy. All three payments are tied to deliverables Jordan controls: signing, midpoint milestone, launch. Clean, fair, professional.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav
+  const fab = document.getElementById('mobileFab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    menuOpen ? closeMenu() : openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile — close menu, wait for animation, then scroll
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
