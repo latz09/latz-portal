@@ -5,1999 +5,375 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="robots" content="noindex" />
 		<title>C &amp; J Custom Rods — Site Wireframes | Latz Web Design</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
-			rel="stylesheet"
-		/>
+		<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 		<style>
-			:root {
-				--primary: #1a1a1a;
-				--primary-mid: #2e2e2e;
-				--accent: #c8a94e;
-				--accent-light: rgba(200, 169, 78, 0.08);
-				--light: #f7f5f0;
-				--light-dark: #ede9df;
-				--mid: #5a5a5a;
-				--green: #4a6741;
-				--green-light: rgba(74, 103, 65, 0.1);
-				--white: #ffffff;
-				--sidebar-w: 240px;
-			}
-
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-
-			body {
-				font-family: 'Source Sans 3', sans-serif;
-				background: var(--light);
-				background-image:
-					linear-gradient(rgba(26, 26, 26, 0.04) 1px, transparent 1px),
-					linear-gradient(90deg, rgba(26, 26, 26, 0.04) 1px, transparent 1px);
-				background-size: 28px 28px;
-				color: var(--primary);
-			}
-
-			/* ── OVERLAY ── */
-			.sidebar-overlay {
-				display: none;
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: rgba(0, 0, 0, 0.45);
-				z-index: 199;
-				opacity: 0;
-				pointer-events: none;
-				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-			}
-			.sidebar-overlay.visible {
-				opacity: 1;
-				pointer-events: auto;
-			}
-
-			/* ── SIDEBAR ── */
-			.sidebar {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: var(--sidebar-w);
-				height: 100vh;
-				background: var(--primary);
-				display: flex;
-				flex-direction: column;
-				z-index: 200;
-				overflow-y: auto;
-				border-right: 3px solid var(--primary-mid);
-				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-			}
-
-			.sidebar-brand {
-				padding: 24px 20px 20px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-			}
-
-			.sidebar-lwd {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 9px;
-				letter-spacing: 0.18em;
-				text-transform: uppercase;
-				color: rgba(255, 255, 255, 0.3);
-				margin-bottom: 8px;
-			}
-
-			.sidebar-client {
-				font-family: 'Oswald', sans-serif;
-				font-size: 17px;
-				font-weight: 700;
-				color: var(--light);
-				line-height: 1.2;
-				margin-bottom: 4px;
-				text-transform: uppercase;
-				letter-spacing: 0.04em;
-			}
-
-			.sidebar-doctype {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 10px;
-				color: rgba(247, 245, 240, 0.4);
-				letter-spacing: 0.08em;
-				margin-bottom: 12px;
-			}
-
-			.status-pill {
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-				background: rgba(200, 169, 78, 0.15);
-				border: 1px solid rgba(200, 169, 78, 0.35);
-				border-radius: 4px;
-				padding: 4px 10px;
-			}
-
-			.status-dot {
-				width: 5px;
-				height: 5px;
-				background: var(--accent);
-				border-radius: 50%;
-				animation: pulse 2.5s infinite;
-			}
-
-			@keyframes pulse {
-				0%, 100% { opacity: 1; }
-				50% { opacity: 0.3; }
-			}
-
-			.status-pill span {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 9px;
-				font-weight: 500;
-				letter-spacing: 0.1em;
-				text-transform: uppercase;
-				color: var(--accent);
-			}
-
-			.sidebar-nav {
-				padding: 12px 8px;
-				flex: 1;
-			}
-
-			.nav-group-label {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 8.5px;
-				letter-spacing: 0.16em;
-				text-transform: uppercase;
-				color: rgba(255, 255, 255, 0.2);
-				padding: 12px 10px 5px;
-			}
-
-			.nav-link {
-				display: flex;
-				align-items: center;
-				gap: 9px;
-				padding: 7px 10px;
-				color: rgba(247, 245, 240, 0.45);
-				text-decoration: none;
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12.5px;
-				font-weight: 400;
-				border-radius: 5px;
-				transition: all 0.12s;
-				border-left: 2px solid transparent;
-				margin-bottom: 1px;
-			}
-
-			.nav-link:hover {
-				color: var(--light);
-				background: rgba(255, 255, 255, 0.05);
-			}
-
-			.nav-link.active {
-				color: var(--light);
-				background: rgba(200, 169, 78, 0.12);
-				border-left-color: var(--accent);
-				font-weight: 500;
-			}
-
-			.nav-icon {
-				font-size: 12px;
-				width: 16px;
-				text-align: center;
-				flex-shrink: 0;
-			}
-
-			.sidebar-footer {
-				padding: 14px 20px;
-				border-top: 1px solid rgba(255, 255, 255, 0.06);
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 8.5px;
-				color: rgba(255, 255, 255, 0.18);
-				letter-spacing: 0.05em;
-				line-height: 2;
-			}
-
-			/* ── MOBILE FAB ── */
-			.mobile-fab {
-				display: none;
-				position: fixed;
-				bottom: 24px;
-				right: 24px;
-				width: 52px;
-				height: 52px;
-				border-radius: 50%;
-				background: var(--accent);
-				color: var(--primary);
-				border: none;
-				font-size: 22px;
-				z-index: 300;
-				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-				cursor: pointer;
-				align-items: center;
-				justify-content: center;
-			}
-			.mobile-fab:active {
-				transform: scale(0.92);
-			}
-
-			/* ── MAIN ── */
-			.main {
-				margin-left: var(--sidebar-w);
-				min-height: 100vh;
-				padding: 48px 44px 100px;
-			}
-
-			/* ── PAGE HEADER ── */
-			.doc-header {
-				margin-bottom: 52px;
-			}
-
-			.doc-overline {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 11px;
-				letter-spacing: 0.18em;
-				text-transform: uppercase;
-				color: var(--accent);
-				margin-bottom: 8px;
-			}
-
-			.doc-title {
-				font-family: 'Oswald', sans-serif;
-				font-size: 34px;
-				font-weight: 700;
-				color: var(--primary);
-				margin-bottom: 6px;
-				line-height: 1.15;
-				text-transform: uppercase;
-				letter-spacing: 0.02em;
-			}
-
-			.doc-sub {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 14px;
-				color: rgba(26, 26, 26, 0.5);
-				font-weight: 300;
-			}
-
-			.doc-meta-strip {
-				display: flex;
-				gap: 0;
-				margin-top: 24px;
-				border: 1.5px solid rgba(26, 26, 26, 0.15);
-				border-radius: 6px;
-				overflow: hidden;
-				width: fit-content;
-				background: rgba(255, 255, 255, 0.5);
-			}
-
-			.meta-item {
-				padding: 10px 20px;
-				border-right: 1px solid rgba(26, 26, 26, 0.1);
-				display: flex;
-				flex-direction: column;
-				gap: 3px;
-			}
-			.meta-item:last-child {
-				border-right: none;
-			}
-
-			.meta-label {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 9px;
-				letter-spacing: 0.1em;
-				text-transform: uppercase;
-				color: rgba(26, 26, 26, 0.4);
-			}
-
-			.meta-value {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12px;
-				font-weight: 500;
-				color: var(--primary);
-			}
-
-			.meta-value.warn {
-				color: var(--accent);
-			}
-			.meta-value.ok {
-				color: var(--green);
-			}
-
-			/* ── SECTION WRAPPER ── */
-			.wf-section {
-				margin-bottom: 64px;
-				scroll-margin-top: 32px;
-			}
-
-			.section-label {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 11px;
-				color: var(--primary);
-				letter-spacing: 0.2em;
-				text-transform: uppercase;
-				margin-bottom: 14px;
-				display: flex;
-				align-items: center;
-				gap: 10px;
-			}
-
-			.section-label::after {
-				content: '';
-				flex: 1;
-				height: 1px;
-				background: var(--primary);
-				opacity: 0.15;
-			}
-
-			.section-num {
-				background: var(--primary);
-				color: var(--light);
-				font-family: 'Architects Daughter', cursive;
-				font-size: 11px;
-				width: 24px;
-				height: 24px;
-				border-radius: 50%;
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				flex-shrink: 0;
-			}
-
-			/* ── WIREFRAME CARD ── */
-			.wireframe-card {
-				background: rgba(255, 255, 255, 0.7);
-				border: 2px solid var(--primary);
-				border-radius: 6px;
-				box-shadow: 5px 5px 0 rgba(26, 26, 26, 0.1);
-				overflow: hidden;
-			}
-
-			/* ── NAV BAR IN WIREFRAME ── */
-			.wf-nav {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 10px 22px;
-				border-bottom: 2px solid var(--primary);
-				background: var(--white);
-			}
-
-			.wf-nav-logo {
-				font-family: 'Oswald', sans-serif;
-				font-weight: 700;
-				font-size: 14px;
-				color: var(--primary);
-				text-transform: uppercase;
-				letter-spacing: 0.04em;
-			}
-
-			.wf-nav-links {
-				display: flex;
-				gap: 14px;
-				align-items: center;
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 11.5px;
-				color: rgba(26, 26, 26, 0.5);
-				flex-wrap: wrap;
-			}
-
-			.wf-nav-links span.active {
-				color: var(--primary);
-				font-weight: 600;
-				text-decoration: underline;
-				text-underline-offset: 3px;
-			}
-
-			/* ── WIREFRAME BODY ── */
-			.wf-body {
-				padding: 28px 28px 36px;
-			}
-
-			/* ── ANNOTATION ── */
-			.annotation {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 12px;
-				color: var(--primary);
-				line-height: 1.5;
-				margin-top: 10px;
-				padding: 8px 14px;
-				background: rgba(26, 26, 26, 0.04);
-				border-left: 3px solid rgba(26, 26, 26, 0.2);
-				border-radius: 0 4px 4px 0;
-			}
-
-			/* ── DECISION BOX ── */
-			.decision-box {
-				border: 2px dashed var(--accent);
-				border-radius: 6px;
-				padding: 14px 16px;
-				margin: 14px 0;
-				background: rgba(200, 169, 78, 0.04);
-			}
-
-			.decision-label {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 11px;
-				color: var(--accent);
-				letter-spacing: 0.1em;
-				text-transform: uppercase;
-				margin-bottom: 8px;
-				display: flex;
-				align-items: center;
-				gap: 6px;
-			}
-
-			.decision-label::before {
-				content: '⚑';
-			}
-
-			/* ── CMS TAG ── */
-			.cms-tag {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 10px;
-				color: var(--green);
-				border: 1px solid var(--green);
-				border-radius: 3px;
-				padding: 2px 8px;
-				display: inline-block;
-				white-space: nowrap;
-			}
-
-			/* ── SECTION BLOCK ── */
-			.wf-block {
-				border: 2px dashed rgba(26, 26, 26, 0.15);
-				border-radius: 6px;
-				padding: 18px 16px;
-				margin-bottom: 16px;
-				background: rgba(247, 245, 240, 0.4);
-			}
-
-			.wf-block-header {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				margin-bottom: 12px;
-				flex-wrap: wrap;
-				gap: 8px;
-			}
-
-			/* ── TYPOGRAPHY ── */
-			.wf-heading-lg {
-				font-family: 'Oswald', sans-serif;
-				font-size: 26px;
-				font-weight: 700;
-				color: var(--primary);
-				margin-bottom: 6px;
-				text-transform: uppercase;
-				letter-spacing: 0.02em;
-			}
-
-			.wf-heading-md {
-				font-family: 'Oswald', sans-serif;
-				font-size: 18px;
-				font-weight: 600;
-				color: var(--primary);
-				margin-bottom: 6px;
-				text-transform: uppercase;
-				letter-spacing: 0.02em;
-			}
-
-			.wf-heading-sm {
-				font-family: 'Oswald', sans-serif;
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--primary);
-				margin-bottom: 4px;
-				text-transform: uppercase;
-				letter-spacing: 0.02em;
-			}
-
-			.wf-subtext {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 14px;
-				color: rgba(26, 26, 26, 0.5);
-				font-style: italic;
-				margin-bottom: 14px;
-				line-height: 1.5;
-			}
-
-			.wf-body-text {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 13px;
-				color: rgba(26, 26, 26, 0.6);
-				line-height: 1.6;
-				margin-bottom: 10px;
-			}
-
-			.section-divider {
-				border: none;
-				border-top: 1px dashed rgba(26, 26, 26, 0.15);
-				margin: 20px 0;
-			}
-
-			/* ── CTA BUTTON ── */
-			.wf-cta {
-				display: inline-block;
-				background: var(--primary);
-				color: var(--light);
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 13px;
-				font-weight: 600;
-				padding: 9px 22px;
-				border-radius: 4px;
-				margin-top: 8px;
-			}
-			.wf-cta.accent {
-				background: var(--accent);
-				color: var(--primary);
-			}
-
-			/* ── FOOTER ── */
-			.wf-footer {
-				border-top: 2px solid var(--primary);
-				padding: 14px 22px;
-				background: var(--primary);
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-
-			.wf-footer span {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 11px;
-				color: rgba(247, 245, 240, 0.4);
-			}
-
-			/* ── IMAGE PLACEHOLDER ── */
-			.img-placeholder {
-				background: rgba(26, 26, 26, 0.07);
-				border: 2px dashed rgba(26, 26, 26, 0.2);
-				border-radius: 6px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				gap: 8px;
-				padding: 20px;
-			}
-
-			.img-placeholder .img-icon {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 28px;
-				opacity: 0.3;
-				color: var(--primary);
-			}
-
-			.img-placeholder .img-label {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 12px;
-				color: rgba(26, 26, 26, 0.4);
-				text-align: center;
-				line-height: 1.6;
-			}
-
-			/* ── PRODUCT CARDS ── */
-			.product-grid {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 12px;
-				margin-top: 12px;
-			}
-
-			.product-card {
-				border: 1.5px dashed rgba(26, 26, 26, 0.2);
-				border-radius: 5px;
-				padding: 14px;
-				background: rgba(255, 255, 255, 0.6);
-				text-align: center;
-			}
-
-			.product-name {
-				font-family: 'Oswald', sans-serif;
-				font-size: 13px;
-				font-weight: 600;
-				color: var(--primary);
-				margin-bottom: 3px;
-				text-transform: uppercase;
-			}
-
-			.product-price {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12px;
-				color: rgba(26, 26, 26, 0.5);
-				margin-bottom: 4px;
-			}
-
-			.product-action {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 11px;
-				color: var(--accent);
-				font-weight: 600;
-			}
-
-			/* ── FILTER ROW ── */
-			.filter-row {
-				display: flex;
-				gap: 8px;
-				align-items: center;
-				margin-bottom: 14px;
-				flex-wrap: wrap;
-			}
-
-			.filter-label {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 11px;
-				color: rgba(26, 26, 26, 0.4);
-			}
-
-			.filter-pill {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12px;
-				border: 1.5px solid rgba(26, 26, 26, 0.2);
-				border-radius: 20px;
-				padding: 3px 12px;
-				color: rgba(26, 26, 26, 0.5);
-			}
-
-			.filter-pill.active {
-				border-color: var(--primary);
-				color: var(--primary);
-				font-weight: 600;
-			}
-
-			/* ── TESTIMONIAL CARDS ── */
-			.testimonial-grid {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 10px;
-				margin-top: 12px;
-			}
-
-			.testimonial-card {
-				border: 1.5px dashed rgba(26, 26, 26, 0.2);
-				border-radius: 5px;
-				padding: 14px;
-				background: rgba(255, 255, 255, 0.6);
-			}
-
-			.testimonial-name {
-				font-family: 'Oswald', sans-serif;
-				font-size: 13px;
-				font-weight: 600;
-				color: var(--primary);
-				margin-bottom: 4px;
-			}
-
-			.testimonial-quote {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12px;
-				color: rgba(26, 26, 26, 0.6);
-				font-style: italic;
-				line-height: 1.5;
-			}
-
-			/* ── FORM FIELDS ── */
-			.form-grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 10px;
-				margin-top: 10px;
-			}
-
-			.form-field {
-				border: 1.5px dashed rgba(26, 26, 26, 0.2);
-				border-radius: 5px;
-				padding: 10px 14px;
-				background: rgba(255, 255, 255, 0.6);
-			}
-
-			.form-field.full {
-				grid-column: 1 / -1;
-			}
-
-			.field-label {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 11px;
-				color: rgba(26, 26, 26, 0.4);
-				margin-bottom: 4px;
-			}
-
-			.field-placeholder {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 13px;
-				color: rgba(26, 26, 26, 0.3);
-			}
-
-			/* ── QUICK LINKS GRID ── */
-			.quick-links {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 10px;
-				margin: 14px 0;
-			}
-
-			.quick-link-card {
-				border: 2px dashed rgba(26, 26, 26, 0.2);
-				border-radius: 6px;
-				padding: 14px 12px;
-				text-align: center;
-				background: rgba(255, 255, 255, 0.5);
-			}
-
-			.quick-link-icon {
-				font-size: 20px;
-				margin-bottom: 6px;
-			}
-
-			.quick-link-label {
-				font-family: 'Oswald', sans-serif;
-				font-size: 12px;
-				font-weight: 600;
-				color: var(--primary);
-				text-transform: uppercase;
-			}
-
-			/* ── SITEMAP ── */
-			.sitemap {
-				display: flex;
-				align-items: flex-start;
-				gap: 0;
-				justify-content: center;
-				margin: 20px 0;
-				flex-wrap: wrap;
-			}
-
-			.sitemap-node {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 6px;
-			}
-
-			.sitemap-box {
-				background: var(--primary);
-				color: var(--light);
-				font-family: 'Oswald', sans-serif;
-				font-size: 11px;
-				font-weight: 600;
-				padding: 8px 14px;
-				border-radius: 4px;
-				text-align: center;
-				min-width: 100px;
-				text-transform: uppercase;
-				letter-spacing: 0.02em;
-			}
-
-			.sitemap-box.secondary {
-				background: rgba(26, 26, 26, 0.1);
-				color: var(--primary);
-				border: 1.5px dashed var(--primary);
-			}
-
-			.sitemap-box.tertiary {
-				background: rgba(200, 169, 78, 0.1);
-				color: var(--primary);
-				border: 1.5px dashed var(--accent);
-				font-size: 10px;
-				min-width: 80px;
-				padding: 6px 10px;
-			}
-
-			.sitemap-arrow {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 18px;
-				color: rgba(26, 26, 26, 0.3);
-				padding: 0 6px;
-				align-self: center;
-				margin-top: -14px;
-			}
-
-			.sitemap-children {
-				display: flex;
-				gap: 6px;
-				margin-top: 6px;
-			}
-
-			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
-			.checklist {
-				list-style: none;
-				padding: 0;
-			}
-
-			.check-item {
-				display: flex;
-				align-items: flex-start;
-				gap: 12px;
-				padding: 10px 0;
-				border-bottom: 1px dashed rgba(26, 26, 26, 0.12);
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 13px;
-				color: var(--primary);
-			}
-
-			.check-item:last-child {
-				border-bottom: none;
-			}
-
-			.check-icon {
-				font-size: 14px;
-				flex-shrink: 0;
-				margin-top: 1px;
-			}
-
-			/* ── OPTION CARDS ── */
-			.option-grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 12px;
-				margin-top: 10px;
-			}
-
-			.option-card {
-				border: 2px dashed rgba(26, 26, 26, 0.2);
-				border-radius: 6px;
-				padding: 14px;
-				background: rgba(255, 255, 255, 0.5);
-			}
-
-			.option-label {
-				font-family: 'Architects Daughter', cursive;
-				font-size: 11px;
-				color: var(--accent);
-				letter-spacing: 0.08em;
-				text-transform: uppercase;
-				margin-bottom: 8px;
-			}
-
-			/* ── STEP INDICATOR ── */
-			.step-row {
-				display: flex;
-				align-items: center;
-				gap: 8px;
-				margin-bottom: 14px;
-			}
-			.step-badge {
-				background: var(--accent);
-				color: var(--primary);
-				font-family: 'Oswald', sans-serif;
-				font-size: 10px;
-				font-weight: 600;
-				padding: 3px 10px;
-				border-radius: 3px;
-				text-transform: uppercase;
-				letter-spacing: 0.08em;
-			}
-			.step-text {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12px;
-				color: rgba(26, 26, 26, 0.5);
-			}
-
-			/* ── ROD SPEC ROW ── */
-			.spec-row {
-				display: flex;
-				gap: 16px;
-				flex-wrap: wrap;
-				margin: 8px 0;
-			}
-			.spec-item {
-				font-family: 'Source Sans 3', sans-serif;
-				font-size: 12px;
-				color: rgba(26, 26, 26, 0.5);
-			}
-			.spec-item strong {
-				color: var(--primary);
-			}
-
-			/* ── RESPONSIVE ── */
-			@media (max-width: 960px) {
-				:root {
-					--sidebar-w: 200px;
-				}
-				.main {
-					padding: 32px 24px 80px;
-				}
-				.product-grid,
-				.testimonial-grid,
-				.quick-links {
-					grid-template-columns: repeat(2, 1fr);
-				}
-			}
-
-			@media (max-width: 680px) {
-				.sidebar {
-					transform: translateX(-100%);
-				}
-				.sidebar.mobile-open {
-					transform: translateX(0);
-				}
-				.sidebar-overlay {
-					display: block;
-				}
-				.mobile-fab {
-					display: flex;
-				}
-				.main {
-					margin-left: 0;
-					padding: 24px 16px 80px;
-				}
-				.doc-title {
-					font-size: 28px;
-				}
-				.doc-meta-strip {
-					flex-direction: column;
-					width: 100%;
-				}
-				.meta-item {
-					border-right: none;
-					border-bottom: 1px solid rgba(26, 26, 26, 0.1);
-				}
-				.meta-item:last-child {
-					border-bottom: none;
-				}
-				.wf-nav-links {
-					display: none;
-				}
-				.wf-nav {
-					padding: 10px 14px;
-				}
-				.wf-body {
-					padding: 20px 16px 28px;
-				}
-				.option-grid,
-				.form-grid,
-				.product-grid,
-				.testimonial-grid,
-				.quick-links {
-					grid-template-columns: 1fr;
-				}
-				.sitemap {
-					flex-direction: column;
-					align-items: center;
-				}
-				.sitemap-arrow {
-					transform: rotate(90deg);
-					margin: 0;
-					padding: 4px 0;
-				}
-				.sitemap-children {
-					flex-direction: column;
-					align-items: center;
-				}
-				.wf-footer {
-					flex-direction: column;
-					text-align: center;
-					gap: 4px;
-				}
-				.check-item {
-					font-size: 12px;
-					gap: 8px;
-				}
-			}
+			:root { --primary: #1a1a1a; --primary-mid: #2e2e2e; --accent: #c8a94e; --accent-light: rgba(200,169,78,0.08); --light: #f7f5f0; --light-dark: #ede9df; --mid: #5a5a5a; --green: #4a6741; --white: #ffffff; --sidebar-w: 240px; }
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body { font-family: 'Source Sans 3', sans-serif; background: var(--light); background-image: linear-gradient(rgba(26,26,26,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(26,26,26,0.04) 1px, transparent 1px); background-size: 28px 28px; color: var(--primary); }
+			.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1); }
+			.sidebar-overlay.visible { opacity: 1; pointer-events: auto; }
+			.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--primary); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; border-right: 3px solid var(--primary-mid); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+			.sidebar-brand { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+			.sidebar-lwd { font-family: 'Source Sans 3', sans-serif; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+			.sidebar-client { font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 700; color: var(--light); line-height: 1.2; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+			.sidebar-doctype { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: rgba(247,245,240,0.4); letter-spacing: 0.08em; margin-bottom: 12px; }
+			.status-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(200,169,78,0.15); border: 1px solid rgba(200,169,78,0.35); border-radius: 4px; padding: 4px 10px; }
+			.status-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; animation: pulse 2.5s infinite; }
+			@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+			.status-pill span { font-family: 'Source Sans 3', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+			.sidebar-nav { padding: 12px 8px; flex: 1; }
+			.nav-group-label { font-family: 'Source Sans 3', sans-serif; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 12px 10px 5px; }
+			.nav-link { display: flex; align-items: center; gap: 9px; padding: 7px 10px; color: rgba(247,245,240,0.45); text-decoration: none; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; font-weight: 400; border-radius: 5px; transition: all 0.12s; border-left: 2px solid transparent; margin-bottom: 1px; }
+			.nav-link:hover { color: var(--light); background: rgba(255,255,255,0.05); }
+			.nav-link.active { color: var(--light); background: rgba(200,169,78,0.12); border-left-color: var(--accent); font-weight: 500; }
+			.nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; }
+			.sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.06); font-family: 'Source Sans 3', sans-serif; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.05em; line-height: 2; }
+			.mobile-fab { display: none; position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: var(--primary); border: none; font-size: 22px; z-index: 300; box-shadow: 0 4px 16px rgba(0,0,0,0.25); cursor: pointer; align-items: center; justify-content: center; }
+			.mobile-fab:active { transform: scale(0.92); }
+			.main { margin-left: var(--sidebar-w); min-height: 100vh; padding: 48px 44px 100px; }
+			.doc-header { margin-bottom: 52px; }
+			.doc-overline { font-family: 'Architects Daughter', cursive; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+			.doc-title { font-family: 'Oswald', sans-serif; font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 6px; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.02em; }
+			.doc-sub { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: rgba(26,26,26,0.5); font-weight: 300; }
+			.doc-meta-strip { display: flex; gap: 0; margin-top: 24px; border: 1.5px solid rgba(26,26,26,0.15); border-radius: 6px; overflow: hidden; width: fit-content; background: rgba(255,255,255,0.5); }
+			.meta-item { padding: 10px 20px; border-right: 1px solid rgba(26,26,26,0.1); display: flex; flex-direction: column; gap: 3px; }
+			.meta-item:last-child { border-right: none; }
+			.meta-label { font-family: 'Architects Daughter', cursive; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,26,26,0.4); }
+			.meta-value { font-family: 'Source Sans 3', sans-serif; font-size: 12px; font-weight: 500; color: var(--primary); }
+			.meta-value.warn { color: var(--accent); }
+			.meta-value.ok { color: var(--green); }
+			.wf-section { margin-bottom: 64px; scroll-margin-top: 32px; }
+			.section-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--primary); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+			.section-label::after { content: ''; flex: 1; height: 1px; background: var(--primary); opacity: 0.15; }
+			.section-num { background: var(--primary); color: var(--light); font-family: 'Architects Daughter', cursive; font-size: 11px; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+			.wireframe-card { background: rgba(255,255,255,0.7); border: 2px solid var(--primary); border-radius: 6px; box-shadow: 5px 5px 0 rgba(26,26,26,0.1); overflow: hidden; }
+			.wf-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 22px; border-bottom: 2px solid var(--primary); background: var(--white); }
+			.wf-nav-logo { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 14px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.04em; }
+			.wf-nav-links { display: flex; gap: 14px; align-items: center; font-family: 'Source Sans 3', sans-serif; font-size: 11.5px; color: rgba(26,26,26,0.5); flex-wrap: wrap; }
+			.wf-nav-links span.active { color: var(--primary); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+			.wf-body { padding: 28px 28px 36px; }
+			.wf-footer { border-top: 2px solid var(--primary); padding: 14px 22px; background: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+			.wf-footer span { font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: rgba(247,245,240,0.4); }
+			.annotation { font-family: 'Architects Daughter', cursive; font-size: 12px; color: var(--primary); line-height: 1.5; margin-top: 10px; padding: 8px 14px; background: rgba(26,26,26,0.04); border-left: 3px solid rgba(26,26,26,0.2); border-radius: 0 4px 4px 0; }
+			.cms-tag { font-family: 'Architects Daughter', cursive; font-size: 10px; color: var(--green); border: 1px solid var(--green); border-radius: 3px; padding: 2px 8px; display: inline-block; white-space: nowrap; }
+			.wf-block { border: 2px dashed rgba(26,26,26,0.15); border-radius: 6px; padding: 18px 16px; margin-bottom: 16px; background: rgba(247,245,240,0.4); }
+			.wf-block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+			.wf-heading-lg { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.02em; }
+			.wf-heading-md { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 600; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.02em; }
+			.wf-heading-sm { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.02em; }
+			.wf-subtext { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: rgba(26,26,26,0.5); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+			.wf-body-text { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: rgba(26,26,26,0.6); line-height: 1.6; margin-bottom: 10px; }
+			.section-divider { border: none; border-top: 1px dashed rgba(26,26,26,0.15); margin: 20px 0; }
+			.wf-cta { display: inline-block; background: var(--primary); color: var(--light); font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; padding: 9px 22px; border-radius: 4px; margin-top: 8px; }
+			.wf-cta.accent { background: var(--accent); color: var(--primary); }
+			.img-placeholder { background: rgba(26,26,26,0.07); border: 2px dashed rgba(26,26,26,0.2); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
+			.img-placeholder .img-icon { font-family: 'Architects Daughter', cursive; font-size: 28px; opacity: 0.3; color: var(--primary); }
+			.img-placeholder .img-label { font-family: 'Architects Daughter', cursive; font-size: 12px; color: rgba(26,26,26,0.4); text-align: center; line-height: 1.6; }
+			.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+			.product-card { border: 1.5px dashed rgba(26,26,26,0.2); border-radius: 5px; padding: 14px; background: rgba(255,255,255,0.6); text-align: center; }
+			.product-name { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 3px; text-transform: uppercase; }
+			.product-price { font-family: 'Source Sans 3', sans-serif; font-size: 12px; color: rgba(26,26,26,0.5); margin-bottom: 4px; }
+			.product-action { font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600; }
+			.filter-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+			.filter-pill { font-family: 'Source Sans 3', sans-serif; font-size: 12px; border: 1.5px solid rgba(26,26,26,0.2); border-radius: 20px; padding: 3px 12px; color: rgba(26,26,26,0.5); }
+			.filter-pill.active { border-color: var(--primary); color: var(--primary); font-weight: 600; }
+			.testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+			.testimonial-card { border: 1.5px dashed rgba(26,26,26,0.2); border-radius: 5px; padding: 14px; background: rgba(255,255,255,0.6); }
+			.testimonial-name { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+			.testimonial-quote { font-family: 'Source Sans 3', sans-serif; font-size: 12px; color: rgba(26,26,26,0.6); font-style: italic; line-height: 1.5; }
+			.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+			.form-field { border: 1.5px dashed rgba(26,26,26,0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255,255,255,0.6); }
+			.form-field.full { grid-column: 1 / -1; }
+			.field-label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: rgba(26,26,26,0.4); margin-bottom: 4px; }
+			.field-placeholder { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: rgba(26,26,26,0.3); }
+			.quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0; }
+			.quick-link-card { border: 2px dashed rgba(26,26,26,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; background: rgba(255,255,255,0.5); }
+			.quick-link-icon { font-size: 20px; margin-bottom: 6px; }
+			.quick-link-label { font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 600; color: var(--primary); text-transform: uppercase; }
+			.sitemap { display: flex; align-items: flex-start; gap: 0; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+			.sitemap-node { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+			.sitemap-box { background: var(--primary); color: var(--light); font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 600; padding: 8px 14px; border-radius: 4px; text-align: center; min-width: 100px; text-transform: uppercase; letter-spacing: 0.02em; }
+			.sitemap-box.secondary { background: rgba(26,26,26,0.1); color: var(--primary); border: 1.5px dashed var(--primary); }
+			.sitemap-box.tertiary { background: rgba(200,169,78,0.1); color: var(--primary); border: 1.5px dashed var(--accent); font-size: 10px; min-width: 80px; padding: 6px 10px; }
+			.sitemap-arrow { font-family: 'Architects Daughter', cursive; font-size: 18px; color: rgba(26,26,26,0.3); padding: 0 6px; align-self: center; margin-top: -14px; }
+			.sitemap-children { display: flex; gap: 6px; margin-top: 6px; }
+			@media (max-width: 960px) { :root { --sidebar-w: 200px; } .main { padding: 32px 24px 80px; } .product-grid, .testimonial-grid { grid-template-columns: repeat(2, 1fr); } .quick-links { grid-template-columns: repeat(2, 1fr); } }
+			@media (max-width: 680px) { .sidebar { transform: translateX(-100%); } .sidebar.mobile-open { transform: translateX(0); } .sidebar-overlay { display: block; } .mobile-fab { display: flex; } .main { margin-left: 0; padding: 24px 16px 80px; } .doc-title { font-size: 28px; } .doc-meta-strip { flex-direction: column; width: 100%; } .meta-item { border-right: none; border-bottom: 1px solid rgba(26,26,26,0.1); } .meta-item:last-child { border-bottom: none; } .wf-nav-links { display: none; } .wf-nav { padding: 10px 14px; } .wf-body { padding: 20px 16px 28px; } .product-grid, .testimonial-grid, .quick-links, .form-grid { grid-template-columns: 1fr; } .sitemap { flex-direction: column; align-items: center; } .sitemap-arrow { transform: rotate(90deg); margin: 0; padding: 4px 0; } .sitemap-children { flex-direction: column; align-items: center; } .wf-footer { flex-direction: column; text-align: center; gap: 4px; } }
 		</style>
 	</head>
 	<body>
-		<!-- ── OVERLAY ── -->
 		<div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-		<!-- ── SIDEBAR ── -->
 		<nav class="sidebar" id="sidebar">
 			<div class="sidebar-brand">
 				<div class="sidebar-lwd">Latz Web Design</div>
 				<div class="sidebar-client">C &amp; J Custom Rods</div>
 				<div class="sidebar-doctype">Site Wireframes — Rebuild</div>
-				<div class="status-pill">
-					<div class="status-dot"></div>
-					<span>Client Review</span>
-				</div>
+				<div class="status-pill"><div class="status-dot"></div><span>Client Review</span></div>
 			</div>
-
 			<div class="sidebar-nav">
 				<div class="nav-group-label">Overview</div>
 				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
-
 				<div class="nav-group-label">Pages</div>
 				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
-				<a href="#custom-rods" class="nav-link"><span class="nav-icon">🎣</span> Custom Rods</a>
-				<a href="#in-stock" class="nav-link"><span class="nav-icon">🏷️</span> In-Stock Rods</a>
-				<a href="#rod-detail" class="nav-link"><span class="nav-icon">🔍</span> Rod Detail (PDP)</a>
-				<a href="#who-we-are" class="nav-link"><span class="nav-icon">👥</span> Who We Are</a>
+				<a href="#shop-rods" class="nav-link"><span class="nav-icon">🎣</span> In-Stock Rods</a>
+				<a href="#shop-custom" class="nav-link"><span class="nav-icon">🔧</span> Custom Rod Builder</a>
+				<a href="#shop-reels" class="nav-link"><span class="nav-icon">🎡</span> Reels</a>
+				<a href="#shop-apparel" class="nav-link"><span class="nav-icon">👕</span> Apparel</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">👥</span> About</a>
 				<a href="#feedback" class="nav-link"><span class="nav-icon">💬</span> Feedback</a>
-				<a href="#get-in-touch" class="nav-link"><span class="nav-icon">📬</span> Get in Touch</a>
-				<a href="#privacy" class="nav-link"><span class="nav-icon">🔒</span> Privacy Policy</a>
-
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact</a>
 			</div>
-
-			<div class="sidebar-footer">
-				Latz Web Design LLC<br />
-				Stevens Point, WI<br />
-				jordan@latzwebdesign.com<br /><br />
-				No fluff. Just results.
-			</div>
+			<div class="sidebar-footer">Latz Web Design LLC<br />Stevens Point, WI<br />jordan@latzwebdesign.com<br /><br />No fluff. Just results.</div>
 		</nav>
-
-		<!-- ── MOBILE FAB ── -->
 		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
 
-		<!-- ── MAIN ── -->
 		<div class="main">
-			<!-- HEADER -->
 			<div class="doc-header">
 				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
 				<div class="doc-title">C &amp; J Custom Rods</div>
-				<div class="doc-sub">
-					Full-Site Rebuild &nbsp;·&nbsp; Custom Rod Builder + E-Commerce + CMS
-				</div>
-
+				<div class="doc-sub">8-Page Custom Storefront Rebuild &nbsp;·&nbsp; Shopify Commerce + Sanity CMS</div>
 				<div class="doc-meta-strip">
-					<div class="meta-item">
-						<span class="meta-label">Status</span>
-						<span class="meta-value warn">Client Review</span>
-					</div>
-					<div class="meta-item">
-						<span class="meta-label">Pages</span>
-						<span class="meta-value">8 page types</span>
-					</div>
-					<div class="meta-item">
-						<span class="meta-label">Contact</span>
-						<span class="meta-value">C &amp; J Custom Rods</span>
-					</div>
-					<div class="meta-item">
-						<span class="meta-label">Current Site</span>
-						<span class="meta-value ok">candjcustomrods.com</span>
-					</div>
+					<div class="meta-item"><span class="meta-label">Status</span><span class="meta-value warn">Client Review</span></div>
+					<div class="meta-item"><span class="meta-label">Pages</span><span class="meta-value">8 in scope</span></div>
+					<div class="meta-item"><span class="meta-label">Current Site</span><span class="meta-value ok">candjcustomrods.com</span></div>
+					<div class="meta-item"><span class="meta-label">Commerce</span><span class="meta-value">Shopify</span></div>
 				</div>
 			</div>
 
-			<!-- ILLUSTRATIVE NOTE -->
-			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
-				✏️ This is a rebuild wireframe — the current site at candjcustomrods.com is live and was built by Latz Web Design.
-				Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.
-			</div>
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">✏️ This is a rebuild wireframe — the current site at candjcustomrods.com is live and was built by Latz Web Design. Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.</div>
 
-			<!-- ── SITE MAP ── -->
+			<!-- ── 0 · SITE MAP ── -->
 			<section class="wf-section" id="sitemap">
-				<div class="section-label">
-					<span class="section-num">0</span> Site Map
-				</div>
-
-				<div class="wireframe-card">
-					<div class="wf-body">
-						<div style="text-align: center; margin-bottom: 20px">
-							<div class="wf-heading-sm" style="margin-bottom: 4px">C &amp; J Custom Rods</div>
-							<div class="wf-subtext" style="margin-bottom: 0">
-								8 page types · custom rod builder · Sanity CMS for products, testimonials, and content
-							</div>
-						</div>
-
-						<div class="sitemap" style="gap: 6px; align-items: flex-start">
-							<div class="sitemap-node">
-								<div class="sitemap-box">
-									Home<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/</span>
-								</div>
-							</div>
-							<div class="sitemap-arrow">→</div>
-							<div class="sitemap-node">
-								<div class="sitemap-box secondary">
-									Custom Rods<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/custom-rods</span>
-								</div>
-								<div class="sitemap-children">
-									<div class="sitemap-box tertiary">Ice</div>
-									<div class="sitemap-box tertiary">Open Water</div>
-								</div>
-							</div>
-							<div class="sitemap-arrow">→</div>
-							<div class="sitemap-node">
-								<div class="sitemap-box secondary">
-									In-Stock Rods<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/in-stock-rods</span>
-								</div>
-								<div class="sitemap-children">
-									<div class="sitemap-box tertiary">Ice</div>
-									<div class="sitemap-box tertiary">Open Water</div>
-								</div>
-							</div>
-							<div class="sitemap-arrow">→</div>
-							<div class="sitemap-node">
-								<div class="sitemap-box secondary">
-									Who We Are<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/who-we-are</span>
-								</div>
-							</div>
-							<div class="sitemap-arrow">→</div>
-							<div class="sitemap-node">
-								<div class="sitemap-box secondary">
-									Feedback<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/feedback</span>
-								</div>
-							</div>
-							<div class="sitemap-arrow">→</div>
-							<div class="sitemap-node">
-								<div class="sitemap-box secondary">
-									Get in Touch<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/get-in-touch</span>
-								</div>
-							</div>
-						</div>
-
-						<div class="annotation" style="margin-top: 20px">
-							Same domain: candjcustomrods.com. Same page structure as the current live site. Nav is consistent across all pages — Custom Rods and In-Stock Rods each have dropdown sub-nav (Ice Rods / Open Water Rods). Individual rod product detail pages (PDP) are dynamic routes under their parent category. Privacy Policy linked in the footer only, not in main nav.
-						</div>
+				<div class="section-label"><span class="section-num">0</span> Site Map</div>
+				<div class="wireframe-card"><div class="wf-body">
+					<div style="text-align: center; margin-bottom: 20px"><div class="wf-heading-sm" style="margin-bottom: 4px">C &amp; J Custom Rods</div><div class="wf-subtext" style="margin-bottom: 0">8 pages · Shopify commerce · Sanity CMS for content · rebuilt custom rod builder</div></div>
+					<div class="sitemap" style="gap: 6px; align-items: flex-start">
+						<div class="sitemap-node"><div class="sitemap-box">Home<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">In-Stock Rods<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/shop/rods</span></div><div class="sitemap-children"><div class="sitemap-box tertiary">Ice</div><div class="sitemap-box tertiary">Open Water</div></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Custom Builder<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/shop/custom</span></div><div class="sitemap-children"><div class="sitemap-box tertiary">Ice</div><div class="sitemap-box tertiary">Open Water</div></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Reels<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/shop/reels</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Apparel<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/shop/apparel</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">About<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/about</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Feedback<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/feedback</span></div></div>
+						<div class="sitemap-arrow">→</div>
+						<div class="sitemap-node"><div class="sitemap-box secondary">Contact<br /><span style="font-size: 9px; font-family: 'Source Sans 3', sans-serif; font-weight: 400; opacity: 0.7;">/contact</span></div></div>
 					</div>
-				</div>
+					<div class="annotation" style="margin-top: 20px">Same domain: candjcustomrods.com. Nav includes Shop dropdown (In-Stock Rods, Custom Builder, Reels, Apparel), About, Feedback, Contact. Privacy Policy linked in the footer only. All product pages route through /shop/. In-stock rods and custom rods each have Ice/Open Water sub-nav.</div>
+				</div></div>
 			</section>
 
-			<!-- ── PAGE 1: HOME ── -->
+			<!-- ── 1 · HOME ── -->
 			<section class="wf-section" id="home">
-				<div class="section-label">
-					<span class="section-num">1</span> Home Page &mdash; /
-				</div>
-
+				<div class="section-label"><span class="section-num">1</span> Home Page &mdash; /</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span class="active">Home</span>
-							<span>Custom Rods ▾</span>
-							<span>In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span>Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span class="active">Home</span><span>Shop ▾</span><span>About</span><span>Feedback</span><span>Contact</span></div></div>
 					<div class="wf-body">
-						<!-- Hero -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Hero — Full Width</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div class="img-placeholder" style="height: 200px">
-								<div class="img-icon">🎣</div>
-								<div class="img-label">
-									Hero image — rod product photography or lifestyle on-the-water shot<br />
-									Currently using Sanity-hosted product images
-								</div>
-							</div>
-							<div style="margin-top: 16px; text-align: center">
-								<div class="wf-heading-lg">Handcrafted Custom Fishing Rods</div>
-								<div class="wf-subtext">Your Passion Meets Our Craftsmanship</div>
-								<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-									<div class="wf-cta">Design Your Perfect Rod →</div>
-									<div class="wf-cta accent">Shop In-Stock Rods →</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Two primary CTAs: one to custom rod builder, one to in-stock inventory. Hero headline and subhead are CMS-editable. Currently the hero also has a thumbnail strip of 4 product images that rotate — the rebuild should retain that rotating product showcase or improve on it.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Hero — Full Width</div><span class="cms-tag">CMS managed</span></div>
+							<div class="img-placeholder" style="height: 200px"><div class="img-icon">🎣</div><div class="img-label">Hero image — new professional photography<br />Rod product shots or lifestyle on-the-water</div></div>
+							<div style="margin-top: 16px; text-align: center"><div class="wf-heading-lg">Handcrafted Custom Fishing Rods</div><div class="wf-subtext">Your Passion Meets Our Craftsmanship</div><div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"><div class="wf-cta">Build Your Custom Rod →</div><div class="wf-cta accent">Shop In-Stock Rods →</div></div></div>
+							<div class="annotation">Two primary CTAs: custom rod builder and in-stock rods. Hero headline, subhead, and imagery are CMS-editable. Product image showcase pulls live from Shopify/Sanity.</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Featured Rod -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Today's Featured Rod</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div style="display: flex; gap: 16px; flex-wrap: wrap;">
-								<div class="img-placeholder" style="height: 160px; flex: 1; min-width: 200px;">
-									<div class="img-icon">🐟</div>
-									<div class="img-label">Featured rod product image<br />from Sanity</div>
-								</div>
-								<div style="flex: 2; min-width: 240px;">
-									<div class="wf-heading-md">Bass Spinning</div>
-									<div class="wf-body-text">
-										Full rod title and description pulled from Sanity — includes specs, thread color, grip type, lure weight, line weight, and use-case descriptions.
-									</div>
-									<div class="wf-cta">View This Rod →</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Client selects the featured rod in Sanity — it pulls the full product data automatically. Current site has this section and it works well. The featured rod rotates or is manually set.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Featured Products</div><span class="cms-tag">Shopify managed</span></div>
+							<div style="display: flex; gap: 16px; flex-wrap: wrap;"><div class="img-placeholder" style="height: 160px; flex: 1; min-width: 200px;"><div class="img-icon">🐟</div><div class="img-label">Featured product image<br />from Shopify</div></div><div style="flex: 2; min-width: 240px;"><div class="wf-heading-md">Featured Rod</div><div class="wf-body-text">Product title, description, price, and specs pulled live from Shopify. Featured product is selected in the CMS.</div><div class="wf-cta">View This Rod →</div></div></div>
+							<div class="annotation">Featured product pulled live from Shopify — price, stock status, and imagery are always current. Selection managed in Sanity.</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Rod Collections -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Open Water Rod Collections</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div class="product-grid">
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">product photo</div>
-									</div>
-									<div class="product-name">Panfish Spinning</div>
-									<div class="product-price">Starting at $219.99</div>
-									<div class="product-action">Shop Now →</div>
-								</div>
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">product photo</div>
-									</div>
-									<div class="product-name">Bass Spinning</div>
-									<div class="product-price">Starting at $229.99</div>
-									<div class="product-action">Shop Now →</div>
-								</div>
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">product photo</div>
-									</div>
-									<div class="product-name">Walleye Spinning</div>
-									<div class="product-price">Starting at $234.99</div>
-									<div class="product-action">Shop Now →</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Collections are CMS-driven — each collection (Panfish, Bass, Walleye, Musky, etc.) is a Sanity document with image, name, starting price, and description. Clicking any card goes to the in-stock category listing. Current site shows these as horizontal scrollable cards with hover effects — designer decides treatment for rebuild.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Shop Collections</div><span class="cms-tag">Shopify managed</span></div>
+							<div class="product-grid" style="grid-template-columns: repeat(4, 1fr);"><div class="product-card"><div class="img-placeholder" style="height: 70px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">photo</div></div><div class="product-name">In-Stock Rods</div><div class="product-action">Shop Now →</div></div><div class="product-card"><div class="img-placeholder" style="height: 70px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">photo</div></div><div class="product-name">Custom Rods</div><div class="product-action">Build Yours →</div></div><div class="product-card"><div class="img-placeholder" style="height: 70px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">photo</div></div><div class="product-name">Reels</div><div class="product-action">Shop Now →</div></div><div class="product-card"><div class="img-placeholder" style="height: 70px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">photo</div></div><div class="product-name">Apparel</div><div class="product-action">Shop Now →</div></div></div>
+							<div class="annotation">Four shop entry points — In-Stock Rods, Custom Rods, Reels, Apparel. Each links to its respective shop page.</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Custom Rod CTA -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Custom Rod Builder CTA</div>
-							</div>
-							<div style="text-align: center; padding: 20px 0;">
-								<div class="wf-heading-md">Craft Your Perfect Rod</div>
-								<div class="wf-body-text" style="max-width: 500px; margin: 0 auto;">
-									Every angler has their own unique style — why settle for a one-size-fits-all rod? Choose from premium rod blanks, handles, wraps, and more.
-								</div>
-								<div class="wf-cta accent">Build Your Custom Rod Now →</div>
-							</div>
-							<div class="annotation">
-								Strong mid-page push to the custom rod builder. This is a key conversion point — anglers who want something specific need to know the option exists before they leave.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">About Blurb</div><span class="cms-tag">CMS managed</span></div>
+							<div style="display: flex; gap: 16px; flex-wrap: wrap;"><div class="img-placeholder" style="height: 120px; flex: 1; min-width: 180px;"><div class="img-icon">👥</div><div class="img-label">Founders photo<br />from Sanity</div></div><div style="flex: 2; min-width: 240px;"><div class="wf-heading-md">Crafted for Anglers, Built for Performance</div><div class="wf-body-text">Short blurb — two friends who set out to build something better than off-the-shelf. Links to full About page.</div><span style="font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--primary); font-weight: 600;">See Who's Behind the Craft →</span></div></div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- About blurb -->
-						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">About Blurb — C &amp; J</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div style="display: flex; gap: 16px; flex-wrap: wrap;">
-								<div class="img-placeholder" style="height: 120px; flex: 1; min-width: 180px;">
-									<div class="img-icon">👥</div>
-									<div class="img-label">C &amp; J founders photo<br />from Sanity</div>
-								</div>
-								<div style="flex: 2; min-width: 240px;">
-									<div class="wf-heading-md">Crafted for Anglers, Built for Performance</div>
-									<div class="wf-body-text">
-										Short blurb about C&J — two friends in a garage, grew into a commitment to precision and performance. Links to full Who We Are page.
-									</div>
-									<span style="font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--primary); font-weight: 600;">See Who's Behind the Craft →</span>
-								</div>
-							</div>
-							<div class="annotation">
-								Short warm intro to C&J. Photo + copy. Links to the full Who We Are page. Copy managed in CMS.
-							</div>
-						</div>
-
-						<div class="section-divider"></div>
-
-						<!-- Final CTA Bar -->
-						<div class="wf-block" style="background: var(--primary); padding: 20px; border-radius: 6px; border-color: var(--primary);">
-							<div style="text-align: center;">
-								<div class="wf-heading-md" style="color: var(--light);">Find Your Perfect Rod</div>
-								<div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap;">
-									<div class="wf-cta accent">Custom Rods</div>
-									<div class="wf-cta" style="background: transparent; border: 1.5px solid var(--light);">In-Stock Rods</div>
-									<div class="wf-cta" style="background: transparent; border: 1.5px solid var(--light);">Send Us a Message</div>
-								</div>
-							</div>
-						</div>
-						<div class="annotation">
-							Final conversion bar — same pattern as the current site. Three CTAs: Custom Rods, In-Stock Rods, Get in Touch. Always present above the footer on every page.
-						</div>
+						<div class="wf-block" style="background: var(--primary); padding: 20px; border-radius: 6px; border-color: var(--primary);"><div style="text-align: center;"><div class="wf-heading-md" style="color: var(--light);">Find Your Perfect Rod</div><div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap;"><div class="wf-cta accent">Custom Rods</div><div class="wf-cta" style="background: transparent; border: 1.5px solid var(--light);">In-Stock Rods</div><div class="wf-cta" style="background: transparent; border: 1.5px solid var(--light);">Send Us a Message</div></div></div></div>
+						<div class="annotation">Final conversion bar — present above the footer on every page.</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
 
-			<!-- ── PAGE 2: CUSTOM RODS ── -->
-			<section class="wf-section" id="custom-rods">
-				<div class="section-label">
-					<span class="section-num">2</span> Custom Rods &mdash; /custom-rods
-				</div>
-
+			<!-- ── 2 · IN-STOCK RODS ── -->
+			<section class="wf-section" id="shop-rods">
+				<div class="section-label"><span class="section-num">2</span> Shop — In-Stock Rods &mdash; /shop/rods</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span class="active">Custom Rods ▾</span>
-							<span>In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span>Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span class="active">Shop ▾</span><span>About</span><span>Feedback</span><span>Contact</span></div></div>
 					<div class="wf-body">
-						<div style="margin-bottom: 20px">
-							<div class="wf-heading-lg">Build Your Own Rod</div>
-							<div class="wf-subtext">
-								Create a custom rod tailored to your fishing style. Choose your components, design, and specifications.
-							</div>
-						</div>
-
-						<!-- Type selector -->
+						<div style="margin-bottom: 20px"><div class="wf-heading-lg">In-Stock Rods</div><div class="wf-subtext">Pre-built rods available for immediate purchase.</div></div>
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Step 1 — Choose Rod Type</div>
-							</div>
-							<div class="filter-row">
-								<span class="filter-pill active">Ice Rods</span>
-								<span class="filter-pill">Open Water Rods</span>
-							</div>
-							<div class="annotation">
-								Landing page shows two paths: Ice Rods and Open Water Rods. Clicking either goes to the sub-listing showing all available series in that category. Current site uses card-style links for each path.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Category Filter</div></div>
+							<div class="filter-row"><span class="filter-pill active">All</span><span class="filter-pill">Ice Rods</span><span class="filter-pill">Open Water</span></div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Series listing -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Series Listing (e.g. Open Water)</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-
-							<div class="step-row">
-								<span class="step-badge">Step 1</span>
-								<span class="step-text">Choose Rod Application (Spinning vs Casting filter for Open Water)</span>
-							</div>
-
-							<div class="product-grid">
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">series photo</div>
-									</div>
-									<div class="product-name">Panfish Spinning</div>
-									<div class="product-price">Starting at $219.99</div>
-									<div class="product-action">Start Building →</div>
-								</div>
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">series photo</div>
-									</div>
-									<div class="product-name">Bass Spinning</div>
-									<div class="product-price">Starting at $229.99</div>
-									<div class="product-action">Start Building →</div>
-								</div>
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">series photo</div>
-									</div>
-									<div class="product-name">Walleye Spinning</div>
-									<div class="product-price">Starting at $234.99</div>
-									<div class="product-action">Start Building →</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Each series card links to the rod builder configurator for that species/type. Open Water has an additional Spinning/Casting toggle filter. All series are managed in Sanity — new series can be added without developer help.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Product Grid</div><span class="cms-tag">Shopify managed</span></div>
+							<div class="product-grid"><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div><div class="product-name">Panfish Spinning</div><div class="product-price">$219.99</div><div class="product-action">View Rod →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div><div class="product-name">Bass Spinning</div><div class="product-price">$234.99</div><div class="product-action">View Rod →</div></div><div class="product-card" style="opacity: 0.5;"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div><div class="product-name">Musky Casting</div><div class="product-price">$399.99</div><div class="product-action">Coming Soon</div></div></div>
+							<div class="annotation">Products pulled from Shopify — price, inventory, and imagery are always current. Out-of-stock items show as dimmed. Clicking a rod goes to its product detail page with full specs, photo gallery, and Add to Cart → Shopify checkout.</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Rod Builder / Configurator -->
-						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Rod Builder Configurator (sub-page)</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-
-							<div class="annotation" style="margin-top: 0; background: rgba(200, 169, 78, 0.06); border-left-color: var(--accent);">
-								⚑ This is the most intricate part of the site. The rod builder configurator involves multiple option types (application, length, power/action, handle material, thread color, guide options, grip style, etc.) with additive pricing. All option types and step flows will be mapped out collaboratively to determine the best UX approach for the rebuild. The block is intentionally left blank here — detailed wireframing of this section happens during the design phase.
-							</div>
-						</div>
+						<div style="text-align: center; padding: 14px; border: 2px dashed rgba(26,26,26,0.15); border-radius: 6px;"><div class="wf-heading-sm">Don't See What You Need?</div><div class="wf-cta accent" style="margin-top: 6px;">Build Your Own Custom Rod →</div></div>
+						<div class="annotation">Crossover CTA to the custom rod builder at bottom of every rod listing.</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
 
-			<!-- ── PAGE 3: IN-STOCK RODS ── -->
-			<section class="wf-section" id="in-stock">
-				<div class="section-label">
-					<span class="section-num">3</span> In-Stock Rods &mdash; /in-stock-rods
-				</div>
-
+			<!-- ── 3 · CUSTOM ROD BUILDER ── -->
+			<section class="wf-section" id="shop-custom">
+				<div class="section-label"><span class="section-num">3</span> Shop — Custom Rod Builder &mdash; /shop/custom</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span>Custom Rods ▾</span>
-							<span class="active">In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span>Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span class="active">Shop ▾</span><span>About</span><span>Feedback</span><span>Contact</span></div></div>
 					<div class="wf-body">
-						<div style="margin-bottom: 20px">
-							<div class="wf-heading-lg">In-Stock Rods</div>
-							<div class="wf-subtext">
-								Ready-to-ship rods — high-quality without the wait.
-							</div>
-						</div>
-
-						<!-- Type selector -->
+						<div style="margin-bottom: 20px"><div class="wf-heading-lg">Build Your Own Rod</div><div class="wf-subtext">Create a custom rod tailored to your fishing style.</div></div>
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Category Selector</div>
-							</div>
-							<div class="filter-row">
-								<span class="filter-pill active">Ice Rods</span>
-								<span class="filter-pill">Open Water Rods</span>
-							</div>
-							<div class="annotation">
-								Same two paths as Custom Rods: Ice and Open Water. Clicking goes to the sub-listing.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Step 1 — Choose Rod Type</div></div>
+							<div class="filter-row"><span class="filter-pill active">Ice Rods</span><span class="filter-pill">Open Water Rods</span></div>
+							<div class="annotation">Two paths: Ice and Open Water. Each leads to a series listing.</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Collection listing -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Collection Listing (e.g. Open Water)</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-
-							<div class="product-grid">
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">collection photo</div>
-									</div>
-									<div class="product-name">Panfish Spinning</div>
-									<div class="product-price">Starting at $219.99</div>
-									<div class="product-action">Shop Now →</div>
-								</div>
-								<div class="product-card">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">collection photo</div>
-									</div>
-									<div class="product-name">Bass Spinning</div>
-									<div class="product-price">Starting at $229.99</div>
-									<div class="product-action">Shop Now →</div>
-								</div>
-								<div class="product-card" style="opacity: 0.5;">
-									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">product photo</div>
-									</div>
-									<div class="product-name">Musky Casting</div>
-									<div class="product-price">Starting at $399.99</div>
-									<div class="product-action">Coming Soon</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Collections are CMS-driven. Out-of-stock collections show as dimmed with "Coming Soon" — no broken links. Each collection card links to the individual rod listing for that species. Ice Rods currently has 4 series (Hole Hog, Eyece Commander, Panfish Carbon, Hog Whip). Open Water currently has 6 (Panfish, Bass, Walleye Spinning + Musky Casting, Bass Casting, Musky Spinning — last 3 currently "Coming Soon").
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Series Listing</div><span class="cms-tag">CMS managed</span></div>
+							<div class="product-grid"><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">series photo</div></div><div class="product-name">Panfish Spinning</div><div class="product-price">Starting at $219.99</div><div class="product-action">Start Building →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">series photo</div></div><div class="product-name">Bass Spinning</div><div class="product-price">Starting at $229.99</div><div class="product-action">Start Building →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">series photo</div></div><div class="product-name">Walleye Spinning</div><div class="product-price">Starting at $234.99</div><div class="product-action">Start Building →</div></div></div>
+							<div class="annotation">Each series card links to the rod builder configurator. Open Water has Spinning/Casting toggle. All series managed in Sanity — new series can be added without developer help.</div>
 						</div>
-
 						<div class="section-divider"></div>
-
-						<!-- Individual rod listing -->
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Rod Listing Within Collection (sub-page)</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div class="wf-body-text">
-								Collection overview paragraph at top (e.g. "The C&J Bass Rods are crafted from a high-performance graphite blend..."), then individual rod cards below.
-							</div>
-							<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-								<div style="border: 1.5px dashed rgba(26,26,26,0.2); border-radius: 5px; padding: 12px 14px; background: rgba(255,255,255,0.6); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-									<div class="img-placeholder" style="height: 70px; width: 70px; flex-shrink: 0;">
-										<div class="img-label" style="font-size: 9px;">photo</div>
-									</div>
-									<div style="flex: 1; min-width: 200px;">
-										<div style="font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary); text-transform: uppercase;">6'8" Black Med XF Bass Spinning, Seafoam Thread</div>
-										<div class="spec-row">
-											<span class="spec-item"><strong>$234.99</strong></span>
-											<span class="spec-item" style="color: var(--green);">1 In Stock</span>
-										</div>
-									</div>
-									<div class="wf-cta" style="font-size: 11px; padding: 6px 14px;">View Rod →</div>
-								</div>
-								<div style="border: 1.5px dashed rgba(26,26,26,0.2); border-radius: 5px; padding: 12px 14px; background: rgba(255,255,255,0.6); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-									<div class="img-placeholder" style="height: 70px; width: 70px; flex-shrink: 0;">
-										<div class="img-label" style="font-size: 9px;">photo</div>
-									</div>
-									<div style="flex: 1; min-width: 200px;">
-										<div style="font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary); text-transform: uppercase;">6'8" Black Med XF Bass Spinning, Blue Thread</div>
-										<div class="spec-row">
-											<span class="spec-item"><strong>$234.99</strong></span>
-											<span class="spec-item" style="color: var(--green);">1 In Stock</span>
-										</div>
-									</div>
-									<div class="wf-cta" style="font-size: 11px; padding: 6px 14px;">View Rod →</div>
-								</div>
-							</div>
-
-							<div style="text-align: center; margin-top: 16px; padding: 14px; border: 2px dashed rgba(26,26,26,0.15); border-radius: 6px;">
-								<div class="wf-heading-sm">Don't See What You Need?</div>
-								<div class="wf-cta accent" style="margin-top: 6px;">Build Your Own Custom Rod →</div>
-							</div>
-
-							<div class="annotation">
-								Each rod listing page shows all in-stock rods for that collection. Stock count badge (e.g. "1 In Stock") is managed in Sanity. At the bottom, a crossover CTA pushes visitors to the custom rod builder — this is the current pattern and it converts.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Rod Builder Configurator</div><span class="cms-tag">CMS managed</span></div>
+							<div class="annotation" style="margin-top: 0; background: rgba(200,169,78,0.06); border-left-color: var(--accent);">⚑ This is the most intricate part of the site. The rod builder configurator involves multiple option types (application, length, power/action, handle material, thread color, guide options, grip style, etc.) with additive pricing. All option types and step flows will be mapped out collaboratively to determine the best UX approach for the rebuild. The block is intentionally left blank here — detailed wireframing happens during the design phase. Custom rod orders check out through Shopify via draft orders.</div>
 						</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
 
-			<!-- ── PAGE 4: ROD DETAIL (PDP) ── -->
-			<section class="wf-section" id="rod-detail">
-				<div class="section-label">
-					<span class="section-num">4</span> Rod Detail (PDP) &mdash; /in-stock-rods/[category]/[slug]
-				</div>
-
+			<!-- ── 4 · REELS ── -->
+			<section class="wf-section" id="shop-reels">
+				<div class="section-label"><span class="section-num">4</span> Shop — Reels &mdash; /shop/reels</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span>Custom Rods ▾</span>
-							<span class="active">In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span>Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span class="active">Shop ▾</span><span>About</span><span>Feedback</span><span>Contact</span></div></div>
 					<div class="wf-body">
-						<!-- Product detail -->
+						<div style="margin-bottom: 20px"><div class="wf-heading-lg">Reels</div><div class="wf-subtext">Quality reels to pair with your custom rod.</div></div>
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Product Detail Page</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-
-							<div style="display: flex; gap: 20px; flex-wrap: wrap;">
-								<div style="flex: 1; min-width: 220px;">
-									<div class="img-placeholder" style="height: 220px; margin-bottom: 10px;">
-										<div class="img-icon">🎣</div>
-										<div class="img-label">Primary rod product photo<br />High-res from Sanity</div>
-									</div>
-									<div style="display: flex; gap: 6px;">
-										<div class="img-placeholder" style="height: 50px; flex: 1;">
-											<div class="img-label" style="font-size: 9px;">thumb</div>
-										</div>
-										<div class="img-placeholder" style="height: 50px; flex: 1;">
-											<div class="img-label" style="font-size: 9px;">thumb</div>
-										</div>
-										<div class="img-placeholder" style="height: 50px; flex: 1;">
-											<div class="img-label" style="font-size: 9px;">thumb</div>
-										</div>
-									</div>
-								</div>
-								<div style="flex: 1; min-width: 240px;">
-									<div class="wf-heading-lg" style="font-size: 20px;">6'8" Black Medium Extra Fast Bass Spinning</div>
-									<div class="wf-subtext">Seafoam Thread, Custom Cork Split Grip</div>
-
-									<div style="font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 700; color: var(--primary); margin: 10px 0;">$234.99</div>
-
-									<div class="spec-row" style="margin-bottom: 12px;">
-										<span class="spec-item" style="color: var(--green); font-weight: 600;">● In Stock</span>
-									</div>
-
-									<div class="wf-body-text">
-										Full product description — specs, materials, blank construction, lure/line weight ratings, recommended techniques, and the "handcrafted with close attention to detail" closer that's on every rod.
-									</div>
-
-									<div class="spec-row" style="flex-direction: column; gap: 4px; margin-top: 10px;">
-										<span class="spec-item"><strong>Power/Action:</strong> Medium / Extra Fast</span>
-										<span class="spec-item"><strong>Lure Weight:</strong> 3/16–1/2 oz</span>
-										<span class="spec-item"><strong>Line Weight:</strong> 6–14 lb</span>
-										<span class="spec-item"><strong>Blank:</strong> Graphite Blend</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="annotation">
-								Product detail page (PDP) shows the full rod with photo gallery, price, stock status, full description, and specs. Product data lives in Shopify (pulled via Storefront API), photography and supplemental content in Sanity. The rebuild adds a real Add to Cart flow — standard products go through Shopify's Storefront API cart and hosted checkout. No more inquiry-only.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Product Grid</div><span class="cms-tag">Shopify managed</span></div>
+							<div class="product-grid"><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">reel photo</div></div><div class="product-name">Reel Name</div><div class="product-price">$XX.XX</div><div class="product-action">View Reel →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">reel photo</div></div><div class="product-name">Reel Name</div><div class="product-price">$XX.XX</div><div class="product-action">View Reel →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">reel photo</div></div><div class="product-name">Reel Name</div><div class="product-price">$XX.XX</div><div class="product-action">View Reel →</div></div></div>
+							<div class="annotation">New product category. Reels are standard Shopify products — managed entirely in the Shopify admin. Add new reels, update pricing, manage inventory without any developer involvement. Each reel has a product detail page with photography, specs, Add to Cart → Shopify checkout.</div>
 						</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
 
-			<!-- ── PAGE 5: WHO WE ARE ── -->
-			<section class="wf-section" id="who-we-are">
-				<div class="section-label">
-					<span class="section-num">5</span> Who We Are &mdash; /who-we-are
-				</div>
-
+			<!-- ── 5 · APPAREL ── -->
+			<section class="wf-section" id="shop-apparel">
+				<div class="section-label"><span class="section-num">5</span> Shop — Apparel &mdash; /shop/apparel</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span>Custom Rods ▾</span>
-							<span>In-Stock Rods ▾</span>
-							<span class="active">Who We Are</span>
-							<span>Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span class="active">Shop ▾</span><span>About</span><span>Feedback</span><span>Contact</span></div></div>
 					<div class="wf-body">
-						<div style="margin-bottom: 20px">
-							<div class="wf-heading-lg">Who We Are</div>
-							<div class="wf-subtext">Your passion meets our craftsmanship.</div>
-						</div>
-
-						<!-- Story -->
+						<div style="margin-bottom: 20px"><div class="wf-heading-lg">Apparel</div><div class="wf-subtext">Branded clothing &amp; merchandise.</div></div>
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Our Story</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div class="wf-body-text">
-								"Crafted by Anglers, Built for Passion" — story of two friends in a garage who set out to build something better than off-the-shelf. What started with a question became a commitment to precision, performance, and personalization. 2–3 paragraphs covering the founding, philosophy, and what drives them.
-							</div>
-							<div class="annotation">
-								Copy from the current site works well — can be refined for the rebuild. CMS-managed so the client can update their story as the business grows.
-							</div>
-						</div>
-
-						<div class="section-divider"></div>
-
-						<!-- Success on the Water -->
-						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Success on the Water — Customer Photos</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div style="display: flex; gap: 8px; flex-wrap: wrap;">
-								<div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;">
-									<div class="img-label" style="font-size: 10px;">customer catch 1</div>
-								</div>
-								<div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;">
-									<div class="img-label" style="font-size: 10px;">customer catch 2</div>
-								</div>
-								<div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;">
-									<div class="img-label" style="font-size: 10px;">customer catch 3</div>
-								</div>
-								<div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;">
-									<div class="img-label" style="font-size: 10px;">customer catch 4</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Customer success photos — the current site has 4 images here. Client uploads new catch photos via Sanity. Great social proof section. Designer decides gallery treatment — current is a simple grid.
-							</div>
-						</div>
-
-						<div class="section-divider"></div>
-
-						<!-- Commitment -->
-						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Our Commitment — Value Props</div>
-							</div>
-							<div class="quick-links" style="grid-template-columns: repeat(4, 1fr);">
-								<div class="quick-link-card">
-									<div class="quick-link-icon">🔧</div>
-									<div class="quick-link-label">Handcrafted Precision</div>
-								</div>
-								<div class="quick-link-card">
-									<div class="quick-link-icon">⭐</div>
-									<div class="quick-link-label">Premium Materials</div>
-								</div>
-								<div class="quick-link-card">
-									<div class="quick-link-icon">🎯</div>
-									<div class="quick-link-label">Tailor-Made Performance</div>
-								</div>
-								<div class="quick-link-card">
-									<div class="quick-link-icon">🏆</div>
-									<div class="quick-link-label">Real Angler Results</div>
-								</div>
-							</div>
-							<div class="annotation">
-								Four value proposition cards — already on the current site. Simple icon + label treatment. These reinforce trust before the final CTA.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Product Grid</div><span class="cms-tag">Shopify managed</span></div>
+							<div class="product-grid"><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">apparel photo</div></div><div class="product-name">C&amp;J Hat</div><div class="product-price">$XX.XX</div><div class="product-action">View Item →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">apparel photo</div></div><div class="product-name">C&amp;J Hoodie</div><div class="product-price">$XX.XX</div><div class="product-action">View Item →</div></div><div class="product-card"><div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">apparel photo</div></div><div class="product-name">C&amp;J Tee</div><div class="product-price">$XX.XX</div><div class="product-action">View Item →</div></div></div>
+							<div class="annotation">New product category. Apparel with size variants handled natively by Shopify. Managed entirely in the Shopify admin — add new items, update sizes/pricing, manage inventory. No developer needed. Product detail pages with size selector, Add to Cart → Shopify checkout.</div>
 						</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
 
-			<!-- ── PAGE 6: FEEDBACK ── -->
+			<!-- ── 6 · ABOUT ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label"><span class="section-num">6</span> About / Who We Are &mdash; /about</div>
+				<div class="wireframe-card">
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span>Shop ▾</span><span class="active">About</span><span>Feedback</span><span>Contact</span></div></div>
+					<div class="wf-body">
+						<div style="margin-bottom: 20px"><div class="wf-heading-lg">Who We Are</div><div class="wf-subtext">Your passion meets our craftsmanship.</div></div>
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Our Story</div><span class="cms-tag">CMS managed</span></div>
+							<div class="wf-body-text">Brand story — two friends who set out to build something better. What started with a question became a commitment to precision, performance, and personalization. New professional photography featured throughout.</div>
+							<div class="annotation">Copy managed in Sanity. New professional photography will be the centerpiece of this page.</div>
+						</div>
+						<div class="section-divider"></div>
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Success on the Water</div><span class="cms-tag">CMS managed</span></div>
+							<div style="display: flex; gap: 8px; flex-wrap: wrap;"><div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;"><div class="img-label" style="font-size: 10px;">catch 1</div></div><div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;"><div class="img-label" style="font-size: 10px;">catch 2</div></div><div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;"><div class="img-label" style="font-size: 10px;">catch 3</div></div><div class="img-placeholder" style="height: 100px; flex: 1; min-width: 100px;"><div class="img-label" style="font-size: 10px;">catch 4</div></div></div>
+							<div class="annotation">Customer success photos uploaded via Sanity. Social proof gallery.</div>
+						</div>
+						<div class="section-divider"></div>
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Our Commitment</div></div>
+							<div class="quick-links"><div class="quick-link-card"><div class="quick-link-icon">🔧</div><div class="quick-link-label">Handcrafted Precision</div></div><div class="quick-link-card"><div class="quick-link-icon">⭐</div><div class="quick-link-label">Premium Materials</div></div><div class="quick-link-card"><div class="quick-link-icon">🎯</div><div class="quick-link-label">Tailor-Made</div></div><div class="quick-link-card"><div class="quick-link-icon">🏆</div><div class="quick-link-label">Real Results</div></div></div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ── 7 · FEEDBACK ── -->
 			<section class="wf-section" id="feedback">
-				<div class="section-label">
-					<span class="section-num">6</span> Feedback &mdash; /feedback
-				</div>
-
+				<div class="section-label"><span class="section-num">7</span> Feedback &mdash; /feedback</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span>Custom Rods ▾</span>
-							<span>In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span class="active">Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span>Shop ▾</span><span>About</span><span class="active">Feedback</span><span>Contact</span></div></div>
 					<div class="wf-body">
-						<div style="margin-bottom: 6px">
-							<div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;">Angler Feedback</div>
-							<div class="wf-heading-lg">Precision-Crafted Fishing Rods</div>
-							<div class="wf-subtext">Unmatched Sensitivity, Strength, and Customization</div>
-						</div>
-
+						<div style="margin-bottom: 6px"><div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;">Angler Feedback</div><div class="wf-heading-lg">Precision-Crafted Fishing Rods</div><div class="wf-subtext">Unmatched Sensitivity, Strength, and Customization</div></div>
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Testimonials Grid</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-
-							<div class="testimonial-grid">
-								<div class="testimonial-card">
-									<div class="img-placeholder" style="height: 60px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">angler photo</div>
-									</div>
-									<div class="testimonial-name">Angler Name</div>
-									<div class="testimonial-quote">"Needless to say, I'm sold and never going back to my old store-bought combos!"</div>
-									<div style="margin-top: 6px;"><span style="font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600;">Hear from this Angler →</span></div>
-								</div>
-								<div class="testimonial-card">
-									<div class="img-placeholder" style="height: 60px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">angler photo</div>
-									</div>
-									<div class="testimonial-name">Angler Name</div>
-									<div class="testimonial-quote">"Hands down, they are the best feeling rods I've ever had."</div>
-									<div style="margin-top: 6px;"><span style="font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600;">Hear from this Angler →</span></div>
-								</div>
-								<div class="testimonial-card">
-									<div class="img-placeholder" style="height: 60px; margin-bottom: 8px;">
-										<div class="img-label" style="font-size: 10px;">angler photo</div>
-									</div>
-									<div class="testimonial-name">Angler Name</div>
-									<div class="testimonial-quote">"Great rod from some great guys. Thanks, boys — keep on building!!"</div>
-									<div style="margin-top: 6px;"><span style="font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600;">Hear from this Angler →</span></div>
-								</div>
-							</div>
-
-							<div class="annotation">
-								Testimonials page — each testimonial card has an angler photo, name, quote headline, and a "Hear from this Angler" link that goes to a longer testimonial detail (currently exists on the live site). All managed in Sanity — client adds new testimonials as they come in. Currently 5 testimonials. The "Hear from this Angler" link could go to a modal/expandable detail or a dedicated sub-page — designer decides.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Testimonials</div><span class="cms-tag">CMS managed</span></div>
+							<div class="testimonial-grid"><div class="testimonial-card"><div class="img-placeholder" style="height: 60px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">angler photo</div></div><div class="testimonial-name">Angler Name</div><div class="testimonial-quote">"Quote about their C&J rod experience."</div><div style="margin-top: 6px;"><span style="font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600;">Hear from this Angler →</span></div></div><div class="testimonial-card"><div class="img-placeholder" style="height: 60px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">angler photo</div></div><div class="testimonial-name">Angler Name</div><div class="testimonial-quote">"Quote about rod quality and performance."</div><div style="margin-top: 6px;"><span style="font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600;">Hear from this Angler →</span></div></div><div class="testimonial-card"><div class="img-placeholder" style="height: 60px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">angler photo</div></div><div class="testimonial-name">Angler Name</div><div class="testimonial-quote">"Quote about craftsmanship and service."</div><div style="margin-top: 6px;"><span style="font-family: 'Source Sans 3', sans-serif; font-size: 11px; color: var(--accent); font-weight: 600;">Hear from this Angler →</span></div></div></div>
+							<div class="annotation">Testimonials managed in Sanity — add new ones anytime. Each card has photo, name, quote, and expandable detail. Social proof for the custom rod builder.</div>
 						</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
 
-			<!-- ── PAGE 7: GET IN TOUCH ── -->
-			<section class="wf-section" id="get-in-touch">
-				<div class="section-label">
-					<span class="section-num">7</span> Get in Touch &mdash; /get-in-touch
-				</div>
-
+			<!-- ── 8 · CONTACT ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label"><span class="section-num">8</span> Contact &mdash; /contact</div>
 				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span>Custom Rods ▾</span>
-							<span>In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span>Feedback</span>
-							<span class="active">Get in Touch</span>
-						</div>
-					</div>
-
+					<div class="wf-nav"><div class="wf-nav-logo">C &amp; J Custom Rods</div><div class="wf-nav-links"><span>Home</span><span>Shop ▾</span><span>About</span><span>Feedback</span><span class="active">Contact</span></div></div>
 					<div class="wf-body">
-						<div style="margin-bottom: 20px">
-							<div class="wf-heading-lg">Send Us a Message</div>
-							<div class="wf-subtext">
-								Whether you're looking for a custom rod, have a question, or just want to say hi — drop us a message.
-							</div>
-						</div>
-
+						<div style="margin-bottom: 20px"><div class="wf-heading-lg">Get in Touch</div><div class="wf-subtext">Whether you're looking for a custom rod, have a question, or just want to say hi — drop us a message.</div></div>
 						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Contact Form</div>
-							</div>
-
-							<div class="form-grid">
-								<div class="form-field">
-									<div class="field-label">Name *</div>
-									<div class="field-placeholder">Your name</div>
-								</div>
-								<div class="form-field">
-									<div class="field-label">Email *</div>
-									<div class="field-placeholder">your@email.com</div>
-								</div>
-								<div class="form-field">
-									<div class="field-label">Phone Number</div>
-									<div class="field-placeholder">(###) ###-####</div>
-								</div>
-								<div class="form-field">
-									<div class="field-label">&nbsp;</div>
-									<div class="field-placeholder">&nbsp;</div>
-								</div>
-								<div class="form-field full">
-									<div class="field-label">Your Message</div>
-									<div class="field-placeholder" style="min-height: 60px;">Tell us what you're looking for...</div>
-								</div>
-							</div>
-
-							<div style="margin-top: 12px;">
-								<div class="wf-cta">Send Message →</div>
-							</div>
-
-							<div class="annotation">
-								Simple contact form — Name (required), Email (required), Phone (optional), Message. Submissions go to the client's email. Current site uses this same form structure. No CAPTCHA currently — consider adding one for the rebuild if spam becomes an issue. Form validation is client-side with server-side backup.
-							</div>
+							<div class="wf-block-header"><div class="wf-heading-sm">Contact Form</div></div>
+							<div class="form-grid"><div class="form-field"><div class="field-label">Name *</div><div class="field-placeholder">Your name</div></div><div class="form-field"><div class="field-label">Email *</div><div class="field-placeholder">your@email.com</div></div><div class="form-field"><div class="field-label">Phone Number</div><div class="field-placeholder">(###) ###-####</div></div><div class="form-field"><div class="field-label">Inquiry Type</div><div class="field-placeholder">Custom Rod / In-Stock / Reels / Other</div></div><div class="form-field full"><div class="field-label">Your Message</div><div class="field-placeholder" style="min-height: 60px;">Tell us what you're looking for...</div></div></div>
+							<div style="margin-top: 12px;"><div class="wf-cta">Send Message →</div></div>
+							<div class="annotation">Contact form with inquiry type selector — helps route messages. Click-to-call and click-to-email for business contact info on this page as well.</div>
+						</div>
+						<div class="section-divider"></div>
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Business Info</div><span class="cms-tag">CMS managed</span></div>
+							<div class="wf-body-text"><strong>Location</strong> — Business location and hours.</div>
+							<div class="wf-body-text"><strong>Phone</strong> — Click-to-call on mobile.</div>
+							<div class="wf-body-text"><strong>Email</strong> — Click-to-email.</div>
 						</div>
 					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
+					<div class="wf-footer"><span>© 2026 C and J Custom Rods · Privacy Policy</span><span>Powered by LatzWebDesign.com</span></div>
 				</div>
 			</section>
-
-			<!-- ── PAGE 8: PRIVACY POLICY ── -->
-			<section class="wf-section" id="privacy">
-				<div class="section-label">
-					<span class="section-num">8</span> Privacy Policy &mdash; /legal/privacy-policy
-				</div>
-
-				<div class="wireframe-card">
-					<div class="wf-nav">
-						<div class="wf-nav-logo">C &amp; J Custom Rods</div>
-						<div class="wf-nav-links">
-							<span>Home</span>
-							<span>Custom Rods ▾</span>
-							<span>In-Stock Rods ▾</span>
-							<span>Who We Are</span>
-							<span>Feedback</span>
-							<span>Get in Touch</span>
-						</div>
-					</div>
-
-					<div class="wf-body">
-						<div style="margin-bottom: 20px">
-							<div class="wf-heading-lg">Privacy Policy</div>
-							<div class="wf-subtext">Effective Date: February 1, 2025</div>
-						</div>
-
-						<div class="wf-block">
-							<div class="wf-block-header">
-								<div class="wf-heading-sm">Legal Copy</div>
-								<span class="cms-tag">CMS managed</span>
-							</div>
-							<div class="wf-body-text">
-								Standard privacy policy content — information collection, usage, sharing, security, user choices, and contact information. Currently has a placeholder email (clientEmail@email.com) that needs to be updated with the client's actual contact email.
-							</div>
-							<div class="annotation">
-								Privacy policy is linked from the footer only — not in the main nav. Current policy effective Feb 2025. If the rebuild adds any new data collection (payment processing, analytics changes), the policy will be updated. The placeholder email address on the current live page needs to be fixed.
-							</div>
-						</div>
-					</div>
-
-					<div class="wf-footer">
-						<span>© 2026 C and J Custom Rods · Privacy Policy</span>
-						<span>Powered by LatzWebDesign.com</span>
-					</div>
-				</div>
-			</section>
-
-
 		</div>
-		<!-- /main -->
 
 		<script>
-			/* ── Scrollspy ── */
 			const sections = document.querySelectorAll('section[id]');
 			const navLinks = document.querySelectorAll('.nav-link');
-
-			const observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							navLinks.forEach((link) => {
-								link.classList.remove('active');
-								if (link.getAttribute('href') === '#' + entry.target.id) {
-									link.classList.add('active');
-								}
-							});
-						}
-					});
-				},
-				{ rootMargin: '-15% 0px -70% 0px' }
-			);
-
+			const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { navLinks.forEach((link) => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active'); }); } }); }, { rootMargin: '-15% 0px -70% 0px' });
 			sections.forEach((s) => observer.observe(s));
-
-			/* ── Mobile sidebar ── */
-			const fab = document.getElementById('mobileFab');
-			const sidebar = document.getElementById('sidebar');
-			const sidebarOverlay = document.getElementById('sidebarOverlay');
-			let menuOpen = false;
-
-			function openMenu() {
-				menuOpen = true;
-				sidebar.classList.add('mobile-open');
-				sidebarOverlay.style.display = 'block';
-				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
-				fab.textContent = '✕';
-			}
-
-			function closeMenu(callback) {
-				menuOpen = false;
-				sidebar.classList.remove('mobile-open');
-				sidebarOverlay.classList.remove('visible');
-				fab.textContent = '☰';
-				setTimeout(() => {
-					sidebarOverlay.style.display = 'none';
-					if (callback) callback();
-				}, 280);
-			}
-
-			fab.addEventListener('click', () => {
-				if (menuOpen) { closeMenu(); } else { openMenu(); }
-			});
-
+			const fab = document.getElementById('mobileFab'); const sidebar = document.getElementById('sidebar'); const sidebarOverlay = document.getElementById('sidebarOverlay'); let menuOpen = false;
+			function openMenu() { menuOpen = true; sidebar.classList.add('mobile-open'); sidebarOverlay.style.display = 'block'; requestAnimationFrame(() => sidebarOverlay.classList.add('visible')); fab.textContent = '✕'; }
+			function closeMenu(cb) { menuOpen = false; sidebar.classList.remove('mobile-open'); sidebarOverlay.classList.remove('visible'); fab.textContent = '☰'; setTimeout(() => { sidebarOverlay.style.display = 'none'; if (cb) cb(); }, 280); }
+			fab.addEventListener('click', () => { if (menuOpen) closeMenu(); else openMenu(); });
 			sidebarOverlay.addEventListener('click', () => closeMenu());
-
-			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-				link.addEventListener('click', (e) => {
-					if (window.innerWidth <= 680 && menuOpen) {
-						e.preventDefault();
-						const target = link.getAttribute('href');
-						closeMenu(() => {
-							const el = document.querySelector(target);
-							if (el) el.scrollIntoView({ behavior: 'smooth' });
-						});
-					}
-				});
-			});
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => { link.addEventListener('click', (e) => { if (window.innerWidth <= 680 && menuOpen) { e.preventDefault(); const t = link.getAttribute('href'); closeMenu(() => { const el = document.querySelector(t); if (el) el.scrollIntoView({ behavior: 'smooth' }); }); } }); });
 		</script>
 	</body>
 </html>
