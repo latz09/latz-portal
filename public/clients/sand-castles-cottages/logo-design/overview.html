@@ -1,29 +1,1603 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Sand Castle Cottages — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE NAV ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 301;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.15s;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'SAND CASTLE';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 100px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── DELIVERABLE CARDS ── */
+  .deliv-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .deliv-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .deliv-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .deliv-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .deliv-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .deliv-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-included { background: var(--teal-light); color: var(--teal); }
+  .badge-tbd { background: var(--orange-light); color: var(--orange); }
+  .badge-not-included { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE — TABLET ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  /* ── RESPONSIVE — MOBILE ── */
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .sidebar.mobile-open {
+      transform: translateX(0);
     }
-  </style>
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .main { margin-left: 0; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding-left: 20px; padding-right: 20px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .checklist li .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Sand Castle Cottages</div>
+    <div class="status-pill">Discovery</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏖️</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Deliverables</a>
+  <a href="#design" class="nav-link"><span class="nav-icon">🎨</span> Design Direction</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#referral" class="nav-link"><span class="nav-icon">🤝</span> Referral Partner</a>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Sand Castle Cottages</h1>
+    <div class="sub">Logo Design · Pookie Rosa Referral</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Jennifer Ferguson</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Estimated Value</span>
+        <span class="value">~$725</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit</span>
+        <span class="value" style="color: var(--orange);">Not Yet</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Status</span>
+        <span class="value" style="color: var(--orange);">Proposal Next</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">(262) 496-6037</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Referred By</span>
+        <span class="value">Pookie Rosa</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏖️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Jennifer Ferguson (Jen)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:Jenn.pentilla@gmail.com">Jenn.pentilla@gmail.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">(262) 496-6037</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">Milwaukee, WI — all meetings will be virtual</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Background</span>
+            <span class="data-value">Interior design work. Very talented per Pookie. Previous Airbnb experience (renovated a cottage called "Longview").</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Personality</span>
+            <span class="data-value">Incredibly outgoing, articulate, casual, energetic. Strong visual opinions — she's an interior designer who curates intentionally. Easy to work with.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Secondary Stakeholder</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Jeff (husband)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Co-owner. Has opinions on the logo but Jen is the decision-maker.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Design Vision</span>
+            <span class="data-value">Wants literal sandcastle imagery, pail and shovel. Jen actively disagrees — says it looks like "a kindergartener did it."</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Strategy</span>
+            <span class="data-value">Jen wants to present him with a finished direction. "Show him and he'll be fine." Don't design for Jeff — design for Jen, present to both.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>About the Business</h3>
+        <div class="data-row">
+          <span class="data-label">Business Name</span>
+          <span class="data-value">Sand Castle Cottages</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Type</span>
+          <span class="data-value">Airbnb / Vacation rental — main house with satellite mini homes around it for guests and kids</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Location</span>
+          <span class="data-value">UP Michigan, on the beach near Mackinac Island. Sandy beaches, Straits area.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Property Status</span>
+          <span class="data-value">Not yet broken ground. Hoping to have structure up by summer 2026.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Experience</span>
+          <span class="data-value">Jen and Jeff ran a previous Airbnb called "Longview" — renovated property, navy + chartreuse branding. They know the business.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Listing Channels</span>
+          <span class="data-value">Vrbo, Booking.com, Airbnb — that's how guests will find them</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Unique Detail</span>
+          <span class="data-value">Near Mackinac Island (famous for fudge/taffy) — they plan to give away taffy to guests. Branded stickers on the taffy bags. Smart branding hook.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Jeff vs. Jen Design Conflict</strong>
+          <span>This is the #1 risk for concept presentations. They are "not on the same page" — her words. Jeff wants literal sandcastle + pail and shovel. Jen wants watercolor, upscale, grown-up. Jen's approach: show him the final direction and he'll get on board. Strategy: design for Jen's vision. Optionally explore one concept that subtly incorporates a sandcastle element (watercolor, abstract) to bridge the gap — but do NOT go literal.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Logo Design Package — ~$725 (discussed, not yet formalized)</strong>
+        <p>2–3 distinct logo concepts, icon/logo mark for social media, full color system, typography pairings, brand guidelines, social media profile + cover images, complete file package (SVG, PNG, EPS, PDF). Couple rounds of revisions. Business cards and letterhead discussed but client said not needed.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>What She Needs</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🪧</span> Logo for property signage (1–2 signs, visible from the road)</li>
+            <li><span class="check-icon">👕</span> Logo that works on T-shirts, sweatshirts</li>
+            <li><span class="check-icon">🏷️</span> Stickers — regular and small (for taffy giveaway bags)</li>
+            <li><span class="check-icon">📱</span> Social media profile pic + cover images (Facebook confirmed)</li>
+            <li><span class="check-icon">🔤</span> Typography pairings + full color system — ready for future website</li>
+            <li><span class="check-icon">📁</span> Complete file package: SVG, PNG, EPS, PDF</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What She Doesn't Need (Right Now)</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✖️</span> Business cards — guests find them through Airbnb/Vrbo, not cards</li>
+            <li><span class="check-icon">✖️</span> Letterhead — not relevant for this type of business</li>
+            <li><span class="check-icon">✖️</span> Website — but it's the clear next step. Typography + color system from logo work sets her up for it.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Next step: Send project outline / proposal</strong>
+          <span>Nothing is signed yet. Need to formalize the ~$725 package into a line-item project outline she can review and approve. Include what's in, what's optional, payment terms, and timeline. Include the content you still need from her (tagline, inspiration screenshots, town name spelling).</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Brand voice is being handled by Pookie Rosa separately</strong>
+          <span>Pookie is developing brand voice. Coordinate with her to make sure the logo and voice work aren't happening in separate vacuums. If Pookie has brand words or a direction doc, get it before Alyssa starts concepts.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Nothing signed, nothing paid — proposal is the next step</strong>
+          <span>Price was discussed verbally on the discovery call at ~$725. Pookie had quoted Jen ~$500 originally. Jordan explained typical is $1,200, landed on $725 as a referral-friendly price. Jen was fine with $725 but balked at $1,200.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Logo Design Package</strong></td>
+            <td>2–3 concepts, icon mark, color system, typography, brand guidelines, social assets, file package, 2 revision rounds</td>
+            <td class="amount">~$725</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gray-400);">Business Card Layout</td>
+            <td style="color: var(--gray-400);">Client said not needed — could be optional add-on</td>
+            <td class="amount" style="color: var(--gray-400);">—</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gray-400);">Letterhead Layout</td>
+            <td style="color: var(--gray-400);">Client said not needed</td>
+            <td class="amount" style="color: var(--gray-400);">—</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Estimated Total</strong></td>
+            <td>Final price TBD in project outline — could go lower if deliverables trimmed</td>
+            <td class="amount"><strong>~$725</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout yellow">
+        <span class="callout-icon">💬</span>
+        <div class="callout-body">
+          <strong>Pricing Context</strong>
+          <span>Pookie gave Jen a ~$500 estimate. Jordan explained that was a referral cost for Pookie's own project — normal rate is ~$1,200. Jen said $1,200 is too much. Landed on $725 with the option to trim deliverables to bring it down further. Jen said "make a pick and choose" list — the project outline should reflect that.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Fast-moving referral — 6 days from intro to discovery call</strong>
+          <span>Pookie sent the referral April 21. Discovery call happened same week. Jen is engaged and responsive. No board, no committee — just her (and occasionally Jeff). This can move fast if content comes in.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 21, 2026 — 6:33 AM</div>
+          <div class="timeline-title">Pookie Rosa Sends Referral</div>
+          <div class="timeline-desc">Email from Pookie: Jennifer Ferguson wants a logo for Sand Castle Cottages. Airbnb on the beach in the UP. Pookie handling brand voice, logo goes to Jordan/Alyssa. Included Pinterest board link. "You're genuinely going to enjoy her!"</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 21, 2026 — 11:35 AM</div>
+          <div class="timeline-title">Jordan Replies to Pookie</div>
+          <div class="timeline-desc">Thanked Pookie. Asked for budget ballpark on future referrals — helps tailor the process (more concepts vs. more upfront research). Sent intro email to Jen same day.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 21, 2026</div>
+          <div class="timeline-title">Intro Email Sent to Jen</div>
+          <div class="timeline-desc">Referenced Pinterest board, asked about logo usage, colors, and timeline. Offered call or coffee. Casual, warm tone.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 21, 2026</div>
+          <div class="timeline-title">Missed Calls + Voicemail from Jen</div>
+          <div class="timeline-desc">Kept missing each other by phone. Jen left a voicemail answering the big questions: no rush on timeline, blues/whites/natural wood palette, logo for signs + shirts + stickers + taffy giveaways near Mackinac Island. Casual, energetic tone.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 21, 2026 — 1:35 PM</div>
+          <div class="timeline-title">Follow-Up Email with Questions</div>
+          <div class="timeline-desc">Since they kept missing calls, Jordan dropped remaining questions in email: property status, mini home setup, brand feel, logo inspiration likes/dislikes, budget range.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">~Apr 21–27, 2026</div>
+          <div class="timeline-title">Discovery Call Completed</div>
+          <div class="timeline-desc">~15 min call. Covered design direction in detail: watercolor style, no literal sandcastle, upscale + family-friendly, coral + navy + white + light blue palette. Jeff wants pail and shovel — Jen does not. Budget landed at ~$725. Jen to send screenshot inspiration and tagline ideas. She mentioned "where memories are made" but can't remember exact wording.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Post-Call</div>
+          <div class="timeline-title">Jen Sent Screenshot</div>
+          <div class="timeline-desc">Sent one screenshot of a logo she liked — had a lighthouse-style layout (she doesn't want a lighthouse, but liked the structure/feel). Said she'd send more info. Still waiting on additional inspiration + tagline.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Now</div>
+          <div class="timeline-title">📝 Project Outline / Proposal Next</div>
+          <div class="timeline-desc">Need to write up the formal project outline with line items, pick-and-choose options, payment terms, timeline, and the content/info still needed from Jen (tagline, town name spelling, more inspiration). Once she approves and pays, brief Alyssa.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & DELIVERABLES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Deliverables</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>~$725 Logo Package — needs to be formalized in project outline</strong>
+          <span>Jen wants a pick-and-choose format. Core package + optional add-ons she can drop to lower the price. Everything below is based on the discovery call discussion.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="deliv-card">
+          <span class="deliv-badge badge-included">Included</span>
+          <h4>Logo Concepts</h4>
+          <ul>
+            <li>2–3 distinct concepts presented for feedback</li>
+            <li>Couple rounds of revisions on chosen direction</li>
+            <li>Final logo in full color, white, dark, monochrome</li>
+          </ul>
+        </div>
+
+        <div class="deliv-card">
+          <span class="deliv-badge badge-included">Included</span>
+          <h4>Icon / Logo Mark</h4>
+          <ul>
+            <li>Smaller graphic mark for social media avatars</li>
+            <li>"Sand Castle Cottages" is long — needs a compact version</li>
+            <li>Works at tiny sizes (taffy stickers, profile pics)</li>
+          </ul>
+        </div>
+
+        <div class="deliv-card">
+          <span class="deliv-badge badge-included">Included</span>
+          <h4>Brand Foundation</h4>
+          <ul>
+            <li>Typography pairings — locked in for future website</li>
+            <li>Complete color system</li>
+            <li>Brand guidelines document</li>
+          </ul>
+        </div>
+
+        <div class="deliv-card">
+          <span class="deliv-badge badge-included">Included</span>
+          <h4>Social Media Assets</h4>
+          <ul>
+            <li>Profile image (Facebook confirmed, likely others)</li>
+            <li>Cover image</li>
+          </ul>
+        </div>
+
+        <div class="deliv-card">
+          <span class="deliv-badge badge-included">Included</span>
+          <h4>File Package</h4>
+          <ul>
+            <li>SVG (scalable, web)</li>
+            <li>PNG (digital, social)</li>
+            <li>EPS (print — shirts, hats, stickers)</li>
+            <li>PDF (print production)</li>
+          </ul>
+        </div>
+
+        <div class="deliv-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="deliv-badge badge-not-included">Not Needed</span>
+          <h4>Business Card & Letterhead</h4>
+          <ul>
+            <li>Jen said these aren't needed — guests book via Airbnb/Vrbo</li>
+            <li>Could be added back as optional line items in the outline</li>
+            <li>Jeff already has a business that orders merch — they'll handle swag themselves</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESIGN DIRECTION -->
+    <section id="design">
+      <div class="section-header">
+        <div class="section-icon">🎨</div>
+        <h2>Design Direction</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Upscale coastal cottage. Watercolor feel. NOT a child's drawing of a sandcastle.</strong>
+        <p>Family-friendly but also appeals to couples. Grown-up, elevated, warm. Think Nantucket/Cape Cod — not Jimmy Buffett. The Pinterest board and the call both point the same direction: whites, soft blues, natural textures, refined but approachable.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Color Palette (from call + Pinterest)</h3>
+          <div class="data-row">
+            <span class="data-label">Dominant</span>
+            <span class="data-value">White — lots of it. Clean, airy.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Primary</span>
+            <span class="data-value">Light blue — not sea glass / blue-green. Soft, refined blue.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Accent 1</span>
+            <span class="data-value">Navy — touch of it, also needed darker for road-visible signage</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Accent 2</span>
+            <span class="data-value">Coral — inspired by coral chairs she found for the property. Present but not overwhelming.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Textures</span>
+            <span class="data-value">Natural wood, natural wicker (from voicemail + Pinterest)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Avoid</span>
+            <span class="data-value">Sea glass blue-green, chartreuse (was previous cottage), primary/childish colors</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Style & Tone</h3>
+          <div class="data-row">
+            <span class="data-label">Overall</span>
+            <span class="data-value">Upscale, elevated, high-end — but warm and approachable</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Art Style</span>
+            <span class="data-value">Watercolor / painting feel — she mentioned this multiple times. NOT photographic or clipart.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Audience</span>
+            <span class="data-value">Dual: families AND couples (romantic weekend). Not exclusively family-branded.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Vibe Words</span>
+            <span class="data-value">Beachy, cozy, family-friendly, upscale, grown-up, relaxed</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Inspiration</span>
+            <span class="data-value"><a href="https://pin.it/4QSmuDps3" target="_blank">Pinterest Board ↗</a> — coastal cottage, white shiplap, navy textiles, natural wood beams, woven pendants, gray-blue cedar shingles, covered porches</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Logo Element Discussion</h3>
+        <div class="data-row">
+          <span class="data-label">Sandcastle</span>
+          <span class="data-value">Maybe — but ONLY as watercolor/abstract/subtle. Not literal, not childish. Jen is open to it if done right. Jeff really wants it.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Pail & Shovel</span>
+          <span class="data-value">Absolutely not. Jeff suggested it. Jen rejected it immediately. Do not include.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Lighthouse</span>
+          <span class="data-value">No — even though there are lighthouses nearby. She liked the structure of a logo that had one but doesn't want a lighthouse in hers.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Initials</span>
+          <span class="data-value">Jen mentioned playing with a bigger S and two smaller C's. Worth exploring as an icon mark approach.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Background</span>
+          <span class="data-value">Watercolor wash of Lake Michigan + sand, or a sketch of what the house will look like — she mentioned both as possibilities for the center/background of the mark.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Tagline</span>
+          <span class="data-value">TBD — she's thinking about it. Floated "where memories are made" and something about "sand meets fonder." May want the Northern Michigan location referenced. Needs to send exact wording.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🪧</span>
+        <div class="callout-body">
+          <strong>Signage legibility requirement</strong>
+          <span>Logo needs to be readable from the road. Jen specifically noted the cottage name might need to be in a darker blue for visibility. Factor this into the primary logo version vs. light/reversed versions.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Include these asks in the project outline</strong>
+          <span>She said she'd send more info. Use the proposal as the vehicle to formally request everything still missing. Don't start concepts without at least the tagline decision and a couple inspiration examples.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Screenshot / Logo Inspiration</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Jen sent one screenshot (lighthouse-style layout she liked). Said she'd send more. Also need Jeff's version for reference — even if it's "like a second grader did it." Both help Alyssa understand the range.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Partial — 1 received</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏷️</span>
+            <div>
+              <strong>Tagline / Subtitle</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">She's thinking about it. Floated "where memories are made" and "sand meets fonder." May also want location (Northern Michigan). Needs exact wording before design starts.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📍</span>
+            <div>
+              <strong>Town Name + Exact Spelling</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">If the location appears on the logo, we need the correct town name and spelling. Jordan asked for this on the call.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Exact Business Name Confirmation</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Pookie wrote "Sand Castles Cottages" (castles plural). Call transcript uses "Sand Castle Cottages" (singular). Need to confirm which is correct.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Needs Confirmation</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Additional Pinterest / Inspiration</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Beyond the existing Pinterest board. Any other logos, brands, or visual references she sees and likes. Jordan asked for these on the call.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏠</span>
+            <div>
+              <strong>Property Rendering / Sketch (if available)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Jen mentioned possibly incorporating what the house will look like. If there's an architectural rendering or sketch, it could inform the watercolor background element.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Requested Yet</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>No hard deadline — but don't let it drift</strong>
+          <span>Jen said "if it takes a week or so, that's fine." Property structure hoped up by summer. Logo doesn't need to wait for the building, but there's a natural window to have branding ready before they start taking bookings.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Now</div>
+          <h4>Finalize Scope & Close</h4>
+          <ul>
+            <li>Write project outline with line items, pick-and-choose options, payment terms</li>
+            <li>Include content needs (tagline, town name, business name confirmation, inspiration)</li>
+            <li>Send to Jen for review and approval</li>
+            <li>Collect deposit once she approves</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">After Approval + Content In</div>
+          <h4>Design Brief & Concept Development</h4>
+          <ul>
+            <li>Brief Alyssa with full design direction, Pinterest board, inspiration, call notes</li>
+            <li>Coordinate with Pookie on brand voice — get any brand words or direction doc</li>
+            <li>Review Pinterest board in detail — note patterns, colors, recurring elements</li>
+            <li>Alyssa develops 2–3 distinct concepts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">~1 Week After Concepts Start</div>
+          <h4>Concept Presentation</h4>
+          <ul>
+            <li>Present 2–3 concepts to Jen (and Jeff)</li>
+            <li>Collect feedback — which direction, what to refine</li>
+            <li>Round 1 revisions on chosen concept</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">~1–2 Weeks</div>
+          <h4>Finalization & Delivery</h4>
+          <ul>
+            <li>Round 2 revisions if needed</li>
+            <li>Finalize logo, icon mark, color system, typography</li>
+            <li>Build brand guidelines doc</li>
+            <li>Create social media assets</li>
+            <li>Package all files (SVG, PNG, EPS, PDF) and deliver</li>
+            <li>Final invoice</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFERRAL PARTNER -->
+    <section id="referral">
+      <div class="section-header">
+        <div class="section-icon">🤝</div>
+        <h2>Referral Partner</h2>
+      </div>
+
+      <div class="card">
+        <h3>Pookie Rosa — Pookie Rosa Marketing LLC</h3>
+        <div class="data-row">
+          <span class="data-label">Relationship</span>
+          <span class="data-value">Client turned referral partner. Jordan built her website. Mutual referral arrangement.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Email</span>
+          <span class="data-value"><a href="mailto:pookie@pookierosamarketing.com">pookie@pookierosamarketing.com</a></span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Phone</span>
+          <span class="data-value">715-899-0608</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Website</span>
+          <span class="data-value"><a href="http://www.PookieRosaMarketing.com" target="_blank">PookieRosaMarketing.com</a></span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Location</span>
+          <span class="data-value">Stevens Point, WI</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Connection to Jen</span>
+          <span class="data-value">Known since high school. Personal relationship, not just business.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Partnership Arrangement</h3>
+        <div class="data-row">
+          <span class="data-label">Division of Work</span>
+          <span class="data-value">Websites + logos → Jordan/Alyssa. Brand voice, marketing, PR → Pookie.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Overlap Services</span>
+          <span class="data-value">SEO and copy — depends per project. If Pookie delivers strategy/copy, Jordan builds around it. If she wants Jordan to handle both, he estimates accordingly.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">This Project</span>
+          <span class="data-value">Pookie → brand voice. Jordan/Alyssa → logo. Website likely follows — goes through Jordan.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Pricing Note</span>
+          <span class="data-value">Jordan gave Pookie a cost price on her own logo. Jen heard ~$500 from Pookie as a reference point — that was Pookie's price, not market rate. Managed expectations on the call.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔗</span>
+        <div class="callout-body">
+          <strong>Coordinate with Pookie before concepts</strong>
+          <span>Check what Pookie is delivering on brand voice and when. If she has brand words, tone guidelines, or a direction doc, Alyssa should see it before starting concepts. Don't let the logo and voice work happen in parallel without talking to each other.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Website is the obvious next project — and she knows it</strong>
+          <span>Jordan included typography + color system in the logo package specifically to set up the website conversation. Pookie also mentioned "website will likely follow the logo." Don't push it now — deliver an excellent logo, then the website sell happens naturally.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🌐 Website</h4>
+          <div class="price">TBD — scope dependent</div>
+          <p>The clear next step. Pookie mentioned it will follow the logo. Typography and color system from this project carry directly into the build. Could be a full booking-focused site with property photos, amenity details, and direct booking links alongside the Airbnb/Vrbo listings.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📸 Professional Photography</h4>
+          <div class="price">~$600–$800</div>
+          <p>Once the property is built, professional photos of the cottages, beach, interiors. Jen is an interior designer — the interiors will be stunning. These photos power both the website and the listing platforms.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🏷️ Extended Merch Design</h4>
+          <div class="price">~$200–$400</div>
+          <p>Beyond the logo files — actual merch-ready designs for sweatshirts, sticker sheets, taffy bag labels. Jeff already has a merch vendor, but they may want custom layouts for specific items.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">April 2026 — Discovery Phase</div>
+        <p>This came in hot through Pookie and moved fast. Jen is easy to work with — casual, articulate, knows what she wants. The only friction point is Jeff's design taste vs. Jen's. She's handling that herself ("show him and he'll be fine"). Trust her on this but prepare for the possibility that Jeff pushes back at concept presentation.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The Pookie Price Anchor</div>
+        <p>Pookie told Jen ~$500 for a logo. That was the referral/cost price Jordan gave Pookie for her own project — not market rate. Jen came in expecting $500. Jordan explained the difference on the call and landed at $725 without friction, but don't push higher. The project outline should clearly show value at $725 — the pick-and-choose format lets her feel in control of the budget.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Business Name Discrepancy</div>
+        <p>Pookie's email says "Sand Castles Cottages" (plural). The call and most references use "Sand Castle Cottages" (singular). This needs to be confirmed with Jen before any design work starts. Get the exact spelling in the project outline.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The Taffy Branding Hook</div>
+        <p>Property is near Mackinac Island — famous for fudge and taffy. They're going to give away taffy to guests with branded stickers on the bags. This is a smart, personality-driven touchpoint that tells you this brand has warmth and generosity baked in. Worth factoring into the logo's personality — this isn't a sterile luxury rental, it's a place with character.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Longview — Previous Airbnb</div>
+        <p>Jen and Jeff ran a previous Airbnb renovation called "Longview." It was navy blue and chartreuse. Jen loved those colors but is moving away from chartreuse for this project — coral is the new accent. The fact that they've done this before means they understand the business. They're not first-time operators guessing — they know what branding matters for a rental property.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Interior Designer = Strong Visual Opinions</div>
+        <p>Jen's interior design background means the Pinterest board was curated intentionally — not random pins. She has taste, she has opinions, and she'll know immediately if something feels wrong. This is good (clear feedback, fewer guessing games) but also means the concepts need to be strong out of the gate. Give Alyssa the full brief — don't let her go in blind.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Note</div>
+        <p>Jen is in Milwaukee — everything is virtual. She's responsive but has a job and limited windows. She was driving during the discovery call. Best approach: email the outline, let her review on her own time, then schedule a quick call to discuss. Don't wait for a meeting to send things — she'll text or call back when she's free.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ── Scrollspy ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Mobile Nav ──
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('mobileFab');
+  let menuOpen = false;
+
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    sidebar.classList.toggle('mobile-open', menuOpen);
+    overlay.classList.toggle('visible', menuOpen);
+    fab.textContent = menuOpen ? '✕' : '☰';
+  }
+
+  function closeMenu() {
+    if (!menuOpen) return;
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile: close menu, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
