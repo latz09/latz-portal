@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Brand Identity Package — Sand Castle Cottages | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { height: auto !important; overflow: visible !important; }
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+    body { background: white; margin: 0; }
+    .page-wrap { margin-left: 0 !important; height: auto !important; overflow: visible !important; }
+    .cover { min-height: 0 !important; height: auto !important; padding: 56px 48px !important; page-break-after: always; }
+    .main { padding: 32px 48px 48px !important; }
+    section { page-break-inside: avoid; margin-bottom: 40px !important; }
+    .tier-grid { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+    a { color: inherit !important; text-decoration: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 22px 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+  .sidebar-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 3px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 16px 8px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 8px 10px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12.5px; font-weight: 400; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 10px 14px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 18px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 220px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 72px 48px 60px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .cover-overline::before { content: ''; width: 32px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .cover-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 14px 24px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 56px 64px 80px; }
+  section { margin-bottom: 60px; scroll-margin-top: 24px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 3px 9px; border-radius: 4px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 28px; margin-top: 12px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 24px; max-width: 680px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 18px; }
+  .opening-wrap p { font-size: 14.5px; color: var(--gray-700); line-height: 1.8; margin-bottom: 14px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── TIER CARDS ── */
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .tier-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 8px; padding: 28px 24px; position: relative; display: flex; flex-direction: column; }
+  .tier-card.featured { border-color: var(--teal-border); box-shadow: 0 0 0 1px var(--teal-border); }
+  .tier-card.featured::before { content: 'Recommended'; position: absolute; top: -1px; right: 24px; background: var(--teal); color: white; font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px 6px; border-radius: 0 0 5px 5px; }
+  .tier-num { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .tier-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+  .tier-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin-bottom: 20px; }
+  .tier-price { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .tier-price-note { font-size: 11px; color: var(--gray-400); margin-bottom: 20px; }
+  .tier-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 16px; flex: 1; }
+  .tier-list li { font-size: 12.5px; color: var(--gray-600); padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+  .tier-list li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-size: 11px; top: 5px; font-weight: 600; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--gray-50); border-radius: 8px; padding: 32px 36px; margin-bottom: 20px; border-left: 3px solid var(--teal); }
+  .highlight-box p { font-size: 14px; color: var(--gray-700); line-height: 1.8; margin-bottom: 12px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── CRED STRIP ── */
+  .cred-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cred-badge { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 12px; text-align: center; }
+  .cred-badge .icon { font-size: 18px; margin-bottom: 7px; display: block; }
+  .cred-badge .label { font-size: 11px; font-weight: 500; color: var(--gray-700); line-height: 1.35; }
+
+  /* ── INVESTMENT SUMMARY ── */
+  .invest-summary { background: var(--gray-900); border-radius: 8px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-schedule { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .invest-note { font-size: 12.5px; color: var(--gray-500); line-height: 1.6; padding: 12px 0; }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding-bottom: 28px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 40px; height: 40px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 8px; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
+  .step-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; margin-top: 6px; }
+  .step-tag.both { background: var(--gray-50); color: var(--gray-500); border: 1px solid var(--gray-200); }
+  .step-tag.opt2 { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal-border); }
+  .step-tag.opt3 { background: rgba(17,24,39,0.06); color: var(--gray-700); border: 1px solid var(--gray-300); }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 10px; padding: 40px 44px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; color: var(--white); margin-bottom: 10px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+  .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; position: relative; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 7px; padding: 12px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .cta-btn.primary { background: var(--teal); color: var(--white); }
+  .cta-btn.primary:hover { background: #1ab2bf; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(24,161,173,0.3); }
+  .cta-btn.secondary { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12); }
+  .cta-btn.secondary:hover { background: rgba(255,255,255,0.12); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.1); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.11); }
+  .next-contact { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 16px; position: relative; }
+  .next-contact a { color: var(--teal); text-decoration: none; }
+
+  /* ── PROOF ROW ── */
+  .proof-row { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 24px 0 0; margin-top: 20px; border-top: 1px solid var(--gray-100); text-align: center; }
+  .proof-row p { font-size: 12px; color: var(--gray-400); }
+  .proof-row a { font-size: 12px; font-weight: 600; color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 52px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2px; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-220px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 36px 20px 80px; }
+    .doc-footer { padding-left: 20px; padding-right: 20px; }
+    .cover-client { font-size: 36px; }
+    .tier-grid { grid-template-columns: 1fr; }
+    .cred-strip { grid-template-columns: 1fr 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-btn { justify-content: center; width: 100%; }
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .cred-strip { grid-template-columns: 1fr 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .next-box { padding: 32px 20px; }
+    .main { padding: 36px 16px 80px; }
+    .proof-row { flex-direction: column; align-items: center; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Sand Castle Cottages</div>
+    <div class="sidebar-doctype">Brand Identity Package</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#options" class="nav-link"><span class="num">02</span> Your Options</a>
+    <a href="#why" class="nav-link"><span class="num">03</span> Why This Matters</a>
+    <a href="#investment" class="nav-link"><span class="num">04</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">05</span> How It Works</a>
+    <a href="#next-steps" class="nav-link"><span class="num">06</span> Get Started</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="#next-steps" class="sidebar-cta-btn">Get Started →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Brand Identity Package</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">Sand Castle<br>Cottages</div>
+      <div class="cover-sub">Logo &amp; Brand Identity &nbsp;·&nbsp; April 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Jennifer Ferguson</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Options</span>
+          <span class="cover-meta-value">3 tiers</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Range</span>
+          <span class="cover-meta-value">$700 – $950</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Jen,</div>
+        <p>Sand Castle Cottages is the kind of brand that needs to feel right the moment someone sees it. You're building a property that guests will find through Airbnb, Vrbo, and Booking.com — platforms where every listing looks the same. The logo is what makes yours feel like a place, not just a listing. It's the thing that shows up on your road sign, your social profiles, the stickers on those taffy bags, the sweatshirts guests take home. It sets the tone before they ever set foot on the property.</p>
+        <p>From our conversation, I know exactly the direction this needs to go — upscale coastal, watercolor feel, whites and soft blues and coral, the kind of brand that appeals to couples on a weekend away <em>and</em> families building memories. Not childish, not generic beach clipart. Elevated but warm. You have strong visual instincts from your interior design work, and I want to make sure the logo lives up to what you're building.</p>
+        <p><strong>I've put together three options below</strong> — a focused logo package that covers the essentials, a full brand identity with guidelines and social assets, and a complete brand toolkit that locks in the entire visual system across every touchpoint — listings, signage, print, merch, and marketing materials.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="options">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">Your Options</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-num">Option 01</div>
+          <div class="tier-title">Logo Package</div>
+          <div class="tier-desc">A focused logo design with the core files and variations you need for signage, social media, and merch.</div>
+          <div class="tier-price">$700</div>
+          <div class="tier-price-note">$350 deposit &nbsp;·&nbsp; $350 at delivery.</div>
+          <ul class="tier-list">
+            <li>2 distinct concept directions presented</li>
+            <li>1 round of revisions on your chosen direction</li>
+            <li>Final logo in full color, white, dark, and monochrome</li>
+            <li>Compact icon mark for social media and small use (taffy stickers, profile pics)</li>
+            <li>Color palette defined — hex, RGB, and CMYK values</li>
+            <li>Complete file package: SVG, PNG (multiple sizes), EPS, PDF</li>
+            <li>One-page brand quick-reference sheet</li>
+          </ul>
+        </div>
+        <div class="tier-card featured">
+          <div class="tier-num">Option 02</div>
+          <div class="tier-title">Brand Identity</div>
+          <div class="tier-desc">Everything in the Logo Package, plus a complete color system, brand guidelines, and social media assets — the full visual identity.</div>
+          <div class="tier-price">$825</div>
+          <div class="tier-price-note">$415 deposit &nbsp;·&nbsp; $410 at delivery.</div>
+          <ul class="tier-list">
+            <li>Everything in Option 01, plus:</li>
+            <li>3 distinct concept directions instead of 2</li>
+            <li>2 rounds of revisions instead of 1</li>
+            <li>Complete color system — primary, secondary, accent with usage ratios</li>
+            <li>Full brand guidelines document with do's and don'ts</li>
+            <li>Social media profile and cover images (Facebook + additional platforms)</li>
+            <li>Favicon</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <div class="tier-num">Option 03</div>
+          <div class="tier-title">Complete Brand Toolkit</div>
+          <div class="tier-desc">The full visual foundation — everything from Option 02, plus typography pairings, layout variations, and a tagline lock-up so every touchpoint feels cohesive from day one.</div>
+          <div class="tier-price">$950</div>
+          <div class="tier-price-note">$475 deposit &nbsp;·&nbsp; $475 at delivery.</div>
+          <ul class="tier-list">
+            <li>Everything in Option 02, plus:</li>
+            <li>Typography pairings — heading + body font recommendations for listings, signage, print materials, welcome packets, and marketing</li>
+            <li>Horizontal and stacked layout variations for different use cases (signs, social headers, listing banners, merch)</li>
+            <li>Tagline lock-up version (once tagline is finalized) — designed as part of the logo system, not added after the fact</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="why">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Why This Matters</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="highlight-box">
+        <p>When someone scrolls through vacation rentals, they're making snap decisions. They look at the first photo, they skim the listing title, and they glance at the host profile. Your logo is the one visual that separates Sand Castle Cottages from the hundreds of other beach rentals in Northern Michigan. It's the difference between <strong>"this feels like a real destination"</strong> and "this is someone's second house on Airbnb."</p>
+        <p>You're not competing with hotels — you're competing with every other listing in the Straits area. A strong brand turns a vacation rental into a place people remember, recommend, and come back to. It's the thing that makes guests pick up a taffy bag and say "this place has it together." It's the thing that makes your road sign feel like an arrival, not just a turn.</p>
+        <p><strong>The logo isn't decoration — it's the first promise you make to every guest.</strong> And with the property, the interiors, and the experience you're planning, that promise needs to match.</p>
+      </div>
+      <div class="cred-strip">
+        <div class="cred-badge"><span class="icon">🏖️</span><div class="label">Beachfront on the Straits</div></div>
+        <div class="cred-badge"><span class="icon">🏡</span><div class="label">Main House + Satellite Cottages</div></div>
+        <div class="cred-badge"><span class="icon">🎨</span><div class="label">Interior Designer–Curated</div></div>
+        <div class="cred-badge"><span class="icon">🍬</span><div class="label">Mackinac Island Taffy Welcome</div></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+
+      <div class="invest-summary" style="margin-bottom: 16px;">
+        <div>
+          <div class="invest-summary-label">Option 01 — Logo Package</div>
+          <div class="invest-summary-amount">$700</div>
+          <div class="invest-summary-schedule">$350 deposit to start &nbsp;·&nbsp; $350 at delivery</div>
+        </div>
+      </div>
+
+      <div class="invest-summary" style="margin-bottom: 16px;">
+        <div>
+          <div class="invest-summary-label">Option 02 — Brand Identity</div>
+          <div class="invest-summary-amount">$825</div>
+          <div class="invest-summary-schedule">$415 deposit to start &nbsp;·&nbsp; $410 at delivery</div>
+        </div>
+      </div>
+
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Option 03 — Complete Brand Toolkit</div>
+          <div class="invest-summary-amount">$950</div>
+          <div class="invest-summary-schedule">$475 deposit to start &nbsp;·&nbsp; $475 at delivery</div>
+        </div>
+      </div>
+
+      <div class="invest-note">All three options are 50/50 — half to start, half at delivery. Let me know which one fits and I'll send the invoice.</div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Kickoff</div>
+            <div class="step-desc">I'll collect the final pieces I need from you — tagline wording, the exact town name and spelling, and any additional logo inspiration you've been collecting. For Options 02 and 03, we'll also pull together a quick design brief with Pookie's brand voice direction to make sure everything is aligned before we start sketching.</div>
+            <span class="step-tag both">All options</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Concepts Presented</div>
+            <div class="step-desc">Option 01: 2 distinct concepts presented. Options 02 and 03: 2–3 distinct concept directions — different visual approaches so you can react to real options, not just one idea. Each concept will explore the watercolor, coastal, upscale direction we discussed, with different takes on how to bring it to life.</div>
+            <span class="step-tag both">All options</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Revisions</div>
+            <div class="step-desc">You pick a direction. Options 02 and 03 include two revision rounds — color tweaks, weight adjustments, icon variations, tagline placement, whatever it takes to lock it in. This is where it goes from good to exactly right. Option 01 includes one revision round.</div>
+            <span class="step-tag both">All options</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Brand System &amp; Guidelines</div>
+            <div class="step-desc">Complete color system with usage ratios, brand guidelines document, and social media assets built and delivered. Option 03 also includes typography pairings, horizontal and stacked layout variations, and the tagline lock-up — the pieces that make every touchpoint from the road sign to the listing to the merch feel like one brand.</div>
+            <span class="step-tag opt2">Options 02 &amp; 03</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Final Delivery</div>
+            <div class="step-desc">Complete file package delivered — every format, every variation, every size you'll need. SVG for web, PNG for digital, EPS for print production (signs, shirts, stickers), PDF for everything else. Final payment due at this step.</div>
+            <span class="step-tag both">All options</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">06</span>
+        <span class="sec-title">Ready to Move Forward?</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Next Step —</div>
+        <div class="next-title">Let's build a brand that feels like the place itself.</div>
+        <div class="next-sub">Reply with which option fits — or reach out with any questions first. Once you decide, I'll send over the invoice and we're off.</div>
+        <div class="cta-row">
+          <a href="mailto:jordan@latzwebdesign.com?subject=Brand%20Identity%20—%20Sand%20Castle%20Cottages" class="cta-btn primary">✉️ Reply to Jordan</a>
+        </div>
+        <div class="cta-row" style="margin-top: 4px;">
+          <a href="tel:7156305689" class="cta-btn ghost">📞 (715) 630-5689</a>
+        </div>
+        <div class="next-contact">
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+        </div>
+      </div>
+      <div class="proof-row no-print">
+        <p>Curious what it's like to work together?</p>
+        <a href="https://latzwebdesign.com/reviews" target="_blank">See what clients are saying →</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    sidebarOverlay.style.display = 'block';
+    requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { sidebarOverlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  sidebarOverlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
