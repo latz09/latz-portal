@@ -1,29 +1,1186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Jeannine Kellogg — Designer Brief | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #0a0a0a;
+    --sidebar-border: rgba(255,255,255,0.06);
+    --header-bg: #0f0f0f;
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-light: #e8f7f8;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --text: #111827;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 228px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+    transform: translateX(0);
+  }
+
+  .sidebar-top {
+    padding: 22px 18px 18px;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+
+  .sidebar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .sidebar-wordmark .dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lwd-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-client {
+    font-family: 'Fraunces', serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .sidebar-doctype {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.22);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 11px;
+    background: rgba(24,161,173,0.08);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 3px 9px;
+  }
+
+  .pulse {
+    width: 5px; height: 5px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .sidebar-status span {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .sidebar-nav { padding: 10px 8px; flex: 1; }
+
+  .nav-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    padding: 10px 8px 4px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 8px;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 400;
+    border-radius: 5px;
+    transition: all 0.12s;
+    margin-bottom: 1px;
+  }
+
+  .nav-link:hover {
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.07);
+    font-weight: 500;
+  }
+
+  .nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; opacity: 0.6; }
+  .nav-link.active .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--sidebar-border);
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.06em;
+    line-height: 2;
+  }
+
+  /* OVERLAY */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* FAB */
+  .fab-menu {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(24,161,173,0.4);
+  }
+
+  /* MAIN */
+  .main { margin-left: 228px; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER */
+  .page-header {
+    background: var(--header-bg);
+    padding: 52px 60px 44px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 72% 50%, rgba(24,161,173,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .header-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-overline::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--teal);
+    opacity: 0.5;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.94);
+    line-height: 1.08;
+    margin-bottom: 7px;
+    letter-spacing: -0.6px;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 0;
+    margin-top: 34px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 7px;
+    overflow: hidden;
+    width: fit-content;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .meta-item {
+    padding: 13px 22px;
+    border-right: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+  }
+
+  .meta-value { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.75); }
+  .meta-value.ok { color: #4ade80; }
+  .meta-value.warn { color: #fbbf24; }
+
+  /* CONTENT */
+  .content { padding: 48px 60px 96px; flex: 1; }
+
+  section { margin-bottom: 64px; scroll-margin-top: 32px; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.2px;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin-bottom: 22px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* DATA ROWS */
+  .data-row {
+    display: grid;
+    grid-template-columns: 144px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    padding-top: 1px;
+  }
+
+  .data-value {
+    font-size: 13px;
+    color: var(--gray-700);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .data-value a { color: var(--teal); text-decoration: none; }
+  .data-value a:hover { text-decoration: underline; }
+
+  /* CALLOUTS */
+  .callout {
+    border-radius: 7px;
+    padding: 13px 17px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+  }
+
+  .callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+  .callout-body p, .callout-body span { font-size: 12px; line-height: 1.55; }
+
+  .callout.info { background: var(--teal-light); border-color: rgba(24,161,173,0.2); color: #0e7490; }
+  .callout.warn { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+  .callout.neutral { background: var(--gray-50); border-color: var(--gray-200); color: var(--gray-600); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: #0f0f0f;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight-box::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--teal);
+    border-radius: 8px 0 0 8px;
+  }
+
+  .highlight-box strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .highlight-box p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* MOCKUP LINK */
+  .mockup-ref {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 13px 15px;
+    text-decoration: none;
+    transition: border-color 0.12s, background 0.12s;
+    margin-bottom: 10px;
+  }
+
+  .mockup-ref:hover { border-color: var(--teal); background: var(--teal-light); }
+  .mockup-ref .ref-icon { font-size: 18px; flex-shrink: 0; }
+  .mockup-ref .ref-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .mockup-ref .ref-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+  .mockup-ref .ref-url { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); margin-top: 1px; }
+
+  /* PAGE CARDS */
+  .page-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 17px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+  }
+
+  .page-card .page-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    margin-bottom: 11px;
+  }
+
+  .page-card ul { list-style: none; padding: 0; }
+
+  .page-card ul li {
+    font-size: 12px;
+    color: var(--gray-600);
+    padding: 3px 0 3px 13px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .page-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gray-300);
+    font-size: 9px;
+    top: 5px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+  .badge-static { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .badge-ecom { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+
+  /* ASSET LIST */
+  .asset-list { list-style: none; padding: 0; }
+
+  .asset-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .asset-list li:last-child { border-bottom: none; }
+
+  .asset-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
+  .asset-body { flex: 1; }
+  .asset-body strong { font-size: 13px; font-weight: 600; color: var(--gray-800); display: block; margin-bottom: 2px; }
+  .asset-body span { font-size: 11.5px; color: var(--gray-500); line-height: 1.45; }
+  .asset-status { margin-left: auto; flex-shrink: 0; padding-top: 1px; }
+
+  /* PILLS */
+  .pill {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .pill-orange { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+  .pill-green { background: var(--green-light); color: var(--green); border-color: var(--green-border); }
+
+  /* QUESTIONS */
+  .question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .question-item:last-child { border-bottom: none; }
+  .question-text { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .question-context { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+
+  /* ARROW LIST */
+  .arrow-list { list-style: none; padding: 0; margin-top: 10px; }
+
+  .arrow-list li {
+    font-size: 12px;
+    color: var(--gray-600);
+    padding: 4px 0 4px 15px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .arrow-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 10px;
+    top: 5px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .page-header, .content { padding-left: 36px; padding-right: 36px; }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      width: 228px;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .sidebar-overlay { display: block; }
+    .fab-menu {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+    .main { margin-left: 0; }
+    .two-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .header-meta { flex-direction: column; width: 100%; }
+    .meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .meta-item:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 680px) {
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .callout { flex-direction: column; gap: 6px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header { padding: 32px 20px 28px; }
+    .asset-list li { flex-wrap: wrap; }
+    .asset-status { margin-left: 0; margin-top: 4px; width: 100%; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="dot"></div>
+      <span class="lwd-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Jeannine Kellogg</div>
+    <div class="sidebar-doctype">Designer Brief</div>
+    <div class="sidebar-status">
+      <div class="pulse"></div>
+      <span>In Progress</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Brief</div>
+    <a href="#snapshot" class="nav-link active"><span class="nav-icon">📋</span> Project Snapshot</a>
+    <a href="#client" class="nav-link"><span class="nav-icon">📚</span> Client & Audience</a>
+    <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand & Direction</a>
+    <a href="#pages" class="nav-link"><span class="nav-icon">📄</span> Pages & Content</a>
+    <a href="#assets" class="nav-link"><span class="nav-icon">📦</span> Assets & Status</a>
+    <a href="#questions" class="nav-link"><span class="nav-icon">💬</span> Let's Talk</a>
+  </div>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<button class="fab-menu" id="fabMenu">☰</button>
+
+<div class="main">
+
+  <div class="page-header">
+    <div class="header-overline">Designer Brief · For Alyssa</div>
+    <h1>Jeannine Kellogg</h1>
+    <div class="sub">9-Page Trilogy + Ecommerce Rebuild &nbsp;·&nbsp; The Tukor Series v2</div>
+
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Contact</span>
+        <span class="meta-value">Jeannine Kellogg — Author</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Pages</span>
+        <span class="meta-value">9 total · 7 unique designs</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deposit</span>
+        <span class="meta-value warn">⏳ Pending</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Brand</span>
+        <span class="meta-value warn">Incoming — Fuzzy Duck</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Wireframe</span>
+        <span class="meta-value">Attached separately</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 SNAPSHOT -->
+    <section id="snapshot">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Snapshot</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="highlight-box">
+        <strong>The job</strong>
+        <p>Rebuild jeanninekellogg.com from a static author page into a trilogy-first ecommerce site. Jeannine writes middle-grade fantasy — The Tukor Series. Book 1 is published and ready to sell. Books 2 and 3 are in production. A parent meets Jeannine at a book fair, searches her name later, and needs to land on a real author site with a buy button. Right now there's no way to purchase online. That changes with this build.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The Build</div>
+          <div class="data-row"><span class="data-label">Scope</span><span class="data-value">9-page custom site — Trilogy + Ecommerce + CMS</span></div>
+          <div class="data-row"><span class="data-label">Ecommerce</span><span class="data-value">Shopify-powered — Bookmobile/Itasca fulfillment</span></div>
+          <div class="data-row"><span class="data-label">CMS</span><span class="data-value">Book management — toggle availability, update details, manage reviews</span></div>
+          <div class="data-row"><span class="data-label">Stack</span><span class="data-value">Next.js, React, Tailwind, Shopify, Vercel</span></div>
+          <div class="data-row"><span class="data-label">Timeline</span><span class="data-value">6–8 weeks from deposit — phased launch</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Not in Scope</div>
+          <div class="data-row"><span class="data-label">Ebooks</span><span class="data-value">Distribution halted — no links for now</span></div>
+          <div class="data-row"><span class="data-label">Audiobooks</span><span class="data-value">"Huge maybe" long-term — design should accommodate future addition</span></div>
+          <div class="data-row"><span class="data-label">Blog / News</span><span class="data-value">Not in this build — future upsell after launch</span></div>
+          <div class="data-row"><span class="data-label">Email List</span><span class="data-value">No newsletter integration — future upsell</span></div>
+          <div class="data-row"><span class="data-label">3D Mockups</span><span class="data-value">Jeannine declined for now — flat covers for launch</span></div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>This is a v2 rebuild, not a blank slate</strong>
+          <span>Jeannine had a v1 site built by us in late 2024. It's live but outdated — no ecommerce, no CMS, series expanded from 2 books to a trilogy, and new branding is coming from Fuzzy Duck. We're rebuilding using the v1 backbone. All existing Jim Madsen illustrations carry over. The signature artwork-forward feel of the current site is a keeper — it's what makes the site feel like an experience, not just a catalog.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 CLIENT & AUDIENCE -->
+    <section id="client">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Client & Audience</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">The Client</div>
+          <div class="data-row"><span class="data-label">Who She Is</span><span class="data-value">Self-published author from the Twin Cities. Publishes under Jagged Compass Publishing (Jagged Compass LLC). Middle-grade fantasy trilogy — The Tukor Series.</span></div>
+          <div class="data-row"><span class="data-label">Her Story</span><span class="data-value">Survived a publishing catastrophe in late 2025 — lost a 2,400-book customer, catastrophic defective print run. Came back, expanded to a trilogy, hired a marketing agency. She fights for her work.</span></div>
+          <div class="data-row"><span class="data-label">Decision Maker</span><span class="data-value">Jeannine — solo. No board, no committee. She decides and moves.</span></div>
+          <div class="data-row"><span class="data-label">Tone</span><span class="data-value">Immersive, story-driven, cinematic. This is a fantasy world — the site should feel like stepping into it.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">The Audience</div>
+          <div class="data-row"><span class="data-label">Primary</span><span class="data-value">Parents of middle-school kids. They meet Jeannine at book fairs / school visits, then search her name later to buy.</span></div>
+          <div class="data-row"><span class="data-label">Secondary</span><span class="data-value">Middle-school readers (10–14) who discover the books on their own. The site needs to feel exciting to a kid, not just functional for a parent.</span></div>
+          <div class="data-row"><span class="data-label">Key Behavior</span><span class="data-value">In-person discovery → online purchase. The site bridges that gap. If there's no buy button, the sale dies.</span></div>
+          <div class="data-row"><span class="data-label">Devices</span><span class="data-value">Parents on mobile at a book fair, kids on tablets/laptops at home. Mobile-first matters here.</span></div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Vibe in one sentence</strong>
+          <span>Stepping into a fantasy world — epic, immersive, cinematic. Think illustrated storybook meets polished author platform. Not a generic book-listing site, not a Squarespace template. An experience that makes a 12-year-old want to read and a parent feel confident clicking "buy."</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 BRAND & DIRECTION -->
+    <section id="brand">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Brand & Visual Direction</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🦆</span>
+        <div class="callout-body">
+          <strong>New branding incoming from Fuzzy Duck — not here yet</strong>
+          <span>Fuzzy Duck (Wayzata, MN) was just hired for logo, cover design, and marketing. Their kickoff is May 4, 2026. Brand assets — logo, color palette, typography direction — should start flowing mid-May. Until then, we're working with what exists: the current v1 site, Jim Madsen's illustrations, and the existing stormy-sea Book 3 cover. Design should be flexible enough to absorb new brand assets as they arrive.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">What Exists Today</div>
+          <div class="data-row"><span class="data-label">V1 Site</span><span class="data-value">Live at jeanninekellogg.com — artwork-forward, immersive panels alternating illustration with story text. This visual signature carries forward.</span></div>
+          <div class="data-row"><span class="data-label">Illustrations</span><span class="data-value">Jim Madsen artwork — landscapes, creatures, action scenes. Professional quality. The heart of the current site's visual identity.</span></div>
+          <div class="data-row"><span class="data-label">Book Covers</span><span class="data-value">Book 1 cover exists (getting rebranded by Fuzzy Duck). Book 3 has the stormy sea cover. Book 2 cover coming from Madsen end of May.</span></div>
+          <div class="data-row"><span class="data-label">Logo</span><span class="data-value">None — Fuzzy Duck is creating one. Nav needs something in the meantime.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">What the Vibe Should Be</div>
+          <div class="data-row"><span class="data-label">Feel</span><span class="data-value">Epic, immersive, story-driven. Faraway lands, volcanoes, mountains, tundra, tropical forests, dangerous creatures. Adventure and courage.</span></div>
+          <div class="data-row"><span class="data-label">Not This</span><span class="data-value">Generic author template. Flat, clinical book listing. Amazon product page energy. Anything that feels like a catalog rather than a world.</span></div>
+          <div class="data-row"><span class="data-label">Reference</span><span class="data-value">The current v1 site nails the artwork-forward approach. That's the foundation — we're elevating it, not replacing it.</span></div>
+          <div class="data-row"><span class="data-label">Audience Lens</span><span class="data-value">A 12-year-old should feel excited. A parent should feel confident. Both should feel like they've entered a world, not visited a storefront.</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Reference — V1 Site (Current)</div>
+        <a class="mockup-ref" href="https://www.jeanninekellogg.com" target="_blank" rel="noopener">
+          <div class="ref-icon">🖥️</div>
+          <div>
+            <div class="ref-label">Live v1 site</div>
+            <div class="ref-name">jeanninekellogg.com</div>
+            <div class="ref-url">Click to view ↗</div>
+          </div>
+        </a>
+        <p style="font-size:11.5px;color:var(--gray-500);line-height:1.55;margin-bottom:4px;">The v1 site is the visual starting point. The artwork panels, immersive feel, and illustration-forward layout carry over. What's new: ecommerce, CMS, trilogy structure, and (eventually) Fuzzy Duck's new branding.</p>
+        <ul class="arrow-list">
+          <li>How do we keep the immersive artwork-forward feel while adding ecommerce without it feeling like a shop?</li>
+          <li>What color direction works before Fuzzy Duck delivers a palette?</li>
+          <li>How does the trilogy structure read visually — three books as one story, not three products?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 04 PAGES & CONTENT -->
+    <section id="pages">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Pages & Content</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout neutral">
+        <span class="callout-icon">📐</span>
+        <div class="callout-body">
+          <strong>Wireframe covers layout — these notes cover intent</strong>
+          <span>Use the wireframe for structure. These notes explain what each page needs to accomplish and anything worth knowing going in. The trilogy showcase approach is confirmed — the homepage leads with all three books as one connected story, not individual products.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS + Ecommerce</span>
+          <h4>Home</h4>
+          <div class="page-url">/</div>
+          <ul>
+            <li>Trilogy-first hero — one epic story, three books</li>
+            <li>Awards and recognitions displayed prominently</li>
+            <li>Trilogy bundle as primary purchase CTA</li>
+            <li>Featured artwork panel — immersive, cinematic</li>
+            <li>Story synopsis teaser — sell the narrative arc</li>
+            <li>Retailer logos (Barnes & Noble, Amazon, Itasca)</li>
+            <li>Featured reviews and author teaser</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="grid-column: 1 / -1;">
+          <span class="page-badge badge-cms">CMS + Ecommerce · Template</span>
+          <h4>Book Page (×3 — One Template, Three Instances)</h4>
+          <div class="page-url">/books/tukors-journey &nbsp;·&nbsp; /books/tukors-mission &nbsp;·&nbsp; /books/tukors-battle</div>
+          <ul>
+            <li>This is one page design — not three. Same layout, same components, different data. Each book populates the template with its own cover, synopsis, artwork, and reviews via CMS.</li>
+            <li>Full-width hero illustration — sets the mood for each book</li>
+            <li>Cover + purchase info with "Add to Cart" (Shopify)</li>
+            <li>Synopsis section — the hook that makes visitors buy</li>
+            <li>Alternating artwork + text story panels — this is the signature feature from v1. Large illustrations paired with story passages. The heart of each book page.</li>
+            <li>Retailer logos (Barnes & Noble, Amazon, Itasca) with direct links</li>
+            <li>Artwork gallery — browsable Madsen illustrations per book</li>
+            <li>Book-specific reader reviews — filtered by title</li>
+            <li>"Continue the series" cross-sell — links to prev/next book. No dead ends.</li>
+          </ul>
+        </div>
+
+        <div class="callout info" style="margin-bottom:10px;">
+          <span class="callout-icon">🔁</span>
+          <div class="callout-body">
+            <strong>Design one book page — it powers all three</strong>
+            <span>Books 1, 2, and 3 share the same template. The CMS swaps in each book's cover art, synopsis, story panels, illustrations, reviews, and purchase state. You're designing one page that needs to feel complete and immersive regardless of which book's data fills it. The only variation: Book 3 has a "Coming Soon" state (see below).</span>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Template Variation</span>
+          <h4>"Coming Soon" State — Book 3</h4>
+          <div class="page-url">/books/tukors-battle (at launch)</div>
+          <ul>
+            <li>Same template, but with a toggled-down state</li>
+            <li>Shows teaser artwork (existing stormy sea cover) and a brief "the final battle approaches" message</li>
+            <li>No synopsis, no story panels, no purchase button, no gallery</li>
+            <li>Needs to feel intentional and exciting — not empty or broken</li>
+            <li>Jeannine flips the status in CMS when ready → full page appears. No rebuild.</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-ecom">Shopify-Powered</span>
+          <h4>Shop</h4>
+          <div class="page-url">/shop</div>
+          <ul>
+            <li>Trilogy bundle featured first — "Best Value"</li>
+            <li>Individual books below with "Add to Cart"</li>
+            <li>Book 3 shows "Coming Soon" with "Notify Me"</li>
+            <li>Shipping & fulfillment info — Itasca handles it</li>
+            <li>Cart drawer slides in from right — no page redirect</li>
+            <li>Checkout via Shopify-hosted secure page</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>About Jeannine</h4>
+          <div class="page-url">/about</div>
+          <ul>
+            <li>Updated bio with trilogy context</li>
+            <li>Author photo — new one from Fuzzy Duck if available</li>
+            <li>Connection to the series — why she wrote it</li>
+            <li>Warm, personal, not a press kit</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Reviews & Testimonials</h4>
+          <div class="page-url">/reviews</div>
+          <ul>
+            <li>Full review collection — filterable by book</li>
+            <li>Jeannine picks which reviews to feature</li>
+            <li>Can add/remove reviews via CMS</li>
+            <li>Social proof is critical for parent buyers</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Contact</h4>
+          <div class="page-url">/contact</div>
+          <ul>
+            <li>Contact form → Jeannine's email</li>
+            <li>For school visit inquiries, media, general</li>
+            <li>Simple and direct — no barriers</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="grid-column: 1 / -1;">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Jagged Compass Publishing</h4>
+          <div class="page-url">/jagged-compass</div>
+          <ul>
+            <li>Brief page about Jeannine's publishing imprint</li>
+            <li>Adds legitimacy — she's a real publisher, not just self-published</li>
+            <li>May evolve if she signs other authors later</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 ASSETS & STATUS -->
+    <section id="assets">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Assets & Content Status</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Content arrives in waves — build the framework first</strong>
+          <span>Most assets depend on Fuzzy Duck deliverables and Madsen's illustration timeline. We're building the structure and populating as things land. Don't wait for everything — the site launches with Book 1 purchasable and Books 2 & 3 as "Coming Soon."</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">What We Have / What's Coming</div>
+        <ul class="asset-list">
+          <li>
+            <span class="asset-icon">🎨</span>
+            <div class="asset-body"><strong>Jim Madsen Illustrations</strong><span>All existing artwork from v1 carries over — landscapes, creatures, action scenes. Professional quality. These are the site's visual backbone.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📕</span>
+            <div class="asset-body"><strong>Book 1 Cover — Current Version</strong><span>The Tukor's Journey cover exists. Fuzzy Duck is creating a rebranded version. Use current cover as placeholder.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand (Rebrand Pending)</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📘</span>
+            <div class="asset-body"><strong>Book 3 Cover — Stormy Sea</strong><span>Existing cover illustration. Keeps current art. May get Fuzzy Duck treatment for visual consistency across trilogy.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🌐</span>
+            <div class="asset-body"><strong>V1 Site Code & Content</strong><span>Full Next.js codebase from v1 build. Synopses, bios, review text — all available to carry forward and refine.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🦆</span>
+            <div class="asset-body"><strong>New Logo & Brand Identity</strong><span>Coming from Fuzzy Duck. Logo, color palette, typography direction. Can't finalize design until this lands. Kickoff May 4.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Fuzzy Duck — Mid-May</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📕</span>
+            <div class="asset-body"><strong>Book 1 Cover — Rebranded</strong><span>New cover from Fuzzy Duck. The Tukor's Journey gets a fresh look as part of the rebrand.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Fuzzy Duck — TBD</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📗</span>
+            <div class="asset-body"><strong>Book 2 Cover — The Tukor's Mission</strong><span>Madsen illustration end of May. Interior B&W early June. Title still TBD ("Mission" vs "Secret").</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Madsen — End of May</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">✏️</span>
+            <div class="asset-body"><strong>Title PNGs for All Three Books</strong><span>Isolated title graphics (like the current leaves-around-title treatment). Needed for each book page.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Fuzzy Duck — TBD</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📖</span>
+            <div class="asset-body"><strong>Bibliographic Details — All Books</strong><span>Book 1: some updates needed from Jeannine. Books 2 & 3: partially unavailable until printer specs finalized.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Partial</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🔗</span>
+            <div class="asset-body"><strong>Social Media Links</strong><span>Needs Fuzzy Duck input on what the "socials" will be. Current links stay as-is for now.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Fuzzy Duck — TBD</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🔌</span>
+            <div class="asset-body"><strong>Shopify + Bookmobile Integration</strong><span>Paul Trombley at Bookmobile is the IT contact. Bookmobile auto-pulls orders from Shopify — no custom API needed. Jordan coordinates.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Jordan Handles</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🌐</span>
+            <div class="asset-body"><strong>Domain</strong><span>jeanninekellogg.com — currently live with v1. No transfer needed unless platform changes.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Jordan Handles</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06 LET'S TALK -->
+    <section id="questions">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">☕</span>
+        <div class="callout-body">
+          <strong>This one's different — brand is in motion</strong>
+          <span>Fuzzy Duck is building the brand identity in parallel. We can't wait for them to finish, so design decisions need to be flexible. Think of it as designing a beautiful frame that's ready to receive a painting. Your instincts on color, type, and tone set the direction — Fuzzy Duck's assets slot in when they arrive. These questions are conversation starters, not a checklist.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Open Design Questions</div>
+        <div class="question-item">
+          <div class="question-text">How do we keep "immersive fantasy world" while adding a shopping cart?</div>
+          <div class="question-context">The v1 site feels like stepping into the story — full-width artwork panels, dramatic illustrations, cinematic flow. Now we're adding "Add to Cart" buttons, a cart drawer, and a Shop page. How does ecommerce live inside a fantasy world without breaking the spell? The cart needs to feel like part of the experience, not a jarring switch to storefront mode.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">What's the color direction before Fuzzy Duck delivers?</div>
+          <div class="question-context">No palette exists yet. The current v1 site uses dark tones that let the artwork pop. Fuzzy Duck will deliver brand colors mid-May — but we're designing now. What direction feels right for a fantasy trilogy about faraway lands, volcanoes, tundra, and dangerous creatures? Something that works as a foundation and can absorb a brand palette later without a full redesign.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Trilogy showcase — three books reading as one story</div>
+          <div class="question-context">Jeannine's confirmed direction: the three books are "one big long story" — not three standalone novels. The homepage needs to communicate this immediately. How do we visually connect the books as chapters of one epic narrative? Think progression, continuity, a visual throughline — not three equal product cards sitting next to each other.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Typography that serves both kids and parents</div>
+          <div class="question-context">The primary readers are middle-schoolers (10–14). The primary buyers are their parents. The site needs to feel exciting and adventurous to a kid while looking credible and trustworthy to a parent. What typeface pairing threads that needle? Something with character that doesn't tip into childish or overly polished.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">How does the "Coming Soon" state for Book 3 feel special, not empty?</div>
+          <div class="question-context">The book page template has a "Coming Soon" toggle — Book 3 launches in that state. It shows the stormy-sea cover and a brief "final battle approaches" message, but none of the full-page components (synopsis, artwork panels, gallery, purchase). How do we design this toggled-down state so it feels intentional and exciting rather than like a broken version of the real page? This needs to build anticipation for the finale.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">What happens in the nav before a logo exists?</div>
+          <div class="question-context">Fuzzy Duck is designing the logo. It's not here yet and we can't wait. The nav needs an identity element — "The Tukor Series" wordmark? A Madsen illustration detail? Something that feels intentional now and can be swapped for the real logo later without breaking the layout.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile FAB + Sidebar
+  const sidebar = document.getElementById('sidebar');
+  const overlayEl = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('fabMenu');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlayEl.style.display = 'block';
+    requestAnimationFrame(() => overlayEl.classList.add('visible'));
+    fab.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlayEl.classList.remove('visible');
+    fab.textContent = '☰';
+    document.body.style.overflow = '';
+    setTimeout(() => { overlayEl.style.display = 'none'; }, 280);
+  }
+
+  fab.addEventListener('click', () => {
+    menuOpen ? closeMenu() : openMenu();
+  });
+
+  overlayEl.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile: close menu, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
