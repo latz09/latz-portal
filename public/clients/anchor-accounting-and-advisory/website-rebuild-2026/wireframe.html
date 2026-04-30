@@ -1,0 +1,2273 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Anchor Accounting — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #0D1B2A;
+				--primary-mid: #1b2d45;
+				--accent: #18a1ad;
+				--accent-light: rgba(24, 161, 173, 0.08);
+				--light: #f7f9fa;
+				--light-dark: #edf1f4;
+				--mid: #475569;
+				--green: #16a34a;
+				--green-light: rgba(22, 163, 74, 0.1);
+				--yellow: #ffee65;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(13, 27, 42, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(13, 27, 42, 0.04) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 4px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 10px;
+				color: rgba(247, 249, 250, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(24, 161, 173, 0.15);
+				border: 1px solid rgba(24, 161, 173, 0.35);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(247, 249, 250, 0.45);
+				text-decoration: none;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(24, 161, 173, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--white);
+				border: none;
+				font-size: 22px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 52px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Fraunces', serif;
+				font-size: 34px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 27, 42, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(13, 27, 42, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(13, 27, 42, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(13, 27, 42, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(13, 27, 42, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Fraunces', serif;
+				font-weight: 700;
+				font-size: 14px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11.5px;
+				color: rgba(13, 27, 42, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(13, 27, 42, 0.04);
+				border-left: 3px solid rgba(13, 27, 42, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(24, 161, 173, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(13, 27, 42, 0.15);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(247, 249, 250, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Fraunces', serif;
+				font-size: 26px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Fraunces', serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.wf-subtext {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 27, 42, 0.5);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(13, 27, 42, 0.6);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(13, 27, 42, 0.15);
+				margin: 20px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--white);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 14px 22px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(247, 249, 250, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(13, 27, 42, 0.07);
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(13, 27, 42, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── QUICK LINKS GRID ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin: 14px 0;
+			}
+
+			.quick-link-card {
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				padding: 14px 12px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.quick-link-icon {
+				font-size: 20px;
+				margin-bottom: 6px;
+			}
+
+			.quick-link-label {
+				font-family: 'Fraunces', serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			/* ── SERVICE CARDS ── */
+			.service-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.service-card {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.service-name {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.service-desc {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(13, 27, 42, 0.5);
+				line-height: 1.4;
+			}
+
+			/* ── TESTIMONIAL CARDS ── */
+			.testimonial-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.testimonial-card {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.testimonial-name {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 2px;
+			}
+
+			.testimonial-biz {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(13, 27, 42, 0.4);
+				margin-bottom: 6px;
+			}
+
+			.testimonial-quote {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: rgba(13, 27, 42, 0.6);
+				font-style: italic;
+				line-height: 1.5;
+			}
+
+			/* ── CERT BADGES ── */
+			.cert-grid {
+				display: flex;
+				gap: 10px;
+				flex-wrap: wrap;
+				margin-top: 10px;
+			}
+
+			.cert-badge {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 10px 16px;
+				background: rgba(255, 255, 255, 0.6);
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.cert-badge .cert-icon {
+				font-size: 20px;
+			}
+
+			.cert-badge .cert-name {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+				margin-top: 10px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 10px 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(13, 27, 42, 0.4);
+				margin-bottom: 4px;
+			}
+
+			.field-placeholder {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(13, 27, 42, 0.3);
+			}
+
+			/* ── BLOG POST ROW ── */
+			.post-list {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				margin-top: 10px;
+			}
+
+			.post-row {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 12px 14px;
+				background: rgba(255, 255, 255, 0.6);
+				flex-wrap: wrap;
+			}
+
+			.post-info {
+				flex: 1;
+				min-width: 200px;
+			}
+
+			.post-title {
+				font-family: 'Fraunces', serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.post-meta {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(13, 27, 42, 0.45);
+				margin-top: 2px;
+			}
+
+			.post-action {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: var(--primary);
+				border: 1px solid var(--primary);
+				border-radius: 3px;
+				padding: 3px 10px;
+				font-weight: 600;
+				white-space: nowrap;
+			}
+
+			/* ── FILTER ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				margin-bottom: 14px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: rgba(13, 27, 42, 0.4);
+			}
+
+			.filter-pill {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				border: 1.5px solid rgba(13, 27, 42, 0.2);
+				border-radius: 20px;
+				padding: 3px 12px;
+				color: rgba(13, 27, 42, 0.5);
+			}
+
+			.filter-pill.active {
+				border-color: var(--primary);
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Fraunces', serif;
+				font-size: 11px;
+				font-weight: 600;
+				padding: 8px 14px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 100px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(13, 27, 42, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box.tertiary {
+				background: rgba(24, 161, 173, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--accent);
+				font-size: 10px;
+				min-width: 80px;
+				padding: 6px 10px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(13, 27, 42, 0.3);
+				padding: 0 6px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 6px;
+				margin-top: 6px;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(13, 27, 42, 0.12);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: var(--primary);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 10px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			/* ── LOCATION CARDS ── */
+			.location-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.location-card {
+				border: 1.5px dashed rgba(13, 27, 42, 0.2);
+				border-radius: 5px;
+				padding: 12px 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.location-name {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 2px;
+			}
+
+			.location-slug {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: rgba(13, 27, 42, 0.4);
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.service-grid,
+				.testimonial-grid,
+				.quick-links,
+				.location-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(13, 27, 42, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.option-grid,
+				.form-grid,
+				.service-grid,
+				.testimonial-grid,
+				.quick-links,
+				.location-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
+				}
+				.cert-grid {
+					flex-direction: column;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Anchor Accounting</div>
+				<div class="sidebar-doctype">Site Wireframes — Full Rebuild</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Review</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">👤</span> Who We Are</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Get in Touch</a>
+				<a href="#blog" class="nav-link"><span class="nav-icon">📝</span> Blog</a>
+				<a href="#blog-post" class="nav-link"><span class="nav-icon">📄</span> Blog Post</a>
+				<a href="#locations" class="nav-link"><span class="nav-icon">📍</span> Location Pages</a>
+				<a href="#testimonials" class="nav-link"><span class="nav-icon">⭐</span> Testimonials</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content & Structure</div>
+				<div class="doc-title">Anchor Accounting & Advisory</div>
+				<div class="doc-sub">
+					anchor.cpa &nbsp;·&nbsp; Full Rebuild + Expansion Package
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Client Review</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">7 page types</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Ned O'Sullivan, CPA</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value warn">Not Yet — Quoting</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
+				✏️ This is a rebuild wireframe — the current site at anchor.cpa is live and was built by Latz Web Design (~June 2025). Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">Anchor Accounting & Advisory</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								7 page types · Sanity CMS for blog, testimonials, locations, certs, and content
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 6px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span style="font-size: 9px; font-family: 'DM Mono', monospace; font-weight: 400; opacity: 0.7;">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Who We Are<br /><span style="font-size: 9px; font-family: 'DM Mono', monospace; font-weight: 400; opacity: 0.7;">/about</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Get in Touch<br /><span style="font-size: 9px; font-family: 'DM Mono', monospace; font-weight: 400; opacity: 0.7;">/contact</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Blog<br /><span style="font-size: 9px; font-family: 'DM Mono', monospace; font-weight: 400; opacity: 0.7;">/blog</span>
+								</div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">/blog/[slug]</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Locations<br /><span style="font-size: 9px; font-family: 'DM Mono', monospace; font-weight: 400; opacity: 0.7;">/locations</span>
+								</div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">/locations/[city]</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Testimonials<br /><span style="font-size: 9px; font-family: 'DM Mono', monospace; font-weight: 400; opacity: 0.7;">/testimonials</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							Same domain: anchor.cpa. Same Vercel hosting. Nav is consistent across all pages. Blog posts and location pages are dynamic routes — each is a unique page generated from Sanity content. Individual location pages are the big SEO play — each targets "CPA in [city]" searches. No location index page in the main nav — individual location pages are linked from the footer or discovered via search.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home Page &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Who We Are</span>
+							<span>Get in Touch</span>
+							<span>Blog</span>
+							<span>Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 180px">
+								<div class="img-icon">⚓</div>
+								<div class="img-label">
+									Hero image — professional/approachable<br />
+									Ned headshot or abstract financial imagery<br />
+									Current site uses Sanity-hosted hero
+								</div>
+							</div>
+							<div style="margin-top: 16px; text-align: center">
+								<div class="wf-heading-lg">Steady Books. Clear Direction. Confidence.</div>
+								<div class="wf-subtext">
+									Year-round bookkeeping, tax strategy, and fractional CFO services for small businesses that want financial clarity — not just a tax return.
+								</div>
+								<div class="wf-cta accent">Schedule a Consultation →</div>
+							</div>
+							<div class="annotation">
+								Hero headline and subhead are CMS-editable. Current messaging is StoryBrand-inspired and works — refine for the rebuild but keep the core positioning: fractional CFO, not just tax prep. Primary CTA goes to Calendly (currently linked out — see discussion on embedded vs linked).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Services Overview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Services Overview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="service-grid">
+								<div class="service-card">
+									<div class="quick-link-icon">📊</div>
+									<div class="service-name">Bookkeeping & Financial Management</div>
+									<div class="service-desc">Clean books, monthly reports, financial clarity year-round.</div>
+								</div>
+								<div class="service-card">
+									<div class="quick-link-icon">📋</div>
+									<div class="service-name">Tax Planning & Preparation</div>
+									<div class="service-desc">Proactive strategy, not last-minute scrambling.</div>
+								</div>
+								<div class="service-card">
+									<div class="quick-link-icon">🧭</div>
+									<div class="service-name">Fractional CFO Services</div>
+									<div class="service-desc">Strategic financial leadership without the full-time cost.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Three core service areas — these are on the current site and match Ned's positioning. Each card is a short blurb, not a full service page. The fractional CFO service is the differentiator — designer should give it visual weight. All editable in Sanity.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Certifications -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Certifications & Memberships</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="cert-grid">
+								<div class="cert-badge">
+									<span class="cert-icon">🏅</span>
+									<span class="cert-name">QuickBooks ProAdvisor</span>
+								</div>
+								<div class="cert-badge">
+									<span class="cert-icon">🏅</span>
+									<span class="cert-name">Gusto Advisor</span>
+								</div>
+								<div class="cert-badge">
+									<span class="cert-icon">🏅</span>
+									<span class="cert-name">Fathom Advisor</span>
+								</div>
+								<div class="cert-badge">
+									<span class="cert-icon">🏅</span>
+									<span class="cert-name">AICPA</span>
+								</div>
+								<div class="cert-badge">
+									<span class="cert-icon">🏅</span>
+									<span class="cert-name">MN CPA Society</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Ned specifically asked for this — he referenced resoluteaccounting.com as a reference for how certs should be displayed (logo strip). We'll take it further — real partner logos/badges, not just text. Ned needs to provide high-res logos or Jordan sources from partner portals. CMS-managed so new certifications can be added.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Testimonials Preview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Testimonials Preview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-grid" style="grid-template-columns: 1fr 1fr;">
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-biz">Business Name</div>
+									<div class="testimonial-quote">"Quote about working with Ned — trustworthy, strategic, always available."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-biz">Business Name</div>
+									<div class="testimonial-quote">"Quote about how Ned transformed their financial outlook."</div>
+								</div>
+							</div>
+							<div style="margin-top: 10px; text-align: center;">
+								<span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--primary); font-weight: 600;">See All Testimonials →</span>
+							</div>
+							<div class="annotation">
+								Shows 2–3 testimonials on the home page, links to the full testimonials page. These pull from the same Sanity collection as the testimonials page — CMS picks featured ones or shows the most recent. Current site has minimal testimonials — Ned needs to collect more.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Blog Preview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Latest from the Blog</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="post-list">
+								<div class="post-row">
+									<div class="post-info">
+										<div class="post-title">5 Tax Moves Every Small Business Should Make Before Year-End</div>
+										<div class="post-meta">Published: [date] · Tax Planning</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+								<div class="post-row" style="opacity: 0.6;">
+									<div class="post-info">
+										<div class="post-title">Why Your Business Needs a Fractional CFO</div>
+										<div class="post-meta">Published: [date] · CFO Insights</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+							</div>
+							<div style="margin-top: 10px; text-align: center;">
+								<span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--primary); font-weight: 600;">View All Posts →</span>
+							</div>
+							<div class="annotation">
+								Shows the 2–3 most recent blog posts on the home page. Pulls from Sanity automatically — no manual curation needed. Links to full blog listing. Jordan writes 1–2 seed posts for launch.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Final CTA -->
+						<div class="wf-block" style="background: var(--primary); padding: 20px; border-radius: 6px; border-color: var(--primary);">
+							<div style="text-align: center;">
+								<div class="wf-heading-md" style="color: var(--light);">Ready for Financial Clarity?</div>
+								<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(247,249,250,0.6); margin-top: 4px; margin-bottom: 10px;">Book a free consultation — no pressure, just a conversation about your goals.</div>
+								<div class="wf-cta accent">Schedule a Meeting →</div>
+							</div>
+						</div>
+						<div class="annotation">
+							Final conversion bar — Calendly CTA. Consistent across all pages above the footer. Warm, low-pressure language matches Ned's approachable style.
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: ABOUT / WHO WE ARE ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label">
+					<span class="section-num">2</span> Who We Are &mdash; /about
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Who We Are</span>
+							<span>Get in Touch</span>
+							<span>Blog</span>
+							<span>Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Who We Are</div>
+							<div class="wf-subtext">Your strategic financial partner — not just a tax preparer.</div>
+						</div>
+
+						<!-- Ned Bio -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Meet Ned</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+								<div class="img-placeholder" style="height: 180px; flex: 1; min-width: 180px;">
+									<div class="img-icon">👤</div>
+									<div class="img-label">Professional headshot<br />Updated/high-res from Ned<br />Current site has a headshot — may need refresh</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">Ned O'Sullivan, CPA</div>
+									<div class="wf-subtext" style="margin-bottom: 8px;">Founder · Anchor Accounting & Advisory</div>
+									<div class="wf-body-text">
+										Ned's story — CPA background, why he started Anchor (originally O'Sullivan Tax & Accounting), the rebrand, the vision. Fractional CFO positioning: strategic financial leadership for small businesses. Professional but personal — builds trust. Jordan writes the final copy from Ned's rough notes. 2–3 paragraphs.
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Current bio references the old O'Sullivan brand — needs a full refresh for Anchor. Ned provides rough notes, Jordan writes the copy. CMS-managed so Ned can update as his business evolves. The professional-but-personal tone is important — he's a solo CPA, clients are hiring him, not a firm.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Certifications Full Display -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Certifications & Memberships</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Cert Display — Logo Strip vs. Detailed Cards</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A — Logo Strip</div>
+										<div class="cert-grid" style="justify-content: center;">
+											<div class="cert-badge"><span class="cert-icon">🏅</span><span class="cert-name">QB</span></div>
+											<div class="cert-badge"><span class="cert-icon">🏅</span><span class="cert-name">Gusto</span></div>
+											<div class="cert-badge"><span class="cert-icon">🏅</span><span class="cert-name">AICPA</span></div>
+										</div>
+										<div class="wf-body-text" style="font-size: 12px; margin-top: 8px;">
+											Simple logo row — clean, compact. Similar to what resoluteaccounting.com does but with better design treatment. Less space, works well as a trust bar.
+										</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B — Detailed Cards</div>
+										<div style="border: 1.5px dashed rgba(13,27,42,0.2); border-radius: 5px; padding: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.6);">
+											<div style="display: flex; gap: 8px; align-items: center;">
+												<span style="font-size: 20px;">🏅</span>
+												<div>
+													<div style="font-family: 'Fraunces', serif; font-size: 12px; font-weight: 600;">QuickBooks ProAdvisor</div>
+													<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(13,27,42,0.5);">Certified expert in QuickBooks setup and optimization</div>
+												</div>
+											</div>
+										</div>
+										<div class="wf-body-text" style="font-size: 12px;">
+											Each cert gets a card with logo + short description. More space, more context. Better for visitors who don't know what these certifications mean.
+										</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top: 10px;">
+									Ned referenced resoluteaccounting.com — they do a basic logo strip. We can do better either way. Option A is clean and compact (good if it appears on both Home and About). Option B gives more context (good if certs only live on About). Designer decides treatment.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Approach / Values -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Our Approach</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Why Anchor is different — year-round relationship vs. once-a-year tax prep. The fractional CFO model explained in plain language. What clients actually get: proactive financial strategy, clean books, someone in their corner. This is the conversion copy — visitors should read this and think "this is what I've been looking for."
+							</div>
+							<div class="annotation">
+								This section reinforces the fractional CFO positioning. Jordan writes the copy — needs to differentiate from the generic "we care about your business" language every CPA uses. CMS-managed.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: CONTACT / GET IN TOUCH ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label">
+					<span class="section-num">3</span> Get in Touch &mdash; /contact
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Are</span>
+							<span class="active">Get in Touch</span>
+							<span>Blog</span>
+							<span>Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Get in Touch</div>
+							<div class="wf-subtext">Ready to talk? Let's figure out how Anchor can help.</div>
+						</div>
+
+						<!-- Contact Form -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Form</div>
+							</div>
+
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email *</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Phone (optional)</div>
+									<div class="field-placeholder">(###) ###-####</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Services Interested In</div>
+									<div class="field-placeholder">Bookkeeping / Tax / CFO / Not Sure</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Your Message</div>
+									<div class="field-placeholder" style="min-height: 60px;">Tell us about your business and what you need...</div>
+								</div>
+							</div>
+
+							<div style="margin-top: 12px;">
+								<div class="wf-cta">Send Message →</div>
+							</div>
+
+							<div class="annotation">
+								Form submissions go directly to Ned's email (ned@anchor.cpa). Current site uses this same basic structure. Services dropdown helps Ned triage inquiries. No CAPTCHA on the current build — add if spam becomes an issue.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Calendly -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Schedule a Meeting</div>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Calendly — Embedded vs. Linked Out</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A — Link Out</div>
+										<div style="text-align: center; padding: 14px 0;">
+											<div class="wf-cta accent">Book a Meeting on Calendly →</div>
+										</div>
+										<div class="wf-body-text" style="font-size: 12px;">
+											Simple button that opens Calendly in a new tab. Zero development effort. This is what the current site does. Works fine.
+										</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B — Embedded</div>
+										<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
+											<div class="img-label">Calendly widget embedded<br />directly on the page</div>
+										</div>
+										<div class="wf-body-text" style="font-size: 12px;">
+											Scheduler embedded on the contact page. Keeps visitors on-site. Better conversion — no tab switching. Was an optional add-on in the original proposal ($125). Could include in the rebuild.
+										</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top: 10px;">
+									Original proposal had embedded Calendly as a $125 optional add-on — Ned passed on it then. Could include it in the rebuild as a value-add or offer as a separate line item. If embedded, it lives on the Contact page and optionally shows as a popup from the nav CTA.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Contact Info -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Information</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								<strong>Email</strong><br />ned@anchor.cpa
+							</div>
+							<div class="wf-body-text" style="margin-top: 8px;">
+								<strong>Phone</strong><br />(612) 219-2838<br />
+								<span style="font-size: 11px; color: rgba(13, 27, 42, 0.4);">click-to-call on mobile</span>
+							</div>
+							<div class="wf-body-text" style="margin-top: 8px;">
+								<strong>Location</strong><br />Minneapolis, MN
+							</div>
+							<div class="wf-body-text" style="margin-top: 8px;">
+								<strong>Client Portal</strong><br />
+								<span style="color: var(--accent);">anchor.taxdome.com</span>
+							</div>
+							<div class="annotation">
+								Phone number is click-to-call on mobile. Client portal link to TaxDome is important — existing clients look for this. All editable in CMS.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 4: BLOG LISTING ── -->
+			<section class="wf-section" id="blog">
+				<div class="section-label">
+					<span class="section-num">4</span> Blog &mdash; /blog
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Are</span>
+							<span>Get in Touch</span>
+							<span class="active">Blog</span>
+							<span>Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Blog</div>
+							<div class="wf-subtext">Tax tips, bookkeeping insights, and financial strategy for small business owners.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Post Listing</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="filter-row">
+								<span class="filter-label">Category:</span>
+								<span class="filter-pill active">All</span>
+								<span class="filter-pill">Tax Planning</span>
+								<span class="filter-pill">Bookkeeping</span>
+								<span class="filter-pill">CFO Insights</span>
+							</div>
+
+							<div class="post-list">
+								<div class="post-row">
+									<div class="img-placeholder" style="height: 70px; width: 100px; flex-shrink: 0;">
+										<div class="img-label" style="font-size: 9px;">cover</div>
+									</div>
+									<div class="post-info">
+										<div class="post-title">5 Tax Moves Every Small Business Should Make Before Year-End</div>
+										<div class="post-meta">April 15, 2026 · Tax Planning · 5 min read</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+								<div class="post-row">
+									<div class="img-placeholder" style="height: 70px; width: 100px; flex-shrink: 0;">
+										<div class="img-label" style="font-size: 9px;">cover</div>
+									</div>
+									<div class="post-info">
+										<div class="post-title">Why Your Business Needs a Fractional CFO (Even If You Think It Doesn't)</div>
+										<div class="post-meta">April 8, 2026 · CFO Insights · 7 min read</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+								<div class="post-row" style="opacity: 0.6;">
+									<div class="img-placeholder" style="height: 70px; width: 100px; flex-shrink: 0;">
+										<div class="img-label" style="font-size: 9px;">cover</div>
+									</div>
+									<div class="post-info">
+										<div class="post-title">QuickBooks vs. Xero: Which One Is Right for Your Business?</div>
+										<div class="post-meta">March 22, 2026 · Bookkeeping · 6 min read</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Blog listing page — all posts managed in Sanity. Each post has: title, cover image (optional), category, publish date, body content. Categories are defined in Sanity — Ned can create new ones. Category filter is client-side. Jordan writes 1–2 seed posts to launch with — Ned can add his own over time. SEO-optimized post structure with meta descriptions, OG images, and structured data.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 5: BLOG POST DETAIL ── -->
+			<section class="wf-section" id="blog-post">
+				<div class="section-label">
+					<span class="section-num">5</span> Blog Post &mdash; /blog/[slug]
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Are</span>
+							<span>Get in Touch</span>
+							<span class="active">Blog</span>
+							<span>Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Blog Post Detail</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div style="margin-bottom: 14px;">
+								<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--accent); font-weight: 500; margin-bottom: 6px;">Tax Planning</div>
+								<div class="wf-heading-lg" style="font-size: 22px;">5 Tax Moves Every Small Business Should Make Before Year-End</div>
+								<div class="wf-subtext">Published April 15, 2026 · 5 min read</div>
+							</div>
+
+							<div class="img-placeholder" style="height: 160px; margin-bottom: 20px;">
+								<div class="img-icon">📝</div>
+								<div class="img-label">Cover image (optional)<br />from Sanity</div>
+							</div>
+
+							<!-- Filler blog content -->
+							<div style="max-width: 680px;">
+								<div class="wf-body-text" style="font-size: 14px; line-height: 1.7; margin-bottom: 16px;">
+									Tax season doesn't have to be a scramble. The businesses that come out ahead aren't the ones who panic in March — they're the ones who make smart moves throughout the year. Here are five things you can do right now to set yourself up for a stronger tax position.
+								</div>
+
+								<div class="wf-heading-md" style="font-size: 16px; margin-top: 24px;">1. Review Your Estimated Tax Payments</div>
+								<div class="wf-body-text" style="font-size: 14px; line-height: 1.7;">
+									If your income has changed significantly this year — up or down — your quarterly estimated payments might be off. Underpaying leads to penalties. Overpaying means you're giving the IRS an interest-free loan. Neither is ideal. Pull your year-to-date P&L and compare it to what you've been paying in. Adjust now, not in January.
+								</div>
+
+								<div class="wf-heading-md" style="font-size: 16px; margin-top: 24px;">2. Max Out Your Retirement Contributions</div>
+								<div class="wf-body-text" style="font-size: 14px; line-height: 1.7;">
+									SEP-IRAs, Solo 401(k)s, and SIMPLE IRAs all have contribution deadlines tied to your tax filing. But the planning starts now. If you haven't maxed out your contributions, you're leaving tax-deferred growth — and a deduction — on the table.
+								</div>
+
+								<div class="img-placeholder" style="height: 120px; margin: 20px 0;">
+									<div class="img-label">Inline image — chart, infographic, or supporting visual<br />uploaded via Sanity rich text editor</div>
+								</div>
+
+								<div class="wf-heading-md" style="font-size: 16px; margin-top: 24px;">3. Accelerate Deductions (or Defer Income)</div>
+								<div class="wf-body-text" style="font-size: 14px; line-height: 1.7;">
+									This is the classic year-end move: if you expect to be in a higher bracket this year, pull expenses forward. Prepay January rent, stock up on supplies, or make that equipment purchase you've been putting off. On the flip side, if next year looks leaner, consider deferring some December invoicing into January.
+								</div>
+
+								<div class="wf-heading-md" style="font-size: 16px; margin-top: 24px;">4. Clean Up Your Books</div>
+								<div class="wf-body-text" style="font-size: 14px; line-height: 1.7;">
+									Uncategorized transactions, missing receipts, personal expenses mixed in with business — these all create problems at tax time. A clean set of books means a faster, cheaper, and more accurate tax return. If your books are behind, now is the time to catch up. Not February.
+								</div>
+
+								<div class="wf-heading-md" style="font-size: 16px; margin-top: 24px;">5. Schedule a Year-End Review with Your CPA</div>
+								<div class="wf-body-text" style="font-size: 14px; line-height: 1.7;">
+									The best tax strategy isn't a last-minute deduction — it's a year-round relationship with someone who knows your business. A 30-minute year-end review can surface opportunities you'd never catch on your own: entity structure changes, depreciation elections, carryforward losses. Don't wait until you're filing.
+								</div>
+							</div>
+
+							<div class="section-divider"></div>
+
+							<!-- Post CTA -->
+							<div style="text-align: center; padding: 18px; border: 2px dashed rgba(13,27,42,0.15); border-radius: 6px; background: rgba(24,161,173,0.04);">
+								<div class="wf-heading-sm">Need help with your year-end tax strategy?</div>
+								<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(13,27,42,0.5); margin-top: 4px;">Let's talk through your situation — no obligation.</div>
+								<div class="wf-cta accent" style="margin-top: 8px;">Schedule a Free Consultation →</div>
+							</div>
+
+							<div class="annotation">
+								Every blog post ends with a CTA to schedule a consultation — the blog exists to drive leads, not just publish content. Post body supports rich text from Sanity: headings, bold/italic, links, inline images, bulleted lists. Content width is constrained for readability. CTA is contextual to the post topic when possible.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- More from this category -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">More in Tax Planning</div>
+							</div>
+
+							<div class="post-list">
+								<div class="post-row">
+									<div class="img-placeholder" style="height: 60px; width: 80px; flex-shrink: 0;">
+										<div class="img-label" style="font-size: 9px;">cover</div>
+									</div>
+									<div class="post-info">
+										<div class="post-title">S-Corp vs. LLC: Which Structure Saves You More on Taxes?</div>
+										<div class="post-meta">March 30, 2026 · Tax Planning · 6 min read</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+								<div class="post-row">
+									<div class="img-placeholder" style="height: 60px; width: 80px; flex-shrink: 0;">
+										<div class="img-label" style="font-size: 9px;">cover</div>
+									</div>
+									<div class="post-info">
+										<div class="post-title">The Quarterly Tax Calendar Every Small Business Owner Needs</div>
+										<div class="post-meta">March 10, 2026 · Tax Planning · 4 min read</div>
+									</div>
+									<div class="post-action">Read →</div>
+								</div>
+							</div>
+
+							<div style="margin-top: 12px; text-align: center;">
+								<span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--primary); font-weight: 600;">View All Posts →</span>
+							</div>
+
+							<div class="annotation">
+								"More in [Category]" shows 2–3 posts from the same category as the current post. Keeps readers in the topic they're interested in — higher intent than a random "related posts" section. The "View All Posts" link goes to the blog listing with that category pre-filtered. Posts are pulled automatically from Sanity by matching category.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 6: LOCATION PAGES ── -->
+			<section class="wf-section" id="locations">
+				<div class="section-label">
+					<span class="section-num">6</span> Location Pages &mdash; /locations/[city]
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Are</span>
+							<span>Get in Touch</span>
+							<span>Blog</span>
+							<span>Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">CPA & Bookkeeping in [City Name], MN</div>
+							<div class="wf-subtext">Anchor Accounting serves small businesses in [City Name] with year-round bookkeeping, tax planning, and fractional CFO services.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Location Page Template</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="wf-body-text">
+								Each location page is a unique landing page targeting "CPA in [city]" and "bookkeeper near [city]" searches. The content must be genuinely unique per page — not just the city name swapped out. Each page includes:
+							</div>
+
+							<div style="margin: 12px 0;">
+								<div style="display: flex; flex-direction: column; gap: 8px;">
+									<div style="border: 1.5px dashed rgba(13,27,42,0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255,255,255,0.6);">
+										<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">City-Specific Intro</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(13,27,42,0.5);">1–2 paragraphs about serving [city] businesses — unique copy, not templated fill-in-the-blank</div>
+									</div>
+									<div style="border: 1.5px dashed rgba(13,27,42,0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255,255,255,0.6);">
+										<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">Services Available in [City]</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(13,27,42,0.5);">Same three core services (Bookkeeping, Tax, CFO) — framed for local context</div>
+									</div>
+									<div style="border: 1.5px dashed rgba(13,27,42,0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255,255,255,0.6);">
+										<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">Testimonial from Local Client (if available)</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(13,27,42,0.5);">Optional — pulls from Sanity testimonials tagged to that location</div>
+									</div>
+									<div style="border: 1.5px dashed rgba(13,27,42,0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255,255,255,0.6);">
+										<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">CTA — Schedule a Consultation</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(13,27,42,0.5);">Calendly link or embedded scheduler</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								This is the big SEO play. Each location page is a landing page optimized to rank for "[service] in [city]" searches. Jordan writes unique copy per location — not template content. Minneapolis metro has dozens of suburbs that each get their own page. These pages aren't in the main nav — they're discoverable via Google and linked from the footer. Ned needs to provide his service area list.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Example locations -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Example Service Areas (TBD with Ned)</div>
+							</div>
+							<div class="location-grid">
+								<div class="location-card">
+									<div class="location-name">Minneapolis</div>
+									<div class="location-slug">/locations/minneapolis</div>
+								</div>
+								<div class="location-card">
+									<div class="location-name">St. Paul</div>
+									<div class="location-slug">/locations/st-paul</div>
+								</div>
+								<div class="location-card">
+									<div class="location-name">Eden Prairie</div>
+									<div class="location-slug">/locations/eden-prairie</div>
+								</div>
+								<div class="location-card" style="opacity: 0.5;">
+									<div class="location-name">Bloomington</div>
+									<div class="location-slug">/locations/bloomington</div>
+								</div>
+								<div class="location-card" style="opacity: 0.5;">
+									<div class="location-name">Plymouth</div>
+									<div class="location-slug">/locations/plymouth</div>
+								</div>
+								<div class="location-card" style="opacity: 0.5;">
+									<div class="location-name">[More TBD]</div>
+									<div class="location-slug">/locations/[city]</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Cities shown are examples — Ned needs to provide his actual service area list. The dimmed entries indicate we can expand as far as makes sense. Each location page lives in Sanity — Jordan writes the initial copy, Ned can request new locations anytime.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 7: TESTIMONIALS ── -->
+			<section class="wf-section" id="testimonials">
+				<div class="section-label">
+					<span class="section-num">7</span> Testimonials &mdash; /testimonials
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Anchor Accounting</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Are</span>
+							<span>Get in Touch</span>
+							<span>Blog</span>
+							<span class="active">Testimonials</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">What Our Clients Say</div>
+							<div class="wf-subtext">Real feedback from real business owners.</div>
+						</div>
+
+						<!-- Featured Testimonial -->
+						<div class="wf-block" style="background: rgba(13, 27, 42, 0.03);">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Featured Testimonial</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+								<div class="img-placeholder" style="height: 160px; width: 140px; flex-shrink: 0;">
+									<div class="img-icon">👤</div>
+									<div class="img-label">Client photo<br />headshot or candid</div>
+								</div>
+								<div style="flex: 1; min-width: 240px;">
+									<div style="font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">Client Name</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 2px;">Owner, Business Name</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(13,27,42,0.4); margin-bottom: 12px;">Minneapolis, MN · Client since 2024</div>
+
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(13,27,42,0.7); font-style: italic; line-height: 1.6; margin-bottom: 12px; border-left: 3px solid var(--accent); padding-left: 14px;">
+										"Before Anchor, I was flying blind — I had no idea where my business stood financially until tax time. Ned didn't just clean up our books, he built a system that gives me real-time clarity on cash flow, margins, and where to invest next. It's like having a CFO on speed dial without the six-figure salary."
+									</div>
+
+									<div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px;">
+										<div style="border: 1.5px dashed rgba(13,27,42,0.15); border-radius: 5px; padding: 8px 12px; background: rgba(255,255,255,0.6);">
+											<div style="font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(13,27,42,0.4); text-transform: uppercase; letter-spacing: 0.08em;">Challenge</div>
+											<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--primary); font-weight: 500;">No financial visibility between tax seasons</div>
+										</div>
+										<div style="border: 1.5px dashed rgba(13,27,42,0.15); border-radius: 5px; padding: 8px 12px; background: rgba(255,255,255,0.6);">
+											<div style="font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(13,27,42,0.4); text-transform: uppercase; letter-spacing: 0.08em;">Result</div>
+											<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--primary); font-weight: 500;">Monthly financial clarity + strategic growth plan</div>
+										</div>
+										<div style="border: 1.5px dashed rgba(13,27,42,0.15); border-radius: 5px; padding: 8px 12px; background: rgba(255,255,255,0.6);">
+											<div style="font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(13,27,42,0.4); text-transform: uppercase; letter-spacing: 0.08em;">Services Used</div>
+											<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--primary); font-weight: 500;">Bookkeeping + Fractional CFO</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Featured testimonial sits at the top of the page — almost a mini case study. Photo, extended quote, challenge/result snapshot, services used. Ned selects the featured testimonial in Sanity. This is the strongest social proof on the site — it should feel like a real story, not just a pull quote. Ideally the first client who sends a testimonial with a photo and some detail gets this spot.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Testimonials Grid -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">All Testimonials</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="testimonial-grid">
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-biz">Business Name · Minneapolis</div>
+									<div class="testimonial-quote">"Ned completely changed how I think about my business finances. I finally have clarity."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-biz">Business Name · St. Paul</div>
+									<div class="testimonial-quote">"The fractional CFO service is a game-changer for a business our size. Worth every penny."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-biz">Business Name · Eden Prairie</div>
+									<div class="testimonial-quote">"Tax season used to stress me out. Now it's the easiest part of my year."</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Standard testimonial cards below the featured one. Each has: client name, business name, optional location tag, and quote. All managed in Sanity — Ned adds new testimonials as they come in. Location tags double as social proof for the location pages. Current site has minimal testimonials — Ned needs to collect more before launch. Designer decides treatment — grid, masonry, etc.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- CTA -->
+						<div style="text-align: center; padding: 20px; border: 2px dashed rgba(13,27,42,0.15); border-radius: 6px;">
+							<div class="wf-heading-sm">Ready to Be Our Next Success Story?</div>
+							<div class="wf-cta accent" style="margin-top: 8px;">Schedule a Consultation →</div>
+						</div>
+						<div class="annotation">
+							Bottom CTA on the testimonials page — after reading social proof, visitors are primed to take action. Same Calendly link.
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Anchor Accounting & Advisory</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Full Rebuild + Expansion</strong> — Not a patch. Every page rebuilt from scratch with professional designer involvement. New pages: Blog, Location Pages, Testimonials, Certifications section.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Same Stack</strong> — Next.js (App Router), React, Tailwind CSS, Sanity CMS, Vercel hosting. No migration risk — same platform, same domain, same hosting account.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Sanity CMS Cleanup</strong> — Consolidate to single Sanity project. New schemas for blog, testimonials, location pages, certifications. Same simple CMS experience — no confusion.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Domain Stays</strong> — anchor.cpa. Same Vercel deployment. Deploy to same project or create new and swap. No DNS changes needed.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Jordan Writes Copy</strong> — All page copy, blog seed posts, and location page content written by Jordan from Ned's rough notes. Ned's not responsible for writing — just providing direction and bullet points.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Fractional CFO Positioning</strong> — The site positions Ned as a strategic financial partner, not just a tax preparer. This is the key differentiator and it drives everything.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Three Core Services</strong> — Bookkeeping & Financial Management, Tax Planning & Preparation, Fractional CFO Services. These are the pillars and they appear on the home page and location pages.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>SEO-Optimized Structure</strong> — Meta tags, structured data, sitemap, OG images. Blog posts and location pages are the primary organic traffic play.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Certification Display — Logo Strip vs. Detailed Cards</strong> — Simple logo row (like resoluteaccounting.com) or expanded cards with descriptions? Decision depends on how many certs Ned wants to showcase and whether they appear on Home + About or About only.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Calendly — Embedded vs. Linked Out</strong> — Current site links to Calendly externally. Embedding it on the contact page keeps visitors on-site and reduces drop-off. Was a $125 add-on in the original proposal — could include in the rebuild as a value-add.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Service Area List for Location Pages</strong> — Ned needs to provide the specific cities he wants location pages for. Minneapolis metro has dozens of potential suburbs. How many pages do we build at launch? Can always add more later via Sanity.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Testimonials — How Many Does Ned Have?</strong> — Current site has minimal testimonials. The expanded testimonials page only works if Ned collects enough quotes. Need at least 3–5 for launch. Can he reach out to current clients?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Certification Logos — Source Files</strong> — Does Ned have high-res logos for QuickBooks ProAdvisor, Gusto Advisor, Fathom, AICPA, and MN CPA Society? If not, Jordan sources from partner portals. Some may have usage restrictions.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Professional Headshot</strong> — Current site has a headshot. Is it high-res enough for the redesign? Does Ned want to update it? Designer needs a good photo to work with.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Blog Seed Content</strong> — Jordan writes 1–2 seed posts for launch. Does Ned have topic preferences? Tax tips, bookkeeping advice, and CFO insights are the obvious categories. Optional for Ned to provide — Jordan can pick topics based on SEO opportunity.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Case Study Page — Include or Skip?</strong> — Was discussed historically, offered free with the rebuild. If Ned wants it, it's an additional page with a client story, before/after, and results. Not in the current wireframe scope but easy to add.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Branded Auto-Response Email</strong> — Original proposal had this at $150. When someone fills out the contact form, they get a polished on-brand confirmation email. Easy add-on — decide during build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Location Page Nav Strategy</strong> — Location pages aren't in the main nav (too many). Where do they get linked? Footer? A dedicated /locations index page? Or purely SEO-discovered? Decide during build.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

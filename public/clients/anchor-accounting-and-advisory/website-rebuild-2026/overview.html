@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Anchor Accounting — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 400;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s;
+  }
+
+  .mobile-overlay.visible { opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'ANCHOR';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-new { background: #dbeafe; color: #2563eb; }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .main { margin-left: 0; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .mobile-overlay { display: block; pointer-events: none; }
+    .mobile-overlay.visible { pointer-events: auto; }
+
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header { padding: 32px 20px 28px; }
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Anchor Accounting</div>
+    <div class="status-pill">Quoting</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏢</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Anchor Accounting &amp; Advisory</h1>
+    <div class="sub">anchor.cpa · Full Rebuild + Expansion Package</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Ned O'Sullivan, CPA</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Quoted Range</span>
+        <span class="value">$2,000–$2,200</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Status</span>
+        <span class="value" style="color:#ea580c;">Not Yet — Quoting</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://anchor.cpa" target="_blank">anchor.cpa</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">(612) 219-2838</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Original Build</span>
+        <span class="value">~June 2025 · $925</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏢</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Ned O'Sullivan, CPA</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Owner</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:ned@anchor.cpa">ned@anchor.cpa</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">(612) 219-2838</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">Minneapolis, MN (612 area code)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Client Portal</span>
+            <span class="data-value"><a href="https://anchor.taxdome.com/login" target="_blank">TaxDome (anchor.taxdome.com)</a></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Business</h3>
+          <div class="data-row">
+            <span class="data-label">Business Name</span>
+            <span class="data-value">Anchor Accounting & Advisory</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Legal Entity</span>
+            <span class="data-value">Originally O'Sullivan Tax & Accounting, LLC — rebranded to Anchor</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Type</span>
+            <span class="data-value">Solo CPA firm — bookkeeping, tax, fractional CFO</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Target Clients</span>
+            <span class="data-value">Small business owners who need year-round financial clarity, not just tax prep</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Positioning</span>
+            <span class="data-value">Fractional CFO — strategic partner, not just a tax preparer</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Scheduling Tool</span>
+            <span class="data-value">Calendly (linked from current site)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Certifications & Memberships</h3>
+        <div class="data-row">
+          <span class="data-label">Certifications</span>
+          <span class="data-value">QuickBooks ProAdvisor, Gusto Advisor, Fathom Advisor</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Memberships</span>
+          <span class="data-value">AICPA, Minnesota CPA Society</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Reference</span>
+          <span class="data-value"><a href="https://resoluteaccounting.com/" target="_blank">resoluteaccounting.com</a> — Ned wants certs displayed like this (logos + badges), but we'll take it further</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Relationship Context</strong>
+          <span>Met Ned in person a few years ago when he was just launching his firm. Built his original site for $925 as a startup discount. Good relationship — responsive, friendly, appreciative. He congratulated us on business growth when we reached out about the rebuild. Low maintenance client.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Quoted: Full Rebuild + Expansion Package @ $2,000–$2,200</strong>
+        <p>Complete redesign of existing 3-page site with professional designer involvement, plus new pages: blog, location-based landing pages (SEO play), expanded testimonials section, and dedicated certifications/memberships display. Awaiting Ned's response on pricing and how business has been going.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why This Project Exists</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Current site was built early in both our careers — design quality has evolved significantly since then</li>
+            <li><span class="check-icon">🔴</span> No blog — missing SEO opportunities for organic traffic</li>
+            <li><span class="check-icon">🔴</span> No location pages — can't rank for "CPA near [city]" searches across service areas</li>
+            <li><span class="check-icon">🔴</span> Testimonials section is minimal — not leveraging social proof</li>
+            <li><span class="check-icon">🔴</span> Certifications (QB ProAdvisor, Gusto, Fathom, AICPA, MN CPA Society) aren't showcased</li>
+            <li><span class="check-icon">🔴</span> Sanity CMS had confusion — duplicate project caused "Undefined" errors</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Modern, designer-involved site that positions Ned as a premium fractional CFO</li>
+            <li><span class="check-icon">✅</span> Blog system for content marketing and SEO authority</li>
+            <li><span class="check-icon">✅</span> Individual location landing pages to rank on Google per service area</li>
+            <li><span class="check-icon">✅</span> Testimonials section that builds trust at scale</li>
+            <li><span class="check-icon">✅</span> Certifications displayed prominently with partner logos/badges</li>
+            <li><span class="check-icon">✅</span> Clean CMS — single Sanity project, no confusion</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Awaiting Response — Ball is in Ned's Court</strong>
+          <span>Last email sent April 30, 2026 with full pricing breakdown ($1,250–$1,500 for straight rebuild, $2,000–$2,200 for full package). Also asked how business has been going. Need his decision before scoping further.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Designer Involvement</strong>
+          <span>This rebuild includes professional graphic designer (new team member). Pitched this as a major upgrade — "I've leveled up quite a bit" and "brought on a professional graphic designer." This is a selling point that differentiates from the original build.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Option A: Straight Rebuild</strong></td>
+            <td>Same content, new design + dev standard with designer. Night and day difference.</td>
+            <td class="amount">$1,250–$1,500</td>
+          </tr>
+          <tr>
+            <td><strong>Option B: Full Package (Recommended)</strong></td>
+            <td>Rebuild + blog + location pages + expanded testimonials + certifications section</td>
+            <td class="amount">$2,000–$2,200</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Likely Contract (if Option B)</strong></td>
+            <td></td>
+            <td class="amount"><strong>~$2,100</strong></td>
+          </tr>
+          <tr>
+            <td>Deposit (50%)</td>
+            <td>Due at project kickoff</td>
+            <td class="amount">~$1,050</td>
+          </tr>
+          <tr>
+            <td>Balance (50%)</td>
+            <td>Due at launch</td>
+            <td class="amount">~$1,050</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>No deposit received — still in quoting phase</strong>
+          <span>Pricing sent April 30, 2026. Awaiting Ned's response. Don't start any build work until deposit is in hand.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Pricing Context</h3>
+        <div class="data-row">
+          <span class="data-label">Original Build</span>
+          <span class="data-value">$925 (proposal said $925, you mentioned ~$1,000 to Ned) — startup discount, met in person</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Market Rate</span>
+          <span class="data-value">$4,500–$6,500 for a new build of this scope</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Rebuild Discount</span>
+          <span class="data-value">Past-client loyalty pricing — covering time + designer cost only</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">$20/month — paid directly to Vercel by Ned (already set up from original build)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Case Study Page</span>
+          <span class="data-value">Offered to include free if he goes with the rebuild — sweetener</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story</strong>
+          <span>He'd be getting a $5–7K site for ~$2,100. Plus he's already on Vercel ($20/mo), so no new hosting costs. This is a massive deal for a returning client and he should know it.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Returning client — original relationship ~June 2025</strong>
+          <span>Built original site for O'Sullivan Tax & Accounting. He's since rebranded to Anchor Accounting & Advisory. Re-engaged April 28, 2026 with a CMS support question, which opened the door for the rebuild conversation.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">~June 2025</div>
+          <div class="timeline-title">Original Site Built</div>
+          <div class="timeline-desc">3-page site for O'Sullivan Tax & Accounting — Home, About, Contact. $925 (startup discount, met in person). StoryBrand messaging, Calendly integration, Sanity CMS, Vercel hosting. Included placeholder logo concept.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jun 11, 2025</div>
+          <div class="timeline-title">Original Proposal Delivered</div>
+          <div class="timeline-desc">Full proposal PDF sent. Included core 3-page site ($925), optional branded auto-response email ($150), optional embedded Calendly ($125), optional full logo package ($500). Ned went with the core build only.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Post-Launch 2025</div>
+          <div class="timeline-title">Case Study Discussion</div>
+          <div class="timeline-desc">At some point discussed adding a case study page. Never materialized — Ned wasn't ready or it wasn't a priority. Still on the table.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Unknown</div>
+          <div class="timeline-title">Rebrand: O'Sullivan → Anchor</div>
+          <div class="timeline-desc">Ned rebranded from O'Sullivan Tax & Accounting to Anchor Accounting & Advisory. Site was updated to anchor.cpa domain. New logo in use. Business focus sharpened to bookkeeping + fractional CFO.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Unknown</div>
+          <div class="timeline-title">Sanity Project Confusion</div>
+          <div class="timeline-desc">At some point a second Sanity project was created, causing confusion. Ned was likely hitting the old project dashboard. This surfaced when he reached out in April 2026.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 28, 2026</div>
+          <div class="timeline-title">Ned Re-Engages — CMS Issue</div>
+          <div class="timeline-desc">Ned emailed about getting "Undefined" error on Sanity dashboard. Likely hitting wrong project or the dashboard view. This opened the door for the rebuild conversation.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 29, 2026</div>
+          <div class="timeline-title">CMS Fixed + Email Swapped</div>
+          <div class="timeline-desc">Sent Ned direct Studio link — resolved the issue. He also requested email change to ned@anchor.cpa. Sent new invite, he confirmed access, old account removed. Quick turnaround — all sorted by 10:15am.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 29, 2026 — 10:15 AM</div>
+          <div class="timeline-title">Rebuild Pitch Sent</div>
+          <div class="timeline-desc">While fixing the CMS, planted two seeds: (1) case study page — still interested? (2) Full site rebuild at past-client discount. Mentioned designer hire and leveled-up work. Offered to share recent work. No pressure framing.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 30, 2026 — 12:56 PM</div>
+          <div class="timeline-title">🎯 Ned Responds — Interested in Full Package</div>
+          <div class="timeline-desc">Ned came back same day with a clear wish list: blog, location pages (Google visibility), expanded testimonials, certifications section (QB ProAdvisor, Gusto, Fathom, AICPA, MN CPA Society). Sent resoluteaccounting.com as a reference for cert display.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Apr 30, 2026 — 2:13 PM</div>
+          <div class="timeline-title">Pricing Sent — Awaiting Response</div>
+          <div class="timeline-desc">Sent two options: $1,250–$1,500 (straight rebuild) or $2,000–$2,200 (full package with all additions). Mentioned location pages as individual landing pages per area for Google ranking. Also asked how business is going. Ball is in Ned's court.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Scope: Full Rebuild + Expansion (Option B — $2,000–$2,200)</strong>
+          <span>Redesigned site with designer involvement. All existing pages rebuilt from scratch plus new blog, location pages, expanded testimonials, and certifications section. CMS retained (Sanity — cleaned up, single project).</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Rebuild</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Full redesign with professional designer</li>
+            <li>StoryBrand messaging refresh — fractional CFO positioning</li>
+            <li>Clear CTA to Calendly / schedule a meeting</li>
+            <li>Certifications badges/logos displayed prominently</li>
+            <li>Testimonials preview section</li>
+            <li>Services overview (bookkeeping, tax, CFO)</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Rebuild</span>
+          <h4>About / Who We Are</h4>
+          <ul>
+            <li>Ned's CPA background + fractional CFO vision</li>
+            <li>Professional + personal balance to build trust</li>
+            <li>Certifications & memberships section (full display)</li>
+            <li>Updated headshot / professional imagery</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Rebuild</span>
+          <h4>Contact / Get in Touch</h4>
+          <ul>
+            <li>Contact form (Name, Email, Message, Services)</li>
+            <li>Calendly link or embedded scheduler</li>
+            <li>Phone, email, location info</li>
+            <li>Form submissions direct to Ned's email</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-new">New</span>
+          <h4>Blog</h4>
+          <ul>
+            <li>CMS-managed blog system via Sanity</li>
+            <li>SEO-optimized post structure</li>
+            <li>Categories/tags for content organization</li>
+            <li>Ned can publish articles on tax tips, bookkeeping advice, CFO insights</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-new">New</span>
+          <h4>Location Pages (SEO Play)</h4>
+          <ul>
+            <li>Individual landing pages per service area</li>
+            <li>Target: "CPA in [city]" / "bookkeeper near [city]"</li>
+            <li>Each page uniquely written — not duplicate content</li>
+            <li>Cities TBD with Ned — Minneapolis suburbs + surrounding areas</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-new">New</span>
+          <h4>Testimonials (Expanded)</h4>
+          <ul>
+            <li>Dedicated testimonials page or prominent section</li>
+            <li>CMS-managed — Ned can add new ones easily</li>
+            <li>Client name, business, quote, optional photo</li>
+            <li>Social proof as conversion driver</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6; margin-top: 8px;">
+        <span class="page-badge" style="background:var(--gray-100);color:var(--gray-600);">Not in Scope</span>
+        <h4>Case Study Page</h4>
+        <ul>
+          <li>Discussed historically but never built</li>
+          <li>Offered to throw in free with the rebuild</li>
+          <li>Could be added during or after build if Ned wants it</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>CMS Details</h3>
+        <div class="data-row">
+          <span class="data-label">Platform</span>
+          <span class="data-value">Sanity — existing setup from original build</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Issue</span>
+          <span class="data-value">Had duplicate Sanity project causing dashboard errors. Fixed — sent Ned direct Studio link. Dashboard disabled.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Rebuild Plan</span>
+          <span class="data-value">Clean up Sanity — single project, new schemas for blog, testimonials, location pages. Same simple CMS experience.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Login</span>
+          <span class="data-value">ned@anchor.cpa — swapped from old email on Apr 29, 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Don't send content checklist until deal is confirmed</strong>
+          <span>Ned hasn't confirmed the rebuild yet. Once he commits and deposit is in, send the formal content request. Most content can be pulled from the existing site + Ned's input on new sections.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist (for when project kicks off)</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Updated Professional Photo</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Current site has a headshot — may need updated/higher-res version for the redesign</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏅</span>
+            <div>
+              <strong>Certification Badges/Logos</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">QuickBooks ProAdvisor, Gusto Advisor, Fathom Advisor, AICPA, MN CPA Society — need high-res logos or badge graphics. Can source from partner portals.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">⭐</span>
+            <div>
+              <strong>Testimonials</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Client quotes, names, businesses. The more the better. Current site has minimal testimonials.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📍</span>
+            <div>
+              <strong>Service Area List</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Which cities/areas does Ned want location pages for? Minneapolis, St. Paul, suburbs? Need specific list for SEO targeting.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Updated About/Bio Copy</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Current bio references O'Sullivan Tax & Accounting vision. Needs refresh for Anchor brand. Rough notes fine — Jordan will write the copy.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📝</span>
+            <div>
+              <strong>Blog Topic Ideas (Optional)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Any topics Ned wants for launch posts. Can write 1-2 sample posts to seed the blog. Not required for launch.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Brand Assets</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Current Anchor logo files, brand colors, any style guide. The current site uses a teal/navy palette with the anchor bar chart icon.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Likely Available</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack (Same as Current)</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Sanity — cleaned up, single project with new schemas</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel ($20/mo, already set up — Ned pays directly)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel — no issues</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain & Current Site</h3>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">anchor.cpa — already pointed to Vercel</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Pages</span>
+            <span class="data-value">Home, Who We Are, Contact (Get in Touch)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current CMS Content</span>
+            <span class="data-value">Hero image via Sanity, services sections, testimonial. CMS login: ned@anchor.cpa</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Sanity Project ID</span>
+            <span class="data-value">9gvfekze (visible in image URLs on current site)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Current Site Assessment</h3>
+        <div class="data-row">
+          <span class="data-label">Design</span>
+          <span class="data-value">Clean but basic — built early in Jordan's career. Functional but doesn't match current design standards. No designer involved originally.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Messaging</span>
+          <span class="data-value">"Steady Books. Clear Direction. Confidence." — StoryBrand-inspired. Still solid foundation to build on.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Services Listed</span>
+          <span class="data-value">Bookkeeping & Financial Management, Tax Planning & Preparation, Fractional CFO Services</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">SEO</span>
+          <span class="data-value">Basic on-page only. Image alt text uses "Small business bookkeeping Minnesota." No blog, no location pages, no structured data.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Migration Notes</span>
+          <span class="data-value">No domain migration needed — same domain, same hosting. Deploy new site to same Vercel project or create new one and swap.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Timeline cannot start until deposit is received</strong>
+          <span>Estimated 3–5 weeks from deposit to launch with prompt feedback. Ned is historically responsive, so this should move fast.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Week 1 — Kickoff</div>
+          <h4>Setup & Content Gathering</h4>
+          <ul>
+            <li>Send content checklist to Ned</li>
+            <li>Get service area list for location pages</li>
+            <li>Collect certification logos/badges</li>
+            <li>Collect testimonials</li>
+            <li>Clean up Sanity — consolidate to single project, build new schemas</li>
+            <li>Designer begins homepage concepts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Weeks 1–3</div>
+          <h4>Design & Core Development</h4>
+          <ul>
+            <li>Build redesigned Home, About, Contact pages</li>
+            <li>Implement certifications/memberships section</li>
+            <li>Build blog system (CMS + frontend)</li>
+            <li>Build expanded testimonials section (CMS-managed)</li>
+            <li>Share live dev link for Ned's feedback as we go</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 3–4</div>
+          <h4>Location Pages + Content</h4>
+          <ul>
+            <li>Build location page template + individual pages</li>
+            <li>Write unique copy per location (SEO-optimized)</li>
+            <li>Populate testimonials, cert badges, blog seed posts</li>
+            <li>Integrate updated photos and brand assets</li>
+            <li>Implement feedback from Ned's reviews</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 4–5</div>
+          <h4>Finalization & Launch</h4>
+          <ul>
+            <li>Final review with Ned</li>
+            <li>SEO pass — meta tags, structured data, sitemap</li>
+            <li>Deploy to production (same domain, swap Vercel deployment)</li>
+            <li>Quick CMS walkthrough for new blog + testimonials schemas</li>
+            <li>Final invoice ($1,050) sent at launch</li>
+            <li>Post-launch check-in scheduled</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Original proposal had several optional add-ons that Ned passed on — revisit once the rebuild proves its value</strong>
+          <span>Don't pitch these during the rebuild. Wait until post-launch, once he's seeing the quality difference and getting comfortable with the new site.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📧 Branded Auto-Response Email</h4>
+          <div class="price">$150</div>
+          <p>Was in the original proposal as an optional add-on at $150. Auto-sends a polished, on-brand confirmation when someone fills out the contact form. Easy sell once the new site is generating leads.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📅 Embedded Calendly</h4>
+          <div class="price">$125</div>
+          <p>Also in the original proposal. Embeds the scheduler directly on-site instead of linking out. Reduces drop-off, keeps visitors on the page. Natural add-on after launch.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📖 Case Study Page</h4>
+          <div class="price">Offered Free with Rebuild</div>
+          <p>Discussed before the rebuild conversation. Offered to include for free. If he doesn't take it during the rebuild, this becomes a standalone add-on later (~$300–$500).</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎨 Full Logo Package</h4>
+          <div class="price">$500</div>
+          <p>Original proposal offered this at $500. He has a logo now (the Anchor bar chart mark) but if he ever wants a full brand refresh, this is on the table.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📰 Newsletter Integration</h4>
+          <div class="price">~$200–$400</div>
+          <p>Mentioned in the original proposal's "Future Flexibility" section. Email capture + newsletter system. Good fit once the blog is generating content worth distributing.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance / Retainer</h4>
+          <div class="price">~$500–$800/yr</div>
+          <p>Ongoing updates, blog post support, location page additions as his service area grows. Light retainer for a client who's historically low-maintenance but appreciates quality.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">April 30, 2026 — Rebuild Pitch Window</div>
+        <p>The CMS support request was the perfect door-opener. Fixed his issue quickly, then naturally transitioned into "while I've got you." The pitch was soft — no pressure, framed as "just wanted to put it on your radar." Ned's response was enthusiastic and specific (blog, locations, testimonials, certs), which means he's been thinking about this independently. That's the best kind of lead.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Resolute Accounting — The Reference Site</div>
+        <p>Ned sent resoluteaccounting.com as his reference for how certs should be displayed. That site is basic — WordPress, probably Temecula Web Solutions template. They show AICPA logo, MN CPA Society logo, and a Gusto People Advisory badge. Their layout is functional but generic. We can do significantly better. Use this as a floor, not a ceiling. Show Ned the gap between what Resolute has and what we'll build.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Location Pages Strategy Note</div>
+        <p>Pitched the location pages idea specifically: "I actually have an idea for this where we build individual landing pages per location so you can rank on Google for each area you serve." This is a strong differentiator — most accountants don't have this. Need to get Ned's specific service area list. Minneapolis metro has dozens of suburbs that could each be a landing page. This is the real SEO win in this project.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Sanity CMS Cleanup Required</div>
+        <p>There are at least two Sanity projects associated with this client. The dashboard was showing "Undefined" which usually means the dashboard plugin was pointing at the wrong project or the dataset config was off. Fixed by sending a direct Studio link and disabling the dashboard. For the rebuild, start fresh with clean schemas or migrate the correct project. Sanity project ID from current site image URLs: 9gvfekze.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pricing Strategy Note</div>
+        <p>The $2,000–$2,200 price point is aggressive but intentional. This is a returning client who came in at $925 when both parties were just starting out. The rebuild price honors that relationship while covering time + designer costs. Market rate would be $5–7K for this scope. If Ned pushes back, there's room to simplify (skip location pages, reduce blog scope), but he seemed genuinely excited about the full package. Don't negotiate down unless he asks — the price is already a steal.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Ned is responsive, professional, and appreciative. Replies quickly (often within minutes during business hours). Doesn't need hand-holding. Uses his email signature consistently. Communication is all email — no calls needed unless something complex comes up. Keep things efficient and direct. He'll match the energy.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile FAB navigation
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (menuOpen) closeMenu();
+    else openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link click on mobile: close sidebar, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
