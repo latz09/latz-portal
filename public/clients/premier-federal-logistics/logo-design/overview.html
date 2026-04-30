@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Premier Federal Logistics — Brand Identity Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .project-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s;
+  }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'PFL';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 160px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── DELIVERABLES GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-included { background: var(--teal-light); color: var(--teal); }
+  .badge-not { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .main { margin-left: 0; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding-left: 20px; padding-right: 20px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .checklist li .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Premier Federal Logistics</div>
+    <div class="project-label">Brand Identity</div>
+    <div class="status-pill">Active Project</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏢</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Deliverables</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#relationship" class="nav-link"><span class="nav-icon">🤝</span> Relationship Context</a>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Brand Identity Overview · Source of Truth</div>
+    <h1>Premier Federal Logistics, LLC</h1>
+    <div class="sub">Full Brand Identity Package · Option 02 @ $1,200</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Contacts</span>
+        <span class="value">Tracy Krenz (design) · Bill Krenz (ops)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value">$1,200</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Received</span>
+        <span class="value">$600 ✓</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Balance Due</span>
+        <span class="value">$600 at delivery</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Related Project</span>
+        <span class="value">Website Build — $5,000 (separate)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phone (Bill)</span>
+        <span class="value">907-575-7705</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏢</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contacts</h3>
+          <div class="data-row">
+            <span class="data-label">Design Lead</span>
+            <span class="data-value">Tracy Krenz — Owner/Founder. All design decisions go through her.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Operations</span>
+            <span class="data-value">Bill Krenz — Exec. Dir. of Ops. CC'd on all communication.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Bill's Phone</span>
+            <span class="data-value">907-575-7705 (Alaska area code — lives in Wausau)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:billkkrenz@gmail.com">billkkrenz@gmail.com</a> (Bill) · <a href="mailto:tracy@premierfederallogistics.com">tracy@premierfederallogistics.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Communication</span>
+            <span class="data-value">Tracy handles design feedback. Bill handles logistics + payments. Always CC both.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Company</span>
+            <span class="data-value">Premier Federal Logistics, LLC</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Type</span>
+            <span class="data-value">Federal compliance & logistics firm</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Ownership</span>
+            <span class="data-value">Veteran-owned, woman-owned (Tracy Krenz — Owner/Founder)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Business Model</span>
+            <span class="data-value">Subcontracts under prime federal contractors (Boeing, Halliburton, UPS)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">HQ</span>
+            <span class="data-value">Wausau, WI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Brand Context</h3>
+        <div class="data-row">
+          <span class="data-label">Primary Audience</span>
+          <span class="data-value">Fortune 500 procurement teams, federal contracting officers, prime contractors</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Brand Goal</span>
+          <span class="data-value">Federal-level credibility. Must look like a serious operation — not a local small business.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Logo</span>
+          <span class="data-value">Fiverr logo — Bill sent it April 13. Not built for print, large-format, or federal-facing credibility.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Design Direction</span>
+          <span class="data-value">Likely navy/dark blue base, patriotic undertones (red/white/blue), gold/brass accents. Strong modern sans-serif. No playful or casual fonts.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Certifications</span>
+          <span class="data-value">Woman-owned + veteran-owned — in process, expected before website launch. Badge assets needed.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Approved: Option 02 — Full Brand Identity @ $1,200</strong>
+        <p>Discovery session, 2–3 concept directions, 2 revision rounds, final logo in all variations, complete color system, typography pairings, brand guidelines document, social media specs, business card + letterhead layout, full file package. Bill confirmed April 24 — "We also will do the 1200 package on the logo." Deposit ($600) paid via PayPal.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why This Project Exists</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Current logo was sourced from Fiverr — doesn't carry authority at the federal level</li>
+            <li><span class="check-icon">🔴</span> Logo files likely not formatted correctly for print or large-format use</li>
+            <li><span class="check-icon">🔴</span> No brand system — no color definitions, no typography rules, no usage guidelines</li>
+            <li><span class="check-icon">🔴</span> Logo appears everywhere: site header, favicon, capability statement, email signatures, truck decals, business cards</li>
+            <li><span class="check-icon">🔴</span> Procurement officers judge credibility in seconds — a weak logo undercuts every credential on the page</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Logo that holds up next to Boeing, Halliburton, and UPS branding</li>
+            <li><span class="check-icon">✅</span> Complete file package — SVG, PNG, EPS, PDF, favicon — works everywhere</li>
+            <li><span class="check-icon">✅</span> Brand guidelines doc so anyone touching the brand knows what to do</li>
+            <li><span class="check-icon">✅</span> Visual system that flows directly into the website build</li>
+            <li><span class="check-icon">✅</span> Tracy and Bill feel confident putting it on a capability statement or business card</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔗</span>
+        <div class="callout-body">
+          <strong>This project feeds directly into the website build</strong>
+          <span>Running parallel with the $5,000 website project. Logo will likely be completed first, which means the website design system gets built on top of a locked brand identity. Best-case scenario — no design rework.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Bill said "we are open to anything"</strong>
+          <span>When asked whether they want text-only or concepts with icon marks/graphic elements, Bill's exact words were "We are open to anything." That's full creative freedom — use it.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Full Brand Identity (Option 02)</strong></td>
+            <td>Discovery, 2–3 concepts, 2 revision rounds, full file package, brand guidelines</td>
+            <td class="amount">$1,200</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Contract</strong></td>
+            <td></td>
+            <td class="amount"><strong>$1,200</strong></td>
+          </tr>
+          <tr class="paid-row">
+            <td>✅ Deposit Received</td>
+            <td>Paid via PayPal — ~April 29, 2026</td>
+            <td class="amount">$600</td>
+          </tr>
+          <tr>
+            <td><strong>Balance Due at Delivery</strong></td>
+            <td>Due when final brand package is delivered</td>
+            <td class="amount"><strong>$600</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Combined client value: $6,200</strong>
+          <span>Website ($5,000) + Brand Identity ($1,200). Both deposits now received. This is a high-trust client who went from a $1,500 initial budget to $6,200 total across two projects — entirely on the strength of the work shown.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Logo Project Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Logo grew organically out of the website sale</strong>
+          <span>Bill sent the Fiverr logo on April 13 with the rest of his website materials. Said he was "open to different options." Jordan sent the brand identity package on April 21 alongside the website proposal. Bill chose Option 02 on April 24 — no pushback on price.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 13, 2026</div>
+          <div class="timeline-title">Logo Received from Bill</div>
+          <div class="timeline-desc">Bill sent 3 PDFs of website copy + the current PFL logo (5W(2).jpeg). Said "Here is our logo we are open different options as well." Fiverr-sourced logo — text-based, not built for the level they're operating at.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 16, 2026</div>
+          <div class="timeline-title">Creative Direction Question</div>
+          <div class="timeline-desc">Jordan asked Bill: "Are you guys open to seeing concepts that include a graphic or icon mark alongside the text? Or do you want to keep it strictly text-based?" Bill responded same day: "We are open to anything." Full creative freedom confirmed.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 20, 2026</div>
+          <div class="timeline-title">Progress Update</div>
+          <div class="timeline-desc">Jordan emailed Bill with a status update — working through the logo direction with the designer, formal proposal + logo concepts coming by end of day Tuesday.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 21, 2026</div>
+          <div class="timeline-title">Brand Identity Package + Website Proposal Sent</div>
+          <div class="timeline-desc">Two separate deliverables sent same day. Brand identity package with Option 01 ($300 refinement) and Option 02 ($1,200 full identity). Website proposal ($5,000) with PayPal invoice for deposit. Logo package positioned as separate from the website — "I'll send over a separate outline for the logo so we can keep everything clean and organized."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 24, 2026</div>
+          <div class="timeline-title">Follow-Up Check-In</div>
+          <div class="timeline-desc">Jordan followed up — no pressure, checking if debit card arrived and if questions came up. Keeping the calendar in mind for the 2-month website timeline.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 24, 2026</div>
+          <div class="timeline-title">🎉 Bill Confirms Option 02 — $1,200</div>
+          <div class="timeline-desc">Bill replied same day: "We should be getting it tomorrow so I will be able to do it soon. We also will do the 1200 package on the logo so how does that deposit work?" No negotiation, no hesitation. Jordan sent PayPal invoice for $600 deposit within 10 minutes.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Apr 29, 2026</div>
+          <div class="timeline-title">Final Check-In</div>
+          <div class="timeline-desc">Jordan emailed: "hoping the card arrived and everything went smoothly." Asked if any issues with either invoice.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">~Apr 29, 2026</div>
+          <div class="timeline-title">✅ Deposit Paid — PROJECT LIVE</div>
+          <div class="timeline-desc">Both deposits paid (website $2,500 + logo $600). Logo project is officially active. Discovery session needs to be scheduled with Tracy.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & DELIVERABLES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Deliverables</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Option 02 — Full Brand Identity @ $1,200</strong>
+          <span>Everything listed below is in scope. This is the complete deliverable set from the brand identity package Bill approved.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-included">Included</span>
+          <h4>Discovery & Concepts</h4>
+          <ul>
+            <li>Discovery session (20–30 min) — story, audience, competitors</li>
+            <li>2–3 distinct concept directions presented</li>
+            <li>2 rounds of revisions on chosen direction</li>
+            <li>Competitor review to ensure differentiation</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-included">Included</span>
+          <h4>Logo System</h4>
+          <ul>
+            <li>Final logo in full color, white, dark, and monochrome</li>
+            <li>Icon mark / PFL monogram for compact use</li>
+            <li>Tagline lock-up version (if applicable)</li>
+            <li>Horizontal and stacked layout variations</li>
+            <li>Favicon-ready simplified mark</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-included">Included</span>
+          <h4>Brand System</h4>
+          <ul>
+            <li>Complete color system — primary, secondary, accent with usage ratios</li>
+            <li>Typography pairings — heading + body font recommendations</li>
+            <li>Full brand guidelines document with do's and don'ts</li>
+            <li>Clear space and minimum size rules</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-included">Included</span>
+          <h4>Application & Files</h4>
+          <ul>
+            <li>Social media profile and cover image specs</li>
+            <li>Business card and letterhead layout (design only)</li>
+            <li>Complete file package: SVG, PNG (multiple sizes), EPS, PDF, favicon</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 8px; border-top: 3px solid var(--gray-400); opacity: 0.6;">
+        <h3 style="color: var(--gray-400);">Not in Scope (Option 01 — Declined)</h3>
+        <div class="data-row">
+          <span class="data-label">Logo Refinement</span>
+          <span class="data-value">$300 option — clean up existing logo, proper file formats, one-page brand sheet. Not selected. Bill chose the full build instead.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Discovery session = project kickoff</strong>
+          <span>Can't start concepts until the discovery call with Tracy happens. Schedule it ASAP — this is the bottleneck. Everything else (competitor research, initial exploration) can begin in parallel.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📞</span>
+            <div>
+              <strong>Discovery Session (20–30 min)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Schedule with Tracy (and Bill if available). Cover: what PFL stands for, who they're trying to impress, what direction feels right, any colors or vibes they gravitate toward or hate.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Not Yet Scheduled</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🖼️</span>
+            <div>
+              <strong>Existing Logo File</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Bill sent 5W(2).jpeg on April 13. Fiverr-sourced — likely raster only. Ask if they have any vector files (AI, EPS, SVG) from the original designer. Probably not, but worth asking.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In Hand — JPEG</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎖️</span>
+            <div>
+              <strong>Certification Badge Assets</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Woman-owned + veteran-owned certifications in process. Once official, get badge/seal assets — these may influence brand guidelines and how badges sit alongside the logo.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending — Certs in Process</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏷️</span>
+            <div>
+              <strong>Tagline (if applicable)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Scope includes a tagline lock-up version. Ask during discovery if they have a tagline or want one developed. If yes, build it into the concepts.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending — Ask in Discovery</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📋</span>
+            <div>
+              <strong>Current Capability Statement</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">If they have an existing cap statement PDF, review it — the logo and brand system need to work on that document. Also informs whether a cap statement design upsell is viable.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Deposit received ~April 29, 2026</strong>
+          <span>Target: 2–3 weeks from discovery session to final delivery. Will likely finish before website build reaches design phase — ideal sequencing.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Week 1 — NOW</div>
+          <h4>Kickoff & Discovery</h4>
+          <ul>
+            <li>Schedule discovery session with Tracy (and Bill if available)</li>
+            <li>Review existing Fiverr logo — assess what works and what doesn't</li>
+            <li>Begin competitor research (federal logistics firms, defense contractors)</li>
+            <li>Collect any existing brand materials, cap statements, etc.</li>
+            <li>Ask about tagline during discovery</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Week 1–2</div>
+          <h4>Concept Development</h4>
+          <ul>
+            <li>Develop 2–3 distinct concept directions</li>
+            <li>Present concepts to Tracy and Bill</li>
+            <li>Let them react to real options — not just one idea</li>
+            <li>Gather feedback on direction preference</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Week 2–3</div>
+          <h4>Revisions & Refinement</h4>
+          <ul>
+            <li>Round 1 revisions on chosen direction</li>
+            <li>Color tweaks, weight adjustments, icon variations</li>
+            <li>Round 2 revisions — lock it in</li>
+            <li>Build out all logo variations (horizontal, stacked, monochrome, etc.)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Week 3</div>
+          <h4>Final Delivery</h4>
+          <ul>
+            <li>Complete file package: SVG, PNG (multiple sizes), EPS, PDF, favicon</li>
+            <li>Brand guidelines document (do's, don'ts, clear space, minimum sizes)</li>
+            <li>Color system documented: hex, RGB, CMYK values</li>
+            <li>Typography pairings defined</li>
+            <li>Social media profile + cover specs</li>
+            <li>Business card + letterhead layout (design only)</li>
+            <li>Final $600 invoice sent</li>
+            <li>Feed brand assets directly into website build</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATIONSHIP CONTEXT -->
+    <section id="relationship">
+      <div class="section-header">
+        <div class="section-icon">🤝</div>
+        <h2>Relationship Context</h2>
+      </div>
+
+      <div class="card">
+        <h3>How This Client Communicates</h3>
+        <div class="data-row">
+          <span class="data-label">Bill's Style</span>
+          <span class="data-value">Short, direct emails. Responds fast when engaged. Prefers phone calls for decisions. Said "I will give a call tomorrow" before the acceptance call.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Tracy's Role</span>
+          <span class="data-value">Design lead. Takes over creative decisions. Haven't worked with her directly on the logo yet — discovery session will be the first deep interaction.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Decision Speed</span>
+          <span class="data-value">Fast once trust is established. Bill went from $1,500 budget to $6,200 total spend. No negotiation on the logo — just "how does the deposit work?"</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Trust Level</span>
+          <span class="data-value">High. Earned through the wireframe and direct communication. Bill was burned by a previous developer — showing the work before writing code addressed that fear. Don't erode this.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Bill was burned before</strong>
+          <span>Previous developer built something that was "never what I wanted." The wireframe approach addressed this for the website. For the logo, the equivalent is the 2–3 concept approach — multiple real directions, not one take-it-or-leave-it idea. Let them react and choose.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎖️</span>
+        <div class="callout-body">
+          <strong>The credentials are elite — design must match</strong>
+          <span>Tracy: Secret-level DoD missions, M1 Abrams tank transport, Army veteran, two-time ARCOM. Bill: 1M+ accident-free miles, certified bookkeeper, 40+ property rehabilitations. The brand needs to carry the same authority as the people behind it.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Don't pitch anything new right now — they just committed $6,200</strong>
+          <span>Trust is high but the wallet just opened twice. Let the logo land, let the website impress, and revisit these naturally. Photography is the most likely next conversation — it was already discussed on the acceptance call.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📸 Professional Photography</h4>
+          <div class="price">TBD — coordinate with Meghan/Theresa Hill</div>
+          <p>Headshots for Tracy + Bill, plus branding photography (equipment, trucks, operations). Already discussed on the acceptance call — they're open to it. Need to coordinate travel to Wausau. Most natural next conversation.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📋 Capability Statement Design</h4>
+          <div class="price">~$300–$500</div>
+          <p>Professionally designed downloadable PDF using the new brand system. Most federal contractors need one. If PFL's current version is plain or nonexistent, this is a quick win — and it directly uses the logo and brand guidelines we're building right now.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🖨️ Print Collateral</h4>
+          <div class="price">~$200–$400</div>
+          <p>Business card + letterhead design is in scope (design only). If they want print-ready files with a specific printer's specs, or additional pieces (envelopes, folder, branded documents), that's a natural extension once the brand system is finalized.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">How the Logo Sale Happened</div>
+        <p>Bill sent the Fiverr logo on April 13 — unprompted, with his website materials, and added "we are open different options as well." That was the opening. Jordan asked about creative direction on April 16 (icon marks vs text-only). Bill said "open to anything." Jordan then built the brand identity package as a separate deliverable alongside the website proposal, sent both on April 21. Bill confirmed Option 02 on April 24 in the same breath as discussing the website deposit. No pitch needed — the package sold itself. Total elapsed time from logo received to Option 02 confirmed: 11 days.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Logo Feeds the Website</div>
+        <p>The logo project will likely finish before the website design phase kicks in. This is ideal — the website design system (colors, fonts, overall visual direction) gets built on a locked brand identity. No guessing, no rework, no "wait, we changed the logo" mid-build. Treat the logo project as Phase 0 of the website build.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">$1,500 to $6,200 — The Full Arc</div>
+        <p>Bill's initial budget was $1,500 for a website. He's now committed to $5,000 (website) + $1,200 (brand identity) = $6,200 total. The wireframe did the heavy lifting on the website sale; the brand identity package did the same for the logo. In both cases, showing the work and the thinking before asking for money was the play. Neither required negotiation — Bill just said yes.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Tracy is the Key for Logo</div>
+        <p>Bill handles the business communication and payments, but Tracy is the design decision-maker. The discovery session needs to center on Tracy's vision for PFL's brand. Don't make the mistake of designing for Bill's preferences if Tracy is the one who'll be living with this mark on her capability statements and business cards. Route concepts to both, but weight Tracy's feedback heavier on creative direction.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Fiverr Logo Assessment</div>
+        <p>The current logo (5W(2).jpeg) was sourced from Fiverr. It got the job done to get started, but it wasn't built for the level PFL is operating at. Files are almost certainly raster-only — no vector artwork for print or large-format. The design itself doesn't carry the authority that federal procurement officers expect. This isn't about aesthetics for the sake of it — it's about making sure the first visual impression doesn't create doubt.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Alaska Phone Number</div>
+        <p>Bill's number is 907 (Alaska area code) but he's based in Wausau, WI. Likely from prior military or work. Don't assume anything — just note it so it doesn't cause confusion.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let sidebarOpen = false;
+
+  function openSidebar() {
+    sidebarOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    sidebarOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => sidebarOpen ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 680 && sidebarOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
