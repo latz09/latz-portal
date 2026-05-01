@@ -1,0 +1,1353 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Call Prep — Sand Castle Cottages | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--sidebar-bg: #0a0a0a;
+				--header-bg: #0f0f0f;
+				--content-bg: #f8fafc;
+				--card-bg: #ffffff;
+				--card-border: #e5e7eb;
+				--primary: #18a1ad;
+				--primary-dim: rgba(24, 161, 173, 0.1);
+				--gray-50: #f9fafb;
+				--gray-100: #f3f4f6;
+				--gray-200: #e5e7eb;
+				--gray-300: #d1d5db;
+				--gray-400: #9ca3af;
+				--gray-500: #6b7280;
+				--gray-600: #4b5563;
+				--gray-700: #374151;
+				--gray-900: #111827;
+				--text-dark: #1f2937;
+				--green: #16a34a;
+				--green-light: #f0fdf4;
+				--green-border: #bbf7d0;
+				--orange: #ea580c;
+				--orange-light: #fff7ed;
+				--orange-border: #fed7aa;
+				--red: #dc2626;
+				--red-light: #fef2f2;
+				--red-border: #fecaca;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--content-bg);
+				color: var(--text-dark);
+				line-height: 1.6;
+				font-size: 16px;
+			}
+
+			.main-content {
+				min-height: 100vh;
+			}
+
+			.page-header {
+				background: var(--header-bg);
+				padding: 20px 32px;
+				position: relative;
+				background: radial-gradient(
+					ellipse at top,
+					rgba(24, 161, 173, 0.08) 0%,
+					var(--header-bg) 70%
+				);
+			}
+
+			.header-overline {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--primary);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				margin-bottom: 4px;
+			}
+
+			.header-overline::before {
+				content: '── ';
+				color: rgba(24, 161, 173, 0.4);
+			}
+
+			.header-title {
+				font-family: 'Fraunces', serif;
+				font-size: 26px;
+				font-weight: 600;
+				color: white;
+				line-height: 1.2;
+				margin-bottom: 6px;
+				letter-spacing: -0.02em;
+			}
+
+			.header-subtitle {
+				color: rgba(255, 255, 255, 0.7);
+				font-size: 15px;
+				margin-bottom: 16px;
+			}
+
+			.meta-strip {
+				display: flex;
+				gap: 24px;
+				align-items: center;
+				padding: 12px 0;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-left: none;
+				border-right: none;
+				font-size: 13px;
+				flex-wrap: wrap;
+			}
+
+			.meta-item {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.meta-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: rgba(255, 255, 255, 0.5);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.meta-value {
+				color: rgba(255, 255, 255, 0.9);
+				font-weight: 500;
+			}
+
+			.meta-value.warning {
+				color: var(--orange);
+			}
+
+			.meta-value.success {
+				color: var(--green);
+			}
+
+			.content-area {
+				padding: 24px 32px;
+				max-width: 1800px;
+				margin: 0 auto;
+			}
+
+			.bottom-line {
+				background: var(--header-bg);
+				border: 1px solid rgba(255, 255, 255, 0.07);
+				border-left: 3px solid var(--primary);
+				border-radius: 8px;
+				padding: 16px 20px;
+				margin-bottom: 24px;
+			}
+
+			.bottom-line-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--primary);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				margin-bottom: 6px;
+			}
+
+			.bottom-line-text {
+				color: rgba(255, 255, 255, 0.85);
+				font-weight: 300;
+				font-size: 16px;
+				line-height: 1.5;
+			}
+
+			.context-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16px;
+				margin-bottom: 24px;
+			}
+
+			.context-card {
+				background: var(--card-bg);
+				border: 1px solid var(--card-border);
+				border-radius: 8px;
+				padding: 16px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+			}
+
+			.context-card-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--gray-400);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				padding-bottom: 6px;
+				border-bottom: 1px solid var(--gray-200);
+			}
+
+			.context-card-content {
+				font-size: 14px;
+				color: var(--gray-700);
+				line-height: 1.5;
+			}
+
+			.pricing-ladder {
+				background: var(--card-bg);
+				border: 1px solid var(--card-border);
+				border-radius: 8px;
+				padding: 16px 20px;
+				margin-bottom: 24px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+			}
+
+			.pricing-ladder-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 12px;
+				text-align: center;
+			}
+
+			.pricing-tiers {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+				gap: 12px;
+			}
+
+			.pricing-tier {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 12px;
+				border-radius: 6px;
+				border: 1px solid var(--gray-200);
+				font-size: 13px;
+				text-align: center;
+			}
+
+			.pricing-tier.quoted {
+				background: rgba(24, 161, 173, 0.08);
+				border-color: rgba(24, 161, 173, 0.3);
+			}
+
+			.pricing-tier.accepted {
+				background: rgba(22, 163, 74, 0.08);
+				border-color: rgba(22, 163, 74, 0.3);
+				color: var(--green);
+			}
+
+			.pricing-tier.floor {
+				background: rgba(234, 88, 12, 0.08);
+				border-color: rgba(234, 88, 12, 0.3);
+				color: var(--orange);
+			}
+
+			.pricing-tier.danger {
+				background: rgba(220, 38, 38, 0.08);
+				border-color: rgba(220, 38, 38, 0.3);
+				color: var(--red);
+			}
+
+			.pricing-amount {
+				font-family: 'DM Mono', monospace;
+				font-weight: 600;
+				font-size: 15px;
+				margin-bottom: 4px;
+			}
+
+			.pricing-description {
+				font-size: 11px;
+				color: var(--gray-600);
+				line-height: 1.3;
+				margin-bottom: 4px;
+			}
+
+			.pricing-note {
+				font-family: 'DM Mono', monospace;
+				font-size: 8px;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				padding: 2px 6px;
+				border-radius: 3px;
+				background: var(--gray-100);
+				color: var(--gray-500);
+			}
+
+			.pricing-tier.quoted .pricing-note {
+				background: var(--primary-dim);
+				color: var(--primary);
+			}
+
+			.pricing-tier.accepted .pricing-note {
+				background: var(--green-light);
+				color: var(--green);
+			}
+
+			.pricing-tier.floor .pricing-note {
+				background: var(--orange-light);
+				color: var(--orange);
+			}
+
+			.pricing-tier.danger .pricing-note {
+				background: var(--red-light);
+				color: var(--red);
+			}
+
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin: 32px 0 16px;
+				padding-bottom: 8px;
+				border-bottom: 1px solid var(--gray-200);
+			}
+
+			.section-number {
+				background: var(--primary-dim);
+				color: var(--primary);
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				font-weight: 500;
+				padding: 4px 8px;
+				border-radius: 4px;
+				letter-spacing: 0.08em;
+			}
+
+			.section-title {
+				font-family: 'Fraunces', serif;
+				font-size: 24px;
+				font-weight: 600;
+				color: var(--text-dark);
+				letter-spacing: -0.01em;
+			}
+
+			.subsection-header {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				margin: 24px 0 12px;
+				padding-bottom: 6px;
+				border-bottom: 1px solid var(--gray-200);
+			}
+
+			.subsection-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--gray-500);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.subsection-divider {
+				flex: 1;
+				height: 1px;
+				background: var(--gray-200);
+			}
+
+			.scenarios-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 16px;
+			}
+
+			@media (min-width: 1200px) {
+				.scenarios-grid {
+					grid-template-columns: repeat(2, 1fr);
+					gap: 20px;
+				}
+			}
+
+			@media (min-width: 1600px) {
+				.scenarios-grid {
+					grid-template-columns: repeat(3, 1fr);
+					gap: 24px;
+				}
+			}
+
+			.scenario-card {
+				background: var(--card-bg);
+				border: 1px solid var(--card-border);
+				border-radius: 8px;
+				margin-bottom: 0;
+				overflow: hidden;
+				transition: all 0.2s ease;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+				height: fit-content;
+				cursor: pointer;
+			}
+
+			.scenario-card:hover {
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+				transform: translateY(-1px);
+			}
+
+			.scenario-card.pricing {
+				border-left: 4px solid var(--orange);
+			}
+
+			.scenario-card.logistics {
+				border-left: 4px solid var(--primary);
+			}
+
+			.scenario-card.danger {
+				border-left: 4px solid var(--red);
+			}
+
+			.scenario-header {
+				padding: 18px 20px 14px;
+				position: relative;
+			}
+
+			.scenario-trigger {
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--gray-800);
+				margin-bottom: 12px;
+				line-height: 1.3;
+				padding-right: 24px;
+			}
+
+			.scenario-open-icon {
+				position: absolute;
+				top: 18px;
+				right: 18px;
+				width: 16px;
+				height: 16px;
+				color: var(--gray-400);
+				font-size: 14px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.scenario-bullets-visible {
+				margin-bottom: 0;
+			}
+
+			.scenario-bullets-visible ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+				gap: 8px;
+			}
+
+			.scenario-bullets-visible li {
+				padding: 8px 14px;
+				background: var(--gray-50);
+				border-radius: 6px;
+				font-size: 15px;
+				color: var(--gray-600);
+				border: 1px solid var(--gray-200);
+			}
+
+			.modal {
+				display: none;
+				position: fixed;
+				z-index: 1000;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.8);
+				backdrop-filter: blur(4px);
+			}
+
+			.modal.show {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				animation: modalFadeIn 0.2s ease-out;
+			}
+
+			@keyframes modalFadeIn {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+
+			.modal-content {
+				background: var(--card-bg);
+				border-radius: 12px;
+				padding: 24px 32px;
+				margin: 20px;
+				max-width: 800px;
+				max-height: 80vh;
+				overflow-y: auto;
+				box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+				position: relative;
+				animation: modalSlideIn 0.2s ease-out;
+			}
+
+			@keyframes modalSlideIn {
+				from {
+					opacity: 0;
+					transform: translateY(-20px) scale(0.95);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0) scale(1);
+				}
+			}
+
+			.modal-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 20px;
+				padding-bottom: 16px;
+				border-bottom: 1px solid var(--gray-200);
+			}
+
+			.modal-title {
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--gray-800);
+				margin: 0;
+			}
+
+			.modal-close {
+				background: none;
+				border: none;
+				font-size: 24px;
+				color: var(--gray-400);
+				cursor: pointer;
+				padding: 0;
+				width: 32px;
+				height: 32px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 6px;
+				transition: all 0.2s ease;
+			}
+
+			.modal-close:hover {
+				background: var(--gray-100);
+				color: var(--gray-600);
+			}
+
+			.modal-script {
+				font-size: 17px;
+				line-height: 1.7;
+				color: var(--gray-700);
+			}
+
+			.modal-script p {
+				margin-bottom: 16px;
+			}
+
+			.modal-script p:last-child {
+				margin-bottom: 0;
+			}
+
+			.modal-script strong {
+				color: var(--gray-800);
+				font-weight: 600;
+			}
+
+			.seed-plants {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16px;
+				margin: 24px 0;
+			}
+
+			.seed-plant {
+				background: var(--primary-dim);
+				border: 1px solid rgba(24, 161, 173, 0.2);
+				border-radius: 7px;
+				padding: 16px;
+			}
+
+			.seed-plant h4 {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--primary);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.seed-plant p {
+				font-size: 15px;
+				color: var(--gray-700);
+				font-weight: 500;
+				line-height: 1.4;
+			}
+
+			.checklist {
+				background: var(--card-bg);
+				border: 1px solid var(--card-border);
+				border-radius: 8px;
+				padding: 16px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+			}
+
+			.checklist-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 12px;
+				padding-bottom: 6px;
+				border-bottom: 1px solid var(--gray-200);
+			}
+
+			.checklist-item {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--gray-100);
+				font-size: 15px;
+				color: var(--gray-700);
+			}
+
+			.checklist-item:last-child {
+				border-bottom: none;
+			}
+
+			.checklist-icon {
+				font-size: 16px;
+			}
+
+			@media (max-width: 768px) {
+				.content-area {
+					padding: 16px;
+				}
+				.context-grid {
+					grid-template-columns: 1fr;
+				}
+				.seed-plants {
+					grid-template-columns: 1fr;
+				}
+				.pricing-tiers {
+					grid-template-columns: 1fr;
+				}
+				.scenario-bullets-visible ul {
+					grid-template-columns: 1fr;
+				}
+				.scenarios-grid {
+					grid-template-columns: 1fr !important;
+				}
+				.meta-strip {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 8px;
+				}
+				.modal-content {
+					margin: 10px;
+					padding: 20px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main-content">
+			<div class="page-header">
+				<div class="header-overline">Call Prep Dashboard</div>
+				<h1 class="header-title">Sand Castle Cottages · Follow-Up</h1>
+				<div class="header-subtitle">
+					Proposal sent, no response. This is a check-in, not a chase. Stay warm, stay casual.
+				</div>
+
+				<div class="meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Client</span>
+						<span class="meta-value">Jennifer Ferguson</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Company</span>
+						<span class="meta-value">Sand Castle Cottages</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Project</span>
+						<span class="meta-value">Logo / Brand Identity</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Quoted Range</span>
+						<span class="meta-value">$700 – $950</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Verbal Comfort</span>
+						<span class="meta-value warning">~$725</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Referred By</span>
+						<span class="meta-value">Pookie Rosa</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="content-area">
+				<div class="bottom-line" id="overview">
+					<div class="bottom-line-label">Bottom Line</div>
+					<div class="bottom-line-text">
+						She liked you on the call, loved the process, and hasn't said no. Silence after a proposal usually means life got busy or she's deciding between tiers — not that she's gone. This call is a friendly check-in. Don't sell. Ask if she had any questions, let her talk, and gently move her toward a decision. The Pookie email is handled — don't bring it up unless she does.
+					</div>
+				</div>
+
+				<div class="context-grid" id="context">
+					<div class="context-card">
+						<div class="context-card-title">What She's Seen</div>
+						<div class="context-card-content">
+							Full brand identity package with 3 tiered options ($700 / $825 / $950) • Option 02 marked as recommended • Discovery call covered design direction in detail • One screenshot inspiration sent (lighthouse layout) • Your email to Pookie defending the $700+ pricing
+						</div>
+					</div>
+					<div class="context-card">
+						<div class="context-card-title">Who She Is</div>
+						<div class="context-card-content">
+							Jen Ferguson, interior designer • Building Airbnb cottages in UP Michigan near Mackinac • Previous Airbnb experience (Longview) • Very articulate, strong visual opinions • Husband Jeff is co-owner with different design taste • Referred by Pookie Rosa (high school friend)
+						</div>
+					</div>
+					<div class="context-card">
+						<div class="context-card-title">What's Likely Happening</div>
+						<div class="context-card-content">
+							She's busy — drives during calls, works a job, building a property. She may be stuck choosing between tiers, or waiting for Jeff to weigh in. Pookie's $500 email may have made her second-guess the budget. She has NOT said no.
+						</div>
+					</div>
+				</div>
+
+				<div class="pricing-ladder">
+					<div class="pricing-ladder-title">Pricing Structure — As Quoted</div>
+					<div class="pricing-tiers">
+						<div class="pricing-tier">
+							<div class="pricing-amount">$700</div>
+							<div class="pricing-description">
+								Option 01 — Logo Package<br />(2 concepts, 1 revision, core files)
+							</div>
+							<div class="pricing-note">Entry</div>
+						</div>
+
+						<div class="pricing-tier quoted">
+							<div class="pricing-amount">$825</div>
+							<div class="pricing-description">
+								Option 02 — Brand Identity<br />(3 concepts, 2 revisions, guidelines, social assets)
+							</div>
+							<div class="pricing-note">Recommended</div>
+						</div>
+
+						<div class="pricing-tier">
+							<div class="pricing-amount">$950</div>
+							<div class="pricing-description">
+								Option 03 — Complete Brand Toolkit<br />(+ typography, layout variations, tagline lock-up)
+							</div>
+							<div class="pricing-note">Full System</div>
+						</div>
+
+						<div class="pricing-tier floor">
+							<div class="pricing-amount">$700</div>
+							<div class="pricing-description">
+								Option 01 is the floor<br />Don't go below this
+							</div>
+							<div class="pricing-note">FLOOR</div>
+						</div>
+
+						<div class="pricing-tier danger">
+							<div class="pricing-amount">❌</div>
+							<div class="pricing-description">Below $700 / custom discount</div>
+							<div class="pricing-note">Walk Away</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="section-header" id="scenarios">
+					<div class="section-number">01</div>
+					<h2 class="section-title">Response Scenarios</h2>
+				</div>
+
+				<div class="subsection-header">
+					<div class="subsection-title">Opening the Call</div>
+					<div class="subsection-divider"></div>
+				</div>
+
+				<div class="scenarios-grid">
+					<div class="scenario-card logistics" data-scenario="opener">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>The Opener</strong> — Setting the Tone
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Keep it light — "just checking in"</li>
+									<li>Reference the proposal casually</li>
+									<li>Ask if she had any questions</li>
+									<li>Let her lead from there</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="subsection-header">
+					<div class="subsection-title">Pricing & Budget</div>
+					<div class="subsection-divider"></div>
+				</div>
+
+				<div class="scenarios-grid">
+					<div class="scenario-card pricing" data-scenario="too-much">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"It's more than I was expecting"</strong> — Budget Pushback
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Acknowledge it — don't get defensive</li>
+									<li>Point her to Option 01 at $700</li>
+									<li>Remind her it's close to the $725 she was fine with</li>
+									<li>The tiered format means she picks what fits</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card pricing" data-scenario="pookie-price">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"Pookie said it would be around $500"</strong> — The Anchor
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Don't throw Pookie under the bus</li>
+									<li>Explain the referral pricing vs. standard rate</li>
+									<li>Pookie's price was a one-time cost rate — not market</li>
+									<li>Already addressed in your email to Pookie</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card pricing" data-scenario="which-option">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"I can't decide between options"</strong> — Help Her Choose
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Option 01 gets her a great logo — full stop</li>
+									<li>Option 02 adds the brand system for the website later</li>
+									<li>Option 03 is the full toolkit — ideal but not required</li>
+									<li>Guide based on what she actually needs NOW</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card danger" data-scenario="five-hundred">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"Can you do it for $500?"</strong> — Hard No Territory
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Acknowledge cheaper options exist</li>
+									<li>Reference the Fiverr problems you've seen</li>
+									<li>The discovery call alone sets this apart</li>
+									<li>$700 is the floor — kind, firm, final</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card danger" data-scenario="hesitant">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>Goes quiet / seems unsure</strong> — Plant the Seeds
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Use the listing platform framing</li>
+									<li>OR the Fiverr cautionary tale</li>
+									<li>The logo shows up everywhere — forever</li>
+									<li>Don't push — let the logic land</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="subsection-header">
+					<div class="subsection-title">Project & Design</div>
+					<div class="subsection-divider"></div>
+				</div>
+
+				<div class="scenarios-grid">
+					<div class="scenario-card logistics" data-scenario="jeff">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"Jeff has some opinions on the design"</strong> — The Jeff Factor
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Validate that both opinions matter</li>
+									<li>Concepts will give them real options to react to</li>
+									<li>Multiple directions = something for everyone</li>
+									<li>Don't promise literal sandcastle — stay neutral</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card logistics" data-scenario="content-needed">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"I still need to send you stuff"</strong> — Missing Content
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Tagline, town name spelling, business name confirmation</li>
+									<li>More inspiration screenshots (optional)</li>
+									<li>Take the pressure off — "no rush, just whenever"</li>
+									<li>Offer to start once she picks an option + sends tagline</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card logistics" data-scenario="timeline">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"How long will it take?"</strong>
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>3–4 weeks from deposit to delivery</li>
+									<li>Concepts within the first week or two</li>
+									<li>No hard deadline on her end — property still being built</li>
+									<li>Faster if content comes in quickly</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card logistics" data-scenario="sandcastle-singular">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"Is it Sand Castle or Sand Castles?"</strong> — Name Confirmation
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>YOU need to ask this — it's been inconsistent</li>
+									<li>Pookie wrote "Sand Castles" (plural)</li>
+									<li>Most references say "Sand Castle" (singular)</li>
+									<li>Lock this down before any design starts</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="subsection-header">
+					<div class="subsection-title">Process & Next Steps</div>
+					<div class="subsection-divider"></div>
+				</div>
+
+				<div class="scenarios-grid">
+					<div class="scenario-card logistics" data-scenario="ready-to-go">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"I'm ready — let's do it"</strong> — She Says Yes
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Confirm which option she wants</li>
+									<li>Send invoice — 50% deposit to start</li>
+									<li>List the content you still need from her</li>
+									<li>Brief Alyssa once deposit + content are in</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card logistics" data-scenario="payment">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"What about payment?"</strong>
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>50% deposit, 50% at delivery — all options</li>
+									<li>Simple and standard</li>
+									<li>Invoice comes after she picks her option</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card logistics" data-scenario="not-ready">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"I need more time to decide"</strong> — Not Ready Yet
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>That's totally fine — no pressure</li>
+									<li>The proposal isn't going anywhere</li>
+									<li>Offer to answer any questions via text/email</li>
+									<li>Don't chase — she'll come back or she won't</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="subsection-header">
+					<div class="subsection-title">Relationship & Pookie</div>
+					<div class="subsection-divider"></div>
+				</div>
+
+				<div class="scenarios-grid">
+					<div class="scenario-card danger" data-scenario="pookie-involved">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>"Pookie mentioned something about the pricing..."</strong> — The Pookie Conversation
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Stay gracious — Pookie is an ally, not an opponent</li>
+									<li>Pookie was looking out for Jen</li>
+									<li>You and Pookie already talked — it's squared away</li>
+									<li>Redirect to the value in the proposal</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="section-header" id="seeds">
+					<div class="section-number">02</div>
+					<h2 class="section-title">Seed Plants</h2>
+				</div>
+
+				<div class="seed-plants">
+					<div class="seed-plant">
+						<h4>The Listing Platform Seed</h4>
+						<p>
+							"Every Airbnb listing in the Straits area looks the same. The logo is the one thing that makes yours feel like a destination — not just another rental."
+						</p>
+					</div>
+					<div class="seed-plant">
+						<h4>The Fiverr Cautionary Tale</h4>
+						<p>
+							"I've had two clients in the last month come to me because their Fiverr logos fell apart — wrong formats for signs, broke on merch, couldn't scale for stickers. They paid twice."
+						</p>
+					</div>
+					<div class="seed-plant">
+						<h4>The Website Setup Seed</h4>
+						<p>
+							"The brand system we build here — colors, typography, guidelines — carries directly into the website when you're ready for that. It's not throwaway work, it's the foundation."
+						</p>
+					</div>
+					<div class="seed-plant">
+						<h4>The "Forever" Seed</h4>
+						<p>
+							"This logo goes on every sign, every listing, every taffy sticker, every guest's first impression — for the life of the business. That's worth getting right once."
+						</p>
+					</div>
+				</div>
+
+				<div class="section-header" id="landmines">
+					<div class="section-number">03</div>
+					<h2 class="section-title">Landmines to Avoid</h2>
+				</div>
+
+				<div class="scenarios-grid" style="margin-bottom: 32px;">
+					<div class="scenario-card danger" data-scenario="landmine-pookie">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>Don't bring up the Pookie email</strong>
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>You handled it. It's done. Let it stay done.</li>
+									<li>If Jen brings it up, stay gracious</li>
+									<li>Never make Pookie look bad — the referral pipeline matters</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card danger" data-scenario="landmine-jeff">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>Don't take sides on the sandcastle debate</strong>
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Jeff wants literal pail and shovel — Jen hates it</li>
+									<li>Don't promise either direction on this call</li>
+									<li>Say "we'll explore a few directions" and leave it there</li>
+									<li>Design for Jen's vision, present to both</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="scenario-card danger" data-scenario="landmine-discount">
+						<div class="scenario-header">
+							<div class="scenario-trigger">
+								<strong>Don't offer discounts unprompted</strong>
+							</div>
+							<div class="scenario-open-icon">⤴</div>
+							<div class="scenario-bullets-visible">
+								<ul>
+									<li>Option 01 at $700 IS the affordable option</li>
+									<li>You already built the pick-and-choose format she asked for</li>
+									<li>If she picks Option 01, that's a win — don't undersell it</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="section-header" id="must-get">
+					<div class="section-number">04</div>
+					<h2 class="section-title">Must-Get Answers on This Call</h2>
+				</div>
+
+				<div class="checklist">
+					<div class="checklist-title">Don't Hang Up Without These</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📛</span>
+						<span><strong>Business name confirmation</strong> — Sand Castle or Sand Castles? Singular or plural?</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">🎯</span>
+						<span><strong>Where her head is at</strong> — Has she reviewed the options? Leaning toward one? Any questions?</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">🏷️</span>
+						<span><strong>Tagline status</strong> — Still deciding? "Where memories are made"? "Sand meets fonder"? Something else?</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📍</span>
+						<span><strong>Town name + spelling</strong> — If the location shows on the logo, get the exact name</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📧</span>
+						<span><strong>Best email for invoice</strong> — Confirm Jenn.pentilla@gmail.com is correct</span>
+					</div>
+				</div>
+
+
+				<div class="section-header" id="checklist">
+					<div class="section-number">05</div>
+					<h2 class="section-title">Pre-Call Checklist</h2>
+				</div>
+
+				<div class="checklist">
+					<div class="checklist-title">Ready to Go</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📄</span>
+						<span>Brand identity package pulled up (all 3 options visible)</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📋</span>
+						<span>Overview doc pulled up (design direction, Jeff/Jen notes, content checklist)</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📧</span>
+						<span>Pookie email exchange pulled up (in case it comes up)</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📌</span>
+						<span>Pinterest board open in a tab</span>
+					</div>
+
+					<div class="checklist-item">
+						<span class="checklist-icon">📊</span>
+						<span>This dashboard</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="scriptModal" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 id="modalTitle" class="modal-title"></h3>
+					<button class="modal-close" onclick="closeModal()">&times;</button>
+				</div>
+				<div id="modalScript" class="modal-script"></div>
+			</div>
+		</div>
+
+		<script>
+			const scenarios = {
+				'opener': {
+					title: 'The Opener — Setting the Tone',
+					script:
+						'<p>"Hey Jen, it\'s Jordan from Latz Web Design — how are you? I just wanted to check in. I sent over the brand identity options a little bit ago and wanted to make sure you got a chance to look through everything. No rush at all — just figured I\'d see if you had any questions or if anything jumped out at you."</p><p><strong>Then shut up and listen.</strong> Let her talk. Her response tells you exactly where she is — excited, hesitant, busy, or stuck between options. Whatever she says, match her energy.</p>',
+				},
+				'too-much': {
+					title: '"It\'s more than I was expecting" — Budget Pushback',
+					script:
+						'<p>"I hear you — and that\'s exactly why I set it up with the three options. Option 01 at $700 is really close to the $725 we talked about on our call, and it gets you everything you need for a strong logo — two concepts, a round of revisions, all the file formats for signs, shirts, stickers, the works."</p><p>"The higher options add things like the full brand guidelines, social media assets, and extra concept directions — those are great to have, but they\'re not required to get a logo you love. Option 01 is a complete package on its own."</p>',
+				},
+				'pookie-price': {
+					title: '"Pookie said it would be around $500" — The Price Anchor',
+					script:
+						'<p>"Yeah, I totally get where that number came from. What I did for Pookie was a deeply discounted rate because we were building a referral partnership — it was honestly below cost for me. That\'s not something I can repeat on every project, but I wanted to invest in that relationship."</p><p>"The $700 option is genuinely as lean as I can go while doing it right. And the difference between what you get here and what $500 gets you somewhere else is the discovery process we already did together — I already know the watercolor direction, the coral accents, the dual audience, the Jeff and Jen dynamic on the design. That all gets built into every concept. That\'s not what Fiverr gives you."</p>',
+				},
+				'which-option': {
+					title: '"I can\'t decide between options" — Help Her Choose',
+					script:
+						'<p>"Let me make it easy. Option 01 gets you a great logo — full color, white, dark, monochrome, icon mark, all the file formats, color palette. If all you need right now is the logo to put on signs, shirts, and stickers, that\'s the one."</p><p>"Option 02 adds the stuff that makes your life easier down the road — a full brand guidelines doc, social media assets ready to go, and an extra concept direction so you have more to react to. If you\'re thinking about the website eventually, this is the one I\'d lean toward because the color system and guidelines carry right over."</p><p>"Option 03 is for when you want the whole visual system locked in from day one — typography, layout variations, the tagline designed into the logo. It\'s the most comprehensive, but it\'s not a requirement."</p><p><strong>Then ask:</strong> "What feels right for where you are right now?"</p>',
+				},
+				'five-hundred': {
+					title: '"Can you do it for $500?" — Hard No Territory',
+					script:
+						'<p>"I totally understand wanting to keep costs down — you\'re building a property, there are a million expenses. At $500 you can absolutely find someone on Fiverr or a freelance marketplace who will turn something around. But I\'ve had two clients come to me in just the last couple weeks for websites who also needed their logos redone because the Fiverr ones fell apart — wrong file formats for their signs, looked pixelated on social, couldn\'t scale down for stickers. They ended up paying twice."</p><p>"What I can do at $700 — the discovery call we already had, the watercolor direction, the coral and navy palette, understanding how this needs to work on taffy stickers AND road signs — that\'s all baked in. A $500 designer is starting from scratch with none of that context."</p><p>"I don\'t want to lose this project, and I think we\'d do amazing work together. But $700 is genuinely where I need to be to give this the time it deserves."</p>',
+				},
+				'hesitant': {
+					title: 'Goes quiet / seems unsure — Plant the Seeds',
+					script:
+						'<p><strong>Option 1 — The Listing Platform Angle:</strong><br>"Here\'s the thing I keep coming back to — every Airbnb listing in that area looks the same. Same stock photos, same generic fonts. Your logo is the one visual that separates Sand Castle Cottages from every other beach rental near Mackinac. When someone\'s scrolling through 40 listings, the one that looks like a real brand — not someone\'s side hustle — that\'s the one they click. And once they\'re on your listing, that same logo is on your sign when they pull up, on the shirts, on the taffy bags. It all adds up."</p><p><strong>Option 2 — The Fiverr Cautionary Tale:</strong><br>"I\'ll be honest with you — I have two clients right now who came to me for websites and had to redo their logos too, because the Fiverr versions didn\'t hold up. Files that don\'t work on signs, logos that look wrong at small sizes, no brand guidelines so everything they made looked different. They thought they saved money and ended up spending more. I don\'t want that for you."</p>',
+				},
+				'jeff': {
+					title: '"Jeff has some opinions on the design" — The Jeff Factor',
+					script:
+						'<p>"That\'s actually great — I like when both people are invested in the brand. Here\'s how I typically handle it: I\'ll present multiple concept directions, each with a different visual approach. That way you\'re both reacting to real options instead of trying to describe what\'s in your head. Sometimes the direction neither of you expected ends up being the one that clicks."</p><p>"And the watercolor style we talked about — there\'s a lot of range there. We can explore concepts that feel more abstract and elevated alongside ones that have more personality and playfulness. Everyone sees something they connect with."</p><p><em>Internal note: Do NOT mention the pail and shovel. Do NOT promise a sandcastle concept. Let Alyssa handle the creative range. Design for Jen\'s vision, present to both.</em></p>',
+				},
+				'content-needed': {
+					title: '"I still need to send you stuff" — Missing Content',
+					script:
+						'<p>"No worries at all — here\'s what I still need whenever you get a chance: the tagline you\'re going with — I know you were thinking about \'where memories are made\' and that \'sand meets fonder\' one. Also the exact town name if you want the location on the logo. And one quick thing — is it Sand Castle Cottages or Sand Castles Cottages? I\'ve seen it both ways and want to make sure I have it right."</p><p>"None of that needs to happen today. Once you pick which option you want and send me those pieces, I can get the invoice over and we\'re rolling. No rush."</p>',
+				},
+				'timeline': {
+					title: '"How long will it take?"',
+					script:
+						'<p>"From when we kick off — meaning I have the deposit and the content I need from you — I\'d say 3 to 4 weeks to final delivery. You\'d see the first round of concepts within the first week or two, then we refine from there. It\'s a pretty collaborative process — you\'re not just waiting around."</p><p>"And since there\'s no hard deadline on your end — the property\'s still being built — we have plenty of runway. But I also won\'t let it drag. Once we start, we keep moving."</p>',
+				},
+				'sandcastle-singular': {
+					title: '"Is it Sand Castle or Sand Castles?" — Name Confirmation',
+					script:
+						'<p><strong>You need to ASK this, not wait for her to bring it up.</strong></p><p>"Quick thing — I want to make sure I have the business name exactly right. Is it Sand Castle Cottages — singular — or Sand Castles Cottages, plural? I\'ve seen it written both ways and I want to lock that down before we start any design work."</p>',
+				},
+				'ready-to-go': {
+					title: '"I\'m ready — let\'s do it" — She Says Yes',
+					script:
+						'<p>"That\'s great! Which option are you going with?"</p><p><em>Wait for her answer.</em></p><p>"Perfect. Here\'s what happens next — I\'ll send you the invoice for the deposit. Once that\'s in, I just need a few things from you: the final tagline, the exact town name if we\'re including the location, and whether it\'s Sand Castle or Sand Castles. If you have any more inspiration screenshots, those are helpful too but not required."</p><p>"Once I have all that, I\'ll brief my designer and you\'ll see concepts within the first couple weeks. Sound good?"</p>',
+				},
+				'payment': {
+					title: '"What about payment?"',
+					script:
+						'<p>"It\'s 50/50 — half upfront to start, half when the final files are delivered. So for Option 01 that\'s $350 and $350. Option 02 is $415 and $410. I\'ll send the invoice and you can pay however works best for you."</p>',
+				},
+				'not-ready': {
+					title: '"I need more time to decide" — Not Ready Yet',
+					script:
+						'<p>"Totally fine — no pressure at all. The proposal\'s not going anywhere, and I\'m not filling that slot with someone else. Whenever you\'re ready, just shoot me a text or email and we\'ll pick right up."</p><p>"If any questions come up while you\'re thinking it over — about the options, the process, whatever — don\'t hesitate to reach out. I\'d rather you feel 100% good about it."</p><p><em>Internal note: Don\'t follow up again for at least 2 weeks after this. If she needs more time, give her actual space. The next touch should be a soft value-add, not another "just checking in."</em></p>',
+				},
+				'pookie-involved': {
+					title: '"Pookie mentioned something about the pricing..." — The Pookie Conversation',
+					script:
+						'<p>"Yeah, Pookie and I actually talked about that — she was just looking out for you, which I appreciate. The short version is that the pricing I gave her for her own logo was a one-time referral rate, not my standard. It was an investment in our working relationship. The options I put together for you are my actual rates, and they reflect the full process — the discovery, the concepts, the revisions, the complete file package."</p><p>"Pookie and I are on the same page now. She wants this to be a great experience for you too — that\'s why she connected us in the first place."</p><p><em>Key: Stay warm about Pookie. She\'s not the problem. The pricing misunderstanding was. It\'s handled. Move on.</em></p>',
+				},
+				'landmine-pookie': {
+					title: 'Don\'t bring up the Pookie email',
+					script:
+						'<p><strong>You already handled this.</strong> Your email to Pookie was clear, professional, and firm. It doesn\'t need to be re-litigated.</p><p>If Jen doesn\'t mention it, neither should you. If she does, handle it with the "Pookie mentioned something about pricing" script. But don\'t volunteer it — bringing it up creates a problem where there might not be one.</p><p>Pookie is the pipeline. This referral is the first of many. Protect that relationship above all.</p>',
+				},
+				'landmine-jeff': {
+					title: 'Don\'t take sides on the sandcastle debate',
+					script:
+						'<p><strong>The situation:</strong> Jeff wants a literal sandcastle with a pail and shovel. Jen thinks that looks "like a kindergartener did it." She wants watercolor, upscale, elevated. They are "not on the same page" — Jen\'s words.</p><p><strong>Your play:</strong> Don\'t promise either direction on this call. If it comes up, say you\'ll present multiple concept directions that give them both something to react to. Alyssa will handle the creative range — she can do a subtle, abstract sandcastle nod in one concept without going literal.</p><p><strong>Strategy:</strong> Design for Jen\'s vision. She\'s the decision-maker and she has the stronger design instinct. Present to both. Jen believes "show him and he\'ll be fine." Trust her on that.</p>',
+				},
+				'landmine-discount': {
+					title: 'Don\'t offer discounts unprompted',
+					script:
+						'<p><strong>You already built the solution.</strong> The 3-tier format IS the flexibility she asked for. Option 01 at $700 IS the affordable path. You don\'t need to invent a discount below that.</p><p>If she picks Option 01 — great. That\'s a $700 logo project with a client who has a website coming down the road. That\'s a win.</p><p>Don\'t apologize for the pricing. Don\'t offer to trim deliverables below what\'s in Option 01. The proposal is fair, the process is real, and the value is clear. Let the work speak.</p>',
+				},
+			};
+
+			function openModal(scenario) {
+				const modal = document.getElementById('scriptModal');
+				const title = document.getElementById('modalTitle');
+				const content = document.getElementById('modalScript');
+
+				if (scenarios[scenario]) {
+					title.textContent = scenarios[scenario].title;
+					content.innerHTML = scenarios[scenario].script;
+					modal.classList.add('show');
+					document.body.style.overflow = 'hidden';
+				}
+			}
+
+			function closeModal() {
+				const modal = document.getElementById('scriptModal');
+				modal.classList.remove('show');
+				document.body.style.overflow = '';
+			}
+
+			document.addEventListener('DOMContentLoaded', function () {
+				const scenarioCards = document.querySelectorAll(
+					'.scenario-card[data-scenario]',
+				);
+				scenarioCards.forEach((card) => {
+					card.addEventListener('click', function () {
+						const scenario = this.getAttribute('data-scenario');
+						openModal(scenario);
+					});
+				});
+
+				const modal = document.getElementById('scriptModal');
+				modal.addEventListener('click', function (e) {
+					if (e.target === modal) {
+						closeModal();
+					}
+				});
+
+				document.addEventListener('keydown', function (e) {
+					if (e.key === 'Escape') {
+						closeModal();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
