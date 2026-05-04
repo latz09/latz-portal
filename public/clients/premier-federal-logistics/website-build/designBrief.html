@@ -1,29 +1,1255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Premier Federal Logistics — Designer Brief | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #0a0a0a;
+    --sidebar-border: rgba(255,255,255,0.06);
+    --header-bg: #0f0f0f;
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-light: #e8f7f8;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --text: #111827;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 228px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+    transform: translateX(0);
+  }
+
+  .sidebar-top {
+    padding: 22px 18px 18px;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+
+  .sidebar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .sidebar-wordmark .dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lwd-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-client {
+    font-family: 'Fraunces', serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .sidebar-doctype {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.22);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 11px;
+    background: rgba(24,161,173,0.08);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 3px 9px;
+  }
+
+  .pulse {
+    width: 5px; height: 5px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .sidebar-status span {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .sidebar-nav { padding: 10px 8px; flex: 1; }
+
+  .nav-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    padding: 10px 8px 4px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 8px;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 400;
+    border-radius: 5px;
+    transition: all 0.12s;
+    margin-bottom: 1px;
+  }
+
+  .nav-link:hover {
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.07);
+    font-weight: 500;
+  }
+
+  .nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; opacity: 0.6; }
+  .nav-link.active .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--sidebar-border);
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.06em;
+    line-height: 2;
+  }
+
+  /* OVERLAY */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* FAB */
+  .fab-menu {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(24,161,173,0.4);
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.15s;
+  }
+  .fab-menu:active { transform: scale(0.92); }
+
+  /* MAIN */
+  .main { margin-left: 228px; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER */
+  .page-header {
+    background: var(--white);
+    padding: 52px 60px 44px;
+    border-bottom: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 72% 50%, rgba(24,161,173,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: 'PFL';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(17,24,39,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .header-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-overline::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--teal);
+    opacity: 0.5;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1.08;
+    margin-bottom: 7px;
+    letter-spacing: -0.6px;
+  }
+
+  .page-header .sub {
+    color: var(--gray-500);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 0;
+    margin-top: 34px;
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    overflow: hidden;
+    width: fit-content;
+    background: var(--white);
+  }
+
+  .meta-item {
+    padding: 13px 22px;
+    border-right: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .meta-value { font-size: 12.5px; font-weight: 500; color: var(--gray-700); }
+  .meta-value.ok { color: var(--green); }
+  .meta-value.warn { color: var(--orange); }
+
+  /* CONTENT */
+  .content { padding: 48px 60px 96px; flex: 1; }
+
+  section { margin-bottom: 64px; scroll-margin-top: 32px; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.2px;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin-bottom: 22px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* DATA ROWS */
+  .data-row {
+    display: grid;
+    grid-template-columns: 144px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    padding-top: 1px;
+  }
+
+  .data-value {
+    font-size: 13px;
+    color: var(--gray-700);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .data-value a { color: var(--teal); text-decoration: none; }
+  .data-value a:hover { text-decoration: underline; }
+
+  /* CALLOUTS */
+  .callout {
+    border-radius: 7px;
+    padding: 13px 17px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+  }
+
+  .callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+  .callout-body p, .callout-body span { font-size: 12px; line-height: 1.55; }
+
+  .callout.info { background: var(--teal-light); border-color: rgba(24,161,173,0.2); color: #0e7490; }
+  .callout.warn { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+  .callout.neutral { background: var(--gray-50); border-color: var(--gray-200); color: var(--gray-600); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: var(--teal-light);
+    border: 1px solid rgba(24,161,173,0.15);
+    border-left: 3px solid var(--teal);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight-box strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .highlight-box p {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: var(--gray-700);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* MOCKUP LINK */
+  .mockup-ref {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 13px 15px;
+    text-decoration: none;
+    transition: border-color 0.12s, background 0.12s;
+    margin-bottom: 10px;
+  }
+
+  .mockup-ref:hover { border-color: var(--teal); background: var(--teal-light); }
+  .mockup-ref .ref-icon { font-size: 18px; flex-shrink: 0; }
+  .mockup-ref .ref-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .mockup-ref .ref-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+  .mockup-ref .ref-url { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); margin-top: 1px; }
+
+  /* PAGE CARDS */
+  .page-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 17px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+  }
+
+  .page-card .page-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    margin-bottom: 11px;
+  }
+
+  .page-card ul { list-style: none; padding: 0; }
+
+  .page-card ul li {
+    font-size: 12px;
+    color: var(--gray-600);
+    padding: 3px 0 3px 13px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .page-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gray-300);
+    font-size: 9px;
+    top: 5px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .badge-static { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .badge-bundled { background: rgba(139,92,246,0.08); color: #7c3aed; border-color: rgba(139,92,246,0.2); }
+
+  /* ASSET LIST */
+  .asset-list { list-style: none; padding: 0; }
+
+  .asset-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .asset-list li:last-child { border-bottom: none; }
+
+  .asset-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
+  .asset-body { flex: 1; }
+  .asset-body strong { font-size: 13px; font-weight: 600; color: var(--gray-800); display: block; margin-bottom: 2px; }
+  .asset-body span { font-size: 11.5px; color: var(--gray-500); line-height: 1.45; }
+  .asset-status { margin-left: auto; flex-shrink: 0; padding-top: 1px; }
+
+  /* PILLS */
+  .pill {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .pill-orange { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+  .pill-green { background: var(--green-light); color: var(--green); border-color: var(--green-border); }
+
+  /* QUESTIONS */
+  .question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .question-item:last-child { border-bottom: none; }
+  .question-text { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .question-context { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+
+  /* ARROW LIST */
+  .arrow-list { list-style: none; padding: 0; margin-top: 10px; }
+
+  .arrow-list li {
+    font-size: 12px;
+    color: var(--gray-600);
+    padding: 4px 0 4px 15px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .arrow-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 10px;
+    top: 5px;
+  }
+
+  /* CERT BADGES */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .cert-badge {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .cert-badge .cert-icon { font-size: 20px; margin-bottom: 6px; }
+  .cert-badge .cert-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.4; }
+  .cert-badge .cert-detail { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+
+  /* RELATED PROJECT CALLOUT */
+  .related-box {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 14px 17px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+
+  .related-box .related-icon { font-size: 16px; flex-shrink: 0; }
+  .related-box .related-text { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
+  .related-box .related-text strong { color: var(--gray-800); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .page-header, .content { padding-left: 36px; padding-right: 36px; }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      width: 228px;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .sidebar.mobile-open {
+      transform: translateX(0);
     }
-  </style>
+    .sidebar-overlay { display: block; }
+    .fab-menu { display: flex; align-items: center; justify-content: center; }
+    .main { margin-left: 0; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .header-meta { flex-direction: column; width: 100%; }
+    .meta-item { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .meta-item:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr 1fr; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .meta-item { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .callout { flex-direction: column; gap: 6px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header { padding: 32px 20px 28px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="dot"></div>
+      <span class="lwd-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Premier Federal Logistics</div>
+    <div class="sidebar-doctype">Designer Brief</div>
+    <div class="sidebar-status">
+      <div class="pulse"></div>
+      <span>In Progress</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Brief</div>
+    <a href="#snapshot" class="nav-link active"><span class="nav-icon">📋</span> Project Snapshot</a>
+    <a href="#client" class="nav-link"><span class="nav-icon">🏢</span> Client & Audience</a>
+    <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand & Direction</a>
+    <a href="#pages" class="nav-link"><span class="nav-icon">📄</span> Pages & Content</a>
+    <a href="#assets" class="nav-link"><span class="nav-icon">📦</span> Assets & Status</a>
+    <a href="#questions" class="nav-link"><span class="nav-icon">💬</span> Let's Talk</a>
+  </div>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<button class="fab-menu" id="fabMenu">☰</button>
+
+<div class="main">
+
+  <div class="page-header">
+    <div class="header-overline">Designer Brief · For Alyssa</div>
+    <h1>Premier Federal Logistics</h1>
+    <div class="sub">9-Page Federal Authority Website &nbsp;·&nbsp; Full Build + Service Landing Pages</div>
+
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Contacts</span>
+        <span class="meta-value">Tracy & Bill Krenz</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Pages</span>
+        <span class="meta-value">9 in scope</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deposit</span>
+        <span class="meta-value warn">⏳ Awaiting</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Brand</span>
+        <span class="meta-value warn">Separate project — in progress</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Wireframe</span>
+        <span class="meta-value">Attached separately</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 — PROJECT SNAPSHOT -->
+    <section id="snapshot">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Snapshot</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="highlight-box">
+        <strong>The job</strong>
+        <p>Give Premier Federal Logistics a web presence that matches its credentials. Tracy has secret-level DoD clearance and transported M1 Abrams tanks. Bill has 1M+ accident-free miles. They subcontract under Boeing, Halliburton, and UPS — and right now a procurement officer searching for PFL finds nothing. This site needs to fix that in 10 seconds flat: credibility, authority, and the kind of visual weight that makes someone confident enough to pick up the phone.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The Build</div>
+          <div class="data-row"><span class="data-label">Scope</span><span class="data-value">9-page static site — 6 core + 3 service landing pages</span></div>
+          <div class="data-row"><span class="data-label">CMS</span><span class="data-value">None — fully static. Client has all copy written.</span></div>
+          <div class="data-row"><span class="data-label">Stack</span><span class="data-value">Next.js, React, Tailwind, Framer Motion, Vercel</span></div>
+          <div class="data-row"><span class="data-label">Timeline</span><span class="data-value">2–2.5 months from deposit</span></div>
+          <div class="data-row"><span class="data-label">Design Ref</span><span class="data-value"><a href="https://universallogistics.com" target="_blank">universallogistics.com</a> — "that vibe, but doesn't need to be as big"</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Not in Scope</div>
+          <div class="data-row"><span class="data-label">CMS</span><span class="data-value">No content management — content is static and final</span></div>
+          <div class="data-row"><span class="data-label">Blog</span><span class="data-value">No blog or news section — future add-on</span></div>
+          <div class="data-row"><span class="data-label">Capability PDF</span><span class="data-value">Downloadable PDF design — potential separate project</span></div>
+          <div class="data-row"><span class="data-label">Photography</span><span class="data-value">Headshot/branding shoot discussed separately — coordinating with photographer</span></div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔗</span>
+        <div class="callout-body">
+          <strong>Logo & brand identity running in parallel</strong>
+          <span>PFL's brand identity is a separate project — also assigned to you. That deliverable feeds directly into this site. Colors, typography, and logo from the brand project become the design system for the website. See the brand designer brief for full details on that scope.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 — CLIENT & AUDIENCE -->
+    <section id="client">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Client & Audience</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">The Client</div>
+          <div class="data-row"><span class="data-label">Company</span><span class="data-value">Premier Federal Logistics, LLC — federal compliance & logistics firm, Wausau, WI</span></div>
+          <div class="data-row"><span class="data-label">What They Do</span><span class="data-value">Backend support for companies on federal jobs — paperwork, subcontractor coordination, compliance. They keep the job clean, documented, and within federal rules.</span></div>
+          <div class="data-row"><span class="data-label">Design Lead</span><span class="data-value">Tracy Krenz — Owner/Founder. All creative decisions go through her.</span></div>
+          <div class="data-row"><span class="data-label">Operations</span><span class="data-value">Bill Krenz — Exec. Dir. of Ops. CC'd on everything. Bill is the talker; Tracy is the decision-maker on design.</span></div>
+          <div class="data-row"><span class="data-label">Tone</span><span class="data-value">Corporate-federal authority. Clean, sharp, confident. Not flashy — credible. Think a firm that belongs on the same page as Boeing.</span></div>
+          <div class="data-row"><span class="data-label">Trust Level</span><span class="data-value">High. They invested willingly after seeing the wireframe. But they were burned before — previous developer built something that was "never what I wanted." Don't overpromise.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">The Audience</div>
+          <div class="data-row"><span class="data-label">Primary</span><span class="data-value">Fortune 500 procurement teams, federal contracting officers, prime contractors (Boeing, Halliburton, UPS)</span></div>
+          <div class="data-row"><span class="data-label">What They Need</span><span class="data-value">To feel immediately that PFL is a serious, capable operation — not a local small business with a cheap logo</span></div>
+          <div class="data-row"><span class="data-label">Behavior</span><span class="data-value">They see dozens of capability statements. First 10 seconds decide if they keep reading or move to the next vendor.</span></div>
+          <div class="data-row"><span class="data-label">Devices</span><span class="data-value">Desktop-primary, but procurement officers check on phones too. Capability statement PDF must work on mobile.</span></div>
+          <div class="data-row"><span class="data-label">Key Insight</span><span class="data-value">The brand needs to hold up next to Boeing's. Not compete with it — just not look embarrassing beside it.</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">SBA-Certified Credentials</div>
+        <div class="cert-grid">
+          <div class="cert-badge">
+            <div class="cert-icon">🎖️</div>
+            <div class="cert-label">Veteran-Owned</div>
+            <div class="cert-detail">Tracy — Army veteran, 2x ARCOM</div>
+          </div>
+          <div class="cert-badge">
+            <div class="cert-icon">👩‍✈️</div>
+            <div class="cert-label">EDWOSB</div>
+            <div class="cert-detail">Economically Disadvantaged Women-Owned — SBA certified</div>
+          </div>
+          <div class="cert-badge">
+            <div class="cert-icon">🏛️</div>
+            <div class="cert-label">WOSB</div>
+            <div class="cert-detail">Women-Owned Small Business — SBA certified</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Vibe in one sentence</strong>
+          <span>Federal-grade authority with a human backbone — professional, trustworthy, and capable. This is a company run by people who transported tanks and managed million-dollar federal contracts. The site should carry that weight without saying it out loud.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 — BRAND & DIRECTION -->
+    <section id="brand">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Brand & Visual Direction</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Brand identity is being built from scratch — by you</strong>
+          <span>The logo/brand project runs in parallel with the website. Current logo is a Fiverr raster file — "plain and mostly files are wrong." Nothing to carry forward. The brand you create becomes the design system for this site. Colors, typography, and logo lock-up flow directly from that deliverable into the web build.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">Color & Aesthetic Direction</div>
+          <div class="data-row"><span class="data-label">Base</span><span class="data-value">Navy — the anchor. Federal, serious, authoritative.</span></div>
+          <div class="data-row"><span class="data-label">Accent</span><span class="data-value">Gold/brass — authority, credibility. Not flashy — earned.</span></div>
+          <div class="data-row"><span class="data-label">Patriotic</span><span class="data-value">Red as a subtle undertone. Not a flag — a nod. White for clean open space.</span></div>
+          <div class="data-row"><span class="data-label">Client Says</span><span class="data-value">"Stay with simple colors." Clean and strong, not complex or trendy.</span></div>
+          <div class="data-row"><span class="data-label">Aesthetic</span><span class="data-value">Corporate-federal authority. Think universallogistics.com scaled for a smaller, sharper operation.</span></div>
+          <div class="data-row"><span class="data-label">Not This</span><span class="data-value">Nothing flashy, trendy, startup-y, cheap, AI-generated, busy, or hard to read.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Logo & Typography</div>
+          <div class="data-row"><span class="data-label">Logo Type</span><span class="data-value">PFL monogram with full company name underneath. Must be embroidery-friendly — no fine lines, no gradients.</span></div>
+          <div class="data-row"><span class="data-label">Tagline</span><span class="data-value">"Compliance and Coordination You Can Count On" — working candidate, build a lock-up with and without.</span></div>
+          <div class="data-row"><span class="data-label">Typography</span><span class="data-value">Strong modern sans-serif. Needs to read "federal contractor," not "local shop." No playful or casual fonts.</span></div>
+          <div class="data-row"><span class="data-label">Creative Latitude</span><span class="data-value">Bill: "Be creative. I'm not so much." Full permission to impress — they want to be wowed, not consulted on every detail.</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">Trust Signals — Must Be Prominent</div>
+        <div class="data-row"><span class="data-label">Certifications</span><span class="data-value">Veteran-owned, EDWOSB, WOSB — all SBA confirmed. Need badge placements above the fold on Home. Build spots now, swap in official assets when they arrive.</span></div>
+        <div class="data-row"><span class="data-label">CAGE Code</span><span class="data-value">18JK9 — above the fold on Home and on Capability Statement page. Procurement officers look for this.</span></div>
+        <div class="data-row"><span class="data-label">Prime Names</span><span class="data-value">Boeing, Halliburton, UPS — these are the primes PFL subcontracts under. The association does heavy work.</span></div>
+        <div class="data-row"><span class="data-label">Credentials</span><span class="data-value">Secret-level DoD clearance, M1 Abrams transport, 2x ARCOM, 1M+ accident-free miles, NACPB certified bookkeeper</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Reference — Wireframe</div>
+        <a class="mockup-ref" href="#" onclick="return false;">
+          <div class="ref-icon">🖥️</div>
+          <div>
+            <div class="ref-label">Wireframe document</div>
+            <div class="ref-name">Premier Federal Logistics — Site Wireframes</div>
+            <div class="ref-url">Attached separately</div>
+          </div>
+        </a>
+        <p style="font-size:11.5px;color:var(--gray-500);line-height:1.55;margin-bottom:4px;">Full 9-page wireframe built from Bill's actual copy. Layouts are illustrative — they show what content needs to exist, not how it should be designed. Visual treatment is in your hands.</p>
+        <ul class="arrow-list">
+          <li>What does federal authority look like without being generic government blue?</li>
+          <li>How do navy/gold/red work together without looking like a military branch or a law firm?</li>
+          <li>How do we make the About/Leadership page the most credible page on the internet for this company?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 04 — PAGES & CONTENT -->
+    <section id="pages">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Pages & Content</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout neutral">
+        <span class="callout-icon">📐</span>
+        <div class="callout-body">
+          <strong>Wireframe covers layout — these notes cover intent</strong>
+          <span>Use the wireframe for structure. Client provided full copy via PDFs — all content is written. These notes explain what each page needs to accomplish and anything worth knowing going in.</span>
+        </div>
+      </div>
+
+      <div class="callout info" style="margin-bottom:16px;">
+        <span class="callout-icon">📄</span>
+        <div class="callout-body">
+          <strong>All copy is done — massive head start</strong>
+          <span>Bill delivered 3 PDFs with fully written content for every page. That's unusual and saves significant time. Copy may need light formatting for web, but the heavy lifting is done. Design with real content — no placeholder text needed.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Home</h4>
+          <div class="page-url">/</div>
+          <ul>
+            <li>Hero with authority headline + "Compliance and Coordination You Can Count On"</li>
+            <li>Trust badges above the fold — veteran-owned, woman-owned, CAGE: 18JK9</li>
+            <li>About Us teaser — company overview, link to full About page</li>
+            <li>"Why Choose PFL" section — 5 differentiators from client copy</li>
+            <li>Services overview — 3 cards linking to full Services page</li>
+            <li>Capability statement download CTA with CAGE + NAICS codes visible</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Services</h4>
+          <div class="page-url">/services</div>
+          <ul>
+            <li>Three service lines with full bullet breakdowns from client PDFs</li>
+            <li>Secure Mission Tracking & Logistics Oversight</li>
+            <li>Subcontractor Vetting & Management</li>
+            <li>Federal & DOT Compliance & Administrative Services</li>
+            <li>Depth is the differentiator — not generic descriptions. Show the specifics.</li>
+            <li>CTA at bottom — "Request a Consultation"</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Industries</h4>
+          <div class="page-url">/industries</div>
+          <ul>
+            <li>Four verticals: Federal Primes, DoD, FEMA/Emergency, Trucking & Logistics</li>
+            <li>Each with a paragraph positioning PFL's relevance</li>
+            <li>Services = what PFL does. Industries = who they do it for.</li>
+            <li>Could potentially fold into Services as "Who We Serve" — designer's call on what reads better</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>About / Leadership</h4>
+          <div class="page-url">/about</div>
+          <ul>
+            <li>Company overview — mission statement, 20+ years experience</li>
+            <li>Tracy Krenz bio — Army vet, secret-level DoD, M1 Abrams, 2x ARCOM, NACPB certified</li>
+            <li>Bill Krenz bio — 1M+ accident-free miles, ultra-heavy haul, 40+ property rehabs</li>
+            <li>Professional headshot placements — photos coordinating separately</li>
+            <li>This is potentially the most important page on the entire site. Give the bios space to breathe.</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Capability Statement</h4>
+          <div class="page-url">/capability-statement</div>
+          <ul>
+            <li>CAGE Code 18JK9, full NAICS codes listing</li>
+            <li>Downloadable PDF — opens in new tab, not force-download</li>
+            <li>Company profile, core competencies, key differentiators</li>
+            <li>Critical page for federal procurement — must be easy to find and download</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Contact / Request Consultation</h4>
+          <div class="page-url">/contact</div>
+          <ul>
+            <li>Multi-field consultation request form</li>
+            <li>Dropdown: organization type (prime contractor, gov agency, etc.)</li>
+            <li>Dropdown: services of interest</li>
+            <li>Routes to info@premierfederallogistics.com</li>
+            <li>Direct contact info for Bill & Tracy + click-to-call</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Bundled — 3 Service Landing Pages</div>
+        <div class="two-col" style="gap:10px;">
+          <div class="page-card">
+            <span class="page-badge badge-bundled">Bundled</span>
+            <h4>Mission Tracking</h4>
+            <div class="page-url">/services/mission-tracking</div>
+            <ul>
+              <li>Deep-dive landing page for Secure Mission Tracking & Logistics Oversight</li>
+              <li>SEO-optimized for targeted federal contracting search terms</li>
+              <li>Built for outreach links or future paid campaigns</li>
+            </ul>
+          </div>
+          <div class="page-card">
+            <span class="page-badge badge-bundled">Bundled</span>
+            <h4>Subcontractor Vetting</h4>
+            <div class="page-url">/services/subcontractor-vetting</div>
+            <ul>
+              <li>Deep-dive landing page for Subcontractor Vetting & Management</li>
+              <li>SEO-optimized for targeted federal contracting search terms</li>
+              <li>Built for outreach links or future paid campaigns</li>
+            </ul>
+          </div>
+        </div>
+        <div class="page-card" style="margin-top:10px;">
+          <span class="page-badge badge-bundled">Bundled</span>
+          <h4>Compliance Services</h4>
+          <div class="page-url">/services/compliance</div>
+          <ul>
+            <li>Deep-dive landing page for Federal & DOT Compliance & Administrative Services</li>
+            <li>SEO-optimized for targeted federal contracting search terms</li>
+            <li>Built for outreach links or future paid campaigns</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 — ASSETS & STATUS -->
+    <section id="assets">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Assets & Content Status</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="card">
+        <div class="card-title">What We Have / What's Coming</div>
+        <ul class="asset-list">
+          <li>
+            <span class="asset-icon">📄</span>
+            <div class="asset-body"><strong>Website Copy (3 PDFs)</strong><span>Full copy for all 9 pages — Home, Services, Industries, About/Bios, Capability Statement, Contact. All received from Bill. Light web formatting may be needed, but the content is done.</span></div>
+            <span class="asset-status"><span class="pill pill-green">Received</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🖼️</span>
+            <div class="asset-body"><strong>Current Logo (Fiverr)</strong><span>Raster-only JPEG. "Plain and mostly files are wrong." Being replaced by the brand project — keep for reference only.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Replacing</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🎨</span>
+            <div class="asset-body"><strong>Brand Identity</strong><span>Separate project assigned to you — logo, colors, typography, brand guidelines. This deliverable feeds directly into the site design system.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Progress</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📝</span>
+            <div class="asset-body"><strong>Brand Discovery Responses</strong><span>Complete answers from Bill (shared with Tracy). Personality, direction, dislikes, tagline candidate, logo type preference — all captured and in the brand designer brief.</span></div>
+            <span class="asset-status"><span class="pill pill-green">Received</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📸</span>
+            <div class="asset-body"><strong>Professional Photos / Headshots</strong><span>Headshots for Tracy + Bill, plus branding photography (equipment, trucks). Coordinating with Meghan/Theresa Hill for travel to Wausau. Could significantly elevate the site beyond stock.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Coordinating</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🎖️</span>
+            <div class="asset-body"><strong>Certification Badges</strong><span>Veteran-owned, EDWOSB, WOSB — all SBA confirmed. Official badge assets needed for the site. Build the spots into the design now; swap in official assets when they arrive.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Pending Assets</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📋</span>
+            <div class="asset-body"><strong>Capability Statement PDF</strong><span>Downloadable PDF for the capability statement page. May need to be created or reformatted from existing materials. Potential separate project.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Not Requested Yet</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📊</span>
+            <div class="asset-body"><strong>NAICS Codes</strong><span>Full list for capability statement page. Partially captured in client PDFs — may need the complete set confirmed.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Partial</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🌐</span>
+            <div class="asset-body"><strong>Domain</strong><span>premierfederallogistics.com — already active with Google Workspace email. No purchase needed. Jordan handles DNS at launch.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Jordan Handles</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06 — LET'S TALK -->
+    <section id="questions">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">☕</span>
+        <div class="callout-body">
+          <strong>Bring your instincts — not just answers</strong>
+          <span>These are things worth talking through before we're deep in build mode. You've also got the brand brief — the logo and site design should feel like one coherent system. If you've got a direction you want to run with after reading both briefs, let's hear it.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Open Design Questions</div>
+        <div class="question-item">
+          <div class="question-text">How does the brand identity translate into a full website design system?</div>
+          <div class="question-context">You're building the logo, color palette, and typography in the brand project — then those decisions become the foundation for 9 pages. What's your approach for making that handoff seamless? Think about how the navy/gold/red palette scales across hero sections, cards, CTAs, and dense content pages like Services.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">What does the About/Leadership page look like when it's the most important page on the site?</div>
+          <div class="question-context">Tracy's credentials include secret-level DoD clearance and M1 Abrams transport. Bill has 1M+ accident-free miles and 40+ property rehabs. These bios are genuinely elite — they're not LinkedIn fluff. How do we design around them so a procurement officer reading this page says "these people are the real deal"? Headshot placement, credential callouts, visual hierarchy — this page needs to do maximum work.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">How do we handle the hero without professional photos yet?</div>
+          <div class="question-context">Photography is being coordinated separately and may not be ready when design starts. Stock imagery is the fallback for now. What's the hero strategy — dark overlay on stock, abstract pattern, solid-color authority treatment? Worth having a plan that works with or without real photography, since we'll swap in real photos when they arrive.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Trust badges and certification placements — how prominent is too prominent?</div>
+          <div class="question-context">Veteran-owned, EDWOSB, WOSB, CAGE code, Secret-level DoD, ARCOM — there's a lot of trust signal content. Procurement officers expect to see these. But stacking badges and credentials too aggressively can feel desperate. What's the right visual approach for authority without looking like you're overcompensating?</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Service landing pages — what makes a deep-dive page convert?</div>
+          <div class="question-context">Three standalone service pages built for SEO and outreach. These need to work as landing pages someone might hit directly from a search or a shared link — not just subpages of the main site. What's the structure that makes a procurement officer who lands on /services/mission-tracking take the next step?</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">The Contact page has a multi-field form with dropdowns — how do we keep it from feeling like a government form?</div>
+          <div class="question-context">Organization type dropdown, services of interest dropdown, name, company, email, phone, message. That's a lot of fields. The audience fills out government forms all day — this needs to feel like a conversation, not paperwork. How do we design the form experience so it's inviting rather than bureaucratic?</div>
+        </div>
+      </div>
+
+      <div class="related-box">
+        <span class="related-icon">📎</span>
+        <div class="related-text"><strong>Also assigned to you:</strong> PFL Brand Identity — Full logo system, color palette, typography pairings, brand guidelines. See the separate brand designer brief for that scope. The two projects are designed to feed into each other.</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile FAB + Sidebar
+  const fab = document.getElementById('fabMenu');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  let sidebarOpen = false;
+
+  function openSidebar() {
+    sidebarOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebarOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    document.body.style.overflow = '';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebarOpen) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // Nav link behavior on mobile
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetEl = document.getElementById(targetId);
+        closeSidebar();
+        setTimeout(() => {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
