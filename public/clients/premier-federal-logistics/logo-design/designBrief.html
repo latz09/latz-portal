@@ -1,29 +1,583 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Premier Federal Logistics — Brand Designer Brief | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sidebar-bg: #0a0a0a;
+    --sidebar-border: rgba(255,255,255,0.06);
+    --header-bg: #0f0f0f;
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.1);
+    --teal-light: #e8f7f8;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --text: #111827;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text); line-height: 1.6; font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+  /* SIDEBAR */
+  .sidebar { position: fixed; top: 0; left: 0; width: 228px; height: 100vh; background: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border); display: flex; flex-direction: column; z-index: 100; overflow-y: auto; }
+  .sidebar-top { padding: 22px 18px 18px; border-bottom: 1px solid var(--sidebar-border); }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 18px; }
+  .dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+  .lwd-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.92); line-height: 1.25; margin-bottom: 4px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 14px; }
+  .sidebar-status { display: inline-flex; align-items: center; gap: 7px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); border: 1px solid rgba(24,161,173,0.25); border-radius: 20px; padding: 4px 12px 4px 10px; }
+  .pulse { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .sidebar-nav { padding: 18px 10px; flex: 1; }
+  .nav-group-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 6px 8px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 7px 8px; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12.5px; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.95); background: rgba(255,255,255,0.06); border-left-color: var(--teal); font-weight: 500; }
+  .nav-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
+
+  .sidebar-footer { padding: 16px 18px; border-top: 1px solid var(--sidebar-border); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.2); letter-spacing: 0.06em; line-height: 2; margin-top: auto; }
+
+  /* MAIN */
+  .main { margin-left: 228px; min-height: 100vh; }
+
+  /* HEADER */
+  .page-header { background: var(--white); padding: 48px 56px 40px; position: relative; overflow: hidden; border-bottom: 1px solid var(--gray-200); }
+  .page-header::before { content: ''; position: absolute; bottom: -40%; left: 50%; width: 80%; height: 80%; background: radial-gradient(ellipse, rgba(24,161,173,0.06) 0%, transparent 65%); transform: translateX(-50%); pointer-events: none; }
+  .header-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; position: relative; }
+  .header-overline::before { content: ''; width: 28px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .page-header h1 { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; line-height: 1.15; position: relative; }
+  .page-header .sub { color: var(--gray-500); font-size: 14px; position: relative; }
+
+  .header-meta { display: flex; gap: 0; margin-top: 28px; border: 1px solid var(--gray-200); border-radius: 6px; overflow: hidden; position: relative; width: fit-content; }
+  .meta-item { padding: 12px 22px; border-right: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 3px; }
+  .meta-item:last-child { border-right: none; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); }
+  .meta-value { font-size: 13px; font-weight: 500; color: var(--gray-700); }
+  .meta-value.ok { color: var(--green); }
+  .meta-value.warn { color: var(--orange); }
+
+  /* CONTENT */
+  .content { padding: 40px 56px 80px; max-width: 900px; }
+  section { margin-bottom: 52px; scroll-margin-top: 24px; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--teal); background: var(--teal-dim); width: 30px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0; }
+  .section-header h2 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; color: var(--gray-900); }
+  .section-divider { height: 1px; background: var(--gray-200); margin-bottom: 24px; }
+
+  /* CARDS */
+  .card { background: var(--white); border-radius: 8px; padding: 22px; border: 1px solid var(--gray-200); margin-bottom: 14px; }
+  .card-title { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--gray-100); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .data-row { display: grid; grid-template-columns: 140px 1fr; gap: 12px; align-items: start; padding: 8px 0; border-bottom: 1px solid var(--gray-100); }
+  .data-row:last-child { border-bottom: none; }
+  .data-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-400); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 2px; }
+  .data-value { font-size: 13px; color: var(--gray-700); line-height: 1.55; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box { background: var(--teal-light); border: 1px solid rgba(24,161,173,0.15); border-left: 3px solid var(--teal); border-radius: 6px; padding: 20px 22px; margin-bottom: 18px; }
+  .highlight-box strong { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 6px; }
+  .highlight-box p { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 300; color: var(--gray-700); line-height: 1.6; }
+
+  /* CALLOUTS */
+  .callout { border-radius: 7px; padding: 14px 18px; margin-bottom: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .callout-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 3px; }
+  .callout-body span { font-size: 12px; color: var(--gray-600); line-height: 1.55; }
+  .callout.info { background: var(--teal-light); border-left: 3px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 3px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 3px solid var(--green); }
+
+  /* SWATCHES */
+  .swatch-row { display: flex; gap: 12px; flex-wrap: wrap; padding: 6px 0; }
+  .swatch { display: flex; align-items: center; gap: 8px; }
+  .swatch-block { width: 28px; height: 28px; border-radius: 5px; border: 1px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+  .swatch-label { font-size: 12px; color: var(--gray-600); }
+  .swatch-hex { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-400); }
+
+  /* PILLS */
+  .pill { display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 4px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid transparent; }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+  .pill-green { background: var(--green-light); color: var(--green); border-color: var(--green-border); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+
+  /* ASSET LIST */
+  .asset-list { list-style: none; padding: 0; }
+  .asset-list li { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--gray-100); }
+  .asset-list li:last-child { border-bottom: none; }
+  .asset-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
+  .asset-body { flex: 1; }
+  .asset-body strong { font-size: 13px; font-weight: 600; color: var(--gray-800); display: block; margin-bottom: 2px; }
+  .asset-body span { font-size: 11.5px; color: var(--gray-500); line-height: 1.45; }
+  .asset-status { margin-left: auto; flex-shrink: 0; padding-top: 1px; }
+
+  /* QUESTIONS */
+  .question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .question-item:last-child { border-bottom: none; }
+  .question-text { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .question-context { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+
+  /* ARROW LIST */
+  .arrow-list { list-style: none; padding: 0; margin-top: 8px; }
+  .arrow-list li { font-size: 12px; color: var(--gray-600); padding: 3px 0 3px 15px; position: relative; line-height: 1.45; }
+  .arrow-list li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 10px; top: 4px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .page-header, .content { padding-left: 36px; padding-right: 36px; }
+  }
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .two-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .header-meta { flex-direction: column; width: 100%; }
+    .meta-item { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .meta-item:last-child { border-bottom: none; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+<nav class="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="dot"></div>
+      <span class="lwd-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Premier Federal Logistics</div>
+    <div class="sidebar-doctype">Brand Designer Brief</div>
+    <div class="sidebar-status">
+      <div class="pulse"></div>
+      <span>In Progress</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Brief</div>
+    <a href="#snapshot" class="nav-link active"><span class="nav-icon">📋</span> Project Snapshot</a>
+    <a href="#client" class="nav-link"><span class="nav-icon">🏢</span> Client & Audience</a>
+    <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand & Direction</a>
+    <a href="#usage" class="nav-link"><span class="nav-icon">📐</span> Usage & Applications</a>
+    <a href="#assets" class="nav-link"><span class="nav-icon">📦</span> Assets & Status</a>
+    <a href="#questions" class="nav-link"><span class="nav-icon">💬</span> Let's Talk</a>
+  </div>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <div class="header-overline">Brand Designer Brief · For Alyssa</div>
+    <h1>Premier Federal Logistics</h1>
+    <div class="sub">Full Brand Identity &nbsp;·&nbsp; Option 02</div>
+
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Contacts</span>
+        <span class="meta-value">Tracy & Bill Krenz</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deposit</span>
+        <span class="meta-value ok">✓ Received</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Discovery</span>
+        <span class="meta-value ok">✓ Complete</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Current Logo</span>
+        <span class="meta-value warn">Fiverr — replacing</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Related</span>
+        <span class="meta-value">Website build in progress</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 — PROJECT SNAPSHOT -->
+    <section id="snapshot">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Snapshot</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="highlight-box">
+        <strong>The job</strong>
+        <p>Build a brand identity that carries the same authority as the people behind it. Tracy has secret-level DoD clearance and transported M1 Abrams tanks. Bill has 1M+ accident-free miles. The current Fiverr logo doesn't match — procurement officers at Boeing and Halliburton need to see credibility in the first three seconds.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The Project</div>
+          <div class="data-row"><span class="data-label">Package</span><span class="data-value">Full Brand Identity — Option 02</span></div>
+          <div class="data-row"><span class="data-label">Concepts</span><span class="data-value">2–3 distinct directions presented</span></div>
+          <div class="data-row"><span class="data-label">Revisions</span><span class="data-value">2 rounds on chosen direction</span></div>
+          <div class="data-row"><span class="data-label">Deliverables</span><span class="data-value">Full logo system, color system, typography pairings, brand guidelines, social specs, business card + letterhead layout</span></div>
+          <div class="data-row"><span class="data-label">File Package</span><span class="data-value">SVG, PNG (multiple sizes), EPS, PDF, favicon</span></div>
+          <div class="data-row"><span class="data-label">Related</span><span class="data-value">Website build running parallel — brand feeds directly into site design</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Not in Scope</div>
+          <div class="data-row"><span class="data-label">Website</span><span class="data-value">Separate project — don't design for web layout</span></div>
+          <div class="data-row"><span class="data-label">Print Prod.</span><span class="data-value">Business card + letterhead are design only, not print-ready production</span></div>
+          <div class="data-row"><span class="data-label">Photography</span><span class="data-value">Discussed as future add-on, not part of this deliverable</span></div>
+          <div class="data-row"><span class="data-label">Capability Stmt.</span><span class="data-value">Potential future project — not in this scope</span></div>
+          <div class="data-row"><span class="data-label">Copy/Tagline</span><span class="data-value">We'll work with what they give us — not writing it from scratch</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 — CLIENT & AUDIENCE -->
+    <section id="client">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Client & Audience</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="two-col" style="margin-bottom:10px">
+        <div class="card">
+          <div class="card-title">The Client</div>
+          <div class="data-row"><span class="data-label">Company</span><span class="data-value">Premier Federal Logistics, LLC — federal compliance & logistics firm, Wausau, WI</span></div>
+          <div class="data-row"><span class="data-label">What They Do</span><span class="data-value">Backend support for companies on federal jobs — paperwork, subcontractor coordination, compliance. In Bill's words: "We keep the job clean, documented, and within federal rules."</span></div>
+          <div class="data-row"><span class="data-label">Design Lead</span><span class="data-value">Tracy Krenz — Owner/Founder. Creative decisions go through her.</span></div>
+          <div class="data-row"><span class="data-label">Operations</span><span class="data-value">Bill Krenz — Exec. Dir. of Ops. Handles logistics and payments. CC both on everything.</span></div>
+          <div class="data-row"><span class="data-label">Communication</span><span class="data-value">Bill is the talker — short, direct. Tracy is the decision-maker on design. Shared email. Both see everything.</span></div>
+          <div class="data-row"><span class="data-label">Creative Latitude</span><span class="data-value">Bill: "Be creative. I'm not so much." That's trust and permission — they want to be impressed, not consulted on every detail.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">The Audience</div>
+          <div class="data-row"><span class="data-label">Primary</span><span class="data-value">Fortune 500 procurement teams, federal contracting officers, prime contractors (Boeing, Halliburton, UPS)</span></div>
+          <div class="data-row"><span class="data-label">What They Need</span><span class="data-value">To feel immediately that PFL is a serious, capable operation — not a local small business with a cheap logo</span></div>
+          <div class="data-row"><span class="data-label">Context</span><span class="data-value">These people see dozens of capability statements and pitches. The logo is the first visual impression — if it looks amateur, nothing else on the page matters.</span></div>
+          <div class="data-row"><span class="data-label">Key Insight</span><span class="data-value">The brand needs to hold up next to Boeing's. Not compete with it — just not look embarrassing beside it.</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div class="card-title">Certifications — Confirmed by SBA</div>
+        <div class="data-row"><span class="data-label">Veteran-Owned</span><span class="data-value">Tracy — Army veteran, two-time ARCOM recipient, secret-level DoD clearance, M1 Abrams tank transport</span></div>
+        <div class="data-row"><span class="data-label">EDWOSB</span><span class="data-value">Economically Disadvantaged Women-Owned Small Business — SBA certified</span></div>
+        <div class="data-row"><span class="data-label">WOSB</span><span class="data-value">Women-Owned Small Business — SBA certified</span></div>
+        <div class="data-row"><span class="data-label">Bill's Credentials</span><span class="data-value">1M+ accident-free miles, certified bookkeeper, 40+ property rehabilitations</span></div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Vibe in one sentence</strong>
+          <span>Federal-grade authority with a human backbone — professional, trustworthy, and capable. This is a company run by people who transported tanks and managed million-dollar federal contracts. The brand should carry that weight without saying it out loud.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 — BRAND & CREATIVE DIRECTION -->
+    <section id="brand">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Brand & Creative Direction</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Replacing a Fiverr logo — this is a clean slate</strong>
+          <span>Current logo is raster-only, wrong file formats, doesn't carry authority. Bill described it as "plain and mostly files are wrong." Nothing to carry forward from the existing mark. Full creative freedom on direction.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div class="card-title">Color Direction — Starting Points</div>
+        <div class="data-row">
+          <span class="data-label">Base</span>
+          <div class="data-value">
+            <div class="swatch-row">
+              <div class="swatch">
+                <div class="swatch-block" style="background:#0D1B2A;"></div>
+                <span class="swatch-label">Navy — the anchor. Federal, serious, authoritative.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Accent</span>
+          <div class="data-value">
+            <div class="swatch-row">
+              <div class="swatch">
+                <div class="swatch-block" style="background:#c9a84c;"></div>
+                <span class="swatch-label">Gold/brass — authority, credibility. Not flashy — earned.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Patriotic</span>
+          <div class="data-value">
+            <div class="swatch-row">
+              <div class="swatch">
+                <div class="swatch-block" style="background:#b91c1c;"></div>
+                <span class="swatch-label">Red — subtle patriotic undertone. Not a flag — a nod.</span>
+              </div>
+              <div class="swatch">
+                <div class="swatch-block" style="background:#ffffff; border-color:#ddd;"></div>
+                <span class="swatch-label">White — clean, open</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="data-row"><span class="data-label">Client Says</span><span class="data-value">"Stay with simple colors." — Bill wants clean and strong, not complex or trendy. These are starting points — refine the exact palette based on what reads best at every size.</span></div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px">
+        <div class="card">
+          <div class="card-title">Brand Personality</div>
+          <div class="data-row"><span class="data-label">In Their Words</span><span class="data-value">"Professional and trustworthy and can get the job done."</span></div>
+          <div class="data-row"><span class="data-label">Tone</span><span class="data-value">Authoritative but not cold. Competent, reliable, no-nonsense. The kind of company you trust with a $2M federal subcontract.</span></div>
+          <div class="data-row"><span class="data-label">What It's Not</span><span class="data-value">Not flashy, not trendy, not startup-y. Nothing that looks cheap, AI-generated, busy, or hard to read. Bill specifically called those out.</span></div>
+          <div class="data-row"><span class="data-label">First Impression</span><span class="data-value">"Professional and trustworthy" — that's the gut check. If a procurement officer doesn't feel that in the first second, we missed.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Logo Direction</div>
+          <div class="data-row"><span class="data-label">Type</span><span class="data-value">Monogram (PFL) with full company name underneath. They like the idea of both working together.</span></div>
+          <div class="data-row"><span class="data-label">Embroidery</span><span class="data-value">Must be embroidery-friendly — no fine detail, no thin lines, no gradients. This constrains line weight and complexity.</span></div>
+          <div class="data-row"><span class="data-label">Flexibility</span><span class="data-value">"We are open to anything." Full creative latitude. Present 2–3 distinct directions including the monogram approach.</span></div>
+          <div class="data-row"><span class="data-label">Typography</span><span class="data-value">Strong modern sans-serif implied by the overview. No playful or casual fonts. Needs to read "federal contractor," not "local shop."</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div class="card-title">Tagline</div>
+        <div class="data-row"><span class="data-label">Candidate</span><span class="data-value">"Compliance and Coordination You Can Count On"</span></div>
+        <div class="data-row"><span class="data-label">Status</span><span class="data-value">Working idea from the client. Build a tagline lock-up as part of the logo system — needs to work with and without.</span></div>
+        <div class="data-row"><span class="data-label">Notes</span><span class="data-value">It's functional and descriptive, which fits the federal audience. Could be refined — but start designing with it and we'll adjust if needed.</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Anti-References — What to Avoid</div>
+        <div class="data-row"><span class="data-label">Busy</span><span class="data-value">"Ones with a lot going on and hard to read" — keep it clean and legible at every size</span></div>
+        <div class="data-row"><span class="data-label">Cheap</span><span class="data-value">"Look cheap and simple AI made" — nothing that reads as template or auto-generated</span></div>
+        <div class="data-row"><span class="data-label">No Inspiration</span><span class="data-value">Bill didn't have specific logos he admires. No competitor brands to reference either — do your own competitive scan to make sure PFL stands apart in the federal logistics space.</span></div>
+      </div>
+    </section>
+
+    <!-- 04 — USAGE & APPLICATIONS -->
+    <section id="usage">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Usage & Applications</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div class="card-title">Where This Logo Lives</div>
+        <div class="data-row"><span class="data-label">Capability Stmt.</span><span class="data-value">The single most important document in federal contracting. Logo anchors the header — needs to project authority at letter-size. This is where procurement officers first see PFL.</span></div>
+        <div class="data-row"><span class="data-label">Website</span><span class="data-value">Site header, favicon, OG image. Website build is running parallel — logo feeds directly into the site design system.</span></div>
+        <div class="data-row"><span class="data-label">Email Signatures</span><span class="data-value">Compact version for email footer. Needs to be crisp at small sizes on any background.</span></div>
+        <div class="data-row"><span class="data-label">Business Cards</span><span class="data-value">Design layout is in scope. Logo needs to work at business-card scale with tagline.</span></div>
+        <div class="data-row"><span class="data-label">Letterhead</span><span class="data-value">Design layout is in scope. Clean, professional header treatment.</span></div>
+        <div class="data-row"><span class="data-label">Apparel</span><span class="data-value">Embroidered shirts — this is a hard constraint. No fine lines, no gradients, limited color count. Design with embroidery in mind from the start.</span></div>
+        <div class="data-row"><span class="data-label">Truck Decals</span><span class="data-value">Vehicle signage. Needs to read cleanly at distance on a moving truck.</span></div>
+        <div class="data-row"><span class="data-label">Social Media</span><span class="data-value">Profile picture and cover. Icon mark or PFL monogram needs to work at 32px.</span></div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Priority order: capability statement → website → business cards → apparel</strong>
+          <span>The logo's most critical job is looking authoritative on a PDF that lands on a procurement officer's desk. Everything else follows from that. Design for the capability statement first — if it works there, it works everywhere.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">File Deliverables</div>
+        <div class="data-row"><span class="data-label">Variations</span><span class="data-value">Full color, white (reversed), dark, monochrome. Horizontal and stacked layouts.</span></div>
+        <div class="data-row"><span class="data-label">Icon Mark</span><span class="data-value">PFL monogram or simplified mark for compact use — favicons, social profiles, app icons.</span></div>
+        <div class="data-row"><span class="data-label">Tagline Lock-up</span><span class="data-value">Version with tagline and version without. Both orientations.</span></div>
+        <div class="data-row"><span class="data-label">Formats</span><span class="data-value">SVG, PNG (multiple sizes), EPS, PDF, favicon ICO</span></div>
+        <div class="data-row"><span class="data-label">Guidelines</span><span class="data-value">Brand guidelines doc — usage rules, clear space, minimum sizes, do's and don'ts, color specs (hex, RGB, CMYK).</span></div>
+        <div class="data-row"><span class="data-label">Typography</span><span class="data-value">Heading + body font pairings defined and documented.</span></div>
+        <div class="data-row"><span class="data-label">Social Specs</span><span class="data-value">Profile picture and cover image templates for major platforms.</span></div>
+      </div>
+    </section>
+
+    <!-- 05 — ASSETS & STATUS -->
+    <section id="assets">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Assets & Status</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="card">
+        <div class="card-title">What We Have / What's Coming</div>
+        <ul class="asset-list">
+          <li>
+            <span class="asset-icon">🖼️</span>
+            <div class="asset-body">
+              <strong>Current Logo (Fiverr)</strong>
+              <span>5W(2).jpeg — raster only, no vector source. "Plain and mostly files are wrong." Being replaced, not refined. Keep for reference only.</span>
+            </div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📝</span>
+            <div class="asset-body">
+              <strong>Brand Discovery Responses</strong>
+              <span>Complete answers from Bill (shared with Tracy). Personality, direction, dislikes, tagline candidate, logo type preference — all captured.</span>
+            </div>
+            <span class="asset-status"><span class="pill pill-green">✓ Received</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🎖️</span>
+            <div class="asset-body">
+              <strong>SBA Certification Badges</strong>
+              <span>Veteran-Owned, EDWOSB, WOSB — all confirmed. Badge assets needed for website and marketing materials. May or may not factor into logo, but the certifications should inform the brand's authority level.</span>
+            </div>
+            <span class="asset-status"><span class="pill pill-orange">Pending Assets</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🔍</span>
+            <div class="asset-body">
+              <strong>Competitor Landscape</strong>
+              <span>Client had no specific competitors or admired brands to share. Do your own scan of federal logistics/compliance firms to ensure PFL stands apart visually.</span>
+            </div>
+            <span class="asset-status"><span class="pill pill-orange">Designer Research</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📸</span>
+            <div class="asset-body">
+              <strong>Photography</strong>
+              <span>Not in logo scope. Professional shoot discussed as a future add-on for website and branding materials. Headshots and operations photos will happen eventually.</span>
+            </div>
+            <span class="asset-status"><span class="pill pill-gray">Future Project</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🌐</span>
+            <div class="asset-body">
+              <strong>Domain</strong>
+              <span>premierfederallogistics.com — already active. Jordan handles DNS.</span>
+            </div>
+            <span class="asset-status"><span class="pill pill-gray">Jordan Handles</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06 — LET'S TALK -->
+    <section id="questions">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">☕</span>
+        <div class="callout-body">
+          <strong>Bring your instincts — not just answers</strong>
+          <span>These are conversation starters for when we kick off concepts. You know design better than I do — if you've got a direction you want to run with after reading this, let's hear it.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Creative Questions</div>
+
+        <div class="question-item">
+          <div class="question-text">How do we make "PFL" feel authoritative as a monogram without looking generic?</div>
+          <div class="question-context">They want a PFL monogram with the full name underneath. The risk is it looks like every other three-letter logistics company. What makes this monogram feel like it belongs on a DoD subcontractor's capability statement? Weight, structure, negative space — what's the play?</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">Embroidery-friendly from day one — how does that shape the design?</div>
+          <div class="question-context">Bill specifically called out embroidered shirts. That means no fine lines, no gradients, limited detail at small sizes. Better to design with that constraint baked in than to simplify a complex logo after the fact. What line weight and complexity level gives us the best of both worlds?</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">Navy + gold + patriotic undertones — how do we execute this without looking like a military branch or a law firm?</div>
+          <div class="question-context">The palette direction is clear. The risk is ending up in "generic government contractor" territory. How do we use these colors in a way that feels modern and distinct? Where does the red play — if at all? What separates this from the dozens of navy-and-gold shield logos in the federal space?</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">What typography says "federal contractor" without saying "boring"?</div>
+          <div class="question-context">Strong modern sans-serif is the direction. But there's a range between Helvetica-safe and something with more character. What font pairings feel authoritative enough for a capability statement but distinctive enough to be a real brand?</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">The tagline: "Compliance and Coordination You Can Count On" — does it work as a lock-up?</div>
+          <div class="question-context">It's long. It's descriptive. It might work well on a capability statement or website but be too much for a business card lock-up. Worth thinking about whether we design a full lock-up version or suggest they shorten it. Or both.</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">No competitor references, no admired brands — what does the landscape actually look like?</div>
+          <div class="question-context">Bill said "none really" to both questions. That means we need to do our own homework. What are federal logistics and compliance firms actually doing with their branding? Where's the visual gap PFL can own? A quick scan before concepts start would prevent us from accidentally looking like someone else.</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">What should the icon mark communicate at 32px without the company name?</div>
+          <div class="question-context">The PFL monogram is one approach, but the favicon and social profile picture need something even simpler. What reads at that scale? A single letter? An abstract mark? The monogram shrunk down? Worth having a plan before we're in revisions trying to make a complex mark work small.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
