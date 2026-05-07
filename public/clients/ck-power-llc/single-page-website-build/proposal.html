@@ -1,29 +1,774 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Website Proposal — CK Power LLC | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    html, body {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+
+    body { background: white; margin: 0; }
+
+    .page-wrap {
+      margin-left: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .cover {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 56px 48px !important;
+      page-break-after: always;
+    }
+
+    .main { padding: 32px 48px 48px !important; }
+
+    section { page-break-inside: avoid; margin-bottom: 40px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+
+    a { color: inherit !important; text-decoration: none !important; }
+    .proof-row { display: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 22px 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+  .sidebar-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 3px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 16px 8px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 8px 10px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12.5px; font-weight: 400; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 10px 14px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 18px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── STICKY CTA ── */
+  a.sticky-cta { display: none; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 220px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 72px 48px 60px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .cover-overline::before { content: ''; width: 32px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .cover-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 14px 24px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 56px 64px 80px; }
+  section { margin-bottom: 60px; scroll-margin-top: 24px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 3px 9px; border-radius: 4px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 28px; margin-top: 12px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 24px; max-width: 680px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 18px; }
+  .opening-wrap p { font-size: 14.5px; color: var(--gray-700); line-height: 1.8; margin-bottom: 14px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── SECTION CARDS (used for site sections scope) ── */
+  .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .page-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 7px; padding: 16px 18px; }
+  .page-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .page-card-slug { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--gray-400); letter-spacing: 0.06em; margin-bottom: 10px; display: block; }
+  .page-card ul { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 10px; }
+  .page-card ul li { font-size: 12px; color: var(--gray-600); padding: 2.5px 0 2.5px 14px; position: relative; line-height: 1.45; }
+  .page-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 10px; }
+
+  /* ── ALWAYS INCLUDED ── */
+  .always-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .always-item { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 16px; }
+  .always-label { font-size: 12px; font-weight: 600; color: var(--gray-900); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+  .always-label .dot { width: 4px; height: 4px; background: var(--gray-400); border-radius: 50%; flex-shrink: 0; }
+  .always-desc { font-size: 11.5px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--dark-header); border-radius: 8px; padding: 32px 36px; margin-bottom: 20px; border-left: 3px solid var(--teal); }
+  .highlight-box p { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.8; margin-bottom: 12px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--white); font-weight: 600; }
+
+  /* ── CRED STRIP ── */
+  .cred-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cred-badge { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 12px; text-align: center; }
+  .cred-badge .icon { font-size: 18px; margin-bottom: 7px; display: block; }
+  .cred-badge .label { font-size: 11px; font-weight: 500; color: var(--gray-700); line-height: 1.35; }
+
+  /* ── INVESTMENT ── */
+  .invest-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .invest-cards.single { grid-template-columns: 1fr; max-width: 480px; }
+  .invest-card { border: 1px solid var(--gray-100); border-radius: 8px; padding: 24px 22px; background: var(--white); position: relative; }
+  .invest-card.featured { border-color: var(--gray-300); border-width: 1.5px; }
+  .featured-pill { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--teal); color: var(--white); font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 12px; border-radius: 4px; white-space: nowrap; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+  .invest-card-desc { font-size: 12.5px; color: var(--gray-500); line-height: 1.55; margin-bottom: 20px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 11px; color: var(--gray-400); margin-bottom: 18px; }
+  .invest-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 14px; }
+  .invest-list li { font-size: 12px; color: var(--gray-600); padding: 3.5px 0 3.5px 16px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 10px; top: 4px; }
+  .invest-summary { background: var(--gray-900); border-radius: 8px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-schedule { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .hosting-row { background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 6px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 10px; }
+  .hosting-row .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .hosting-row p { font-size: 12.5px; color: var(--gray-600); line-height: 1.6; }
+  .hosting-row strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding-bottom: 28px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 40px; height: 40px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 8px; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note { margin-top: 24px; padding: 14px 18px; background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; font-size: 12.5px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note strong { color: var(--gray-700); }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 10px; padding: 40px 44px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; color: var(--white); margin-bottom: 10px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+  .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; position: relative; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 7px; padding: 12px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .cta-btn.primary { background: var(--teal); color: var(--white); }
+  .cta-btn.primary:hover { background: #1ab2bf; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(24,161,173,0.3); }
+  .cta-btn.primary-dim { background: rgba(24,161,173,0.7); color: var(--white); }
+  .cta-btn.primary-dim:hover { background: rgba(24,161,173,0.85); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.1); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.11); }
+  .next-contact { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 16px; position: relative; }
+  .next-contact a { color: var(--teal); text-decoration: none; }
+
+  /* ── PROOF ROW ── */
+  .proof-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 0 0;
+    margin-top: 20px;
+    border-top: 1px solid var(--gray-100);
+    text-align: center;
+  }
+  .proof-row p { font-size: 12px; color: var(--gray-400); }
+  .proof-row a { font-size: 12px; font-weight: 600; color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 52px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2px; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-220px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 36px 20px 80px; }
+    .doc-footer { padding-left: 20px; padding-right: 20px; }
+    .cover-client { font-size: 36px; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .cred-strip { grid-template-columns: 1fr 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-btn { justify-content: center; width: 100%; }
+    a.sticky-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      gap: 6px;
+      padding: 11px 20px;
+      background: var(--teal);
+      color: var(--white) !important;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none !important;
+      box-shadow: 0 4px 20px rgba(24,161,173,0.35);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .page-grid { grid-template-columns: 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .always-grid { grid-template-columns: 1fr 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .next-box { padding: 32px 20px; }
+    .main { padding: 36px 16px 80px; }
+    .proof-row { flex-direction: column; align-items: center; gap: 4px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">CK Power LLC</div>
+    <div class="sidebar-doctype">Website Proposal</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#scope" class="nav-link"><span class="num">02</span> What You're Getting</a>
+    <a href="#why" class="nav-link"><span class="num">03</span> Why This Matters</a>
+    <a href="#investment" class="nav-link"><span class="num">04</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">05</span> How It Works</a>
+    <a href="#next-steps" class="nav-link"><span class="num">06</span> Get Started</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="#next-steps" class="sidebar-cta-btn">Get Started →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+<a href="#next-steps" class="sticky-cta no-print">Get Started →</a>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Website Proposal</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">CK Power LLC</div>
+      <div class="cover-sub">Custom Single-Page Website &nbsp;·&nbsp; May 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Chris Kodl</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Sections</span>
+          <span class="cover-meta-value">7 + Footer</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Investment</span>
+          <span class="cover-meta-value">$1,150 – $1,375</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Chris,</div>
+        <p>You've got business cards going to print with a domain that doesn't resolve yet. That's the kind of urgency that tells me you're serious about getting this right — so let's make sure what people find when they type in ckpowerllc.com is worth the visit.</p>
+        <p>Here's what stood out from our call: <strong>you're partnered with ICT Electric — a 30-year licensed electrical contractor — and you're combining standby generators with Trimlight permanent lighting</strong> in a market where most competitors do one or the other. That's a real edge. The site needs to make that obvious in about five seconds.</p>
+        <p>Right now, when someone gets your card and searches you, they find nothing. Your competitors have websites. You don't. Every day that stays true is a day someone picks the other guy — not because he's better, but because he showed up online and you didn't.</p>
+        <p><strong>This proposal covers a custom single-page website</strong> — 7 sections built around your services, your ICT partnership, and the central Wisconsin market you serve. Professional, mobile-ready, built to expand as CK Power grows. No templates, no monthly fees to me — you own it forever.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="scope">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">What You're Getting</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="page-grid">
+        <div class="page-card">
+          <div class="page-card-title">Navigation</div>
+          <span class="page-card-slug">Fixed top bar</span>
+          <ul>
+            <li>CK Power logo (left)</li>
+            <li>Anchor links to each section</li>
+            <li>Prominent "Call Now" CTA button</li>
+            <li>Mobile hamburger with slide-out drawer</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Hero</div>
+          <span class="page-card-slug">#hero</span>
+          <ul>
+            <li>Headline: services + central WI location</li>
+            <li>Dual CTAs: Call Now + Get a Quote</li>
+            <li>Professional stock photography</li>
+            <li>Generac · Kohler · Trimlight callout</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Services</div>
+          <span class="page-card-slug">#services</span>
+          <ul>
+            <li>Standby Generators — Generac &amp; Kohler</li>
+            <li>Trimlight Permanent Outdoor Lighting</li>
+            <li>Service cards with descriptions + CTAs</li>
+            <li>Structured for future landing page links</li>
+            <li>Brand logos contingent on dealer status confirmation</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Partnership / Trust</div>
+          <span class="page-card-slug">#partnership</span>
+          <ul>
+            <li>ICT Electric LLC branding + partnership</li>
+            <li>Master Electrician &amp; Contractor license badges</li>
+            <li>30+ years of licensed electrical work</li>
+            <li>Link to ICT Electric's website</li>
+            <li>ICT logo &amp; license display pending your confirmation with ICT</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">About</div>
+          <span class="page-card-slug">#about</span>
+          <ul>
+            <li>Chris Kodl — owner-operated story</li>
+            <li>Background and experience (TBD with you)</li>
+            <li>Central WI roots, trust-building copy</li>
+            <li>Photo placement (yours or professional stock)</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Service Area</div>
+          <span class="page-card-slug">#area</span>
+          <ul>
+            <li>Central WI community list</li>
+            <li>Map graphic for local SEO value</li>
+            <li>Merrill, Wausau, Stevens Point + more</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Contact</div>
+          <span class="page-card-slug">#contact</span>
+          <ul>
+            <li>Phone number — click-to-call</li>
+            <li>Email address</li>
+            <li>Contact form: name, phone, service interest</li>
+            <li>This is the conversion point</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Footer</div>
+          <span class="page-card-slug">Site-wide</span>
+          <ul>
+            <li>Business info + contact details</li>
+            <li>Quick navigation links</li>
+            <li>ICT partnership mention</li>
+            <li>Service area summary</li>
+          </ul>
+        </div>
+      </div>
+      <div class="always-grid">
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Mobile-First</div>
+          <div class="always-desc">Someone gets your card, pulls out their phone. The site has to work there first.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> SEO Foundations</div>
+          <div class="always-desc">Meta tags, local schema, service area keywords, fast load times.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Live Dev Link</div>
+          <div class="always-desc">Watch it come together. Give feedback as we build — no surprises.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Bold &amp; Industrial</div>
+          <div class="always-desc">Matches your brand. Dark navy, electric blue, confident. Not corporate — credible.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> You Own It</div>
+          <div class="always-desc">No retainer, no lock-in, no monthly fees to me. Ever.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Built to Expand</div>
+          <div class="always-desc">When you're ready for service pages, solar, or a gallery — we add on, not rebuild.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="why">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Why This Site Matters</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="highlight-box">
+        <p>You're handing out business cards right now. When someone flips that card over and types in your domain, what they find in the next 10 seconds decides whether they call you or Google someone else.</p>
+        <p>Right now, they find nothing. <strong>Meanwhile, your competitors have websites — and they're getting the calls that should be going to you.</strong></p>
+        <p>You've got a partnership with a 30-year licensed electrical contractor. You're covering both generators and permanent lighting under one roof. A site that makes all of that clear to one homeowner who was about to call someone else has already paid for itself.</p>
+      </div>
+      <div class="cred-strip" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="cred-badge"><span class="icon">🔒</span><div class="label">ICT Master Electrician #1025848</div></div>
+        <div class="cred-badge"><span class="icon">⚡</span><div class="label">ICT Electrical Contractor #1241265</div></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="invest-cards">
+        <div class="invest-card">
+          <div class="invest-card-name">The Site</div>
+          <div class="invest-card-title">Custom Single-Page Website</div>
+          <div class="invest-card-desc">Everything in the wireframe. 7 sections + footer. Professional design, mobile-responsive, contact form, stock photography sourced and integrated. Rush delivery included.</div>
+          <div class="invest-price">$1,150</div>
+          <div class="invest-price-note">One-time. Includes rush priority.</div>
+          <ul class="invest-list">
+            <li>7 custom sections + footer</li>
+            <li>Bold, industrial design matching your brand</li>
+            <li>ICT partnership trust section with licenses</li>
+            <li>Service area with map graphic</li>
+            <li>Contact form + click-to-call</li>
+            <li>Stock photography sourced &amp; integrated</li>
+            <li>Mobile-first, SEO foundations, local schema</li>
+            <li>Architecture built for future expansion</li>
+          </ul>
+        </div>
+        <div class="invest-card featured">
+          <div class="featured-pill">Best Value</div>
+          <div class="invest-card-name">The Site + CMS</div>
+          <div class="invest-card-title">Site + Content Editor</div>
+          <div class="invest-card-desc">Everything above, plus a custom content management system so you can update text, swap photos, and add services yourself — no calling me every time. A CMS like this is typically a ~$500 add-on — bundled with this project, it's $225 added to your final invoice at launch.</div>
+          <div class="invest-price">$1,375</div>
+          <div class="invest-price-note">Same deposit — $225 CMS added at launch.</div>
+          <ul class="invest-list">
+            <li>Everything in The Site</li>
+            <li>Custom CMS — edit content yourself</li>
+            <li>Update text, photos, service descriptions</li>
+            <li>No clutter, no bloat — built for you</li>
+            <li>Add new services as your business grows</li>
+            <li>Never pay someone to change a phone number</li>
+          </ul>
+        </div>
+      </div>
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Your investment</div>
+          <div class="invest-summary-amount">$1,150 <span style="color:rgba(255,255,255,0.2);font-size:22px;">/</span> $1,375</div>
+          <div class="invest-summary-schedule">50% deposit ($575) to start &nbsp;·&nbsp; remainder at launch &nbsp;·&nbsp; CMS added to final bill if selected</div>
+        </div>
+        <a href="#next-steps" class="cta-btn primary no-print">Move Forward →</a>
+      </div>
+      <div class="hosting-row">
+        <span class="icon">🏠</span>
+        <p><strong>Hosting &amp; Domain</strong> — Hosting through Vercel is free or minimal for a single-page site. Domain (ckpowerllc.com) is ~$10–15/year through Namecheap, purchased by you. No monthly fees to me — ever. Most agencies charge $100–$300/month just to keep the lights on.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Deposit &amp; Kickoff</div>
+            <div class="step-desc">50% deposit locks in the project and puts you at the front of the line. I'll reach out within 24 hours to confirm a few remaining details — ICT approval, dealer confirmations, final service area list — and we're off.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Design &amp; Build</div>
+            <div class="step-desc">Your wireframe is already mapped out — that's a significant head start. My designer and I will build from the wireframe, lock in the visual direction from your logo and brand, source stock photography, and share a live development link so you can follow along in real time.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Review &amp; Refine</div>
+            <div class="step-desc">You review the live site. We go through it together, make adjustments until it's right. No guessing, no surprises — and if something's not working, just tell me straight.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Launch &amp; Handoff</div>
+            <div class="step-desc">Domain connected, site live, business cards finally point somewhere. Final 50% due at launch. You own everything — code, hosting, domain. If you ever want a different developer, you take it all with you.</div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-note">
+        <strong>Timeline:</strong> With the wireframe done and your logo in hand, a realistic build is <strong>2–3 weeks</strong> from deposit to launch — targeting end of the month so your business cards are backed by a live site. You mentioned end of month — we're building to hit that.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">06</span>
+        <span class="sec-title">Ready to Move Forward?</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Next Steps —</div>
+        <div class="next-title">Let's get this live.</div>
+        <div class="next-sub">Select your package to pay your deposit and lock in the project — or reach out with any questions first.</div>
+        <div class="cta-row">
+          <a id="btn-1150" href="#" target="_blank" class="cta-btn primary">💳 Pay Deposit — $1,150 Package</a>
+          <a id="btn-1375" href="#" target="_blank" class="cta-btn primary-dim">💳 Pay Deposit — $1,375 Package</a>
+        </div>
+        <div class="cta-row">
+          <a href="mailto:jordan@latzwebdesign.com" class="cta-btn ghost">✉️ Email a Question</a>
+          <a href="tel:7156305689" class="cta-btn ghost">📞 (715) 630-5689</a>
+        </div>
+        <div class="next-contact">
+          Each deposit is $575 — remainder due at launch. CMS add-on ($225) billed at launch if selected.<br>
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+        </div>
+      </div>
+      <div class="proof-row no-print">
+        <p>Curious what it's like to work together?</p>
+        <a href="https://latzwebdesign.com/reviews" target="_blank">See what clients are saying →</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CLIENT CONFIG — update these before sending
+  // ─────────────────────────────────────────────
+  const PAYPAL_1150 = '';  // 50% deposit link for $1,150 package ($575)
+  const PAYPAL_1375 = '';  // 50% deposit link for $1,375 package ($575 deposit + $225 CMS at launch)
+  // ─────────────────────────────────────────────
+
+  const btn1150 = document.getElementById('btn-1150');
+  const btn1375 = document.getElementById('btn-1375');
+
+  if (PAYPAL_1150) btn1150.href = PAYPAL_1150;
+  else btn1150.style.opacity = '0.4';
+
+  if (PAYPAL_1375) {
+    btn1375.href = PAYPAL_1375;
+  } else {
+    btn1375.style.display = 'none';
+  }
+
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
