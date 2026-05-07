@@ -1,29 +1,1079 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Hill Creative LLC — Site Wireframes | Latz Web Design</title>
+		<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+		<style>
+			:root {
+				--primary: #2a2a2a;
+				--primary-mid: #3a3a3a;
+				--rose: #d1b9af;
+				--rose-deep: #b08070;
+				--rose-light: rgba(209, 185, 175, 0.08);
+				--warm-gray: #c0bdb6;
+				--warm-gray-light: rgba(192, 189, 182, 0.15);
+				--teal: #5a8e89;
+				--teal-light: rgba(90, 142, 137, 0.1);
+				--light: #f5f2ee;
+				--light-dark: #ece8e1;
+				--light-mid: #e2ddd5;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body {
+				font-family: 'Jost', sans-serif; background: var(--light);
+				background-image: linear-gradient(rgba(42,42,42,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(42,42,42,0.04) 1px, transparent 1px);
+				background-size: 28px 28px; color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1); }
+			.sidebar-overlay.visible { opacity: 1; pointer-events: auto; }
+
+			/* ── SIDEBAR ── */
+			.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--primary); display: flex; flex-direction: column; z-index: 200; overflow-y: auto; border-right: 3px solid var(--primary-mid); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+			.sidebar-brand { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+			.sidebar-lwd { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+			.sidebar-client { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--light); line-height: 1.2; margin-bottom: 4px; }
+			.sidebar-doctype { font-size: 10px; color: rgba(245,242,238,0.4); letter-spacing: 0.08em; margin-bottom: 12px; }
+			.status-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(90,142,137,0.15); border: 1px solid rgba(90,142,137,0.35); border-radius: 4px; padding: 4px 10px; }
+			.status-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; animation: pulse 2.5s infinite; }
+			@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+			.status-pill span { font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+			.sidebar-nav { padding: 12px 8px; flex: 1; }
+			.nav-group-label { font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 12px 10px 5px; }
+			.nav-link { display: flex; align-items: center; gap: 9px; padding: 7px 10px; color: rgba(245,242,238,0.45); text-decoration: none; font-size: 12.5px; border-radius: 5px; transition: all 0.12s; border-left: 2px solid transparent; margin-bottom: 1px; }
+			.nav-link:hover { color: var(--light); background: rgba(255,255,255,0.05); }
+			.nav-link.active { color: var(--light); background: rgba(90,142,137,0.12); border-left-color: var(--teal); font-weight: 500; }
+			.nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; }
+			.sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.05em; line-height: 2; }
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab { display: none; position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; border-radius: 50%; background: var(--teal); color: var(--white); border: none; font-size: 22px; z-index: 300; box-shadow: 0 4px 16px rgba(0,0,0,0.25); cursor: pointer; align-items: center; justify-content: center; }
+
+			/* ── MAIN ── */
+			.main { margin-left: var(--sidebar-w); min-height: 100vh; padding: 48px 44px 100px; }
+
+			/* ── DOC HEADER ── */
+			.doc-header { margin-bottom: 52px; }
+			.doc-overline { font-family: 'Architects Daughter', cursive; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+			.doc-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600; line-height: 1.15; margin-bottom: 6px; }
+			.doc-sub { font-size: 14px; color: rgba(42,42,42,0.5); font-weight: 300; }
+			.doc-meta-strip { display: flex; gap: 0; margin-top: 24px; border: 1.5px solid rgba(42,42,42,0.15); border-radius: 6px; overflow: hidden; width: fit-content; background: rgba(255,255,255,0.5); }
+			.meta-item { padding: 10px 20px; border-right: 1px solid rgba(42,42,42,0.1); display: flex; flex-direction: column; gap: 3px; }
+			.meta-item:last-child { border-right: none; }
+			.meta-label { font-family: 'Architects Daughter', cursive; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(42,42,42,0.4); }
+			.meta-value { font-size: 12px; font-weight: 500; }
+			.meta-value.warn { color: var(--rose-deep); }
+			.meta-value.ok { color: var(--teal); }
+
+			/* ── SECTIONS ── */
+			.wf-section { margin-bottom: 64px; scroll-margin-top: 32px; }
+			.section-label { font-family: 'Architects Daughter', cursive; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+			.section-label::after { content: ''; flex: 1; height: 1px; background: var(--primary); opacity: 0.15; }
+			.section-num { background: var(--primary); color: var(--light); font-family: 'Architects Daughter', cursive; font-size: 11px; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card { background: rgba(255,255,255,0.7); border: 2px solid var(--primary); border-radius: 6px; box-shadow: 5px 5px 0 rgba(42,42,42,0.1); overflow: hidden; }
+			.wf-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 22px; border-bottom: 2px solid var(--primary); background: var(--white); }
+			.wf-nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 14px; line-height: 1.1; }
+			.wf-nav-logo small { display: block; font-family: 'Cormorant Garamond', serif; font-size: 11px; font-style: italic; font-weight: 400; color: rgba(42,42,42,0.4); }
+			.wf-nav-links { display: flex; gap: 14px; font-size: 11.5px; color: rgba(42,42,42,0.5); flex-wrap: wrap; }
+			.wf-nav-links span.active { color: var(--primary); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+			.wf-body { padding: 28px 28px 36px; }
+			.wf-footer { border-top: 2px solid var(--primary); padding: 14px 22px; background: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+			.wf-footer span { font-size: 11px; color: rgba(245,242,238,0.4); }
+
+			/* ── ANNOTATION ── */
+			.annotation { font-family: 'Architects Daughter', cursive; font-size: 12px; line-height: 1.5; margin-top: 10px; padding: 8px 14px; background: rgba(42,42,42,0.04); border-left: 3px solid rgba(42,42,42,0.2); border-radius: 0 4px 4px 0; }
+
+			/* ── DECISION BOX ── */
+			.decision-box { border: 2px dashed var(--rose-deep); border-radius: 6px; padding: 14px 16px; margin: 14px 0; background: rgba(176,128,112,0.04); }
+			.decision-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--rose-deep); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+			.decision-label::before { content: '⚑'; }
+
+			/* ── TAGS ── */
+			.embed-tag { font-family: 'Architects Daughter', cursive; font-size: 10px; color: var(--rose-deep); border: 1px solid var(--rose-deep); border-radius: 3px; padding: 2px 8px; display: inline-block; }
+
+			/* ── BLOCK ── */
+			.wf-block { border: 2px dashed rgba(42,42,42,0.15); border-radius: 6px; padding: 18px 16px; margin-bottom: 16px; background: rgba(245,242,238,0.4); }
+			.wf-block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+			.wf-heading-md { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+			.wf-heading-sm { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+			.wf-subtext { font-size: 14px; color: rgba(42,42,42,0.5); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+			.wf-body-text { font-size: 13px; color: rgba(42,42,42,0.6); line-height: 1.6; margin-bottom: 10px; }
+			.section-divider { border: none; border-top: 1px dashed rgba(42,42,42,0.15); margin: 20px 0; }
+			.wf-cta { display: inline-block; background: var(--teal); color: var(--white); font-size: 12px; font-weight: 500; padding: 9px 22px; border-radius: 0; margin-top: 8px; letter-spacing: 0.08em; }
+			.wf-cta.outline { background: transparent; color: var(--primary); border: 1.5px solid var(--warm-gray); }
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder { background: rgba(42,42,42,0.07); border: 2px dashed rgba(42,42,42,0.2); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
+			.img-placeholder .img-icon { font-family: 'Architects Daughter', cursive; font-size: 28px; opacity: 0.3; }
+			.img-placeholder .img-label { font-family: 'Architects Daughter', cursive; font-size: 12px; color: rgba(42,42,42,0.4); text-align: center; line-height: 1.6; }
+
+			/* ── GRIDS ── */
+			.quick-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
+			.quick-link-card { border: 2px dashed rgba(42,42,42,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; background: rgba(255,255,255,0.5); }
+			.quick-link-icon { font-size: 20px; margin-bottom: 6px; }
+			.quick-link-label { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 600; }
+			.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+			.portfolio-card { border: 1.5px dashed rgba(42,42,42,0.2); border-radius: 5px; padding: 12px; background: rgba(255,255,255,0.6); }
+			.portfolio-label { font-size: 10px; color: rgba(42,42,42,0.4); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; }
+			.portfolio-name { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+			.portfolio-desc { font-size: 11px; color: rgba(42,42,42,0.5); line-height: 1.4; margin-top: 4px; }
+			.option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+			.option-card { border: 2px dashed rgba(42,42,42,0.2); border-radius: 6px; padding: 14px; background: rgba(255,255,255,0.5); }
+			.option-label { font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--rose-deep); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+			/* ── STEPS ── */
+			.step-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+			.step-badge { background: var(--rose); color: var(--primary); font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+			.step-content { flex: 1; }
+			.step-title { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+			.step-desc { font-size: 12px; color: rgba(42,42,42,0.5); line-height: 1.5; }
+
+			/* ── TESTIMONIALS ── */
+			.testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+			.testimonial-card { border: 1.5px dashed rgba(42,42,42,0.2); border-radius: 5px; padding: 14px; background: rgba(255,255,255,0.6); }
+			.testimonial-type { font-size: 10px; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+			.testimonial-quote { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: rgba(42,42,42,0.6); font-style: italic; line-height: 1.5; }
+			.testimonial-name { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; margin-top: 8px; }
+
+			/* ── SITEMAP ── */
+			.sitemap { display: flex; align-items: flex-start; gap: 0; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+			.sitemap-node { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+			.sitemap-box { background: var(--primary); color: var(--light); font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 4px; text-align: center; min-width: 100px; }
+			.sitemap-box.secondary { background: rgba(42,42,42,0.1); color: var(--primary); border: 1.5px dashed var(--primary); }
+			.sitemap-arrow { font-family: 'Architects Daughter', cursive; font-size: 18px; color: rgba(42,42,42,0.3); padding: 0 6px; align-self: center; margin-top: -14px; }
+			.sitemap-embed-note { font-family: 'Architects Daughter', cursive; font-size: 9px; color: var(--rose-deep); margin-top: 4px; }
+
+			/* ── CHECKLIST ── */
+			.checklist { list-style: none; padding: 0; }
+			.check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px dashed rgba(42,42,42,0.12); font-size: 13px; }
+			.check-item:last-child { border-bottom: none; }
+			.check-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+			/* ── CALENDLY MOCKUP ── */
+			.calendly-mock { background: var(--white); border: 1.5px solid rgba(42,42,42,0.12); border-radius: 8px; padding: 20px; }
+			.calendly-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(42,42,42,0.08); }
+			.calendly-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--rose); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; }
+			.calendly-name { font-size: 13px; font-weight: 500; }
+			.calendly-type { font-size: 11px; color: rgba(42,42,42,0.5); }
+			.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
+			.cal-d { font-size: 10px; text-align: center; padding: 6px 2px; border-radius: 4px; color: rgba(42,42,42,0.35); }
+			.cal-d.hdr { font-weight: 500; color: rgba(42,42,42,0.6); font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; }
+			.cal-d.on { color: var(--teal); font-weight: 500; background: rgba(90,142,137,0.08); }
+			.cal-d.sel { background: var(--teal); color: var(--white); font-weight: 600; }
+			.cal-times { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+			.cal-slot { border: 1.5px solid var(--teal); border-radius: 4px; padding: 8px 14px; font-size: 12px; color: var(--teal); text-align: center; font-weight: 500; }
+			.cal-slot.sel { background: var(--teal); color: var(--white); }
+			.mock-note { font-family: 'Architects Daughter', cursive; font-size: 10px; color: rgba(42,42,42,0.3); text-align: center; margin-top: 10px; }
+
+			/* ── HONEYBOOK MOCKUP ── */
+			.hb-mock { background: var(--white); border: 1.5px solid rgba(42,42,42,0.12); border-radius: 8px; padding: 20px; }
+			.hb-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; text-align: center; }
+			.hb-sub { font-size: 11px; color: rgba(42,42,42,0.5); text-align: center; margin-top: 4px; margin-bottom: 16px; }
+			.hb-field { margin-bottom: 10px; }
+			.hb-field label { font-size: 11px; color: rgba(42,42,42,0.5); display: block; margin-bottom: 4px; }
+			.hb-input { border: 1px solid rgba(42,42,42,0.15); border-radius: 4px; padding: 8px 12px; font-size: 12px; color: rgba(42,42,42,0.3); width: 100%; background: rgba(245,242,238,0.3); }
+			.hb-textarea { min-height: 60px; }
+			.hb-submit { background: var(--primary); color: var(--light); font-size: 12px; font-weight: 500; padding: 10px 24px; border: none; border-radius: 4px; width: 100%; text-align: center; margin-top: 6px; letter-spacing: 0.05em; }
+			.hb-powered { font-size: 9px; color: rgba(42,42,42,0.25); text-align: center; margin-top: 10px; }
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root { --sidebar-w: 200px; }
+				.main { padding: 32px 24px 80px; }
+				.portfolio-grid, .quick-links { grid-template-columns: repeat(2, 1fr); }
+			}
+			@media (max-width: 680px) {
+				.sidebar { transform: translateX(-100%); }
+				.sidebar.mobile-open { transform: translateX(0); }
+				.sidebar-overlay { display: block; }
+				.mobile-fab { display: flex; }
+				.main { margin-left: 0; padding: 24px 16px 80px; }
+				.doc-title { font-size: 28px; }
+				.doc-meta-strip { flex-direction: column; width: 100%; }
+				.meta-item { border-right: none; border-bottom: 1px solid rgba(42,42,42,0.1); }
+				.meta-item:last-child { border-bottom: none; }
+				.wf-nav-links { display: none; }
+				.wf-body { padding: 20px 16px 28px; }
+				.option-grid, .portfolio-grid, .testimonial-grid, .quick-links { grid-template-columns: 1fr; }
+				.sitemap { flex-direction: column; align-items: center; }
+				.sitemap-arrow { transform: rotate(90deg); margin: 0; padding: 4px 0; }
+				.wf-footer { flex-direction: column; text-align: center; gap: 4px; }
+			}
+		</style>
+	</head>
+	<body>
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Hill Creative LLC</div>
+				<div class="sidebar-doctype">Site Wireframes — Phase 1 Foundation</div>
+				<div class="status-pill"><div class="status-dot"></div><span>Client Review</span></div>
+			</div>
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#real-estate" class="nav-link"><span class="nav-icon">🏡</span> Real Estate</a>
+				<a href="#branding" class="nav-link"><span class="nav-icon">✨</span> Branding</a>
+				<a href="#portraits" class="nav-link"><span class="nav-icon">📸</span> Portraits</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">👋</span> About</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact</a>
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+			<div class="sidebar-footer">Latz Web Design LLC<br />Stevens Point, WI<br />jordan@latzwebdesign.com<br /><br />No fluff. Just results.</div>
+		</nav>
+
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content & Structure</div>
+				<div class="doc-title">Hill Creative LLC</div>
+				<div class="doc-sub">Phase 1 Foundation Site &nbsp;·&nbsp; 6 Pages + Calendly & HoneyBook Integrations</div>
+				<div class="doc-meta-strip">
+					<div class="meta-item"><span class="meta-label">Status</span><span class="meta-value ok">Client Review</span></div>
+					<div class="meta-item"><span class="meta-label">Pages</span><span class="meta-value">6 in scope</span></div>
+					<div class="meta-item"><span class="meta-label">Contact</span><span class="meta-value">Thresa Hill</span></div>
+					<div class="meta-item"><span class="meta-label">Domain</span><span class="meta-value ok">hillcreativellc.com</span></div>
+				</div>
+			</div>
+
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
+				✏️ This wireframe shows what content goes on each page and how it behaves — not how it will look. The final design will draw from your AI mockup aesthetic (Cormorant Garamond + Jost, rose/sage/teal, editorial feel) and references like Stonebridge Marketing — calm, confident, personality-forward. Layout and visual treatment are in the designer's hands. Where you see a <span style="color:var(--rose-deep);font-weight:600;">⚑ Decision Box</span>, we need your input to move forward.
+			</div>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- SITE MAP -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label"><span class="section-num">0</span> Site Map</div>
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align:center;margin-bottom:20px">
+							<div class="wf-heading-sm" style="margin-bottom:4px">Hill Creative LLC</div>
+							<div class="wf-subtext" style="margin-bottom:0">6 pages · 3 audience paths · Calendly + HoneyBook embeds · Sanity CMS</div>
+						</div>
+						<div class="sitemap" style="gap:6px;align-items:flex-start">
+							<div class="sitemap-node"><div class="sitemap-box">Home<br /><span style="font-size:9px;font-family:'Jost',sans-serif;font-weight:400;opacity:0.7;">/</span></div><div class="sitemap-embed-note">routing page</div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Real Estate<br /><span style="font-size:9px;font-family:'Jost',sans-serif;font-weight:400;opacity:0.7;">/real-estate</span></div><div class="sitemap-embed-note">Calendly</div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Branding<br /><span style="font-size:9px;font-family:'Jost',sans-serif;font-weight:400;opacity:0.7;">/branding</span></div><div class="sitemap-embed-note">HoneyBook</div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Portraits<br /><span style="font-size:9px;font-family:'Jost',sans-serif;font-weight:400;opacity:0.7;">/portraits</span></div><div class="sitemap-embed-note">HoneyBook</div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">About<br /><span style="font-size:9px;font-family:'Jost',sans-serif;font-weight:400;opacity:0.7;">/about</span></div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Contact<br /><span style="font-size:9px;font-family:'Jost',sans-serif;font-weight:400;opacity:0.7;">/contact</span></div><div class="sitemap-embed-note">Calendly + HoneyBook</div></div>
+						</div>
+						<div class="annotation" style="margin-top:20px">All 6 pages live on hillcreativellc.com. Nav is consistent across all pages — feels like a table of contents, not a sales funnel. Logo click → Home. CTAs live on the pages in context, not in the nav bar. The homepage routes three audiences: real estate agents → Calendly path, branding clients → HoneyBook path, family/portrait clients → HoneyBook path.</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- PAGE 1: HOME -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="home">
+				<div class="section-label"><span class="section-num">1</span> Home Page — /</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Hill Creative<small>llc</small></div>
+						<div class="wf-nav-links"><span class="active">Home</span><span>Real Estate</span><span>Branding</span><span>Portraits</span><span>About</span><span>Contact</span></div>
+					</div>
+					<div class="wf-body">
+
+						<!-- HERO -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Hero — Split Layout</div></div>
+							<div style="display:flex;gap:16px;flex-wrap:wrap;">
+								<div style="flex:1;min-width:220px;">
+									<div class="wf-body-text" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:8px;">Central Wisconsin · Photography & Videography</div>
+									<div class="wf-heading-lg" style="font-size:28px;line-height:1.1;">Visual stories that <em style="font-style:italic;color:rgba(42,42,42,0.5);">elevate</em> your brand.</div>
+									<div class="wf-body-text" style="margin-top:10px;">Real estate, brand, and lifestyle photography crafted with intention — capturing what matters most, beautifully.</div>
+									<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+										<div class="wf-cta">View Services</div>
+										<div class="wf-cta outline">Let's Connect</div>
+									</div>
+								</div>
+								<!-- Overlapping / staggered photo layout from AI mockup -->
+								<div style="flex:1;min-width:240px;position:relative;height:260px;">
+									<div style="position:absolute;top:0;right:0;width:70%;height:55%;background:var(--warm-gray);border-radius:4px;display:flex;align-items:center;justify-content:center;">
+										<span class="img-label" style="color:rgba(42,42,42,0.5);">Your Hero Photo Here</span>
+									</div>
+									<div style="position:absolute;bottom:0;left:5%;width:55%;height:52%;background:var(--rose);border-radius:4px;display:flex;align-items:center;justify-content:center;">
+										<span class="img-label" style="color:rgba(42,42,42,0.5);">Your Photo</span>
+									</div>
+									<div style="position:absolute;top:8px;left:0;width:22%;height:38%;background:var(--light-dark);border-radius:4px;"></div>
+									<div style="position:absolute;bottom:8px;right:2%;width:30%;height:25%;background:rgba(90,142,137,0.2);border-radius:4px;"></div>
+								</div>
+							</div>
+							<div class="annotation">All copy from Thresa's AI mockup. Hero uses an overlapping / staggered photo layout (see her AI mockup screenshot) — multiple photos at different sizes layered and offset to create depth. The cream, sage, and rose color blocks represent where her real photos will sit. "View Services" scrolls to routing cards below. "Let's Connect" goes to Contact. Neither should feel aggressive — Stonebridge energy.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- NOW FEATURING -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">"Now Featuring" — Brand Photography Lead</div></div>
+							<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+								<div style="flex:1.5;min-width:220px;">
+									<div class="wf-body-text" style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:6px;">Now Featuring · Brand Photography & Videography</div>
+									<div class="wf-heading-md">Help your business show up beautifully.</div>
+									<div class="wf-body-text">Your brand deserves visuals that stop the scroll. I create compelling photography and video content that tells your story, builds trust, and strengthens your online presence — so local businesses in Central Wisconsin can show up with confidence.</div>
+									<div class="wf-cta">Book Brand Session</div>
+								</div>
+								<div class="img-placeholder" style="height:160px;flex:1;min-width:180px;">
+									<div class="img-icon">✨</div>
+									<div class="img-label">Brand portfolio highlight<br />strongest brand session shot</div>
+								</div>
+							</div>
+							<div class="annotation">This leads with branding — Thresa's growth area this year. All copy from AI mockup. The "Now Featuring" label makes it feel curated and current. This section can rotate seasonally. Links to /branding.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- AUDIENCE ROUTING -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Audience Routing — "What Are You Here For?"</div></div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🏡</div>
+									<div class="quick-link-label">Real Estate</div>
+									<div style="font-size:10px;color:rgba(42,42,42,0.4);margin-top:4px;">Listings that sell faster</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">✨</div>
+									<div class="quick-link-label">Brand & Business</div>
+									<div style="font-size:10px;color:rgba(42,42,42,0.4);margin-top:4px;">Show up beautifully online</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">👨‍👩‍👧</div>
+									<div class="quick-link-label">Family & Portraits</div>
+									<div style="font-size:10px;color:rgba(42,42,42,0.4);margin-top:4px;">Real moments captured</div>
+								</div>
+							</div>
+							<div class="annotation">Three cards, three paths. Each links to its service page. This is the core routing — visitors self-select. No decision paralysis. Cards should feel warm and inviting, not like a product catalog.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- PORTFOLIO SAMPLES — Mini Carousel -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Portfolio Samples — Swipeable Galleries</div><span style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 8px;">CMS managed</span></div>
+							<div class="portfolio-grid">
+								<div class="portfolio-card">
+									<!-- Mini carousel mockup -->
+									<div style="position:relative;height:110px;background:rgba(42,42,42,0.07);border:2px dashed rgba(42,42,42,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+										<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">‹</div>
+										<div class="img-label" style="font-size:10px;">brand session · 1 of 5</div>
+										<div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">›</div>
+									</div>
+									<div style="display:flex;gap:3px;justify-content:center;margin-top:6px;">
+										<div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+									</div>
+									<div class="portfolio-label">Local Business · Headshots & Brand</div>
+									<div class="portfolio-name">Professional Brand Session</div>
+									<div class="portfolio-desc">On-location brand photography capturing authentic moments that reflect their story and connect with their audience.</div>
+									<div style="margin-top:8px;"><span style="font-size:11px;color:var(--teal);font-weight:500;">View Brand Photography →</span></div>
+								</div>
+								<div class="portfolio-card">
+									<div style="position:relative;height:110px;background:rgba(42,42,42,0.07);border:2px dashed rgba(42,42,42,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+										<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">‹</div>
+										<div class="img-label" style="font-size:10px;">property shot · 1 of 6</div>
+										<div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">›</div>
+									</div>
+									<div style="display:flex;gap:3px;justify-content:center;margin-top:6px;">
+										<div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+									</div>
+									<div class="portfolio-label">Real Estate · Property Photography</div>
+									<div class="portfolio-name">Residential Listing</div>
+									<div class="portfolio-desc">High-quality property photography with 24-hour turnaround, ready for MLS and marketing.</div>
+									<div style="margin-top:8px;"><span style="font-size:11px;color:var(--teal);font-weight:500;">View Real Estate →</span></div>
+								</div>
+								<div class="portfolio-card">
+									<div style="position:relative;height:110px;background:rgba(42,42,42,0.07);border:2px dashed rgba(42,42,42,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+										<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">‹</div>
+										<div class="img-label" style="font-size:10px;">family session · 1 of 4</div>
+										<div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">›</div>
+									</div>
+									<div style="display:flex;gap:3px;justify-content:center;margin-top:6px;">
+										<div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+									</div>
+									<div class="portfolio-label">Family · Lifestyle Photography</div>
+									<div class="portfolio-name">Family Portrait Session</div>
+									<div class="portfolio-desc">Natural, unscripted family moments captured with a photojournalistic approach.</div>
+									<div style="margin-top:8px;"><span style="font-size:11px;color:var(--teal);font-weight:500;">View Family & Portraits →</span></div>
+								</div>
+							</div>
+							<div class="annotation">Each portfolio card is a mini carousel / swipeable gallery — 4–6 images per category that visitors can click or swipe through. Dot indicators show position. On mobile these swipe naturally; on desktop they have arrow buttons. Each card links to its service page. Images are CMS-managed — Thresa can update her portfolio anytime without calling Jordan.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- TESTIMONIAL -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Testimonial Pull Quote</div><span style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 8px;">CMS managed</span></div>
+							<div style="text-align:center;padding:16px 20px;">
+								<div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;line-height:1.5;">"Thresa's real estate photos are absolutely stunning. Our listings sell faster and for more — her 24-hour turnaround keeps our team moving at full speed."</div>
+								<div style="font-size:11px;color:var(--rose-deep);letter-spacing:0.15em;text-transform:uppercase;margin-top:10px;">— Sarah M., Real Estate Agent</div>
+							</div>
+							<div class="annotation">⚑ Thresa — is this a real client quote from your AI mockup, or AI-generated placeholder text? If placeholder, we need real testimonials to swap in. One strong quote is enough for the homepage.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- ABOUT BLURB -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">About Blurb — Thresa</div></div>
+							<div style="display:flex;gap:16px;flex-wrap:wrap;">
+								<div class="img-placeholder" style="height:140px;flex:1;min-width:140px;">
+									<div class="img-icon">👋</div>
+									<div class="img-label">Thresa headshot / brand photo</div>
+								</div>
+								<div style="flex:2;min-width:220px;">
+									<div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--rose-deep);margin-bottom:4px;">hi!</div>
+									<div class="wf-heading-md">I'm Thresa Hill.</div>
+									<div class="wf-body-text">I'm the creator behind Hill Creative, LLC, specializing in real estate photography and videography across Central Wisconsin. With a background in photojournalistic lifestyle photography, I enjoy capturing natural, authentic moments — whether it's a property listing, a business brand, or a family session.</div>
+									<span style="font-size:13px;color:var(--teal);font-weight:500;">Get to know me →</span>
+								</div>
+							</div>
+							<div class="annotation">Bio copy from AI mockup + live GoDaddy site. The "hi!" and "— Thresa" signature match her AI mockup tone. Jordan refines for final build. Links to full About page.</div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 Hill Creative, LLC · Central Wisconsin</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- PAGE 2: REAL ESTATE -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="real-estate">
+				<div class="section-label"><span class="section-num">2</span> Real Estate — /real-estate</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Hill Creative<small>llc</small></div>
+						<div class="wf-nav-links"><span>Home</span><span class="active">Real Estate</span><span>Branding</span><span>Portraits</span><span>About</span><span>Contact</span></div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px">
+							<div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:6px;">Real Estate Photography & Videography</div>
+							<div class="wf-heading-lg">Listings that sell faster.</div>
+							<div class="wf-subtext">High-quality property photography, videography, and virtual tours that help real estate agents present listings at their absolute best. With a 24-hour turnaround, I keep up with the fast pace of the Central Wisconsin market.</div>
+						</div>
+
+						<!-- Portfolio -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Portfolio — Property Photography</div><span style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 8px;">CMS managed</span></div>
+							<div class="portfolio-grid">
+								<div class="portfolio-card"><div class="img-placeholder" style="height:100px;"><div class="img-label" style="font-size:10px;">interior</div></div></div>
+								<div class="portfolio-card"><div class="img-placeholder" style="height:100px;"><div class="img-label" style="font-size:10px;">exterior / drone</div></div></div>
+								<div class="portfolio-card"><div class="img-placeholder" style="height:100px;"><div class="img-label" style="font-size:10px;">virtual tour</div></div></div>
+							</div>
+							<div class="annotation">8–12 of her best property shots — curated, not a dump.</div>
+							<div class="decision-box" style="margin-top:10px;">
+								<div class="decision-label">Gallery Display — How Should Photos Be Shown?</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A — Static Grid</div>
+										<div class="wf-body-text" style="font-size:12px;">6–10 best images displayed in a curated grid layout. Clean, fast, editorial. Visitor sees everything at a glance.</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B — Carousel / Swipeable</div>
+										<div class="wf-body-text" style="font-size:12px;">Clickable / swipeable gallery. More images in less space. Feels more interactive and modern. Design TBD.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Video Decision -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Drone & Video Reel</div></div>
+							<div class="decision-box">
+								<div class="decision-label">Do You Have a Video Reel?</div>
+								<div class="wf-body-text" style="font-size:12px;">Thresa — do you have a drone / property walkthrough video reel we can use? If so, we have two options:</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A — Embed Video</div>
+										<div class="wf-body-text" style="font-size:12px;">Embed a YouTube or Vimeo reel on this page showcasing drone footage and property walkthrough. Adds credibility and gives agents a feel for your work beyond still photos.</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B — Link Only</div>
+										<div class="wf-body-text" style="font-size:12px;">Skip the embed, link to your YouTube channel instead. Keeps page fast-loading and focused on the booking flow.</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top:10px">If Thresa doesn't have a video ready, we skip this section entirely for launch and add it later when she does. No placeholder video.</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 4-Step Process -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">What to Expect — 4-Step Process</div></div>
+							<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+								<div class="step-row"><div class="step-badge">01</div><div class="step-content"><div class="step-title">Book Online</div><div class="step-desc">Schedule your shoot through my easy online booking. I'll confirm your date and send a prep guide to get the property ready.</div></div></div>
+								<div class="step-row"><div class="step-badge">02</div><div class="step-content"><div class="step-title">The Shoot</div><div class="step-desc">I arrive on time, ready to work efficiently. Most shoots take 1–2 hours depending on property size. You can be present or hand off the key.</div></div></div>
+								<div class="step-row"><div class="step-badge">03</div><div class="step-content"><div class="step-title">24-Hour Delivery</div><div class="step-desc">Edited, high-resolution images delivered within 24 hours via a private online gallery — ready for your MLS listing.</div></div></div>
+								<div class="step-row"><div class="step-badge">04</div><div class="step-content"><div class="step-title">Use & Share</div><div class="step-desc">Download, share, and use your images across MLS, social media, and marketing materials. Virtual tours are hosted and ready to link.</div></div></div>
+							</div>
+							<div class="annotation">All 4-step copy from Thresa's AI mockup — she already articulated this process clearly. The 24-hour turnaround is the key selling point. Agents want speed and predictability.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Shoot Day Detail -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">What Happens on Shoot Day</div></div>
+							<div class="wf-body-text">When I arrive for your photoshoot, the home should be photo-ready, but I'll still help with the final touches — I'll turn on all the lights, put down toilet lids, and tidy small things like countertop clutter. The rest is up to you, so check the provided checklist beforehand.</div>
+							<div class="wf-body-text">Feel free to head out for coffee and leave me entry instructions, or hang out on another floor while I work. I'll go through the home three times — once for photos, once for video, and once for a 360° tour if you've signed up for it. Depending on size and services, this can take 45 minutes to 2 hours — great time to grab a coffee with your clients.</div>
+							<div class="wf-body-text">We don't usually photograph closets or cupboards unless they're a feature, so they're perfect for hiding clutter. Need something changed? Just shoot me a message — I can remove objects, virtually stage, or add twilight images in post.</div>
+							<div class="annotation">This detail copy is from Thresa's current live GoDaddy site — it's great, practical stuff that agents love. The casual tone (toilet lids, coffee break, hiding clutter in closets) is very on-brand. Jordan will tighten for the new design.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Shoot Prep PDF -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Shoot Prep Download</div></div>
+							<div style="display:flex;gap:12px;align-items:center;border:1.5px dashed rgba(42,42,42,0.2);border-radius:5px;padding:12px 14px;background:rgba(255,255,255,0.6);">
+								<div style="font-size:24px;">📄</div>
+								<div style="flex:1;">
+									<div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;">PhotoReady House Checklist</div>
+									<div style="font-size:12px;color:rgba(42,42,42,0.5);">PDF download — get the property photo-ready before your shoot</div>
+								</div>
+								<div class="wf-cta" style="font-size:11px;padding:6px 14px;margin-top:0;">Download PDF →</div>
+							</div>
+							<div class="annotation">This PDF already exists on Thresa's current GoDaddy site ("PhotoReady House.pdf"). We host it directly on the new site. Opens in new tab. Can also be linked from Calendly confirmation emails.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Pricing Decision -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Pricing</div></div>
+							<div class="decision-box">
+								<div class="decision-label">Pricing Display — Show or Hide?</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A — Show Starting Prices</div>
+										<div class="wf-body-text" style="font-size:12px;">List starting prices on this page (e.g. "Starting at $XXX"). Reduces friction for agents — they're high-volume, price-sensitive, and want to know upfront before booking.</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B — Inquiry-Based</div>
+										<div class="wf-body-text" style="font-size:12px;">No prices shown. Agents book via Calendly, pricing discussed during confirmation. Gives flexibility but adds friction — agents may bounce without seeing numbers.</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top:10px">Recommendation: Option A for real estate (high volume, low touch). Branding and portrait pricing stay inquiry-based. Thresa — which direction feels right?</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- CALENDLY MOCKUP -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Book a Listing</div><span class="embed-tag">Calendly embed</span></div>
+							<div style="text-align:center;margin-bottom:12px;">
+								<div class="wf-heading-md" style="font-style:italic;">Ready to book your next listing?</div>
+							</div>
+							<div class="calendly-mock">
+								<div class="calendly-header">
+									<div class="calendly-avatar">TH</div>
+									<div><div class="calendly-name">Thresa Hill</div><div class="calendly-type">Real Estate Shoot · 60 min</div></div>
+								</div>
+								<div style="font-size:12px;font-weight:500;margin-bottom:8px;">June 2026</div>
+								<div class="cal-grid">
+									<div class="cal-d hdr">Mon</div><div class="cal-d hdr">Tue</div><div class="cal-d hdr">Wed</div><div class="cal-d hdr">Thu</div><div class="cal-d hdr">Fri</div><div class="cal-d hdr">Sat</div><div class="cal-d hdr">Sun</div>
+									<div class="cal-d on">1</div><div class="cal-d on">2</div><div class="cal-d on">3</div><div class="cal-d">4</div><div class="cal-d">5</div><div class="cal-d">6</div><div class="cal-d">7</div>
+									<div class="cal-d on">8</div><div class="cal-d sel">9</div><div class="cal-d on">10</div><div class="cal-d">11</div><div class="cal-d">12</div><div class="cal-d">13</div><div class="cal-d">14</div>
+									<div class="cal-d on">15</div><div class="cal-d on">16</div><div class="cal-d on">17</div><div class="cal-d">18</div><div class="cal-d">19</div><div class="cal-d">20</div><div class="cal-d">21</div>
+									<div class="cal-d on">22</div><div class="cal-d on">23</div><div class="cal-d on">24</div><div class="cal-d">25</div><div class="cal-d">26</div><div class="cal-d">27</div><div class="cal-d">28</div>
+								</div>
+								<div class="cal-times">
+									<div class="cal-slot">10:00 AM</div>
+									<div class="cal-slot sel">11:00 AM</div>
+									<div class="cal-slot">12:00 PM</div>
+								</div>
+								<div class="mock-note">↑ Illustrative mockup — actual Calendly widget embeds here inline</div>
+							</div>
+							<div class="annotation">Calendly inline embed — renders directly on the page. Agent picks a date/time → gets confirmation → done. Her current Calendly link: calendly.com/thresa-hill/real-estate-shoot. Mon–Wed 10 AM–1 PM availability. Teal days = available (Mon/Tue/Wed). No extra page, no extra clicks. The heading "Ready to book your next listing?" is from her AI mockup.</div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 Hill Creative, LLC · Central Wisconsin</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- PAGE 3: BRANDING -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="branding">
+				<div class="section-label"><span class="section-num">3</span> Branding / Content — /branding</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Hill Creative<small>llc</small></div>
+						<div class="wf-nav-links"><span>Home</span><span>Real Estate</span><span class="active">Branding</span><span>Portraits</span><span>About</span><span>Contact</span></div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px">
+							<div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:6px;">Brand Photography & Videography</div>
+							<div class="wf-heading-lg">Help your business show up beautifully.</div>
+							<div class="wf-subtext">Your brand deserves visuals that stop the scroll. I create compelling photography and video content that tells your story, builds trust, and strengthens your online presence — so local businesses in Central Wisconsin can show up with confidence.</div>
+						</div>
+
+						<!-- Portfolio — Swipeable Galleries -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Portfolio — Brand Work (Swipeable Galleries)</div><span style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 8px;">CMS managed</span></div>
+							<div class="portfolio-grid">
+								<div class="portfolio-card">
+									<div style="position:relative;height:110px;background:rgba(42,42,42,0.07);border:2px dashed rgba(42,42,42,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+										<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;">‹</div>
+										<div class="img-label" style="font-size:10px;">headshot / brand · 1 of 5</div>
+										<div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;">›</div>
+									</div>
+									<div style="display:flex;gap:3px;justify-content:center;margin-top:6px;">
+										<div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+									</div>
+									<div class="portfolio-label">Local Business · Headshots & Brand</div>
+									<div class="portfolio-name">Professional Brand Session</div>
+									<div class="portfolio-desc">On-location brand photography capturing authentic moments that reflect their story and connect with their audience.</div>
+								</div>
+								<div class="portfolio-card">
+									<div style="position:relative;height:110px;background:rgba(42,42,42,0.07);border:2px dashed rgba(42,42,42,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+										<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;">‹</div>
+										<div class="img-label" style="font-size:10px;">product / lifestyle · 1 of 4</div>
+										<div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;">›</div>
+									</div>
+									<div style="display:flex;gap:3px;justify-content:center;margin-top:6px;">
+										<div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+									</div>
+									<div class="portfolio-label">Small Business · Product & Lifestyle</div>
+									<div class="portfolio-name">Product & Lifestyle Brand Shoot</div>
+									<div class="portfolio-desc">Product photography, team portraits, and lifestyle content for a local entrepreneur ready to elevate their online presence.</div>
+								</div>
+								<div class="portfolio-card">
+									<div style="position:relative;height:110px;background:rgba(42,42,42,0.07);border:2px dashed rgba(42,42,42,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+										<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;">‹</div>
+										<div class="img-label" style="font-size:10px;">video / reels · 1 of 4</div>
+										<div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;">›</div>
+									</div>
+									<div style="display:flex;gap:3px;justify-content:center;margin-top:6px;">
+										<div style="width:6px;height:6px;border-radius:50%;background:var(--teal);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+										<div style="width:6px;height:6px;border-radius:50%;background:rgba(42,42,42,0.15);"></div>
+									</div>
+									<div class="portfolio-label">Service Business · Video & Photo</div>
+									<div class="portfolio-name">Brand Videography Package</div>
+									<div class="portfolio-desc">Video content and photography — from testimonial clips to social media reels, a full suite of marketing assets.</div>
+								</div>
+							</div>
+							<div class="annotation">Same mini carousel treatment as the homepage portfolio. 4–6 images per card, swipeable on mobile, arrow click on desktop. All portfolio descriptions from Thresa's AI mockup. Images are CMS-managed. This is her growth area — the page needs to feel premium and confident. Editorial feel, not a grid dump.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Brand Quote -->
+						<div class="wf-block">
+							<div style="text-align:center;padding:14px 20px;">
+								<div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;line-height:1.5;">"Your brand is the story the world tells about you — let's make sure it's a beautiful one."</div>
+								<div style="font-size:11px;color:var(--rose-deep);letter-spacing:0.12em;margin-top:10px;">— Thresa Hill, Hill Creative LLC</div>
+							</div>
+							<div class="annotation">Pull quote directly from her AI mockup. Great editorial moment. Breaks up the page and sets the tone before the inquiry section.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Process -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">What a Brand Session Looks Like</div></div>
+							<div class="wf-body-text">Not a checklist of deliverables — more of a story about the process. Consultation → creative direction → on-location shoot → edited images + video content → delivery via private gallery.</div>
+							<div class="wf-body-text">Should feel inviting, not transactional. "Here's what it's like to work with me." Copy mirrors the Stonebridge vibe — confident but warm.</div>
+							<div class="annotation">Jordan writes this section — it's the "experience" narrative, not a features list. The AI mockup didn't have detailed process copy for branding, so this is new content.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- HONEYBOOK MOCKUP -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Inquire — HoneyBook</div><span class="embed-tag">HoneyBook embed</span></div>
+							<div style="text-align:center;padding:10px 0 14px;">
+								<div class="wf-heading-md" style="font-style:italic;">Let's make something beautiful together.</div>
+								<div class="wf-body-text" style="max-width:400px;margin:6px auto;">Tell me a bit about your business and what you're envisioning. I'll follow up with ideas and next steps.</div>
+							</div>
+							<div class="hb-mock">
+								<div class="hb-title">Brand Session Inquiry</div>
+								<div class="hb-sub">Hill Creative LLC</div>
+								<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+									<div class="hb-field"><label>Your Name *</label><div class="hb-input">Full name</div></div>
+									<div class="hb-field"><label>Email *</label><div class="hb-input">your@email.com</div></div>
+								</div>
+								<div class="hb-field"><label>Business Name</label><div class="hb-input">Your business or project</div></div>
+								<div class="hb-field"><label>What are you looking for?</label><div class="hb-input hb-textarea">Tell me a bit about your vision, timeline, and what you hope to capture...</div></div>
+								<div class="hb-submit">Send Inquiry</div>
+								<div class="hb-powered">powered by HoneyBook</div>
+								<div class="mock-note">↑ Illustrative mockup — actual HoneyBook form embeds here</div>
+							</div>
+							<div class="annotation">HoneyBook JS embed — inquiry goes directly into Thresa's existing CRM pipeline. The form fields shown are illustrative — actual fields are configured inside HoneyBook's builder. We can get "close enough" styling via HoneyBook's Design panel (colors, fonts, button). We don't build a custom form — we use her existing tool.</div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 Hill Creative, LLC · Central Wisconsin</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- PAGE 4: PORTRAITS -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="portraits">
+				<div class="section-label"><span class="section-num">4</span> Portraits & Lifestyle — /portraits</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Hill Creative<small>llc</small></div>
+						<div class="wf-nav-links"><span>Home</span><span>Real Estate</span><span>Branding</span><span class="active">Portraits</span><span>About</span><span>Contact</span></div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px">
+							<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+								<div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose-deep);">Family & Lifestyle Photography</div>
+								<div style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--rose-deep);border:1px solid var(--rose-deep);border-radius:3px;padding:2px 8px;">Seasonal Availability</div>
+							</div>
+							<div class="wf-heading-lg">Real moments, authentically captured.</div>
+							<div class="wf-subtext">Rooted in a photojournalistic approach, I capture the real, unscripted moments — the ones that feel like you. Families, seniors, and couples who want natural, warm, story-driven imagery.</div>
+						</div>
+
+						<!-- Gallery -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Gallery — Family & Lifestyle</div><span style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 8px;">CMS managed</span></div>
+							<div style="display:flex;gap:8px;flex-wrap:wrap;">
+								<div class="img-placeholder" style="height:120px;flex:2;min-width:180px;"><div class="img-icon">👨‍👩‍👧</div><div class="img-label">featured family session</div></div>
+								<div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:120px;">
+									<div class="img-placeholder" style="height:55px;"><div class="img-label" style="font-size:10px;">senior</div></div>
+									<div class="img-placeholder" style="height:55px;"><div class="img-label" style="font-size:10px;">couple</div></div>
+								</div>
+							</div>
+							<div class="annotation">6–10 lifestyle/family images showing range: families, seniors, couples. Photojournalistic feel — real moments, not posed.</div>
+							<div class="decision-box" style="margin-top:10px;">
+								<div class="decision-label">Gallery Display — How Should Photos Be Shown?</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A — Static Grid</div>
+										<div class="wf-body-text" style="font-size:12px;">6–10 best images displayed in a curated grid. Clean, fast, editorial.</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B — Carousel / Swipeable</div>
+										<div class="wf-body-text" style="font-size:12px;">Clickable / swipeable gallery. More images in less space. Design TBD.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Session Info -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">What to Know</div></div>
+							<div class="wf-body-text">Family sessions are offered <strong>seasonally throughout the year</strong>. Reach out early to check availability and reserve your spot. Sessions are typically outdoors in Central Wisconsin — parks, trails, family properties.</div>
+							<div class="wf-body-text">Photojournalistic approach: I'll guide you gently, but I'm capturing the real stuff — the laughs, the chaos, the quiet moments. No stiff poses.</div>
+							<div class="annotation">Copy pulled from her AI mockup. The seasonal availability badge sets expectations upfront. This isn't always-on like real estate — it's curated and intentional.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- HoneyBook -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Check Availability — HoneyBook</div><span class="embed-tag">HoneyBook embed</span></div>
+							<div style="text-align:center;padding:10px 0 14px;">
+								<div class="wf-heading-md" style="font-style:italic;">Let's capture your story.</div>
+								<div class="wf-body-text" style="max-width:380px;margin:6px auto;">Tell me about your family, your vibe, and what kind of session you're dreaming of.</div>
+							</div>
+							<div class="hb-mock">
+								<div class="hb-title">Portrait Session Inquiry</div>
+								<div class="hb-sub">Hill Creative LLC</div>
+								<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+									<div class="hb-field"><label>Your Name *</label><div class="hb-input">Full name</div></div>
+									<div class="hb-field"><label>Email *</label><div class="hb-input">your@email.com</div></div>
+								</div>
+								<div class="hb-field"><label>Session Type</label><div class="hb-input">Family / Senior / Couple / Other</div></div>
+								<div class="hb-field"><label>Tell me about your session</label><div class="hb-input hb-textarea">How many people, ages, vibe you're going for, preferred timing...</div></div>
+								<div class="hb-submit">Send Inquiry</div>
+								<div class="hb-powered">powered by HoneyBook</div>
+								<div class="mock-note">↑ Illustrative mockup — actual HoneyBook form embeds here</div>
+							</div>
+							<div class="annotation">Same HoneyBook embed approach as Branding page. Could be same form with a session type selector or separate forms — depends on how Thresa configures it. CTA copy is warmer than branding page — matching the family audience.</div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 Hill Creative, LLC · Central Wisconsin</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- PAGE 5: ABOUT -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="about">
+				<div class="section-label"><span class="section-num">5</span> About — /about</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Hill Creative<small>llc</small></div>
+						<div class="wf-nav-links"><span>Home</span><span>Real Estate</span><span>Branding</span><span>Portraits</span><span class="active">About</span><span>Contact</span></div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px">
+							<div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--rose-deep);margin-bottom:6px;">hi!</div>
+							<div class="wf-heading-lg">I'm Thresa Hill.</div>
+							<div class="wf-subtext">let's get to know each other</div>
+						</div>
+
+						<!-- Story -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Thresa's Story</div></div>
+							<div style="display:flex;gap:20px;flex-wrap:wrap;">
+								<div class="img-placeholder" style="height:220px;flex:1;min-width:180px;">
+									<div class="img-icon">📷</div>
+									<div class="img-label">Thresa brand photo — she's a photographer,<br />she definitely has great photos of herself</div>
+								</div>
+								<div style="flex:1.5;min-width:220px;">
+									<div class="wf-body-text">I'm the creator behind Hill Creative, LLC, specializing in real estate photography and videography across Central Wisconsin. I create high-quality property photography, videography, and virtual tours to help real estate agents showcase their listings in the best light.</div>
+									<div class="wf-body-text">I also offer brand photography and videography to help local businesses enhance their online presence. With a background in photojournalistic lifestyle photography, I enjoy capturing natural, authentic moments for families, seniors, and couples.</div>
+									<div class="wf-body-text">If you're looking to elevate your real estate listings, brand, or capture special moments — let's connect!</div>
+									<div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(42,42,42,0.5);margin-top:14px;">— Thresa</div>
+								</div>
+							</div>
+							<div class="annotation">Bio copy from both her AI mockup and current GoDaddy site — same core content, slightly different wording in each. Jordan refines into something more personal and less "About Me template." The "— Thresa" signature matches her AI mockup. This page should feel like meeting her for coffee — not reading a resume.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Testimonials -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Kind Words</div><span style="font-family:'Architects Daughter',cursive;font-size:10px;color:var(--teal);border:1px solid var(--teal);border-radius:3px;padding:2px 8px;">CMS managed</span></div>
+							<div class="testimonial-grid">
+								<div class="testimonial-card">
+									<div class="testimonial-type">Real Estate Agent</div>
+									<div class="testimonial-quote">"Thresa's real estate photos are absolutely stunning. Our listings sell faster and for more — her 24-hour turnaround keeps our team moving at full speed."</div>
+									<div class="testimonial-name">— Sarah M., Real Estate Agent</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-type">Brand Client</div>
+									<div class="testimonial-quote">"She captured our brand in a way we never could have imagined. The photos tell our story perfectly and have transformed how we show up online."</div>
+									<div class="testimonial-name">— Local Business Owner</div>
+								</div>
+							</div>
+							<div class="annotation">⚑ These testimonials are from Thresa's AI mockup. Thresa — are these real client quotes or AI-generated placeholders? If placeholders, we need 2–4 actual client quotes, ideally one from each service type (RE agent, brand client, family client). HoneyBook may have reviews she can pull.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Social -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Find Me Elsewhere</div></div>
+							<div style="display:flex;gap:14px;flex-wrap:wrap;">
+								<span style="font-size:13px;color:var(--teal);font-weight:500;">Instagram</span>
+								<span style="font-size:13px;color:var(--teal);font-weight:500;">Facebook</span>
+								<span style="font-size:13px;color:var(--teal);font-weight:500;">LinkedIn</span>
+								<span style="font-size:13px;color:var(--teal);font-weight:500;">YouTube</span>
+							</div>
+							<div class="annotation">All social links from her current live site: Instagram (@thresa_ann_hill), Facebook, LinkedIn (thresa-ann), YouTube (@HillCreativeLLC).</div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 Hill Creative, LLC · Central Wisconsin</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- PAGE 6: CONTACT -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="contact">
+				<div class="section-label"><span class="section-num">6</span> Contact — /contact</div>
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Hill Creative<small>llc</small></div>
+						<div class="wf-nav-links"><span>Home</span><span>Real Estate</span><span>Branding</span><span>Portraits</span><span>About</span><span class="active">Contact</span></div>
+					</div>
+					<div class="wf-body">
+						<div style="margin-bottom:20px">
+							<div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--rose-deep);margin-bottom:6px;">get in touch</div>
+							<div class="wf-heading-lg">Let's connect.</div>
+							<div class="wf-subtext">Whether you're a real estate agent ready to elevate your listings, a business looking to refresh your brand visuals, or a family wanting to capture a moment — I'd love to hear from you. Let's make something beautiful together.</div>
+						</div>
+
+						<!-- Routing -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">What Are You Looking For?</div></div>
+							<div class="wf-body-text">Visitor selects their intent. Selection determines which tool shows below — Calendly for real estate, HoneyBook for everything else.</div>
+							<div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;">
+								<div style="border:1.5px solid var(--teal);border-radius:4px;padding:8px 16px;font-size:12px;font-weight:500;color:var(--teal);background:rgba(90,142,137,0.06);">🏡 Real Estate Photography</div>
+								<div style="border:1.5px dashed rgba(42,42,42,0.2);border-radius:4px;padding:8px 16px;font-size:12px;color:rgba(42,42,42,0.5);">✨ Branding / Content</div>
+								<div style="border:1.5px dashed rgba(42,42,42,0.2);border-radius:4px;padding:8px 16px;font-size:12px;color:rgba(42,42,42,0.5);">👨‍👩‍👧 Portraits / Family</div>
+								<div style="border:1.5px dashed rgba(42,42,42,0.2);border-radius:4px;padding:8px 16px;font-size:12px;color:rgba(42,42,42,0.5);">💬 Something Else</div>
+							</div>
+							<div class="annotation">Contact page routes based on selection. "Real Estate" → Calendly. Everything else → HoneyBook. The right people get the right tool without knowing the difference. Simple toggle — not a multi-step form. On load, nothing is pre-selected.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Calendly (RE) -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">If Real Estate Selected → Calendly</div><span class="embed-tag">Calendly embed</span></div>
+							<div class="calendly-mock" style="max-width:400px;margin:0 auto;">
+								<div class="calendly-header">
+									<div class="calendly-avatar">TH</div>
+									<div><div class="calendly-name">Thresa Hill</div><div class="calendly-type">Real Estate Shoot · 60 min</div></div>
+								</div>
+								<div style="font-size:11px;color:rgba(42,42,42,0.4);text-align:center;padding:12px 0;">Same Calendly inline widget as the RE page — agent picks a time, done.</div>
+							</div>
+						</div>
+
+						<!-- HoneyBook (Other) -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">If Branding / Portrait / Other → HoneyBook</div><span class="embed-tag">HoneyBook embed</span></div>
+							<div class="hb-mock" style="max-width:400px;margin:0 auto;">
+								<div class="hb-title">Get in Touch</div>
+								<div class="hb-sub">Hill Creative LLC</div>
+								<div class="hb-field"><label>Your Name *</label><div class="hb-input">Full name</div></div>
+								<div class="hb-field"><label>Email *</label><div class="hb-input">your@email.com</div></div>
+								<div class="hb-field"><label>I'm interested in…</label><div class="hb-input">Brand / Family / Senior / Couple / Other</div></div>
+								<div class="hb-field"><label>Tell me about what you're looking for</label><div class="hb-input hb-textarea">Your vision, timeline, questions...</div></div>
+								<div class="hb-submit">Send Message</div>
+								<div class="hb-powered">powered by HoneyBook</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Direct Contact -->
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Direct Contact</div></div>
+							<div style="display:flex;gap:20px;flex-wrap:wrap;">
+								<div style="flex:1;min-width:180px;">
+									<div class="wf-body-text"><strong>Email</strong><br /><span style="color:var(--teal);">thresahill@hillcreativellc.com</span></div>
+									<div class="wf-body-text" style="margin-top:8px;"><strong>Phone</strong><br />715-897-4964<br /><span style="font-size:11px;color:rgba(42,42,42,0.4);">click-to-call on mobile</span></div>
+									<div class="wf-body-text" style="margin-top:8px;"><strong>Location</strong><br />Stevens Point, Wisconsin</div>
+								</div>
+								<div style="flex:1;min-width:180px;">
+									<div class="wf-body-text"><strong>Find Me</strong><br /><span style="color:var(--teal);">Instagram</span> · <span style="color:var(--teal);">Facebook</span> · <span style="color:var(--teal);">LinkedIn</span> · <span style="color:var(--teal);">YouTube</span></div>
+									<div class="wf-body-text" style="margin-top:8px;"><strong>Service Area</strong><br />Central Wisconsin</div>
+									<div class="wf-body-text" style="margin-top:8px;"><strong>Business Hours</strong><br />Mon–Fri, 9 AM – 4 PM</div>
+								</div>
+							</div>
+							<div class="annotation">Direct contact info always visible regardless of form selection above. Phone is click-to-call on mobile. All info from her current live site. Email uses real business email, not a placeholder.</div>
+						</div>
+					</div>
+					<div class="wf-footer"><span>© 2026 Hill Creative, LLC · Central Wisconsin</span><span>Site by LatzWebDesign.com</span></div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- CONFIRMED DECISIONS -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label"><span class="section-num">✓</span> Confirmed Decisions</div>
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>6-Page Phase 1 Scope</strong> — Home, Real Estate, Branding, Portraits, About, Contact. No client portal, no blog, no payment system in this build.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Embed Existing Tools — Don't Replace Them</strong> — Calendly stays for RE scheduling. HoneyBook stays for CRM/inquiry. Pic-Time stays off-site for gallery delivery. Phase 1 is a front door, not a platform swap.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>CMS in Phase 1</strong> — Sanity CMS included from the start. Thresa manages portfolio images, testimonials, and basic page content herself. No need to call Jordan for routine updates like swapping photos or adding testimonials.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Three Audience Routing</strong> — Homepage routes RE agents (speed → Calendly), branding clients (premium → HoneyBook), and family/portrait clients (warm → HoneyBook). Each path has its own service page.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>"Don't Feel Sold To" Principle</strong> — No Book Now buttons in the nav. CTAs live on the pages in context, after the content has done its job. Nav feels like a table of contents.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Design Direction</strong> — Stonebridge Marketing is the vibe reference. AI mockup (Cormorant Garamond + Jost, rose/sage/teal) is the starting point. Editorial, calm, confident.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Jordan Writes Copy</strong> — Final copy comes from Jordan, based on Thresa's AI mockup content, GoDaddy bio, and bullet points.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Domain</strong> — hillcreativellc.com. Currently on GoDaddy. Jordan handles DNS at launch.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Tech Stack</strong> — Next.js 13+ (App Router), React, Tailwind CSS, Framer Motion. Hosted on Vercel. She owns the code forever.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ══════════════════════════════════════════ -->
+			<!-- DISCUSSION CHECKLIST -->
+			<!-- ══════════════════════════════════════════ -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label"><span class="section-num">?</span> Discussion Checklist</div>
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>RE Pricing — Show or Inquiry-Based?</strong> — Option A shows starting prices on the RE page (recommended). Option B keeps it inquiry-based. Thresa — which direction?</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>RE Video — Embed or Link?</strong> — She has YouTube and Vimeo content. Embed a reel on the RE page, or just link to YouTube? Embed adds credibility, link keeps page fast.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Portfolio Images — All Three Categories</strong> — Need curated images: 8–12 RE, 6–10 branding, 6–10 family. She has the work. This is the timeline driver.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Headshot / Brand Photo of Thresa</strong> — Needed for About page and homepage hero. She's a photographer — she has this.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Testimonials — Real or AI Placeholder?</strong> — The testimonials in the AI mockup (Sarah M., Local Business Owner) — are these real quotes or AI-generated? If placeholders, she needs to provide 2–4 real ones.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>HoneyBook Embed Code</strong> — Need the embeddable form code from HoneyBook. She sent a HoneyBook link — need the actual embed snippet.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Calendly Embed Confirmation</strong> — Her current scheduling link: calendly.com/thresa-hill/real-estate-shoot. Confirm this is correct for the inline embed.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>PhotoReady House PDF</strong> — Already exists on her current GoDaddy site. Need the latest version from Thresa to host on the new site.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>GoDaddy Domain Login</strong> — Need credentials to transfer or point DNS at launch. Remind Thresa to cancel GoDaddy Website Builder subscription after we're live.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>YouTube Channel — Link or Embed?</strong> — @HillCreativeLLC on YouTube. Link from the site? Embed a sample video? Both?</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<script>
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						navLinks.forEach((link) => {
+							link.classList.remove('active');
+							if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+						});
+					}
+				});
+			}, { rootMargin: '-15% 0px -70% 0px' });
+			sections.forEach((s) => observer.observe(s));
+
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+			function openMenu() { menuOpen = true; sidebar.classList.add('mobile-open'); sidebarOverlay.style.display = 'block'; requestAnimationFrame(() => sidebarOverlay.classList.add('visible')); fab.textContent = '✕'; }
+			function closeMenu(cb) { menuOpen = false; sidebar.classList.remove('mobile-open'); sidebarOverlay.classList.remove('visible'); fab.textContent = '☰'; setTimeout(() => { sidebarOverlay.style.display = 'none'; if (cb) cb(); }, 280); }
+			fab.addEventListener('click', () => { if (menuOpen) closeMenu(); else openMenu(); });
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) { e.preventDefault(); const t = link.getAttribute('href'); closeMenu(() => { const el = document.querySelector(t); if (el) el.scrollIntoView({ behavior: 'smooth' }); }); }
+				});
+			});
+		</script>
+	</body>
 </html>
