@@ -1,0 +1,1408 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>CK Power LLC — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #1F3B6A;
+				--primary-mid: #2a4d80;
+				--primary-dark: #152a4d;
+				--accent: #0094DE;
+				--accent-light: rgba(0, 148, 222, 0.08);
+				--light: #f4f7fa;
+				--light-dark: #e8edf3;
+				--mid: #4a5e7a;
+				--green: #16a34a;
+				--green-light: rgba(22, 163, 74, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(31, 59, 106, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(31, 59, 106, 0.04) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--white);
+				line-height: 1.2;
+				margin-bottom: 4px;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 10px;
+				color: rgba(244, 247, 250, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(0, 148, 222, 0.15);
+				border: 1px solid rgba(0, 148, 222, 0.35);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(244, 247, 250, 0.45);
+				text-decoration: none;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--white);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--white);
+				background: rgba(0, 148, 222, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--white);
+				border: none;
+				font-size: 22px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active { transform: scale(0.92); }
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header { margin-bottom: 52px; }
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 34px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.15;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-sub {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(31, 59, 106, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(31, 59, 106, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(31, 59, 106, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child { border-right: none; }
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(31, 59, 106, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn { color: var(--accent); }
+			.meta-value.ok { color: var(--green); }
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(31, 59, 106, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			/* ─────────────────────────────────────────────
+			   LOGO IMAGE PATH — UPDATE THIS IF NEEDED
+			   Current: /ck-power-logo.png
+			   Change the src in every <img class="nav-logo-img">
+			   if the filename or path is different.
+			   ───────────────────────────────────────────── */
+			.wf-nav-logo .nav-logo-img {
+				height: 28px;
+				width: auto;
+				display: block;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11.5px;
+				color: rgba(31, 59, 106, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body { padding: 28px 28px 36px; }
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(31, 59, 106, 0.04);
+				border-left: 3px solid rgba(31, 59, 106, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(0, 148, 222, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before { content: '⚑'; }
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(31, 59, 106, 0.15);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(244, 247, 250, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 26px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				text-transform: uppercase;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-md {
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-subtext {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(31, 59, 106, 0.5);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(31, 59, 106, 0.6);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(31, 59, 106, 0.15);
+				margin: 20px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--white);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 14px 22px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(244, 247, 250, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(31, 59, 106, 0.07);
+				border: 2px dashed rgba(31, 59, 106, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(31, 59, 106, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── SERVICE CARDS ── */
+			.service-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.service-card {
+				border: 1.5px dashed rgba(31, 59, 106, 0.2);
+				border-radius: 5px;
+				padding: 16px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.service-name {
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+				text-transform: uppercase;
+			}
+
+			.service-desc {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: rgba(31, 59, 106, 0.5);
+				line-height: 1.5;
+			}
+
+			/* ── TRUST BADGES ── */
+			.trust-grid {
+				display: flex;
+				gap: 10px;
+				flex-wrap: wrap;
+				margin: 12px 0;
+			}
+
+			.trust-badge {
+				border: 1.5px dashed rgba(31, 59, 106, 0.2);
+				border-radius: 5px;
+				padding: 10px 16px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+				margin-top: 10px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(31, 59, 106, 0.2);
+				border-radius: 5px;
+				padding: 10px 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full { grid-column: 1 / -1; }
+
+			.field-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(31, 59, 106, 0.4);
+				margin-bottom: 4px;
+			}
+
+			.field-placeholder {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(31, 59, 106, 0.3);
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Chakra Petch', sans-serif;
+				font-size: 11px;
+				font-weight: 600;
+				padding: 8px 14px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 90px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(31, 59, 106, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(31, 59, 106, 0.3);
+				padding: 0 6px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			/* ── AREA LIST ── */
+			.area-list {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+				margin: 10px 0;
+			}
+
+			.area-tag {
+				border: 1.5px dashed rgba(31, 59, 106, 0.2);
+				border-radius: 5px;
+				padding: 6px 14px;
+				background: rgba(255, 255, 255, 0.5);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			/* ── CHECKLIST ── */
+			.checklist { list-style: none; padding: 0; }
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(31, 59, 106, 0.12);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: var(--primary);
+			}
+
+			.check-item:last-child { border-bottom: none; }
+
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root { --sidebar-w: 200px; }
+				.main { padding: 32px 24px 80px; }
+				.service-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+
+			@media (max-width: 680px) {
+				.sidebar { transform: translateX(-100%); }
+				.sidebar.mobile-open { transform: translateX(0); }
+				.sidebar-overlay { display: block; }
+				.mobile-fab { display: flex; }
+				.main { margin-left: 0; padding: 24px 16px 80px; }
+				.doc-title { font-size: 28px; }
+				.doc-meta-strip { flex-direction: column; width: 100%; }
+				.meta-item { border-right: none; border-bottom: 1px solid rgba(31, 59, 106, 0.1); }
+				.meta-item:last-child { border-bottom: none; }
+				.wf-nav-links { display: none; }
+				.wf-nav { padding: 10px 14px; }
+				.wf-body { padding: 20px 16px 28px; }
+				.form-grid, .service-grid { grid-template-columns: 1fr; }
+				.sitemap { flex-direction: column; align-items: center; }
+				.sitemap-arrow { transform: rotate(90deg); margin: 0; padding: 4px 0; }
+				.wf-footer { flex-direction: column; text-align: center; gap: 4px; }
+				.check-item { font-size: 12px; gap: 8px; }
+				.trust-badge { font-size: 10px; padding: 8px 12px; }
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">CK Power LLC</div>
+				<div class="sidebar-doctype">Site Wireframes — Single Page</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Internal Review</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Sections</div>
+				<a href="#nav-section" class="nav-link"><span class="nav-icon">🧭</span> Navigation</a>
+				<a href="#hero" class="nav-link"><span class="nav-icon">⚡</span> Hero</a>
+				<a href="#services" class="nav-link"><span class="nav-icon">🔧</span> Services</a>
+				<a href="#trust" class="nav-link"><span class="nav-icon">🤝</span> Partnership / Trust</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">👤</span> About</a>
+				<a href="#service-area" class="nav-link"><span class="nav-icon">📍</span> Service Area</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact</a>
+				<a href="#footer-section" class="nav-link"><span class="nav-icon">📎</span> Footer</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">CK Power LLC</div>
+				<div class="doc-sub">
+					Single-Page Custom Website &nbsp;·&nbsp; 7 Sections + Footer &nbsp;·&nbsp; ckpowerllc.com
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Internal Review</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Sections</span>
+						<span class="meta-value">7 + Footer</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Chris Kodl</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value warn">Pending — Proposal Not Sent</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
+				✏️ This is a single-page site — all sections live on one scrollable page with anchor-link navigation. Layouts shown are illustrative — they communicate what content needs to exist in each section and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands. Architecture is built to expand into a multi-page site later.
+			</div>
+
+			<!-- BRAND REFERENCE -->
+			<div class="wf-block" style="margin-bottom: 40px; background: rgba(255,255,255,0.6); border-color: rgba(31,59,106,0.25);">
+				<div class="wf-block-header">
+					<div class="wf-heading-sm">Brand Reference — Logo Received</div>
+				</div>
+				<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+					<div style="display: flex; gap: 12px; align-items: center;">
+						<div style="width: 40px; height: 40px; border-radius: 6px; background: #0094DE;"></div>
+						<div>
+							<div style="font-family: 'Chakra Petch', sans-serif; font-size: 12px; font-weight: 600; color: var(--primary); text-transform: uppercase;">Light Blue</div>
+							<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(31,59,106,0.5);">#0094DE</div>
+						</div>
+					</div>
+					<div style="display: flex; gap: 12px; align-items: center;">
+						<div style="width: 40px; height: 40px; border-radius: 6px; background: #1F3B6A;"></div>
+						<div>
+							<div style="font-family: 'Chakra Petch', sans-serif; font-size: 12px; font-weight: 600; color: var(--primary); text-transform: uppercase;">Dark Navy</div>
+							<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(31,59,106,0.5);">#1F3B6A</div>
+						</div>
+					</div>
+					<div style="display: flex; gap: 12px; align-items: center;">
+						<div style="width: 40px; height: 40px; border-radius: 6px; background: #ffffff; border: 2px dashed rgba(31,59,106,0.2);"></div>
+						<div>
+							<div style="font-family: 'Chakra Petch', sans-serif; font-size: 12px; font-weight: 600; color: var(--primary); text-transform: uppercase;">White</div>
+							<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(31,59,106,0.5);">Background / contrast</div>
+						</div>
+					</div>
+				</div>
+				<div class="annotation" style="margin-top: 12px;">
+					Logo uses a bold italic industrial sans-serif with a forward lean — geometric, techy, power-industry feel. Lightbulb + lightning bolt icon split in two-tone blue. Tagline "ENERGY AND POWER" in the lighter blue. Designer should use these two blues as the primary palette and find a web font that complements the angular logo type. Chakra Petch used here as a placeholder — designer may choose another geometric sans that better matches.
+				</div>
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">CK Power LLC</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								Single scrollable page · 7 sections + footer · anchor-link navigation · ckpowerllc.com
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 6px; align-items: center">
+							<div class="sitemap-node">
+								<div class="sitemap-box">Nav<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">fixed top</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Hero<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">#hero</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Services<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">#services</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Trust<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">#partnership</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">About<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">#about</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Area<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">#area</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Contact<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">#contact</span></div>
+							</div>
+							<div class="sitemap-arrow">↓</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box">Footer<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">site-wide</span></div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							Single domain: ckpowerllc.com. Everything on one scrollable page with smooth-scroll anchor navigation. Nav is fixed at the top. Each section is built as its own component so it can be broken into individual pages later when the site expands. Service cards are structured to become links to full landing pages in future phases.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 1: NAVIGATION ── -->
+			<section class="wf-section" id="nav-section">
+				<div class="section-label"><span class="section-num">1</span> Navigation — Fixed Top</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/clients/ck-power-llc/single-page-website-build/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span>Services</span>
+							<span>About</span>
+							<span>Service Area</span>
+							<span>Contact</span>
+							<span style="background: var(--accent); color: var(--white); padding: 4px 12px; border-radius: 3px; font-weight: 600;">Call Now</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Sticky Navigation Bar</div></div>
+							<div class="wf-body-text">
+								CK Power LLC logo on the left (lightbulb + bolt mark). Anchor links to each section on the right. Prominent CTA button (Call Now or Get a Quote) as the rightmost element — styled in brand blue (#0094DE). Mobile: hamburger menu with slide-out drawer.
+							</div>
+							<div class="annotation">
+								Nav stays fixed at top on scroll. Logo click scrolls to top. CTA button should be the most visually prominent nav element — this is the primary conversion trigger for mobile visitors coming from a business card. Click-to-call on mobile is critical — Chris's customers will be checking from their phones.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 2: HERO ── -->
+			<section class="wf-section" id="hero">
+				<div class="section-label"><span class="section-num">2</span> Hero Section — #hero</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span><span>Services</span><span>About</span><span>Service Area</span><span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Hero — Full Width</div></div>
+							<div class="img-placeholder" style="height: 200px">
+								<div class="img-icon">⚡</div>
+								<div class="img-label">Hero image — stock photography for launch<br />Generators, outdoor lighting, central WI residential setting<br />Chris will provide real install photos later</div>
+							</div>
+							<div style="margin-top: 16px; text-align: center">
+								<div class="wf-heading-lg">Standby Generators &amp; Permanent Lighting for Central Wisconsin</div>
+								<div class="wf-subtext">Generac &amp; Kohler backup power · Trimlight permanent LED lighting · Partnered with ICT Electric</div>
+								<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+									<div class="wf-cta accent">Call Now →</div>
+									<div class="wf-cta">Get a Free Quote →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Hero headline establishes what CK Power does + where they do it — critical for SEO and first impression. Dual CTAs: Call Now (click-to-call on mobile, styled in #0094DE) and Get a Free Quote (scrolls to contact form, styled in #1F3B6A). Stock photography for launch. Once install photos exist, swap in real imagery.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 3: SERVICES ── -->
+			<section class="wf-section" id="services">
+				<div class="section-label"><span class="section-num">3</span> Services — #services</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span>Home</span><span class="active">Services</span><span>About</span><span>Service Area</span><span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">What We Do</div>
+							<div class="wf-subtext">Power generation and permanent outdoor lighting for homes and businesses across central Wisconsin.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Service Cards</div></div>
+
+							<div class="service-grid">
+								<div class="service-card">
+									<div class="img-placeholder" style="height: 100px; margin-bottom: 10px;">
+										<div class="img-icon">🔋</div>
+										<div class="img-label">Generator stock photo<br />residential/commercial setting</div>
+									</div>
+									<div class="service-name">Standby Generators</div>
+									<div class="service-desc">Generac and Kohler whole-home and commercial backup power systems. Sales, installation, and service. Never lose power again — automatic transfer, seamless backup.</div>
+									<div class="wf-cta" style="font-size: 11px; padding: 6px 14px; margin-top: 10px;">Learn More →</div>
+								</div>
+								<div class="service-card">
+									<div class="img-placeholder" style="height: 100px; margin-bottom: 10px;">
+										<div class="img-icon">💡</div>
+										<div class="img-label">Trimlight product photo<br />home with permanent LED lighting</div>
+									</div>
+									<div class="service-name">Trimlight Permanent Lighting</div>
+									<div class="service-desc">Year-round app-controlled LED lighting system. Holidays, sports, events, everyday — customizable colors and patterns. No ladders, no takedown. Installed once, enjoyed forever.</div>
+									<div class="wf-cta" style="font-size: 11px; padding: 6px 14px; margin-top: 10px;">Learn More →</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Two service cards for v1 — Standby Generators and Trimlight. "Learn More" buttons scroll to the contact form in v1 — in future phases, these become links to dedicated service landing pages. Chris mentioned solar is coming — this section needs to accommodate a third card later without a redesign.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Decision — Brand Logo Display</div>
+							<div class="wf-body-text" style="font-size: 12px;">
+								Should Generac, Kohler, and Trimlight brand logos appear alongside the service cards? Adds trust but requires confirmed authorized dealer status from Chris. Do not display manufacturer marks without authorization.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 4: TRUST / PARTNERSHIP ── -->
+			<section class="wf-section" id="trust">
+				<div class="section-label"><span class="section-num">4</span> Partnership / Trust — #partnership</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span class="active">Partnership</span><span>About</span><span>Service Area</span><span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">ICT Electric Partnership</div></div>
+
+							<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start;">
+								<div class="img-placeholder" style="height: 100px; flex: 1; min-width: 160px;">
+									<div class="img-icon">🤝</div>
+									<div class="img-label">ICT Electric logo<br />pending from Chris</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">Backed by 30+ Years of Licensed Electrical Expertise</div>
+									<div class="wf-body-text">CK Power partners with ICT Electric LLC — a 30+ year licensed electrical contractor based in Rhinelander, WI. Chris handles sales and mechanical installation. ICT handles all licensed electrical work: panel ties, transfer switches, and code-compliant wiring. Together, your project is covered from start to finish.</div>
+								</div>
+							</div>
+
+							<div class="trust-grid">
+								<div class="trust-badge">🔒 Master Electrician #1025848</div>
+								<div class="trust-badge">🔒 Electrical Contractor #1241265</div>
+								<div class="trust-badge">⚡ ICT Electric LLC — Rhinelander, WI</div>
+							</div>
+
+							<div style="margin-top: 10px;">
+								<span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--accent); font-weight: 600;">Visit ICT Electric →</span>
+							</div>
+
+							<div class="annotation">
+								This is arguably the most important section on the page. The ICT partnership IS the credibility play. Chris is new — ICT is 30+ years established. The site needs to make this feel seamless — not like a referral, but like a unified team. License numbers as trust badges. ⚠️ REQUIRES confirmation from Chris that ICT has approved their logo + license numbers being displayed before this goes live.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Blocker — ICT Permission Required</div>
+							<div class="wf-body-text" style="font-size: 12px;">Cannot build this section with real license numbers and ICT branding until Chris confirms ICT has approved the usage. Hard requirement — not optional.</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 5: ABOUT ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label"><span class="section-num">5</span> About — #about</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span>Partnership</span><span class="active">About</span><span>Service Area</span><span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">About CK Power</div></div>
+
+							<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+								<div class="img-placeholder" style="height: 140px; flex: 1; min-width: 180px;">
+									<div class="img-icon">👤</div>
+									<div class="img-label">Photo of Chris (optional)<br />Stock fallback if no photo available<br />Central WI working-class setting</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">Owner-Operated. Factory-Trained. Central Wisconsin.</div>
+									<div class="wf-body-text">Chris Kodl — owner and operator of CK Power LLC, based in Merrill, Wisconsin. Factory-trained through Kohler Power Generation School and Grantham University. Mechanical and power generation background. The guy who actually shows up at your house.</div>
+									<div class="wf-body-text">Short, grounded personal story. Not corporate — blue-collar professional. Trustworthy, local, knows what he's doing. Jordan writes the copy from Chris's direction on the discovery call.</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Brand voice: local, blue-collar professional — trustworthy and grounded, not slick or corporate. "The guy you actually want showing up at your house." Photo of Chris is optional — worth asking. A real person photo beats stock every time for a local service business.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 6: SERVICE AREA ── -->
+			<section class="wf-section" id="service-area">
+				<div class="section-label"><span class="section-num">6</span> Service Area — #area</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span>Partnership</span><span>About</span><span class="active">Service Area</span><span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Service Area — Central Wisconsin</div></div>
+
+							<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+								<div style="flex: 1; min-width: 220px;">
+									<div class="wf-heading-md">Serving Central Wisconsin</div>
+									<div class="wf-body-text">CK Power serves homeowners and businesses across central Wisconsin. Whether you need a standby generator or permanent outdoor lighting, we bring the expertise to your door.</div>
+
+									<div class="area-list">
+										<div class="area-tag">Merrill</div>
+										<div class="area-tag">Wausau</div>
+										<div class="area-tag">Schofield</div>
+										<div class="area-tag">Rothschild</div>
+										<div class="area-tag">Mosinee</div>
+										<div class="area-tag">Stevens Point</div>
+										<div class="area-tag">Antigo</div>
+										<div class="area-tag">Tomahawk</div>
+									</div>
+								</div>
+								<div class="img-placeholder" style="height: 180px; flex: 1; min-width: 200px;">
+									<div class="img-icon">📍</div>
+									<div class="img-label">Map graphic — central WI region<br />Shows coverage area for local SEO value<br />Designer decides treatment</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Community list is the working list from the discovery call — Chris needs to sign off on final version. Map graphic adds local SEO value and visual anchor. City names are keyword-rich for local search.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Pending — Final Service Area List</div>
+							<div class="wf-body-text" style="font-size: 12px;">Working list from discovery call. Chris needs to confirm or adjust before build.</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── SECTION 7: CONTACT ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label"><span class="section-num">7</span> Contact — #contact</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo"><img class="nav-logo-img" src="/ck-power-logo.png" alt="CK Power LLC" /></div>
+						<div class="wf-nav-links">
+							<span>Home</span><span>Services</span><span>Partnership</span><span>About</span><span>Service Area</span><span class="active">Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Get in Touch</div>
+							<div class="wf-subtext">Ready for a free quote? Have questions about generators or Trimlight? Reach out — Chris responds directly.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Contact Information</div></div>
+							<div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+								<div style="flex: 1; min-width: 180px;">
+									<div class="wf-body-text"><strong>Phone</strong><br />[Chris's number — not captured yet]<br /><span style="font-size: 11px; color: rgba(31, 59, 106, 0.4);">click-to-call on mobile</span></div>
+								</div>
+								<div style="flex: 1; min-width: 180px;">
+									<div class="wf-body-text"><strong>Email</strong><br />christopherkodl@yahoo.com</div>
+								</div>
+								<div style="flex: 1; min-width: 180px;">
+									<div class="wf-body-text"><strong>Location</strong><br />Merrill, Wisconsin</div>
+								</div>
+							</div>
+							<div class="annotation">Phone number is the #1 conversion path. Click-to-call on mobile is non-negotiable. Phone number needs to be pulled from phone records — wasn't captured on the discovery call.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Contact Form</div></div>
+
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Phone *</div>
+									<div class="field-placeholder">(###) ###-####</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Service Interest</div>
+									<div class="field-placeholder">Generators / Trimlight / Other ▾</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Message</div>
+									<div class="field-placeholder" style="min-height: 50px;">Tell us about your project...</div>
+								</div>
+							</div>
+
+							<div style="margin-top: 12px;"><div class="wf-cta accent">Send Message →</div></div>
+
+							<div class="annotation">This is the conversion point — make it dead simple. Name and Phone are required (Chris's audience is phone-first). Email is optional. Service Interest dropdown helps Chris triage leads. Submissions go to Chris's email. No CAPTCHA in v1 unless spam becomes an issue.</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── FOOTER ── -->
+			<section class="wf-section" id="footer-section">
+				<div class="section-label"><span class="section-num">F</span> Footer</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body" style="padding: 20px 16px;">
+						<div class="wf-block">
+							<div class="wf-block-header"><div class="wf-heading-sm">Site Footer</div></div>
+							<div class="wf-body-text">CK Power LLC logo, Merrill, WI. Phone number (click-to-call). Email link. Quick nav links mirroring section anchors. © 2026 CK Power LLC. Site by LatzWebDesign.com.</div>
+							<div class="annotation">Footer repeats key contact info and nav. Phone number must be click-to-call. Keep it lean — single-page site, so the footer is a recap.</div>
+						</div>
+					</div>
+					<div class="wf-footer">
+						<span>© 2026 CK Power LLC · Merrill, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label"><span class="section-num">✓</span> Confirmed Decisions</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Single-Page Site — 7 Sections + Footer</strong> — Hero, Services, Partnership/Trust, About, Service Area, Contact, Footer. No subpages in v1. Architecture supports expansion into multi-page later.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>No CMS in Base Scope</strong> — CMS is an optional add-on ($600). Base build is static — Jordan makes content changes when needed.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Brand Colors from Logo</strong> — Primary: #1F3B6A (dark navy). Accent: #0094DE (bright blue). Two-tone palette derived directly from the CK Power logo.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Logo Received</strong> — CK Power LLC logo delivered in PNG and PDF. Lightbulb + lightning bolt icon. Two-tone blue. Tagline: "Energy and Power." Bold italic industrial sans-serif typeface.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Stock Photography for Launch</strong> — No client photos available. Stock photos for generators and outdoor lighting. Real install photos swapped in later.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Click-to-Call Phone Numbers</strong> — All phone numbers are tap-to-call on mobile. Critical — business card → phone → site → call flow.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Two Services in V1</strong> — Standby Generators (Generac + Kohler) and Trimlight Permanent Lighting. Solar added in future phases.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Domain</strong> — ckpowerllc.com. Chris purchasing via Namecheap. Jordan handles DNS at launch. Business cards being printed with this domain.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Jordan Writes Copy</strong> — Chris doesn't know web design and asked to be led. Jordan writes all copy. Chris approves or redirects.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Designer Leads Creative</strong> — No inspiration sites from Chris. Designer creates visual direction from logo and brand colors.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Mobile-First Build</strong> — Mobile is the primary experience. Business card → phone → site → call.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label"><span class="section-num">?</span> Discussion Checklist</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>ICT Logo + License Permission</strong> — Need written confirmation that ICT Electric has approved their logo and license numbers on CK Power's site. Hard blocker for the trust section.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Authorized Dealer Status</strong> — Confirm Chris's dealer status for Generac, Kohler, and Trimlight before displaying manufacturer brand logos.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>ICT Electric Website Link</strong> — Need to review ICT's site to understand partnership branding. Chris was sending the link.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Chris's Phone Number</strong> — Not captured on the discovery call. Need it for contact section and click-to-call.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Final Service Area List</strong> — Working list: Merrill, Wausau, Schofield, Rothschild, Mosinee, Stevens Point, Antigo, Tomahawk. Chris needs to confirm.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Domain Purchase Confirmation</strong> — ckpowerllc.com confirmed available. Chris needs to purchase through Namecheap. Business cards being printed — time-sensitive.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Brand Logo Placement in Services</strong> — Generac, Kohler, Trimlight logos in service cards? Blocked by dealer status confirmation.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Photo of Chris for About Section</strong> — Optional but high value. A real person photo beats stock for a local service business. Worth asking.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Logo Font Match for Headings</strong> — Logo uses a bold italic industrial sans-serif. Designer should find a complementary web font — Chakra Petch used here as placeholder. Other options: Rajdhani, Exo 2, or Orbitron.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>CK Power LLC — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* CK Power brand colors — extracted from logo */
+    --navy: #1F3B6A;        /* logo dark blue */
+    --teal: #0094DE;         /* logo bright blue */
+    --teal-light: #e6f3fb;   /* bright blue tinted light */
+    --teal-mid: #9dd1f2;     /* bright blue midtone */
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fb;
+    --gray-100: #eef1f5;
+    --gray-200: #dce3ed;
+    --gray-400: #8a99b0;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #1F3B6A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE NAV ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.28s ease;
+  }
+
+  .mobile-overlay.visible { opacity: 1; }
+
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 301;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+
+  .mobile-fab:active { transform: scale(0.92); }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'CK POWER';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE — TABLET ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  /* ── RESPONSIVE — MOBILE ── */
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 240px;
+      z-index: 200;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .mobile-overlay { display: block; pointer-events: none; }
+    .mobile-overlay.visible { pointer-events: auto; }
+    .mobile-fab { display: flex; align-items: center; justify-content: center; }
+    .main { margin-left: 0; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding: 28px 20px 80px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .checklist li .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">CK Power LLC</div>
+    <div class="status-pill">Pre-Proposal</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">⚡</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Sections</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>CK Power LLC</h1>
+    <div class="sub">ckpowerllc.com · Single-Page Custom Website</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Chris Kodl, Owner</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Proposed Value</span>
+        <span class="value">$1,200</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Status</span>
+        <span class="value" style="color: var(--orange);">Not Yet — Proposal Pending</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value">ckpowerllc.com (available — client purchasing)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value"><a href="mailto:christopherkodl@yahoo.com">christopherkodl@yahoo.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Location</span>
+        <span class="value">Merrill, WI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Chris Kodl</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Owner / Operator — solo</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:christopherkodl@yahoo.com">christopherkodl@yahoo.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">Not captured — communicates via text/call. Get number from phone records.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Comm Style</span>
+            <span class="data-value">Mobile-heavy — phone calls and texts. Straightforward, wants direct guidance. Admits he doesn't know web design. Said on call: "if it's a stupid way to do it, just tell me."</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Business</h3>
+          <div class="data-row">
+            <span class="data-label">Business Name</span>
+            <span class="data-value">CK Power LLC</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">Merrill, Wisconsin (central WI)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Business Stage</span>
+            <span class="data-value">Brand new startup — distributing business cards, no website, no web presence</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Industry</span>
+            <span class="data-value">Power generation sales/install + permanent outdoor lighting</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Owner Background</span>
+            <span class="data-value">Factory-trained — Kohler Power Generation School, Grantham University. Trade background in mechanical/power generation.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>What CK Power Does</h3>
+        <div class="data-row">
+          <span class="data-label">Product Line 1</span>
+          <span class="data-value">Standby Generators — Generac and Kohler whole-home and commercial backup power systems</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Product Line 2</span>
+          <span class="data-value">Trimlight Permanent Outdoor Lighting — year-round app-controlled LED system (holidays, sports, events, customizable colors)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Chris's Role</span>
+          <span class="data-value">Sales relationship + mechanical/installation side. He closes the deal and handles what he's qualified for.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Service Area</span>
+          <span class="data-value">Central WI — Merrill, Wausau, Schofield, Rothschild, Mosinee, Stevens Point, Antigo, Tomahawk. Final list TBD.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Brand Analysis (from Logo — Received May 7)</h3>
+        <div class="data-row">
+          <span class="data-label">Logo Mark</span>
+          <span class="data-value">Split lightbulb with embedded lightning bolt — left half bright blue, right half dark navy. Radiating energy lines. Suggests power, electricity, light. Clean enough to scale small (favicon, cards).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Typeface Style</span>
+          <span class="data-value">Industrial italic/slanted sans-serif — bold, mechanical, forward-leaning. Mixed case with stylized capitals. "LLC" set smaller. Feels like automotive/power industry branding.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Tagline</span>
+          <span class="data-value">"ENERGY AND POWER" — set in bright blue italic below the business name. Simple, direct, on-brand.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Primary Blue</span>
+          <span class="data-value"><span style="display:inline-block;width:14px;height:14px;background:#0094DE;border-radius:3px;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,0.1);"></span><code style="font-family:'DM Mono',monospace;font-size:12px;">#0094DE</code> — bright, electric blue. CTAs, links, accents, energy/trust signals.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Dark Blue</span>
+          <span class="data-value"><span style="display:inline-block;width:14px;height:14px;background:#1F3B6A;border-radius:3px;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,0.1);"></span><code style="font-family:'DM Mono',monospace;font-size:12px;">#1F3B6A</code> — deep navy. Headings, nav, body text, grounding elements.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Files Received</span>
+          <span class="data-value">PNG (on black background — for dark sections) + PDF (on white — clean version). No vector/SVG yet — may need to request or trace for large-scale use.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Design Direction</span>
+          <span class="data-value">Bold, industrial, masculine. Not corporate-slick — blue-collar energy company. Italic lean says "forward motion." Site: strong typography, dark sections with bright blue accents, confident and clean.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Logo is solid — gives clear design direction</strong>
+          <span>Two-tone blue palette + industrial typeface + lightbulb/lightning mark = strong starting point for designer. Site should lean into dark navy + electric blue contrast. No need to overthink brand identity — the logo does the work. Extend it consistently.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>The ICT Partnership (Critical Context)</h3>
+        <div class="data-row">
+          <span class="data-label">Partner</span>
+          <span class="data-value">ICT Electric LLC — 30+ year licensed electrical contractor, Rhinelander, WI (Oneida County)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">How It Works</span>
+          <span class="data-value">Chris sells and does mechanical install. ICT does all licensed electrical work — panel ties, transfer switches, code-compliant wiring.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Licenses</span>
+          <span class="data-value">ICT Master Electrician #1025848 · Electrical Contractor #1241265</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">How They Met</span>
+          <span class="data-value">Connected through Trimlight — Chris on power side, ICT on electrical. Decided to partner and tackle it together.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">ICT's Site</span>
+          <span class="data-value">Already represents Trimlight and Generac on their own site. Link requested from Chris — pending.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Verification Needed Before Build</strong>
+          <span>Must confirm: (1) ICT has approved use of their logo and license numbers on CK Power's site. (2) Chris's authorized dealer status for Generac, Kohler, and Trimlight before displaying those brand logos. Don't build trust section with license badges until this is locked.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Proposed Scope: Single-Page Custom Website @ $1,200</strong>
+        <p>One-page site with 7 sections + footer. Authoritative business card landing destination. Services overview, ICT partnership trust section, about, service area, contact form. Built for expansion from day one.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why He Needs This</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Brand new business — no web presence at all</li>
+            <li><span class="check-icon">🔴</span> Handing out business cards that point nowhere</li>
+            <li><span class="check-icon">🔴</span> Can't explain the ICT partnership without a site to land on</li>
+            <li><span class="check-icon">🔴</span> Competitors have established web presence — CK Power looks invisible</li>
+            <li><span class="check-icon">🔴</span> Getting business cards printed NOW — domain on the cards needs to resolve</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> People who get a business card land on a professional, authoritative site</li>
+            <li><span class="check-icon">✅</span> Clear path for visitors to understand what CK Power does</li>
+            <li><span class="check-icon">✅</span> ICT partnership is visible and builds trust</li>
+            <li><span class="check-icon">✅</span> Leads come in via contact form and phone calls</li>
+            <li><span class="check-icon">✅</span> Foundation set for expansion — service pages, solar, gallery as business grows</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>This is a starter site with expansion built in</strong>
+          <span>Chris explicitly said this is "just the start." He mentioned solar as an upcoming offering, individual service landing pages, and a photo gallery once install photos exist. Build the architecture so these plug in cleanly later — each upsell should be a natural next step, not a rebuild.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🃏</span>
+        <div class="callout-body">
+          <strong>Business cards are being printed — domain is time-sensitive</strong>
+          <span>Chris said on the call: "I'm getting all these cards renamed again, and I don't want to have false information. Once a guy prints them, I'm kind of screwed." The domain ckpowerllc.com needs to be locked down ASAP. Client is purchasing directly through Namecheap.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Single-Page Custom Website</strong></td>
+            <td>7 sections + footer — hero, services, partnership, about, service area, contact, footer</td>
+            <td class="amount">$1,200</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gray-400);">Optional: Custom CMS Add-On</td>
+            <td style="color: var(--gray-400);">Self-service content updates — if Chris wants to edit without Jordan</td>
+            <td class="amount" style="color: var(--gray-400);">+$600</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total (Base)</strong></td>
+            <td></td>
+            <td class="amount"><strong>$1,200</strong></td>
+          </tr>
+          <tr>
+            <td>Designer Allocation</td>
+            <td>Internal cost — not shown to client</td>
+            <td class="amount">~$200</td>
+          </tr>
+          <tr>
+            <td><strong>50% Deposit Required</strong></td>
+            <td>Work does not begin until deposit is received</td>
+            <td class="amount"><strong>$600</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Balance Due at Launch</strong></td>
+            <td>Due when site goes live</td>
+            <td class="amount"><strong>$600</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <span class="callout-icon">💸</span>
+        <div class="callout-body">
+          <strong>Deposit not received yet — proposal hasn't been sent</strong>
+          <span>Proposal needs to go out within 1–2 days of receiving Chris's assets (logo, ICT link). Work doesn't start until 50% deposit clears. He's motivated — don't let this stall.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">Vercel — exact cost TBD, likely free tier or minimal for single-page site</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">ckpowerllc.com — client purchasing directly through Namecheap. ~$10–15/yr.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Startup-friendly pricing strategy</strong>
+          <span>Chris's budget range was $500–$1,000. We quoted "at most $1,000" on the call but scoped it at $1,200 after full discovery. On the call Jordan said: "You're a startup, you're brand new. I like to kind of keep the price lower for startups like that." This is a relationship play — low entry point, upsell as the business grows. Chris explicitly said there's "more work to come."</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Fast mover — 24 hours from contact form to discovery call</strong>
+          <span>Chris submitted the contact form Tuesday evening May 5. Jordan called back the next day (May 6). Chris is motivated and ready to go — he's got business cards being printed. Don't let momentum die.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 5, 2026 — 8:04 PM</div>
+          <div class="timeline-title">Contact Form Submitted</div>
+          <div class="timeline-desc">Chris Kodl submitted contact form on latzwebdesign.com. No service selected. Description: "I need a website created for customers to review." Jordan responded via email between 10am–noon the next day — Chris may have missed it (mentioned being busy late at night when he submitted).</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 6, 2026</div>
+          <div class="timeline-title">Discovery Call</div>
+          <div class="timeline-desc">~15 minute call. Chris explained the business, ICT partnership, single-page need. Discussed budget ($500–$1k range from Chris), timeline (end of month), domain (ckpowerllc.com), branding (has logo). Jordan committed to sending wireframe + proposal within 1–2 days of receiving assets. Chris will send logo + ICT link tonight.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 6, 2026 — NOW</div>
+          <div class="timeline-title">✅ Logo Received</div>
+          <div class="timeline-desc">Chris sent logo files (PNG + PDF). Two-tone blue palette confirmed: bright blue #0094DE + dark navy #1F3B6A. Split lightbulb/lightning bolt icon. Industrial italic typeface. Tagline: "Energy and Power." Both dark-bg and white-bg versions available. ICT link still pending.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">May 7, 2026 — NOW</div>
+          <div class="timeline-title">Wireframe + Proposal in Progress</div>
+          <div class="timeline-desc">Logo in hand. Still need ICT Electric website link from Chris. Wireframe being finalized. Proposal target: send within 1–2 days. Then schedule follow-up call to discuss.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">~May 8–9</div>
+          <div class="timeline-title">Proposal Sent</div>
+          <div class="timeline-desc">Target: 1–2 days after receiving assets. Include wireframe, scope, pricing, timeline. Discuss on follow-up call.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Deposit Received — Project Starts</div>
+          <div class="timeline-desc">50% deposit ($600) required before work begins. Chris is motivated — should close quickly if proposal is clean.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & SECTIONS -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Sections</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Single-page site — 7 sections + footer</strong>
+          <span>All sections live on one scrollable page with anchor-link navigation. No subpages in v1. Architecture is built to expand into multi-page site later.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Navigation</h4>
+          <ul>
+            <li>Logo (left)</li>
+            <li>Anchor links to each section</li>
+            <li>Prominent CTA button (call or quote)</li>
+            <li>Mobile hamburger menu</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Hero</h4>
+          <ul>
+            <li>Headline establishing services + central WI location</li>
+            <li>Dual CTAs: Call Now + Get a Quote</li>
+            <li>Hero image — stock for launch (generators/lighting)</li>
+            <li>First impression — must look professional and established</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Services</h4>
+          <ul>
+            <li>Two service cards: Standby Generators / Trimlight Permanent Lighting</li>
+            <li>Brief description of each offering</li>
+            <li>Structured to become landing page links later</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Partnership / Trust</h4>
+          <ul>
+            <li>ICT Electric branding + license numbers as trust badges</li>
+            <li>Brief explanation of working relationship</li>
+            <li>Link to ICT's website</li>
+            <li>⚠️ Requires permission confirmation before build</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>About</h4>
+          <ul>
+            <li>Owner-operated story — Chris's background</li>
+            <li>Central WI roots, factory-trained credentials</li>
+            <li>Optional photo of Chris (if available)</li>
+            <li>Build trust — "the guy who actually shows up"</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Service Area</h4>
+          <ul>
+            <li>Text list of communities served</li>
+            <li>Map graphic for local SEO value</li>
+            <li>Central WI focus — Merrill, Wausau, Stevens Point, etc.</li>
+            <li>Final list to be confirmed with Chris</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Contact</h4>
+          <ul>
+            <li>Direct phone number (click-to-call)</li>
+            <li>Email address</li>
+            <li>Contact form: name, phone, email, service interest, message</li>
+            <li>This is the conversion point — make it dead simple</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge" style="background: var(--gray-100); color: var(--gray-600);">Not in V1 Scope</span>
+          <h4>Future Expansion Pages</h4>
+          <ul>
+            <li>Individual service landing pages (generators, trimlight, solar)</li>
+            <li>Photo gallery from completed installs</li>
+            <li>Blog / content section</li>
+            <li>CMS for self-service edits (optional add-on, +$600)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Chris wants launch by end of May — content is the bottleneck</strong>
+          <span>Tight but achievable for a single page IF materials arrive promptly. Chris said he'd send assets "tonight" (May 6). Follow up if nothing arrives by May 8.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Logo + Brand Assets</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">RECEIVED — PNG (dark bg) + PDF (white bg). Two-tone blue: bright #0094DE + dark #1F3B6A. Split lightbulb/lightning icon. Industrial italic typeface. Tagline: "Energy and Power." No formal style guide — colors and logo are the brand standards.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Received ✓</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔗</span>
+            <div>
+              <strong>ICT Electric Website Link</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Need to review ICT's site to understand the partnership, their branding, and how CK Power's site should complement it. Chris sending tonight.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — tonight</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Domain Purchase (ckpowerllc.com)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Confirmed available. Client purchasing directly through Namecheap. TIME SENSITIVE — business cards being printed with this domain.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Client purchasing</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✅</span>
+            <div>
+              <strong>ICT Logo/License Usage Permission</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Need written confirmation from Chris that ICT has approved their logo + license numbers being displayed on CK Power's site.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏷️</span>
+            <div>
+              <strong>Authorized Dealer Status Confirmation</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Confirm Chris's dealer status for Generac, Kohler, and Trimlight before displaying those brand logos. Can't use manufacturer marks without authorization.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📍</span>
+            <div>
+              <strong>Final Service Area List</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Have a working list (Merrill, Wausau, Schofield, Rothschild, Mosinee, Stevens Point, Antigo, Tomahawk). Needs client sign-off.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Photography</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">None available. Stock photos for launch. Chris said "probably just stock photos, nothing too out of the ordinary." Photo gallery planned for future once install photos exist.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Stock — handled internally</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💬</span>
+            <div>
+              <strong>Inspiration Sites</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Chris said he hasn't really seen anything that caught his eye. "Nothing that really just caught my time." Designer will lead creative direction.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Designer leads</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Animation</span>
+            <span class="data-value">Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">None in base scope. Optional add-on ($600) for self-service edits.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — client pays directly</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain</h3>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">ckpowerllc.com</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Availability</span>
+            <span class="data-value">Confirmed available</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Registrar</span>
+            <span class="data-value">Namecheap — client purchasing directly</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Urgency</span>
+            <span class="data-value" style="color: var(--orange); font-weight: 600;">HIGH — business cards being printed with this domain</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Design Requirements</h3>
+        <div class="data-row">
+          <span class="data-label">Brand Voice</span>
+          <span class="data-value">Local, blue-collar professional — trustworthy and grounded, not slick or corporate. "The guy you actually want showing up at your house."</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Trust Strategy</span>
+          <span class="data-value">Partnership angle is the trust play. ICT's 30+ years + license numbers = credibility by association. Small but legit.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Photography</span>
+          <span class="data-value">Stock images for launch — generators, outdoor lighting, central WI residential settings</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Mobile</span>
+          <span class="data-value">Mobile-first. Click-to-call. Chris's customers will be checking from phones after getting a business card.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Expansion</span>
+          <span class="data-value">Architecture must support adding pages later without rebuilding. Service sections become links to full landing pages.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">📅</span>
+        <div class="callout-body">
+          <strong>Client wants launch by end of May 2026</strong>
+          <span>Tight but achievable for a single-page site — IF deposit arrives quickly and assets come in on time. Work does not begin until 50% deposit is received.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">May 6–9 — NOW</div>
+          <h4>Assets & Proposal</h4>
+          <ul>
+            <li>Receive logo + ICT link from Chris (promised tonight May 6)</li>
+            <li>Confirm ckpowerllc.com domain availability (done) — ensure Chris purchases it</li>
+            <li>Review ICT Electric website</li>
+            <li>Finalize wireframe layout</li>
+            <li>Write and send proposal (target: 1–2 days after receiving assets)</li>
+            <li>Schedule follow-up call to discuss proposal</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">~May 9–12</div>
+          <h4>Close & Kickoff</h4>
+          <ul>
+            <li>Review proposal on call with Chris</li>
+            <li>Receive 50% deposit ($600)</li>
+            <li>Get ICT logo/license permission confirmation</li>
+            <li>Get dealer status confirmations (Generac, Kohler, Trimlight)</li>
+            <li>Confirm final service area list</li>
+            <li>Set up project repo, Vercel project</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">~May 12–23</div>
+          <h4>Design & Development</h4>
+          <ul>
+            <li>Designer creates visual direction from logo + brand assets</li>
+            <li>Build all 7 sections + footer</li>
+            <li>Source and integrate stock photography</li>
+            <li>Write copy (Chris will give direction; we refine)</li>
+            <li>Share live dev link for Chris to review as it's built</li>
+            <li>Implement feedback</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">~May 23–31</div>
+          <h4>Finalization & Launch</h4>
+          <ul>
+            <li>Final review with Chris</li>
+            <li>Domain DNS setup (point ckpowerllc.com to Vercel)</li>
+            <li>Mobile testing — click-to-call, form submissions</li>
+            <li>SEO basics — meta tags, local schema, service area keywords</li>
+            <li>Site goes live — final $600 invoice sent</li>
+            <li>Post-launch check-in scheduled</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Chris said "this is just the start" — he's already thinking about expansion</strong>
+          <span>This guy is a growth client. Low entry, high ceiling. He explicitly mentioned solar, more pages, updating content. Let the single page prove value, then come back with the expansion conversation in 2–3 months.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🔧 Custom CMS</h4>
+          <div class="price">$600 (already quoted as optional)</div>
+          <p>Self-service content updates so Chris can edit without calling Jordan. Already positioned as an add-on in the proposal. Most natural immediate upsell — pitch at launch or shortly after when he realizes he wants to tweak things.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>⚡ Service Landing Pages</h4>
+          <div class="price">~$400–$800 per page</div>
+          <p>Individual pages for Standby Generators, Trimlight, and eventually Solar. Chris's service overview sections become links to these. He mentioned wanting to go "bigger" as the business grows. Natural Phase 2.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>☀️ Solar Services Page</h4>
+          <div class="price">~$400–$600</div>
+          <p>Chris mentioned they're "getting into solar a lot more." Once that offering is formalized, he'll need a dedicated page. This was brought up by Chris on the call — it's real, not speculative.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📸 Photo Gallery</h4>
+          <div class="price">~$300–$500</div>
+          <p>Install photo showcase once CK Power has completed projects to photograph. Chris mentioned wanting real photos later: "after we kind of see the layout and I get more ideas, that's where I can start throwing them towards you." Gallery builds trust and shows real work.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔍 SEO & Google Business</h4>
+          <div class="price">~$300–$500</div>
+          <p>Local SEO package — Google Business Profile setup, local schema markup, service area optimization. For a new business in central WI, this is how you get found. Natural post-launch add-on.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance</h4>
+          <div class="price">~$300–$500/yr</div>
+          <p>Light retainer for updates, new content, seasonal changes (Trimlight has seasonal demand). Good fit because Chris doesn't know web stuff — he'll want a phone call away, not DIY.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">May 6, 2026 — After Discovery Call</div>
+        <p>Fast mover. Contact form to call in under 24 hours. Chris is clearly motivated — he's got business cards being printed and doesn't want them pointing to nothing. This is a "buy now" mindset, not a "let me think about it" client. Don't let the proposal sit. Get it out fast and close.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Chris is a tradesman, not a marketer. He explicitly asked for straight talk: "if it's a stupid way to do it, just tell me." He doesn't know web design at all — "I've never seen a page like that, so it's kind of hard for me to actually say what to do." He needs to be led, not consulted. Designer leads creative. Jordan leads structure. Chris approves or redirects. That's the workflow.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The ICT Dynamic</div>
+        <p>The ICT partnership is the core of Chris's pitch. Everything on his business card, his elevator pitch, his website — it all leads back to "I'm partnered with ICT." ICT is the credibility. Chris is the face and the relationship. The site needs to make this feel seamless — not like a referral, but like a unified team. The trust section is arguably the most important section on the page.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pricing Strategy</div>
+        <p>Chris said his budget was $500–$1,000. On the call, Jordan said "at most $1,000." After full discovery and wireframing, scope landed at $1,200. This is slightly above what was verbally discussed — proposal needs to justify the value clearly. The CMS add-on at $600 brings total to $1,800 which is well within his "up to $10,000" ceiling but above his comfortable range. Lead with the $1,200 base, position CMS as optional.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Growth Potential</div>
+        <p>This client has real expansion potential. He mentioned solar, more pages, updating content, a bigger web presence. If CK Power takes off (generators + trimlight + solar in central WI is a solid market), this $1,200 starter site could turn into a $3,000–$5,000 multi-page build within a year. Treat this as a long-term relationship, not a one-off gig.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Designer Involvement</div>
+        <p>Jordan mentioned on the call: "I'll talk with my designer as well... she's amazing. She has a long background in this type of stuff." Designer allocation is ~$200 internal. Designer is leading creative direction since Chris has no inspiration sites and no design opinions. Need to make sure designer has the logo and ICT context before starting visual exploration.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Country Roads Signal</div>
+        <p>Call dropped briefly — Chris said "I'm on country roads right now, just bad signal." He's rural central WI. Keep in mind: phone calls may drop, texts may be more reliable. Definitely a text-first communicator for quick stuff.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ── SCROLLSPY ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── MOBILE NAV ──
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+  const fab = document.getElementById('mobileFab');
+  let menuOpen = false;
+
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    sidebar.classList.toggle('mobile-open', menuOpen);
+    overlay.classList.toggle('visible', menuOpen);
+    fab.textContent = menuOpen ? '✕' : '☰';
+  }
+
+  function closeMenu() {
+    if (!menuOpen) return;
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile: close menu, wait for animation, then scroll
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
