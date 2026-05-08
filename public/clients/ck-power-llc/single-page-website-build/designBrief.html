@@ -1,29 +1,1266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>CK Power LLC — Designer Brief | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #0a0a0a;
+    --sidebar-border: rgba(255,255,255,0.06);
+    --header-bg: #ffffff;
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-light: #e8f7f8;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --text: #111827;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --red-border: #fecaca;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 228px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+    transform: translateX(0);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-top {
+    padding: 22px 18px 18px;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+
+  .sidebar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .sidebar-wordmark .dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lwd-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-client {
+    font-family: 'Fraunces', serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .sidebar-doctype {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.22);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 11px;
+    background: rgba(24,161,173,0.08);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 3px 9px;
+  }
+
+  .pulse {
+    width: 5px; height: 5px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .sidebar-status span {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .sidebar-nav { padding: 10px 8px; flex: 1; }
+
+  .nav-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    padding: 10px 8px 4px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 8px;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 400;
+    border-radius: 5px;
+    transition: all 0.12s;
+    margin-bottom: 1px;
+  }
+
+  .nav-link:hover {
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.07);
+    font-weight: 500;
+  }
+
+  .nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; opacity: 0.6; }
+  .nav-link.active .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--sidebar-border);
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.06em;
+    line-height: 2;
+  }
+
+  /* OVERLAY */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* FAB */
+  .fab-menu {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%;
+    background: var(--teal);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(24,161,173,0.4);
+    transition: transform 0.18s;
+  }
+  .fab-menu:active { transform: scale(0.94); }
+
+  /* MAIN */
+  .main { margin-left: 228px; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER — LIGHT */
+  .page-header {
+    background: var(--header-bg);
+    padding: 52px 60px 44px;
+    border-bottom: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 72% 50%, rgba(24,161,173,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .header-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-overline::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--teal);
+    opacity: 0.6;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1.08;
+    margin-bottom: 7px;
+    letter-spacing: -0.6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header .sub {
+    color: var(--gray-500);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 0;
+    margin-top: 34px;
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    overflow: hidden;
+    width: fit-content;
+    background: #fff;
+    position: relative;
+    z-index: 1;
+  }
+
+  .meta-item {
+    padding: 13px 22px;
+    border-right: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .meta-value { font-size: 12.5px; font-weight: 500; color: var(--gray-700); }
+  .meta-value.ok { color: var(--green); }
+  .meta-value.warn { color: var(--orange); }
+
+  /* CONTENT */
+  .content { padding: 48px 60px 96px; flex: 1; }
+
+  section { margin-bottom: 64px; scroll-margin-top: 32px; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.2px;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin-bottom: 22px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* DATA ROWS */
+  .data-row {
+    display: grid;
+    grid-template-columns: 144px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    padding-top: 1px;
+  }
+
+  .data-value {
+    font-size: 13px;
+    color: var(--gray-700);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .data-value a { color: var(--teal); text-decoration: none; }
+  .data-value a:hover { text-decoration: underline; }
+
+  .data-value code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11.5px;
+    background: var(--gray-100);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--gray-700);
+  }
+
+  /* CALLOUTS */
+  .callout {
+    border-radius: 7px;
+    padding: 13px 17px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+  }
+
+  .callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+  .callout-body p, .callout-body span { font-size: 12px; line-height: 1.55; }
+
+  .callout.info { background: var(--teal-light); border-color: rgba(24,161,173,0.2); color: #0e7490; }
+  .callout.warn { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+  .callout.alert { background: var(--red-light); border-color: var(--red-border); color: var(--red); }
+  .callout.neutral { background: var(--gray-50); border-color: var(--gray-200); color: var(--gray-600); }
+
+  /* HIGHLIGHT BOX — LIGHT TEAL */
+  .highlight-box {
+    background: var(--teal-light);
+    border: 1px solid rgba(24,161,173,0.15);
+    border-left: 3px solid var(--teal);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+  }
+
+  .highlight-box strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .highlight-box p {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--gray-700);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* BRAND — SWATCHES & LOGO */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .swatch-block {
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .swatch-color {
+    height: 78px;
+    width: 100%;
+  }
+
+  .swatch-meta {
+    padding: 10px 13px;
+  }
+
+  .swatch-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+
+  .swatch-hex {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--gray-500);
+    letter-spacing: 0.04em;
+  }
+
+  .swatch-use {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .logo-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .logo-preview {
+    width: 130px;
+    background: #1F3B6A;
+    border-radius: 7px;
+    padding: 18px 14px;
+    text-align: center;
+    flex-shrink: 0;
+    border: 1px solid var(--gray-200);
+  }
+
+  .logo-preview .logo-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .logo-preview .logo-mark .accent { color: #0094DE; }
+
+  .logo-preview .logo-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    color: #0094DE;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .logo-desc h4 { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 5px; }
+  .logo-desc p { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+
+  /* MOCKUP REF */
+  .mockup-ref {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 13px 15px;
+    text-decoration: none;
+    transition: border-color 0.12s, background 0.12s;
+    margin-bottom: 10px;
+  }
+
+  .mockup-ref:hover { border-color: var(--teal); background: var(--teal-light); }
+  .mockup-ref .ref-icon { font-size: 18px; flex-shrink: 0; }
+  .mockup-ref .ref-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .mockup-ref .ref-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+  .mockup-ref .ref-url { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); margin-top: 1px; }
+
+  /* PAGE/SECTION CARDS */
+  .page-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 17px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--teal);
+  }
+
+  .page-card.removed::before { background: var(--gray-300); }
+  .page-card.removed { opacity: 0.78; }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+  }
+
+  .page-card .page-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    margin-bottom: 11px;
+  }
+
+  .page-card ul { list-style: none; padding: 0; }
+
+  .page-card ul li {
+    font-size: 12px;
+    color: var(--gray-600);
+    padding: 3px 0 3px 13px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .page-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gray-300);
+    font-size: 9px;
+    top: 5px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+  .badge-static { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .badge-removed { background: var(--red-light); color: var(--red); border-color: var(--red-border); }
+
+  /* ASSET LIST */
+  .asset-list { list-style: none; padding: 0; }
+
+  .asset-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .asset-list li:last-child { border-bottom: none; }
+
+  .asset-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
+  .asset-body { flex: 1; }
+  .asset-body strong { font-size: 13px; font-weight: 600; color: var(--gray-800); display: block; margin-bottom: 2px; }
+  .asset-body span { font-size: 11.5px; color: var(--gray-500); line-height: 1.45; }
+  .asset-status { margin-left: auto; flex-shrink: 0; padding-top: 1px; }
+
+  /* PILLS */
+  .pill {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .pill-orange { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+  .pill-green { background: var(--green-light); color: var(--green); border-color: var(--green-border); }
+
+  /* QUESTIONS */
+  .question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .question-item:last-child { border-bottom: none; }
+  .question-text { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .question-context { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+
+  /* ARROW LIST */
+  .arrow-list { list-style: none; padding: 0; margin-top: 10px; }
+
+  .arrow-list li {
+    font-size: 12px;
+    color: var(--gray-600);
+    padding: 4px 0 4px 15px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .arrow-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 10px;
+    top: 5px;
+  }
+
+  /* RESPONSIVE — TABLET */
+  @media (max-width: 1024px) {
+    .main { margin-left: 228px; }
+    .page-header, .content { padding-left: 36px; padding-right: 36px; }
+  }
+
+  /* RESPONSIVE — MOBILE */
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .sidebar-overlay { display: block; }
+    .fab-menu {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .main { margin-left: 0; }
+    .two-col { grid-template-columns: 1fr; }
+    .swatch-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* RESPONSIVE — STACKED PHONE */
+  @media (max-width: 680px) {
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding: 32px 20px 96px; }
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      gap: 0;
     }
-  </style>
+    .meta-item {
+      border-right: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .meta-item:nth-child(2n) { border-right: none; }
+    .meta-item:nth-last-child(-n+2) { border-bottom: none; }
+    .callout { flex-direction: column; gap: 6px; }
+    .swatch-grid { grid-template-columns: 1fr; }
+    .logo-row { flex-direction: column; }
+    .logo-preview { width: 100%; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="dot"></div>
+      <span class="lwd-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">CK Power LLC</div>
+    <div class="sidebar-doctype">Designer Brief</div>
+    <div class="sidebar-status">
+      <div class="pulse"></div>
+      <span>In Progress</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Brief</div>
+    <a href="#snapshot" class="nav-link active"><span class="nav-icon">📋</span> Project Snapshot</a>
+    <a href="#client" class="nav-link"><span class="nav-icon">⚡</span> Client &amp; Audience</a>
+    <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand &amp; Direction</a>
+    <a href="#sections" class="nav-link"><span class="nav-icon">📐</span> Sections &amp; Content</a>
+    <a href="#assets" class="nav-link"><span class="nav-icon">📦</span> Assets &amp; Status</a>
+    <a href="#questions" class="nav-link"><span class="nav-icon">💬</span> Let's Talk</a>
+  </div>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<button class="fab-menu" id="fabMenu" aria-label="Toggle navigation">☰</button>
+
+<div class="main">
+
+  <div class="page-header">
+    <div class="header-overline">Designer Brief · For Alyssa</div>
+    <h1>CK Power LLC</h1>
+    <div class="sub">Single-Page Custom Website &nbsp;·&nbsp; Trimlight + ICT Partnership Build</div>
+
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Contact</span>
+        <span class="meta-value">Chris Kodl — Owner</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Sections</span>
+        <span class="meta-value">7 + footer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deposit</span>
+        <span class="meta-value warn">Verbally committed</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Brand</span>
+        <span class="meta-value ok">Logo-led — clear direction</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Wireframe</span>
+        <span class="meta-value">Attached separately</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <section id="snapshot">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Snapshot</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="highlight-box">
+        <strong>The job</strong>
+        <p>Give a brand-new central Wisconsin business its first home online — a single-page site that sells Trimlight permanent outdoor lighting and frames ICT Electric as the partnered authority for anything electrical. Chris is handing out business cards right now that point to nothing. The site has to look established the day it launches, even though the business is six weeks old.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The Build</div>
+          <div class="data-row"><span class="data-label">Scope</span><span class="data-value">Single-page site — 7 sections + footer, anchor-link nav</span></div>
+          <div class="data-row"><span class="data-label">CMS</span><span class="data-value">Custom CMS — text + image edits on existing sections</span></div>
+          <div class="data-row"><span class="data-label">Stack</span><span class="data-value">Next.js 13+, React, Tailwind, Framer Motion, Vercel</span></div>
+          <div class="data-row"><span class="data-label">Domain</span><span class="data-value">ckpowerllc.com — client purchasing via Namecheap</span></div>
+          <div class="data-row"><span class="data-label">Timeline</span><span class="data-value">Launch by end of May — tight but achievable</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Not in Scope</div>
+          <div class="data-row"><span class="data-label">Generators</span><span class="data-value">Zero generator content — see Brand section. Non-negotiable.</span></div>
+          <div class="data-row"><span class="data-label">Subpages</span><span class="data-value">Single page only — architecture supports expansion later</span></div>
+          <div class="data-row"><span class="data-label">Photo Gallery</span><span class="data-value">No install gallery yet — future upsell once real photos exist</span></div>
+          <div class="data-row"><span class="data-label">Solar Page</span><span class="data-value">Coming later — not in v1</span></div>
+          <div class="data-row"><span class="data-label">Photography</span><span class="data-value">No professional shoot — stock for launch</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="client">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Client &amp; Audience</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">The Client</div>
+          <div class="data-row"><span class="data-label">Who They Are</span><span class="data-value">CK Power LLC — solo-operator startup in Merrill, WI. Trimlight permanent outdoor lighting installer. Brand new — no website, no web presence, business cards being printed now.</span></div>
+          <div class="data-row"><span class="data-label">Our Contact</span><span class="data-value">Chris Kodl — owner/operator. Tradesman background, hands-on installer, fast mover. Not a designer, not a marketer.</span></div>
+          <div class="data-row"><span class="data-label">Who Updates Site</span><span class="data-value">Chris — solo. CMS scope is text and image swaps on existing sections, nothing structural.</span></div>
+          <div class="data-row"><span class="data-label">Tone</span><span class="data-value">Local blue-collar professional. Trustworthy, grounded, confident. Not corporate, not slick. "The guy you actually want showing up at your house."</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">The Audience</div>
+          <div class="data-row"><span class="data-label">Primary</span><span class="data-value">Central WI homeowners and small businesses considering Trimlight permanent outdoor lighting. Mostly residential.</span></div>
+          <div class="data-row"><span class="data-label">What They Need</span><span class="data-value">A reason to trust a brand-new business. Visual proof of what Trimlight looks like. Easy way to call or request a quote.</span></div>
+          <div class="data-row"><span class="data-label">Devices</span><span class="data-value">Mobile-heavy. Most visits will come from someone holding the business card and tapping the URL. Click-to-call is critical.</span></div>
+          <div class="data-row"><span class="data-label">Key Insight</span><span class="data-value">First impression has to read as "established and legit" within the first scroll — they're judging a stranger's business based on the site alone.</span></div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Vibe in one sentence</strong>
+          <span>Industrial blue-collar power company — confident, capable, no-nonsense. Think the truck-and-trades aesthetic done well, not the polished-startup version of it.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="brand">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Brand &amp; Visual Direction</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚨</span>
+        <div class="callout-body">
+          <strong>Hard rule — zero generator imagery or references, anywhere</strong>
+          <span>Chris's day job creates a legal conflict that prevents CK Power from marketing generator work. No generator photos, no Generac/Kohler logos, no "we install generators" language, no transfer-switch imagery. Anything power-generation lives under ICT Electric in the partnership section — that's the only path. Keep this in mind for stock photo selection especially.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">Logo — Received</div>
+        <div class="logo-row">
+          <div class="logo-preview">
+            <div class="logo-mark">CK <span class="accent">P</span>OWER</div>
+            <div class="logo-tag">Energy and Power</div>
+          </div>
+          <div class="logo-desc">
+            <h4>Two-tone industrial mark</h4>
+            <p>Split lightbulb with embedded lightning bolt — left half bright blue, right half dark navy, radiating energy lines. Bold italic typeface, forward-leaning, mixed case. Tagline "ENERGY AND POWER" in bright blue italic. Files in hand: PNG on dark background, PDF on white. No vector yet — request SVG from Chris if you want to scale clean for hero treatments. The logo gives you a strong, opinionated starting point — extend it confidently.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">Color Palette — From the Logo</div>
+        <div class="swatch-grid">
+          <div class="swatch-block">
+            <div class="swatch-color" style="background:#0094DE;"></div>
+            <div class="swatch-meta">
+              <div class="swatch-name">Electric Blue</div>
+              <div class="swatch-hex">#0094DE</div>
+              <div class="swatch-use">CTAs, links, accents, energy moments. The "voltage" color.</div>
+            </div>
+          </div>
+          <div class="swatch-block">
+            <div class="swatch-color" style="background:#1F3B6A;"></div>
+            <div class="swatch-meta">
+              <div class="swatch-name">Deep Navy</div>
+              <div class="swatch-hex">#1F3B6A</div>
+              <div class="swatch-use">Headings, dark sections, nav, body grounding.</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--gray-500);line-height:1.55;margin-top:12px;">Heads up — these hex values came from a quick color-picker pass over the logo PNG, not from a brand spec sheet. Treat them as close-but-not-gospel. If you want exact values, pull them yourself from the source file or nudge them to whatever reads cleanest on screen. Two-color palette as the spine, neutrals (white, off-white, gray) for everything else. Open to a third accent if you want to introduce one — warm orange or a metallic tone could play nicely against the blues. Your call.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">What We Know About the Vibe</div>
+          <div class="data-row"><span class="data-label">Feel</span><span class="data-value">Industrial, confident, masculine. Forward-leaning energy — the italic logo says it all.</span></div>
+          <div class="data-row"><span class="data-label">Not This</span><span class="data-value">Corporate-slick SaaS aesthetic. Generic contractor template. Cute or playful. Anything that softens the blue-collar edge.</span></div>
+          <div class="data-row"><span class="data-label">Hero Move</span><span class="data-value">Trimlight is a visual product — it sells on imagery. The hero needs to make someone go "oh, that's cool" before they read a word.</span></div>
+          <div class="data-row"><span class="data-label">Trust Anchor</span><span class="data-value">ICT partnership section is a credibility play — license numbers, "30+ years." Treat it like a badge moment, not an afterthought.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Reference — Your Creative Sandbox</div>
+          <p style="font-size:12px;color:var(--gray-600);line-height:1.55;margin-bottom:10px;">Chris had no inspiration sites — said nothing caught his eye. Designer leads creative direction here. That means real latitude on type, hero treatment, dark/light section rhythm, and how the Trimlight imagery is staged. Lean into the blue-collar industrial side rather than softening it.</p>
+          <ul class="arrow-list">
+            <li>What does dark navy + electric blue look like at scale — full-bleed dark sections vs. light?</li>
+            <li>What typeface pairs with that italic logo without competing with it?</li>
+            <li>How do we stage Trimlight imagery so it carries the visual weight of a product the homeowner can imagine on their house?</li>
+            <li>What does the ICT partnership "trust badge" moment look like — license numbers as the hero of that section?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="sections">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Sections &amp; Content</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout neutral">
+        <span class="callout-icon">📐</span>
+        <div class="callout-body">
+          <strong>Single page, anchored sections — wireframe handles structure</strong>
+          <span>All seven sections live on one scrollable page with anchor-link navigation. Use the wireframe for layout. These notes cover what each section needs to accomplish and any context worth knowing going in.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Navigation</h4>
+          <div class="page-url">fixed top</div>
+          <ul>
+            <li>Logo left, anchor links to each section</li>
+            <li>Prominent CTA — Call Now (electric blue)</li>
+            <li>Mobile: hamburger with slide-out drawer</li>
+            <li>Stays sticky — visitors should always be one tap from contact</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Hero · CMS</span>
+          <h4>Hero</h4>
+          <div class="page-url">#hero</div>
+          <ul>
+            <li>Trimlight + central WI established in the headline</li>
+            <li>Dual CTAs — Call Now and Get a Quote</li>
+            <li>Hero imagery — Trimlight install at night is the money shot</li>
+            <li>This is the first scroll — has to read as "real business" instantly</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Section · CMS</span>
+          <h4>Services — Trimlight</h4>
+          <div class="page-url">#services</div>
+          <ul>
+            <li>Trimlight as the only service marketed (this is intentional)</li>
+            <li>App-controlled, year-round, holidays/sports/events use cases</li>
+            <li>Customizable colors — show range, not just one look</li>
+            <li>Heavy visual emphasis — the product sells itself when shown well</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Section · CMS</span>
+          <h4>ICT Electric Partnership</h4>
+          <div class="page-url">#partnership</div>
+          <ul>
+            <li>"Need electrical work? We work with ICT Electric." framing</li>
+            <li>ICT logo + license numbers as trust badges (Master Electrician, Electrical Contractor)</li>
+            <li>30+ years, Rhinelander WI — credibility-by-association</li>
+            <li>This section does double duty — anyone Googling for power/electrical lands here and gets routed</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Section · CMS</span>
+          <h4>About</h4>
+          <div class="page-url">#about</div>
+          <ul>
+            <li>Owner-operated story — Chris's trade/mechanical background</li>
+            <li>Central WI roots, hands-on installer angle</li>
+            <li>Optional photo of Chris if he sends one</li>
+            <li>Keep it human — "the guy who actually shows up"</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Section · CMS</span>
+          <h4>Service Area</h4>
+          <div class="page-url">#area</div>
+          <ul>
+            <li>Text list of communities served</li>
+            <li>Map graphic — local SEO value, also makes it scannable</li>
+            <li>Working list: Merrill, Wausau, Schofield, Rothschild, Mosinee, Stevens Point, Antigo, Tomahawk</li>
+            <li>Final list pending Chris confirmation</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="grid-column: 1 / -1;">
+          <span class="page-badge badge-cms">Section · CMS</span>
+          <h4>Contact</h4>
+          <div class="page-url">#contact</div>
+          <ul>
+            <li>Click-to-call phone number — large and obvious on mobile</li>
+            <li>Email address</li>
+            <li>Contact form — name, phone, email, service interest, message</li>
+            <li>This is the conversion point — make it dead simple, no friction</li>
+          </ul>
+        </div>
+
+        <div class="page-card removed" style="grid-column: 1 / -1;">
+          <span class="page-badge badge-removed">Removed from Scope</span>
+          <h4>Generator Section</h4>
+          <div class="page-url">— do not reintroduce —</div>
+          <ul>
+            <li>Was in an earlier wireframe — pulled entirely after the May 8 call</li>
+            <li>Any generator inquiries route through ICT in the partnership section</li>
+            <li>Flagging here so it doesn't accidentally creep back in via stock photos or copy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="assets">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Assets &amp; Content Status</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="card">
+        <div class="card-title">What We Have / What's Coming</div>
+        <ul class="asset-list">
+          <li>
+            <span class="asset-icon">🎨</span>
+            <div class="asset-body"><strong>CK Power Logo</strong><span>PNG (dark bg) and PDF (white bg) in hand. No vector yet — request SVG if needed for scaling.</span></div>
+            <span class="asset-status"><span class="pill pill-green">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🎨</span>
+            <div class="asset-body"><strong>Color Palette</strong><span>Two-tone blues pulled from the logo — see Brand section. Open to a third accent if you want one.</span></div>
+            <span class="asset-status"><span class="pill pill-green">Locked</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🔌</span>
+            <div class="asset-body"><strong>ICT Electric Logo + License #s</strong><span>Chris is emailing Nick (ICT owner) for the logo, Master Electrician #, and Electrical Contractor #. Nick is on board.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Chris Coordinating</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🏷️</span>
+            <div class="asset-body"><strong>Trimlight Brand Authorization</strong><span>Confirm Chris's authorized dealer status before displaying the Trimlight brand mark anywhere on the site.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Pending Confirmation</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📍</span>
+            <div class="asset-body"><strong>Final Service Area List</strong><span>Working list exists — needs Chris's sign-off before going final.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📸</span>
+            <div class="asset-body"><strong>Photography</strong><span>No real photos yet. Stock for launch — Trimlight installs, central WI residential, blue-collar/trade settings. Watch for accidental generator imagery in stock searches.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">Stock — Jordan handles</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">✍️</span>
+            <div class="asset-body"><strong>Copy</strong><span>Jordan writes from scratch. Chris is not a copy person — designer can mock up with placeholder, real words land later.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">Jordan handles</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🌐</span>
+            <div class="asset-body"><strong>Domain</strong><span>ckpowerllc.com — Chris purchasing via Namecheap. Time-sensitive (printing business cards). Jordan handles DNS to Vercel at launch.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Client Purchasing</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">☕</span>
+        <div class="callout-body">
+          <strong>Bring instincts, not just answers</strong>
+          <span>The logo gives you a strong starting point and the audience is well-defined — so the open questions are about how far to push the industrial vibe and where the visual weight sits. These are conversation starters. You know design better than I do.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Open Design Questions</div>
+        <div class="question-item">
+          <div class="question-text">How dark do we go?</div>
+          <div class="question-context">The logo lives natively on dark navy. Curious where you want to land — full-bleed dark hero with electric-blue accents, or a lighter site with strategic dark sections (services, partnership)? Both could work. The blue-collar industrial vibe pulls toward dark; the "approachable for a homeowner" pulls toward light. Want your read.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Typography to pair with the logo</div>
+          <div class="question-context">The wordmark is a bold italic — opinionated. Body needs to feel industrial but not fight it. Curious whether you want to lean into a condensed display face for headings or stay more neutral and let the logo carry the personality. Click-to-call usability matters — body needs to be readable on a phone in daylight.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Hero treatment — what carries the weight?</div>
+          <div class="question-context">Trimlight at night is the obvious move, but every Trimlight installer's site does the same thing. Worth thinking about: is there a way to stage it that feels more "central WI residential" than "anonymous suburban house"? Stock will be the constraint here — see what's findable, then decide if a stylized treatment (gradient overlay, motion, type-led) saves us from a flat photo.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">The ICT partnership section — credibility moment</div>
+          <div class="question-context">This section is doing real work — it's where anyone needing electrical/power gets routed and where new-business credibility gets established. License numbers and "30+ years" are the trust currency. Worth treating it like a badge moment with visual weight, not a referral footnote. Curious how you want to stage it.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Accent color — yes or no?</div>
+          <div class="question-context">Two blues is solid but tight. Open to a third accent if you want one — could be a warm contrast (orange, amber) or a metallic note. Or hold the line at two and let neutrals breathe. Your instinct.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Mobile-first hero — what survives the shrink?</div>
+          <div class="question-context">Most traffic is going to be someone holding a business card and tapping the URL on their phone. The hero needs to read fast and convert fast on a 5-inch screen. Worth thinking about that constraint up front rather than retrofitting from a desktop comp.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // SCROLLSPY
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // MOBILE NAV
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('fabMenu');
+  let menuOpen = false;
+
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    document.body.style.overflow = '';
+  }
+
+  function toggleMenu() {
+    if (menuOpen) closeMenu(); else openMenu();
+  }
+
+  fab.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile: close menu, wait for animation, then scroll
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (isMobile() && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+
+  // Close menu if window resized to desktop
+  window.addEventListener('resize', () => {
+    if (!isMobile() && menuOpen) closeMenu();
+  });
+</script>
+
 </body>
 </html>
