@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Resources & Shop Options — The Steady Elevation | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { height: auto !important; overflow: visible !important; }
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+    body { background: white; margin: 0; }
+    .page-wrap { margin-left: 0 !important; height: auto !important; overflow: visible !important; }
+    .cover { min-height: 0 !important; height: auto !important; padding: 56px 48px !important; page-break-after: always; }
+    .main { padding: 32px 48px 48px !important; }
+    section { page-break-inside: avoid; margin-bottom: 40px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+    a { color: inherit !important; text-decoration: none !important; }
+    .proof-row { display: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 22px 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+  .sidebar-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 3px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 16px 8px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 8px 10px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12.5px; font-weight: 400; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 18px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 220px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 72px 48px 60px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .cover-overline::before { content: ''; width: 32px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .cover-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 14px 24px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 56px 64px 80px; }
+  section { margin-bottom: 60px; scroll-margin-top: 24px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 3px 9px; border-radius: 4px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 28px; margin-top: 12px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 24px; max-width: 720px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 18px; }
+  .opening-wrap p { font-size: 14.5px; color: var(--gray-700); line-height: 1.8; margin-bottom: 14px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── COMPARISON TABLE (Options 1 vs 2) ── */
+  .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .compare-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 7px; padding: 22px 24px; }
+  .compare-card .compare-tag { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
+  .compare-card h3 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+  .compare-card .compare-fee { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--gray-500); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-100); }
+  .compare-card .compare-fee strong { color: var(--gray-900); font-weight: 600; }
+  .compare-card h4 { font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 14px; margin-bottom: 8px; }
+  .compare-card h4:first-of-type { margin-top: 0; }
+  .compare-card ul { list-style: none; padding: 0; }
+  .compare-card ul li { font-size: 12.5px; color: var(--gray-600); padding: 3px 0 3px 14px; position: relative; line-height: 1.55; }
+  .compare-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 10px; }
+
+  /* ── ADD-ON CARD ── */
+  .addon-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 7px; padding: 22px 24px; margin-bottom: 16px; }
+  .addon-card .compare-tag { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
+  .addon-card h3 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+  .addon-card p.lead { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin-bottom: 14px; }
+  .addon-card ul { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 12px; }
+  .addon-card ul li { font-size: 12.5px; color: var(--gray-600); padding: 3px 0 3px 14px; position: relative; line-height: 1.55; }
+  .addon-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 10px; }
+
+  /* ── SALES TAX CALLOUT ── */
+  .tax-note { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 6px; padding: 16px 20px; margin-bottom: 16px; }
+  .tax-note .tax-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+  .tax-note p { font-size: 12.5px; color: var(--gray-600); line-height: 1.65; margin-bottom: 8px; }
+  .tax-note p:last-child { margin-bottom: 0; }
+  .tax-note strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--dark-header); border-radius: 8px; padding: 28px 32px; margin-bottom: 20px; border-left: 3px solid var(--teal); }
+  .highlight-box p { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.8; margin-bottom: 12px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--white); font-weight: 600; }
+
+  /* ── INVESTMENT (3-CARD) ── */
+  .invest-cards-three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  .invest-card { border: 1px solid var(--gray-100); border-radius: 8px; padding: 24px 22px; background: var(--white); position: relative; display: flex; flex-direction: column; }
+  .invest-card.featured { border-color: var(--gray-300); border-width: 1.5px; }
+  .featured-pill { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--teal); color: var(--white); font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 12px; border-radius: 4px; white-space: nowrap; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; line-height: 1.25; }
+  .invest-card-desc { font-size: 12.5px; color: var(--gray-500); line-height: 1.55; margin-bottom: 18px; min-height: 60px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 11px; color: var(--gray-400); margin-bottom: 16px; }
+  .invest-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 12px; flex: 1; }
+  .invest-list li { font-size: 11.5px; color: var(--gray-600); padding: 3px 0 3px 14px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 10px; top: 3px; }
+
+  /* ── PRICING NOTES ── */
+  .pricing-notes { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 6px; padding: 16px 20px; margin-bottom: 16px; }
+  .pricing-notes p { font-size: 12.5px; color: var(--gray-600); line-height: 1.65; margin-bottom: 6px; }
+  .pricing-notes p:last-child { margin-bottom: 0; }
+  .pricing-notes strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── RECOMMENDATION BOX ── */
+  .recommend-box { background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 7px; padding: 20px 24px; margin-top: 12px; }
+  .recommend-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; font-weight: 500; }
+  .recommend-box h4 { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+  .recommend-box p { font-size: 13px; color: var(--gray-700); line-height: 1.7; margin-bottom: 8px; }
+  .recommend-box p:last-child { margin-bottom: 0; }
+  .recommend-box strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── TIMELINE ── */
+  .timeline-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .timeline-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 16px 18px; }
+  .timeline-card .timeline-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 6px; }
+  .timeline-card .timeline-value { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .timeline-card .timeline-desc { font-size: 11.5px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── NOT INCLUDED CALLOUT ── */
+  .not-included { background: var(--gray-50); border-left: 3px solid var(--gray-300); border-radius: 4px; padding: 14px 18px; margin-top: 16px; }
+  .not-included p { font-size: 12.5px; color: var(--gray-600); line-height: 1.65; }
+  .not-included strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 10px; padding: 40px 44px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; color: var(--white); margin-bottom: 14px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 0; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.75; position: relative; }
+  .next-sub p { margin-bottom: 14px; }
+  .next-sub p:last-child { margin-bottom: 0; }
+  .next-sub strong { color: rgba(255,255,255,0.95); font-weight: 600; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 52px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2px; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 1100px (3 cards → 1 row may be tight) ── */
+  @media (max-width: 1100px) {
+    .invest-cards-three { grid-template-columns: 1fr; }
+    .invest-card-desc { min-height: 0; }
+  }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-220px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 36px 20px 80px; }
+    .doc-footer { padding-left: 20px; padding-right: 20px; }
+    .cover-client { font-size: 36px; }
+    .compare-wrap { grid-template-columns: 1fr; }
+    .timeline-grid { grid-template-columns: 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .next-box { padding: 32px 20px; }
+    .main { padding: 36px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">The Steady Elevation</div>
+    <div class="sidebar-doctype">Resources &amp; Shop Options</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#how-it-works" class="nav-link"><span class="num">02</span> How The Shop Works</a>
+    <a href="#options" class="nav-link"><span class="num">03</span> Two Storefront Options</a>
+    <a href="#event-capture" class="nav-link"><span class="num">04</span> Event Interest Add-On</a>
+    <a href="#pricing" class="nav-link"><span class="num">05</span> Pricing &amp; Configurations</a>
+    <a href="#next-steps" class="nav-link"><span class="num">06</span> Next Steps</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Add-On Options</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">The Steady<br>Elevation</div>
+      <div class="cover-sub">Resources &amp; Shop Add-On &nbsp;·&nbsp; May 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Stephanie</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Status</span>
+          <span class="cover-meta-value">Options for review</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Range</span>
+          <span class="cover-meta-value">$800 – $2,000</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Stephanie,</div>
+        <p>This isn't a final proposal yet — it's a <strong>menu of options</strong> based on what you described on our May 18 call. The goal is to give you everything you need to pick a direction. Once you have, we'll talk it through and I'll send a real proposal off the back of that conversation.</p>
+        <p>You want to sell digital resources — worksheets, PDFs, webinar recordings, and eventually the book — directly from your site. Customers pay, they get the file automatically, no manual emailing on your end. Products live on both the Individual and Business sides. You manage everything yourself in the CMS. And you want a foundation that can grow into paid event registration later.</p>
+        <p>You also mentioned wanting to <strong>capture interest in upcoming events</strong> — an email signup on event cards so you can build a list before announcing dates. That's covered here too as a small add-on.</p>
+        <p>Two ways to handle the shop side. They look identical to your customers — same product cards, same click-to-buy experience. The difference is what runs behind the scenes, how much you keep per sale, and how much you own operationally. Read through, sit with it, and we'll talk.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="how-it-works">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">How The Shop Works (Either Option)</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap" style="border-left: none; padding-left: 0; max-width: 720px;">
+        <p style="margin-bottom: 16px;">A quick framing before the options, since both share the same shape:</p>
+        <p><strong>For your customer:</strong> They browse the Resources page on either side of the site (Individual or Business), click "Buy" on a product, pay, and get their file or recording automatically. Same experience either way.</p>
+        <p><strong>For you:</strong> You add products in the CMS — title, image, short description, which side(s) it shows on, price. The shop runs the same way regardless of which option you pick.</p>
+        <p><strong>What you can sell:</strong> PDFs, downloadable files, and webinar recordings — all handled the same way. For webinars, you can either upload the video file directly (customer downloads it) or paste in a private Vimeo/YouTube link (customer gets a viewing link). Your call per product. The book listing can also live on the Resources page, linking out to wherever you fulfill it.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="options">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Two Storefront Options</span>
+      </div>
+      <div class="sec-rule"></div>
+
+      <div class="compare-wrap">
+
+        <div class="compare-card">
+          <div class="compare-tag">Option 1</div>
+          <h3>Lemon Squeezy Storefront</h3>
+          <div class="compare-fee"><strong>5% + 50¢ per sale</strong> &nbsp;·&nbsp; No monthly fee</div>
+
+          <h4>How it works for you</h4>
+          <ul>
+            <li>You sign up for Lemon Squeezy (free), invite me as a team member</li>
+            <li>I set up your first 3–5 products — files, pricing, checkout</li>
+            <li>30-min screenshare: I show you how to add the next one yourself</li>
+            <li>You add resources to your site via the CMS — paste in the Lemon Squeezy checkout URL and you're done</li>
+          </ul>
+
+          <h4>How it works for your customer</h4>
+          <ul>
+            <li>Clicks "Buy" — Lemon Squeezy checkout opens in a new tab</li>
+            <li>Pays, gets the download link emailed automatically</li>
+            <li>Returned to your Resources page after payment</li>
+          </ul>
+
+          <h4>Why I lean toward this</h4>
+          <ul>
+            <li>Zero technical liability — they handle delivery, refunds, receipts</li>
+            <li>Sales tax handled completely (they're a Merchant of Record — collect &amp; remit in every state and country for you)</li>
+            <li>Faster to launch, simpler to maintain</li>
+            <li>Reversible — we can upgrade to Option 2 later if volume grows</li>
+          </ul>
+
+          <h4>On a $15 PDF, you keep <strong style="color: var(--gray-900);">$13.75</strong> per sale.</h4>
+        </div>
+
+        <div class="compare-card">
+          <div class="compare-tag">Option 2</div>
+          <h3>Custom Stripe Storefront</h3>
+          <div class="compare-fee"><strong>2.9% + 30¢ per sale</strong> &nbsp;·&nbsp; No monthly fee, no platform cut</div>
+
+          <h4>How it works for you</h4>
+          <ul>
+            <li>You sign up for Stripe (free), invite me as a team member</li>
+            <li>I set up your first 3–5 products and build the integration</li>
+            <li>60-min screenshare: how to add new products (~3 min in Stripe, paste IDs into CMS)</li>
+            <li>You upload the file directly in the CMS (or paste a viewing link for webinars)</li>
+          </ul>
+
+          <h4>How it works for your customer</h4>
+          <ul>
+            <li>Clicks "Buy" — Stripe-hosted checkout, branded with your colors</li>
+            <li>Pays, your site auto-sends a secure download link (expires in 7 days)</li>
+            <li>Returned to your Resources page after payment</li>
+          </ul>
+
+          <h4>Why you'd pick this</h4>
+          <ul>
+            <li>Single source of truth — everything customer-facing lives in your CMS</li>
+            <li>Lower per-sale fee long-term (~$0.52 more per $15 sale than Option 1)</li>
+            <li>Foundation for growth — easier to extend into paid event registration, memberships, gated library</li>
+          </ul>
+
+          <h4>On a $15 PDF, you keep <strong style="color: var(--gray-900);">$14.27</strong> per sale.</h4>
+        </div>
+
+      </div>
+
+      <div class="tax-note">
+        <div class="tax-label">⚠ Real Difference: Sales Tax</div>
+        <p>Unlike Lemon Squeezy, <strong>Stripe doesn't handle sales tax</strong> — that responsibility lives with you. Two things worth knowing:</p>
+        <p><strong>1. Minnesota tax from day one.</strong> MN considers digital products (e-books, audio, video) taxable, and because you operate the business from MN, you have automatic physical nexus. State + local rates run ~6.875%–8.875% on MN customers.</p>
+        <p><strong>2. Other states aren't an immediate concern.</strong> Most require registration only after $100K in annual sales OR 200 transactions in that state — thresholds you'd be a long way from at $15 PDFs.</p>
+        <p><strong>Options if it grows:</strong> Stripe Tax (built-in, 0.5%/transaction — I can wire this in ready to enable) or a service like TaxJar ($19–50/mo, overkill at low volume). Real homework you'd own with Option 2 — flagging it because it's a genuine difference.</p>
+      </div>
+
+      <div class="addon-card" style="margin-top: 20px;">
+        <div class="compare-tag">Option 1 — Optional Add-On</div>
+        <h3>Embedded Checkout Overlay</h3>
+        <p class="lead">Instead of opening Lemon Squeezy in a new tab, the checkout slides in as an overlay on your page — feels more like a single seamless shop experience. Small upcharge for a more polished look. Only relevant if you go with Option 1.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="event-capture">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Event Interest Capture (Add-On)</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="addon-card">
+        <div class="compare-tag">Works with either option</div>
+        <h3>Email Signup On Event Cards</h3>
+        <p class="lead">You mentioned wanting to capture interest in upcoming events before you announce dates. Visitors see an event card, drop in their email, and you build the list inside the CMS. Toggle it on per event — only the ones you choose collect emails.</p>
+        <ul>
+          <li>Toggle on each event for "Collect Interest" — you decide which events have the form</li>
+          <li>Email signup form on event cards when the toggle is on</li>
+          <li>Email list stored on the event in the CMS</li>
+          <li>CSV export button right inside the CMS — paste into a BCC field or share however you want</li>
+        </ul>
+      </div>
+      <div class="not-included">
+        <p><strong>Future option (not included):</strong> If you ever want to pipe these emails directly into Mailchimp, ConvertKit, or similar so they flow into a real list automatically, that's a separate add-on I can quote later. For launch, simple CMS storage + export covers what you described wanting.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="pricing">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">Pricing &amp; Likely Configurations</span>
+      </div>
+      <div class="sec-rule"></div>
+
+      <div class="pricing-notes" style="margin-bottom: 24px;">
+        <p>A note on pricing: when we first discussed Resources during your launch project, I gave ballpark figures based on what I <em>thought</em> you wanted — essentially a resource library with videos and downloadables freely available to view on the site. Pretty straightforward to build.</p>
+        <p>Our May 18 call changed that picture. Once you described <strong>webinars and downloadables sitting behind a paywall</strong> — with automated payment, automated delivery, products on both sides of the site, and event interest capture — that's a meaningfully different build. Payment integration, file delivery, secure links, the whole operational layer. The numbers below reflect <strong>the actual scope we discussed</strong>, not the simpler version I'd originally ballparked.</p>
+        <p>That said, as a returning client you're getting a <strong>discount off standard pricing</strong> on this engagement. Wanted to be upfront about both pieces — the scope shift and the discount — rather than have either be a surprise down the line.</p>
+      </div>
+
+      <div class="invest-cards-three">
+
+        <div class="invest-card">
+          <div class="invest-card-name">Config A</div>
+          <div class="invest-card-title">Lemon Squeezy<br>+ Event Capture</div>
+          <div class="invest-card-desc">Fastest to launch, lowest build cost, zero operational overhead. My recommendation.</div>
+          <div class="invest-price">$800</div>
+          <div class="invest-price-note">Standard $1,050 · You save $250</div>
+          <ul class="invest-list">
+            <li>Resources page on both sides (Individual + Business)</li>
+            <li>CMS setup for self-managing products</li>
+            <li>Lemon Squeezy account setup &amp; first 3–5 products configured</li>
+            <li>Screenshare training</li>
+            <li>Event interest capture with CSV export</li>
+          </ul>
+        </div>
+
+        <div class="invest-card featured">
+          <div class="featured-pill">Most Polished</div>
+          <div class="invest-card-name">Config B</div>
+          <div class="invest-card-title">Lemon Squeezy + Overlay<br>+ Event Capture</div>
+          <div class="invest-card-desc">Same as Config A, but checkout slides in as an overlay instead of opening a new tab. Feels more like a single seamless shop.</div>
+          <div class="invest-price">$950</div>
+          <div class="invest-price-note">Standard $1,250 · You save $300</div>
+          <ul class="invest-list">
+            <li>Everything in Config A</li>
+            <li>Embedded checkout overlay (no new tab)</li>
+            <li>Same operational simplicity as Config A</li>
+            <li>More polished customer experience</li>
+          </ul>
+        </div>
+
+        <div class="invest-card">
+          <div class="invest-card-name">Config C</div>
+          <div class="invest-card-title">Custom Stripe<br>+ Event Capture</div>
+          <div class="invest-card-desc">Most control, lowest per-sale fee, foundation for future growth. You handle sales tax.</div>
+          <div class="invest-price">$2,000</div>
+          <div class="invest-price-note">Standard $2,450 · You save $450</div>
+          <ul class="invest-list">
+            <li>Resources page on both sides</li>
+            <li>Custom Stripe integration in your CMS</li>
+            <li>File uploads + secure time-limited download links</li>
+            <li>Automated post-payment emails (Resend)</li>
+            <li>Stripe webhook + test mode setup</li>
+            <li>Event interest capture with CSV export</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="recommend-box">
+        <div class="recommend-label">— My Recommendation —</div>
+        <h4>Config A: Lemon Squeezy + Event Capture ($800)</h4>
+        <p>You're not sure yet what's going to sell or at what volume. Config A gets you live faster, costs less to build, and offloads everything operational — delivery, taxes, refunds — onto a platform built for exactly this. <strong>The sales tax piece alone</strong> (having to handle MN collection from day one with Stripe) is a real headache that Lemon Squeezy makes disappear entirely.</p>
+        <p>If in 6–12 months you're selling enough volume that the fee structure starts mattering, we revisit Stripe then — with real data on what's actually working.</p>
+      </div>
+
+      <div class="not-included" style="margin-top: 20px;">
+        <p><strong>What's NOT included:</strong> This is a separate engagement from the 3 months of content support included in your existing launch contract. That covers edits to the existing site (copy updates, image swaps, small content changes). This Resources/Shop add-on is new functionality being built on top of the launched site.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">06</span>
+        <span class="sec-title">Next Steps</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Take A Look —</div>
+        <div class="next-title">Look it over and let me know.</div>
+        <div class="next-sub">
+          <p>No deposit button on this one, no pressure to pick today. <strong>Read through, sit with it, write down whatever questions come up.</strong></p>
+          <p>When you're ready, we'll get on a call, talk through which direction makes sense, and I'll send a real proposal off the back of that conversation.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
