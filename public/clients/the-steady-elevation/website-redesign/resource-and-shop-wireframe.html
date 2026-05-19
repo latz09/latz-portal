@@ -1,0 +1,2154 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>The Steady Elevation — Resources & Shop Add-On Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Cormorant+Garamond:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #013543;
+				--primary-mid: #0a4a5a;
+				--accent: #d09f84;
+				--accent-light: rgba(208, 159, 132, 0.1);
+				--light: #f5f1ec;
+				--light-dark: #ebe5dc;
+				--mid: #8e9f89;
+				--mid-light: rgba(142, 159, 137, 0.15);
+				--green: #8e9f89;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Raleway', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(1, 53, 67, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(1, 53, 67, 0.05) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Raleway', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 20px;
+				font-weight: 500;
+				color: var(--light);
+				line-height: 1.15;
+				margin-bottom: 4px;
+				letter-spacing: 0.01em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Raleway', sans-serif;
+				font-size: 10px;
+				color: rgba(245, 241, 236, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(208, 159, 132, 0.15);
+				border: 1px solid rgba(208, 159, 132, 0.4);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.35; }
+			}
+
+			.status-pill span {
+				font-family: 'Raleway', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Raleway', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.22);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(245, 241, 236, 0.5);
+				text-decoration: none;
+				font-family: 'Raleway', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(208, 159, 132, 0.14);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Raleway', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.2);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 22px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 52px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 40px;
+				font-weight: 500;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.15;
+				letter-spacing: 0.01em;
+			}
+
+			.doc-sub {
+				font-family: 'Raleway', sans-serif;
+				font-size: 14px;
+				color: rgba(1, 53, 67, 0.55);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(1, 53, 67, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(1, 53, 67, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(1, 53, 67, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Raleway', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.72);
+				border: 2px solid var(--primary);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(1, 53, 67, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 12px 22px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Cormorant Garamond', serif;
+				font-weight: 500;
+				font-size: 17px;
+				color: var(--primary);
+				letter-spacing: 0.02em;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 16px;
+				align-items: center;
+				font-family: 'Raleway', sans-serif;
+				font-size: 12px;
+				color: rgba(1, 53, 67, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.wf-nav-cta {
+				background: var(--accent);
+				color: var(--primary);
+				font-family: 'Raleway', sans-serif;
+				font-size: 11px;
+				font-weight: 600;
+				padding: 5px 12px;
+				border-radius: 3px;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				line-height: 1.55;
+				margin-top: 10px;
+				padding: 9px 14px;
+				background: rgba(1, 53, 67, 0.04);
+				border-left: 3px solid rgba(1, 53, 67, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 6px;
+				padding: 16px 18px;
+				margin: 16px 0;
+				background: rgba(208, 159, 132, 0.06);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 10px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				font-weight: 700;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			.decision-option {
+				margin-bottom: 10px;
+				padding-left: 4px;
+			}
+			.decision-option:last-child {
+				margin-bottom: 0;
+			}
+			.decision-option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				font-weight: 700;
+				margin-bottom: 3px;
+			}
+			.decision-option-body {
+				font-family: 'Raleway', sans-serif;
+				font-size: 12.5px;
+				color: rgba(1, 53, 67, 0.7);
+				line-height: 1.5;
+			}
+
+			.decision-note {
+				margin-top: 12px;
+				padding-top: 10px;
+				border-top: 1px dashed rgba(208, 159, 132, 0.5);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(1, 53, 67, 0.7);
+				font-style: italic;
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+				background: rgba(142, 159, 137, 0.06);
+			}
+
+			.new-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--accent);
+				border: 1px solid var(--accent);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+				background: rgba(208, 159, 132, 0.08);
+				font-weight: 700;
+				letter-spacing: 0.04em;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(1, 53, 67, 0.18);
+				border-radius: 6px;
+				padding: 18px 18px;
+				margin-bottom: 16px;
+				background: rgba(245, 241, 236, 0.5);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 14px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			.wf-block-header-left {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				flex-wrap: wrap;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 32px;
+				font-weight: 500;
+				color: var(--primary);
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+				line-height: 1.15;
+			}
+
+			.wf-heading-md {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 22px;
+				font-weight: 500;
+				color: var(--primary);
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-subtext {
+				font-family: 'Raleway', sans-serif;
+				font-size: 14px;
+				color: rgba(1, 53, 67, 0.55);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+				font-weight: 300;
+			}
+
+			.wf-body-text {
+				font-family: 'Raleway', sans-serif;
+				font-size: 13px;
+				color: rgba(1, 53, 67, 0.65);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(1, 53, 67, 0.15);
+				margin: 22px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Raleway', sans-serif;
+				font-size: 12px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 3px;
+				margin-top: 8px;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--primary);
+			}
+
+			.wf-cta.small {
+				padding: 7px 16px;
+				font-size: 11px;
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 14px 22px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Raleway', sans-serif;
+				font-size: 11px;
+				color: rgba(245, 241, 236, 0.5);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(1, 53, 67, 0.06);
+				border: 2px dashed rgba(1, 53, 67, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 18px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 24px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(1, 53, 67, 0.45);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── FILTER PILLS ── */
+			.filter-row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				margin-bottom: 14px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: rgba(1, 53, 67, 0.45);
+				margin-right: 4px;
+			}
+
+			.filter-pill {
+				font-family: 'Raleway', sans-serif;
+				font-size: 12px;
+				border: 1.5px solid rgba(1, 53, 67, 0.2);
+				border-radius: 20px;
+				padding: 4px 14px;
+				color: rgba(1, 53, 67, 0.55);
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.filter-pill.active {
+				border-color: var(--primary);
+				color: var(--primary);
+				font-weight: 600;
+				background: var(--white);
+			}
+
+			/* ── RESOURCE CARD GRID ── */
+			.resource-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.resource-card {
+				border: 1.5px dashed rgba(1, 53, 67, 0.2);
+				border-radius: 6px;
+				padding: 12px;
+				background: rgba(255, 255, 255, 0.7);
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+
+			.resource-card .img-placeholder {
+				height: 90px;
+				padding: 10px;
+				margin-bottom: 2px;
+			}
+
+			.resource-title {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 15px;
+				font-weight: 600;
+				color: var(--primary);
+				line-height: 1.25;
+			}
+
+			.resource-desc {
+				font-family: 'Raleway', sans-serif;
+				font-size: 11px;
+				color: rgba(1, 53, 67, 0.6);
+				line-height: 1.45;
+				flex: 1;
+			}
+
+			.resource-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 4px;
+				gap: 8px;
+			}
+
+			.resource-price {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.resource-buy {
+				background: var(--accent);
+				color: var(--primary);
+				font-family: 'Raleway', sans-serif;
+				font-size: 10.5px;
+				font-weight: 700;
+				padding: 5px 12px;
+				border-radius: 3px;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.resource-tags {
+				display: flex;
+				gap: 4px;
+				flex-wrap: wrap;
+				margin-top: 2px;
+			}
+			.resource-tag-pill {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				color: rgba(1, 53, 67, 0.55);
+				background: rgba(142, 159, 137, 0.15);
+				border-radius: 10px;
+				padding: 1px 8px;
+				letter-spacing: 0.04em;
+			}
+
+			/* ── EMPTY STATE ── */
+			.empty-state {
+				text-align: center;
+				padding: 40px 20px;
+				border: 2px dashed rgba(1, 53, 67, 0.18);
+				border-radius: 6px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.empty-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 32px;
+				opacity: 0.3;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.empty-text {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: rgba(1, 53, 67, 0.5);
+				line-height: 1.5;
+			}
+
+			/* ── FLOW EXPLAINER ── */
+			.flow-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 8px;
+			}
+
+			.flow-card {
+				border: 1.5px dashed rgba(1, 53, 67, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.flow-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				font-weight: 700;
+			}
+
+			.flow-steps {
+				font-family: 'Raleway', sans-serif;
+				font-size: 13px;
+				color: rgba(1, 53, 67, 0.7);
+				line-height: 1.65;
+			}
+
+			.flow-step-number {
+				display: inline-block;
+				width: 18px;
+				height: 18px;
+				border-radius: 50%;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				text-align: center;
+				line-height: 18px;
+				margin-right: 6px;
+			}
+
+			/* ── EVENT CARD ── */
+			.event-card {
+				border: 2px solid rgba(1, 53, 67, 0.2);
+				border-radius: 8px;
+				padding: 18px 20px;
+				background: var(--white);
+				margin-top: 4px;
+			}
+
+			.event-card-row {
+				display: flex;
+				gap: 18px;
+				align-items: flex-start;
+				flex-wrap: wrap;
+			}
+
+			.event-date-block {
+				background: var(--primary);
+				color: var(--light);
+				padding: 10px 14px;
+				border-radius: 6px;
+				text-align: center;
+				flex-shrink: 0;
+				min-width: 70px;
+			}
+
+			.event-month {
+				font-family: 'Raleway', sans-serif;
+				font-size: 10px;
+				font-weight: 600;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 2px;
+			}
+
+			.event-day {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 26px;
+				font-weight: 500;
+				line-height: 1;
+			}
+
+			.event-meta {
+				flex: 1;
+				min-width: 220px;
+			}
+
+			.event-format {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--mid);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 4px;
+			}
+
+			.event-title {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 22px;
+				font-weight: 500;
+				color: var(--primary);
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.event-desc {
+				font-family: 'Raleway', sans-serif;
+				font-size: 13px;
+				color: rgba(1, 53, 67, 0.65);
+				line-height: 1.55;
+				margin-bottom: 10px;
+			}
+
+			.event-register {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Raleway', sans-serif;
+				font-size: 11.5px;
+				font-weight: 600;
+				padding: 8px 18px;
+				border-radius: 3px;
+				display: inline-block;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			/* ── INTEREST CAPTURE FORM ── */
+			.interest-capture {
+				margin-top: 14px;
+				padding: 14px 16px;
+				background: rgba(208, 159, 132, 0.1);
+				border: 1.5px solid rgba(208, 159, 132, 0.4);
+				border-radius: 6px;
+				position: relative;
+			}
+
+			.interest-capture::before {
+				content: 'NEW';
+				position: absolute;
+				top: -8px;
+				right: 14px;
+				background: var(--accent);
+				color: var(--primary);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				font-weight: 700;
+				padding: 2px 8px;
+				border-radius: 3px;
+				letter-spacing: 0.08em;
+			}
+
+			.interest-heading {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 15px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.interest-form-row {
+				display: flex;
+				gap: 8px;
+				align-items: stretch;
+				flex-wrap: wrap;
+			}
+
+			.interest-input {
+				flex: 1;
+				min-width: 180px;
+				border: 1.5px dashed rgba(1, 53, 67, 0.3);
+				border-radius: 4px;
+				padding: 9px 12px;
+				background: var(--white);
+				font-family: 'Raleway', sans-serif;
+				font-size: 13px;
+				color: rgba(1, 53, 67, 0.4);
+			}
+
+			.interest-submit {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Raleway', sans-serif;
+				font-size: 11.5px;
+				font-weight: 600;
+				padding: 9px 18px;
+				border-radius: 3px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				white-space: nowrap;
+			}
+
+			/* ── CMS MOCKUP ── */
+			.cms-mockup {
+				background: #1f2937;
+				border-radius: 8px;
+				padding: 18px;
+				margin-top: 4px;
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+			}
+
+			.cms-mockup-bar {
+				display: flex;
+				gap: 5px;
+				margin-bottom: 14px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				align-items: center;
+			}
+
+			.cms-mockup-dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+			}
+
+			.cms-mockup-label {
+				font-family: 'Raleway', sans-serif;
+				font-size: 11px;
+				color: rgba(255, 255, 255, 0.4);
+				margin-left: 10px;
+				letter-spacing: 0.04em;
+			}
+
+			.cms-doc-title {
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 18px;
+				font-weight: 500;
+				color: var(--light);
+				margin-bottom: 14px;
+			}
+
+			.cms-field {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+				padding: 8px 12px;
+				background: rgba(255, 255, 255, 0.05);
+				border-radius: 4px;
+				margin-bottom: 6px;
+			}
+
+			.cms-field.new {
+				background: rgba(208, 159, 132, 0.15);
+				border: 1px solid rgba(208, 159, 132, 0.4);
+			}
+
+			.cms-field-label {
+				font-family: 'Raleway', sans-serif;
+				font-size: 11px;
+				color: rgba(255, 255, 255, 0.55);
+				min-width: 130px;
+				font-weight: 500;
+			}
+
+			.cms-field-value {
+				font-family: 'Raleway', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.85);
+				flex: 1;
+			}
+
+			.cms-field-badge {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				color: var(--accent);
+				background: rgba(208, 159, 132, 0.2);
+				padding: 2px 7px;
+				border-radius: 3px;
+				letter-spacing: 0.06em;
+				margin-left: 6px;
+			}
+
+			.cms-toggle {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.cms-toggle-switch {
+				width: 32px;
+				height: 18px;
+				background: var(--accent);
+				border-radius: 10px;
+				position: relative;
+			}
+			.cms-toggle-switch::after {
+				content: '';
+				position: absolute;
+				top: 2px;
+				right: 2px;
+				width: 14px;
+				height: 14px;
+				background: var(--light);
+				border-radius: 50%;
+			}
+
+			.cms-emails-list {
+				background: rgba(0, 0, 0, 0.25);
+				border-radius: 4px;
+				padding: 8px 12px;
+				margin: 4px 0 6px 130px;
+				font-family: 'Raleway', sans-serif;
+				font-size: 11.5px;
+				color: rgba(255, 255, 255, 0.7);
+				line-height: 1.8;
+			}
+
+			.cms-email-row {
+				display: flex;
+				justify-content: space-between;
+				border-bottom: 1px dotted rgba(255, 255, 255, 0.08);
+				padding: 2px 0;
+			}
+			.cms-email-row:last-child {
+				border-bottom: none;
+			}
+
+			.cms-email-date {
+				color: rgba(255, 255, 255, 0.35);
+				font-size: 10.5px;
+			}
+
+			.cms-export-btn {
+				background: var(--accent);
+				color: var(--primary);
+				font-family: 'Raleway', sans-serif;
+				font-size: 11px;
+				font-weight: 700;
+				padding: 6px 14px;
+				border-radius: 3px;
+				display: inline-block;
+				margin-left: 130px;
+				margin-top: 4px;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				flex-direction: column;
+				gap: 14px;
+				margin: 20px 0;
+			}
+
+			.sitemap-level {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-indent {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				padding-left: 36px;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-indent.deep {
+				padding-left: 72px;
+			}
+
+			.sitemap-tree {
+				font-family: 'Architects Daughter', cursive;
+				color: rgba(1, 53, 67, 0.3);
+				font-size: 14px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Cormorant Garamond', serif;
+				font-size: 13px;
+				font-weight: 500;
+				padding: 8px 16px;
+				border-radius: 4px;
+				text-align: left;
+				letter-spacing: 0.01em;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(1, 53, 67, 0.08);
+				color: var(--primary);
+				border: 1.5px dashed rgba(1, 53, 67, 0.3);
+			}
+
+			.sitemap-box.existing {
+				background: rgba(255, 255, 255, 0.5);
+				color: rgba(1, 53, 67, 0.55);
+				border: 1.5px dashed rgba(1, 53, 67, 0.18);
+				font-style: italic;
+			}
+
+			.sitemap-box.new {
+				background: var(--accent);
+				color: var(--primary);
+				border: 1.5px solid var(--accent);
+				font-weight: 600;
+				position: relative;
+			}
+
+			.sitemap-box.modified {
+				background: rgba(208, 159, 132, 0.15);
+				color: var(--primary);
+				border: 1.5px dashed var(--accent);
+				font-weight: 500;
+			}
+
+			.sitemap-route {
+				font-family: 'Raleway', sans-serif;
+				font-size: 10.5px;
+				font-weight: 400;
+				opacity: 0.75;
+				letter-spacing: 0.02em;
+			}
+
+			.sitemap-badge {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.08em;
+				background: var(--primary);
+				color: var(--accent);
+				padding: 2px 7px;
+				border-radius: 3px;
+				font-weight: 700;
+			}
+
+			.sitemap-badge.mod {
+				background: var(--primary);
+				color: var(--accent);
+			}
+
+			/* ── CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 12px 0;
+				border-bottom: 1px dashed rgba(1, 53, 67, 0.12);
+				font-family: 'Raleway', sans-serif;
+				font-size: 13px;
+				color: var(--primary);
+				line-height: 1.55;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-item strong {
+				font-weight: 600;
+			}
+
+			.check-icon {
+				font-size: 15px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			.check-icon.flag {
+				color: var(--accent);
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.resource-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(1, 53, 67, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.resource-grid {
+					grid-template-columns: 1fr;
+				}
+				.flow-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap-indent {
+					padding-left: 18px;
+				}
+				.sitemap-indent.deep {
+					padding-left: 36px;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
+				}
+				.cms-field {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 4px;
+				}
+				.cms-field-label {
+					min-width: auto;
+				}
+				.cms-emails-list,
+				.cms-export-btn {
+					margin-left: 0;
+				}
+				.event-card-row {
+					gap: 12px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">The Steady Elevation</div>
+				<div class="sidebar-doctype">Resources &amp; Shop Add-On</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">New &amp; Modified</div>
+				<a href="#resources" class="nav-link"><span class="nav-icon">📚</span> Resources Page</a>
+				<a href="#events" class="nav-link"><span class="nav-icon">📅</span> Event Interest Capture</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Add-On Proposal</div>
+				<div class="doc-title">Resources &amp; Shop Add-On</div>
+				<div class="doc-sub">
+					The Steady Elevation &nbsp;·&nbsp; New Resources page + Event interest capture
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">2 in scope</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Stephanie Elliston</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Engagement</span>
+						<span class="meta-value warn">Add-On Proposal</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
+				✏️ This wireframe is a continuation of the main Steady Elevation site rebuild — same brand, same fonts, same annotation style. Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Visual treatment, hierarchy, and theming (Individual peach vs. Business navy) follow the existing site system.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 12px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">Where the new pieces fit</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								Resources nests under each side hub · Events page gains a per-event interest capture toggle
+							</div>
+						</div>
+
+						<div class="sitemap">
+							<div class="sitemap-level">
+								<div class="sitemap-box existing">Fork Landing <span class="sitemap-route">/</span></div>
+							</div>
+
+							<div class="sitemap-level">
+								<div class="sitemap-box secondary">Individual Hub <span class="sitemap-route">/individual</span></div>
+							</div>
+							<div class="sitemap-indent">
+								<span class="sitemap-tree">└─</span>
+								<div class="sitemap-box existing">About, Services, Testimonials, etc. <span class="sitemap-route">/individual/*</span></div>
+							</div>
+							<div class="sitemap-indent">
+								<span class="sitemap-tree">└─</span>
+								<div class="sitemap-box modified">
+									Events
+									<span class="sitemap-route">/individual/events</span>
+									<span class="sitemap-badge mod">MODIFIED</span>
+								</div>
+							</div>
+							<div class="sitemap-indent">
+								<span class="sitemap-tree">└─</span>
+								<div class="sitemap-box new">
+									Resources
+									<span class="sitemap-route">/individual/resources</span>
+									<span class="sitemap-badge">NEW</span>
+								</div>
+							</div>
+
+							<div class="sitemap-level" style="margin-top: 8px">
+								<div class="sitemap-box secondary">Business Hub <span class="sitemap-route">/business</span></div>
+							</div>
+							<div class="sitemap-indent">
+								<span class="sitemap-tree">└─</span>
+								<div class="sitemap-box existing">About, Services, Testimonials, etc. <span class="sitemap-route">/business/*</span></div>
+							</div>
+							<div class="sitemap-indent">
+								<span class="sitemap-tree">└─</span>
+								<div class="sitemap-box modified">
+									Events
+									<span class="sitemap-route">/business/events</span>
+									<span class="sitemap-badge mod">MODIFIED</span>
+								</div>
+							</div>
+							<div class="sitemap-indent">
+								<span class="sitemap-tree">└─</span>
+								<div class="sitemap-box new">
+									Resources
+									<span class="sitemap-route">/business/resources</span>
+									<span class="sitemap-badge">NEW</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							Resources is a top-level item under each side hub — appears in the main nav of both Individual and Business. The Events page isn't a new route; it's the same existing page with an opt-in "Collect Interest" toggle added per event. A single resource can be tagged for one side or both — same CMS document, controlled by a side selector.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: RESOURCES ── -->
+			<section class="wf-section" id="resources">
+				<div class="section-label">
+					<span class="section-num">1</span> Resources Page &mdash; /[side]/resources
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">The Steady Elevation</div>
+						<div class="wf-nav-links">
+							<span>About</span>
+							<span>Services ▾</span>
+							<span>Events</span>
+							<span>Testimonials</span>
+							<span class="active">Resources</span>
+							<span class="wf-nav-cta">Work With Me</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Page Header -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Page Header</div>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div style="text-align: center; padding: 8px 0">
+								<div class="wf-heading-lg">Resources</div>
+								<div class="wf-subtext" style="margin-bottom: 0">
+									Tools, recordings, and resources to support your journey.
+								</div>
+							</div>
+							<div class="annotation">
+								Page title and intro line are CMS-editable. Stephanie can adjust the framing on Individual vs. Business if she wants a different tone per side. Theme color (peach on Individual, navy on Business) inherits from the existing side system — no extra config.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Filter / Category Bar -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Filter / Category Bar</div>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="filter-row">
+								<span class="filter-label">Browse:</span>
+								<span class="filter-pill active">All</span>
+								<span class="filter-pill">Worksheets</span>
+								<span class="filter-pill">Webinars</span>
+								<span class="filter-pill">Books</span>
+							</div>
+							<div class="annotation">
+								Optional. Stephanie can add or remove categories per resource in the CMS — categories are free-form, not hardcoded. Filtering is client-side, no page reload. Can launch without it if simpler — see decision below. If she's only got 4-5 resources at launch, filtering may feel like overkill.
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision — Filtering at Launch</div>
+								<div class="decision-option">
+									<div class="decision-option-label">Option A — Launch with filtering</div>
+									<div class="decision-option-body">Pills bar appears above the resource grid from day one. Future-proofed for when the library grows. Slightly more build.</div>
+								</div>
+								<div class="decision-option">
+									<div class="decision-option-label">Option B — Launch without, add later</div>
+									<div class="decision-option-body">Simple grid only. When Stephanie has 8+ resources, we add filtering then. Cleanest for v1.</div>
+								</div>
+								<div class="decision-note">
+									Recommendation: Option B for v1 unless Stephanie has a backlog of resources ready to load on launch day.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Resource Cards Grid -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Resource Cards Grid</div>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+
+							<div class="resource-grid">
+								<div class="resource-card">
+									<div class="img-placeholder">
+										<div class="img-label" style="font-size: 10px">cover image</div>
+									</div>
+									<div class="resource-title">Stress Reset Worksheet</div>
+									<div class="resource-desc">A short guided exercise to help you reset when the week gets loud.</div>
+									<div class="resource-tags">
+										<span class="resource-tag-pill">Worksheet</span>
+										<span class="resource-tag-pill">Individual</span>
+									</div>
+									<div class="resource-row">
+										<span class="resource-price">$15</span>
+										<span class="resource-buy">Buy Now</span>
+									</div>
+								</div>
+
+								<div class="resource-card">
+									<div class="img-placeholder">
+										<div class="img-label" style="font-size: 10px">cover image</div>
+									</div>
+									<div class="resource-title">Confidence Webinar Recording</div>
+									<div class="resource-desc">60-minute recorded session on building confidence in high-stakes settings.</div>
+									<div class="resource-tags">
+										<span class="resource-tag-pill">Webinar</span>
+										<span class="resource-tag-pill">Both sides</span>
+									</div>
+									<div class="resource-row">
+										<span class="resource-price">$35</span>
+										<span class="resource-buy">Buy Now</span>
+									</div>
+								</div>
+
+								<div class="resource-card">
+									<div class="img-placeholder">
+										<div class="img-label" style="font-size: 10px">cover image</div>
+									</div>
+									<div class="resource-title">Find Your Steady — the Book</div>
+									<div class="resource-desc">Stephanie's signature framework in one place. Available as ebook or print.</div>
+									<div class="resource-tags">
+										<span class="resource-tag-pill">Book</span>
+										<span class="resource-tag-pill">Both sides</span>
+									</div>
+									<div class="resource-row">
+										<span class="resource-price">$22</span>
+										<span class="resource-buy">Buy Now</span>
+									</div>
+								</div>
+
+								<div class="resource-card">
+									<div class="img-placeholder">
+										<div class="img-label" style="font-size: 10px">cover image</div>
+									</div>
+									<div class="resource-title">Leadership Reset Bundle</div>
+									<div class="resource-desc">Three worksheets + a recorded debrief for new managers. Save when bought together.</div>
+									<div class="resource-tags">
+										<span class="resource-tag-pill">Bundle</span>
+										<span class="resource-tag-pill">Business</span>
+									</div>
+									<div class="resource-row">
+										<span class="resource-price">$65</span>
+										<span class="resource-buy">Buy Now</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Each resource is a CMS document. Stephanie adds: title, cover image, short description, price, side(s) it shows on (Individual / Business / Both), category tag, and the checkout URL (Option A) or product file + Stripe IDs (Option B). Cards display the same regardless of payment backend — only what happens after "Buy Now" differs. Side tagging means one resource can be sold from one or both side hubs without duplicate entries.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- How Purchase Works -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">How Purchase Works</div>
+									<span class="new-tag" style="border-style: dashed; color: rgba(1,53,67,0.45); border-color: rgba(1,53,67,0.3); background: rgba(1,53,67,0.04); font-weight: 400;">illustrative only</span>
+								</div>
+							</div>
+
+							<div class="flow-grid">
+								<div class="flow-card">
+									<div class="flow-label">What the customer experiences</div>
+									<div class="flow-steps">
+										<div><span class="flow-step-number">1</span> Clicks "Buy Now" on a resource card</div>
+										<div><span class="flow-step-number">2</span> Enters payment on hosted checkout</div>
+										<div><span class="flow-step-number">3</span> Receives download or recording via email automatically</div>
+										<div><span class="flow-step-number">4</span> Returned to the resources page with a thank-you state</div>
+									</div>
+								</div>
+								<div class="flow-card">
+									<div class="flow-label">What Stephanie does</div>
+									<div class="flow-steps">
+										<div><span class="flow-step-number">1</span> Adds a resource in the CMS (title, image, price, file)</div>
+										<div><span class="flow-step-number">2</span> Publishes — it goes live on the chosen side(s)</div>
+										<div><span class="flow-step-number">3</span> Sees sales in the dashboard (Lemon Squeezy or Stripe)</div>
+										<div><span class="flow-step-number">4</span> That's it. No manual emails.</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								This block is illustrative for the wireframe only — it won't appear on the actual resources page. Just clarifying the end-to-end flow for the proposal review.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Payment Backend Decision -->
+						<div class="wf-block" style="background: rgba(208, 159, 132, 0.04); border-style: solid; border-color: rgba(208, 159, 132, 0.35);">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Payment Backend — Major Decision</div>
+								</div>
+							</div>
+
+							<div class="decision-box" style="margin: 0;">
+								<div class="decision-label">Decision — Payment Backend</div>
+								<div class="decision-option">
+									<div class="decision-option-label">Option A — Lemon Squeezy (Recommended for v1)</div>
+									<div class="decision-option-body">
+										External hosted checkout. Lemon Squeezy handles payment, file delivery, and sales tax compliance (they're the merchant of record). Simpler build, faster launch. Fee: <strong>5% + 50¢ per sale</strong>.
+									</div>
+								</div>
+								<div class="decision-option">
+									<div class="decision-option-label">Option B — Custom Stripe</div>
+									<div class="decision-option-body">
+										Files live in the CMS, automated email delivery via webhook, single dashboard alongside everything else. More build time. Fee: <strong>2.9% + 30¢ per sale</strong> — you handle sales tax compliance yourself.
+									</div>
+								</div>
+								<div class="decision-note">
+									The visual layout of resource cards is identical either way — only the backend differs. Lemon Squeezy gets you live faster; Stripe is cheaper per-sale long-term once volume justifies the build.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Empty State -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Empty State</div>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="empty-state">
+								<div class="empty-icon">📚</div>
+								<div class="empty-text">
+									New resources coming soon.<br />
+									In the meantime, take a look around the rest of the site.
+								</div>
+							</div>
+							<div class="annotation">
+								Default state shown if Stephanie has no published resources for that side yet (or if she's unpublished them temporarily). CMS controls visibility per resource and per side, so the Individual side could be empty while Business has resources, and vice versa.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 The Steady Elevation · Coaching with Stephanie Elliston</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: EVENT INTEREST CAPTURE ── -->
+			<section class="wf-section" id="events">
+				<div class="section-label">
+					<span class="section-num">2</span> Event Interest Capture &mdash; /[side]/events
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">The Steady Elevation</div>
+						<div class="wf-nav-links">
+							<span>About</span>
+							<span>Services ▾</span>
+							<span class="active">Events</span>
+							<span>Testimonials</span>
+							<span>Resources</span>
+							<span class="wf-nav-cta">Work With Me</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Page Header (existing) -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Page Header</div>
+									<span class="cms-tag" style="color: rgba(1,53,67,0.4); border-color: rgba(1,53,67,0.3); background: rgba(1,53,67,0.03);">existing — no changes</span>
+								</div>
+							</div>
+							<div style="padding: 8px 0">
+								<div class="wf-heading-lg">Events</div>
+								<div class="wf-subtext" style="margin-bottom: 0">
+									Upcoming workshops, talks, and sessions.
+								</div>
+							</div>
+							<div class="annotation">
+								Existing page — no changes here. Shown for context. The modification is at the event-card level, not the page level.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Event Card Standard -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Event Card — Standard</div>
+									<span class="cms-tag" style="color: rgba(1,53,67,0.4); border-color: rgba(1,53,67,0.3); background: rgba(1,53,67,0.03);">existing</span>
+								</div>
+							</div>
+
+							<div class="event-card">
+								<div class="event-card-row">
+									<div class="event-date-block">
+										<div class="event-month">Mar</div>
+										<div class="event-day">14</div>
+									</div>
+									<div class="event-meta">
+										<div class="event-format">Virtual · 7:00 PM CST</div>
+										<div class="event-title">Finding Your Steady: A Live Workshop</div>
+										<div class="event-desc">
+											A 75-minute live session walking through the framework for staying grounded when everything else is moving. Q&amp;A included.
+										</div>
+										<span class="event-register">Register Now</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Existing event card pattern. Stephanie can choose per-event whether to enable interest capture — when off, the card looks exactly like this. No changes to events where she doesn't want to collect interest (e.g. one-off events that are already filled, or events with a hard registration cap she's not promoting publicly yet).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Event Card WITH Interest Capture -->
+						<div class="wf-block" style="background: rgba(208, 159, 132, 0.06); border-color: rgba(208, 159, 132, 0.4);">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">Event Card — With Interest Capture</div>
+									<span class="new-tag">NEW</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+
+							<div class="event-card">
+								<div class="event-card-row">
+									<div class="event-date-block">
+										<div class="event-month">May</div>
+										<div class="event-day">22</div>
+									</div>
+									<div class="event-meta">
+										<div class="event-format">In-Person · Madison, WI</div>
+										<div class="event-title">Steady Leadership for Mid-Career Managers</div>
+										<div class="event-desc">
+											A half-day intensive for mid-career managers navigating their first executive-level decisions. Registration opens 6 weeks before the event.
+										</div>
+
+										<div class="interest-capture">
+											<div class="interest-heading">Interested? Get notified when registration opens.</div>
+											<div class="interest-form-row">
+												<div class="interest-input">your@email.com</div>
+												<span class="interest-submit">Notify Me</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Stephanie toggles "Collect Interest" on for any event in the CMS. The form appears below the event description when the toggle is on. Submitted emails are stored on the event document — she can export the full interest list as a CSV anytime from the CMS. No third-party email platform needed; the list lives with the event so it's tied to the right audience.
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision — Interest Form Placement</div>
+								<div class="decision-option">
+									<div class="decision-option-label">Option A — Inline on the card (shown above)</div>
+									<div class="decision-option-body">Form is always visible on the event card. Lower friction, more visible — visitors see the option without clicking. Card is a bit taller.</div>
+								</div>
+								<div class="decision-option">
+									<div class="decision-option-label">Option B — Expand/modal on button click</div>
+									<div class="decision-option-body">Card stays compact with a "Notify Me" button. Clicking expands the form (or opens a small modal). Cleaner card, one extra click.</div>
+								</div>
+								<div class="decision-note">
+									Either works. Option A is recommended for the lower friction. Designer's call after seeing it in context.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- CMS View -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-block-header-left">
+									<div class="wf-heading-sm" style="margin-bottom: 0">CMS View — What Stephanie Sees</div>
+									<span class="new-tag">NEW</span>
+								</div>
+							</div>
+
+							<div class="cms-mockup">
+								<div class="cms-mockup-bar">
+									<div class="cms-mockup-dot" style="background: #ff5f57"></div>
+									<div class="cms-mockup-dot" style="background: #febc2e"></div>
+									<div class="cms-mockup-dot" style="background: #28c840"></div>
+									<div class="cms-mockup-label">CMS · Event Document</div>
+								</div>
+
+								<div class="cms-doc-title">Steady Leadership for Mid-Career Managers</div>
+
+								<div class="cms-field">
+									<div class="cms-field-label">Title</div>
+									<div class="cms-field-value">Steady Leadership for Mid-Career Managers</div>
+								</div>
+								<div class="cms-field">
+									<div class="cms-field-label">Date &amp; time</div>
+									<div class="cms-field-value">May 22, 2026 · 9:00 AM – 1:00 PM CST</div>
+								</div>
+								<div class="cms-field">
+									<div class="cms-field-label">Format</div>
+									<div class="cms-field-value">In-Person · Madison, WI</div>
+								</div>
+								<div class="cms-field">
+									<div class="cms-field-label">Description</div>
+									<div class="cms-field-value">A half-day intensive for mid-career managers…</div>
+								</div>
+
+								<div class="cms-field new">
+									<div class="cms-field-label">Collect Interest</div>
+									<div class="cms-field-value">
+										<span class="cms-toggle">
+											<span class="cms-toggle-switch"></span>
+											<span style="color: var(--accent); font-weight: 600">On</span>
+										</span>
+										<span class="cms-field-badge">NEW</span>
+									</div>
+								</div>
+
+								<div class="cms-field new">
+									<div class="cms-field-label">Interested Emails (4)</div>
+									<div class="cms-field-value" style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 11px;">Auto-populated as visitors sign up</div>
+								</div>
+								<div class="cms-emails-list">
+									<div class="cms-email-row">
+										<span>jamie.r@example.com</span>
+										<span class="cms-email-date">Apr 28, 2026</span>
+									</div>
+									<div class="cms-email-row">
+										<span>sara.thomas@example.com</span>
+										<span class="cms-email-date">Apr 30, 2026</span>
+									</div>
+									<div class="cms-email-row">
+										<span>michael.k@example.com</span>
+										<span class="cms-email-date">May 02, 2026</span>
+									</div>
+									<div class="cms-email-row">
+										<span>l.peterson@example.com</span>
+										<span class="cms-email-date">May 05, 2026</span>
+									</div>
+								</div>
+
+								<span class="cms-export-btn">⬇ Export as CSV</span>
+							</div>
+
+							<div class="annotation">
+								How Stephanie manages the list. Open any event in the CMS, see who signed up (with the date they joined), and click Export to download a CSV. She can then import that list into her email tool when registration opens, send a heads-up, or just use it as a planning signal. The Collect Interest toggle is the only new field on the event document — everything else already exists.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 The Steady Elevation · Coaching with Stephanie Elliston</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Resources on Both Sides</strong> — Individual and Business each get a Resources page. Stephanie can tag a resource for one side or both via a CMS selector. Same resource document — no duplicate entries.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>CMS Managed Throughout</strong> — Stephanie adds, edits, and removes products herself. No developer needed for routine product management, pricing changes, or new uploads.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Automated Digital Delivery</strong> — Customer pays, file or recording arrives automatically by email. No manual fulfillment by Stephanie.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No Phone, No Popup Checkout, No Pricing on Service Pages</strong> — Existing site decisions carry over. Pricing only appears on the Resources page.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Event Interest Capture is Opt-In Per Event</strong> — Stephanie decides which events show the signup form. Toggle on the event document in the CMS — off by default.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Returning Client Engagement</strong> — This add-on is a separate scope from the original launch contract and content support. Treated as a new mini-project with its own deposit, timeline, and deliverable.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon flag">⚑</span>
+								<div>
+									<strong>Payment Backend — Lemon Squeezy vs. Custom Stripe</strong> — See decision box on the Resources page. Lemon Squeezy recommended for v1: faster to launch, handles sales tax compliance for you, simpler to maintain. Custom Stripe is cheaper per sale long-term once volume justifies the build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon flag">⚑</span>
+								<div>
+									<strong>Embedded Overlay Checkout Upgrade (Lemon Squeezy Only)</strong> — Optional upcharge if going with Option A. Lemon Squeezy can open checkout as an overlay on the resources page instead of redirecting to a new tab. Quick to add, more polished feel — but adds a small implementation step.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon flag">⚑</span>
+								<div>
+									<strong>Resources Page Filtering — Launch With or Without?</strong> — See decision box on the Resources page. Recommend Option B (launch without, add later) unless Stephanie has 8+ resources ready on day one.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon flag">⚑</span>
+								<div>
+									<strong>Interest Form Placement — Inline vs. Modal</strong> — See decision box on the Events page. Inline (Option A) recommended for lower friction. Designer's call after seeing it in context.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon flag">⚑</span>
+								<div>
+									<strong>Resource Categories — What Should They Be?</strong> — Stephanie defines. Starter set: Worksheets, Webinars, Books, Bundles. Easy to edit anytime in the CMS — no developer needed to add or rename categories.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon flag">⚑</span>
+								<div>
+									<strong>Will the Book Live on This Page or Link Out to Amazon?</strong> — A Resource entry can do either: a direct purchase through Lemon Squeezy/Stripe, or an external link to Amazon (or wherever the book is fulfilled). Stephanie picks per-resource.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
