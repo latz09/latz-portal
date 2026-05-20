@@ -1,0 +1,2276 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Village of Hancock — Scope 2 Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--navy: #0e1c44;
+				--navy-dark: #091232;
+				--navy-mid: #1a2d5a;
+				--red: #720f11;
+				--red-light: rgba(114, 15, 17, 0.08);
+				--tan: #f5f1e8;
+				--tan-dark: #ede8d8;
+				--tan-mid: #e8e2d0;
+				--green: #4a5d3d;
+				--green-light: rgba(74, 93, 61, 0.1);
+				--brown: #8a2f2e;
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Roboto', sans-serif;
+				background: var(--tan);
+				background-image:
+					linear-gradient(rgba(14, 28, 68, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(14, 28, 68, 0.05) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--navy);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--navy);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--navy-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Roboto', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Merriweather', serif;
+				font-size: 16px;
+				font-weight: 700;
+				color: var(--tan);
+				line-height: 1.2;
+				margin-bottom: 4px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Roboto', sans-serif;
+				font-size: 10px;
+				color: rgba(245, 241, 232, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(74, 93, 61, 0.2);
+				border: 1px solid rgba(74, 93, 61, 0.5);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: #7a9b65;
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Roboto', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: #a8c592;
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Roboto', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(245, 241, 232, 0.45);
+				text-decoration: none;
+				font-family: 'Roboto', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--tan);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--tan);
+				background: rgba(114, 15, 17, 0.15);
+				border-left-color: var(--red);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Roboto', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--red);
+				color: var(--tan);
+				border: none;
+				font-size: 22px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 40px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--red);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Merriweather', serif;
+				font-size: 34px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'Roboto', sans-serif;
+				font-size: 14px;
+				color: rgba(14, 28, 68, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(14, 28, 68, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(14, 28, 68, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(14, 28, 68, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--navy);
+			}
+
+			.meta-value.warn {
+				color: var(--red);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── ADDENDUM CALLOUT ── */
+			.addendum-callout {
+				margin-top: 28px;
+				padding: 16px 20px;
+				background: rgba(114, 15, 17, 0.04);
+				border: 1.5px solid rgba(114, 15, 17, 0.25);
+				border-left: 4px solid var(--red);
+				border-radius: 6px;
+			}
+
+			.addendum-callout-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--red);
+				margin-bottom: 6px;
+				font-weight: 700;
+			}
+
+			.addendum-callout-body {
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				color: var(--navy);
+				line-height: 1.6;
+			}
+
+			.addendum-callout-body strong {
+				color: var(--navy);
+				font-weight: 600;
+			}
+
+			.addendum-callout-body code {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				background: rgba(14, 28, 68, 0.06);
+				padding: 1px 6px;
+				border-radius: 3px;
+				color: var(--navy);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--navy);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--navy);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			.section-num.new {
+				background: var(--red);
+			}
+
+			.section-num.mod {
+				background: var(--green);
+			}
+
+			.section-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				padding: 2px 8px;
+				border-radius: 3px;
+				margin-left: 4px;
+			}
+
+			.section-tag.new {
+				color: var(--red);
+				border: 1px solid var(--red);
+				background: rgba(114, 15, 17, 0.06);
+			}
+
+			.section-tag.mod {
+				color: var(--green);
+				border: 1px solid var(--green);
+				background: rgba(74, 93, 61, 0.06);
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--navy);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(14, 28, 68, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--navy);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Merriweather', serif;
+				font-weight: 700;
+				font-size: 15px;
+				color: var(--navy);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				color: rgba(14, 28, 68, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--navy);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.wf-nav-links span.new {
+				color: var(--red);
+				font-weight: 600;
+			}
+
+			.wf-nav-links span.new::after {
+				content: ' ★';
+				font-size: 9px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── PARTIAL WIREFRAME BANNER ── */
+			.partial-banner {
+				background: rgba(74, 93, 61, 0.08);
+				border: 1.5px dashed var(--green);
+				border-radius: 5px;
+				padding: 10px 16px;
+				margin-bottom: 20px;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12.5px;
+				color: var(--green);
+				line-height: 1.5;
+			}
+
+			.partial-banner strong {
+				font-weight: 700;
+				color: var(--green);
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--navy);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(14, 28, 68, 0.04);
+				border-left: 3px solid rgba(14, 28, 68, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--red);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(114, 15, 17, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--red);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(245, 241, 232, 0.4);
+			}
+
+			.wf-block.new-block {
+				border-color: rgba(114, 15, 17, 0.4);
+				background: rgba(114, 15, 17, 0.03);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			.new-pill {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--red);
+				background: rgba(114, 15, 17, 0.1);
+				border: 1px solid var(--red);
+				border-radius: 3px;
+				padding: 2px 8px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Merriweather', serif;
+				font-size: 26px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Merriweather', serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Merriweather', serif;
+				font-size: 14px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 4px;
+			}
+
+			.wf-subtext {
+				font-family: 'Roboto', sans-serif;
+				font-size: 14px;
+				color: rgba(14, 28, 68, 0.5);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				color: rgba(14, 28, 68, 0.6);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(14, 28, 68, 0.15);
+				margin: 20px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--navy);
+				padding: 14px 22px;
+				background: var(--navy);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.wf-footer span {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11px;
+				color: rgba(245, 241, 232, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(14, 28, 68, 0.07);
+				border: 2px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.3;
+				color: var(--navy);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(14, 28, 68, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── OPTIONAL IMAGE PLACEHOLDER (info-first blocks) ── */
+			.img-placeholder.optional {
+				background: rgba(14, 28, 68, 0.03);
+				border: 1.5px dashed rgba(14, 28, 68, 0.18);
+				padding: 12px;
+				gap: 4px;
+			}
+
+			.img-placeholder.optional .img-icon {
+				font-size: 16px;
+				opacity: 0.35;
+			}
+
+			.img-placeholder.optional .img-label {
+				font-size: 10.5px;
+				color: rgba(14, 28, 68, 0.45);
+			}
+
+			.optional-tag {
+				display: inline-block;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9.5px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: rgba(14, 28, 68, 0.5);
+				border: 1px dashed rgba(14, 28, 68, 0.3);
+				border-radius: 3px;
+				padding: 1px 6px;
+				margin-bottom: 4px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			/* ── INFO-FIRST BLOCK ── */
+			.wf-block.info-first {
+				background: rgba(255, 255, 255, 0.55);
+				border-color: rgba(14, 28, 68, 0.22);
+			}
+
+			.info-first-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9.5px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--navy);
+				background: rgba(14, 28, 68, 0.06);
+				border: 1px solid rgba(14, 28, 68, 0.2);
+				border-radius: 3px;
+				padding: 2px 7px;
+				white-space: nowrap;
+			}
+
+			/* ── POST/NEWS ROW ── */
+			.post-list {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				margin-top: 10px;
+			}
+
+			.post-row {
+				border: 1.5px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 5px;
+				padding: 14px 16px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.post-row-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				margin-bottom: 6px;
+				flex-wrap: wrap;
+			}
+
+			.post-type-badge {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 2px 8px;
+				border-radius: 3px;
+				white-space: nowrap;
+			}
+
+			.post-type-badge.news {
+				color: var(--navy);
+				background: rgba(14, 28, 68, 0.1);
+				border: 1px solid rgba(14, 28, 68, 0.3);
+			}
+
+			.post-type-badge.event {
+				color: var(--red);
+				background: rgba(114, 15, 17, 0.08);
+				border: 1px solid var(--red);
+			}
+
+			.post-title {
+				font-family: 'Merriweather', serif;
+				font-size: 14px;
+				font-weight: 700;
+				color: var(--navy);
+				flex: 1;
+				min-width: 200px;
+			}
+
+			.post-meta {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11px;
+				color: rgba(14, 28, 68, 0.45);
+				margin-bottom: 6px;
+			}
+
+			.post-excerpt {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12.5px;
+				color: rgba(14, 28, 68, 0.6);
+				line-height: 1.5;
+			}
+
+			.post-attachment {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--green);
+				margin-top: 6px;
+				display: inline-block;
+			}
+
+			/* ── FILTER ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				margin-bottom: 14px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: rgba(14, 28, 68, 0.4);
+			}
+
+			.filter-pill {
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				border: 1.5px solid rgba(14, 28, 68, 0.2);
+				border-radius: 20px;
+				padding: 3px 12px;
+				color: rgba(14, 28, 68, 0.5);
+			}
+
+			.filter-pill.active {
+				border-color: var(--navy);
+				color: var(--navy);
+				font-weight: 600;
+			}
+
+			/* ── AMENITY GRID ── */
+			.amenity-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.amenity-card {
+				border: 1.5px dashed rgba(14, 28, 68, 0.2);
+				border-radius: 5px;
+				padding: 12px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.amenity-icon {
+				font-size: 22px;
+				margin-bottom: 6px;
+			}
+
+			.amenity-name {
+				font-family: 'Merriweather', serif;
+				font-size: 12px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 3px;
+			}
+
+			.amenity-desc {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11px;
+				color: rgba(14, 28, 68, 0.5);
+				line-height: 1.4;
+			}
+
+			/* ── INFO ROWS ── */
+			.info-row {
+				display: flex;
+				gap: 12px;
+				padding: 8px 0;
+				border-bottom: 1px dashed rgba(14, 28, 68, 0.12);
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+			}
+
+			.info-row:last-child {
+				border-bottom: none;
+			}
+
+			.info-row-label {
+				font-weight: 600;
+				color: var(--navy);
+				min-width: 130px;
+				flex-shrink: 0;
+			}
+
+			.info-row-value {
+				color: rgba(14, 28, 68, 0.6);
+				flex: 1;
+			}
+
+			/* ── PLACEHOLDER BULLETS ── */
+			.placeholder-list {
+				list-style: none;
+				padding: 0;
+				margin-top: 6px;
+			}
+
+			.placeholder-list li {
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				color: rgba(14, 28, 68, 0.6);
+				line-height: 1.6;
+				padding-left: 18px;
+				position: relative;
+				margin-bottom: 4px;
+			}
+
+			.placeholder-list li::before {
+				content: '◦';
+				position: absolute;
+				left: 4px;
+				color: rgba(14, 28, 68, 0.4);
+			}
+
+			.tbd-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--brown);
+				background: rgba(138, 47, 46, 0.08);
+				border: 1px dashed var(--brown);
+				border-radius: 3px;
+				padding: 1px 7px;
+				margin-left: 4px;
+				white-space: nowrap;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Merriweather', serif;
+				font-size: 12px;
+				font-weight: 700;
+				padding: 8px 14px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 110px;
+			}
+
+			.sitemap-box.muted {
+				background: rgba(14, 28, 68, 0.08);
+				color: rgba(14, 28, 68, 0.4);
+				border: 1.5px dashed rgba(14, 28, 68, 0.25);
+				font-weight: 500;
+			}
+
+			.sitemap-box.new {
+				background: var(--red);
+				color: var(--tan);
+				border: none;
+			}
+
+			.sitemap-box.mod {
+				background: var(--green);
+				color: var(--tan);
+				border: none;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(14, 28, 68, 0.3);
+				padding: 0 6px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			.sitemap-legend {
+				display: flex;
+				gap: 16px;
+				justify-content: center;
+				flex-wrap: wrap;
+				margin-top: 16px;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+			}
+
+			.legend-item {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				color: rgba(14, 28, 68, 0.6);
+			}
+
+			.legend-swatch {
+				width: 14px;
+				height: 14px;
+				border-radius: 3px;
+			}
+
+			.legend-swatch.new {
+				background: var(--red);
+			}
+			.legend-swatch.mod {
+				background: var(--green);
+			}
+			.legend-swatch.muted {
+				background: rgba(14, 28, 68, 0.08);
+				border: 1.5px dashed rgba(14, 28, 68, 0.25);
+			}
+
+			/* ── CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(14, 28, 68, 0.12);
+				font-family: 'Roboto', sans-serif;
+				font-size: 13px;
+				color: var(--navy);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── CMS FORM PREVIEW ── */
+			.cms-form-preview {
+				border: 1.5px dashed rgba(74, 93, 61, 0.4);
+				background: rgba(74, 93, 61, 0.04);
+				border-radius: 5px;
+				padding: 14px;
+				margin-top: 10px;
+			}
+
+			.cms-form-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--green);
+				margin-bottom: 10px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.cms-form-label::before {
+				content: '⚙';
+			}
+
+			.cms-field {
+				display: flex;
+				gap: 10px;
+				padding: 4px 0;
+				font-family: 'Roboto', sans-serif;
+				font-size: 12px;
+				border-bottom: 1px dashed rgba(74, 93, 61, 0.15);
+			}
+
+			.cms-field:last-child {
+				border-bottom: none;
+			}
+
+			.cms-field-name {
+				font-weight: 600;
+				color: var(--navy);
+				min-width: 110px;
+				flex-shrink: 0;
+			}
+
+			.cms-field-type {
+				color: rgba(14, 28, 68, 0.5);
+				font-style: italic;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.amenity-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 26px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(14, 28, 68, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.amenity-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.info-row {
+					flex-direction: column;
+					gap: 2px;
+				}
+				.info-row-label {
+					min-width: 0;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
+				}
+				.cms-field {
+					flex-direction: column;
+					gap: 2px;
+				}
+				.cms-field-name {
+					min-width: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Village of Hancock</div>
+				<div class="sidebar-doctype">Scope 2 — Addendum</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Scope 2 Proposal</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Scope 2 Site Map</a>
+
+				<div class="nav-group-label">New Pages</div>
+				<a href="#hancock-park" class="nav-link"><span class="nav-icon">🌳</span> Hancock Park</a>
+				<a href="#news-events" class="nav-link"><span class="nav-icon">📰</span> News & Events</a>
+
+				<div class="nav-group-label">Modified Pages</div>
+				<a href="#home-additions" class="nav-link"><span class="nav-icon">🏠</span> Home — Additions</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Scope 2 Addendum</div>
+				<div class="doc-title">Village of Hancock</div>
+				<div class="doc-sub">
+					Scope 2 &mdash; Additional Pages & Features &nbsp;·&nbsp; Mid-Build Addendum to Foundation + Documents Package
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Scope 2 Proposal</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">New Pages</span>
+						<span class="meta-value">2</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Modified Pages</span>
+						<span class="meta-value">1</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Jillian Steele</span>
+					</div>
+				</div>
+
+				<!-- ADDENDUM CALLOUT -->
+				<div class="addendum-callout">
+					<div class="addendum-callout-label">⚑ Scope 2 — Read First</div>
+					<div class="addendum-callout-body">
+						This document is a <strong>mid-build addendum</strong> to the original 5-page Foundation + Documents build, which is currently in progress. It covers <strong>only the new and modified pages</strong> being proposed as a Scope 2 addition — it is not a replacement for the original wireframe.
+						<br /><br />
+						The original 5-page scope (Home, About, Contact, Agendas & Minutes, Ordinances) is documented in <code>wireframe.html</code> and remains the source of truth for everything not shown here. Sections labeled "Modified" only show <em>what's changing</em> — the rest of those pages stays as originally specified.
+						<br /><br />
+						Pricing for Scope 2 is in the proposal email, not this wireframe.
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands. Same design system as the original build — consistent fonts, colors, components, and CMS approach.
+			</div>
+
+			<!-- ── SCOPE 2 SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Scope 2 Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">Village of Hancock — Full Site After Scope 2</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								2 new pages added · 1 existing page modified · original pages unchanged
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 6px; align-items: center">
+							<div class="sitemap-node">
+								<div class="sitemap-box mod">Home<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.8;">/ · modified</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box muted">About<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.7;">/about · unchanged</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box new">Hancock Park<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.8;">/hancock-park · new</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box new">News & Events<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.8;">/news-events · new</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box muted">Contact<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.7;">/contact · unchanged</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box muted">Agendas<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.7;">/agendas-minutes · unchanged</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box muted">Ordinances<br /><span style="font-size: 10px; font-family: 'Roboto', sans-serif; font-weight: 400; opacity: 0.7;">/ordinances · unchanged</span></div>
+							</div>
+						</div>
+
+						<div class="sitemap-legend">
+							<div class="legend-item"><div class="legend-swatch new"></div> New in Scope 2</div>
+							<div class="legend-item"><div class="legend-swatch mod"></div> Modified in Scope 2</div>
+							<div class="legend-item"><div class="legend-swatch muted"></div> Unchanged from original build</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							Main nav grows from 5 items to 7. Hancock Park and News & Events are added to the primary navigation so residents can find them from any page. The original 5 pages (Contact, Agendas & Minutes, Ordinances unchanged; Home and About modified) keep their URLs and structure — Scope 2 layers on top, not over.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══════════════════════════════════════════════ -->
+			<!-- ── NEW PAGE: HANCOCK PARK ── -->
+			<!-- ═══════════════════════════════════════════════ -->
+			<section class="wf-section" id="hancock-park">
+				<div class="section-label">
+					<span class="section-num new">1</span> Hancock Park &mdash; /hancock-park <span class="section-tag new">New Page</span>
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>About</span>
+							<span class="active new">Hancock Park</span>
+							<span class="new">News & Events</span>
+							<span>Contact</span>
+							<span>Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Page Hero -->
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Hancock Park</div>
+							<div class="wf-subtext">
+								Fish Lake, campsites, kayaks, and what Hancock offers beyond the village.
+							</div>
+						</div>
+
+						<!-- Photography Strategy Annotation -->
+						<div class="annotation" style="background: rgba(74, 93, 61, 0.06); border-left-color: var(--green); margin-bottom: 20px">
+							📷 <strong>Photography strategy.</strong> This page is built so it reads well whether the village has 4 strong landscape photos or 10. Four <strong>anchor sections</strong> carry hero images: <em>Park Overview, Fish Lake, Campground, Kayak Kiosk</em> — these are the shots Jillian is most likely to have or be able to capture. The smaller amenity sections below (Beach, Boat Ramp, Trails, Playground) are designed as <strong>information-first blocks</strong> that stand on their own without a photo. Small optional image placeholders are noted in each, and can be filled in over time as good landscape photography is gathered. No section should look incomplete if no photo is available.
+						</div>
+
+						<!-- Page Intro / Overview -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Page Intro / Overview</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="img-placeholder" style="height: 180px">
+								<div class="img-icon">🌳</div>
+								<div class="img-label">
+									Hero image — landscape shot of Hancock Park<br />
+									Fish Lake, campground, or beach scene from Jillian
+								</div>
+							</div>
+							<div class="wf-body-text" style="margin-top: 14px">
+								Short intro paragraph explaining what Hancock Park is and why it matters to the village — the hub for recreation, lake access, camping, and community. Jordan writes the initial copy from Jillian's bullet points; 2–3 sentences max.
+							</div>
+							<div class="annotation">
+								This is the "what Hancock offers" page. Sets the tone for everything below — lake, campground, kayaks, amenities. Copy is CMS-managed in Sanity. Hero photo gets swapped out seasonally if Jillian wants.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Fish Lake Section -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Fish Lake</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="img-placeholder" style="height: 140px; margin-bottom: 12px">
+								<div class="img-icon">🐟</div>
+								<div class="img-label">Photo of Fish Lake — landscape, dock, or shoreline</div>
+							</div>
+							<div class="wf-body-text">
+								Fish Lake sits on park grounds and is the centerpiece of Hancock Park. Section covers the lake itself, what you can do on it, and what's swimming in it.
+							</div>
+
+							<div style="margin-top: 14px;">
+								<div class="wf-heading-sm" style="font-size: 13px; margin-bottom: 6px;">Activities</div>
+								<ul class="placeholder-list">
+									<li>Swimming</li>
+									<li>Fishing</li>
+									<li>Boating</li>
+									<li>Tubing</li>
+									<li>Water skiing</li>
+								</ul>
+							</div>
+
+							<div style="margin-top: 14px;">
+								<div class="wf-heading-sm" style="font-size: 13px; margin-bottom: 6px;">Common Fish Species</div>
+								<ul class="placeholder-list">
+									<li>Crappie</li>
+									<li>Northern Pike</li>
+									<li>Bluegill</li>
+									<li>Walleye</li>
+								</ul>
+							</div>
+
+							<div class="annotation">
+								Fish Lake is the page's centerpiece — every other Hancock Park section circles back to it. Linked from the About page's Lakes section ("Fish Lake is part of Hancock Park →"). Activities and fish species lists are CMS-managed so the clerk can add or adjust (e.g. add bass if relevant). Designer decides whether to present these as inline lists, badge pills, or a small icon grid.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Campground Rentals -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Campground Rentals</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="img-placeholder" style="height: 130px; margin-bottom: 12px">
+								<div class="img-icon">⛺</div>
+								<div class="img-label">Campground photo — sites, fire pits, lake view</div>
+							</div>
+							<div class="wf-body-text">
+								Short overview paragraph about the campground — rustic camping on Fish Lake, what to expect, who it suits (families, weekenders, anglers).
+							</div>
+
+							<div style="margin-top: 14px;">
+								<div class="wf-heading-sm" style="font-size: 13px; margin-bottom: 6px;">Sites &amp; Amenities</div>
+								<ul class="placeholder-list">
+									<li>Approximately 30 sites <span class="tbd-tag">confirm count</span></li>
+									<li>Grass back-in sites</li>
+									<li>Water hookups</li>
+									<li>Electric hookups &mdash; 20-amp</li>
+									<li>Tent camping allowed</li>
+									<li>Pit toilets <span class="tbd-tag">confirm only restroom facility</span></li>
+									<li>Pets welcome</li>
+								</ul>
+							</div>
+
+							<div style="margin-top: 14px;">
+								<div class="wf-heading-sm" style="font-size: 13px; margin-bottom: 6px;">Rates &amp; Season</div>
+								<div class="info-row">
+									<span class="info-row-label">Nightly rate</span>
+									<span class="info-row-value">$XX / night <span class="tbd-tag">TBD — older listings showed $7–$10, likely outdated</span></span>
+								</div>
+								<div class="info-row">
+									<span class="info-row-label">Weekly rate</span>
+									<span class="info-row-value">$XX / week <span class="tbd-tag">TBD</span></span>
+								</div>
+								<div class="info-row">
+									<span class="info-row-label">Season</span>
+									<span class="info-row-value">[Open / close dates] <span class="tbd-tag">TBD</span></span>
+								</div>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision — Reservation Process</div>
+								<div class="wf-body-text" style="margin-bottom: 6px">
+									How do campers reserve a site? Sources are conflicting — one listing shows the village phone number (715-249-5521) as the reservation line, another lists "no reservations" (first-come/first-served).
+								</div>
+								<ul class="placeholder-list">
+									<li><strong>Option A &mdash; Call-in reservations.</strong> Section shows: "Call (715) 249-5521 to reserve." Click-to-call on mobile.</li>
+									<li><strong>Option B &mdash; First-come/first-served.</strong> Section shows: "No reservations — sites available on a first-come, first-served basis." Includes overflow guidance if relevant.</li>
+									<li><strong>Option C &mdash; Hybrid.</strong> Some sites reservable by phone, others walk-up. Section explains the split clearly.</li>
+								</ul>
+								<div class="annotation" style="margin-top: 10px; background: transparent; border-left-color: var(--red); padding-left: 12px">
+									Needs confirmation from Jillian or the board. Whatever the answer, the section uses click-to-call on mobile for any phone number listed — matching the original build's pattern.
+								</div>
+							</div>
+
+							<div class="annotation">
+								All rates, season dates, site count, and amenity details are placeholders until Jillian confirms current info. Once content is in, everything is CMS-managed so the clerk can update rates or seasonal hours without calling Jordan.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Kayak Rental Kiosk -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Kayak Rental Kiosk</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="img-placeholder" style="height: 130px; margin-bottom: 12px">
+								<div class="img-icon">🛶</div>
+								<div class="img-label">Photo of the kayak kiosk on-site at the park</div>
+							</div>
+							<div class="wf-body-text">
+								Section explains the self-serve kayak kiosk &mdash; recently board-approved, operated in partnership with Hancock Park Restoration Inc (HPR Inc).
+							</div>
+							<ul class="placeholder-list">
+								<li>How it works &mdash; self-serve kiosk, payment process, key/lock release <span class="tbd-tag">content TBD</span></li>
+								<li>Hours &mdash; [seasonal hours / daily window] <span class="tbd-tag">TBD</span></li>
+								<li>Rental fees &mdash; per hour / per day <span class="tbd-tag">TBD</span></li>
+								<li>Deposit / hold &mdash; [if applicable] <span class="tbd-tag">TBD</span></li>
+								<li>Seasonal availability &mdash; opens [month], closes [month] <span class="tbd-tag">TBD</span></li>
+								<li>Number of kayaks / capacity <span class="tbd-tag">TBD</span></li>
+							</ul>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision — HPR Inc Credit / Link</div>
+								<div class="wf-body-text" style="margin-bottom: 6px">
+									The kiosk is operated through <strong>Hancock Park Restoration Inc (HPR Inc)</strong>, the nonprofit that funded and runs it. Should HPR Inc be credited or linked from this section?
+								</div>
+								<ul class="placeholder-list" style="margin-top: 8px">
+									<li><strong>Option A &mdash; Credit only.</strong> Plain-text mention: "Operated in partnership with Hancock Park Restoration Inc." No outbound link.</li>
+									<li><strong>Option B &mdash; Credit + link.</strong> Same mention but linked to HPR Inc's website or Facebook page (if they have one).</li>
+									<li><strong>Option C &mdash; No mention.</strong> The kiosk is presented as a village amenity without crediting HPR Inc on the site.</li>
+								</ul>
+								<div class="annotation" style="margin-top: 10px; background: transparent; border-left-color: var(--red); padding-left: 12px">
+									Board to weigh in. Jordan's lean: Option B if HPR Inc has a working web presence to link to, otherwise Option A. Avoiding outbound links to dead or stale pages.
+								</div>
+							</div>
+
+							<div class="annotation">
+								The kiosk is the newest amenity on the page and worth highlighting visually — designer should make this section feel current. All content CMS-managed so seasonal hours and fees can be updated without dev help.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Swimming Beach -->
+						<div class="wf-block new-block info-first">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Swimming Beach</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="info-first-tag">Info-first</span>
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								Sandy swimming beach on Fish Lake. Section covers where it is in the park, what to expect, and any relevant guidance for families and swimmers.
+							</div>
+							<ul class="placeholder-list">
+								<li>Location within the park <span class="tbd-tag">TBD</span></li>
+								<li>Lifeguard on duty? <span class="tbd-tag">confirm</span></li>
+								<li>Seasonal hours <span class="tbd-tag">TBD</span></li>
+								<li>Swim-at-your-own-risk language if no lifeguard</li>
+								<li>Pet / glass / cooler rules, if any</li>
+							</ul>
+
+							<div style="margin-top: 14px;">
+								<span class="optional-tag">Optional image</span>
+								<div class="img-placeholder optional">
+									<div class="img-icon">🏖️</div>
+									<div class="img-label">Optional — only if a good landscape photo of the beach is available</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Information-first block — reads complete on its own without a hero photo. Sandy beach is a real differentiator for the park, but the section doesn't depend on imagery to communicate that. If Jillian later sends a strong landscape shot, it slots into the optional placeholder above without restructuring.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Boat Ramp & Water Access -->
+						<div class="wf-block new-block info-first">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Boat Ramp &amp; Water Access</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="info-first-tag">Info-first</span>
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								Water access point on Fish Lake for boating, fishing, and launching kayaks or canoes. Section covers location within the park, restrictions, and practical info for anyone planning to launch.
+							</div>
+							<ul class="placeholder-list">
+								<li>Ramp location within the park <span class="tbd-tag">TBD</span></li>
+								<li>Boat / motor restrictions <span class="tbd-tag">confirm</span></li>
+								<li>Parking for trailers <span class="tbd-tag">confirm</span></li>
+								<li>Launch fees, if any <span class="tbd-tag">TBD</span></li>
+								<li>Hours of access <span class="tbd-tag">TBD</span></li>
+							</ul>
+
+							<div style="margin-top: 14px;">
+								<span class="optional-tag">Optional image</span>
+								<div class="img-placeholder optional">
+									<div class="img-icon">⛵</div>
+									<div class="img-label">Optional — only if a good landscape photo of the ramp or shoreline access is available</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Information-first block. Anglers and boaters look for this info before they show up, and the practical details matter more than a photo. The kayak kiosk section above references this ramp as where rentals launch from — designer can cross-link the two if it makes sense.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Nature Trails -->
+						<div class="wf-block new-block info-first">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Nature Trails</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="info-first-tag">Info-first</span>
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								Walking and recreation trails on park grounds. Section covers what's there, where to start, and what to expect on the trails.
+							</div>
+							<ul class="placeholder-list">
+								<li>Number of trails / total mileage <span class="tbd-tag">TBD</span></li>
+								<li>Difficulty / accessibility <span class="tbd-tag">TBD</span></li>
+								<li>Trailheads / where to start</li>
+								<li>Pets on trails? (already stated welcome at campground — confirm trail-wide)</li>
+								<li>Seasonal notes &mdash; winter use, snowshoeing, etc. <span class="tbd-tag">TBD</span></li>
+							</ul>
+
+							<div style="margin-top: 14px;">
+								<span class="optional-tag">Optional image</span>
+								<div class="img-placeholder optional">
+									<div class="img-icon">🥾</div>
+									<div class="img-label">Optional — only if a good landscape photo of a trail is available</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Information-first block. Useful for both residents and visitors. A trail map (PDF or image) could be added later if Jillian has one — the section is built to handle that addition without a redesign.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Playground & Outdoor Games -->
+						<div class="wf-block new-block info-first">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Playground &amp; Outdoor Games</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="info-first-tag">Info-first</span>
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								Playground equipment plus outdoor game areas for families and groups visiting the park.
+							</div>
+							<ul class="placeholder-list">
+								<li>Playground equipment overview &mdash; age range, what's there <span class="tbd-tag">TBD</span></li>
+								<li>Outdoor games &mdash; horseshoes, volleyball, basketball, etc. <span class="tbd-tag">confirm what's available</span></li>
+								<li>Picnic / shelter access nearby <span class="tbd-tag">confirm</span></li>
+								<li>Open hours / availability</li>
+							</ul>
+
+							<div style="margin-top: 14px;">
+								<span class="optional-tag">Optional image</span>
+								<div class="img-placeholder optional">
+									<div class="img-icon">🛝</div>
+									<div class="img-label">Optional — only if a good landscape photo of the playground or game area is available</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Information-first block. Family draw — pairs well with the beach and campground sections. Final equipment list and game offerings come from Jillian.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══════════════════════════════════════════════ -->
+			<!-- ── NEW PAGE: NEWS & EVENTS ── -->
+			<!-- ═══════════════════════════════════════════════ -->
+			<section class="wf-section" id="news-events">
+				<div class="section-label">
+					<span class="section-num new">2</span> News &amp; Events &mdash; /news-events <span class="section-tag new">New Page</span>
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>About</span>
+							<span class="new">Hancock Park</span>
+							<span class="active new">News & Events</span>
+							<span>Contact</span>
+							<span>Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+
+						<!-- DECISION: Page Name -->
+						<div class="decision-box">
+							<div class="decision-label">Decision — Page Name</div>
+							<div class="wf-body-text" style="margin-bottom: 6px">
+								What does the board want to call this page in the nav and as the page title?
+							</div>
+							<ul class="placeholder-list">
+								<li><strong>Option A &mdash; "News &amp; Events"</strong> — clearer to a first-time visitor, more conventional municipal language.</li>
+								<li><strong>Option B &mdash; "Village Bulletin"</strong> — warmer, more small-town. Doesn't immediately signal "events" though.</li>
+							</ul>
+							<div class="annotation" style="margin-top: 10px; background: transparent; border-left-color: var(--red); padding-left: 12px">
+								Jordan's lean: "News &amp; Events" for clarity. "Bulletin" works if the board wants a more local feel. URL slug can stay <code>/news-events</code> either way, or change to <code>/bulletin</code> if Option B is chosen.
+							</div>
+						</div>
+
+						<!-- Page Hero -->
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">News &amp; Events</div>
+							<div class="wf-subtext">
+								Announcements, upcoming meetings, and community happenings.
+							</div>
+						</div>
+
+						<!-- Page Intro -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Page Intro</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								Brief intro paragraph explaining what residents will find here — village announcements, upcoming events, community news, and notices. 1–2 sentences.
+							</div>
+							<div class="annotation">
+								Sets the page up. Editable in Sanity. Stays short — the feed is the main attraction.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- DECISION: Feed Structure -->
+						<div class="decision-box">
+							<div class="decision-label">Decision — Feed Structure</div>
+							<div class="wf-body-text" style="margin-bottom: 6px">
+								How should the feed be organized?
+							</div>
+							<ul class="placeholder-list">
+								<li><strong>Option A &mdash; Combined chronological feed.</strong> One stream, newest first. News and events mixed together, each post tagged with a small label so residents can tell what they're looking at.</li>
+								<li><strong>Option B &mdash; Filterable by type.</strong> Same combined feed, but with filter pills at the top: "All / News / Events" so residents can narrow down.</li>
+							</ul>
+							<div class="annotation" style="margin-top: 10px; background: transparent; border-left-color: var(--red); padding-left: 12px">
+								Jordan's lean: Option B. Filter is cheap to build, doesn't clutter the page when defaulted to "All", and helps residents who only want events. Shown below as the active wireframe pattern.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Combined Feed -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Combined Feed</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+
+							<div class="filter-row">
+								<span class="filter-label">Show:</span>
+								<span class="filter-pill active">All</span>
+								<span class="filter-pill">News</span>
+								<span class="filter-pill">Events</span>
+							</div>
+
+							<div class="post-list">
+								<div class="post-row">
+									<div class="post-row-header">
+										<span class="post-title">Spring Cleanup Day — Volunteers Needed</span>
+										<span class="post-type-badge event">Event</span>
+									</div>
+									<div class="post-meta">Posted Apr 12, 2026 · Event: Sat, May 16, 9am–noon · Hancock Park</div>
+									<div class="post-excerpt">
+										Join your neighbors for our annual spring cleanup at Hancock Park. Bring gloves, work boots, and a willingness to pitch in. Coffee and donuts provided by the village board.
+									</div>
+									<a class="post-attachment">📎 spring-cleanup-flyer.pdf</a>
+								</div>
+
+								<div class="post-row">
+									<div class="post-row-header">
+										<span class="post-title">Water Main Repair — North St. Closed Tuesday</span>
+										<span class="post-type-badge news">News</span>
+									</div>
+									<div class="post-meta">Posted Apr 4, 2026</div>
+									<div class="post-excerpt">
+										Crews will be repairing a water main on N. Main between 1st and 3rd on Tuesday, April 8. Plan alternate routes. Service may be briefly interrupted for residents on the affected block — boil notice not anticipated.
+									</div>
+								</div>
+
+								<div class="post-row">
+									<div class="post-row-header">
+										<span class="post-title">Memorial Day Ceremony</span>
+										<span class="post-type-badge event">Event</span>
+									</div>
+									<div class="post-meta">Posted Mar 28, 2026 · Event: Mon, May 26, 10am · Village Hall</div>
+									<div class="post-excerpt">
+										Annual Memorial Day ceremony honoring Hancock veterans. Brief remarks, flag raising, and refreshments to follow.
+									</div>
+								</div>
+
+								<div class="post-row" style="opacity: 0.6">
+									<div class="post-row-header">
+										<span class="post-title">Kayak Kiosk Now Open at Hancock Park</span>
+										<span class="post-type-badge news">News</span>
+									</div>
+									<div class="post-meta">Posted Mar 15, 2026</div>
+									<div class="post-excerpt">
+										The new self-serve kayak rental kiosk is open at Hancock Park. Visit the Hancock Park page for hours and rental info.
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Each post entry shows: title, type badge (News or Event), posted date, optional event date/time + location for events, body text, and optional PDF attachment. Filter pills are client-side — clicking "Events" hides news, no page reload. Posts default to chronological (newest first) regardless of filter. Sample posts shown are illustrative — actual posts come from the clerk.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Archive view -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Archive — Worth Adding?</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">Open question</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								Is an archive even needed here? A simple chronological feed (newest first, scroll down for older) might be enough — especially in year one, when post volume is low. If posts pile up over time and the feed gets unwieldy, a year-by-year archive can be added later as a small add-on.
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision — Archive Approach</div>
+								<ul class="placeholder-list">
+									<li><strong>Option A &mdash; Chronological only, no archive.</strong> Simplest. Newest posts at top, older posts below. Fine for low post volume. Build it now; add an archive later if it ever feels needed.</li>
+									<li><strong>Option B &mdash; Chronological + "load more" or pagination.</strong> Show 10–15 posts by default, button to reveal older. Lightweight middle ground.</li>
+									<li><strong>Option C &mdash; Chronological + year filter from day one.</strong> Year buttons appear above the feed (2026, 2025, etc.) as posts accumulate.</li>
+								</ul>
+								<div class="annotation" style="margin-top: 10px; background: transparent; border-left-color: var(--red); padding-left: 12px">
+									Jordan's lean: Option A. Hancock isn't publishing dozens of posts a month — a chronological feed will be readable for years. Easier to add an archive later than to over-engineer up front.
+								</div>
+							</div>
+
+							<div class="annotation">
+								The example below shows what a year filter would look like if Option C is chosen — illustrative only, not committed to.
+							</div>
+							<div class="filter-row" style="opacity: 0.55; margin-top: 8px">
+								<span class="filter-label">Archive (if added):</span>
+								<span class="filter-pill active">2026</span>
+								<span class="filter-pill">2025</span>
+								<span class="filter-pill">2024</span>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- CMS Form Preview -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">CMS Form for the Clerk (Sanity)</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New</span>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								This is what the clerk sees in Sanity when adding a new post. Simple, no surprises.
+							</div>
+							<div class="cms-form-preview">
+								<div class="cms-form-label">New Post · Sanity Form</div>
+								<div class="cms-field"><span class="cms-field-name">Title *</span><span class="cms-field-type">short text</span></div>
+								<div class="cms-field"><span class="cms-field-name">Date Posted *</span><span class="cms-field-type">auto-filled, editable</span></div>
+								<div class="cms-field"><span class="cms-field-name">Type *</span><span class="cms-field-type">News or Event (dropdown)</span></div>
+								<div class="cms-field"><span class="cms-field-name">Body *</span><span class="cms-field-type">rich text (formatting, links)</span></div>
+								<div class="cms-field"><span class="cms-field-name">Attachment</span><span class="cms-field-type">optional PDF upload</span></div>
+								<div class="cms-field"><span class="cms-field-name">Event Date</span><span class="cms-field-type">optional, only shows if Type = Event</span></div>
+								<div class="cms-field"><span class="cms-field-name">Event Location</span><span class="cms-field-type">optional, only shows if Type = Event</span></div>
+							</div>
+							<div class="annotation">
+								Form behaves conditionally — Event Date and Event Location only appear if the clerk picks Event from the Type dropdown. Keeps the news posts simple and event posts complete. Same Sanity setup as the original build — the clerk's already learning that interface, no new tools to onboard.
+							</div>
+						</div>
+
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══════════════════════════════════════════════ -->
+			<!-- ── MODIFIED: HOME PAGE ADDITIONS ── -->
+			<!-- ═══════════════════════════════════════════════ -->
+			<section class="wf-section" id="home-additions">
+				<div class="section-label">
+					<span class="section-num mod">3</span> Home Page &mdash; Additions Only <span class="section-tag mod">Modified</span>
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Village of Hancock</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>About</span>
+							<span class="new">Hancock Park</span>
+							<span class="new">News & Events</span>
+							<span>Contact</span>
+							<span>Agendas & Minutes</span>
+							<span>Ordinances</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="partial-banner">
+							<strong>⚠ Partial wireframe.</strong> This shows <strong>only the two new blocks</strong> being added to the home page in Scope 2. All other home page content (hero, quick links, village snapshot, footer) remains exactly as specified in the original wireframe — <code style="font-family: inherit; background: rgba(74, 93, 61, 0.1); padding: 1px 5px; border-radius: 3px;">wireframe.html → Section 1: Home</code>.
+						</div>
+
+						<!-- Hancock Park Intro Block -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hancock Park Intro Block</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New in Scope 2</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: 4px;">
+								<div class="img-placeholder" style="height: 130px; flex: 1; min-width: 180px;">
+									<div class="img-icon">🌳</div>
+									<div class="img-label">Hancock Park photo<br />Fish Lake or campground</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">Hancock Park</div>
+									<div class="wf-body-text">
+										Short 1–2 sentence teaser about the park — Fish Lake, campsites, kayak kiosk, beach. Pulls residents and visitors into the full Hancock Park page.
+									</div>
+									<span style="font-family: 'Roboto', sans-serif; font-size: 13px; color: var(--navy); font-weight: 600;">Visit Hancock Park →</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Photo + short blurb + link to the full Hancock Park page. Teaser copy is CMS-editable so Jillian can swap seasonal messaging as conditions change throughout the year.
+							</div>
+						</div>
+
+						<!-- News & Events Preview Block -->
+						<div class="wf-block new-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">News &amp; Events Preview Block</div>
+								<div style="display: flex; gap: 6px; align-items: center;">
+									<span class="new-pill">New in Scope 2</span>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+							</div>
+							<div class="wf-heading-md" style="margin-top: 4px">Latest from the Village</div>
+							<div class="wf-body-text">
+								Shows the 2–3 most recent posts from News &amp; Events with a link to the full page. Pulls automatically — the clerk doesn't have to update the home page when she adds a new post.
+							</div>
+							<div class="post-list" style="margin-top: 10px">
+								<div class="post-row">
+									<div class="post-row-header">
+										<span class="post-title">Spring Cleanup Day — Volunteers Needed</span>
+										<span class="post-type-badge event">Event</span>
+									</div>
+									<div class="post-meta">Apr 12, 2026 · Event: Sat, May 16</div>
+								</div>
+								<div class="post-row">
+									<div class="post-row-header">
+										<span class="post-title">Water Main Repair — North St. Closed Tuesday</span>
+										<span class="post-type-badge news">News</span>
+									</div>
+									<div class="post-meta">Apr 4, 2026</div>
+								</div>
+								<div class="post-row">
+									<div class="post-row-header">
+										<span class="post-title">Memorial Day Ceremony</span>
+										<span class="post-type-badge event">Event</span>
+									</div>
+									<div class="post-meta">Mar 28, 2026 · Event: Mon, May 26</div>
+								</div>
+							</div>
+							<div style="margin-top: 12px">
+								<span style="font-family: 'Roboto', sans-serif; font-size: 13px; color: var(--navy); font-weight: 600;">See all news &amp; events →</span>
+							</div>
+							<div class="annotation">
+								Preview is dynamic — pulls the latest 2–3 posts from the News &amp; Events page. Title, type badge, and date only — no body excerpt to keep the home page from getting long. Number of preview posts (2 or 3) is a small designer call based on layout balance.
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px; background: rgba(74, 93, 61, 0.06); border-left-color: var(--green);">
+							✏️ <strong>Reminder:</strong> Hero, Quick Links, Village Snapshot, and footer are unchanged from the original wireframe. Only the two blocks above are new. Designer to integrate them into the existing home page layout — exact placement order is a designer call.
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Village of Hancock, Wisconsin</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="annotation" style="margin-top: 0; margin-bottom: 18px; background: rgba(114, 15, 17, 0.04); border-left-color: var(--red);">
+							⚑ Items below are confirmed <em>pending board approval of Scope 2</em>. Once the board signs off on the addendum, these become locked decisions for the build.
+						</div>
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Hancock Park Gets Its Own Page</strong> — Dedicated /hancock-park route covering Fish Lake, campground rentals, kayak kiosk, swimming beach, boat ramp, nature trails, and playground / outdoor games. Confirmed pending Scope 2 board approval.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>News &amp; Events Is One Combined Page</strong> — Not split into two separate "News" and "Events" pages. One feed, posts tagged by type. Confirmed pending Scope 2 board approval.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>All New Content Is CMS-Managed</strong> — Matches the original build's approach. Clerk manages park amenities, campground info, kayak kiosk details, and all news/event posts via Sanity. No need to call Jordan for routine updates.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Home Page Gets Two New Preview Blocks</strong> — Hancock Park intro + News &amp; Events preview, integrated into the existing home page layout. Other home page content stays as originally specified.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Whistler Lake Removed From About Page</strong> — Already in progress as part of the in-scope edits. Pine Lake and Fish Lake remain; Fish Lake now links to the new Hancock Park page.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Office Hours Updated</strong> — Monday &amp; Thursday, 9am–noon. Reflected everywhere office hours appear on the site. Already in progress as part of the in-scope edits.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Same Design System</strong> — Scope 2 uses the same colors, fonts, components, and CMS approach as the original 5-page build. No re-design, no new visual direction.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>News/Events Page Name</strong> — "News &amp; Events" (clearer) vs "Village Bulletin" (warmer, more local). Board to choose. Jordan's lean: News &amp; Events.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>News &amp; Events Feed Structure</strong> — Combined chronological feed (Option A) or filterable by News/Events (Option B). Jordan's lean: Option B with filter pills.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Archive Approach for News &amp; Events</strong> — Chronological only (Jordan's lean), "load more" pagination, or year-by-year filter from day one. Easier to add an archive later than over-engineer up front.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Pin / Feature a Post on Home Page</strong> — Should the clerk be able to pin a specific post to the top of the home page preview block, or always show the most recent? Affects CMS schema. Jordan's lean: ability to pin one post, otherwise default to most recent.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Event-Specific Fields in CMS Form</strong> — For posts tagged as "Event," should the form include separate event date/time fields (distinct from the post's publish date)? Affects how events render and sort. Likely yes — event date is what residents care about, not when the post was written.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>HPR Inc Credit / Link on Kayak Kiosk Section</strong> — Credit only, credit + link, or no mention? Depends on whether HPR Inc has a working web presence to link to. Board to weigh in.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Campground Reservation Process</strong> — Call-in to (715) 249-5521, first-come/first-served, or a hybrid? Sources conflict — one listing shows the phone number, another says no reservations. Needs confirmation from Jillian or the board.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Confirm Current Campground Rates</strong> — Older online listings showed $7–$10/night, likely outdated. Need current nightly and weekly rates from Jillian.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Confirm Number of Campsites</strong> — Currently listed as approximately 30. Confirm exact count with Jillian.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Restroom Facilities</strong> — Are pit toilets the only restroom facility, or are there showers / additional facilities worth listing? Affects both the campground block and (potentially) the beach and playground blocks.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Hours &amp; Seasonality Per Amenity</strong> — Campground season, kayak kiosk hours, beach hours, boat ramp access hours, playground access. Each amenity block has placeholders waiting on this info.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Fish Lake Boat/Motor Restrictions</strong> — Are there motor size limits or other boating restrictions? Affects the Boat Ramp block and Fish Lake section.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Photography Expectations</strong> — A few strong <em>anchor photos</em> carry the page: park overview, Fish Lake, campsites, and the kayak kiosk. The other amenity sections (beach, boat ramp, trails, playground) work as information-only blocks. The village can add more imagery over time as good landscape photos become available — page won't look incomplete if a few sections never get a photo.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
