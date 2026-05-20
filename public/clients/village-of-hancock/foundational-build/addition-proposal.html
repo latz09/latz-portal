@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Scope 2 Addendum — Village of Hancock | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { height: auto !important; overflow: visible !important; }
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+    body { background: white; margin: 0; }
+    .page-wrap { margin-left: 0 !important; height: auto !important; overflow: visible !important; }
+    .cover { min-height: 0 !important; height: auto !important; padding: 56px 48px !important; page-break-after: always; }
+    .main { padding: 32px 48px 48px !important; }
+    section { page-break-inside: avoid; margin-bottom: 40px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+    a { color: inherit !important; text-decoration: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 22px 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+  .sidebar-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 3px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 16px 8px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 8px 10px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12.5px; font-weight: 400; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 10px 14px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 18px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── STICKY CTA (unused but reserved) ── */
+  a.sticky-cta { display: none; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 220px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 72px 48px 60px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .cover-overline::before { content: ''; width: 32px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .cover-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 14px 24px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 56px 64px 80px; }
+  section { margin-bottom: 60px; scroll-margin-top: 24px; }
+
+  /* ── ADDENDUM BANNER ── */
+  .addendum-banner {
+    background: var(--teal-dim);
+    border: 1px solid var(--teal-border);
+    border-left: 3px solid var(--teal);
+    border-radius: 7px;
+    padding: 16px 20px;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .addendum-banner .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .addendum-banner-body { font-size: 13px; color: var(--gray-700); line-height: 1.65; }
+  .addendum-banner-body strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 3px 9px; border-radius: 4px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 28px; margin-top: 12px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 24px; max-width: 700px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 18px; }
+  .opening-wrap p { font-size: 14.5px; color: var(--gray-700); line-height: 1.8; margin-bottom: 14px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+  .opening-wrap a { color: var(--teal); text-decoration: none; border-bottom: 1px solid var(--teal-border); }
+  .opening-wrap a:hover { border-bottom-color: var(--teal); }
+
+  /* ── PAGE CARDS ── */
+  .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .page-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 7px; padding: 16px 18px; position: relative; }
+  .page-card.new { border-top-color: var(--teal); }
+  .page-card-tag { position: absolute; top: 14px; right: 14px; font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); background: var(--gray-50); border: 1px solid var(--gray-100); padding: 2px 7px; border-radius: 3px; }
+  .page-card.new .page-card-tag { color: var(--teal); background: var(--teal-dim); border-color: var(--teal-border); }
+  .page-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; padding-right: 50px; }
+  .page-card-slug { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--gray-400); letter-spacing: 0.06em; margin-bottom: 10px; display: block; }
+  .page-card ul { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 10px; }
+  .page-card ul li { font-size: 12px; color: var(--gray-600); padding: 2.5px 0 2.5px 14px; position: relative; line-height: 1.45; }
+  .page-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 10px; }
+
+  /* ── INLINE NOTE (replaces always-included grid) ── */
+  .inline-note { background: var(--white); border: 1px solid var(--gray-100); border-left: 3px solid var(--gray-300); border-radius: 6px; padding: 16px 20px; margin-top: 16px; }
+  .inline-note-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 6px; }
+  .inline-note p { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
+  .inline-note strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── ABOUT EDITS CALLOUT ── */
+  .about-edits { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 18px; margin-top: 12px; display: flex; align-items: flex-start; gap: 10px; }
+  .about-edits .icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .about-edits p { font-size: 12.5px; color: var(--gray-600); line-height: 1.65; }
+  .about-edits strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 8px; padding: 28px 32px; margin-bottom: 16px; border-left: 3px solid var(--teal); }
+  .highlight-box .hb-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .highlight-box h4 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .highlight-box p { font-size: 14px; color: var(--gray-700); line-height: 1.8; margin-bottom: 0; font-weight: 400; }
+  .highlight-box p:not(:last-child) { margin-bottom: 12px; }
+  .highlight-box strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── INVESTMENT ── */
+  .invest-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .invest-card { border: 1px solid var(--gray-100); border-radius: 8px; padding: 24px 22px; background: var(--white); position: relative; display: flex; flex-direction: column; }
+  .invest-card.featured { border-color: var(--gray-300); border-width: 1.5px; }
+  .featured-pill { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--teal); color: var(--white); font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 12px; border-radius: 4px; white-space: nowrap; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; line-height: 1.25; }
+  .invest-card-desc { font-size: 12.5px; color: var(--gray-500); line-height: 1.55; margin-bottom: 20px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 11px; color: var(--gray-400); margin-bottom: 18px; }
+  .invest-price-savings { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); margin-bottom: 18px; letter-spacing: 0.04em; }
+  .invest-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 14px; margin-top: auto; }
+  .invest-list li { font-size: 12px; color: var(--gray-600); padding: 3.5px 0 3.5px 16px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 10px; top: 4px; }
+  .invest-summary { background: var(--gray-900); border-radius: 8px; padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-amount .sep { color: rgba(255,255,255,0.2); font-size: 20px; padding: 0 4px; }
+  .invest-summary-schedule { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 6px; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 7px; padding: 12px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .invest-summary .cta-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12); }
+  .invest-summary .cta-btn:hover { background: rgba(255,255,255,0.13); }
+  .addition-note { background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 6px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 10px; }
+  .addition-note .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .addition-note p { font-size: 12.5px; color: var(--gray-700); line-height: 1.65; }
+  .addition-note strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding-bottom: 28px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 40px; height: 40px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 8px; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note { margin-top: 24px; padding: 14px 18px; background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; font-size: 12.5px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note strong { color: var(--gray-700); }
+
+  /* ── CLOSING ── */
+  .closing-wrap { max-width: 640px; margin: 0 auto; padding: 8px 0 0; text-align: center; }
+  .closing-line { font-size: 15px; color: var(--gray-700); line-height: 1.8; margin-bottom: 16px; }
+  .closing-line:last-of-type { margin-bottom: 28px; }
+  .closing-signoff { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 14px; }
+  .closing-contact { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--gray-500); }
+  .closing-contact a { color: var(--teal); text-decoration: none; }
+  .closing-contact a:hover { text-decoration: underline; }
+  .closing-sep { padding: 0 8px; color: var(--gray-300); }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 52px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2px; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-220px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 36px 20px 80px; }
+    .doc-footer { padding-left: 20px; padding-right: 20px; }
+    .cover-client { font-size: 36px; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    .invest-summary .cta-btn { justify-content: center; width: 100%; }
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .page-grid { grid-template-columns: 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .main { padding: 36px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Village of Hancock</div>
+    <div class="sidebar-doctype">Scope 2 Addendum</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#scope" class="nav-link"><span class="num">02</span> What's Being Added</a>
+    <a href="#why" class="nav-link"><span class="num">03</span> Why This Matters</a>
+    <a href="#investment" class="nav-link"><span class="num">04</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">05</span> How It Works</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="https://www.latzwebdevelopment.com/view/village-of-hancock/foundational-build/wireframe-scope-2.html" target="_blank" rel="noopener" class="sidebar-cta-btn">View Wireframe →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Scope 2 Addendum</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">Village of<br>Hancock</div>
+      <div class="cover-sub">Scope 2 — Hancock Park &amp; News &amp; Events &nbsp;·&nbsp; Mid-Build Addition to Foundation + Documents Package</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Jillian Steele</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Type</span>
+          <span class="cover-meta-value">Addendum · Not a new build</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Scope 2 Options</span>
+          <span class="cover-meta-value">$350 – $750</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="addendum-banner">
+      <span class="icon">⚑</span>
+      <div class="addendum-banner-body">
+        <strong>This is an addition to the existing build — not a replacement.</strong> The original 5-page Foundation + Documents package ($4,200) is on track and continues as approved. Scope 2 layers two new pages and a home page update on top of that work. Pricing and timeline below are for the addition only.
+      </div>
+    </div>
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Jillian,</div>
+        <p>The original 5-page build is on track. Foundation is in, the document systems for agendas, minutes, and ordinances are coming together, and the design direction is locked. Nothing in this document changes any of that.</p>
+        <p>The reason I'm sending a Scope 2 proposal is your last round of edits. Pulling Whistler Mounds, swapping Fish Lake over to point at Hancock Park, the office hours update, the campground and kayak kiosk questions — <strong>none of that was busywork. Those were the right edits, and they pointed at something the original scope didn't have room for.</strong></p>
+        <p>The more I dug in, the clearer it got: Hancock Park is genuinely one of the village's biggest assets, and it's currently a paragraph buried halfway down the About page. The kayak kiosk the board just approved exists specifically to generate revenue — and right now there is nowhere online for anyone to actually learn it exists. Same story with the campground, the beach, and Fish Lake itself.</p>
+        <p>And separately, you've mentioned the clerk needing a way to get information out to residents. Road closures, meeting changes, community events. <strong>Right now there's no answer to that.</strong> The original scope kept things tight on purpose to hit budget, but a real announcement tool would change how the clerk operates.</p>
+        <p>So here's what this is: a clean addendum laying out two new pages — <strong>Hancock Park</strong> and <strong>News &amp; Events</strong> — plus a small refresh to the home page so both are visible from the front door. Wireframes are already done and live: <a href="https://www.latzwebdevelopment.com/view/village-of-hancock/foundational-build/wireframe-scope-2.html" target="_blank" rel="noopener">view the Scope 2 wireframe →</a></p>
+        <p>You can pick one, both, or neither. The build keeps going either way. Take this to the board and let me know what they want to do.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="scope">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">What's Being Added</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="page-grid">
+        <div class="page-card new">
+          <span class="page-card-tag">New Page</span>
+          <div class="page-card-title">Hancock Park</div>
+          <span class="page-card-slug">/hancock-park</span>
+          <ul>
+            <li>Park overview &amp; hero intro</li>
+            <li>Fish Lake — activities &amp; common fish species</li>
+            <li>Campground rentals — sites, amenities, rates</li>
+            <li>Kayak rental kiosk (HPR Inc partnership)</li>
+            <li>Swimming beach</li>
+            <li>Boat ramp &amp; water access</li>
+            <li>Nature trails</li>
+            <li>Playground &amp; outdoor games</li>
+            <li>CMS-managed throughout — clerk can update</li>
+          </ul>
+        </div>
+        <div class="page-card new">
+          <span class="page-card-tag">New Page</span>
+          <div class="page-card-title">News &amp; Events</div>
+          <span class="page-card-slug">/news-events</span>
+          <ul>
+            <li>Combined feed — announcements + events together</li>
+            <li>Simple CMS form built for the clerk</li>
+            <li>Optional PDF attachments per post</li>
+            <li>Home page preview block with latest items</li>
+            <li>Archive-ready structure for older posts</li>
+            <li>Designed so any new board member can run it</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <span class="page-card-tag">Modified</span>
+          <div class="page-card-title">Home Page Updates</div>
+          <span class="page-card-slug">/</span>
+          <ul>
+            <li>Hancock Park intro block with link to full page</li>
+            <li>News &amp; Events preview — latest items, auto-updates</li>
+            <li>Existing home page content stays unchanged</li>
+            <li>Slots in cleanly with current design — no rebuild</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="about-edits">
+        <span class="icon">✓</span>
+        <p><strong>About page edits handled in-scope, no additional cost.</strong> Whistler Mounds removed, Fish Lake updated to link to the new Hancock Park page, and office hours refreshed — all rolled into the existing build at no charge.</p>
+      </div>
+
+      <div class="inline-note">
+        <div class="inline-note-label">Same standards as the original build</div>
+        <p>Everything in Scope 2 follows the same playbook — <strong>mobile-first, ADA/WCAG accessible, CMS-managed in Sanity, owned by the village, no vendor lock-in</strong>. Same fonts, same design system, same CMS the clerk is already going to learn. No new standards, no new system, no second learning curve.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="why">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Why This Matters</span>
+      </div>
+      <div class="sec-rule"></div>
+
+      <div class="highlight-box">
+        <div class="hb-label">— News &amp; Events —</div>
+        <h4>The clerk finally gets a real way to reach residents.</h4>
+        <p>Right now, if there's a road closure, a meeting change, or a community event the village wants to promote, there's no central place to put it. Residents have to call the office or rely on word of mouth. <strong>That's the gap.</strong></p>
+        <p>A News &amp; Events page solves it with one tool. The clerk writes the update once, it appears on the page, and a preview lands on the home page automatically. Anyone with the link knows what's going on. No phone calls, no missed notices, no "I didn't hear about that" at the next board meeting.</p>
+      </div>
+
+      <div class="highlight-box">
+        <div class="hb-label">— Hancock Park —</div>
+        <h4>The kayak kiosk needs a home. So does the rest of the park.</h4>
+        <p>The board approved the kayak rental kiosk specifically to generate revenue. That only works if people can find it. A paragraph on the About page won't get indexed, won't get linked from Travel Wisconsin, and won't get shared on Facebook. <strong>A real Hancock Park page does all three.</strong></p>
+        <p>The kiosk, the campground, the beach, Fish Lake, the boat ramp — these are the actual reasons people drive to Hancock. Pulling them out of a buried paragraph and giving them a proper page means the village can point anywhere — flyers, Facebook, regional tourism sites — and have something to link to. And every section is CMS-managed, so seasonal rates, hours, and details get updated by the clerk in seconds, every spring.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+
+      <div class="invest-cards">
+
+        <div class="invest-card">
+          <div class="invest-card-name">Option A</div>
+          <div class="invest-card-title">Add News &amp; Events</div>
+          <div class="invest-card-desc">Dedicated News &amp; Events page plus the home page preview block. The clerk's communication tool.</div>
+          <div class="invest-price">$550</div>
+          <div class="invest-price-note">One-time addition</div>
+          <ul class="invest-list">
+            <li>Dedicated News &amp; Events page</li>
+            <li>Home page preview block</li>
+            <li>CMS form built for clerk-level use</li>
+            <li>Optional PDF attachments per post</li>
+            <li>Archive structure built in</li>
+          </ul>
+        </div>
+
+        <div class="invest-card">
+          <div class="invest-card-name">Option B</div>
+          <div class="invest-card-title">Add Hancock Park Page</div>
+          <div class="invest-card-desc">Full Hancock Park page with all 8 content blocks, plus a home page intro and About page link.</div>
+          <div class="invest-price">$350</div>
+          <div class="invest-price-note">One-time addition</div>
+          <ul class="invest-list">
+            <li>Hancock Park page — all 8 sections</li>
+            <li>Park, Fish Lake, campground, kiosk</li>
+            <li>Beach, boat ramp, trails, playground</li>
+            <li>Home page intro block</li>
+            <li>About page Fish Lake link</li>
+          </ul>
+        </div>
+
+        <div class="invest-card featured">
+          <div class="featured-pill">Best Value</div>
+          <div class="invest-card-name">Option C</div>
+          <div class="invest-card-title">Add Both</div>
+          <div class="invest-card-desc">Everything in Options A and B, bundled. The full Scope 2 build at the lowest combined cost.</div>
+          <div class="invest-price">$750</div>
+          <div class="invest-price-savings">Save $150 vs. separate</div>
+          <ul class="invest-list">
+            <li>Everything in Option A</li>
+            <li>Everything in Option B</li>
+            <li>Single coordinated launch</li>
+            <li>No second round of revisions</li>
+            <li>$900 separately — $750 together</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Scope 2 options</div>
+          <div class="invest-summary-amount">$550 <span class="sep">/</span> $350 <span class="sep">/</span> $750</div>
+          <div class="invest-summary-schedule">News &amp; Events &nbsp;·&nbsp; Hancock Park &nbsp;·&nbsp; Both (Best Value)</div>
+        </div>
+        <a href="https://www.latzwebdevelopment.com/view/village-of-hancock/foundational-build/wireframe-scope-2.html" target="_blank" rel="noopener" class="cta-btn no-print">View the Wireframe →</a>
+      </div>
+
+      <div class="addition-note">
+        <span class="icon">✓</span>
+        <p><strong>These prices are additions to the existing $4,200 build — not a replacement.</strong> The original Foundation + Documents project continues as approved either way. Payment logistics for whichever option the board selects will be handled separately after approval — by check, same as the original deposit.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Board Approval</div>
+            <div class="step-desc">Share this proposal with the board and the Scope 2 wireframe. Vote at the next regular meeting on which option (A, B, or C) makes sense. I'm happy to attend in person or by phone/video to answer questions before the vote.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Content Checklist &amp; Kickoff</div>
+            <div class="step-desc">Wireframe is already done. I already have a content checklist drafted for both pages — campground rates and season, kayak kiosk hours and fees, photos of the park and Fish Lake, the reservation process question, the HPR Inc credit/link question. We work through it the same way we are on the original build.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Build &amp; Live Review</div>
+            <div class="step-desc">New pages built into the same dev environment you're already reviewing. You see them come together in real time on the live dev link, same as the original 5 pages. Information-first sections (beach, boat ramp, trails, playground) are designed to look complete with or without photos — so we don't have to wait on imagery to launch.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Launch With the Rest of the Site</div>
+            <div class="step-desc">Scope 2 launches alongside the original build — one site, one launch, one CMS to learn. No second go-live, no separate training session. The clerk gets the full site, the full CMS guide, and one walkthrough that covers everything.</div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-note">
+        <strong>Timeline:</strong> Scope 2 adds approximately <strong>1–2 weeks</strong> to the overall project, depending on how quickly the campground, kiosk, and park content arrives from the village. With the wireframe already done and the content checklist drafted, the build itself is the fast part — content is the timeline driver, same as the original scope.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="closing">
+      <div class="closing-wrap">
+        <p class="closing-line">That's the whole picture. Take a look at the wireframe, share this with the board, and let me know what you're thinking. No rush — the original build keeps moving either way.</p>
+        <p class="closing-line">If anything's unclear or there are questions worth talking through, I'm a call or email away. Happy to join a board meeting in person or remote if it'd help.</p>
+        <p class="closing-signoff">— Jordan</p>
+        <div class="closing-contact">
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+          <span class="closing-sep">·</span>
+          <a href="tel:7156305689">(715) 630-5689</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CLIENT CONFIG — Village of Hancock Scope 2
+  //  No payment links — village pays by check
+  //  after board approval.
+  // ─────────────────────────────────────────────
+
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        const href = link.getAttribute('href');
+        // Only intercept in-page anchor links
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          closeSidebar(() => {
+            const el = document.querySelector(href);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          });
+        } else {
+          // External / file links — just close sidebar
+          closeSidebar();
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
