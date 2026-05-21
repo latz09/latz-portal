@@ -1,29 +1,2098 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Classic Log Homes — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB & OVERLAY ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(13,27,42,0.25);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms;
+  }
+
+  .mobile-overlay.visible {
+    opacity: 1;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'CLASSIC';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--orange-light) !important;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .budget-table .recommended-row td {
+    background: #fffbcc !important;
+    font-weight: 700;
+    border-left: 4px solid var(--yellow);
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-template { background: #fffbcc; color: #a07d00; }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+  .pill-red { background: var(--red-light); color: var(--red); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+  .note-block p + p { margin-top: 8px; }
+
+  /* ── PREP CARD (showroom visit) ── */
+  .prep-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .prep-section {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .prep-section h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .prep-section ul { list-style: none; padding: 0; }
+  .prep-section ul li {
+    font-size: 13px;
+    color: var(--gray-700, var(--gray-600));
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .prep-section ul li::before {
+    content: '•';
+    position: absolute;
+    left: 6px;
+    color: var(--teal);
+    font-weight: bold;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col, .prep-grid { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .sidebar.mobile-open {
+      transform: translateX(0);
     }
-  </style>
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay.visible { display: block; }
+
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li {
+      flex-wrap: wrap;
+    }
+    .check-status {
+      margin-left: 0;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .budget-table th,
+    .budget-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Classic Log Homes</div>
+    <div class="status-pill">Pre-Meeting</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🪵</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#prep" class="nav-link"><span class="nav-icon">🎯</span> Showroom Prep</a>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Classic Log Homes</h1>
+    <div class="sub">classicloghomes.biz · Website Rebuild · WordPress → Next.js</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Jeff Glaza, Owner</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Projected Contract</span>
+        <span class="value">$11,500 (Tier 2 rec.)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Status</span>
+        <span class="value" style="color: var(--orange);">Not yet — pre-proposal</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Hard Deadline</span>
+        <span class="value">Aug 1, 2026 (plugin cutoff)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://classicloghomes.biz" target="_blank">classicloghomes.biz</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Next Step</span>
+        <span class="value">Mon May 25 · 10 AM showroom</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🪵</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Jeff Glaza</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Owner — sole decision-maker</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:classicloghomes@gmail.com">classicloghomes@gmail.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value"><a href="tel:7158872550">(715) 887-2550</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Preferred Contact</span>
+            <span class="data-value">Text first, phone second. Explicitly asked to be texted. Available 7am–9pm CST, 7 days.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Side Business</span>
+            <span class="data-value">Runs a trucking operation — schedule "a little up in the air." Build in buffer.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Business</span>
+            <span class="data-value">Classic Log Homes, Inc.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Founded</span>
+            <span class="data-value">2004 (22 years in business)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Type</span>
+            <span class="data-value">Manufacturer — log packages, log siding, log furniture, custom milling</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">3981 Pryne Road, Wisconsin Rapids, WI 54495</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Showroom</span>
+            <span class="data-value">By appointment only — direct-to-customer sales</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Dealer Status</span>
+            <span class="data-value">Authorized dealer for Eagle Panel Systems</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Structure</span>
+            <span class="data-value">Jeff alone. No board, no partners.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Audience & Buying Context</h3>
+        <div class="data-row">
+          <span class="data-label">End Customer</span>
+          <span class="data-value">Log home buyers — research-driven, vet vendors over months or years. Not impulse buyers.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Demographic</span>
+          <span class="data-value">Older, blue-collar; retirement / hunting cabin buyers + some Airbnb / second-home builders</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Deal Size</span>
+          <span class="data-value">~$15k to $100k+ per package depending on size and options</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Comparing Against</span>
+          <span class="data-value">Golden Eagle Log Homes (6 min away, 60-year head start, polished web presence) + other regional manufacturers</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Device Reality</span>
+          <span class="data-value">Phones at job sites, weekends, evenings. Mobile is not optional.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🤝</span>
+        <div class="callout-body">
+          <strong>Referrer: Megan Melum — Melum Marketing</strong>
+          <span>melummarketing@gmail.com. Handling ongoing Google Ads + SEO + maintenance on her own engagement with Jeff (separate). Her structure: $300 setup + $250–$1,000/mo ad spend. <strong>First referral from Megan</strong> — treat as foundational partnership.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>The situation: forced migration off WordPress + a chance to leapfrog the local competitor.</strong>
+        <p>Previous developer Richard is pulling agency plugin licenses (Elementor Pro, ACF Pro) on August 1, 2026. After that, the existing site becomes progressively harder to maintain. Jeff is mentally prepared to invest at "Golden Eagle level" — Megan anchored him there. He's already verbally committed before pricing, before contract.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Came to Us (Pain Points)</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Forced WordPress exit — Richard removes plugin licenses Aug 1, 2026</li>
+            <li><span class="check-icon">🔴</span> Site is dated, slow, not mobile-optimized</li>
+            <li><span class="check-icon">🔴</span> ~50 floor plan pages hand-built individually — should be templated</li>
+            <li><span class="check-icon">🔴</span> Photos link in nav goes to a dead Facebook page</li>
+            <li><span class="check-icon">🔴</span> 3 valuable PDF guides hidden in /wp-content/uploads/ — invisible to SEO</li>
+            <li><span class="check-icon">🔴</span> Calculator works but looks 2010-era — table aesthetics</li>
+            <li><span class="check-icon">🔴</span> No floor plan filtering (bedrooms / size / style) — Golden Eagle has it</li>
+            <li><span class="check-icon">🔴</span> $269/yr hosting on managed Plesk WP — Richard was underbilling</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> New site live before Aug 1, 2026 (ideal) or shortly after</li>
+            <li><span class="check-icon">✅</span> Calculator at parity with current or better UX</li>
+            <li><span class="check-icon">✅</span> All 50 floor plans migrated + presented properly with filtering</li>
+            <li><span class="check-icon">✅</span> Mobile-first, fast, modern — competes with Golden Eagle</li>
+            <li><span class="check-icon">✅</span> Clean handoff to Megan for SEO / ads — conversion tracking ready</li>
+            <li><span class="check-icon">✅</span> Jeff owns the code. Hosts on Vercel directly. Zero monthly fees to Latz.</li>
+            <li><span class="check-icon">✅</span> Positions Classic Log Homes as the "direct, no markup" alternative</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Competitive Positioning</h3>
+        <div class="data-row">
+          <span class="data-label">Primary Competitor</span>
+          <span class="data-value">Golden Eagle Log and Timber Homes — 4421 Plover Road, Wisconsin Rapids (6 min from Jeff)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Their Advantages</span>
+          <span class="data-value">Founded 1966, 6,000+ homes built, nationwide builder network, design center, 3D virtual tours, YouTube series, podcasts, multi-category catalog</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Their Weakness</span>
+          <span class="data-value">.asp-based, dated under the hood. Content depth is real; tech is not.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Our Angle</span>
+          <span class="data-value">Same Wisconsin quality. Better price. Talk directly to the owner. Scrappy direct-to-owner alternative.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly NOT in scope (current phase — to confirm at meeting)</strong>
+          <span>3D virtual tours · Builder/dealer portal · Furniture e-commerce · Video production · Admin CMS (may be in scope at Tier 3) · Email marketing automation (may be in scope at Tier 3). These are all clean Phase 2 candidates.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open questions pending Monday's meeting</strong>
+          <span>Exact tier · Final pricing · Whether admin CMS is in initial scope or Phase 2 · Calculator data structure · Whether to include PDF→web conversion in initial scope · Photography strategy · Deposit structure · Domain decision (keep .biz or move to .com) · Email forward verification post-Richard.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Pre-proposal — no contract, no deposit yet</strong>
+          <span>Jeff has verbally committed before any pricing was discussed. Three tiers will be presented in the proposal after Monday's meeting. Recommended tier highlighted below.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>What's Included</th>
+            <th class="amount">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tier 1 — Foundation</strong></td>
+            <td>Custom site (~10–12 pages), floor plan template + CMS for 50 plans, real photo gallery, PDFs converted to web pages, calculator rebuilt at functional parity, mobile-first. Client owns everything.</td>
+            <td class="amount">$7,500</td>
+          </tr>
+          <tr class="recommended-row">
+            <td><strong>Tier 2 — Sales Engine ★</strong></td>
+            <td>Everything in Tier 1 + modernized stepped calculator UX, floor plan filtering (bedrooms / sq ft / style), dedicated testimonials section, YouTube integration, better SEO foundation, conversion tracking for Megan's ads.</td>
+            <td class="amount">$11,500</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 3 — Competitive Build</strong></td>
+            <td>Everything in Tier 2 + admin CMS (Jeff updates plans/prices/articles himself), email automation on quote submissions, enhanced gallery/project showcase, foundation for Phase 2 upgrades.</td>
+            <td class="amount">$16,500</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="2"><strong>Projected Contract (Tier 2 — recommended anchor)</strong></td>
+            <td class="amount"><strong>$11,500</strong></td>
+          </tr>
+          <tr class="pending-row">
+            <td>⏳ Deposit Pending</td>
+            <td>50% standard — will be ~$5,750 at Tier 2. Structure TBD: 50/50 or 50/25/25.</td>
+            <td class="amount">TBD</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing Costs (Jeff pays directly — NOT to Latz)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">Vercel — $0–$20/month depending on traffic (free tier likely sufficient initially)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">~$15–20/yr — stays on GoDaddy or migrates (TBD with Jeff)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Plugin Licenses</span>
+          <span class="data-value">$0 — no plugins, custom build</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Managed WP Fees</span>
+          <span class="data-value">$0 — no managed WordPress</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Marketing (separate)</span>
+          <span class="data-value">Megan: $300 setup + $250–$1,000/mo ad spend (separate engagement, not via Latz)</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story</strong>
+          <span>Current: $269.46/yr Plesk managed WP + ongoing plugin license costs after Aug 1 + obsolete tech + lost leads on mobile. New: ~$0–$240/yr hosting, no licenses, modern stack, client owns the code. The ongoing cost story alone closes this. The Aug 1 deadline forces it.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>Anchor: Megan already set "Golden Eagle level = heavy price tag"</strong>
+          <span>Jeff's mental benchmark for this type of work is roughly $15k–$30k+. Tier 2 at $11,500 will feel reasonable. Tier 1 at $7,500 will feel like a steal. Tier 3 at $16,500 gives him a real "if I want everything" option without breaking his ceiling.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>2-week sale cycle (so far)</strong>
+          <span>First contact via Megan May 20. Verbal commitment May 22 — before any pricing conversation. Monday May 25 is showroom visit. Pace is unusually fast because the Aug 1 deadline is doing the heavy lifting and Megan pre-warmed the lead.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 7, 2026 · Wed</div>
+          <div class="timeline-title">Jeff meets Megan Melum</div>
+          <div class="timeline-desc">In-person meeting. Discussed website situation and goals. Jeff said he wants something "more like Golden Eagle."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 8, 2026 · Thu</div>
+          <div class="timeline-title">Jeff emails Megan committing to migration</div>
+          <div class="timeline-desc">"After thinking about this more, it seems like the thing to do with your help is that I get the hosting so this doesn't happen again. I would also like your help on seo, maintenance, advertizing, and additional web page development." Forwarded Richard's full exit email.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 9, 2026 · Fri</div>
+          <div class="timeline-title">Jeff researches hosting options on his own</div>
+          <div class="timeline-desc">Sent Megan a Cloudways link + Isaac Design Tutorials YouTube reference. Sign that Jeff is engaged and researching — not waiting passively.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 20, 2026 · Wed</div>
+          <div class="timeline-title">Megan introduces Jordan and Jeff</div>
+          <div class="timeline-desc">Intro email with cc to Jordan, full prior thread included. "He had some great ideas on moving forward... I believe you are in good hands with Jordan."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 21, 2026 · Thu AM</div>
+          <div class="timeline-title">Deep analysis built</div>
+          <div class="timeline-desc">Audited classicloghomes.biz, Golden Eagle, Richard's exit email, broader log home market. Built internal opportunity briefing.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 21, 2026 · Thu midday</div>
+          <div class="timeline-title">Aligned with Megan on pricing & expectations</div>
+          <div class="timeline-desc">Asked Megan how she'd anchored Jeff and what her own pricing structure looks like. She confirmed Jeff is "Golden Eagle level = heavy price tag" anchored. Her structure: $300 setup + $250–$1,000/mo ad spend.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 22, 2026 · Fri AM</div>
+          <div class="timeline-title">Custom audit page built and emailed</div>
+          <div class="timeline-desc">Built dedicated audit page at /clients/classic-log-homes/website-rebuild/audit.html. Sent via email: subject "Following up on Megan's intro — a look at your site."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 22, 2026 · ~11:50 AM</div>
+          <div class="timeline-title">Jeff replies asking to talk</div>
+          <div class="timeline-desc">Replied to Megan's intro thread (before seeing Jordan's email): "Jordan, if you could text me at 715-887-2550 and we can set up a time to talk."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 22, 2026 · ~12:00 PM</div>
+          <div class="timeline-title">Jordan texts Jeff with audit link</div>
+          <div class="timeline-desc">Texted offering to talk by phone or meet at the showroom. Pointed to audit page.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 22, 2026 · ~12:15 PM</div>
+          <div class="timeline-title">🎉 Verbal commitment — before any pricing</div>
+          <div class="timeline-desc">"I just read your website link I was about to text you... I would love to have you here at my showroom. If I can make it work Monday morning 10 or 11 o'clock, would that work? It already sounds like we're a fit that I've been looking for I like everything you said."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 22, 2026 · ~12:30 PM</div>
+          <div class="timeline-title">Monday 10 AM showroom confirmed</div>
+          <div class="timeline-desc">Confirmed 10 AM at 3981 Pryne Road. Offered timing flexibility for trucking schedule.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 22, 2026 · ~12:45 PM</div>
+          <div class="timeline-title">Jeff seals it</div>
+          <div class="timeline-desc">"Yep, that's the address. Looking forward to meeting you and have a partner for win-win situation. Everything you said is what I've longed for. Let's make it happen."</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">May 25, 2026 · Mon 10 AM</div>
+          <div class="timeline-title">🎯 Showroom visit — Wisconsin Rapids</div>
+          <div class="timeline-desc">First in-person meeting at Classic Log Homes. Chemistry check + scoping conversation. NOT a sales pitch — Jeff already said yes. Listen first.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">~May 27, 2026</div>
+          <div class="timeline-title">Proposal sent (48-hour turnaround)</div>
+          <div class="timeline-desc">Three tiers ($7,500 / $11,500 / $16,500) with Tier 2 anchored as recommended.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Target: Aug 1, 2026</div>
+          <div class="timeline-title">Plugin license cutoff (hard deadline)</div>
+          <div class="timeline-desc">Richard pulls Elementor Pro + ACF Pro licenses. Ideal launch is before this. Acceptable launch is shortly after — current site doesn't go dark, just becomes harder to maintain.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Recommended Scope: Tier 2 — Sales Engine</strong>
+          <span>~10–12 pages including templated floor plan system for 50 plans. Mobile-first, WCAG 2.1 AA. Calculator rebuild with stepped UX. Filtering on plans. Real testimonials section. YouTube integration. Conversion tracking handoff-ready for Megan.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Hero with real photography (pulled from Google Business initially)</li>
+            <li>Value props: direct-to-owner, no middleman, Wisconsin-made</li>
+            <li>Featured floor plans (3–4)</li>
+            <li>Calculator CTA prominent above the fold</li>
+            <li>Featured testimonials (rotate from full list)</li>
+            <li>YouTube embed feature</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>About / Our Story</h4>
+          <ul>
+            <li>22 years of business, Jeff's story</li>
+            <li>What makes Classic Log Homes different</li>
+            <li>The showroom + the trucking side</li>
+            <li>Eagle Panel Systems dealer info</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS-Managed</span>
+          <h4>Floor Plans (Index)</h4>
+          <ul>
+            <li>Grid of all 50 plans with hero image, sq ft, bedrooms</li>
+            <li>Filtering: bedrooms / sq ft range / style</li>
+            <li>Sort: newest / popular / size</li>
+            <li>Match or beat Golden Eagle's category UX</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-template">Template ×50</span>
+          <h4>Floor Plan Detail (×50)</h4>
+          <ul>
+            <li>Single template, content fed from CMS</li>
+            <li>Plan name, sq ft, bedrooms, baths</li>
+            <li>Floor plan image + exterior renderings</li>
+            <li>Spec sheet download (PDF)</li>
+            <li>"Get a Quote on this Plan" CTA → calculator pre-filled</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS-Managed</span>
+          <h4>Price Calculator</h4>
+          <ul>
+            <li>Modernized stepped UX (replaces 2010-era table)</li>
+            <li>Visual selection of options</li>
+            <li>Real-time pricing as user selects</li>
+            <li>Email-to-Jeff on quote submission</li>
+            <li>Pricing data from CMS — Jeff or admin updates</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Log Siding</h4>
+          <ul>
+            <li>Product details, profiles, options</li>
+            <li>2x8 Log Siding Installation Manual (web)</li>
+            <li>"Building with the Natural Tail" guide (web)</li>
+            <li>"How to Measure for Window/Door Trim" guide (web)</li>
+            <li>Quote request CTA</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Log Furniture</h4>
+          <ul>
+            <li>Product showcase (not e-commerce yet)</li>
+            <li>Gallery of pieces</li>
+            <li>Quote / inquiry CTA</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS-Managed</span>
+          <h4>Testimonials</h4>
+          <ul>
+            <li>Dedicated page — 17+ named testimonials with photos</li>
+            <li>Going back to 2007</li>
+            <li>Give them room to breathe</li>
+            <li>This is currently buried — bring it forward</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS-Managed</span>
+          <h4>Gallery / Projects</h4>
+          <ul>
+            <li>Real photography from Google Business</li>
+            <li>Replaces dead-Facebook-link nav item</li>
+            <li>Lightbox + categorization</li>
+            <li>Tagged to floor plans where applicable</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Business Opportunities</h4>
+          <ul>
+            <li>Existing page on current site</li>
+            <li>Cleaned up for new look</li>
+            <li>Phase 2 candidate to become real lead-gen tool</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Contact</h4>
+          <ul>
+            <li>Phone (7am–9pm CST), email, showroom address</li>
+            <li>Showroom hours: "By appointment"</li>
+            <li>Contact form → Jeff's gmail</li>
+            <li>Embedded map to 3981 Pryne Road</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge badge-gray">Phase 2</span>
+          <h4>Cut from Initial Scope</h4>
+          <ul>
+            <li>Admin CMS (unless Tier 3)</li>
+            <li>3D virtual tours</li>
+            <li>Furniture e-commerce</li>
+            <li>Email automation (unless Tier 3)</li>
+            <li>Dealer/builder portal</li>
+            <li>Video production</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>CMS Approach</h3>
+        <div class="data-row">
+          <span class="data-label">Initial Build</span>
+          <span class="data-value">Custom-built content layer — Jordan manages CMS on behalf of Jeff at Tier 1 / Tier 2</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Admin Access</span>
+          <span class="data-value">Tier 3 includes Jeff-facing admin UI for plans, prices, articles. Tier 1/2: Jordan handles updates as part of light maintenance.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Calculator Data</span>
+          <span class="data-value">Schema TBD pending meeting — need to see how current ACF-based pricing is structured</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Floor Plan Schema</span>
+          <span class="data-value">Name, sq ft, bedrooms, baths, style tag, floor plan image, exterior images, description, spec PDF, related plans</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Content extraction will be the timeline driver — plan for active extraction, not passive delivery</strong>
+          <span>Jeff has 22 years of content scattered across PDFs, Facebook, the existing site, his head, and his showroom. Do not assume a tidy folder will arrive. Plan to pull content during/after the showroom visit and follow up with structured asks.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Photography</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Google Business profile photos are stronger than current site. Pull these in immediately. Plus any photos on Jeff's phone, Facebook, in the showroom. Raise the option of a professional shoot of 2–3 builds.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Multiple sources</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏠</span>
+            <div>
+              <strong>50 Floor Plan Data</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Names, sq ft, bedrooms, baths, style classification, images, spec PDFs. Current site has them all — needs structured extraction into CMS schema.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Extract from current site</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🧮</span>
+            <div>
+              <strong>Calculator Pricing Data</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">All pricing variables, options, modifiers currently managed in ACF Pro admin pages. Need to export or rebuild from scratch with Jeff at meeting.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Critical extraction</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>3 PDF Guides → Web Pages</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">2x8 Log Siding Installation Manual · Building with the Natural Tail · How to Measure for Window and Door Trim. Currently in /wp-content/uploads/ — invisible to SEO. Convert to web content.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In hand via current site</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💬</span>
+            <div>
+              <strong>Testimonials (17+)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Real, named, with photos, going back to 2007. Already on current site. Need clean extraction + permission verification (recommend: assume continuing consent since they're already public).</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In hand via current site</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📺</span>
+            <div>
+              <strong>YouTube Channel Content</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">@classicloghomesinc — existing videos to embed across the site (home, plan pages, log siding page)</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In hand — public</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>About / Our Story Copy</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Jeff's history, the business's founding, what makes him different. Will write from interview at Monday's meeting — bring notebook.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Extract at meeting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔤</span>
+            <div>
+              <strong>SEO Terminology</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Log corner profiles, log types, gable wall terms, etc. — capture Jeff's exact terminology at meeting. This is the SEO language for the new site.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Extract at meeting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🗝️</span>
+            <div>
+              <strong>Domain Registrar Access</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">GoDaddy login for classicloghomes.biz. Email forward (webmaster@) needs verification post-Richard. Decide: keep .biz or move to .com.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💾</span>
+            <div>
+              <strong>WordPress + Database Backup</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Richard providing complete backups via Dropbox until Sept 1, 2026. Final backup Aug 1. Pre-WordPress site also archived.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Available via Dropbox</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📊</span>
+            <div>
+              <strong>Google Services Reconnection</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Analytics, Search Console, Tag Manager (GTM-WRNRTHXB), Business Profile, Ads — all currently via Richard's account through Site Kit. Reconnect to Jeff's account before Aug 1.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-red">Time-sensitive</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>New Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom-built — no plugin sprawl</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — $0–$20/mo direct to Jeff</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Image Optimization</span>
+            <span class="data-value">Next.js Image + Vercel CDN</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Current Stack (to migrate from)</h3>
+          <div class="data-row">
+            <span class="data-label">Platform</span>
+            <span class="data-value">WordPress (Plesk-managed)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Builder</span>
+            <span class="data-value">Elementor Pro (agency license, pulled Aug 1)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Custom Fields</span>
+            <span class="data-value">ACF Pro (agency license, pulled Aug 1) — powers calculator admin</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Gallery</span>
+            <span class="data-value">NextGen Gallery</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Cache</span>
+            <span class="data-value">Redis Object Cache</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Analytics</span>
+            <span class="data-value">Site Kit (Richard's Google account — needs reconnect)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">PHP / DB</span>
+            <span class="data-value">PHP 8.4.20 / MariaDB 11.4.10</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Resources</span>
+            <span class="data-value">1GB disk / 8GB bandwidth/mo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Domain & Migration</h3>
+        <div class="data-row">
+          <span class="data-label">Current Domain</span>
+          <span class="data-value">classicloghomes.biz — registered through GoDaddy</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain Decision</span>
+          <span class="data-value">TBD — keep .biz or move to .com if available. Raise at meeting.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Email Forward</span>
+          <span class="data-value">webmaster@classicloghomes.biz → classicloghomes@gmail.com. Richard updating before exit. Verify post-Aug 1.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">DNS Migration</span>
+          <span class="data-value">Point existing GoDaddy domain to Vercel via DNS records — no transfer required unless we choose to.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Old Site Backup</span>
+          <span class="data-value">Available via shared Dropbox until Sept 1, 2026. Plus pre-WP backup (~250MB, PHP 7.4.33) — keep for reference only.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Third-Party Integrations</h3>
+        <div class="data-row">
+          <span class="data-label">Google Analytics 4</span>
+          <span class="data-value">Reconnect to Jeff's Google account post-Richard</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Tag Manager</span>
+          <span class="data-value">GTM-WRNRTHXB — verify ownership transfers</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Search Console</span>
+          <span class="data-value">Re-verify domain on Jeff's account</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Business Profile</span>
+          <span class="data-value">Linked to map listing — confirm Jeff has admin</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Ads</span>
+          <span class="data-value">Megan handles — coordinate handoff via conversion tracking</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">YouTube</span>
+          <span class="data-value">@classicloghomesinc — embed-only, no API needed</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Facebook</span>
+          <span class="data-value">Current site has dead Facebook link in nav — clean up. Verify page still active.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Eagle Panel Systems</span>
+          <span class="data-value">Dealer badge / link — confirm preferred placement at meeting</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Accessibility & Standards</h3>
+        <div class="data-row">
+          <span class="data-label">Standard</span>
+          <span class="data-value">WCAG 2.1 AA target</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Mobile</span>
+          <span class="data-value">Mobile-first responsive — buyers browsing on phones at job sites</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Performance</span>
+          <span class="data-value">Fast load — Vercel + Next.js optimized images + sensible bundle sizes</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">SEO</span>
+          <span class="data-value">Clean URL structure, schema markup for products / local business, proper sitemap</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚨</span>
+        <div class="callout-body">
+          <strong>August 1, 2026 — hard cutoff</strong>
+          <span>Richard removes plugin licenses (Elementor Pro, ACF Pro), removes himself from Jeff's Google services and WordPress admin, and updates the webmaster@ email forward. Final WP backup pushed to Dropbox. Backups remain available until September 1. We need DNS cutover before or shortly after this date to avoid the existing site degrading.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>Target launch: mid-to-late July 2026 — before Aug 1 plugin cutoff</strong>
+          <span>~10-week build window from Monday May 25 kickoff. If content collection drags, launch slips into early August — current site doesn't go fully dark, but maintainability gets harder.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Weeks 1–2 · May 25 – June 7</div>
+          <h4>Discovery & Planning</h4>
+          <ul>
+            <li>Monday May 25 — showroom visit (chemistry + scope conversation)</li>
+            <li>Send proposal within 48 hours (May 27)</li>
+            <li>Contract signed + deposit received</li>
+            <li>Pull WP + DB backup from Dropbox</li>
+            <li>Audit current calculator data structure (ACF schema export)</li>
+            <li>Finalize content collection plan with Jeff</li>
+            <li>Decide on domain (.biz vs .com move)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Weeks 3–4 · June 8 – June 21</div>
+          <h4>Design & Wireframes</h4>
+          <ul>
+            <li>Wireframes for key page types: home, floor plan detail template, calculator results, contact</li>
+            <li>Visual design direction (modern, Wisconsin-rooted, not "Golden Eagle clone")</li>
+            <li>CMS schema design (floor plans, calculator, testimonials, gallery)</li>
+            <li>Share live dev link for Jeff to review as we build</li>
+            <li>Jeff approval before build begins</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 5–8 · June 22 – July 19</div>
+          <h4>Build</h4>
+          <ul>
+            <li>Component library + design system</li>
+            <li>Page templates (home, about, contact, log siding, log furniture)</li>
+            <li>Floor plan template + index page + filtering</li>
+            <li>Migrate all 50 floor plans into CMS</li>
+            <li>Convert 3 PDF guides into web pages</li>
+            <li>Build modernized calculator with stepped UX</li>
+            <li>Testimonials section (give them room)</li>
+            <li>Gallery page (replace dead Facebook link)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 9–10 · July 20 – July 31</div>
+          <h4>Content & Polish</h4>
+          <ul>
+            <li>Real content review with Jeff (in-person at showroom if helpful)</li>
+            <li>Photography integration (Google Business + any new sources)</li>
+            <li>Image optimization pass</li>
+            <li>Final styling + Framer Motion polish</li>
+            <li>Accessibility audit</li>
+            <li>Mobile QA on real devices</li>
+            <li>Final round of revisions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">Week 11 · ~July 28 – Aug 1</div>
+          <h4>Launch</h4>
+          <ul>
+            <li>DNS cutover to Vercel</li>
+            <li>Verify webmaster@ email forward still working post-Richard</li>
+            <li>Reconnect Google Analytics, Search Console, Tag Manager to Jeff's account</li>
+            <li>Conversion tracking setup with handoff to Megan</li>
+            <li>Final QA across devices</li>
+            <li>Go-live</li>
+            <li>Final invoice (50% balance)</li>
+            <li>Post-launch check-in scheduled (2 weeks out)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Timeline risks</strong>
+          <span>1) Jeff's trucking schedule could delay review cycles — build in buffer. 2) Calculator pricing data structure is unknown until we see ACF schema — could expand Phase 1 scope. 3) Content extraction from 22 years of scattered assets is the biggest variable. Mitigation: get content collection plan locked at Monday's meeting.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOWROOM PREP -->
+    <section id="prep">
+      <div class="section-header">
+        <div class="section-icon">🎯</div>
+        <h2>Showroom Visit Prep — Monday May 25, 10 AM</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Don't over-pitch. Jeff already said yes.</strong>
+        <p>The meeting is a chemistry check and a scoping conversation. The audit page already did the heavy lift. Monday is don't-screw-it-up territory. Lead with curiosity, listen first, take notes.</p>
+      </div>
+
+      <div class="prep-grid">
+        <div class="prep-section">
+          <h4>Arrival</h4>
+          <ul>
+            <li>Arrive 10–15 min early (drive is ~30 min from Stevens Point)</li>
+            <li>Address: 3981 Pryne Road, Wisconsin Rapids, WI 54495</li>
+            <li>Wear: clean button-down or quarter-zip + jeans. Not a suit, not a hoodie.</li>
+          </ul>
+        </div>
+
+        <div class="prep-section">
+          <h4>Bring</h4>
+          <ul>
+            <li>Notebook + pen</li>
+            <li>One printed copy of the audit page</li>
+            <li>Business cards if Megan's network comes up</li>
+          </ul>
+        </div>
+
+        <div class="prep-section">
+          <h4>Don't Bring</h4>
+          <ul>
+            <li>Pricing or contracts (proposal goes out within 48 hours)</li>
+            <li>Slide decks or laptop demos</li>
+            <li>Any vibe of "let me sell you on something"</li>
+          </ul>
+        </div>
+
+        <div class="prep-section">
+          <h4>Lead With</h4>
+          <ul>
+            <li>Curiosity about the business — how Jeff got into it</li>
+            <li>The trucking side — what does his week actually look like</li>
+            <li>What he likes about the work, what frustrates him about the current site</li>
+            <li>Specifically: what does "Golden Eagle level" mean to him?</li>
+          </ul>
+        </div>
+
+        <div class="prep-section">
+          <h4>Listen For</h4>
+          <ul>
+            <li>His exact terminology — log corner profiles, log types, gable walls. This is SEO language.</li>
+            <li>Specific calculator features that matter most</li>
+            <li>What content he already has vs. what needs to be created</li>
+            <li>Names of repeat customers (potential testimonial follow-ups)</li>
+            <li>Types of leads he hates losing — that's what the new site needs to capture</li>
+          </ul>
+        </div>
+
+        <div class="prep-section">
+          <h4>If He Pushes for Pricing</h4>
+          <ul>
+            <li>Default: "I want to put real numbers in front of you, not a guess."</li>
+            <li>"Give me a couple days and I'll send you a proper proposal with options."</li>
+            <li>48-hour proposal turnaround — set the expectation, then beat it.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info" style="margin-top: 16px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Topics to gently raise</strong>
+          <span>Photography (consider professional shoot of 2–3 builds) · domain decision (.biz vs .com) · whether admin CMS is something he'd want now or later · email forward verification timeline · how he wants to be involved in design reviews.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Best window: 3–6 months post-launch</strong>
+          <span>Let the site prove its value first — leads coming in, calculator usage tracked, Megan's ads converting. Then check in with what's missing. Don't pitch any of these at launch.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🎛️ Admin CMS (if not in initial scope)</h4>
+          <div class="price">$3,500 – $5,000</div>
+          <p>Jeff-facing admin to manage floor plans, calculator pricing, articles, testimonials himself. Pitch timing: 3–6 months post-launch, once Jeff sees what updates he actually needs to make. Could become a recurring conversation if he keeps texting Jordan for small edits.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📧 Email Automation on Quote Submissions</h4>
+          <div class="price">$1,500 – $2,500</div>
+          <p>Auto-reply with branded PDF estimate, lead tagging, Slack/email notification, follow-up sequences. Pitch timing: when quote volume grows enough that Jeff is missing leads or losing track of follow-ups.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🏠 3D Virtual Tours of Floor Plans</h4>
+          <div class="price">$5,000 – $15,000+</div>
+          <p>Golden Eagle has these. Significant production scope. Pitch timing: 6–12 months post-launch when Jeff sees Megan's traffic numbers and considers what could differentiate further. Could start with 3–5 hero plans.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔍 Plan Filtering Enhancements</h4>
+          <div class="price">$2,000 – $3,500</div>
+          <p>Saved searches, side-by-side plan comparison, "request quotes on multiple plans" workflow. Pitch timing: 6+ months post-launch based on actual user behavior data. Wait for evidence.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🛒 Furniture E-Commerce</h4>
+          <div class="price">$4,000 – $8,000</div>
+          <p>Real product catalog with checkout for log furniture line. Currently a static page. Pitch timing: only if Jeff signals he wants to put energy into the furniture line. Could be its own micro-site.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🤝 Builder/Dealer Portal</h4>
+          <div class="price">$2,500 – $5,000</div>
+          <p>Jeff has a "Business Opportunities" page — could become a real lead-gen tool for prospective dealers/builders. Form, follow-up workflow, lead tracking. Pitch timing: if Jeff expresses interest in network expansion.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📸 Professional Photography Shoot</h4>
+          <div class="price">Refer out — Wisconsin photographer</div>
+          <p>Not a Latz service. Refer to a Wisconsin-based architectural photographer for 2–3 builds. Worth raising at the meeting as a value-add. Latz can integrate the assets post-shoot.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Light Retainer</h4>
+          <div class="price">$500 – $1,200 / yr</div>
+          <p>Light annual retainer for small updates, plan additions, content tweaks. Good fit since Megan owns the ads/SEO side — this fills the gap of "the site itself needs a small thing." Pitch timing: end of year 1.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎬 Video Production</h4>
+          <div class="price">Refer out</div>
+          <p>YouTube channel exists — but production help (drone shots of builds, owner intro video, plan walkthroughs) could lift it. Not a Latz service. Refer out, integrate the assets.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">May 22, 2026 — Pre-meeting strategy</div>
+        <p>Jeff is ready to buy. Verbal commitment came before any pricing conversation. The meeting Monday is not a sales pitch — it's a chemistry check and a scoping conversation. Don't over-pitch on Monday. Listen first. The audit page already did the work that closes the deal.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication style</div>
+        <p>Jeff is warm, direct, decisive. Uses exclamation points and emotional language: "longed for," "love to have you here," "win-win," "let's make it happen." Match the warmth but don't out-emote him. Stay measured and grounded — be the calm professional partner he's looking for.</p>
+        <p>Text first, phone second. He works 7am–9pm CST 7 days a week. But splits attention with trucking — assume slow response sometimes, not disinterest.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The Megan-Jordan-Jeff triangle</div>
+        <p>Megan Melum is the referrer and runs ongoing marketing on her own contract. Jordan handles the build. Make the boundary clean in the proposal so there's no confusion about who owns what. Megan: ads, SEO, maintenance, additional page development on her schedule. Latz: the initial rebuild + handoff.</p>
+        <p>This is Megan's first referral to Jordan. Foundational partnership — keep her looped in, reciprocate when opportunities arise. Pre-meeting alignment with her on Jeff's price ceiling and her own structure was the right call.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Avoid technical jargon at the meeting</div>
+        <p>Jeff was overwhelmed by Richard's exit email — all the talk about PHP versions, MariaDB, Redis, Elementor Pro credit systems. Translate everything to business outcomes (leads, sales, customer trust, "the site loads fast on phones," "you own everything") rather than tech specs.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pricing approach for the meeting</div>
+        <p>Don't quote at the meeting unless he pushes hard. Default response: "I want to put real numbers in front of you, not a guess. Give me a couple days and I'll send you a proper proposal with options." 48-hour proposal turnaround. Three tiers — $7,500 / $11,500 / $16,500. Anchor Tier 2 as recommended.</p>
+        <p>Megan already anchored him at "Golden Eagle level = heavy price tag" — roughly $15k–$30k+ in his head. Tier 2 will feel reasonable. Tier 1 will feel like a steal.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Risk: content collection</div>
+        <p>Jeff has 22 years of content scattered across PDFs, Facebook, the existing site, his head, and his showroom. Plan for active content extraction — don't assume he'll send a tidy folder. The single biggest timeline risk is content delivery, not build velocity. Get a content collection plan locked at Monday's meeting.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Risk: Jeff's trucking business</div>
+        <p>Could cause scheduling friction during the build phase. Build buffer time into review cycles. Don't assume rapid response on content questions. Plan for 48–72 hour response windows even when he's enthusiastic — he means it, the trucks just don't care.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Asset: real testimonials</div>
+        <p>17+ named testimonials with photos going back to 2007. Currently stacked in one long scroll on the homepage — buried. Plan a dedicated testimonials page that gives them room. This is one of the strongest competitive assets Jeff has. Bring them forward.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Asset: Google Business photography</div>
+        <p>Better than the current website photos. Pull these in immediately. Then evaluate whether a professional shoot of 2–3 builds is worth raising as an add-on.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Asset: YouTube channel exists</div>
+        <p>@classicloghomesinc — already exists. Don't ignore it. Embed videos across the site. Free content depth, real signal, and Megan will love it for SEO.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Strategic angle: anti-WordPress positioning</div>
+        <p>Jeff is in WordPress dependency hell because of his previous developer's exit — paying for someone else's licenses, dependent on someone else's Google account, locked into a platform he can't fully control. He's already primed for the "you own it forever, no monthly fees" pitch. That positioning closes itself once the audit page made it visible.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Strategic angle: positioning vs Golden Eagle</div>
+        <p>Six minutes away. 60-year head start. Same town, same customer pool. The angle isn't "be like Golden Eagle" — it's "be the direct alternative to Golden Eagle." Same Wisconsin quality, better price, talk directly to Jeff (no sales team, no markup, no middleman). Make that the through-line in copy, design, and CTAs.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close sidebar on link tap (mobile), then scroll to section after slide-out
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeSidebar();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
