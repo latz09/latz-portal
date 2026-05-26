@@ -1,29 +1,786 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Website Proposal — Classic Log Homes | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    html, body {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+
+    body { background: white; margin: 0; }
+
+    .page-wrap {
+      margin-left: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .cover {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 56px 48px !important;
+      page-break-after: always;
+    }
+
+    .main { padding: 32px 48px 48px !important; }
+
+    section { page-break-inside: avoid; margin-bottom: 40px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+
+    a { color: inherit !important; text-decoration: none !important; }
+    .proof-row { display: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 22px 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+  .sidebar-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 3px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 16px 8px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 8px 10px 4px; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12.5px; font-weight: 400; border-radius: 5px; border-left: 2px solid transparent; margin-bottom: 1px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); width: 16px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 10px 14px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 18px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── STICKY CTA ── */
+  a.sticky-cta { display: none; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 220px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 72px 48px 60px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .cover-overline::before { content: ''; width: 32px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .cover-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 14px 24px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 56px 64px 80px; }
+  section { margin-bottom: 60px; scroll-margin-top: 24px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 3px 9px; border-radius: 4px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 28px; margin-top: 12px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 24px; max-width: 680px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 18px; }
+  .opening-wrap p { font-size: 14.5px; color: var(--gray-700); line-height: 1.8; margin-bottom: 14px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+  .opening-sign { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; color: var(--gray-900); margin-top: 20px; }
+  .opening-sign-sub { font-size: 12px; color: var(--gray-500); font-family: 'DM Sans', sans-serif; font-weight: 400; margin-top: 2px; letter-spacing: 0.01em; }
+
+  /* ── PAGE CARDS ── */
+  .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .page-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 7px; padding: 16px 18px; }
+  .page-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .page-card-slug { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--gray-400); letter-spacing: 0.06em; margin-bottom: 10px; display: block; }
+  .page-card ul { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 10px; }
+  .page-card ul li { font-size: 12px; color: var(--gray-600); padding: 2.5px 0 2.5px 14px; position: relative; line-height: 1.45; }
+  .page-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 10px; }
+
+  /* ── ALWAYS INCLUDED ── */
+  .always-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .always-item { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 16px; }
+  .always-label { font-size: 12px; font-weight: 600; color: var(--gray-900); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+  .always-label .dot { width: 4px; height: 4px; background: var(--gray-400); border-radius: 50%; flex-shrink: 0; }
+  .always-desc { font-size: 11.5px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--dark-header); border-radius: 8px; padding: 32px 36px; margin-bottom: 20px; border-left: 3px solid var(--teal); }
+  .highlight-box p { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.8; margin-bottom: 12px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--white); font-weight: 600; }
+
+  /* ── PROBLEM LIST (section 03) ── */
+  .problem-list { display: flex; flex-direction: column; gap: 12px; }
+  .problem-item {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 7px;
+    padding: 18px 22px;
+  }
+  .problem-head {
+    font-family: 'Fraunces', serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+  }
+  .problem-item p {
+    font-size: 13.5px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+  .problem-item strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── CRED STRIP ── */
+  .cred-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cred-badge { background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; padding: 14px 12px; text-align: center; }
+  .cred-badge .icon { font-size: 18px; margin-bottom: 7px; display: block; }
+  .cred-badge .label { font-size: 11px; font-weight: 500; color: var(--gray-700); line-height: 1.35; }
+
+  /* ── WIN-WIN CALLOUT ── */
+  .winwin-box {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-left: 3px solid var(--teal);
+    border-radius: 7px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+  }
+  .winwin-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+  .winwin-box p {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.75;
+  }
+  .winwin-box strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── INVESTMENT ── */
+  .invest-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .invest-cards.single { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .invest-card { border: 1px solid var(--gray-100); border-radius: 8px; padding: 24px 22px; background: var(--white); position: relative; }
+  .invest-card.featured { border-color: var(--gray-300); border-width: 1.5px; }
+  .featured-pill { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--teal); color: var(--white); font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 12px; border-radius: 4px; white-space: nowrap; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+  .invest-card-desc { font-size: 12.5px; color: var(--gray-500); line-height: 1.55; margin-bottom: 20px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 11px; color: var(--gray-400); margin-bottom: 18px; }
+  .invest-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 14px; }
+  .invest-list li { font-size: 12px; color: var(--gray-600); padding: 3.5px 0 3.5px 16px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 10px; top: 4px; }
+  .invest-summary { background: var(--gray-900); border-radius: 8px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-schedule { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .hosting-row { background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 6px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 10px; }
+  .hosting-row .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .hosting-row p { font-size: 12.5px; color: var(--gray-600); line-height: 1.6; }
+  .hosting-row strong { color: var(--gray-900); font-weight: 600; }
+  .value-note {
+    margin-top: 12px;
+    padding: 14px 18px;
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: var(--gray-500);
+    line-height: 1.65;
+  }
+  .value-note strong { color: var(--gray-700); }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding-bottom: 28px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 40px; height: 40px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 8px; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; }
+  .step-desc strong { color: var(--gray-700); font-weight: 600; }
+  .timeline-note { margin-top: 24px; padding: 14px 18px; background: var(--white); border: 1px solid var(--gray-100); border-radius: 6px; font-size: 12.5px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note strong { color: var(--gray-700); }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 10px; padding: 40px 44px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; color: var(--white); margin-bottom: 10px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+  .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; position: relative; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 7px; padding: 12px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .cta-btn.primary { background: var(--teal); color: var(--white); }
+  .cta-btn.primary:hover { background: #1ab2bf; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(24,161,173,0.3); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.1); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.11); }
+  .next-contact { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 16px; position: relative; line-height: 1.8; }
+  .next-contact a { color: var(--teal); text-decoration: none; }
+
+  /* ── PROOF ROW ── */
+  .proof-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 0 0;
+    margin-top: 20px;
+    border-top: 1px solid var(--gray-100);
+    text-align: center;
+  }
+  .proof-row p { font-size: 12px; color: var(--gray-400); }
+  .proof-row a { font-size: 12px; font-weight: 600; color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 52px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2px; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-220px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 36px 20px 80px; }
+    .doc-footer { padding-left: 20px; padding-right: 20px; }
+    .cover-client { font-size: 36px; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .cred-strip { grid-template-columns: 1fr 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    /* CTA buttons: full width, centered text */
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-btn { justify-content: center; width: 100%; }
+    a.sticky-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      gap: 6px;
+      padding: 11px 20px;
+      background: var(--teal);
+      color: var(--white) !important;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none !important;
+      box-shadow: 0 4px 20px rgba(24,161,173,0.35);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .page-grid { grid-template-columns: 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .always-grid { grid-template-columns: 1fr 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .next-box { padding: 32px 20px; }
+    .main { padding: 36px 16px 80px; }
+    .proof-row { flex-direction: column; align-items: center; gap: 4px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Classic Log Homes</div>
+    <div class="sidebar-doctype">Website Proposal</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#scope" class="nav-link"><span class="num">02</span> What You're Getting</a>
+    <a href="#why" class="nav-link"><span class="num">03</span> Why This Matters</a>
+    <a href="#investment" class="nav-link"><span class="num">04</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">05</span> How It Works</a>
+    <a href="#next-steps" class="nav-link"><span class="num">06</span> Get Started</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="#next-steps" class="sidebar-cta-btn">Get Started →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+<a href="#next-steps" class="sticky-cta no-print">Get Started →</a>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Website Proposal</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">Classic Log<br>Homes, Inc.</div>
+      <div class="cover-sub">Phase 1 Website Rebuild &nbsp;·&nbsp; May 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Jeff Glaza</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Scope</span>
+          <span class="cover-meta-value">Home + Floor Plans</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Investment</span>
+          <span class="cover-meta-value">$3,500 flat</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Jeff,</div>
+        <p>This proposal isn't the first real document between us — it's just the one that puts a price on what we've already worked out together. The audit, the phone call, the showroom visit, the follow-up today. <strong>We've covered a lot of ground in a week.</strong></p>
+        <p>Here's where things actually stand: you haven't sold a package in close to a year, every dollar matters right now, the August deadline is real, and the site you've been paying for hasn't been earning its keep. You've been honest about all of it. <strong>This proposal is going to be honest right back.</strong></p>
+        <p>The site is scoped to get you to your next sale. Not to maximize my invoice. Not to load you up with features you don't need yet. Phase 1 is the smallest thing that fixes the positioning problem and gives owner-builders and contractors a reason to call you. When that sale comes in, we talk about what's next.</p>
+        <p>You'll see the wireframe alongside this proposal — that's the structure. The copy is drafted. The brand direction is set. <strong>This proposal is just the "how do we start" piece.</strong> Deposit, kickoff, build, launch. Four to five weeks of focused work against a plan we've already built together.</p>
+        <div class="winwin-box" style="margin-top:24px;">
+          <div class="winwin-overline">— The deal —</div>
+          <p>How this works for both of us. You get a clear, modern site that you can update yourself — no calling me to change a price, no charges for small edits, no waiting weeks for an update. I get a project I can do well and a client I can grow with. When the new site brings in more sales, we talk about Phase 2 together. <strong>I make money when you make money. That's the deal.</strong></p>
+        </div>
+        <div class="opening-sign">— Jordan</div>
+        <div class="opening-sign-sub">Latz Web Design · Stevens Point, WI</div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="scope">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">What You're Getting</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="page-grid">
+        <div class="page-card">
+          <div class="page-card-title">Home Page</div>
+          <span class="page-card-slug">/</span>
+          <ul>
+            <li>Hero — headline + dual-audience subhead, View Floor Plans CTA, click-to-call, trust strip</li>
+            <li>Four Pillars bar — 22+ years · Wisconsin built · Nationwide delivery · Direct support</li>
+            <li>What You're Buying — "We supply the package. You build the home."</li>
+            <li>Featured Floor Plans — 5 cards from CMS, with "Show more" load-in</li>
+            <li>Why Families Choose Us — 4 trust blocks for owner-builders and contractors</li>
+            <li>How We're Built — Wisconsin sawmill network &amp; manufacturing story</li>
+            <li>How It Works — 4-step buyer journey from plan to delivery</li>
+            <li>Customer Feedback — curated reviews + 5.0 Google badge</li>
+            <li>Ready to Get Started — click-to-call + contact form (project type radio)</li>
+            <li>Footer — links, contact, CMS-editable nav</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Floor Plan Detail Pages</div>
+          <span class="page-card-slug">/floor-plans/[plan-name]</span>
+          <ul>
+            <li>Two unique page designs — one home page, one floor plan detail layout</li>
+            <li>The floor plan design generates a live URL for every plan you add via CMS</li>
+            <li>5–7 plans live at launch · add unlimited plans yourself anytime</li>
+            <li>Hero image, plan name, category tag, stats bar</li>
+            <li>Image gallery — renderings now, real photos later (swap via CMS)</li>
+            <li>About this plan — 3-paragraph rich text</li>
+            <li>Key features — bulleted list</li>
+            <li>What's in the package — included vs. not included, two-column</li>
+            <li>Optional 3D walkaround link — opens your design program</li>
+            <li>Sidebar — Talk to Jeff, click-to-call, request a quote, free guides</li>
+          </ul>
+        </div>
+      </div>
+      <div class="always-grid">
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Self-Edit CMS</div>
+          <div class="always-desc">Edit prices, content, plans, photos yourself. No calling me for changes.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Mobile-First</div>
+          <div class="always-desc">Most of your traffic is on phones. Built for that from day one.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Built to Get Found</div>
+          <div class="always-desc">Solid SEO foundations — fast loads, clean URLs, proper meta — plus AI-ready structure so you show up on Google and when people ask ChatGPT or Gemini.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Live Dev Link</div>
+          <div class="always-desc">Watch it come together. Give feedback as we build.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Rustic &amp; Modern</div>
+          <div class="always-desc">Warm Wisconsin aesthetic, modern execution. Confident, not flashy.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> You Own It</div>
+          <div class="always-desc">Code, content, CMS access. No retainer, no lock-in, no monthly fees to me.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="why">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Why This Site Matters</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="highlight-box">
+        <p>There are a few problems stacking up — and the new site fixes all of them at once.</p>
+      </div>
+      <div class="problem-list">
+        <div class="problem-item">
+          <div class="problem-head">Your site is talking to the wrong people.</div>
+          <p>Visitors assume you're a turnkey builder. Owner-builders and contractors — your actual audience — never see themselves on the page. The new site opens with <strong>"we supply the package, you build the home"</strong> and filters correctly in the first five seconds.</p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-head">You can't update your own site.</div>
+          <p>Every change required a developer, cost money, and took weeks. The new site is built on a custom CMS where you edit prices, add floor plans, swap photos, and upload PDFs yourself — <strong>instantly, no phone calls, no charges, ever.</strong></p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-head">You've been paying for things you didn't choose.</div>
+          <p>Plugin licenses, maintenance retainers, hosting fees. The new site has no licenses to renew, no monthly fee to me for the first 12 months, and <strong>$0 ongoing operating cost going forward.</strong></p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-head">The site makes you look smaller than you are.</div>
+          <p>No story about your Wisconsin sawmill partners, the manufacturing network behind every package, or the 22 years of relationships behind the materials you ship. The new site puts that front and center — <strong>especially for builders who need to know there's real capacity behind the supplier they're calling.</strong></p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-head">And the clock is running.</div>
+          <p>After August 1, plugin licenses on the old site start expiring and the custom calculator becomes unmaintainable. You need a clean path forward now — one you fully own, with no ongoing fees, that grows with the business.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="invest-cards single">
+        <div class="invest-card">
+          <div class="invest-card-name">Phase 1</div>
+          <div class="invest-card-title">Home + Floor Plan Detail Pages</div>
+          <div class="invest-card-desc">Everything in the wireframe. Two unique page designs — a primary marketing home page, and a floor plan detail layout that powers a live URL for every plan you add via CMS.</div>
+          <div class="invest-price">$3,500</div>
+          <div class="invest-price-note">Flat rate. No surprises. No nickel-and-diming.</div>
+          <ul class="invest-list">
+            <li>Home page — 9 sections, all written copy in place</li>
+            <li>Floor plan detail pages — 5–7 live at launch, expandable anytime</li>
+            <li>Self-edit CMS — you control every word, price, photo</li>
+            <li>Rustic-modern design system, mobile-responsive</li>
+            <li>Contact form with dual-audience project type</li>
+            <li>Free guides — your existing PDFs as downloadable resources</li>
+            <li>SEO + AI-ready foundations, WCAG AA accessibility</li>
+            <li>One round of revisions baked in</li>
+          </ul>
+        </div>
+      </div>
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Your investment</div>
+          <div class="invest-summary-amount">$3,500</div>
+          <div class="invest-summary-schedule">$1,750 deposit to start &nbsp;·&nbsp; $1,750 due at launch</div>
+        </div>
+        <a href="#next-steps" class="cta-btn primary no-print">Move Forward →</a>
+      </div>
+      <div class="hosting-row">
+        <span class="icon">🏠</span>
+        <p><strong>Hosting: $0/month for the first 12 months.</strong> The site lives on Latz Web Design's Vercel account at no monthly cost to you. SSL, analytics, 99.9% uptime included. After 12 months, you can move it to your own Vercel account for $20/month, or keep it on mine — your call, no pressure. <strong>One thing worth knowing on analytics:</strong> on my account, I can pull and send you the most recent month of traffic data anytime you want it. On your own account, you'd have direct access and a full 12-month history. Most agencies charge $100–$300/month just to keep the lights on.</p>
+      </div>
+      <div class="value-note">
+        <strong>For context:</strong> custom sites built like this typically run $8,000–$12,000. We've scoped this build to what matters most right now — the site, the structure, the CMS, the analytics. Anything else can come later, on your timeline, if and when it makes sense.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Deposit &amp; Kickoff</div>
+            <div class="step-desc">$1,750 deposit locks in the project. I'll reach out within 24 hours to confirm the domain choice, finalize your floor plan selections for launch, and gather any remaining assets — headshots, sawmill photos, testimonial photos if you have them.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Design &amp; Build</div>
+            <div class="step-desc"><strong>You're already 60% of the way there.</strong> The wireframe is locked. The home page and floor plan copy is drafted. The brand direction — warm woods, gold accents, modern execution — is set. The dual-audience strategy is worked out. This phase is focused execution against a plan we've already built together. The CMS gets set up alongside the site so you can edit everything from day one.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Review &amp; Refine</div>
+            <div class="step-desc">You get a live development link the moment there's something to look at. Watch it come together in real time. Text me when you spot something to change — no formal tickets, no waiting in a queue. One round of revisions is built in.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Launch &amp; Handoff</div>
+            <div class="step-desc">Domain points to the new site, DNS cuts over, final $1,750 is due. <strong>You own everything</strong> — the code, the content, the CMS login. The site lives on Latz Web Design's Vercel account for the first 12 months at no monthly cost. After that, move it to your own account or keep it on mine — either way, you have the keys.</div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-note">
+        <strong>Four to five weeks from deposit to launch</strong> is the realistic window — your head start on copy and direction is what makes that achievable. Target launch is August 1, but that's the ceiling, not the floor. If we slip to mid- or late-August, the old site doesn't go dark, just gets harder to maintain as plugin licenses expire. <strong>Real launch window: late July through August 15.</strong> Plenty of room.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">06</span>
+        <span class="sec-title">Ready to Move Forward?</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Next Steps —</div>
+        <div class="next-title">Let's get started.</div>
+        <div class="next-sub">Pay the deposit to lock in the project — or text me with any questions first. Either way works.</div>
+        <div class="cta-row">
+          <a id="btn-3500" href="#" target="_blank" class="cta-btn primary">💳 Pay Deposit — $1,750</a>
+        </div>
+        <div class="cta-row">
+          <a href="mailto:jordan@latzwebdesign.com" class="cta-btn ghost">✉️ Email a Question</a>
+          <a href="tel:7156305689" class="cta-btn ghost">📞 (715) 630-5689</a>
+        </div>
+        <div class="next-contact">
+          50% deposit ($1,750) locks in the project. Remainder due at launch.<br>
+          Hosting on Latz Web Design's Vercel account for the first 12 months at no monthly cost to you.<br>
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+        </div>
+      </div>
+      <div class="proof-row no-print">
+        <p>Curious what it's like to work together?</p>
+        <a href="https://www.google.com/search?sca_esv=cc34000cb1b7ea38&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOQkC_I22qw5KyFJGkapNQNPi4E6P9V97UJtJ142Q-DMaZAK9l2A02VAXCMwqi6rMEzY93zae-RrWaozFcnrSVVcYlabs&q=Latz+Web+Design+Reviews&sa=X&ved=2ahUKEwjhgdnv3deUAxWFNYYAHYF5D5oQ0bkNegQIIxAF&biw=2048&bih=983&dpr=1" target="_blank" rel="noopener">See what clients are saying →</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CLIENT CONFIG — update these before sending
+  // ─────────────────────────────────────────────
+  const PAYPAL_3500 = 'https://www.paypal.com/invoice/p/#R3PRN5JF3YBF6VGX';  // 50% deposit link for $3,500 package ($1,750)
+  // ─────────────────────────────────────────────
+
+  const btn3500 = document.getElementById('btn-3500');
+
+  if (PAYPAL_3500) btn3500.href = PAYPAL_3500;
+  else btn3500.style.opacity = '0.4';
+
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

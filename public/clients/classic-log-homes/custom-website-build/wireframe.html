@@ -1,29 +1,2729 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Classic Log Homes — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fraunces:wght@300;600;700&family=Inter:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #1a1614;
+				--secondary-dark: #362d28;
+				--accent: #d39f4a;
+				--accent-warm: #a0522d;
+				--accent-light: rgba(211, 159, 74, 0.08);
+				--light: #f5efe6;
+				--light-dark: #ebe3d5;
+				--mid: #8a7e72;
+				--green: #16a34a;
+				--green-light: rgba(22, 163, 74, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(26, 22, 20, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(26, 22, 20, 0.05) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--secondary-dark);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Inter', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 4px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Inter', sans-serif;
+				font-size: 10px;
+				color: rgba(245, 239, 230, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(211, 159, 74, 0.15);
+				border: 1px solid rgba(211, 159, 74, 0.35);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Inter', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.25);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(245, 239, 230, 0.5);
+				text-decoration: none;
+				font-family: 'Inter', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(211, 159, 74, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Inter', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.22);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 22px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 52px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent-warm);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Fraunces', serif;
+				font-size: 36px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(26, 22, 20, 0.55);
+				font-weight: 400;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(26, 22, 20, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(26, 22, 20, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(26, 22, 20, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent-warm);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.72);
+				border: 2px solid var(--primary);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(26, 22, 20, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+				gap: 12px;
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Fraunces', serif;
+				font-weight: 700;
+				font-size: 15px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.wf-nav-cta {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+
+			.wf-nav-cta .btn-mini {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				padding: 5px 11px;
+				border-radius: 3px;
+				border: 1.5px solid var(--primary);
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			.wf-nav-cta .btn-mini.primary {
+				background: var(--accent);
+				border-color: var(--accent);
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(26, 22, 20, 0.04);
+				border-left: 3px solid rgba(26, 22, 20, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent-warm);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(160, 82, 45, 0.05);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent-warm);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			.decision-body {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				line-height: 1.55;
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(26, 22, 20, 0.18);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(245, 239, 230, 0.5);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Fraunces', serif;
+				font-size: 26px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.2;
+			}
+
+			.wf-heading-md {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.3;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Fraunces', serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.wf-eyebrow {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				font-weight: 600;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--accent-warm);
+				margin-bottom: 6px;
+			}
+
+			.wf-subtext {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(26, 22, 20, 0.55);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: rgba(26, 22, 20, 0.65);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(26, 22, 20, 0.15);
+				margin: 20px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+			}
+
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--primary);
+			}
+
+			.wf-cta.outline {
+				background: transparent;
+				border: 1.5px solid var(--primary);
+				color: var(--primary);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 20px 22px;
+				background: var(--primary);
+				color: rgba(245, 239, 230, 0.6);
+			}
+
+			.wf-footer-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 20px;
+				margin-bottom: 14px;
+			}
+
+			.wf-footer-col-title {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--light);
+				margin-bottom: 8px;
+			}
+
+			.wf-footer-col-item {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(245, 239, 230, 0.5);
+				line-height: 1.7;
+			}
+
+			.wf-footer-bottom {
+				border-top: 1px solid rgba(245, 239, 230, 0.1);
+				padding-top: 12px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(245, 239, 230, 0.4);
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(26, 22, 20, 0.07);
+				border: 2px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.35;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.45);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── TRUST BADGE ROW ── */
+			.trust-strip {
+				display: flex;
+				gap: 14px;
+				justify-content: center;
+				flex-wrap: wrap;
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.55);
+				margin-top: 14px;
+			}
+
+			.trust-strip span {
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+			}
+
+			/* ── PILLARS BAR ── */
+			.pillars-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 10px;
+				margin-top: 10px;
+			}
+
+			.pillar-card {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 5px;
+				padding: 14px 10px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.pillar-icon {
+				font-size: 22px;
+				margin-bottom: 6px;
+				opacity: 0.6;
+			}
+
+			.pillar-label {
+				font-family: 'Fraunces', serif;
+				font-size: 11px;
+				font-weight: 600;
+				color: var(--primary);
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				line-height: 1.3;
+			}
+
+			/* ── TWO-COLUMN COMPARISON ── */
+			.compare-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 10px;
+			}
+
+			.compare-col {
+				border: 2px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.55);
+			}
+
+			.compare-col.included {
+				border-color: rgba(22, 163, 74, 0.4);
+				background: rgba(22, 163, 74, 0.04);
+			}
+
+			.compare-col.local {
+				border-color: rgba(160, 82, 45, 0.4);
+				background: rgba(160, 82, 45, 0.04);
+			}
+
+			.compare-title {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.compare-list {
+				list-style: none;
+				padding: 0;
+			}
+
+			.compare-list li {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.7);
+				padding: 4px 0 4px 18px;
+				position: relative;
+				line-height: 1.5;
+			}
+
+			.compare-list.checks li::before {
+				content: '✓';
+				position: absolute;
+				left: 0;
+				color: var(--green);
+				font-weight: 700;
+			}
+
+			.compare-list.marks li::before {
+				content: '◆';
+				position: absolute;
+				left: 0;
+				color: var(--accent-warm);
+				font-size: 10px;
+				top: 6px;
+			}
+
+			.compare-footnote {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(26, 22, 20, 0.5);
+				font-style: italic;
+				margin-top: 10px;
+				line-height: 1.5;
+			}
+
+			/* ── FLOOR PLAN CARDS ── */
+			.plan-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.plan-card {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 5px;
+				padding: 12px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.plan-tag {
+				display: inline-block;
+				background: var(--secondary-dark);
+				color: var(--accent);
+				font-family: 'Inter', sans-serif;
+				font-size: 9px;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				padding: 2px 8px;
+				border-radius: 3px;
+				margin-bottom: 6px;
+				text-transform: uppercase;
+			}
+
+			.plan-name {
+				font-family: 'Fraunces', serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.plan-desc {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(26, 22, 20, 0.55);
+				line-height: 1.5;
+				margin-bottom: 8px;
+			}
+
+			.plan-specs {
+				display: flex;
+				gap: 10px;
+				flex-wrap: wrap;
+				font-family: 'Inter', sans-serif;
+				font-size: 10px;
+				color: rgba(26, 22, 20, 0.55);
+				margin-bottom: 8px;
+				padding: 6px 0;
+				border-top: 1px dashed rgba(26, 22, 20, 0.1);
+				border-bottom: 1px dashed rgba(26, 22, 20, 0.1);
+			}
+
+			.plan-price {
+				font-family: 'Fraunces', serif;
+				font-size: 12px;
+				color: var(--accent-warm);
+				font-weight: 600;
+				margin-bottom: 4px;
+			}
+
+			.plan-disclaimer {
+				font-family: 'Inter', sans-serif;
+				font-size: 10px;
+				color: rgba(26, 22, 20, 0.45);
+				font-style: italic;
+				line-height: 1.4;
+				margin-bottom: 6px;
+			}
+
+			.plan-link {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 2px;
+			}
+
+			/* ── WHY US BLOCKS ── */
+			.why-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 14px;
+				margin-top: 12px;
+			}
+
+			.why-card {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.55);
+			}
+
+			.why-card .img-placeholder {
+				height: 90px;
+				margin-bottom: 10px;
+			}
+
+			.why-card h4 {
+				font-family: 'Fraunces', serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 5px;
+			}
+
+			.why-card p {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.6);
+				line-height: 1.5;
+			}
+
+			/* ── STEPS ── */
+			.steps-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.step-card {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.55);
+			}
+
+			.step-num {
+				font-family: 'Fraunces', serif;
+				font-size: 22px;
+				font-weight: 700;
+				color: var(--accent);
+				margin-bottom: 4px;
+			}
+
+			.step-card h4 {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 5px;
+			}
+
+			.step-card p {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(26, 22, 20, 0.6);
+				line-height: 1.5;
+			}
+
+			/* ── TESTIMONIAL ── */
+			.testimonial-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.testimonial-card {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.testimonial-stars {
+				color: var(--accent);
+				font-size: 13px;
+				margin-bottom: 6px;
+				letter-spacing: 1px;
+			}
+
+			.verified-tag {
+				font-family: 'Inter', sans-serif;
+				font-size: 9px;
+				color: var(--green);
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.testimonial-quote {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.65);
+				font-style: italic;
+				line-height: 1.5;
+				margin-bottom: 8px;
+			}
+
+			.testimonial-name {
+				font-family: 'Fraunces', serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.testimonial-meta {
+				font-family: 'Inter', sans-serif;
+				font-size: 10px;
+				color: rgba(26, 22, 20, 0.5);
+			}
+
+			.trust-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(211, 159, 74, 0.1);
+				border: 1.5px solid rgba(211, 159, 74, 0.35);
+				border-radius: 4px;
+				padding: 6px 14px;
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			/* ── CONTACT 2-COL ── */
+			.contact-grid {
+				display: grid;
+				grid-template-columns: 1fr 1.4fr;
+				gap: 18px;
+				margin-top: 12px;
+			}
+
+			.contact-col {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				padding: 16px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.contact-col-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent-warm);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			.big-phone {
+				font-family: 'Fraunces', serif;
+				font-size: 22px;
+				font-weight: 700;
+				color: var(--primary);
+				display: inline-block;
+				background: var(--accent);
+				padding: 10px 18px;
+				border-radius: 5px;
+				margin: 6px 0 10px;
+			}
+
+			/* ── FORM ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+				margin-top: 6px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 4px;
+				padding: 8px 12px;
+				background: rgba(255, 255, 255, 0.7);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 10px;
+				color: rgba(26, 22, 20, 0.45);
+				margin-bottom: 3px;
+				letter-spacing: 0.04em;
+			}
+
+			.field-input {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.4);
+				font-style: italic;
+			}
+
+			.field-radio-row {
+				display: flex;
+				gap: 10px;
+				flex-wrap: wrap;
+				margin-top: 4px;
+			}
+
+			.field-radio {
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(26, 22, 20, 0.6);
+				border: 1.5px solid rgba(26, 22, 20, 0.2);
+				border-radius: 20px;
+				padding: 4px 12px;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+				gap: 6px;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Fraunces', serif;
+				font-size: 12px;
+				font-weight: 600;
+				padding: 8px 16px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 130px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(26, 22, 20, 0.08);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box .slug {
+				display: block;
+				font-family: 'Inter', sans-serif;
+				font-size: 10px;
+				font-weight: 400;
+				opacity: 0.7;
+				margin-top: 2px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(26, 22, 20, 0.35);
+				padding: 0 6px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			.sitemap-note {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent-warm);
+				margin-left: 4px;
+			}
+
+			/* ── PLAN HERO STATS ── */
+			.stats-bar {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 0;
+				border: 1.5px dashed rgba(26, 22, 20, 0.2);
+				border-radius: 6px;
+				overflow: hidden;
+				background: rgba(255, 255, 255, 0.6);
+				margin: 12px 0 8px;
+			}
+
+			.stat-cell {
+				padding: 12px 14px;
+				border-right: 1px dashed rgba(26, 22, 20, 0.12);
+				text-align: center;
+			}
+
+			.stat-cell:last-child {
+				border-right: none;
+			}
+
+			.stat-value {
+				font-family: 'Fraunces', serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--primary);
+				line-height: 1.1;
+			}
+
+			.stat-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 9.5px;
+				color: rgba(26, 22, 20, 0.5);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-top: 3px;
+			}
+
+			.sub-stats {
+				display: flex;
+				gap: 14px;
+				flex-wrap: wrap;
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: rgba(26, 22, 20, 0.55);
+			}
+
+			/* ── SIDEBAR COMPONENT (plan detail) ── */
+			.pdp-grid {
+				display: grid;
+				grid-template-columns: 1fr 280px;
+				gap: 20px;
+				margin-top: 12px;
+			}
+
+			.pdp-aside {
+				border: 1.5px dashed rgba(26, 22, 20, 0.25);
+				border-radius: 6px;
+				padding: 16px;
+				background: rgba(255, 255, 255, 0.7);
+				align-self: start;
+			}
+
+			.aside-section + .aside-section {
+				margin-top: 14px;
+				padding-top: 14px;
+				border-top: 1px dashed rgba(26, 22, 20, 0.15);
+			}
+
+			.guide-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 10px;
+				border: 1px dashed rgba(26, 22, 20, 0.15);
+				border-radius: 4px;
+				background: rgba(255, 255, 255, 0.6);
+				margin-bottom: 6px;
+				font-family: 'Inter', sans-serif;
+				font-size: 11px;
+				color: var(--primary);
+			}
+
+			.guide-row .guide-dl {
+				font-family: 'Architects Daughter', cursive;
+				color: var(--accent-warm);
+				font-size: 14px;
+			}
+
+			/* ── KEY FEATURES LIST ── */
+			.feature-list {
+				list-style: none;
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 6px 16px;
+				margin-top: 8px;
+			}
+
+			.feature-list li {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(26, 22, 20, 0.7);
+				padding-left: 16px;
+				position: relative;
+				line-height: 1.5;
+			}
+
+			.feature-list li::before {
+				content: '◆';
+				position: absolute;
+				left: 0;
+				color: var(--accent);
+				font-size: 9px;
+				top: 6px;
+			}
+
+			/* ── DECISION / DISCUSSION CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(26, 22, 20, 0.12);
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: var(--primary);
+				line-height: 1.5;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── FINAL CTA BAR (dark) ── */
+			.cta-bar-dark {
+				background: var(--primary);
+				padding: 20px 22px;
+				border-radius: 6px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+
+			.cta-bar-dark .cta-text {
+				font-family: 'Fraunces', serif;
+				color: var(--light);
+				font-size: 16px;
+				font-weight: 600;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.pillars-grid,
+				.steps-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+				.plan-grid,
+				.testimonial-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+				.pdp-grid {
+					grid-template-columns: 1fr;
+				}
+				.wf-footer-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(26, 22, 20, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links,
+				.wf-nav-cta {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.compare-grid,
+				.why-grid,
+				.form-grid,
+				.contact-grid,
+				.feature-list {
+					grid-template-columns: 1fr;
+				}
+				.plan-grid,
+				.testimonial-grid {
+					grid-template-columns: 1fr;
+				}
+				.pillars-grid,
+				.steps-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+				.stats-bar {
+					grid-template-columns: 1fr 1fr;
+				}
+				.stat-cell {
+					border-right: none;
+					border-bottom: 1px dashed rgba(26, 22, 20, 0.12);
+				}
+				.stat-cell:nth-child(odd) {
+					border-right: 1px dashed rgba(26, 22, 20, 0.12);
+				}
+				.sitemap {
+					flex-direction: column;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.wf-footer-grid {
+					grid-template-columns: 1fr;
+					gap: 14px;
+				}
+				.wf-footer-bottom {
+					flex-direction: column;
+					text-align: center;
+				}
+				.cta-bar-dark {
+					flex-direction: column;
+					text-align: center;
+				}
+				.trust-badge {
+					font-size: 11px;
+					padding: 5px 10px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Classic Log Homes</div>
+				<div class="sidebar-doctype">Wireframes — Phase 1 Rebuild</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#plan-detail" class="nav-link"><span class="nav-icon">📐</span> Floor Plan Detail</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Classic Log Homes</div>
+				<div class="doc-sub">
+					Website Rebuild — Phase 1 &nbsp;·&nbsp; Home + Dynamic Floor Plan Detail Page Design
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Page Designs</span>
+						<span class="meta-value">2 unique</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Jeff Glaza</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 40px; font-size: 13px; padding: 12px 16px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">Classic Log Homes — Phase 1</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								Two unique page designs · dynamic floor plan design renders one URL per CMS entry
+							</div>
+						</div>
+
+						<div class="sitemap">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home
+									<span class="slug">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Floor Plan Detail
+									<span class="slug">/floor-plans/[plan-slug]</span>
+								</div>
+								<span class="sitemap-note">↻ dynamic · 5–7 at launch</span>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							Two unique page designs, one of which (floor plan detail) generates a live URL for every plan Jeff adds via CMS — 5–7 at launch, expandable indefinitely. Featured plans on the home page link to their respective detail pages. Navigation stays consistent across both. A full /floor-plans index page is Phase 2; for Phase 1, floor plan discovery happens via the Featured Floor Plans section on home.
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Decision · Domain</div>
+							<div class="decision-body">
+								classicloghomes.biz vs classicloghomesupply.com — Jeff to decide. Affects URL structure and branding emphasis. Using [domain-pending] as routing placeholder until finalized.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home Page &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Classic Log Homes</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Floor Plans</span>
+							<span>Reviews</span>
+							<span>Contact</span>
+						</div>
+						<div class="wf-nav-cta">
+							<span class="btn-mini">Request a quote</span>
+							<span class="btn-mini primary">(715) 887-2550</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- 1.1 Header / Nav annotation -->
+						<div class="annotation" style="margin-top: 0; margin-bottom: 18px">
+							Header behavior: sticky on scroll. Logo and nav links smooth-scroll to home page sections. On floor plan detail pages, nav links route back to the home page anchors. Right-side has a secondary "Request a quote" CTA and a primary click-to-call phone button — both visible on desktop.
+						</div>
+
+						<!-- 1.2 Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.2 — Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 200px">
+								<div class="img-icon">🌲</div>
+								<div class="img-label">
+									Hero background — log cabin / Wisconsin landscape<br />
+									Jeff's real photos preferred over stock
+								</div>
+							</div>
+							<div style="margin-top: 16px; text-align: center">
+								<div class="wf-heading-lg">Wisconsin-made log home packages. Done the right way.</div>
+								<div class="wf-subtext" style="font-style: normal; color: rgba(26,22,20,0.65); max-width: 580px; margin: 0 auto 14px;">
+									True hand-peeled log packages for builders and DIYers. Quality materials, fair pricing, and direct support from design through delivery.
+								</div>
+								<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+									<div class="wf-cta accent">View floor plans →</div>
+									<div class="wf-cta outline">(715) 887-2550</div>
+								</div>
+								<div class="trust-strip">
+									<span>📞 Package consultation included</span>
+									<span>·</span>
+									<span>🪓 22 years in business</span>
+									<span>·</span>
+									<span>🪵 Family-owned in Wisconsin</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Both audiences (builders + DIYers) named directly in the subhead — this is the primary positioning statement of the entire site. "DIYers" reads more accessible than "owner-builders" — clearer signal to the home-builder-curious visitor. All hero copy (headline, subhead, CTA labels, trust strip, image) is CMS-editable. Secondary CTA is click-to-call on mobile.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.3 Four Pillars -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.3 — Four Pillars Bar</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="pillars-grid">
+								<div class="pillar-card">
+									<div class="pillar-icon">🪵</div>
+									<div class="pillar-label">22+ Years<br/>in Business</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🏭</div>
+									<div class="pillar-label">Wisconsin<br/>Manufacturing Network</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🚚</div>
+									<div class="pillar-label">Nationwide<br/>Delivery</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">📞</div>
+									<div class="pillar-label">Direct Package<br/>Support</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Balances scale signal (manufacturing network) with personal touch (direct support) to serve both builder and owner-builder audiences. Each pillar has an icon (CMS-selectable from icon library or uploaded SVG) plus a short label. Order, copy, and icons all editable.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.4 What You're Buying -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.4 — What You're Buying</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-eyebrow">What You're Buying</div>
+							<div class="wf-heading-md">We supply the log package. You build the home.</div>
+							<div class="wf-body-text">
+								Classic Log Homes supplies and delivers a complete log package to your build site. You or your contractor handle everything else — the way log home building has always worked best.
+							</div>
+
+							<div class="compare-grid">
+								<div class="compare-col included">
+									<div class="compare-title">What We Ship</div>
+									<ul class="compare-list checks">
+										<li>Exterior log walls, milled and numbered</li>
+										<li>Gable-end logs or log siding</li>
+										<li>Roof system (trusses or rafters)</li>
+										<li>Heavy timber floor joists</li>
+										<li>Fasteners, hardware, and spikes</li>
+										<li>Detailed blueprints and assembly guide</li>
+										<li>Phone support through your build</li>
+									</ul>
+								</div>
+								<div class="compare-col local">
+									<div class="compare-title">What You Build</div>
+									<ul class="compare-list marks">
+										<li>Foundation, windows, doors, roofing</li>
+										<li>Plumbing, electrical, HVAC</li>
+										<li>Interior finishing and cabinets</li>
+									</ul>
+									<div class="compare-footnote" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(160, 82, 45, 0.3);">
+										These are better sourced locally, where suppliers can match your area's building codes and engineering requirements.
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Pre-empts the #1 visitor confusion — "are you a builder?" Both columns are editable as repeater fields in CMS, plus the headline, subhead, and footnote. Designer chooses visual treatment; both columns should read as equal-weight to make the supplier-coach positioning crystal clear.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.5 Featured Floor Plans -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.5 — Featured Floor Plans</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-md">Featured floor plans</div>
+							<div class="wf-body-text">
+								Start with a proven package layout, then talk through the changes your land, budget, and builder or build plan may require. Every build is different — these are the conversations we have every day.
+							</div>
+
+							<div class="plan-grid">
+								<div class="plan-card">
+									<div class="img-placeholder" style="height: 90px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">plan rendering</div>
+									</div>
+									<span class="plan-tag">Cabin</span>
+									<div class="plan-name">Sportsman 24x30</div>
+									<div class="plan-desc">Compact hunting cabin layout. Single story, open main room.</div>
+									<div class="plan-specs">
+										<span>📐 720 sq ft</span>
+										<span>🛏 1 bed</span>
+										<span>🛁 1 bath</span>
+										<span>🏠 1 story</span>
+									</div>
+									<div class="plan-price">Package from $XX,XXX</div>
+									<div class="plan-disclaimer">Price is for the log package only. Foundation, labor, finishing, and local trades are separate.</div>
+									<a class="plan-link">View details →</a>
+								</div>
+								<div class="plan-card">
+									<div class="img-placeholder" style="height: 90px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">plan rendering</div>
+									</div>
+									<span class="plan-tag">Home</span>
+									<div class="plan-name">[Plan Name 2]</div>
+									<div class="plan-desc">Mid-size family layout. Loft + main floor master.</div>
+									<div class="plan-specs">
+										<span>📐 1,800 sq ft</span>
+										<span>🛏 3 beds</span>
+										<span>🛁 2 baths</span>
+										<span>🏠 1.5 stories</span>
+									</div>
+									<div class="plan-price">Package from $XX,XXX</div>
+									<div class="plan-disclaimer">Price is for the log package only. Foundation, labor, finishing, and local trades are separate.</div>
+									<a class="plan-link">View details →</a>
+								</div>
+								<div class="plan-card">
+									<div class="img-placeholder" style="height: 90px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">plan rendering</div>
+									</div>
+									<span class="plan-tag">Home</span>
+									<div class="plan-name">[Plan Name 3]</div>
+									<div class="plan-desc">Larger ranch-style layout with full porch.</div>
+									<div class="plan-specs">
+										<span>📐 2,400 sq ft</span>
+										<span>🛏 3 beds</span>
+										<span>🛁 2 baths</span>
+										<span>🏠 1 story</span>
+									</div>
+									<div class="plan-price">Package from $XX,XXX</div>
+									<div class="plan-disclaimer">Price is for the log package only. Foundation, labor, finishing, and local trades are separate.</div>
+									<a class="plan-link">View details →</a>
+								</div>
+								<div class="plan-card" style="opacity: 0.85;">
+									<div class="img-placeholder" style="height: 90px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">plan rendering</div>
+									</div>
+									<span class="plan-tag">Cabin</span>
+									<div class="plan-name">[Plan Name 4]</div>
+									<div class="plan-desc">Two-story cabin with loft bunkroom.</div>
+									<div class="plan-specs">
+										<span>📐 1,200 sq ft</span>
+										<span>🛏 2 beds</span>
+										<span>🛁 1 bath</span>
+										<span>🏠 2 stories</span>
+									</div>
+									<div class="plan-price">Package from $XX,XXX</div>
+									<div class="plan-disclaimer">Price is for the log package only. Foundation, labor, finishing, and local trades are separate.</div>
+									<a class="plan-link">View details →</a>
+								</div>
+								<div class="plan-card" style="opacity: 0.85;">
+									<div class="img-placeholder" style="height: 90px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">plan rendering</div>
+									</div>
+									<span class="plan-tag">Home</span>
+									<div class="plan-name">[Plan Name 5]</div>
+									<div class="plan-desc">Full lodge-style layout, open great room.</div>
+									<div class="plan-specs">
+										<span>📐 3,100 sq ft</span>
+										<span>🛏 4 beds</span>
+										<span>🛁 3 baths</span>
+										<span>🏠 2 stories</span>
+									</div>
+									<div class="plan-price">Package from $XX,XXX</div>
+									<div class="plan-disclaimer">Price is for the log package only. Foundation, labor, finishing, and local trades are separate.</div>
+									<a class="plan-link">View details →</a>
+								</div>
+								<div class="plan-card" style="opacity: 0.85;">
+									<div class="img-placeholder" style="height: 90px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">plan rendering</div>
+									</div>
+									<span class="plan-tag">Cabin</span>
+									<div class="plan-name">[Plan Name 6]</div>
+									<div class="plan-desc">Bunkhouse-style cabin. Sleeps 6+, simple to build.</div>
+									<div class="plan-specs">
+										<span>📐 960 sq ft</span>
+										<span>🛏 2 beds</span>
+										<span>🛁 1 bath</span>
+										<span>🏠 1 story</span>
+									</div>
+									<div class="plan-price">Package from $XX,XXX</div>
+									<div class="plan-disclaimer">Price is for the log package only. Foundation, labor, finishing, and local trades are separate.</div>
+									<a class="plan-link">View details →</a>
+								</div>
+							</div>
+
+							<div style="text-align: center; margin-top: 16px;">
+								<span class="wf-cta outline">Show more plans</span>
+							</div>
+
+							<div class="annotation">
+								Cards pulled from CMS Floor Plans collection, filtered where <strong>featured = true</strong>, sorted by sort_order. "Show more plans" loads 3 additional plans at a time (client-side, no page reload). No cap — Jeff can have 6 plans or 100 plans, the pagination handles it the same way. No separate index page in Phase 1; discovery happens here. Each card links to its dynamic detail page at /floor-plans/[plan-slug]. Jeff adds, edits, or reorders plans anytime via CMS without calling Jordan.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.6 Why Families Choose Us -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.6 — Why Families Choose Us</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-md">Why families choose us</div>
+							<div class="wf-body-text">Good logs, fair prices, and someone who actually picks up the phone.</div>
+
+							<div class="why-grid">
+								<div class="why-card">
+									<div class="img-placeholder">
+										<div class="img-label">Sawmill / log peeling craftsmanship photo from Wisconsin mill partner</div>
+									</div>
+									<h4>Wisconsin manufacturing network</h4>
+									<p>Every package is milled, prepared, and inspected by trusted Wisconsin sawmill partners and log craftsmen who've worked with Jeff for years. You get real hand-peeled logs — not tongue-and-groove, not machine-shaped uniformity — backed by a manufacturing operation refined over two decades.</p>
+								</div>
+								<div class="why-card">
+									<div class="img-placeholder">
+										<div class="img-label">Photo of Jeff (real, professional or candid)</div>
+									</div>
+									<h4>You talk to Jeff</h4>
+									<p>When you call, you get Jeff Glaza directly — not a call center, not a ticket queue, not a sales rep. Jeff personally handles every package from first call to final delivery, supported by the Wisconsin mill network that produces your materials. No middleman. No phone tree. Just the person who knows your build.</p>
+								</div>
+								<div class="why-card">
+									<div class="img-placeholder">
+										<div class="img-label">Truck and trailer — Jeff's actual rig hauling logs</div>
+									</div>
+									<h4>Fair, transparent pricing</h4>
+									<p>You buy the log package direct from us — no contractor markup, no dealer fees, no markup layers. You pick the style, species, and profile, and you get a package price tied to the actual materials our mill produces and ships. Builders, contractors, and owner-builders all get the same fair pricing.</p>
+								</div>
+								<div class="why-card">
+									<div class="img-placeholder">
+										<div class="img-label">Log home construction in progress / crane lifting logs</div>
+									</div>
+									<h4>Built for builders and DIYers</h4>
+									<p>Hiring a contractor or building it yourself, the package and the support are the same. Clear documentation, hand-peeled materials, and a direct person to call when questions come up during the build.</p>
+								</div>
+							</div>
+							<div class="annotation">
+								Each block is a repeater field in CMS — Jeff can reorder, edit copy, or swap images independently. Block 1 now leads with the Wisconsin manufacturing network to address builder-audience credibility before introducing the personal touch in Block 2. The "You talk to Jeff" block needs a real photo of Jeff plus a short bio paragraph (flagged in the Discussion Checklist below).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.7 How We're Built (NEW) -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.7 — How We're Built</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-eyebrow">How We're Built</div>
+							<div class="wf-heading-md">Wisconsin mills. Wisconsin craftsmen. One direct line.</div>
+							<div class="wf-body-text">
+								Classic Log Homes operates through a network of Wisconsin sawmill partners and log craftsmen. They mill, peel, and prepare every package. Jeff Glaza handles design, sourcing, customer support, and delivery — backed by manufacturing relationships refined over 22 years.
+							</div>
+							<div class="wf-body-text">
+								The mill produces. Jeff coordinates. You get one direct line from quote to delivery.
+							</div>
+
+							<div class="img-placeholder" style="height: 160px; margin: 14px 0;">
+								<div class="img-icon">🏭</div>
+								<div class="img-label">
+									Sawmill / mill operations / craftsmen at work<br />
+									Needs Jeff to source real photos from his sawmill partner
+								</div>
+							</div>
+
+							<div class="pillars-grid">
+								<div class="pillar-card">
+									<div class="pillar-icon">🪚</div>
+									<div class="pillar-label">Wisconsin<br/>Sawmill Network</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🪓</div>
+									<div class="pillar-label">Independent<br/>Log Craftsmen</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🚛</div>
+									<div class="pillar-label">Owner-Operated<br/>Delivery</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🤝</div>
+									<div class="pillar-label">22 Years of<br/>Partnerships</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Directly addresses the "two employees" credibility concern by showing the manufacturing network behind Jeff. Targets the builder/contractor audience specifically while not undermining the personal-touch story owner-builders want. Headline, body copy, icon strip items, and image are all CMS-editable.
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision · Sawmill Imagery</div>
+								<div class="decision-body">
+									Section requires real photos of Jeff's Wisconsin sawmill partner or mill operations. Without authentic imagery, this section feels hollow — exactly the opposite of its credibility intent. Jeff to source photos via a sawmill phone call before this section ships.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.7 How It Works -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.8 — How It Works</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-md">How it works</div>
+							<div class="wf-body-text">
+								Four steps that work the same whether you're hiring a builder or building it yourself.
+							</div>
+
+							<div class="steps-grid">
+								<div class="step-card">
+									<div class="step-num">01</div>
+									<h4>Plan &amp; budget</h4>
+									<p>Tell us about your build. Pick a floor plan or share your own. We talk through your land, budget, and what your local trades will handle.</p>
+								</div>
+								<div class="step-card">
+									<div class="step-num">02</div>
+									<h4>Design &amp; quote</h4>
+									<p>We finalize the blueprints and give you a firm price for your log package. No moving targets, no hidden fees — what you see is what ships.</p>
+								</div>
+								<div class="step-card">
+									<div class="step-num">03</div>
+									<h4>Source &amp; deliver</h4>
+									<p>Your logs are sourced, prepared, and delivered directly to your build site on our own truck. You don't pay a middleman to coordinate.</p>
+								</div>
+								<div class="step-card">
+									<div class="step-num">04</div>
+									<h4>Build locally</h4>
+									<p>Your builder, your crew, or you handle construction using the supplied package and assembly documentation. Jeff stays involved through the build — walking you through tricky sections, answering questions, and sometimes showing crews on site when he drops off the logs.</p>
+								</div>
+							</div>
+							<div class="annotation">
+								Subhead reworked to explicitly cover builders AND DIYers. Step 4 reflects Jeff's actual involvement — he likes the education side of the work, walks crews through assembly when he delivers, and sometimes shows on site. Not just a phone-support guy. Step titles, descriptions, and step count are all CMS-editable.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.8 Customer Feedback -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.9 — Customer Feedback</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-eyebrow">Customer Feedback</div>
+							<div class="wf-heading-md">What our families say</div>
+							<div class="wf-body-text">
+								Selected feedback from log package customers, going back to 2007.
+							</div>
+							<div style="margin-bottom: 12px">
+								<span class="trust-badge">★★★★★&nbsp;&nbsp;5.0 on Google Reviews</span>
+							</div>
+
+							<div class="testimonial-grid">
+								<div class="testimonial-card">
+									<div class="testimonial-stars">★★★★★</div>
+									<div class="verified-tag">Verified Google Review</div>
+									<div class="testimonial-quote">"Short 2–4 sentence testimonial. Mix of owner-builder voices and contractor/builder voices."</div>
+									<div class="testimonial-name">Customer Name</div>
+									<div class="testimonial-meta">Project / Location</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-stars">★★★★★</div>
+									<div class="verified-tag">Verified Google Review</div>
+									<div class="testimonial-quote">"Short 2–4 sentence testimonial. Mix of owner-builder voices and contractor/builder voices."</div>
+									<div class="testimonial-name">Customer Name</div>
+									<div class="testimonial-meta">Tomahawk Lodge</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-stars">★★★★★</div>
+									<div class="verified-tag">Verified Google Review</div>
+									<div class="testimonial-quote">"Short 2–4 sentence testimonial. Mix of owner-builder voices and contractor/builder voices."</div>
+									<div class="testimonial-name">Customer Name</div>
+									<div class="testimonial-meta">Project / Location</div>
+								</div>
+							</div>
+							<div style="margin-top: 14px; text-align: center;">
+								<a class="plan-link">See all reviews on Google →</a>
+							</div>
+
+							<div class="annotation">
+								Hand-curated from Jeff's 17+ named testimonials going back to 2007. Phase 1 is manual curation in CMS — Jeff selects which 3–5 to feature. Phase 2 candidate: optional live Google Reviews API integration.
+							</div>
+							<div class="decision-box">
+								<div class="decision-label">Decision · Testimonial Curation</div>
+								<div class="decision-body">
+									Jeff selects which 3–5 of his 17+ named testimonials to feature. Curation guidance: mix should include both owner-builder voices and contractor/builder voices to reinforce the dual-audience positioning.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.9 Ready to Get Started -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.10 — Ready to Get Started? <span style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent-warm); margin-left: 6px;">(reusable component)</span></div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-md">Ready to get started?</div>
+							<div class="wf-body-text">
+								Call Jeff directly or send a message. Either way, you talk to the person who supplies the package.
+							</div>
+
+							<div class="contact-grid">
+								<div class="contact-col">
+									<div class="contact-col-label">Call Jeff</div>
+									<div class="big-phone">(715) 887-2550</div>
+									<div class="wf-body-text" style="margin-bottom: 0; font-size: 12px;">
+										Available Monday–Friday. Showroom visits by appointment.
+									</div>
+								</div>
+								<div class="contact-col">
+									<div class="contact-col-label">Send a message</div>
+									<div class="form-grid">
+										<div class="form-field">
+											<div class="field-label">Name</div>
+											<div class="field-input">Your name</div>
+										</div>
+										<div class="form-field">
+											<div class="field-label">Phone</div>
+											<div class="field-input">(###) ###-####</div>
+										</div>
+										<div class="form-field">
+											<div class="field-label">Email</div>
+											<div class="field-input">your@email.com</div>
+										</div>
+										<div class="form-field">
+											<div class="field-label">Which floor plan?</div>
+											<div class="field-input">Select a plan ▾</div>
+										</div>
+										<div class="form-field full">
+											<div class="field-label">Tell us about your project</div>
+											<div class="field-input" style="min-height: 36px;">Your land, build timeline, questions...</div>
+										</div>
+										<div class="form-field full">
+											<div class="field-label">Project type</div>
+											<div class="field-radio-row">
+												<span class="field-radio">○ I'm an owner-builder</span>
+												<span class="field-radio">○ I'm a contractor</span>
+												<span class="field-radio">○ Still figuring it out</span>
+											</div>
+										</div>
+									</div>
+									<div style="margin-top: 10px;">
+										<span class="wf-cta accent">Send message →</span>
+									</div>
+									<div class="wf-body-text" style="font-size: 11px; margin-top: 8px; margin-bottom: 0; font-style: italic;">
+										Jeff typically responds within one business day.
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								This entire section is a <strong>reusable component</strong> — same component renders on every floor plan detail page at the bottom. The "Which floor plan?" dropdown pulls from the CMS Floor Plans collection plus a "Not sure yet" option. On detail pages, this field pre-fills with the current plan name.
+							</div>
+							<div class="annotation">
+								Form submissions are stored in the CMS (Jeff has a submissions inbox he can review anytime) and an email notification is sent directly to Jeff's inbox. GA4 fires <code>form_submit</code> event with project_type as a parameter. Click-to-call fires <code>phone_call</code> event. No CAPTCHA in Phase 1 — add only if spam becomes an issue.
+							</div>
+							<div class="decision-box">
+								<div class="decision-label">Decision · Showroom Hours Language</div>
+								<div class="decision-body">
+									Confirm with Jeff: "Available Monday–Friday. Showroom visits by appointment." Is this accurate? Adjust days/hours if needed.
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 1.10 Footer -->
+					<div class="wf-footer">
+						<div class="wf-footer-grid">
+							<div>
+								<div class="wf-footer-col-title">Classic Log Homes</div>
+								<div class="wf-footer-col-item">
+									Wisconsin-based log home package supplier with 22 years of manufacturing partnerships. Delivering hand-peeled log packages nationwide since 2004.
+								</div>
+							</div>
+							<div>
+								<div class="wf-footer-col-title">Floor Plans</div>
+								<div class="wf-footer-col-item">
+									[Plan Name 1]<br/>
+									[Plan Name 2]<br/>
+									[Plan Name 3]<br/>
+									[Plan Name 4]<br/>
+									[Plan Name 5]
+								</div>
+							</div>
+							<div>
+								<div class="wf-footer-col-title">Company</div>
+								<div class="wf-footer-col-item">
+									Home<br/>
+									Floor Plans<br/>
+									Gallery (when available)<br/>
+									About (when available)<br/>
+									Contact
+								</div>
+							</div>
+							<div>
+								<div class="wf-footer-col-title">Contact</div>
+								<div class="wf-footer-col-item">
+									(715) 887-2550<br/>
+									classicloghomes@gmail.com<br/>
+									3981 Pryne Road<br/>
+									Wisconsin Rapids, WI<br/>
+									Showroom by appointment
+								</div>
+							</div>
+						</div>
+						<div class="wf-footer-bottom">
+							<span>© 2026 Classic Log Homes, Inc.</span>
+							<span>Website by Latz Web Design</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="annotation" style="margin-top: 14px;">
+					<strong>1.11 — Footer:</strong> Floor Plans column auto-populates from CMS (first 5 plans, by sort_order). Gallery and About marked "(when available)" because they're Phase 2 additions. All footer content (tagline, contact details, links) is CMS-editable.
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: FLOOR PLAN DETAIL ── -->
+			<section class="wf-section" id="plan-detail">
+				<div class="section-label">
+					<span class="section-num">2</span> Floor Plan Detail &mdash; /floor-plans/[plan-slug]
+				</div>
+
+				<div class="annotation" style="margin-top: 0; margin-bottom: 14px; font-size: 13px;">
+					🔁 <strong>Dynamic page design.</strong> This single page design renders for every floor plan Jeff adds via CMS. URL slug, hero image, plan name, specs, description, key features, package contents, optional 3D walkaround link — all pulled from the per-plan CMS document. Wireframe below shows ONE representative example using "[Plan Name]" placeholders.
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Classic Log Homes</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Floor Plans</span>
+							<span>Reviews</span>
+							<span>Contact</span>
+						</div>
+						<div class="wf-nav-cta">
+							<span class="btn-mini">Request a quote</span>
+							<span class="btn-mini primary">(715) 887-2550</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="annotation" style="margin-top: 0; margin-bottom: 18px">
+							Same nav as home page. Phase 1: "Floor Plans" nav link is a scroll-to-anchor back to the Featured Floor Plans section on the home page. Phase 2: this link will route to a full /floor-plans index page.
+						</div>
+
+						<!-- 2.2 Plan Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">2.2 — Plan Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 220px">
+								<div class="img-icon">🪵</div>
+								<div class="img-label">
+									Hero image — rendering or real photo of the plan<br />
+									CMS-uploaded per plan
+								</div>
+							</div>
+							<div style="margin-top: 14px">
+								<span class="plan-tag">Cabin</span>
+								<div class="wf-heading-lg" style="margin-top: 6px;">[Plan Name]</div>
+							</div>
+
+							<div class="stats-bar">
+								<div class="stat-cell">
+									<div class="stat-value">X,XXX</div>
+									<div class="stat-label">SQ FT</div>
+								</div>
+								<div class="stat-cell">
+									<div class="stat-value">X</div>
+									<div class="stat-label">Bedrooms</div>
+								</div>
+								<div class="stat-cell">
+									<div class="stat-value">X</div>
+									<div class="stat-label">Bathrooms</div>
+								</div>
+								<div class="stat-cell">
+									<div class="stat-value">X</div>
+									<div class="stat-label">Stories</div>
+								</div>
+							</div>
+
+							<div class="sub-stats">
+								<span><strong>Footprint:</strong> XX' × XX'</span>
+								<span>·</span>
+								<span><strong>Wall height:</strong> X'</span>
+								<span>·</span>
+								<span><strong>Total area:</strong> X,XXX sq ft footprint</span>
+							</div>
+
+							<div class="annotation">
+								All specs are per-plan CMS fields. Jeff fills them in once per plan; the design renders them consistently across every detail page. Category tag is also a CMS field (e.g., Cabin, Home, Lodge).
+							</div>
+						</div>
+
+						<!-- 2.3 Design Renderings Gallery -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">2.3 — Design Renderings Gallery</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-sm" style="margin-bottom: 10px;">Design renderings · X images</div>
+							<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+								<div class="img-placeholder" style="height: 70px;">
+									<div class="img-label" style="font-size: 10px;">render 1</div>
+								</div>
+								<div class="img-placeholder" style="height: 70px;">
+									<div class="img-label" style="font-size: 10px;">render 2</div>
+								</div>
+								<div class="img-placeholder" style="height: 70px;">
+									<div class="img-label" style="font-size: 10px;">render 3</div>
+								</div>
+								<div class="img-placeholder" style="height: 70px;">
+									<div class="img-label" style="font-size: 10px;">render 4</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Jeff uploads multiple images per plan (orderable in CMS). Initially these are AI renderings from his design program; he swaps to real photos over time as builds complete. Gallery treatment (carousel, grid, lightbox) is the designer's call.
+							</div>
+						</div>
+
+						<!-- Main content + sidebar layout -->
+						<div class="pdp-grid">
+							<div>
+								<!-- 2.4 About This Plan -->
+								<div class="wf-block">
+									<div class="wf-block-header">
+										<div class="wf-heading-sm">2.4 — About This Plan</div>
+										<span class="cms-tag">CMS managed</span>
+									</div>
+									<div class="wf-heading-md">About this plan</div>
+									<div class="wf-body-text">
+										<strong>Paragraph 1 —</strong> Physical description of the plan. Size, key features, vibe, what kind of build it's designed for.
+									</div>
+									<div class="wf-body-text">
+										<strong>Paragraph 2 —</strong> What's flexible and what's local. Where this plan adapts to land, climate, and your builder's preferences.
+									</div>
+									<div class="wf-body-text">
+										<strong>Paragraph 3 —</strong> Honest caveat. "The package gives the builder a clear material and drawing basis. The owner should still collect local bids before treating the plan as a full project budget."
+									</div>
+									<div class="annotation">
+										Honest, grounded copy. The third "collect local bids" paragraph is unusual transparency and reinforces the supplier-coach positioning — keep it on every plan. Rich text field per plan in CMS.
+									</div>
+								</div>
+
+								<!-- 2.5 Key Features -->
+								<div class="wf-block">
+									<div class="wf-block-header">
+										<div class="wf-heading-sm">2.5 — Key Features</div>
+										<span class="cms-tag">CMS managed</span>
+									</div>
+									<div class="wf-heading-md">Key features</div>
+									<ul class="feature-list">
+										<li>Generous front porch</li>
+										<li>Spacious master suite</li>
+										<li>Open-concept main floor</li>
+										<li>Flexible loft space</li>
+										<li>[Plan-specific feature]</li>
+										<li>[Plan-specific feature]</li>
+									</ul>
+									<div class="annotation">
+										Quick scannable list. Jeff adds 4–8 key features per plan via a repeater field in CMS.
+									</div>
+								</div>
+
+								<!-- 2.6 What's in the Package -->
+								<div class="wf-block">
+									<div class="wf-block-header">
+										<div class="wf-heading-sm">2.6 — What's in the [Plan Name] Package</div>
+										<span class="cms-tag">CMS managed</span>
+									</div>
+									<div class="wf-heading-md">What's in the [Plan Name] package</div>
+									<div class="wf-body-text">
+										The $X,XXX starting price covers the log package. Here's what's included and what you'll source locally.
+									</div>
+									<div class="compare-grid">
+										<div class="compare-col included">
+											<div class="compare-title">Included in your package</div>
+											<ul class="compare-list checks">
+												<li>Exterior log walls, milled to spec</li>
+												<li>Full log or log siding for gable ends</li>
+												<li>Roof system (trusses or rafters)*</li>
+												<li>Heavy timber floor joists</li>
+												<li>Fasteners and hardware</li>
+												<li>Sealant and caulking recommendations</li>
+												<li>Detailed blueprints</li>
+												<li>Phone support through assembly</li>
+											</ul>
+										</div>
+										<div class="compare-col local">
+											<div class="compare-title">Not included (source locally)</div>
+											<ul class="compare-list marks">
+												<li>All conventional building materials</li>
+												<li>Foundation and site work</li>
+												<li>Well and septic</li>
+												<li>Electrical service</li>
+												<li>Plumbing</li>
+												<li>HVAC system</li>
+												<li>Roofing material (shingles/metal)</li>
+												<li>Windows and doors</li>
+												<li>Interior finishing</li>
+											</ul>
+										</div>
+									</div>
+									<div class="compare-footnote">
+										*Except where structural logs are used. Conventional building materials are better purchased at your local lumber yard, where they can provide correct engineering for your area.
+									</div>
+									<div class="annotation">
+										CMS pre-fills both lists with common defaults; Jeff edits per plan only where the package differs from the standard. Saves significant time on plan creation while allowing per-plan customization where it matters.
+									</div>
+								</div>
+
+								<!-- 2.7 3D Walkaround -->
+								<div class="wf-block">
+									<div class="wf-block-header">
+										<div class="wf-heading-sm">2.7 — 3D Walkaround Link <span style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent-warm); margin-left: 4px;">(optional per plan)</span></div>
+										<span class="cms-tag">CMS managed</span>
+									</div>
+									<div class="wf-heading-md">Walk around this cabin</div>
+									<div style="margin-top: 8px;">
+										<span class="wf-cta accent">Open 3D walkaround →</span>
+									</div>
+									<div class="annotation">
+										Optional per plan. If the URL field is empty in CMS, this entire section hides on that plan's detail page. Phase 1 = link-out to Jeff's design program. Phase 2 candidate = embedded walkaround.
+									</div>
+								</div>
+							</div>
+
+							<!-- 2.8 Sidebar Component -->
+							<div class="pdp-aside">
+								<div class="wf-block-header" style="margin-bottom: 8px;">
+									<div class="wf-heading-sm">2.8 — Sidebar</div>
+									<span class="cms-tag">CMS managed</span>
+								</div>
+
+								<div class="aside-section">
+									<div class="wf-heading-sm" style="font-size: 13px;">Talk to Jeff about the [Plan Name]</div>
+									<div class="wf-body-text" style="font-size: 12px; margin-top: 6px;">
+										Twenty-two years of these conversations. He'll talk you through pricing, customization, and what your local builder needs to handle.
+									</div>
+									<div style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
+										<span class="wf-cta accent" style="text-align: center;">(715) 887-2550</span>
+										<span class="wf-cta outline" style="text-align: center;">Request a quote</span>
+									</div>
+								</div>
+
+								<div class="aside-section">
+									<div class="wf-heading-sm" style="font-size: 13px;">Free guides</div>
+									<div style="margin-top: 8px;">
+										<div class="guide-row">
+											<span>Wholesale Price Guide</span>
+											<span class="guide-dl">⬇</span>
+										</div>
+										<div class="guide-row">
+											<span>2x8 Log Siding Guide</span>
+											<span class="guide-dl">⬇</span>
+										</div>
+										<div class="guide-row">
+											<span>[Additional guide title]</span>
+											<span class="guide-dl">⬇</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="aside-section">
+									<div class="wf-body-text" style="font-size: 11px; font-style: italic; margin-bottom: 0;">
+										Jeff typically responds within one business day.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation">
+							<strong>Sidebar behavior:</strong> Treat as a sticky/companion content block accompanying the main detail content — final layout (sticky-scroll, anchored, or stacked on mobile) is the designer's call. "Request a quote" anchor-scrolls to the bottom Ready to Get Started section with the floor plan pre-filled.
+						</div>
+						<div class="annotation">
+							<strong>Free guides is a GLOBAL CMS field</strong> — not per-plan. One PDF list managed in Sanity, same list renders on every floor plan detail page automatically. Jeff uploads or removes PDFs anytime.
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 2.9 Ready to Get Started (reused) -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">2.9 — Ready to Get Started? <span style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent-warm); margin-left: 6px;">(reused component from home)</span></div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Same component as home page Section 1.10. On detail pages, the "Which floor plan?" form field auto-pre-fills with the current plan name. All other fields, copy, and behavior identical to home.
+							</div>
+							<div class="annotation">
+								The contact component is built once and rendered in two places. Pre-fill logic: detail page renders → component receives current plan name as prop → "Which floor plan?" defaults to that name (user can still change it).
+							</div>
+						</div>
+					</div>
+
+					<!-- 2.10 Footer (same as home) -->
+					<div class="wf-footer">
+						<div class="wf-footer-grid">
+							<div>
+								<div class="wf-footer-col-title">Classic Log Homes</div>
+								<div class="wf-footer-col-item">
+									Wisconsin-based log home package supplier with 22 years of manufacturing partnerships. Delivering hand-peeled log packages nationwide since 2004.
+								</div>
+							</div>
+							<div>
+								<div class="wf-footer-col-title">Floor Plans</div>
+								<div class="wf-footer-col-item">
+									[Plan Name 1]<br/>
+									[Plan Name 2]<br/>
+									[Plan Name 3]<br/>
+									[Plan Name 4]<br/>
+									[Plan Name 5]
+								</div>
+							</div>
+							<div>
+								<div class="wf-footer-col-title">Company</div>
+								<div class="wf-footer-col-item">
+									Home<br/>
+									Floor Plans<br/>
+									Gallery (when available)<br/>
+									About (when available)<br/>
+									Contact
+								</div>
+							</div>
+							<div>
+								<div class="wf-footer-col-title">Contact</div>
+								<div class="wf-footer-col-item">
+									(715) 887-2550<br/>
+									classicloghomes@gmail.com<br/>
+									3981 Pryne Road<br/>
+									Wisconsin Rapids, WI<br/>
+									Showroom by appointment
+								</div>
+							</div>
+						</div>
+						<div class="wf-footer-bottom">
+							<span>© 2026 Classic Log Homes, Inc.</span>
+							<span>Website by Latz Web Design</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="annotation" style="margin-top: 14px;">
+					<strong>2.10 — Footer:</strong> Identical to home page footer. Same component, rendered globally.
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Tech Stack</strong> — Next.js 15+ (app router), React, Tailwind CSS, Framer Motion (selective), custom CMS built from scratch, Vercel hosting.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Hosting</strong> — First 12 months on Latz Web Design's Vercel account, $0/month to Jeff. Movable to Jeff's own account anytime.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Two Pages in Phase 1</strong> — Home + dynamic Floor Plan Detail page design. No standalone floor plans index, no About, no Gallery, no Contact page in Phase 1.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Dual-Audience Strategy</strong> — Site explicitly serves both owner-builders and contractors. Named in hero subhead, "What you're buying" subhead, Why Us blocks, How It Works, and the contact form's project type radio.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Positioning</strong> — Supplier-coach, not turnkey builder. Reinforced everywhere. No comparison to Golden Eagle or any competitor.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Self-Edit CMS</strong> — Standard inclusion, not premium. Jeff edits floor plans, prices, testimonials, free guides, hero, all Why Us blocks, and footer content himself.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No Price Calculator in Phase 1</strong> — Contact form replaces calculator. Quote process is conversational, matching Jeff's actual sales workflow.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Floor Plan Launch Count</strong> — 5–7 plans at launch. Jeff selects which plans; can add more anytime via CMS.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No Content Migration</strong> — Jeff selects a fresh subset of plans; no transfer of data from the WordPress site.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Reusable Contact Component</strong> — Same "Ready to Get Started?" component renders on home page and every floor plan detail page. "Which floor plan?" field pre-fills on detail pages.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Free Guides as Global CMS Field</strong> — One PDF list, same list shown on every floor plan detail page sidebar.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>3D Walkaround = Link-Out</strong> — Optional per-plan URL field. If empty, the entire section hides. No embedded 3D in Phase 1.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Analytics</strong> — GA4 + GTM + form submission tracking + click-to-call tracking. GTM container ID to be set up fresh during build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Mobile-First Responsive</strong> — All breakpoints. Dark theme tested for WCAG AA contrast.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Manufacturing Network Framing</strong> — Site explicitly shows the Wisconsin sawmill network and log craftsmen behind Jeff to address builder-audience credibility concerns. Personal touch retained for owner-builders but balanced with scale signals throughout (new "How We're Built" section, Four Pillars Bar revision, Why Us Block 1 rewrite).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Nationwide Delivery</strong> — Confirmed. Stays as one of the Four Pillars.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Brand Colors</strong> — Dark warm browns/blacks with gold and orange accents (per the AI reference site Jeff liked).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Copy Voice</strong> — Direct, no-fluff, dual-audience, "supplier in the supplier lane." Phrases like "the way log home building has always worked best" and "you talk to Jeff" anchor the voice.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Domain</strong> — classicloghomes.biz vs classicloghomesupply.com. Jeff to decide. Affects URL structure and branding emphasis.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Hero Headline</strong> — "Wisconsin-made log home packages. Done the right way." Working headline — open to alternatives during design review.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>"Our Own Truck" Claim</strong> — Confirmed in source material; verify Jeff wants it front-and-center on the How It Works step 3.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Sawmill / Manufacturing Imagery</strong> — Jeff needs to source real photos of his Wisconsin sawmill partner and mill operations to populate the new "How We're Built" section, plus a refreshed image for Why Us Block 1. Without real imagery these sections feel hollow — exactly the opposite of their credibility intent. Jeff to source via a sawmill phone call.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Showroom Hours Language</strong> — "Available Monday–Friday. Showroom visits by appointment." Confirm exact wording is accurate.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Testimonial Curation</strong> — Which 3–5 of Jeff's 17+ named testimonials to feature? Curation guidance: mix of owner-builder and contractor voices.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Floor Plan Launch Selection</strong> — Which 5–7 of Jeff's ~50 plans should be the launch set? Should span DIY-friendly small cabins → mid-range → larger homes.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>About Jeff Content</strong> — Need a short bio paragraph + photo for the "You talk to Jeff" Why Us block.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Facebook Link in Footer</strong> — Currently dead on Jeff's existing site. Verify the active URL or remove the link entirely.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
