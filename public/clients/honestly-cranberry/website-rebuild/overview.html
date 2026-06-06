@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Honestly Cranberry — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB + OVERLAY ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 300;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms ease;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'CRANBERRY';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-shopify { background: #d6f5e3; color: #006b3c; }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay { display: block; pointer-events: none; }
+    .mobile-overlay.active { pointer-events: auto; }
+
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+    .content { padding: 32px 20px 80px; }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Honestly Cranberry</div>
+    <div class="status-pill">Active Prospect</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🍒</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Honestly Cranberry</h1>
+    <div class="sub">honestlycranberry.com · Shopify Migration + Custom Next.js Front End</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Primary Contact</span>
+        <span class="value">Allison Brown Hewett</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Decision Maker</span>
+        <span class="value">Mary Brazeau Brown</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Proposed Range</span>
+        <span class="value">$6,500–$7,500</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit</span>
+        <span class="value" style="color:#fdba74;">Not Yet — Proposal Pending</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://honestlycranberry.com" target="_blank">honestlycranberry.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Referral Source</span>
+        <span class="value">Pookie (existing client)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🍒</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Allison Brown Hewett — Day-to-Day</h3>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Daughter, day-to-day operator (5th gen)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:info@honestlycranberry.com">info@honestlycranberry.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Personal Note</span>
+            <span class="data-value">Has 3-year-old Emmy (sometimes around). Married name Brown Hewett. Bridges to mom.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Communication</span>
+            <span class="data-value">Primary point of contact. Responsive, warm, organized.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Mary Brazeau Brown — Founder</h3>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Founder, primary decision-maker (4th gen)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Parent Business</span>
+            <span class="data-value">Glacial Lake Cranberries (also owns)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Background</span>
+            <span class="data-value">Fourth-generation cranberry farmer. The brand is hers. Don't talk past her.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Family</span>
+            <span class="data-value">Son Stephen Brown (farm manager); Allison (DTC side)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Organization &amp; Business Context</h3>
+        <div class="data-row">
+          <span class="data-label">Client Type</span>
+          <span class="data-value">DTC food brand (unsweetened dried cranberries) — vertically integrated arm of family farm</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Parent Operation</span>
+          <span class="data-value">Glacial Lake Cranberries — founded 1873 by Arpin family. 6,000 acres in Cranmoor, WI (330 cranberry, 2,600 forestry). 12 varieties.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Production Scale</span>
+          <span class="data-value">12,200 lbs/min through receiving station at harvest peak; 10–15 semi loads/day</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Product</span>
+          <span class="data-value">Single-ingredient unsweetened dried cranberries. No sugar, no oils. Premium pricing.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Target Customer</span>
+          <span class="data-value">Health-conscious, paleo, keto, gut-health-focused buyers</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Location</span>
+          <span class="data-value">7351 Integrity Way, Wisconsin Rapids, WI 54494 (Biron Business Park)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Phone</span>
+          <span class="data-value">715-424-REAL (7325)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Family Culture</span>
+          <span class="data-value">Family-owned, bootstrapped, no outside investment. Farmer / margin-conscious culture, but real cash flow.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Brand Credibility Assets (Currently Underleveraged)</h3>
+        <ul class="checklist">
+          <li><span class="check-icon">📺</span> <strong>Wisconsin Foodie</strong> — PBS-affiliated, 23-min episode (Feb 2019). 34K YouTube subscribers.</li>
+          <li><span class="check-icon">👨‍🍳</span> <strong>Chef Luke Zahm</strong> (Driftless Cafe) uses their cranberries in duck-pork sausage</li>
+          <li><span class="check-icon">🏡</span> <strong>4th-generation family</strong> story — 150+ years of cranberry farming</li>
+          <li><span class="check-icon">🧀</span> Wisconsin angle: state produces 60% of the world's cranberries; state fruit</li>
+          <li><span class="check-icon">🛡️</span> SnackSafely "safe snack" badge + recycling badge</li>
+          <li><span class="check-icon">⭐</span> ~1,000 Yotpo reviews + large Amazon review base + Google reviews</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Migrate from WordPress + WooCommerce + Beaver Builder + GoDaddy to Shopify Basic + custom Next.js front end.</strong>
+        <p>Post-discovery, strong fit signals. Client wants to move ASAP, not shopping around, conversation was logistics-focused not convincing. Pricing position: $6,500–$7,500. No deposit yet — proposal is next deliverable.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Came to Us</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> <strong>Reliability</strong> — checkout failures actively losing customers. One placed order, thought it didn't go through, ordered again, had to call to cancel.</li>
+            <li><span class="check-icon">🔴</span> "It's been a bit of a nightmare for a year and a half" (Mary's words)</li>
+            <li><span class="check-icon">🔴</span> WordPress + WooCommerce + Beaver Builder + GoDaddy combo is the wrong stack for them</li>
+            <li><span class="check-icon">🔴</span> Brand story (4th-gen, Wisconsin Foodie, chef partners) invisible on current site</li>
+            <li><span class="check-icon">🔴</span> Paying $1,375/yr — getting less than they should for that</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Reliable checkout — Shopify infrastructure solves duplicate-order problem</li>
+            <li><span class="check-icon">✅</span> Story-forward homepage finally showcasing 4th-gen / Wisconsin Foodie</li>
+            <li><span class="check-icon">✅</span> ~1,000 Yotpo reviews migrated and beautifully integrated</li>
+            <li><span class="check-icon">✅</span> Annual cost ~$500–900/yr (down from $1,375/yr)</li>
+            <li><span class="check-icon">✅</span> Mary &amp; Allison can manage content themselves via Sanity</li>
+            <li><span class="check-icon">✅</span> They own the code forever, no monthly fees to Latz</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>The core objection — already disarmed</strong>
+          <span>Mary's opening question was "Is this something we can do ourselves with Shopify, or where do you come in?" — the budget-conscious anchor against a $2K–$5K Shopify Expert tier. The honest framing was given in the reply: yes you can DIY, but the move is the chance to actually tell your story. Post-discovery they didn't push back on scope — confidence on pricing is appropriate.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open: photography inventory</strong>
+          <span>Critical for story-forward homepage. If gap exists: arrange shoot (cost), family captures during fall 2026 harvest, or investigate Wisconsin Foodie still licensing. Resolve before proposal lands.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open: Mary's role at the discovery meeting</strong>
+          <span>Mary's participation status at the June 5 meeting is unconfirmed in notes. Whether she joined by phone or only Allison was present affects how the proposal is delivered — Mary is the actual decision-maker.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>NOT in v1 scope</strong>
+          <span>B2B/wholesale portal · custom-branded customer accounts · full recipes SEO section · B2B login with tier pricing · "Used By Chefs" feature section. All explicitly Phase 2 options.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>v1 Build — Shopify Migration + Custom Next.js</strong></td>
+            <td>Custom front end, Storefront API integration, Yotpo reviews, FAQ system, Sanity CMS, GA4/Search Console migration</td>
+            <td class="amount">$6,500–$7,500</td>
+          </tr>
+          <tr>
+            <td>Wholesale add-on (optional)</td>
+            <td>Dedicated wholesale page + structured inquiry form + downloadable spec sheet PDF</td>
+            <td class="amount">$1,500–$2,500</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Likely Total (v1 only)</strong></td>
+            <td>Anchor against $8K–$20K real market for custom-build, not $2K–$5K Shopify Expert tier</td>
+            <td class="amount"><strong>~$7,000</strong></td>
+          </tr>
+          <tr>
+            <td>50% deposit at signing</td>
+            <td>Standard structure — not yet received</td>
+            <td class="amount">~$3,500</td>
+          </tr>
+          <tr>
+            <td>Balance at launch</td>
+            <td>Due when site goes live</td>
+            <td class="amount">~$3,500</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Shopify Basic</span>
+          <span class="data-value">~$29/mo (or $39/mo depending on current pricing) — required commerce backend</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vercel Hosting</span>
+          <span class="data-value">$0 free tier sufficient at current traffic (485 clicks/28d). Pro $20/mo if scale demands.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Yotpo</span>
+          <span class="data-value">Free tier — confirm API access is still included pre-launch. Worst case $15–30/mo lowest paid tier.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Sanity CMS</span>
+          <span class="data-value">Free tier sufficient for project scale</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">honestlycranberry.com — keeps wherever currently registered</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Old Stack</span>
+          <span class="data-value">Cancel GoDaddy + WordPress hosting at launch. Confirm renewal dates before cutover.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story for the Proposal</strong>
+          <span>Currently paying $1,375/yr for a broken site. New stack ~$500–900/yr depending on Yotpo tier. They save money annually AND get a reliable site that actually converts. A $7K custom build at likely revenue ($400K–$800K) is 0.9–1.7% of revenue — normal marketing spend, not a stretch. Dollarize the 5-year savings vs. current pain in the proposal.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Inferred Revenue (Not Confirmed — Do Not Quote)</h3>
+        <div class="data-row">
+          <span class="data-label">HC Revenue (likely)</span>
+          <span class="data-value">$400K–$800K annual. Upside $1M+ if Amazon volume is large.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">HC Net Profit (est.)</span>
+          <span class="data-value">$80K–$200K. Gross margin 70–80% on DTC (they grow it themselves).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Parent (Glacial Lake)</span>
+          <span class="data-value">$2M–$5M gross annually estimated</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Fast cycle — 7 days from first contact to in-person discovery</strong>
+          <span>Inbound warm referral from Pookie. No price shopping. Strong fit signals throughout discovery. Next deliverable: formal proposal within a few days.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 29, 2026 · 1:41 PM</div>
+          <div class="timeline-title">Initial Contact — Mary's Email</div>
+          <div class="timeline-desc">Mary &amp; Allison emailed from info@honestlycranberry.com. Referenced Pookie referral. Direct ask: thoughts on current stack (GoDaddy + WP + Woo "nightmare for a year and a half"), interest in moving to Shopify, "is this something we can do ourselves… or where do you come in?"</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 29, 2026 · 3:10 PM</div>
+          <div class="timeline-title">Jordan's Reply</div>
+          <div class="timeline-desc">Validated stack pain (named the exact combo as the problem, not WP as a category). Gave honest answer on DIY (yes, real time investment). Planted 4th-gen / Wisconsin Foodie angle — pointed out the brand story is invisible on current site. Offered 20–30 min call or in-person meeting, stated in-person preference.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 29, 2026 · 4:01 PM</div>
+          <div class="timeline-title">Allison Offers Times</div>
+          <div class="timeline-desc">Monday after 10ish / Tuesday afternoon / Friday — flexible. Mentioned 3-year-old Emmy might be present or napping.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">May 29, 2026 · 4:16 PM</div>
+          <div class="timeline-title">Jordan Confirms Friday Available</div>
+          <div class="timeline-desc">Open all of Friday. Offered Tuesday as backup with kindergarten-pickup constraint (back in Stevens Point by 3 PM). Parent-to-parent rapport noted.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jun 1, 2026 · 12:29 PM</div>
+          <div class="timeline-title">Friday 10:30 Locked</div>
+          <div class="timeline-desc">Allison confirmed Friday 10 or 10:30. Mary "might be on the road but could call her while we're here."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jun 1, 2026 · 1:40 PM</div>
+          <div class="timeline-title">Address Provided</div>
+          <div class="timeline-desc">7351 Integrity Way, Wisconsin Rapids, WI 54494 — Biron Business Park off 72nd Street.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jun 5, 2026 · 8:29 AM</div>
+          <div class="timeline-title">Same-Day Heads-Up</div>
+          <div class="timeline-desc">Cell number (715-630-5689) shared, no-pressure framing — "if anything comes up on your end."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jun 5, 2026 · 10:30 AM</div>
+          <div class="timeline-title">🎉 Discovery Meeting — Wisconsin Rapids</div>
+          <div class="timeline-desc">Strong fit signals throughout. Allison present in person; Mary's participation TBD per notes. Conversation focused on logistics, not convincing. Confirmed: reliability is #1 pain. Yotpo reviews (~1,000) critical. FAQ system important. 5–8 PDFs to host. Wisconsin Foodie embed wanted. Current cost $1,375/yr. 28-day GSC data: 485 clicks / 25K impressions.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Jun 6, 2026 — NOW</div>
+          <div class="timeline-title">📝 Proposal Drafting</div>
+          <div class="timeline-desc">Formal proposal targeted within a few days. Range: $6,500–$7,500 v1; +$1.5–2.5K wholesale add-on optional. Photography inventory question to resolve before proposal lands.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Signed Proposal + Deposit</div>
+          <div class="timeline-desc">50% deposit at signature to kick off. ASAP timeline desired by client — confirm realistic 6–10 weeks to launch in proposal.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>v1 Approach: Custom Next.js front end + Shopify Basic backend</strong>
+          <span>Story-forward, mobile-first, conversion-focused. Shopify quietly handling commerce. Sanity managing self-updatable content. Health-conscious / paleo / keto / gut-health customer profile shapes messaging and SEO.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static / Sanity</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Story-forward hero: 4th-generation Wisconsin farm</li>
+            <li>Wisconsin Foodie highlight reel (60–90s) with full-episode link</li>
+            <li>Trust strip: women-owned, allergen-free, WI-owned, recyclable</li>
+            <li>Featured products from Shopify Storefront API</li>
+            <li>Yotpo + Google reviews social proof</li>
+            <li>Health angle: paleo / keto / gut-health</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static / Sanity</span>
+          <h4>Our Story</h4>
+          <ul>
+            <li>1873 Arpin family origin → 4th gen Mary → 5th gen Allison + Stephen</li>
+            <li>6,000 acres in Cranmoor, WI</li>
+            <li>Wisconsin Foodie episode embed (lite YouTube embed, lazy-loaded)</li>
+            <li>Family + farm photography (pending inventory)</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-shopify">Shopify Storefront API</span>
+          <h4>Store / Products</h4>
+          <ul>
+            <li>Custom-designed product pages, live from Shopify</li>
+            <li>Yotpo product-level reviews server-rendered with rich snippets</li>
+            <li>SKUs: 1oz $3.99, 3oz $10.99, 1lb $45, cases, bulk</li>
+            <li>Shopify hosted checkout, styled to brand</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static / Sanity</span>
+          <h4>Health Benefits</h4>
+          <ul>
+            <li>Single-ingredient, no sugar, no oils messaging</li>
+            <li>Paleo / keto / gut-health positioning</li>
+            <li>Sanity-managed for easy updates</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Sanity FAQ</span>
+          <h4>FAQs</h4>
+          <ul>
+            <li>Large volume from current site — preserved</li>
+            <li>Accordion expand/collapse with Framer Motion</li>
+            <li>Grouped categories: Shipping / Product / Health</li>
+            <li>FAQ schema markup for Google rich snippets</li>
+            <li>Search if volume warrants</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Contact</h4>
+          <ul>
+            <li>Phone: 715-424-REAL (click-to-call)</li>
+            <li>Email: info@honestlycranberry.com</li>
+            <li>Contact form for general inquiries</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-shopify">Shopify hosted (v1)</span>
+          <h4>/my-account</h4>
+          <ul>
+            <li>Shopify hosted account pages — login, register, orders</li>
+            <li>Reliable + free + adequate for DTC food customers</li>
+            <li>Custom-branded account pages = Phase 2 ($1–2K) if data warrants</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Sanity PDF Library</span>
+          <h4>Downloadable PDFs</h4>
+          <ul>
+            <li>5–8 PDFs identified by client — content TBD</li>
+            <li>Stored in Sanity PDF array, swappable without dev work</li>
+            <li>Placement TBD: product pages, downloads section, or recipes</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Phase 2 — Not in v1</span>
+          <h4>Wholesale Page + Inquiry Form</h4>
+          <ul>
+            <li>Dedicated B2B page, structured inquiry form, spec sheet PDF</li>
+            <li>Optional add-on $1.5–2.5K if green-lit at proposal stage</li>
+            <li>Client did not flag B2B as priority</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Phase 2 — Not in v1</span>
+          <h4>Recipes Section</h4>
+          <ul>
+            <li>SEO-targeted landing pages for chefs/home cooks</li>
+            <li>Sanity-managed content type</li>
+            <li>Pitch 3–6 months post-launch</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Phase 2 — Not in v1</span>
+          <h4>"Used By Chefs" Feature</h4>
+          <ul>
+            <li>Luke Zahm / Driftless Cafe partnership feature</li>
+            <li>Connects to chef/foodservice buyers</li>
+            <li>Post-launch upsell</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Photography is the biggest content unknown</strong>
+          <span>Story-forward homepage depends on real farm/family/harvest imagery. Resolve inventory question before proposal lands so scope reflects reality (shoot needed vs. existing assets vs. fall 2026 harvest capture).</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Photography — farm, family, harvest, product</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Critical for story-forward design. Investigate Wisconsin Foodie still licensing as supplement.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Unknown — Flag Question</span></span>
+          </li>
+          <li>
+            <span class="check-icon">⭐</span>
+            <div>
+              <strong>Yotpo reviews migration</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">~1,000 reviews. Submit support ticket from old → new Shopify store. Confirm free-tier migration path.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In Hand — Plan Migration</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>5–8 downloadable PDFs</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Content type unknown — could be spec sheets, recipes, press kit. Identify each to decide placement.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">❓</span>
+            <div>
+              <strong>FAQ content</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Large volume on current site. Will pull and re-organize into Shipping / Product / Health categories.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">Available on Current Site</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Existing copy</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Client feels good about it. Scope = reorganize and display better, not rewrite from scratch.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Available</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🛡️</span>
+            <div>
+              <strong>Certification badges</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Women-owned · allergen-free · WI-owned/dried · How2Recycle. Design custom clean SVG icons.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Known — Build SVGs</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📺</span>
+            <div>
+              <strong>Wisconsin Foodie video access</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">YouTube embed is public. Want to cut 60–90s highlight reel — confirm permission with WI Foodie or work from YouTube version only.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Confirm Use Rights</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔑</span>
+            <div>
+              <strong>Admin access</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Need: GA4, Search Console (user add), Yotpo, current Shopify if exists, GoDaddy/DNS at cutover</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Post-Signature</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📐</span>
+            <div>
+              <strong>Old GoDaddy Sites screenshots</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Client liked their previous version (honestlycranberry.godaddysites.com) — simple and clean. Screenshot for design signal.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In Hand — Save Refs</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📊</span>
+            <div>
+              <strong>Channel mix breakdown</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">DTC % vs Amazon % vs anything else — affects how aggressively to lean into Amazon→site conversion</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📈</span>
+            <div>
+              <strong>Current conversion rate baseline</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Even ballpark. Sets post-launch benchmark.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💸</span>
+            <div>
+              <strong>$1,375/yr breakdown</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">What's hosting vs plugins vs Yotpo vs anything else — sharpens the savings story</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>New Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Commerce</span>
+            <span class="data-value">Shopify Basic (Storefront API, hosted checkout)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Sanity — content, PDFs, FAQ, featured items</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Reviews</span>
+            <span class="data-value">Yotpo REST API → server-rendered custom Tailwind components</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Google Reviews</span>
+            <span class="data-value">Google Places API (5 most recent, supplemental)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Customer Accounts</span>
+            <span class="data-value">Shopify hosted in v1</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel (free tier sufficient at current scale)</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Current Stack (Being Replaced)</h3>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">WordPress</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Commerce</span>
+            <span class="data-value">WooCommerce</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Page Builder</span>
+            <span class="data-value">Beaver Builder (fl-* CSS, bb-plugin cache paths)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">GoDaddy (nebula.wsimg.com CDN)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Payments</span>
+            <span class="data-value">PayPal Commerce</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Analytics</span>
+            <span class="data-value">Google Site Kit</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Cost</span>
+            <span class="data-value">$1,375/year — being eliminated</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Reviews Integration — Critical Detail</h3>
+        <div class="data-row">
+          <span class="data-label">Yotpo</span>
+          <span class="data-value">~1,000 reviews. Server-side fetch via REST API in Next.js. Hourly revalidation cache. Custom components for design control + rich snippets.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Yotpo Pre-Launch Check</span>
+          <span class="data-value">Confirm free tier still includes API access. If gated → budget lowest paid tier ($15–30/mo) OR fall back to embedded widgets.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Yotpo Migration</span>
+          <span class="data-value">Support ticket from old Shopify → new Shopify store. Confirm free-tier migration is supported.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Reviews</span>
+          <span class="data-value">Google Places API → homepage/brand-level. Limit: 5 most recent only. "See all on Google" link supplements.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Amazon Reviews</span>
+          <span class="data-value">⛔ Cannot import — TOS violation. Screenshot selected reviews as social proof images only. Manage expectations.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Analytics &amp; SEO Continuity (Post-Signature)</h3>
+        <div class="data-row">
+          <span class="data-label">Search Console</span>
+          <span class="data-value">Source of 485 clicks / 25K impressions (28d). Re-verify new domain at launch. Historical data preserved at property level.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">GA4</span>
+          <span class="data-value">Install same tracking code on new site to preserve historical data continuity.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Business Profile</span>
+          <span class="data-value">Separate maps/search listing — unrelated to migration, stays as-is.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Access Needed</span>
+          <span class="data-value">Get added as user on GA4 + Search Console before launch. Benchmark current metrics.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Performance &amp; SEO Targets</h3>
+        <div class="data-row">
+          <span class="data-label">Core Web Vitals</span>
+          <span class="data-value">Custom Next.js will dramatically outpace Beaver Builder. Pitch this as SEO benefit.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Mobile-First</span>
+          <span class="data-value">Required — DTC food customer base skews mobile</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Rich Snippets</span>
+          <span class="data-value">Product schema (Shopify) + Review schema (Yotpo) + FAQ schema (Sanity content)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Image Optimization</span>
+          <span class="data-value">Next.js Image component throughout — critical for cranberry/farm photography</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Client wants ASAP — realistic 6–10 weeks from signed proposal</strong>
+          <span>Set expectation in proposal: timeline depends on photography situation + content readiness. Don't underprice because they said "ASAP" — urgency is leverage for Jordan, not the client.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Pre-Signature — NOW</div>
+          <h4>Proposal &amp; Open Questions</h4>
+          <ul>
+            <li>Resolve photography inventory question with Allison</li>
+            <li>Confirm Mary's involvement in proposal review</li>
+            <li>Verify Yotpo free-tier API access is still active</li>
+            <li>Build proposal: v1 scope $6,500–$7,500, optional wholesale +$1.5–2.5K</li>
+            <li>Send proposal within a few days of June 5 meeting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Week 1 post-signature</div>
+          <h4>Setup &amp; Discovery Follow-Up</h4>
+          <ul>
+            <li>50% deposit received → kickoff</li>
+            <li>Identify the 5–8 PDFs and their intended placement</li>
+            <li>Get access: GA4, Search Console, Yotpo, current Shopify, GoDaddy</li>
+            <li>Set up new Shopify Basic store</li>
+            <li>Spin up Next.js repo, Vercel project, Sanity project</li>
+            <li>Submit Yotpo migration support ticket</li>
+            <li>Capture old GoDaddy Sites screenshots for design reference</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 2–5</div>
+          <h4>Design &amp; Build</h4>
+          <ul>
+            <li>Story-forward homepage with 4th-gen / Wisconsin Foodie / health angle</li>
+            <li>Our Story page with embedded Wisconsin Foodie video</li>
+            <li>Product pages via Shopify Storefront API</li>
+            <li>Yotpo integration — server-rendered, custom Tailwind components</li>
+            <li>FAQ accordion system with Framer Motion + schema</li>
+            <li>Custom SVG certification badges</li>
+            <li>Sanity content type setup + PDF library</li>
+            <li>Live dev link for Mary &amp; Allison to review as it's built</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 5–7</div>
+          <h4>Content Integration &amp; Refinement</h4>
+          <ul>
+            <li>Populate real product/content as access lands</li>
+            <li>Integrate Yotpo reviews + Google reviews</li>
+            <li>Photography integration (or placeholder strategy if shoot is post-launch)</li>
+            <li>Implement Mary/Allison feedback from review rounds</li>
+            <li>Mobile + accessibility + Core Web Vitals pass</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">Weeks 7–10</div>
+          <h4>Launch</h4>
+          <ul>
+            <li>GA4 + Search Console migration (preserve historical data)</li>
+            <li>Domain DNS cutover to Vercel</li>
+            <li>Old GoDaddy/WP/Woo decommissioning checklist for client</li>
+            <li>Yotpo reviews verified post-cutover</li>
+            <li>Sanity CMS training session with Allison</li>
+            <li>CMS guide delivered</li>
+            <li>Final 50% invoice sent</li>
+            <li>Post-launch check-in scheduled (30 / 60 / 90 days)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells &amp; Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Wholesale add-on is the only one to pitch at proposal stage</strong>
+          <span>Everything else: 3–6 months post-launch once they're comfortable, reviews are humming, and conversion data exists to point at. Don't crowd the v1 conversation.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🏪 Wholesale Page + Inquiry Form</h4>
+          <div class="price">$1,500–$2,500</div>
+          <p>Dedicated B2B page + structured inquiry form + downloadable spec sheet PDF. Pitch at proposal stage as optional add-on — client doesn't see B2B as v1 priority but it's the natural next layer for a premium specialty food brand.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>👨‍🍳 "Used By Chefs" Section</h4>
+          <div class="price">$600–$900</div>
+          <p>Feature Luke Zahm / Driftless Cafe partnership. Connects to chef/foodservice buyers. Strong content asset already exists in Wisconsin Foodie episode.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📖 Recipes Section (SEO Engine)</h4>
+          <div class="price">$1,200–$2,000</div>
+          <p>Sanity-managed recipes section with SEO-targeted landing pages. Health-conscious / paleo / keto recipes drive organic traffic. The actual SEO play — current site has none.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔐 Custom-Branded Customer Accounts</h4>
+          <div class="price">$1,000–$2,000</div>
+          <p>Replace Shopify hosted accounts with custom Next.js account pages via Customer Account API. Only worth doing if account usage data justifies it post-launch.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🏢 B2B Login Portal w/ Tier Pricing</h4>
+          <div class="price">$2,500–$4,000</div>
+          <p>Shopify Wholesale Club (or similar) integration for tiered B2B pricing, account-managed repeat ordering. Only if wholesale grows enough to justify it.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📸 Photography Shoot</h4>
+          <div class="price">~$1,500–$3,000</div>
+          <p>Professional farm/family/harvest/product photography if inventory comes up short. Coordinate with fall 2026 harvest for authenticity. Critical input for story-forward design.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance Retainer</h4>
+          <div class="price">$500–$1,000/yr</div>
+          <p>Light retainer: seasonal updates, harvest-time content, small adjustments, monitoring. Good fit for family-run team focused on the farm, not the website.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📊 Conversion Optimization Sprint</h4>
+          <div class="price">$1,500–$2,500</div>
+          <p>Post-launch (3–6 months in) once GA4 has baseline data. Targeted improvements based on real funnel data, not guesses. Pitch when conversion benchmark exists.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎬 Wisconsin Foodie Highlight Reel (Pro Edit)</h4>
+          <div class="price">$400–$700</div>
+          <p>If a polished 60–90s edit is wanted vs. an in-house cut. Could subcontract to a video editor. Strong homepage asset.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes &amp; Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Post-Discovery — June 5, 2026</div>
+        <p>Strongest signal: conversation focused on logistics, not convincing. They aren't shopping. They're asking how, not whether. Sole vendor + warm referral + ASAP timeline = strong pricing position. Anchor with confidence at $6,500–$7,500. Don't underprice because they said ASAP — urgency is leverage for Jordan, not them.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Relationship Dynamics</div>
+        <p>Mary = matriarch + decision-maker (4th gen, the brand is hers). Allison = bridge + day-to-day operator (5th gen, has Emmy/3yo). Pookie = marketing strategist who referred — stay out of her lane on marketing strategy. Don't talk past Mary to Allison. Confirm Mary's review-loop involvement before sending proposal.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Parent-to-Parent Rapport</div>
+        <p>Allison has 3yo Emmy; Jordan has 3 and 6yo. Kindergarten-pickup constraint surfaced naturally in scheduling. This rapport already exists — don't manufacture it but lean into the working-parent solidarity when appropriate. Family-owned business respects family.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Stack-Framing Discipline</div>
+        <p>Mary specifically named GoDaddy + WordPress + WooCommerce as a "nightmare." Frame the combo as the problem, NOT WordPress as a category. Mary may bristle at platform-tribal trash talk — she's been on WP for 1.5 years and chose it once. The problem is the stack mix for a non-technical food brand, not WP itself.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Reliability is the Emotional Hook</div>
+        <p>The duplicate-order-then-cancel story is the moment to come back to repeatedly. That's not a tech problem — that's a customer losing trust in their brand because of a broken checkout. Shopify handles this. Make this concrete in the proposal: "Shopify processes billions in GMV. The duplicate-order problem disappears."</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Reviews Strategy — Be Honest</div>
+        <p>~1,000 Yotpo reviews are a real asset. Don't drop Yotpo. But have the gentle conversation: Yotpo = product-level (huge for conversion); Google = business-level trust. Keep both running, don't try to consolidate everything. Amazon reviews CANNOT be imported (TOS violation) — manage that expectation early so it's not a launch-day disappointment.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Playground Project (Allison Side)</div>
+        <p>Pookie is also working with Allison on a separate indoor playground project (separate overview). Do NOT bring it up unless Allison does. Mary may not be looped in on it and it could create awkward dynamics in the family-business decision-making.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pricing Anchor Discipline</div>
+        <p>Mary's mental anchor is the $2K–$5K Shopify Expert tier — her opening question made that clear ("is this something we can do ourselves… or where do you come in?"). Real US market for what's actually being built is $8K–$20K. Jordan's $6,500–$7,500 is the honest middle. The proposal should reference the real market quietly (without name-checking competitors) so the price feels reasonable rather than premium.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Photography is the One Real Risk</div>
+        <p>The whole "story-forward homepage" pitch depends on imagery. If they have no usable farm/family photos and won't fund a shoot, the design has to lean harder on text + Wisconsin Foodie video + iconography. Get clarity before proposal lands — don't promise visual storytelling we can't deliver.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">"Old GoDaddy Site Was Simpler" Signal</div>
+        <p>Worth taking seriously. They explicitly liked the previous GoDaddy Sites version (honestlycranberry.godaddysites.com) for its simplicity and cleanness. That's the design north star — restraint over feature density. Save screenshots. Resist the urge to over-design just because we can.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Mobile nav toggle
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  function openMenu() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('active');
+    fab.textContent = '✕';
+  }
+  function closeMenu() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeMenu();
+    else openMenu();
+  });
+  overlay.addEventListener('click', closeMenu);
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+
+  // Active nav on scroll (scrollspy)
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
