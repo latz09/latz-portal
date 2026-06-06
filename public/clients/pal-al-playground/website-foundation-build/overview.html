@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Indoor Playground (Wisconsin Rapids) — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB + OVERLAY ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    z-index: 300;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(13,27,42,0.25);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 280ms;
+  }
+
+  .mobile-overlay.visible {
+    opacity: 1;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'PLAYGROUND';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-cutline { background: #fffbcc; color: #8a6d00; }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li {
+      flex-wrap: wrap;
+    }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE FAB -->
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle menu">☰</button>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Indoor Playground<br>(Wisconsin Rapids)</div>
+    <div class="status-pill">Active Prospect</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🎪</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Indoor Playground (Wisconsin Rapids)</h1>
+    <div class="sub">Unstaffed family entertainment venue · Marketing site + Rhomb handoff</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Allison & Alex Hewett</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Status</span>
+        <span class="value">Proposal in Development</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Est. Main Site</span>
+        <span class="value">$5,000–$6,500</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Pre-Launch Page</span>
+        <span class="value">$750–$1,250 (separate)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Target Launch</span>
+        <span class="value">February 2026</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Location</span>
+        <span class="value">Wisconsin Rapids, WI · 17,000 sqft</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🎪</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Allison Brown Hewett</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Co-owner · Primary point of contact</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Existing Relationship</span>
+            <span class="data-value">Same Allison as Honestly Cranberry — trust already in place</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Personal</span>
+            <span class="data-value">3-year-old daughter (Emmy) — in target customer demo</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Co-Owner</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Alex Hewett</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Co-owner · Co-decision-maker</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Relationship Status</span>
+            <span class="data-value">Light — direct relationship-building still needed before scoping lands with full weight</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Communication</span>
+            <span class="data-value">CC on proposal — needs to be aligned, not just Allison</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Marketing Strategist</h3>
+        <div class="data-row">
+          <span class="data-label">Name</span>
+          <span class="data-value">Pookie Rosa (Pookie Rosa Marketing)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Relationship</span>
+          <span class="data-value">Same Pookie who referred the Honestly Cranberry lead</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Her Lane</span>
+          <span class="data-value">Launch strategy, marketing plan, possibly copywriting</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Coordination</span>
+          <span class="data-value">Stay out of marketing-strategy lane. Connect with her before finalizing proposal.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚧</span>
+        <div class="callout-body">
+          <strong>Hard wall: Mary is NOT involved in this project</strong>
+          <span>Mary (Allison's mother / Honestly Cranberry matriarch) has no stake here. Different stakeholders, different scope, different decision config. Do not discuss this project in front of Mary unless Allison initiates. Do not combine proposals or contracts with the cranberry project.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Business Overview</h3>
+        <div class="data-row">
+          <span class="data-label">Business Model</span>
+          <span class="data-value">Unstaffed indoor playground — customers buy passes online via Rhomb, receive PIN codes, let themselves in</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Facility</span>
+          <span class="data-value">17,000 sqft · two party rooms · vending only (no kitchen)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Staffing</span>
+          <span class="data-value">3–4 employees plus owners as needed; cameras for oversight</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Inspiration</span>
+          <span class="data-value">Good Times Park (Twin Cities) and Let's Run Around</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Revenue Model</span>
+          <span class="data-value">Day passes, yearly memberships, party bookings (bring-your-own-decor at launch)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Service Radius</span>
+          <span class="data-value">~45 miles: Wisconsin Rapids (primary), Stevens Point, Wausau</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Two-part engagement: Pre-launch landing page (built first) + Main marketing site</strong>
+        <p>Pre-launch single-scroll page goes live early for email capture and launch audience. Main 6-page marketing site launches with the business in February 2026. Rhomb (locked) handles bookings, payments, memberships, waivers, PIN access. Marketing site links out — no embedded commerce.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Brand Pillars (from discovery)</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🎯</span> "Spirit of self-service" — core brand concept across the experience</li>
+            <li><span class="check-icon">📵</span> "No screens" — major parent-facing differentiator</li>
+            <li><span class="check-icon">🚫</span> Anti-arcade / anti-Chuck-E-Cheese positioning</li>
+            <li><span class="check-icon">🔁</span> "A place you keep coming back to" — repeat-customer / membership focus</li>
+            <li><span class="check-icon">🏡</span> Family-owned, locally connected — both owners work locally</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Pre-launch site captures email list before Rhomb traffic exists</li>
+            <li><span class="check-icon">✅</span> Parents Googling at 9 PM Sunday find them and convert</li>
+            <li><span class="check-icon">✅</span> Memberships pitched hard — highest-LTV product</li>
+            <li><span class="check-icon">✅</span> Birthday Parties ranks for Wisconsin Rapids / Stevens Point / Wausau</li>
+            <li><span class="check-icon">✅</span> CMS supports easy photo swap-out post-launch (empty → kids playing)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔒</span>
+        <div class="callout-body">
+          <strong>Software decision is LOCKED: Rhomb</strong>
+          <span>Rhomb handles bookings, payments, day passes, memberships, waivers, party bookings, door access PIN codes. Marketing site links out — does NOT embed booking. Don't reopen Rhomb vs Roller. Move on.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Rhomb research complete — party flow handled entirely by Rhomb</strong>
+          <span>Host books party in Rhomb, gets a guest waiver link to share with invitees. Each guest completes their own waiver and receives their own access code via email. Host tracks waiver completion in real time. Marketing site doesn't touch waiver flow at all. Party inquiry form stays scoped to questions only (custom requests, large groups, special needs) — not booking, not waivers.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>Deep-link UX strategy — proposal differentiator</strong>
+          <span>Rhomb storefronts live at <code>{businessname}.rhombnow.com</code> with each product (day pass, membership, party booking) at its own deep-linkable URL. Site CTAs link directly to specific products in new tabs — "Buy a Day Pass," "Get a Yearly Membership," "Book Your Party" — not a generic "Book Now" dumping users on a storefront homepage. Marketing site stays open behind the booking. Frame in proposal as "we sweat the details" vs. template builds.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">📝</span>
+        <div class="callout-body">
+          <strong>Copy ownership not yet decided</strong>
+          <span>Need to confirm with Pookie whether she's writing copy or Jordan is. Materially affects timeline and price — must resolve before proposal goes out.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly out of scope</strong>
+          <span>Email newsletter platform — <strong>confirmed unneeded</strong>, Rhomb has built-in email automations. Blog/news section (phase 2). Ongoing Google Business Profile management (handoff documented, client owns it — consistent with no-monthly-fees positioning). Embedded booking widgets (Rhomb is link-out only). Party decoration rentals. Kitchen/food integration. Stripe/Square integration (Rhomb handles payment processing natively).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>No deposit yet — proposal still in development</strong>
+          <span>Pricing below is the planned proposal range. Final numbers depend on copy ownership outcome with Pookie and whether Plan Your Visit page stays in scope.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pre-Launch Landing Page</strong></td>
+            <td>Separate small project, built first. Single scroll, email capture, brand teaser, 2–3 build-out photos.</td>
+            <td class="amount">$750–$1,250</td>
+          </tr>
+          <tr>
+            <td><strong>Main Site (Full Scope)</strong></td>
+            <td>6 pages including Plan Your Visit. Custom CMS, image-swap-friendly, mobile-first.</td>
+            <td class="amount">$5,000–$6,500</td>
+          </tr>
+          <tr>
+            <td>Main Site (Cut-Line Option)</td>
+            <td>Without Plan Your Visit — visible cut-line if budget needs trimming.</td>
+            <td class="amount">$4,000–$5,000</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Combined Project Range</strong></td>
+            <td>Pre-launch + main site (full scope)</td>
+            <td class="amount"><strong>$5,750–$7,750</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">Vercel — small monthly fee paid directly by client</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Rhomb</span>
+          <span class="data-value">Separate subscription — client manages their own account</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">TBD — client to secure / hand over login during kickoff</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google Business Profile</span>
+          <span class="data-value">Setup bundled into launch. Handoff documented. Client owns going forward — no recurring service.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Pricing principle: fair price per project, not discounted</strong>
+          <span>Multi-project Allison relationship is not a reason to underprice. Quality compounds the relationship — discounts don't. Plan Your Visit positioned as visible cut-line option for budget flexibility, not as a starting concession.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">🤝</span>
+        <div class="callout-body">
+          <strong>Inbound from existing trust — not cold</strong>
+          <span>Allison brought this project to Jordan during the Honestly Cranberry engagement, before that one was even formally pitched. Strong signal she sees Jordan as her "web person." This is expansion within an existing relationship, not a new sale.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Initial Inquiry</div>
+          <div class="timeline-title">Allison's Outreach Email (CC: Alex)</div>
+          <div class="timeline-desc">Reached out about indoor playground in Wisconsin Rapids. Asked for "basic website for About Us, FAQs, and a contact form." Mentioned Rhomb and Good Times Park's recent switch to Roller. Mentioned upcoming Pookie meeting to nail down launch game plan.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jordan's Reply</div>
+          <div class="timeline-title">Detailed Software + Strategy Response</div>
+          <div class="timeline-desc">Apologized for delay — wanted to actually dig into Rhomb, Roller, and inspiration sites before half-baked response. Shared personal anecdote (took kids to Good Times Park Eagan for years). Simplified Rhomb vs Roller. Planted "site does more than basic — makes the playground feel real before they show up." Planted Birthday Parties SEO angle. Suggested call after Pookie's session, with Alex involved.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Discovery Meeting</div>
+          <div class="timeline-title">✅ Discovery Call Completed</div>
+          <div class="timeline-desc">Brand pillars defined (no screens, spirit of self-service, anti-Chuck-E-Cheese, family-owned). Rhomb confirmed locked. Facility specs confirmed (17,000 sqft, two party rooms, vending only). Launch pushed from mid-November to February 2026. Pre-launch landing page added as separate small project. Page list confirmed: Home, About, FAQ, Memberships, Birthday Parties, Plan Your Visit (cut-line).</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Now</div>
+          <div class="timeline-title">Proposal in Development</div>
+          <div class="timeline-desc">Rhomb research complete. Awaiting connection with Pookie to confirm copy ownership before finalizing proposal. Logo expected within 1–2 weeks from Allison. Two outstanding questions emailed to Rhomb sales (storefront analytics + visual customization depth).</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Next</div>
+          <div class="timeline-title">Proposal Send → Acceptance → Kickoff</div>
+          <div class="timeline-desc">Proposal sent to both Allison and Alex. Kickoff target: September/October for February launch with buffer.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Approved scope direction: Pre-launch page + 6-page main site</strong>
+          <span>Mobile-first (parents browse on phones late at night). Custom CMS designed for easy image swap-out post-launch. All purchase paths hand off to Rhomb. Local SEO targeting 45-mile radius.</span>
+        </div>
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:18px;color:var(--navy);margin:8px 0 12px;">Pre-Launch Landing Page</h3>
+
+      <div class="page-card" style="margin-bottom:24px;">
+        <span class="page-badge badge-static">Separate Project · Built First</span>
+        <h4>Single-Scroll Pre-Launch Page</h4>
+        <ul>
+          <li>Logo + "Opening February 2026 in Wisconsin Rapids"</li>
+          <li>Brand positioning hooks: no screens, family-owned, self-service, 17,000 sqft</li>
+          <li>2–3 photos of space build-out (no kids yet)</li>
+          <li>Email capture form: "Be first to know"</li>
+          <li>Possible: early-bird membership interest / opening week reservation interest</li>
+          <li>Deployed before main site to build launch audience ahead of Rhomb traffic</li>
+        </ul>
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:18px;color:var(--navy);margin:8px 0 12px;">Main Marketing Site</h3>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static · Brand-Forward</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Brand pillars front and center (no screens, family-owned, not Chuck E. Cheese)</li>
+            <li>Clear paths: buy day pass / membership / book party (all link to Rhomb)</li>
+            <li>Hero with photo of space</li>
+            <li>Mobile-first CTAs</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS · Photos Swappable</span>
+          <h4>About</h4>
+          <ul>
+            <li>Founders' story — Allison + Alex</li>
+            <li>Individual photos of each owner</li>
+            <li>Local community connection (both work locally)</li>
+            <li>The "why" behind the venture</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>FAQ</h4>
+          <ul>
+            <li>Extensive — anticipates every parent question</li>
+            <li>Socks policy, age range, adult/chaperone, outside food</li>
+            <li>How self-service entry works (PIN codes)</li>
+            <li>Cleanliness, safety, security cameras</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">High-LTV Conversion Page</span>
+          <h4>Memberships</h4>
+          <ul>
+            <li>Dedicated page — not just a button</li>
+            <li>Value math: "pays for itself in X visits"</li>
+            <li>Yearly membership pitch</li>
+            <li>Membership CTA → Rhomb</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">SEO Target</span>
+          <h4>Birthday Parties</h4>
+          <ul>
+            <li>H1 = "Birthday Parties" (confirmed over softer "Parties")</li>
+            <li>Nav label may read "Parties" or "Events"</li>
+            <li>Inquiry form for questions only — custom requests, large groups</li>
+            <li>"Book Your Party" CTA deep-links to Rhomb party product (new tab)</li>
+            <li>Brief explainer of guest waiver flow (each invitee gets own code)</li>
+            <li>Geo-SEO: Wisconsin Rapids, Stevens Point, Wausau</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cutline">Cut-Line · Optional</span>
+          <h4>Plan Your Visit</h4>
+          <ul>
+            <li>Hours, pricing, age range, what to bring (socks)</li>
+            <li>Adult/chaperone policy</li>
+            <li>Vending-only food policy</li>
+            <li>WiFi, parking, accessibility</li>
+            <li>Visible cut option in proposal if budget needs trimming</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:18px;color:var(--navy);margin:24px 0 12px;">Discussed But Not in Scope</h3>
+
+      <div class="two-col">
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Out of Scope</span>
+          <h4>Blog / News Section</h4>
+          <ul>
+            <li>Mentioned in earlier discussion for SEO</li>
+            <li>Cut for launch — phase 2 opportunity</li>
+            <li>Listed as future option in proposal</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">N/A</span>
+          <h4>Embedded Booking Widgets</h4>
+          <ul>
+            <li>Rhomb is link-out only — not embeddable</li>
+            <li>If Roller had been chosen, this would have been the engine of the site</li>
+            <li>Decision is locked — moving on</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>CMS Overview</h3>
+        <div class="data-row">
+          <span class="data-label">Platform</span>
+          <span class="data-value">Custom CMS (Latz standard) — clean, focused, no bloat</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Critical Feature</span>
+          <span class="data-value">Image-swap-friendly: alt-text editing, gallery reordering, one-click replacement. Photos go from empty-space to kids-playing post-launch — CMS must handle this without breaking layouts.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Who Uses It</span>
+          <span class="data-value">Allison primarily; both owners trained at launch</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Logo is the design-phase blocker</strong>
+          <span>Allison said 1–2 weeks. Doesn't block proposal, but blocks design start. Track delivery actively.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Pre-Proposal (must resolve before proposal goes out)</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🤝</span>
+            <div>
+              <strong>Pookie Connection</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Launch plan details, traffic expectations for pre-launch landing, copy ownership (her or Jordan)</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📊</span>
+            <div>
+              <strong>Rhomb — Analytics on Storefront?</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Email Rhomb sales: can Google Analytics / Meta pixel be installed on the storefront for end-to-end conversion tracking from marketing site through purchase? Answer determines what conversion reporting Jordan can offer post-launch.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Email Rhomb</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Rhomb — Visual Customization Depth?</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Email Rhomb sales: beyond logo + business name, how deep does storefront customization go? Colors, fonts, hero imagery? Affects how seamless the brand handoff feels.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Email Rhomb</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Rhomb — Custom Domain Support (lower priority)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Can a CNAME from a subdomain like book.theirsite.com point to the Rhomb storefront? Nice-to-have, not a blocker.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Low Priority</span></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Pre-Launch Page Content</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Logo</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Expected within 1–2 weeks from Allison</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Awaiting · 1–2 wks</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>2–3 Build-Out Photos</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Equipment photos of empty space (no kids yet) for pre-launch teaser</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Main Site Content (deferred to "Get Started" / post-acceptance)</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">💵</span>
+            <div>
+              <strong>Day Pass + Membership Pricing</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Final pricing for memberships page value math</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🕐</span>
+            <div>
+              <strong>Hours of Operation</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">For Plan Your Visit + footer</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">👨‍👩‍👧</span>
+            <div>
+              <strong>Adult/Chaperone Policy + Age Cap</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">FAQ + Plan Your Visit content</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📋</span>
+            <div>
+              <strong>Waiver Flow Specifics</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">How Rhomb handles it — for FAQ language</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📖</span>
+            <div>
+              <strong>About Page Story</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Interview-driven (Jordan writes) vs. client-drafted — to be decided</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🍔</span>
+            <div>
+              <strong>Outside Food Policy</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Vending-only confirmed; outside food rules TBD for FAQ</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">👤</span>
+            <div>
+              <strong>Individual Photos of Allison + Alex</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">For About page — both owners shown individually</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Domain</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Client secures + provides registrar login at kickoff</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Deferred</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom CMS — image-swap-friendly</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — client pays directly</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Third-Party Integrations</h3>
+          <div class="data-row">
+            <span class="data-label">Rhomb Storefront</span>
+            <span class="data-value">Lives at <code>{businessname}.rhombnow.com</code>. White-labeled with logo + business name. Deeper visual customization TBD pending Rhomb sales reply.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Link-Out UX</span>
+            <span class="data-value">Deep-link to specific product URLs (day pass, membership, party booking each have their own) — never generic "Book Now." All link-outs open in new tab so marketing site stays open behind booking.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Rhomb Handles</span>
+            <span class="data-value">Payments (no Stripe/Square needed), waivers (guest waiver links + per-guest codes), memberships, day passes, parties, PIN/mobile/QR/barcode/fob access, email automations, promo codes, gift cards, admin reports + data exports.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email Capture (Pre-Launch)</span>
+            <span class="data-value">Pre-launch page form — provider TBD. Once Rhomb is live, its built-in email automations handle marketing email; no separate newsletter platform.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Analytics</span>
+            <span class="data-value">Site-side: page views, referrers, button click tracking. End-to-end conversion tracking through to purchase depends on Rhomb sales answer.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Google Business Profile</span>
+            <span class="data-value">Setup at launch + handoff docs. Client owns going forward.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Local SEO Plan</h3>
+        <div class="data-row">
+          <span class="data-label">Service Radius</span>
+          <span class="data-value">45 miles — Wisconsin Rapids (primary), Stevens Point, Wausau</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Geo Mentions</span>
+          <span class="data-value">All three towns named in About, FAQ, footer</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Primary Search Targets</span>
+          <span class="data-value">"indoor playground Wisconsin Rapids," "birthday party Wisconsin Rapids," + Stevens Point and Wausau equivalents</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">H1 Confirmed</span>
+          <span class="data-value">"Birthday Parties" (over softer "Parties") for SEO</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Performance & UX Requirements</h3>
+        <div class="data-row">
+          <span class="data-label">Mobile-First</span>
+          <span class="data-value">Parents browse on phones late at night planning weekends — mobile is primary</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Load Speed</span>
+          <span class="data-value">Fast — Next.js + Vercel; outperforms Wix-based competitors like Good Times Park</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Conversion Focus</span>
+          <span class="data-value">Prominent CTAs to Rhomb for day passes, memberships, parties</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">📆</span>
+        <div class="callout-body">
+          <strong>Kickoff target: September/October — for February 2026 launch with buffer</strong>
+          <span>Pre-launch landing page should go live earlier, well ahead of main site, to build email list before Rhomb traffic exists.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">00</div>
+        <div>
+          <div class="weeks">Now</div>
+          <h4>Pre-Proposal Resolution</h4>
+          <ul>
+            <li>Connect with Pookie — copy ownership + launch plan alignment</li>
+            <li>Email Rhomb sales: storefront analytics support + visual customization depth</li>
+            <li>Finalize proposal with pre-launch as separate line + Plan Your Visit as visible cut-line</li>
+            <li>Build deep-link UX into proposal narrative as a differentiator</li>
+            <li>Send to BOTH Allison and Alex — not just Allison</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Post-Acceptance — Get Started Phase</div>
+          <h4>Asset & Info Collection + Rhomb Kickoff (Parallel)</h4>
+          <ul>
+            <li><strong>Critical:</strong> Allison + Alex start Rhomb setup in parallel — not after — web build. Rhomb needs ~5–6 weeks total (2–3 weeks storefront live + ~3 weeks product config and testing).</li>
+            <li>Logo delivery confirmed (1–2 weeks per Allison)</li>
+            <li>Collect deferred content: pricing, hours, policies, About story</li>
+            <li>Domain secured / login provided</li>
+            <li>Confirm photo plan for pre-launch (empty space photos)</li>
+            <li>Set up project repo, Vercel project, custom CMS</li>
+            <li>Capture final Rhomb product URLs as they're configured — needed for deep-link CTAs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Pre-Launch Page Sprint</div>
+          <h4>Build & Deploy Landing Page First</h4>
+          <ul>
+            <li>Build single-scroll page with logo + brand hooks</li>
+            <li>Email capture form integration</li>
+            <li>Deploy live to begin email collection</li>
+            <li>Coordinate with Pookie on launch announcement</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Main Build — Weeks 1–4</div>
+          <h4>Design & Development</h4>
+          <ul>
+            <li>Home + About + FAQ pages</li>
+            <li>Memberships page (value math + Rhomb handoff)</li>
+            <li>Birthday Parties page with inquiry form</li>
+            <li>Plan Your Visit (if in scope)</li>
+            <li>Share live dev link for ongoing Allison + Alex review</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Pre-Launch — Weeks 4–6</div>
+          <h4>Content Integration & Refinement</h4>
+          <ul>
+            <li>Populate real content as it arrives</li>
+            <li>Photography integration (build-out → kids when available)</li>
+            <li>Implement feedback from Allison + Alex</li>
+            <li>SEO pass — meta, H1s, geo mentions</li>
+            <li>Mobile + accessibility QA</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">February 2026 — Launch Week</div>
+          <h4>Finalization & Launch</h4>
+          <ul>
+            <li>Final review with Allison + Alex</li>
+            <li>Domain cutover from pre-launch page to full site</li>
+            <li>CMS training session for both owners</li>
+            <li>Google Business Profile setup + handoff docs</li>
+            <li>Site goes live with grand opening</li>
+            <li>Final invoice sent</li>
+            <li>Plan post-launch photo refresh (kids playing)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Best window: 3–6 months post-launch, once they're running and have data</strong>
+          <span>Don't pitch these at launch. Let the site prove itself first. Come back with a check-in once they have usage patterns + photo library + early member feedback to inform what's worth adding.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📰 Blog / News Section</h4>
+          <div class="price">~$600–$1,000</div>
+          <p>Phase 2 SEO play. Cut from launch scope but flagged in proposal as future option. Posts about parties hosted, community events, kid-development angles — drives long-tail search traffic.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📸 Post-Launch Photo Refresh</h4>
+          <div class="price">~$400–$700</div>
+          <p>Swap build-out photos for real kids-playing photos. Could be a quick paid sprint once they've got 1–2 months of operations and want the site to feel real. Tied directly to CMS image-swap capability built in from day one.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎉 Party Add-On Page</h4>
+          <div class="price">~$500–$800</div>
+          <p>If party decoration rentals or add-on packages launch in year 2, dedicated page or expanded Birthday Parties section. They explicitly said "no add-ons at launch" — implying maybe later.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📅 Events / Community Page</h4>
+          <div class="price">~$400–$600</div>
+          <p>If they start running themed events (parent's night out, sensory-friendly hours, school break camps), a dedicated events page becomes worthwhile.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔁 Membership Portal Enhancements</h4>
+          <div class="price">TBD</div>
+          <p>If Rhomb's member dashboard feels limited once they're running, custom touchpoints on the marketing site (member-only content, perks page) could differentiate. Depends entirely on Rhomb gaps.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔧 Annual Maintenance Sprint</h4>
+          <div class="price">~$500–$800/yr</div>
+          <p>Light annual retainer for updates, policy changes, hours adjustments, seasonal content. Optional — they own the site forever, so this is a convenience product, not a dependency.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Rhomb Research Findings</div>
+        <p>Storefronts live at <code>{businessname}.rhombnow.com</code> with deep-linkable product URLs — confirmed by real examples (playdatemn.rhombnow.com, littleplaydate.rhombnow.com). White-labeled storefronts with logo + business name. Party flow handled entirely by Rhomb (host books, gets a shareable waiver link, each guest gets their own code). Built-in email automations, promo codes, gift cards, native payment processing — no Stripe/Square integration needed, no newsletter platform needed. Rhomb positions itself as complementary to a marketing site, not a replacement. Pricing $199–$229/mo for the client. Setup takes ~5–6 weeks (2–3 weeks storefront + 3 weeks product config). Two questions still out to sales: storefront analytics support + visual customization depth.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Rhomb Parallel Setup — Timeline Critical</div>
+        <p>Allison and Alex must start Rhomb configuration in parallel with the web build, not after. Rhomb's ~5–6 week setup window means if they wait until the marketing site is done to begin, the February launch slips. Flag this clearly in the proposal and again at kickoff. Jordan also needs the final Rhomb product URLs before launch to wire up deep-link CTAs.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Deep-Link UX as a Differentiator</div>
+        <p>Most template builds dump users on a generic "Book Now" storefront homepage. The plan here is to deep-link each CTA — "Buy a Day Pass," "Get a Yearly Membership," "Book Your Party" — directly to the specific Rhomb product URL, opening in a new tab so the marketing site stays open behind the booking. Small detail, real UX impact, and a concrete "we sweat the details" talking point in the proposal vs. competitors on Wix.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Relationship Context</div>
+        <p>This is expansion within an existing relationship. Allison brought this project to Jordan during the Honestly Cranberry engagement — before that one was even pitched. She sees Jordan as her web person. Trust is already there. Don't reset the relationship like a cold lead — but DO treat the project as fully separate from cranberry (different stakeholders, different scope, different decisions).</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Hard Wall: Mary</div>
+        <p>Mary (Allison's mother / Honestly Cranberry matriarch) is NOT part of this venture. Different stakeholder group entirely. Do not discuss the playground in front of Mary unless Allison initiates. Do not combine playground and cranberry proposals or contracts.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Alex Relationship</div>
+        <p>Alex has been light on direct conversation. He's a co-decision-maker, not a rubber stamp. Build relationship intentionally — proposal needs to land with him too, not just Allison. CC him on everything. If a call goes well with both, the project lands cleaner.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pookie Lane</div>
+        <p>Pookie is the marketing strategist, not a gatekeeper. Stay out of marketing strategy. Coordinate on copy ownership + launch alignment. Frame anything strategic as "something to chew on with Pookie." She referred Honestly Cranberry — keep that relationship warm.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Jordan's Edge — Personal</div>
+        <p>Jordan and family lived in the Twin Cities until ~1.5 years ago and were regulars at Good Times Park Eagan — the literal inspiration for this venue. Jordan is the target customer. Has kids in target age range (3 and 6). Natural ability to speak the parent-user's language. Use this in the proposal narrative.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Jordan's Edge — Technical</div>
+        <p>Good Times Park (Wix) and likely most competitors run template stacks. Custom Next.js + Vercel is a meaningful step up — faster, better SEO, mobile-first. Anti-template positioning aligns perfectly with Allison and Alex's "spirit of self-service" brand. Lean into the alignment.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">"Basic Website" Framing</div>
+        <p>Allison originally framed this as a "basic" site (About, FAQ, contact form). She undersold. An unstaffed playground depends on the website as primary 24/7 marketing asset and parent confidence-builder. Discovery meeting expanded scope to 6 pages — that's the right scope. Hold the line if she tries to trim further without dropping cut-line Plan Your Visit first.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Risk Watchlist</div>
+        <p>Logo dependency (blocks design start, not proposal). Pookie alignment needed before proposal goes out (copy ownership materially affects price). Alex relationship still light. February launch is tight if discovery decisions slip. Don't lock in scope without Alex aligned.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">What NOT to Do</div>
+        <p>Don't reopen Rhomb vs Roller — it's locked. Don't combine with cranberry. Don't discuss in front of Mary. Don't finalize proposal without Pookie alignment. Don't turn Google Business Profile into a recurring service — conflicts with no-monthly-fees positioning. Don't underprice because of multi-project relationship.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.innerHTML = '✕';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    setTimeout(() => { overlay.style.display = 'none'; }, 280);
+    fab.innerHTML = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeSidebar();
+    else openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // Nav link tap on mobile: close sidebar, then scroll after animation
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeSidebar();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
