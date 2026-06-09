@@ -1,29 +1,2180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Honestly Cranberry — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #38473f; /* deep farm green */
+				--primary-mid: #4a5e53; /* brand green */
+				--accent: #ae3757; /* cranberry */
+				--accent-light: rgba(174, 55, 87, 0.08);
+				--cream: #f8f4ec; /* grid paper / light field */
+				--cream-dark: #efe7d8;
+				--mid: #6b7d72;
+				--green: #4a5e53; /* CMS tag / secondary */
+				--white: #ffffff;
+				--sidebar-w: 240px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--cream);
+				background-image:
+					linear-gradient(rgba(56, 71, 63, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(56, 71, 63, 0.05) 1px, transparent 1px);
+				background-size: 28px 28px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 24px 20px 20px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 9px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.32);
+				margin-bottom: 8px;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--cream);
+				line-height: 1.2;
+				margin-bottom: 4px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 10px;
+				color: rgba(248, 244, 236, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 12px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(174, 55, 87, 0.18);
+				border: 1px solid rgba(174, 55, 87, 0.4);
+				border-radius: 4px;
+				padding: 4px 10px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background: #d8607f;
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 9px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: #d8607f;
+			}
+
+			.sidebar-nav {
+				padding: 12px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 8.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.22);
+				padding: 12px 10px 5px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 10px;
+				color: rgba(248, 244, 236, 0.48);
+				text-decoration: none;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--cream);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--cream);
+				background: rgba(174, 55, 87, 0.16);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.2);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--white);
+				border: none;
+				font-size: 22px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 48px 44px 100px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 52px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 8px;
+			}
+
+			.doc-title {
+				font-family: 'Fraunces', serif;
+				font-size: 34px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(56, 71, 63, 0.55);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 24px;
+				border: 1.5px solid rgba(56, 71, 63, 0.15);
+				border-radius: 6px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 10px 20px;
+				border-right: 1px solid rgba(56, 71, 63, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 9px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(56, 71, 63, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--cream);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 6px;
+				box-shadow: 5px 5px 0 rgba(56, 71, 63, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 22px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Fraunces', serif;
+				font-weight: 700;
+				font-size: 15px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: rgba(56, 71, 63, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.wf-nav-links span.cart {
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 28px 28px 36px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 10px;
+				padding: 8px 14px;
+				background: rgba(56, 71, 63, 0.04);
+				border-left: 3px solid rgba(56, 71, 63, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 6px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: rgba(174, 55, 87, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 10px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			.cms-tag.shopify {
+				color: var(--accent);
+				border-color: var(--accent);
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(56, 71, 63, 0.18);
+				border-radius: 6px;
+				padding: 18px 16px;
+				margin-bottom: 16px;
+				background: rgba(248, 244, 236, 0.5);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Fraunces', serif;
+				font-size: 26px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Fraunces', serif;
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.wf-subtext {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(56, 71, 63, 0.55);
+				font-style: italic;
+				margin-bottom: 14px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(56, 71, 63, 0.65);
+				line-height: 1.6;
+				margin-bottom: 10px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(56, 71, 63, 0.15);
+				margin: 20px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--cream);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 9px 22px;
+				border-radius: 4px;
+				margin-top: 8px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--white);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 14px 22px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(248, 244, 236, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(56, 71, 63, 0.07);
+				border: 2px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 6px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 28px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				color: rgba(56, 71, 63, 0.42);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── PRODUCT / SKU CARDS ── */
+			.product-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 12px;
+				margin-top: 12px;
+			}
+
+			.product-card {
+				border: 1.5px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 5px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.product-name {
+				font-family: 'Fraunces', serif;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 3px;
+			}
+
+			.product-price {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: rgba(56, 71, 63, 0.55);
+				margin-bottom: 6px;
+			}
+
+			.product-action {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* ── BADGES STRIP ── */
+			.badge-row {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+				margin-top: 4px;
+			}
+
+			.trust-badge {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11.5px;
+				border: 1.5px dashed rgba(56, 71, 63, 0.25);
+				border-radius: 20px;
+				padding: 5px 14px;
+				color: rgba(56, 71, 63, 0.6);
+				background: rgba(255, 255, 255, 0.5);
+				font-weight: 500;
+			}
+
+			.trust-badge.star {
+				border-color: var(--accent);
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* ── TILES ── */
+			.tile-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.tile-card {
+				border: 2px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 6px;
+				padding: 14px 12px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.tile-icon {
+				font-size: 20px;
+				margin-bottom: 6px;
+			}
+
+			.tile-label {
+				font-family: 'Fraunces', serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			/* ── TESTIMONIAL CARDS ── */
+			.testimonial-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+				margin-top: 12px;
+			}
+
+			.testimonial-card {
+				border: 1.5px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 5px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.testimonial-quote {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: rgba(56, 71, 63, 0.65);
+				font-style: italic;
+				line-height: 1.5;
+				margin-bottom: 6px;
+			}
+
+			.testimonial-name {
+				font-family: 'Fraunces', serif;
+				font-size: 12px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			/* ── REVIEW BAR (Yotpo breakdown) ── */
+			.review-bar-row {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				margin-bottom: 4px;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(56, 71, 63, 0.55);
+			}
+			.review-bar-track {
+				flex: 1;
+				height: 7px;
+				background: rgba(56, 71, 63, 0.1);
+				border-radius: 4px;
+				overflow: hidden;
+			}
+			.review-bar-fill {
+				height: 100%;
+				background: var(--accent);
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+				margin-top: 10px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 5px;
+				padding: 10px 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 11px;
+				color: rgba(56, 71, 63, 0.45);
+				margin-bottom: 4px;
+			}
+
+			.field-placeholder {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(56, 71, 63, 0.3);
+			}
+
+			/* ── FAQ ACCORDION ── */
+			.faq-item {
+				border: 1.5px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 5px;
+				padding: 12px 14px;
+				background: rgba(255, 255, 255, 0.6);
+				margin-bottom: 8px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 10px;
+			}
+			.faq-q {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+			.faq-toggle {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16px;
+				color: var(--accent);
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-top: 10px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(56, 71, 63, 0.2);
+				border-radius: 6px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 20px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--cream);
+				font-family: 'Fraunces', serif;
+				font-size: 11px;
+				font-weight: 600;
+				padding: 8px 14px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 100px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(56, 71, 63, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box.tertiary {
+				background: rgba(174, 55, 87, 0.08);
+				color: var(--accent);
+				border: 1.5px dashed var(--accent);
+				font-size: 10px;
+				min-width: 80px;
+				padding: 6px 10px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: rgba(56, 71, 63, 0.3);
+				padding: 0 6px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 6px;
+				margin-top: 6px;
+			}
+
+			/* ── CONFIRMED / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 10px 0;
+				border-bottom: 1px dashed rgba(56, 71, 63, 0.12);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: var(--primary);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 200px;
+				}
+				.main {
+					padding: 32px 24px 80px;
+				}
+				.product-grid,
+				.testimonial-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+				.tile-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(56, 71, 63, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.option-grid,
+				.form-grid,
+				.product-grid,
+				.testimonial-grid,
+				.tile-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Honestly Cranberry</div>
+				<div class="sidebar-doctype">Site Wireframes — v1</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Review</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#our-story" class="nav-link"><span class="nav-icon">🌾</span> Our Story</a>
+				<a href="#shop" class="nav-link"><span class="nav-icon">🛒</span> Shop / Collection</a>
+				<a href="#product" class="nav-link"><span class="nav-icon">🔍</span> Product Page (PDP)</a>
+				<a href="#health" class="nav-link"><span class="nav-icon">🍃</span> Health Benefits</a>
+				<a href="#faqs" class="nav-link"><span class="nav-icon">❓</span> FAQs</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact</a>
+				<a href="#account" class="nav-link"><span class="nav-icon">🔐</span> My Account</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Honestly Cranberry</div>
+				<div class="doc-sub">
+					DTC Specialty Food Site &nbsp;·&nbsp; Shopify Migration + Custom Next.js Front End
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Client Review</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">7 in v1</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Mary &amp; Allison</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Current Site</span>
+						<span class="meta-value ok">honestlycranberry.com</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 24px; font-size: 13px; padding: 12px 16px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.
+			</div>
+
+			<!-- NORTH STAR NOTE -->
+			<div class="decision-box" style="margin-bottom: 40px">
+				<div class="decision-label">Design North Star — Restraint</div>
+				<div class="wf-body-text" style="margin-bottom: 0">
+					They explicitly liked their old GoDaddy site for being simple and clean — that's the bar. Don't over-design just because we can. Two things to hold onto: (1) <strong>Photo-led, story-forward.</strong> Hero and the Our Story band are committed to real family / farm photography — the design is built around the photos, so we need the actual images in hand before those blocks lock. (2) <strong>Reviews do two jobs in two places</strong> — Yotpo lives on product pages (conversion), Google + curated quotes live on the homepage (brand trust). Do not consolidate them into one review wall.
+				</div>
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 20px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">Honestly Cranberry</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								7 pages in v1 · Shopify Storefront API for products &amp; checkout · a custom CMS for content
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 6px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Our Story<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">/our-story</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Shop<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">/shop</span>
+								</div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">Product PDP</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Health<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">/health-benefits</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									FAQs<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">/faqs</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Contact<br /><span style="font-size: 9px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7;">/contact</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 20px">
+							Same domain: honestlycranberry.com. Nav is consistent across all pages, with a persistent cart. Product detail pages (PDP) are dynamic routes under /shop. My Account is a Shopify-hosted redirect — styled to brand, not a page we build (see section 8). Privacy / policy links live in the footer, not the main nav.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home Page &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Our Story</span>
+							<span>Shop</span>
+							<span>Health</span>
+							<span>FAQs</span>
+							<span>Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-body-text" style="margin-bottom: 16px; font-style: italic;">
+							Spine logic for this page: <strong>claim → proof → product → story → proof again.</strong> The first screen-and-a-half does all the work.
+						</div>
+
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 180px">
+								<div class="img-icon">🌾</div>
+								<div class="img-label">
+									Hero image — family / farm photograph<br />
+									Story-forward, full-bleed. The image carries the hero.
+								</div>
+							</div>
+							<div style="margin-top: 16px; text-align: center">
+								<div class="wf-heading-lg">Just cranberries. Nothing else.</div>
+								<div class="wf-subtext">100% fruit, no sugar — from a 4th-generation Wisconsin family farm.</div>
+								<div class="wf-cta accent">Shop →</div>
+							</div>
+							<div class="annotation">
+								Photo-led hero, confirmed — a family / farm photograph carries it, with the claim headline and heritage sub-line over or beside the image (designer's call). Primary CTA points to the Shop collection page, not a single SKU. Headline + sub-line are CMS-editable; placeholder copy shown is illustrative. Current site headline is "Real Cranberries, No Additives / Savor the Natural Tartness of Cranberries" — claim-led version recommended as the upgrade.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Trust strip -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Trust Strip</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="badge-row">
+								<span class="trust-badge">Women-owned</span>
+								<span class="trust-badge">Allergen-free</span>
+								<span class="trust-badge">WI grown &amp; dried</span>
+								<span class="trust-badge">Recyclable packaging</span>
+								<span class="trust-badge star">★ 1,000+ reviews</span>
+							</div>
+							<div class="annotation">
+								Immediate proof under the hero — badges plus the review-count line. The "★ 1,000+ reviews" figure references the Yotpo body of reviews at a brand level (the detailed Yotpo widget lives on product pages). Badges are editable in the CMS. Brand taglines available as copy here or in the hero: True Tart Taste® and We Heart the Tart®.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Featured products -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Featured Products</div>
+								<span class="cms-tag shopify">Shopify Storefront API</span>
+							</div>
+							<div class="product-grid">
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">product photo</div>
+									</div>
+									<div class="product-name">3 oz Bag — Unsweetened Dried Cranberries</div>
+									<div class="product-price">$10.99</div>
+									<div class="product-action">Add to Cart →</div>
+								</div>
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">product photo</div>
+									</div>
+									<div class="product-name">1 lb (16 oz) Bag — Unsweetened Dried Cranberries</div>
+									<div class="product-price">$45.00</div>
+									<div class="product-action">Add to Cart →</div>
+								</div>
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;">
+										<div class="img-label" style="font-size: 10px;">product photo</div>
+									</div>
+									<div class="product-name">1 oz Bag — Unsweetened Dried Cranberries</div>
+									<div class="product-price">$3.99</div>
+									<div class="product-action">Add to Cart →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								3–4 SKUs pulled live from Shopify — image, name, size, price always visible. Price and stock come straight from Shopify so they're never stale. Which SKUs feature here is a CMS-controlled selection; the product data itself is Shopify's.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Story teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Story Teaser</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+								<div class="img-placeholder" style="height: 110px; flex: 1; min-width: 160px;">
+									<div class="img-icon">👨‍👩‍👧</div>
+									<div class="img-label">family / generational photo</div>
+								</div>
+								<div style="flex: 2; min-width: 220px;">
+									<div class="wf-heading-md">Rooted in Generations of Cranberry Growing</div>
+									<div class="wf-body-text">
+										A few sentences of heritage — founded 1873, still family-run five generations later. Short. Links to the full Our Story page.
+									</div>
+									<span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--accent); font-weight: 600;">Read Our Story →</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Brief heritage hook that links to the full Our Story page — a family / generational photo alongside a short blurb. Copy and image editable in the CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Wisconsin Foodie -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Wisconsin Foodie — Highlight Reel</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 150px">
+								<div class="img-icon">▶</div>
+								<div class="img-label">Wisconsin Foodie — full YouTube embed</div>
+							</div>
+							<div class="annotation">
+								The credibility nobody else can claim — embedded straight from YouTube (the full episode/segment, not a custom cut). YouTube handles the player and delivery, so there's nothing to host or maintain. Strong anchor high on the page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Health angle -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Health Angle — Scannable Tiles</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="tile-grid">
+								<div class="tile-card"><div class="tile-icon">🍒</div><div class="tile-label">Single-Ingredient</div></div>
+								<div class="tile-card"><div class="tile-icon">🥥</div><div class="tile-label">Paleo</div></div>
+								<div class="tile-card"><div class="tile-icon">🥑</div><div class="tile-label">Keto</div></div>
+								<div class="tile-card"><div class="tile-icon">🌱</div><div class="tile-label">Gut Health</div></div>
+							</div>
+							<div class="annotation">
+								Quick scannable angles, not an essay — links through to the full Health Benefits page. Keep claims honest, no medical-claim drift. Editable in the CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Curated reviews -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Testimonials</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-grid">
+								<div class="testimonial-card">
+									<div class="testimonial-quote">"Hand-picked quote pulled via a CMS featured-review field."</div>
+									<div class="testimonial-name">Customer Name</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-quote">"Best dried cranberries I've ever had — and the only ingredient is cranberries."</div>
+									<div class="testimonial-name">Customer Name</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-quote">"Google review or curated quote — brand trust, not product conversion."</div>
+									<div class="testimonial-name">Customer Name</div>
+								</div>
+							</div>
+							<div class="annotation">
+								3–6 hand-picked best quotes, set via a CMS featured field — NOT an auto-feed. This is brand-level proof (Google reviews + curated quotes). It is deliberately separate from the Yotpo product reviews on the product pages — the two review systems stay physically apart so the layout teaches the distinction. Current site uses video testimonials with a "Play Video" control; curated written quotes here are still pulled via the CMS featured field.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Footer Resources -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Footer — Resources</div>
+								<span class="cms-tag">CMS PDF array · brand-collateral</span>
+							</div>
+							<div class="wf-body-text">
+								A small, low-key Resources link in the site footer holding the two brand-collateral PDFs. Lives in the footer so it never competes with the main page content.
+							</div>
+							<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">Honestly Cranberry Brochure</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Brand collateral</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">Honestly Cranberry Information Packet</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Brand collateral · held for Phase 2 wholesale</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Footer-level brand collateral (category: brand-collateral), managed in the CMS PDF array. The Information Packet is earmarked for the Phase 2 wholesale page — it sits in Resources for now, but it's the natural intro/spec doc for B2B buyers later.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: OUR STORY ── -->
+			<section class="wf-section" id="our-story">
+				<div class="section-label">
+					<span class="section-num">2</span> Our Story &mdash; /our-story
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Our Story</span>
+							<span>Shop</span>
+							<span>Health</span>
+							<span>FAQs</span>
+							<span>Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-body-text" style="margin-bottom: 16px; font-style: italic;">
+							The emotional closer. Anyone here is already interested, so it can run longer and slower than the homepage. Heritage carries the page instead of sharing the hero.
+						</div>
+
+						<!-- Short hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Short Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="text-align: center; padding: 10px 0;">
+								<div class="wf-heading-lg">Ingredients: Cranberries</div>
+								<div class="wf-subtext" style="margin-bottom: 0;">1873 → 4th generation → 5th generation</div>
+							</div>
+							<div class="annotation">
+								Compact headline + the generational line. No big hero photo required — heritage typography carries it.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Narrative -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Narrative</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								The Arpin family origin → Mary (4th generation) → Allison &amp; Stephen (5th generation). Glacial Lake Cranberries, founded 1873, 6,000 acres in Cranmoor. A few honest paragraphs — founding, family, and what single-ingredient really means.
+							</div>
+							<div style="display: flex; flex-direction: column; gap: 4px; margin: 4px 0 2px;">
+								<div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px;">Real section outline</div>
+								<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">Rooted in Generations of Cranberry Growing</div>
+								<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">How We Do It</div>
+								<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">Why Choose Us — Health Benefits You Can Trust</div>
+								<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">Sustainable Practices, Generational Commitment</div>
+								<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">A Treat for Every Lifestyle</div>
+								<div style="font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; color: var(--primary);">Experience the Natural Taste</div>
+							</div>
+							<div class="annotation">
+								Long-form story, fully editable in the CMS so the family can update it as the business grows. The six sub-headings above are the real Our Story structure; the prose under each is summarized here and lives in the CMS. Jordan writes the initial version from their bullet points; Allison can refine it without dev help.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Wisconsin Foodie embed -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Wisconsin Foodie Embed</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 150px">
+								<div class="img-icon">▶</div>
+								<div class="img-label">Wisconsin Foodie — full YouTube embed</div>
+							</div>
+							<div class="annotation">
+								Same Wisconsin Foodie video, embedded from YouTube. Full episode/segment plays in place — no separate "watch the full episode" link needed since the whole thing is right here. Strong anchor for this page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Family / farm photo band -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Family / Farm Photo Band</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 6px;">
+								<div class="img-placeholder" style="height: 90px; flex: 1;"><div class="img-label" style="font-size: 10px;">farm</div></div>
+								<div class="img-placeholder" style="height: 90px; flex: 1;"><div class="img-label" style="font-size: 10px;">family</div></div>
+								<div class="img-placeholder" style="height: 90px; flex: 1;"><div class="img-label" style="font-size: 10px;">harvest</div></div>
+							</div>
+							<div class="annotation">
+								Photo band, confirmed — a row of real farm / family / harvest images carries the emotional close of the page. Designer decides the exact treatment (count, crop, layout); images are managed in the CMS. Like the hero, this depends on having the actual photos in hand.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- CTA -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Closing CTA</div>
+							</div>
+							<div style="text-align: center; padding: 10px 0;">
+								<div class="wf-cta accent">Order Now →</div>
+							</div>
+							<div class="annotation">
+								Sends an emotionally-warmed-up reader back to Shop. One clear next step.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: SHOP / COLLECTION ── -->
+			<section class="wf-section" id="shop">
+				<div class="section-label">
+					<span class="section-num">3</span> Shop / Collection &mdash; /shop
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Our Story</span>
+							<span class="active">Shop</span>
+							<span>Health</span>
+							<span>FAQs</span>
+							<span>Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Shop</div>
+							<div class="wf-subtext">Single-ingredient dried cranberries — choose your size.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Product Grid — One Card per SKU</div>
+								<span class="cms-tag shopify">Shopify Storefront API</span>
+							</div>
+							<div class="product-grid">
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div>
+									<div class="product-name">1 oz Pouch</div>
+									<div class="product-price">$3.99</div>
+									<div class="product-action">Quick Add →</div>
+								</div>
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div>
+									<div class="product-name">3 oz Bag</div>
+									<div class="product-price">$10.99</div>
+									<div class="product-action">Quick Add →</div>
+								</div>
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div>
+									<div class="product-name">1 lb Bag</div>
+									<div class="product-price">$45.00</div>
+									<div class="product-action">Quick Add →</div>
+								</div>
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div>
+									<div class="product-name">Case</div>
+									<div class="product-price">Case pricing</div>
+									<div class="product-action">View →</div>
+								</div>
+								<div class="product-card">
+									<div class="img-placeholder" style="height: 80px; margin-bottom: 8px;"><div class="img-label" style="font-size: 10px;">product photo</div></div>
+									<div class="product-name">Bulk</div>
+									<div class="product-price">Bulk pricing</div>
+									<div class="product-action">View →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								One card per SKU — image, name, size, price, quick-add. SKUs: 1oz $3.99 · 3oz $10.99 · 1lb $45 · cases · bulk. Everything (price, inventory, variants) comes from Shopify, so the family manages products in one place. Quick-add drops straight into the Shopify cart; checkout is Shopify-hosted — this is what fixes the duplicate-order / checkout-reliability problem on the current site.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 4: PRODUCT (PDP) ── -->
+			<section class="wf-section" id="product">
+				<div class="section-label">
+					<span class="section-num">4</span> Product Page (PDP) &mdash; /shop/[product]
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Our Story</span>
+							<span class="active">Shop</span>
+							<span>Health</span>
+							<span>FAQs</span>
+							<span>Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Gallery + buy box -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Gallery + Claim + Add-to-Cart</div>
+								<span class="cms-tag shopify">Shopify Storefront API</span>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+								<div style="flex: 1; min-width: 200px;">
+									<div class="img-placeholder" style="height: 200px; margin-bottom: 10px;">
+										<div class="img-icon">🍒</div>
+										<div class="img-label">Primary product photo</div>
+									</div>
+									<div style="display: flex; gap: 6px;">
+										<div class="img-placeholder" style="height: 48px; flex: 1;"><div class="img-label" style="font-size: 9px;">thumb</div></div>
+										<div class="img-placeholder" style="height: 48px; flex: 1;"><div class="img-label" style="font-size: 9px;">thumb</div></div>
+										<div class="img-placeholder" style="height: 48px; flex: 1;"><div class="img-label" style="font-size: 9px;">thumb</div></div>
+									</div>
+								</div>
+								<div style="flex: 1; min-width: 220px;">
+									<div class="wf-heading-md">Unsweetened Dried Cranberries — 3 oz</div>
+									<div style="font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--primary); margin: 8px 0;">$10.99</div>
+									<div style="font-family: 'DM Sans'; font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 10px;">★★★★★ &nbsp;4.9 · 1,000+ reviews</div>
+									<div class="wf-cta accent" style="display:block; text-align:center;">Add to Cart →</div>
+									<div style="margin-top: 12px; border: 1.5px dashed rgba(174,55,87,0.4); border-radius: 5px; padding: 10px 12px; background: var(--accent-light);">
+										<div style="font-family:'DM Sans'; font-size: 12px; font-weight: 600; color: var(--accent);">🍒 One ingredient: cranberries.</div>
+										<div class="wf-body-text" style="font-size: 12px; margin-bottom: 0;">No sugar, no oil, no additives.</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Aggregate star rating sits right next to the Add-to-Cart button — proof at the decision point. The single-ingredient / health callout is pinned near the button too, reinforcing the buy. Product data and inventory are Shopify; supplemental content (callouts, supporting copy) lives in the CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Yotpo reviews -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Yotpo Reviews — Product-Level (The Conversion Engine)</div>
+								<span class="cms-tag shopify">Yotpo</span>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+								<div style="text-align: center; min-width: 90px;">
+									<div style="font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--primary);">4.9</div>
+									<div style="font-size: 12px; color: var(--accent);">★★★★★</div>
+									<div style="font-size: 11px; color: rgba(56,71,63,0.5);">1,000+ reviews</div>
+								</div>
+								<div style="flex: 1; min-width: 200px;">
+									<div class="review-bar-row">5★ <div class="review-bar-track"><div class="review-bar-fill" style="width: 88%;"></div></div></div>
+									<div class="review-bar-row">4★ <div class="review-bar-track"><div class="review-bar-fill" style="width: 8%;"></div></div></div>
+									<div class="review-bar-row">3★ <div class="review-bar-track"><div class="review-bar-fill" style="width: 2%;"></div></div></div>
+									<div class="review-bar-row">2★ <div class="review-bar-track"><div class="review-bar-fill" style="width: 1%;"></div></div></div>
+									<div class="review-bar-row">1★ <div class="review-bar-track"><div class="review-bar-fill" style="width: 1%;"></div></div></div>
+								</div>
+							</div>
+							<div class="annotation">
+								Live Yotpo, server-rendered — full review list + star breakdown, the real ~1,000-review asset. This is product-level proof and it stays here, on the product page, where it converts. It is intentionally NOT merged with the homepage's curated brand reviews. (Note for the client conversation: Amazon reviews can't be imported — Yotpo's TOS — so set that expectation early.)
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Badges + related -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Badges + Other Sizes / Related</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="badge-row" style="margin-bottom: 14px;">
+								<span class="trust-badge">Women-owned</span>
+								<span class="trust-badge">Allergen-free</span>
+								<span class="trust-badge">WI grown &amp; dried</span>
+								<span class="trust-badge">Recyclable</span>
+							</div>
+							<div class="product-grid">
+								<div class="product-card"><div class="product-name">1 oz Pouch</div><div class="product-price">$3.99</div><div class="product-action">View →</div></div>
+								<div class="product-card"><div class="product-name">1 lb Bag</div><div class="product-price">$45.00</div><div class="product-action">View →</div></div>
+								<div class="product-card"><div class="product-name">Case</div><div class="product-price">Case pricing</div><div class="product-action">View →</div></div>
+							</div>
+							<div class="annotation">
+								Badge strip reinforces trust, then "Other sizes / related" nudges shoppers up the size ladder (1oz → 3oz → 1lb → case). Related items pulled from Shopify.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 5: HEALTH BENEFITS ── -->
+			<section class="wf-section" id="health">
+				<div class="section-label">
+					<span class="section-num">5</span> Health Benefits &mdash; /health-benefits
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Our Story</span>
+							<span>Shop</span>
+							<span class="active">Health</span>
+							<span>FAQs</span>
+							<span>Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Claim hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Claim Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="text-align: center; padding: 8px 0;">
+								<div class="wf-heading-lg">100% fruit. No sugar, oil, or additives. Period.</div>
+							</div>
+							<div class="annotation">
+								Leads with the honest claim. Scannable, not an essay. Current site H1 is "Naturally Nourishing Cranberries" — claim-led version recommended.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Diet tiles -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Diet Tiles</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="tile-grid" style="grid-template-columns: repeat(5, 1fr);">
+								<div class="tile-card"><div class="tile-icon">🍃</div><div class="tile-label">AIP</div></div>
+								<div class="tile-card"><div class="tile-icon">🩺</div><div class="tile-label">Diabetic</div></div>
+								<div class="tile-card"><div class="tile-icon">🥑</div><div class="tile-label">Keto</div></div>
+								<div class="tile-card"><div class="tile-icon">🥗</div><div class="tile-label">Whole30</div></div>
+								<div class="tile-card"><div class="tile-icon">🥥</div><div class="tile-label">Paleo</div></div>
+							</div>
+							<div class="annotation">
+								Real diet set from the current site: AIP / diabetic / keto / Whole30 / paleo. All five shown here — Jordan to confirm which to feature (all five, or a tighter set). Designer decides treatment; content is editable.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Why it matters -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Why It Matters</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								A short section per angle — the real angles from their copy: antioxidants &amp; polyphenols, urinary tract health, anti-inflammatory, immune support, and digestive wellness. A paragraph each, not a wall of text.
+							</div>
+							<div class="annotation">
+								CMS-managed so the family can edit claims without dev work. Keep claims honest — no medical-claim drift. If wording starts veering toward "treats / cures," flag it.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- The Science -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">The Science</div>
+								<span class="cms-tag">CMS PDF array · health-research</span>
+							</div>
+							<div class="wf-body-text">
+								The research behind the claims — five third-party PDFs, each available to view or download. Cited as evidence under the health angles, not dumped as a file list.
+							</div>
+							<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">Love Your Gut (Consumer)</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Cranberry Institute</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">The Berry Best for Gut Health</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Cranberry Institute</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">Cranberry and its Phytochemicals</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Journal of Nutrition (Neto)</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">Daily Cranberry Intake &amp; Reduced H. pylori Infection Rates</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Clinical study</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+								<div style="display: flex; align-items: center; gap: 12px; border: 1.5px dashed rgba(56, 71, 63, 0.2); border-radius: 5px; padding: 10px 14px; background: rgba(255, 255, 255, 0.6);">
+									<div style="font-family: 'Architects Daughter', cursive; font-size: 10px; background: rgba(56, 71, 63, 0.08); color: var(--primary); border-radius: 3px; padding: 4px 8px; font-weight: 700;">PDF</div>
+									<div style="flex: 1; min-width: 160px;">
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary);">The Berry Best Guidebook</div>
+										<div style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(56, 71, 63, 0.5);">Cranberry Institute</div>
+									</div>
+									<div style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap;">View / Download →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								These five were buried in an undifferentiated footer list on the old site. Surfaced here, they turn the Health page from claims into cited evidence — and pointing at third-party research (Cranberry Institute, Journal of Nutrition) is the safest way to talk about health benefits without medical-claim drift. Managed via the CMS PDF array (category: health-research).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- CTA -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Closing CTA</div>
+							</div>
+							<div style="text-align: center; padding: 8px 0;">
+								<div class="wf-cta accent">Place an Order →</div>
+							</div>
+							<div class="annotation">
+								One clear path to Shop after the health case.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 6: FAQS ── -->
+			<section class="wf-section" id="faqs">
+				<div class="section-label">
+					<span class="section-num">6</span> FAQs &mdash; /faqs
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Our Story</span>
+							<span>Shop</span>
+							<span>Health</span>
+							<span class="active">FAQs</span>
+							<span>Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">FAQs</div>
+							<div class="wf-subtext">Product &amp; process, using it, health, and shipping — all in one place.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Category Groups + Accordion</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Conditional — Search Bar</div>
+								<div class="wf-body-text" style="font-size: 12px; margin-bottom: 0;">
+									11 real FAQs — likely no search bar needed; the category groups are enough on their own. Keep this a soft conditional: add search only if the list grows.
+								</div>
+							</div>
+
+							<div style="margin: 14px 0;">
+								<div class="filter-row" style="display:flex; gap:8px; margin-bottom: 12px; flex-wrap: wrap;">
+									<span class="trust-badge">Product &amp; Process</span>
+									<span class="trust-badge">Using It</span>
+									<span class="trust-badge">Health</span>
+									<span class="trust-badge">Shipping</span>
+								</div>
+								<div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 6px;">Product &amp; Process</div>
+								<div class="faq-item"><div class="faq-q">What is Honestly Cranberry®?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">How do you dry Honestly Cranberry's cranberries?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">Are your cranberries organic?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">How are Honestly Cranberry's cranberries different than sweetened dried cranberries (e.g. Craisins®)?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">What are the macros in Honestly Cranberry?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">What do Honestly Cranberry's dried cranberries taste like?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">What is the shelf life of Honestly Cranberry? And what are surface sugars?</div><div class="faq-toggle">+</div></div>
+								<div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin: 14px 0 6px;">Using It</div>
+								<div class="faq-item"><div class="faq-q">How do you cook with Honestly Cranberry?</div><div class="faq-toggle">+</div></div>
+								<div class="faq-item"><div class="faq-q">Do dried cranberries re-hydrate?</div><div class="faq-toggle">+</div></div>
+								<div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin: 14px 0 6px;">Health</div>
+								<div class="faq-item"><div class="faq-q">What are the health benefits of cranberries?</div><div class="faq-toggle">+</div></div>
+								<div style="font-family: 'Architects Daughter', cursive; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin: 14px 0 6px;">Shipping</div>
+								<div class="faq-item"><div class="faq-q">How do you ship?</div><div class="faq-toggle">+</div></div>
+							</div>
+
+							<div class="annotation">
+								Questions grouped by category (Shipping / Product / Health), each an accordion item that expands with a Framer Motion transition. All FAQs managed in the CMS — keeps the format they like but feels modern. FAQ schema markup is added behind the scenes so questions can win Google rich snippets — free search real estate.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 7: CONTACT ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label">
+					<span class="section-num">7</span> Contact &mdash; /contact
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Honestly Cranberry</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Our Story</span>
+							<span>Shop</span>
+							<span>Health</span>
+							<span>FAQs</span>
+							<span class="active">Contact</span>
+							<span class="cart">🛒 Cart</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 20px">
+							<div class="wf-heading-lg">Get in Touch Today</div>
+							<div class="wf-subtext">Have questions or want to learn more about our unsweetened cranberries? We're here to help you enjoy the True Tart Taste®</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Methods</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+								<div>
+									<div class="wf-body-text"><strong>Call / Text</strong><br />715-424-REAL (7325)<br /><span style="font-size: 11px; color: rgba(56,71,63,0.45);">click-to-call on mobile</span></div>
+								</div>
+								<div>
+									<div class="wf-body-text"><strong>Email</strong><br />info@honestlycranberry.com</div>
+								</div>
+								<div>
+									<div class="wf-body-text"><strong>Address</strong><br />7351 Integrity Way<br />Wisconsin Rapids, WI 54494</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Address is listed for legitimacy and B2B credibility — the current site shows it with a maps link. It's a production / shipping facility in a business park, not a retail storefront, so no embedded map is included by default. Flag for Jordan: list the address for legitimacy/B2B; an embedded map is still optional. Phone is tap-to-call on mobile. Details editable in the CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Short Contact Form</div>
+							</div>
+							<div class="form-grid">
+								<div class="form-field"><div class="field-label">Name *</div><div class="field-placeholder">Your name</div></div>
+								<div class="form-field"><div class="field-label">Email *</div><div class="field-placeholder">your@email.com</div></div>
+								<div class="form-field full"><div class="field-label">Message</div><div class="field-placeholder" style="min-height: 60px;">How can we help?</div></div>
+							</div>
+							<div style="margin-top: 12px;"><div class="wf-cta">Send Message →</div></div>
+							<div class="annotation">
+								Short and friendly — Name, Email, Message. Submissions go to the client's inbox. Client-side validation with a server-side backup; add spam protection if it becomes an issue.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Honestly Cranberry · Cranmoor, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 8: MY ACCOUNT (REDIRECT) ── -->
+			<section class="wf-section" id="account">
+				<div class="section-label">
+					<span class="section-num">8</span> My Account &mdash; /my-account
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Shopify-Hosted Account — Redirect (Not Wireframed)</div>
+								<span class="cms-tag shopify">Shopify</span>
+							</div>
+							<div class="wf-body-text">
+								Account / order-history / login is Shopify-hosted, styled to the brand as closely as Shopify allows. It's a redirect, not a page we build — so it gets no wireframe block here.
+							</div>
+							<div class="annotation">
+								Custom-branded Next.js account pages (via the Shopify Customer Account API) are a Phase 2 item ($1–2K) — only worth doing if post-launch usage data justifies it. Not in v1.
+							</div>
+						</div>
+
+						<!-- PDF array note -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">PDF Library — Array Built, Placement Assigned</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								The 7 PDFs live in the CMS PDF array, which now carries a category / placement field so each file knows where it surfaces — <strong>health-research</strong> → the Science block on the Health page; <strong>brand-collateral</strong> → the footer Resources section (with the Information Packet held for the Phase 2 wholesale page). The array stays the single management tool; placement is data-driven, not hardcoded.
+							</div>
+							<div class="annotation">
+								Still no standalone "Downloads" page — the PDFs surface in context (evidence on the Health page, collateral in the footer) rather than as an undifferentiated list. Add or recategorize a PDF in the CMS and it routes to the right place automatically.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>7-Page v1 Scope</strong> — Home, Our Story, Shop/Collection, Product (PDP), Health Benefits, FAQs, Contact. My Account is a Shopify-hosted redirect, not a built page.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Shopify Migration</strong> — Products, cart, and checkout run on Shopify via the Storefront API. This is what fixes the checkout-reliability problem (the duplicate-order story) on the current WordPress/WooCommerce stack.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Custom CMS for Content</strong> — Story, health claims, FAQs, curated reviews, badges, and the PDF array are all editable by the family without dev work.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Reviews Split — Two Systems, Two Jobs</strong> — Yotpo (product-level, ~1,000 reviews) lives on product pages and drives conversion. Google + curated quotes (brand-level) live on the homepage. They are NOT consolidated.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Claim-Led Spine</strong> — Every page earns its order: claim → proof → product → story → proof again. Single-ingredient claim leads.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Wisconsin Foodie Video</strong> — Full YouTube embed on Home and Our Story. The whole episode/segment plays in place; YouTube handles hosting and the player. The credibility no competitor can claim.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Restraint Over Density</strong> — Clean and simple is the bar (they liked the old GoDaddy site for exactly this). No over-design.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Photo-Led, Story-Forward</strong> — Hero is a family / farm photograph and the Our Story page uses a real photo band (no type-led fallback). The design is built around the imagery, so the actual photos need to be gathered before those blocks lock.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Click-to-Call + Email</strong> — 715-424-REAL (tap-to-call on mobile) and info@honestlycranberry.com. Minimal contact page, no map.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>FAQ Schema Markup</strong> — Structured data on the FAQ page for Google rich snippets.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>PDF Placement Resolved</strong> — Health/science PDFs surface as cited evidence on the Health page; brand collateral lives in the footer Resources, with the Information Packet held for Phase 2 wholesale.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div><strong>Phase 2 — Off the Wireframe</strong> — Custom-branded accounts, B2B/wholesale page + portal, full recipes SEO section, and "Used by Chefs" are all explicitly out of v1.</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div><strong>Photography — Gather the Actual Images</strong> — Hero and the Our Story band are committed to real family / farm / harvest photos, so this is now a delivery item, not a layout decision: confirm what usable photography exists and fill the gaps (a shoot may be needed — coordinate with the fall harvest if so). The design depends on these landing.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div><strong>PDF Hosting Rights</strong> — Confirm Honestly Cranberry has the right to host and distribute the third-party PDFs (the Cranberry Institute pieces and especially the journal articles) before they go live. Placement is settled; rights are the open item.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div><strong>FAQ Volume → Search Bar?</strong> — Add a FAQ search bar only if the real question count warrants it. Decide after pulling current FAQ content.</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div><strong>Amazon Reviews Expectation</strong> — Amazon reviews can't be imported into Yotpo (TOS). Set this expectation with Mary &amp; Allison early so it isn't a launch-day disappointment.</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
