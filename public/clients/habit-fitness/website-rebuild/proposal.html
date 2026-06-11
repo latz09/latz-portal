@@ -1,29 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Website Proposal — Habit Fitness | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 19.6px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    /* Allow full document to flow across multiple pages */
+    html, body {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+
+    body { background: white; margin: 0; }
+
+    .page-wrap {
+      margin-left: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .cover {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 78.4px 67.2px !important;
+      page-break-after: always;
+    }
+
+    .main { padding: 44.8px 67.2px 67.2px !important; }
+
+    section { page-break-inside: avoid; margin-bottom: 56px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+
+    a { color: inherit !important; text-decoration: none !important; }
+    .proof-row { display: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 308px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1.4px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 30.8px 25.2px 28px; border-bottom: 1.4px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 9.8px; margin-bottom: 22.4px; }
+  .sidebar-dot { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 12.6px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 18.2px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 4.2px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 12.6px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 22.4px 11.2px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 11.9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 11.2px 14px 5.6px; }
+  .nav-link { display: flex; align-items: center; gap: 11.2px; padding: 11.2px 14px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 17.5px; font-weight: 400; border-radius: 7px; border-left: 2.8px solid transparent; margin-bottom: 1.4px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 12.6px; color: rgba(255,255,255,0.2); width: 22.4px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 22.4px 16.8px; border-top: 1.4px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 14px 19.6px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 8.4px; font-size: 16.8px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 19.6px 25.2px; border-top: 1.4px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 11.9px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 28px; left: 28px; width: 61.6px; height: 61.6px; border-radius: 50%; background: var(--dark); color: white; border: 1.4px solid rgba(255,255,255,0.1); font-size: 25.2px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 5.6px 22.4px rgba(0,0,0,0.3); }
+
+  /* ── STICKY CTA ── */
+  a.sticky-cta { display: none; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 308px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 39.2px 67.2px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1.4px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 25.2px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 12.6px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1.4px solid rgba(255,255,255,0.1); padding: 5.6px 16.8px; border-radius: 5.6px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 100.8px 67.2px 84px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 22.4px; display: flex; align-items: center; gap: 16.8px; }
+  .cover-overline::before { content: ''; width: 44.8px; height: 1.4px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 67.2px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .cover-sub { font-size: 22.4px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 72.8px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1.4px solid rgba(255,255,255,0.08); border-radius: 9.8px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 19.6px 33.6px; border-right: 1.4px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 5.6px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 11.9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 18.2px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 33.6px 67.2px; border-top: 1.4px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 16.8px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 12.6px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 78.4px 89.6px 112px; }
+  section { margin-bottom: 84px; scroll-margin-top: 33.6px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 19.6px; margin-bottom: 8.4px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1.4px solid var(--gray-200); padding: 4.2px 12.6px; border-radius: 5.6px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 33.6px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1.4px; background: var(--gray-100); margin-bottom: 39.2px; margin-top: 16.8px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 4.2px solid var(--teal); padding-left: 33.6px; max-width: 952px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 600; color: var(--gray-900); margin-bottom: 25.2px; }
+  .opening-wrap p { font-size: 20.3px; color: var(--gray-700); line-height: 1.8; margin-bottom: 19.6px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PAGE CARDS ── */
+  .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+  .page-card { background: var(--white); border: 1.4px solid var(--gray-100); border-top: 2.8px solid var(--gray-700); border-radius: 9.8px; padding: 22.4px 25.2px; }
+  .page-card-title { font-size: 18.2px; font-weight: 600; color: var(--gray-900); margin-bottom: 2.8px; }
+  .page-card-slug { font-family: 'DM Mono', monospace; font-size: 13.3px; color: var(--gray-400); letter-spacing: 0.06em; margin-bottom: 14px; display: block; }
+  .page-card ul { list-style: none; padding: 0; border-top: 1.4px solid var(--gray-100); padding-top: 14px; }
+  .page-card ul li { font-size: 16.8px; color: var(--gray-600); padding: 3.5px 0 3.5px 19.6px; position: relative; line-height: 1.45; }
+  .page-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 14px; }
+
+  /* ── ALWAYS INCLUDED ── */
+  .always-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11.2px; }
+  .always-item { background: var(--white); border: 1.4px solid var(--gray-100); border-radius: 8.4px; padding: 19.6px 22.4px; }
+  .always-label { font-size: 16.8px; font-weight: 600; color: var(--gray-900); margin-bottom: 4.2px; display: flex; align-items: center; gap: 8.4px; }
+  .always-label .dot { width: 5.6px; height: 5.6px; background: var(--gray-400); border-radius: 50%; flex-shrink: 0; }
+  .always-desc { font-size: 16.1px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--dark-header); border-radius: 11.2px; padding: 44.8px 50.4px; margin-bottom: 28px; border-left: 4.2px solid var(--teal); }
+  .highlight-box p { font-size: 19.6px; color: rgba(255,255,255,0.88); line-height: 1.8; margin-bottom: 16.8px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--white); font-weight: 600; }
+
+  /* ── CRED STRIP ── */
+  .cred-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11.2px; }
+  .cred-badge { background: var(--white); border: 1.4px solid var(--gray-100); border-radius: 8.4px; padding: 19.6px 16.8px; text-align: center; }
+  .cred-badge .icon { font-size: 25.2px; margin-bottom: 9.8px; display: block; }
+  .cred-badge .label { font-size: 15.4px; font-weight: 500; color: var(--gray-700); line-height: 1.35; }
+
+  /* ── INVESTMENT ── */
+  .invest-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16.8px; margin-bottom: 22.4px; }
+  .invest-cards.single { grid-template-columns: 1fr; max-width: 672px; }
+  .invest-card { border: 1.4px solid var(--gray-100); border-radius: 11.2px; padding: 33.6px 30.8px; background: var(--white); position: relative; }
+  .invest-card.featured { border-color: var(--gray-300); border-width: 2.1px; }
+  .featured-pill { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--teal); color: var(--white); font-family: 'DM Mono', monospace; font-size: 12.6px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 4.2px 16.8px; border-radius: 5.6px; white-space: nowrap; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5.6px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 25.2px; font-weight: 600; color: var(--gray-900); margin-bottom: 11.2px; }
+  .invest-card-desc { font-size: 17.5px; color: var(--gray-500); line-height: 1.55; margin-bottom: 28px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 2.8px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 15.4px; color: var(--gray-400); margin-bottom: 25.2px; }
+  .invest-list { list-style: none; padding: 0; border-top: 1.4px solid var(--gray-100); padding-top: 19.6px; }
+  .invest-list li { font-size: 16.8px; color: var(--gray-600); padding: 4.9px 0 4.9px 22.4px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 14px; top: 5.6px; }
+  .invest-summary { background: var(--gray-900); border-radius: 11.2px; padding: 33.6px 39.2px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; margin-bottom: 16.8px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 12.6px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 5.6px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 50.4px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-schedule { font-size: 16.8px; color: rgba(255,255,255,0.65); margin-top: 5.6px; }
+  .hosting-row { background: var(--teal-dim); border: 1.4px solid var(--teal-border); border-radius: 8.4px; padding: 19.6px 25.2px; display: flex; align-items: flex-start; gap: 14px; }
+  .hosting-row .icon { font-size: 22.4px; flex-shrink: 0; margin-top: 1.4px; }
+  .hosting-row p { font-size: 17.5px; color: var(--gray-600); line-height: 1.6; }
+  .hosting-row strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 56px 1fr; gap: 22.4px; padding-bottom: 39.2px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 26.6px; top: 56px; bottom: 0; width: 2.8px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 56px; height: 56px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 18.2px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 11.2px; }
+  .step-title { font-size: 19.6px; font-weight: 600; color: var(--gray-900); margin-bottom: 5.6px; }
+  .step-desc { font-size: 18.2px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note { margin-top: 33.6px; padding: 19.6px 25.2px; background: var(--white); border: 1.4px solid var(--gray-100); border-radius: 8.4px; font-size: 17.5px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note strong { color: var(--gray-700); }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 14px; padding: 56px 61.6px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 13.3px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16.8px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 600; color: var(--white); margin-bottom: 14px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 19.6px; color: rgba(255,255,255,0.65); margin-bottom: 44.8px; max-width: 616px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 16.8px; position: relative; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 9.8px; padding: 16.8px 30.8px; border-radius: 8.4px; font-size: 18.2px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .cta-btn.primary { background: var(--teal); color: var(--white); }
+  .cta-btn.primary:hover { background: #1ab2bf; transform: translateY(-1.4px); box-shadow: 0 5.6px 22.4px rgba(24,161,173,0.3); }
+  .cta-btn.primary-dim { background: rgba(24,161,173,0.7); color: var(--white); }
+  .cta-btn.primary-dim:hover { background: rgba(24,161,173,0.85); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); border: 1.4px solid rgba(255,255,255,0.1); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.11); }
+  .next-contact { font-size: 16.8px; color: rgba(255,255,255,0.4); margin-top: 22.4px; position: relative; }
+  .next-contact a { color: var(--teal); text-decoration: none; }
+
+  /* ── PROOF ROW ── */
+  .proof-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11.2px;
+    padding: 33.6px 0 0;
+    margin-top: 28px;
+    border-top: 1.4px solid var(--gray-100);
+    text-align: center;
+  }
+  .proof-row p { font-size: 16.8px; color: var(--gray-400); }
+  .proof-row a { font-size: 16.8px; font-weight: 600; color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1.4px solid var(--gray-100); margin: 72.8px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 28px 89.6px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; border-top: 1.4px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 11.2px; }
+  .footer-dot { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 12.6px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 15.4px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 2.8px; }
+  .footer-right { font-size: 15.4px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 1260px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-308px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 28px; padding-right: 28px; }
+    .main { padding: 50.4px 28px 112px; }
+    .doc-footer { padding-left: 28px; padding-right: 28px; }
+    .cover-client { font-size: 50.4px; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .cred-strip { grid-template-columns: 1fr 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1.4px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    /* CTA buttons: full width, centered text */
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-btn { justify-content: center; width: 100%; }
+    a.sticky-cta {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      gap: 8.4px;
+      padding: 15.4px 28px;
+      background: var(--teal);
+      color: var(--white) !important;
+      border-radius: 8.4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18.2px;
+      font-weight: 600;
+      text-decoration: none !important;
+      box-shadow: 0 5.6px 28px rgba(24,161,173,0.35);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+  }
+
+  /* ── RESPONSIVE 840px ── */
+  @media (max-width: 600px) {
+    .page-grid { grid-template-columns: 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .always-grid { grid-template-columns: 1fr 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .next-box { padding: 44.8px 28px; }
+    .main { padding: 50.4px 22.4px 112px; }
+    /* Stack proof row */
+    .proof-row { flex-direction: column; align-items: center; gap: 5.6px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Habit Fitness</div>
+    <div class="sidebar-doctype">Website Proposal</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#scope" class="nav-link"><span class="num">02</span> What You're Getting</a>
+    <a href="#why" class="nav-link"><span class="num">03</span> Why This Matters</a>
+    <a href="#investment" class="nav-link"><span class="num">04</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">05</span> How It Works</a>
+    <a href="#next-steps" class="nav-link"><span class="num">06</span> Get Started</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="#next-steps" class="sidebar-cta-btn">Get Started →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+<a href="#next-steps" class="sticky-cta no-print">Get Started →</a>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Website Proposal</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">Habit Fitness</div>
+      <div class="cover-sub">Custom Premier Gym Site + Tutorial Video System &nbsp;·&nbsp; June 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Andy Peterson</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Scope</span>
+          <span class="cover-meta-value">Core Site + Video System</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Investment</span>
+          <span class="cover-meta-value">$4,500 – $6,500</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Andy,</div>
+        <p>What makes Habit work isn't the equipment — it's how you run it. Respectful, positive, no weirdos, no contracts, priced on purpose so it never gets packed. The big franchises run the opposite play: cram in as many paying bodies as they can and never actually care who's in the room. You built the other thing — and that's why people stay.</p>
+        <p>You don't need to start over. You like what you've built, and you should. This is about making it <strong>cleaner, more premium, and more to the point.</strong> The site you've got does the job — it just doesn't feel as premium as the gym itself does. Closing that gap is the whole point. The current site informs. This one sells.</p>
+        <p>You already pour money back into this place — new equipment, more space, the details other owners skip. The website's the one piece that hasn't kept up. <strong>This is the same move: reinvesting in the gym, just the part people hit before they ever walk in.</strong></p>
+        <p>You're at 300 members, chasing 500. The right person should land on the site, get what Habit is and what it costs in about ten seconds, and do one thing: <strong>text you to set up a tour.</strong> No online signup, no checkout, not a single "call us." Every button points to a text — the way you already run it.</p>
+        <p>You could throw up a Square site yourself — I know it, you know it. But you've got a gym to run and you want premium. So you hand it to one person who builds it premium and stays on call when you need a change. And <strong>you don't buy blind:</strong> you watch it come together on a live link and give feedback as it's built. Nothing locks until you've seen it working. You own all of it, forever — no monthly fee to me, ever.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="scope">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">What You're Getting</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="page-grid">
+        <div class="page-card">
+          <div class="page-card-title">Home</div>
+          <span class="page-card-slug">/</span>
+          <ul>
+            <li>"More than just a gym" — culture front and center</li>
+            <li>Owner's message, the Habit difference</li>
+            <li>Membership starting-price hook + teasers</li>
+            <li>3-step "how to get started" path</li>
+            <li>Google reviews link-out, hours, location</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Membership</div>
+          <span class="page-card-slug">/membership</span>
+          <ul>
+            <li>All tiers, pricing front and center</li>
+            <li>Full member perks — 24/7, community, no contract</li>
+            <li>"First lift on us. No risk, no contract."</li>
+            <li>Reusable "Get Started" path into a tour</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Personal Training</div>
+          <span class="page-card-slug">/personal-training</span>
+          <ul>
+            <li>What you offer — one-on-one, fully customized</li>
+            <li>Trainer bios — experienced, no cookie-cutter programs</li>
+            <li>Packages &amp; rates</li>
+            <li>One-tap "text us to set it up"</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">About</div>
+          <span class="page-card-slug">/about</span>
+          <ul>
+            <li>How the gym is run — the real differentiator</li>
+            <li>Members over numbers — not a corporate, pack-'em-in franchise</li>
+            <li>Culture + house rules: respect, leave it better</li>
+            <li>Lifter-run, judgement-free, high standards</li>
+            <li>Not a generic bio</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">FAQ</div>
+          <span class="page-card-slug">/faq</span>
+          <ul>
+            <li>The stuff people ask before they walk in</li>
+            <li>Contract, trial, hours, house rules, joining</li>
+            <li>Reduces friction ahead of a tour</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <div class="page-card-title">Contact</div>
+          <span class="page-card-slug">/contact</span>
+          <ul>
+            <li>"Text, don't call" — unmistakable</li>
+            <li>One-tap text button + email + IG</li>
+            <li>Backup form with interest selector</li>
+            <li>Hours, location, directions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p><strong>Plus the Tutorial Video System — the part no Square or template site can match.</strong></p>
+        <p>Scan a code on a machine and a clean, Habit-branded tutorial page opens — never raw YouTube. Behind it, a public, searchable video library: filter by muscle group, filter by equipment, search by nickname ("pulldown," "lat machine"). One simple dataset powers both the machine pages and the library, so it scales from 30 machines to 300 without ever getting messy. Swap a video anytime and the codes never change — no reprinting.</p>
+        <p><strong>Where the line is:</strong> Each machine gets its own QR code, generated straight from your site — I hand you the full set at launch, labeled by machine and ready for a print shop. Need one for a new machine later? It's a click in your dashboard. Getting them printed as stickers and onto the machines is on your side — any local print shop does it cheap — and that part isn't in the price. But the codes themselves come done and dialed; nothing for you to figure out.</p>
+        <p>It's a real reason to walk in, a real reason to stay, and a feature your competition flat-out doesn't have. Pricing for it is on the next page — bundled or core-only, your call.</p>
+      </div>
+
+      <div class="always-grid">
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Mobile-First</div>
+          <div class="always-desc">Most people check you on a phone — and every QR scan is one. Built for that first.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> SEO Foundations</div>
+          <div class="always-desc">Page titles, meta descriptions, clean URLs, fast load times.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Live Dev Link</div>
+          <div class="always-desc">Watch it come together. Give feedback as we build.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Premier Dark Aesthetic</div>
+          <div class="always-desc">Clean, elite, intentional. Matches the room, not a template.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> You Own It</div>
+          <div class="always-desc">No retainer, no lock-in, no monthly fees to me. Ever.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Fast &amp; Reliable</div>
+          <div class="always-desc">Next.js on Vercel. 99.9% uptime, global CDN, auto SSL.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="why">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Why This Site Matters</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="highlight-box">
+        <p>Nobody picks a gym off a feature list. They pick the one that looks like their kind of place before they ever walk in. Your best-fit members search you, glance at the site, and decide in about ten seconds whether Habit is for them.</p>
+        <p>A cleaner, more premium site makes that call easy. When the pricing is obvious and the culture that sets you apart hits right away, the right people know in seconds — and text you. <strong>You're at 300 members, chasing 500. A sharper front door is how you close that gap.</strong></p>
+        <p>Here's the math that makes this easy: a site built to convert that pulls in just <strong>one or two extra members a month</strong> covers the whole project inside the first quarter. After that, it's pure upside — every month, for as long as the site runs.</p>
+      </div>
+      <div class="cred-strip">
+        <div class="cred-badge"><span class="icon">🔑</span><div class="label">24/7 Member Access</div></div>
+        <div class="cred-badge"><span class="icon">📍</span><div class="label">Locally Owned · Plover, WI</div></div>
+        <div class="cred-badge"><span class="icon">📝</span><div class="label">No Contracts, Ever</div></div>
+        <div class="cred-badge"><span class="icon">🏋️</span><div class="label">Run By a Lifter, For Lifters</div></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="invest-cards">
+        <div class="invest-card">
+          <div class="invest-card-name">Core Site</div>
+          <div class="invest-card-title">Custom Premier Gym Site</div>
+          <div class="invest-card-desc">The full core site, built to convert. Premier dark design, custom CMS, mobile-first, every page funneling to "come in for a tour."</div>
+          <div class="invest-price">$4,500</div>
+          <div class="invest-price-note">One-time. You own it outright.</div>
+          <ul class="invest-list">
+            <li>Home, Membership, Personal Training, About, FAQ, Contact</li>
+            <li>Custom CMS — you delegate changes to one person, me</li>
+            <li>Membership pricing front and center</li>
+            <li>Sticky "Join Now" + one-tap text CTAs site-wide</li>
+            <li>Contact form + Google reviews link-out</li>
+            <li>Premier dark aesthetic, mobile-first, SEO foundations</li>
+          </ul>
+        </div>
+        <div class="invest-card featured">
+          <div class="featured-pill">Best Value</div>
+          <div class="invest-card-name">Core Site + Video System</div>
+          <div class="invest-card-title">The Full Build</div>
+          <div class="invest-card-desc">Everything in the core site, plus the Tutorial Video System bundled in. Adding it now is $2,000 — it's $3,000 as a standalone later. Build it once, build it right.</div>
+          <div class="invest-price">$6,500</div>
+          <div class="invest-price-note">Bundled in at launch — save $1,000 vs. adding it later.</div>
+          <ul class="invest-list">
+            <li>Everything in the Core Site</li>
+            <li>Branded tutorial page per machine + print-ready QR codes</li>
+            <li>Public, searchable video library</li>
+            <li>Filter by muscle group + equipment, search by nickname</li>
+            <li>One CMS dataset powers machine pages + library</li>
+            <li>A differentiator no Square or template site has</li>
+          </ul>
+        </div>
+      </div>
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Your investment</div>
+          <div class="invest-summary-amount">$4,500 <span style="color:rgba(255,255,255,0.2);font-size:22px;">/</span> $6,500</div>
+          <div class="invest-summary-schedule">50% deposit to start &nbsp;·&nbsp; 50% at launch &nbsp;·&nbsp; thirds available if you'd rather</div>
+        </div>
+        <a href="#next-steps" class="cta-btn primary no-print">Move Forward →</a>
+      </div>
+      <div class="hosting-row">
+        <span class="icon">🔑</span>
+        <p><strong>This is one-time — you own it outright.</strong> Your current ~$300–400/year is rent you pay forever for something you never own: roughly $2,000 over five years, and at the end you own nothing. This is a one-time build you keep for good. The only ongoing cost is <strong>~$20/month hosting, paid straight to Vercel</strong> — no markup, no monthly fee to me. Most agencies charge $100–$300/month just to keep the lights on.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Deposit &amp; Kickoff</div>
+            <div class="step-desc">50% deposit locks in the project. I'll reach out within 24 hours to line up what I need to start — membership tiers and prices, photos, logo and exact brand colors, and the machine list for the video system. The faster that lands, the faster you launch.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Design &amp; Build</div>
+            <div class="step-desc">The wireframe and plan are already mapped — that's a real head start. I build from there in your premier dark direction and share a live development link so you follow along in real time. You watch it come together; you never buy blind.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Review &amp; Refine</div>
+            <div class="step-desc">You review the live site and we go through it together. Each page gets up to two rounds of revisions — enough room to get it right, with no open-ended back-and-forth. No guessing, no surprises.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Launch &amp; Handoff</div>
+            <div class="step-desc">Site goes live on habitfitnessgym.com. Final 50% due at launch. You own everything — code, CMS, hosting, domain. If you ever want a different developer, you take it all with you.</div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-note">
+        <strong>Timeline:</strong> With the wireframe and plan already locked, a realistic build is <strong>4–6 weeks</strong> from deposit to launch. The one thing that sets the pace is content — tiers, prices, photos, and your first batch of machine videos. Get those to me quickly and we're at the fast end; that's the only real variable.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">06</span>
+        <span class="sec-title">Ready to Move Forward?</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Next Steps —</div>
+        <div class="next-title">Let's get started.</div>
+        <div class="next-sub">Two packages, one decision. Text or email me which one you want — the Core Site or the Full Build — and I'll send your invoice for the 50% deposit and get everything lined up to start. Questions first? Even better. Reach out and we'll talk it through.</div>
+        <div class="cta-row">
+          <a href="sms:7156305689" class="cta-btn primary">💬 Text Jordan</a>
+          <a href="mailto:jordan@latzwebdesign.com" class="cta-btn ghost">✉️ Email Jordan</a>
+          <a href="tel:7156305689" class="cta-btn ghost">📞 (715) 630-5689</a>
+        </div>
+        <div class="next-contact">
+          50% deposit to start · 50% at launch · thirds available if you'd rather.<br>
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

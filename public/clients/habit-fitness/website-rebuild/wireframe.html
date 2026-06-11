@@ -1,29 +1,2543 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Habit Fitness — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				/* PROVISIONAL palette — DARK theme. Andy's near-black monochrome north star
+				   with a dark-military-tan accent. Not locked; real hex comes from the brief. */
+				--bg: #161616;
+				--bg-grid: rgba(255, 255, 255, 0.04);
+				--sidebar-bg: #0e0e0e;
+				--sidebar-border: #2a2a2a;
+				--card-bg: #1d1d1d;
+				--card-border: #3a3a3a;
+				--block-bg: rgba(255, 255, 255, 0.03);
+				--nav-bg: #262626;
+				--surface: rgba(255, 255, 255, 0.06);
+				--footer-bg: #000000;
+
+				--text: #ece9e1;
+				--text-dim: rgba(236, 233, 225, 0.62);
+				--text-dimmer: rgba(236, 233, 225, 0.4);
+				--heading: #f6f4ee;
+
+				--accent: #c2aa6e;
+				--accent-bright: #d8c089;
+				--accent-soft: rgba(194, 170, 110, 0.1);
+				--accent-border: rgba(194, 170, 110, 0.45);
+				--green: #9bb178;
+
+				--line: rgba(255, 255, 255, 0.16);
+				--line-soft: rgba(255, 255, 255, 0.1);
+				--dark-on-accent: #141414;
+
+				--sidebar-w: 336px;
+
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+				background: var(--bg);
+				background-image:
+					linear-gradient(var(--bg-grid) 1.4px, transparent 1.4px),
+					linear-gradient(90deg, var(--bg-grid) 1.4px, transparent 1.4px);
+				background-size: 39.2px 39.2px;
+				color: var(--text);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.6);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--sidebar-bg);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 4.2px solid var(--sidebar-border);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 33.6px 28px 28px;
+				border-bottom: 1.4px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Inter', sans-serif;
+				font-size: 12.6px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11.2px;
+			}
+
+			.sidebar-client {
+				font-family: 'Oswald', sans-serif;
+				font-size: 25.2px;
+				font-weight: 700;
+				color: var(--heading);
+				line-height: 1.2;
+				margin-bottom: 5.6px;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 16.8px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8.4px;
+				background: rgba(194, 170, 110, 0.15);
+				border: 1.4px solid rgba(194, 170, 110, 0.4);
+				border-radius: 5.6px;
+				padding: 5.6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Inter', sans-serif;
+				font-size: 12.6px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent-bright);
+			}
+
+			.sidebar-nav {
+				padding: 16.8px 11.2px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 11.9px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.25);
+				padding: 16.8px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 12.6px;
+				padding: 9.8px 14px;
+				color: rgba(236, 233, 225, 0.5);
+				text-decoration: none;
+				font-family: 'Inter', sans-serif;
+				font-size: 17.5px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 2.8px solid transparent;
+				margin-bottom: 1.4px;
+			}
+
+			.nav-link:hover {
+				color: var(--heading);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--heading);
+				background: rgba(194, 170, 110, 0.14);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 16.8px;
+				width: 22.4px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 19.6px 28px;
+				border-top: 1.4px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Inter', sans-serif;
+				font-size: 11.9px;
+				color: rgba(255, 255, 255, 0.22);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 33.6px;
+				right: 33.6px;
+				width: 72.8px;
+				height: 72.8px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--dark-on-accent);
+				border: none;
+				font-size: 30.8px;
+				z-index: 300;
+				box-shadow: 0 5.6px 22.4px rgba(0, 0, 0, 0.5);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67.2px 61.6px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 72.8px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15.4px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent-bright);
+				margin-bottom: 11.2px;
+			}
+
+			.doc-title {
+				font-family: 'Oswald', sans-serif;
+				font-size: 47.6px;
+				font-weight: 700;
+				color: var(--heading);
+				margin-bottom: 8.4px;
+				line-height: 1.15;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 19.6px;
+				color: var(--text-dim);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 33.6px;
+				border: 2.1px solid var(--line);
+				border-radius: 8.4px;
+				overflow: hidden;
+				width: fit-content;
+				background: var(--surface);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1.4px solid var(--line-soft);
+				display: flex;
+				flex-direction: column;
+				gap: 4.2px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12.6px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--text-dimmer);
+			}
+
+			.meta-value {
+				font-family: 'Inter', sans-serif;
+				font-size: 16.8px;
+				font-weight: 500;
+				color: var(--text);
+			}
+
+			.meta-value.warn {
+				color: var(--accent-bright);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 89.6px;
+				scroll-margin-top: 44.8px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15.4px;
+				color: var(--text);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 19.6px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1.4px;
+				background: rgba(255, 255, 255, 0.18);
+			}
+
+			.section-num {
+				background: var(--accent);
+				color: var(--dark-on-accent);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15.4px;
+				width: 33.6px;
+				height: 33.6px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				position: relative;
+				background: var(--card-bg);
+				border: 2.8px solid var(--card-border);
+				border-radius: 8.4px;
+				box-shadow: 8.4px 8.4px 0 rgba(0, 0, 0, 0.45);
+				overflow: hidden;
+			}
+
+			/* ── STICKY JOIN NOW (site-wide element representation) ── */
+			.sticky-cta {
+				position: absolute;
+				bottom: 84px;
+				right: 25.2px;
+				background: var(--accent);
+				color: var(--dark-on-accent);
+				font-family: 'Oswald', sans-serif;
+				font-size: 15.4px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				padding: 11.2px 22.4px;
+				border-radius: 33.6px;
+				box-shadow: 0 4.2px 16.8px rgba(0, 0, 0, 0.5);
+				z-index: 5;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 30.8px;
+				border-bottom: 2.8px solid rgba(255, 255, 255, 0.12);
+				background: var(--nav-bg);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Oswald', sans-serif;
+				font-weight: 700;
+				font-size: 19.6px;
+				color: var(--heading);
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 19.6px;
+				align-items: center;
+				font-family: 'Inter', sans-serif;
+				font-size: 16.1px;
+				color: var(--text-dim);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--heading);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 4.2px;
+				text-decoration-color: var(--accent);
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39.2px 39.2px 50.4px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16.8px;
+				color: rgba(236, 233, 225, 0.78);
+				line-height: 1.5;
+				margin-top: 14px;
+				padding: 11.2px 19.6px;
+				background: rgba(255, 255, 255, 0.05);
+				border-left: 4.2px solid rgba(255, 255, 255, 0.22);
+				border-radius: 0 5.6px 5.6px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2.8px dashed var(--accent);
+				border-radius: 8.4px;
+				padding: 19.6px 22.4px;
+				margin: 19.6px 0;
+				background: var(--accent-soft);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15.4px;
+				color: var(--accent-bright);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11.2px;
+				display: flex;
+				align-items: center;
+				gap: 8.4px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1.4px solid var(--green);
+				border-radius: 4.2px;
+				padding: 2.8px 11.2px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2.8px dashed var(--line);
+				border-radius: 8.4px;
+				padding: 25.2px 22.4px;
+				margin-bottom: 22.4px;
+				background: var(--block-bg);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 16.8px;
+				flex-wrap: wrap;
+				gap: 11.2px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Oswald', sans-serif;
+				font-size: 36.4px;
+				font-weight: 700;
+				color: var(--heading);
+				margin-bottom: 8.4px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-heading-md {
+				font-family: 'Oswald', sans-serif;
+				font-size: 25.2px;
+				font-weight: 600;
+				color: var(--heading);
+				margin-bottom: 8.4px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Oswald', sans-serif;
+				font-size: 19.6px;
+				font-weight: 600;
+				color: var(--heading);
+				margin-bottom: 5.6px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-subtext {
+				font-family: 'Inter', sans-serif;
+				font-size: 19.6px;
+				color: var(--text-dim);
+				font-style: italic;
+				margin-bottom: 19.6px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Inter', sans-serif;
+				font-size: 18.2px;
+				color: rgba(236, 233, 225, 0.7);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1.4px dashed var(--line-soft);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: #2b2b2b;
+				color: var(--heading);
+				border: 1.4px solid rgba(255, 255, 255, 0.18);
+				font-family: 'Inter', sans-serif;
+				font-size: 18.2px;
+				font-weight: 600;
+				padding: 12.6px 30.8px;
+				border-radius: 5.6px;
+				margin-top: 11.2px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--dark-on-accent);
+				border-color: var(--accent);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2.8px solid rgba(255, 255, 255, 0.12);
+				padding: 19.6px 30.8px;
+				background: var(--footer-bg);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 14px;
+				flex-wrap: wrap;
+			}
+
+			.wf-footer span {
+				font-family: 'Inter', sans-serif;
+				font-size: 15.4px;
+				color: rgba(236, 233, 225, 0.5);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(255, 255, 255, 0.04);
+				border: 2.8px dashed var(--line);
+				border-radius: 8.4px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11.2px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39.2px;
+				opacity: 0.5;
+				color: var(--text-dim);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16.8px;
+				color: var(--text-dimmer);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── PRICING TIER CARDS ── */
+			.tier-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16.8px;
+				margin-top: 16.8px;
+			}
+
+			.tier-card {
+				border: 2.1px dashed var(--line);
+				border-radius: 7px;
+				padding: 22.4px 19.6px;
+				background: var(--surface);
+				text-align: center;
+			}
+
+			.tier-name {
+				font-family: 'Oswald', sans-serif;
+				font-size: 19.6px;
+				font-weight: 600;
+				color: var(--heading);
+				margin-bottom: 8.4px;
+				text-transform: uppercase;
+			}
+
+			.tier-price {
+				font-family: 'Oswald', sans-serif;
+				font-size: 28px;
+				font-weight: 700;
+				color: var(--accent-bright);
+				margin-bottom: 5.6px;
+			}
+
+			.tier-note {
+				font-family: 'Inter', sans-serif;
+				font-size: 15.4px;
+				color: var(--text-dimmer);
+			}
+
+			/* ── PERK / DIFFERENCE CHIPS ── */
+			.chip-row {
+				display: flex;
+				gap: 11.2px;
+				flex-wrap: wrap;
+				margin-top: 8.4px;
+			}
+
+			.chip {
+				font-family: 'Inter', sans-serif;
+				font-size: 16.8px;
+				border: 2.1px solid var(--line);
+				border-radius: 28px;
+				padding: 7px 18.2px;
+				color: var(--text-dim);
+				background: var(--surface);
+			}
+
+			/* ── FILTER ROW (library) ── */
+			.filter-row {
+				display: flex;
+				gap: 11.2px;
+				align-items: center;
+				margin-bottom: 16.8px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15.4px;
+				color: var(--text-dimmer);
+			}
+
+			.filter-pill {
+				font-family: 'Inter', sans-serif;
+				font-size: 16.8px;
+				border: 2.1px solid var(--line);
+				border-radius: 28px;
+				padding: 4.2px 16.8px;
+				color: var(--text-dim);
+			}
+
+			.filter-pill.active {
+				border-color: var(--accent);
+				background: var(--accent-soft);
+				color: var(--heading);
+				font-weight: 600;
+			}
+
+			/* ── SEARCH BAR ── */
+			.search-bar {
+				border: 2.1px dashed rgba(255, 255, 255, 0.28);
+				border-radius: 8.4px;
+				padding: 14px 19.6px;
+				background: var(--surface);
+				font-family: 'Inter', sans-serif;
+				font-size: 18.2px;
+				color: var(--text-dimmer);
+				margin-bottom: 16.8px;
+				display: flex;
+				align-items: center;
+				gap: 11.2px;
+			}
+
+			/* ── VIDEO CARD GRID ── */
+			.video-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16.8px;
+				margin-top: 16.8px;
+			}
+
+			.video-card {
+				border: 2.1px dashed var(--line);
+				border-radius: 7px;
+				padding: 14px;
+				background: var(--surface);
+			}
+
+			.video-name {
+				font-family: 'Oswald', sans-serif;
+				font-size: 16.8px;
+				font-weight: 600;
+				color: var(--heading);
+				text-transform: uppercase;
+				margin: 11.2px 0 8.4px;
+			}
+
+			.badge-row {
+				display: flex;
+				gap: 7px;
+				flex-wrap: wrap;
+			}
+
+			.badge {
+				font-family: 'Inter', sans-serif;
+				font-size: 13.3px;
+				font-weight: 600;
+				padding: 2.8px 9.8px;
+				border-radius: 4.2px;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+			}
+
+			.badge.muscle {
+				background: rgba(255, 255, 255, 0.12);
+				color: var(--text);
+			}
+
+			.badge.equip {
+				background: var(--accent-soft);
+				color: var(--accent-bright);
+				border: 1.4px solid var(--accent-border);
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.form-field {
+				border: 2.1px dashed var(--line);
+				border-radius: 7px;
+				padding: 14px 19.6px;
+				background: var(--surface);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 15.4px;
+				color: var(--text-dimmer);
+				margin-bottom: 5.6px;
+			}
+
+			.field-placeholder {
+				font-family: 'Inter', sans-serif;
+				font-size: 18.2px;
+				color: rgba(236, 233, 225, 0.3);
+			}
+
+			/* ── QUICK LINKS GRID ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin: 19.6px 0;
+			}
+
+			.quick-link-card {
+				border: 2.8px dashed var(--line);
+				border-radius: 8.4px;
+				padding: 19.6px 16.8px;
+				text-align: center;
+				background: var(--surface);
+			}
+
+			.quick-link-icon {
+				font-size: 28px;
+				margin-bottom: 8.4px;
+			}
+
+			.quick-link-label {
+				font-family: 'Oswald', sans-serif;
+				font-size: 16.8px;
+				font-weight: 600;
+				color: var(--heading);
+				text-transform: uppercase;
+			}
+
+			/* ── STEP / GET STARTED ── */
+			.step-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16.8px;
+				margin-top: 14px;
+			}
+
+			.step-card {
+				border: 2.1px dashed var(--line);
+				border-radius: 8.4px;
+				padding: 19.6px;
+				background: var(--surface);
+			}
+
+			.step-num {
+				font-family: 'Oswald', sans-serif;
+				font-size: 30.8px;
+				font-weight: 700;
+				color: var(--accent-bright);
+				line-height: 1;
+				margin-bottom: 8.4px;
+			}
+
+			.step-title {
+				font-family: 'Oswald', sans-serif;
+				font-size: 18.2px;
+				font-weight: 600;
+				color: var(--heading);
+				text-transform: uppercase;
+				margin-bottom: 5.6px;
+			}
+
+			.step-text {
+				font-family: 'Inter', sans-serif;
+				font-size: 16.8px;
+				color: var(--text-dim);
+				line-height: 1.5;
+			}
+
+			/* ── FAQ ROWS ── */
+			.faq-list {
+				display: flex;
+				flex-direction: column;
+				gap: 11.2px;
+				margin-top: 14px;
+			}
+
+			.faq-row {
+				border: 2.1px dashed var(--line);
+				border-radius: 7px;
+				padding: 16.8px 19.6px;
+				background: var(--surface);
+			}
+
+			.faq-q {
+				font-family: 'Oswald', sans-serif;
+				font-size: 18.2px;
+				font-weight: 600;
+				color: var(--heading);
+				text-transform: uppercase;
+				margin-bottom: 5.6px;
+			}
+
+			.faq-a {
+				font-family: 'Inter', sans-serif;
+				font-size: 17.5px;
+				color: var(--text-dim);
+				line-height: 1.5;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8.4px;
+			}
+
+			.sitemap-box {
+				background: var(--accent);
+				color: var(--dark-on-accent);
+				font-family: 'Oswald', sans-serif;
+				font-size: 15.4px;
+				font-weight: 600;
+				padding: 11.2px 19.6px;
+				border-radius: 5.6px;
+				text-align: center;
+				min-width: 100px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(255, 255, 255, 0.06);
+				color: var(--text);
+				border: 2.1px dashed rgba(255, 255, 255, 0.3);
+			}
+
+			.sitemap-box.tertiary {
+				background: var(--accent-soft);
+				color: var(--accent-bright);
+				border: 2.1px dashed var(--accent-border);
+				font-size: 14px;
+				min-width: 80px;
+				padding: 8.4px 14px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25.2px;
+				color: var(--text-dimmer);
+				padding: 0 8.4px;
+				align-self: center;
+				margin-top: -19.6px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 8.4px;
+				margin-top: 8.4px;
+			}
+
+			/* ── CONFIRMED / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 16.8px;
+				padding: 14px 0;
+				border-bottom: 1.4px dashed var(--line-soft);
+				font-family: 'Inter', sans-serif;
+				font-size: 18.2px;
+				color: var(--text);
+				line-height: 1.5;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 19.6px;
+				flex-shrink: 0;
+				margin-top: 1.4px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16.8px;
+				margin-top: 14px;
+			}
+
+			.option-grid.three {
+				grid-template-columns: 1fr 1fr 1fr;
+			}
+
+			.option-card {
+				border: 2.8px dashed var(--line);
+				border-radius: 8.4px;
+				padding: 19.6px;
+				background: var(--surface);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15.4px;
+				color: var(--accent-bright);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 11.2px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 44.8px 33.6px 112px;
+				}
+				.tier-grid,
+				.video-grid,
+				.quick-links,
+				.step-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 33.6px 22.4px 112px;
+				}
+				.doc-title {
+					font-size: 39.2px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1.4px solid var(--line-soft);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 14px 19.6px;
+				}
+				.wf-body {
+					padding: 28px 22.4px 39.2px;
+				}
+				.option-grid,
+				.option-grid.three,
+				.form-grid,
+				.tier-grid,
+				.video-grid,
+				.quick-links,
+				.step-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 5.6px 0;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 5.6px;
+				}
+				.sticky-cta {
+					bottom: 70px;
+					right: 16.8px;
+				}
+				.check-item {
+					font-size: 16.8px;
+					gap: 11.2px;
+				}
+			}
+		
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Habit Fitness</div>
+				<div class="sidebar-doctype">Site Wireframes — Rebuild</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#membership" class="nav-link"><span class="nav-icon">💳</span> Membership</a>
+				<a href="#personal-training" class="nav-link"><span class="nav-icon">🏋️</span> Personal Training</a>
+				<a href="#video-library" class="nav-link"><span class="nav-icon">🎬</span> Video Library</a>
+				<a href="#machine-detail" class="nav-link"><span class="nav-icon">🔳</span> Machine Detail (QR)</a>
+				<a href="#faq" class="nav-link"><span class="nav-icon">❓</span> FAQ</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">📖</span> About</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Habit Fitness</div>
+				<div class="doc-sub">
+					7-Page Premier Gym Site &nbsp;·&nbsp; Membership + Tutorial Video System (QR)
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">7 + QR template</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Andy Peterson</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value warn">Pre-Proposal</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 22.4px; font-size: 18.2px; padding: 16.8px 22.4px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each
+				page and how it should behave, not how it should be designed. Layout, hierarchy, and visual
+				treatment are in the designer's hands.
+			</div>
+			<div class="annotation" style="margin-bottom: 56px; font-size: 18.2px; padding: 16.8px 22.4px; border-left-color: var(--accent); background: rgba(194,170,110,0.08)">
+				🎨 Colors and fonts in this document are <strong>provisional</strong> — placeholder values
+				standing in for Andy's "dark / white-grey / dark-military-tan" direction until the designer
+				brief locks exact hex + typefaces. Don't read the specific shades or fonts here as final.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label"><span class="section-num">0</span> Site Map</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 5.6px">Habit Fitness</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								7 pages + QR machine-detail template · custom CMS for every page · public faceted video library
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 8.4px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box">Home<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Membership<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/membership</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Personal Training<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/personal-training</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Video Library<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/tutorials</span></div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">/m/[slug]<br />QR target</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">FAQ<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/faq</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">About<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/about</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Contact<br /><span style="font-size: 12.6px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7">/contact</span></div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 28px">
+							Launching on <strong>habitfitnessgym.com</strong> — habitfitness.com is held by a third
+							party and isn't being pursued now. Nav is consistent across every page (Home · Membership
+							· Personal Training · Video Library · FAQ · About · Contact). The sticky "Join Now" button
+							sits bottom-right on every page and, like the other primary CTAs, opens a one-tap text
+							(sms: link) to set up the visit; the footer carries the text-don't-call line, the Google
+							reviews link-out, and hours/location. Machine detail pages live at /m/[slug] — the stable
+							URL each QR sticker points to — surfaced from the library, not in the main nav.
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Decision — Video Library nav placement</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										Top-level nav item (as shown above). Treats the library as a public draw and
+										conversion asset anyone can find.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										Surfaced from Home + Membership only — kept out of the top nav so the nav stays
+										tight and the library feels more like a members' perk.
+									</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px">
+								Andy's call. Pairs with the library access decision (public vs members) on the Video
+								Library page.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label"><span class="section-num">1</span> Home Page &mdash; /</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Membership</span>
+							<span>Personal Training</span>
+							<span>Video Library</span>
+							<span>FAQ</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 266px">
+								<div class="img-icon">🏋️</div>
+								<div class="img-label">
+									Hero image(s) — real photography of the black-painted equipment / gym floor<br />
+									Premier dark look. From Andy.<br />
+									Ideally 3–5 images that slow-fade between each other.
+								</div>
+							</div>
+							<div style="margin-top: 22.4px; text-align: center">
+								<div class="wf-heading-lg">More Than Just a Gym</div>
+								<div class="wf-subtext">
+									Locally owned 24/7 gym in Plover, WI — no contract, respectful community.
+								</div>
+								<div class="wf-cta accent">First Lift On Us →</div>
+							</div>
+							<div class="annotation">
+								Headline carries the brand refrain "More Than Just a Gym." Primary CTA "First Lift On
+								Us" opens a one-tap text (sms: link) to set up an in-person visit — no online signup;
+								the form is the backup. Hero copy + image(s) are CMS-editable. The hero takes 3–5 images
+								and slow-fades between them; if Andy loads only one it just shows that single image, and
+								the moment he adds more it auto-switches to the slow-fade carousel — no setup on his end.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Owner's Message -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Owner's Message — Andy</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 22.4px; flex-wrap: wrap">
+								<div class="img-placeholder" style="height: 168px; flex: 1; min-width: 160px">
+									<div class="img-icon">👤</div>
+									<div class="img-label">Photo of Andy<br />in the gym</div>
+								</div>
+								<div style="flex: 2; min-width: 240px">
+									<div class="wf-body-text">
+										"My members, my equipment, and my community come before everything. I'm a hands-on
+										owner — in the gym with you every day. I hold everyone to the same standard: respect
+										the gym, the equipment, and each other. Leave it better than you found it. Positivity
+										only. Brand new or fifteen years in — all I care about is that you're good to be around
+										and want to get better. If that's your kind of gym, reach out. Your first lift is on us.
+										No risk, no contract. #CREATEDBYHABIT"
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								The centerpiece of the home page — first-person from Andy, sets the culture before
+								anything else. Sample copy here is the refined draft; Andy approves final wording.
+								Editable in CMS. Can optionally repeat on the About page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Our Difference -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Our Difference</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="chip-row">
+								<span class="chip">No contract</span>
+								<span class="chip">Chalk allowed</span>
+								<span class="chip">Gym bags allowed</span>
+								<span class="chip">Lifting-focused</span>
+								<span class="chip">Social-media friendly</span>
+								<span class="chip">Personal-training focused</span>
+								<span class="chip">Ran by a lifter, for lifters</span>
+							</div>
+							<div class="annotation">
+								The quick "what makes us different" strip — these are the points Andy leads with. Each
+								item is CMS-editable so he can add/reorder as the gym's positioning evolves. Designer
+								decides treatment.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Membership teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Membership Teaser</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; align-items: center; justify-content: space-between; gap: 22.4px; flex-wrap: wrap">
+								<div>
+									<div class="tier-note" style="font-size: 16.8px; margin-bottom: 2.8px">Memberships starting at</div>
+									<div class="tier-price" style="font-size: 42px; margin: 0">$ —<span style="font-size: 18.2px; color: var(--text-dim); font-weight: 400">/mo</span></div>
+									<div class="wf-body-text" style="margin: 5.6px 0 0">No contract. First lift on us.</div>
+								</div>
+								<div class="wf-cta accent">View All Memberships →</div>
+							</div>
+							<div class="annotation">
+								Quick price hook on the home page — the lowest tier's "starting at" price pulled
+								straight from the Membership CMS data (so it's never out of sync), plus a link to the
+								full Membership page. Making cost obvious up front is a core goal; this surfaces it
+								before someone has to dig. Price shows as TBD until tiers are locked.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Teasers -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Teasers — Perks · Equipment · Video Library</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">⭐</div>
+									<div class="quick-link-label">Member Perks</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🏋️</div>
+									<div class="quick-link-label">The Equipment</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🎬</div>
+									<div class="quick-link-label">Video Library</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Three teasers that lead deeper into the site: Member Perks → Membership, Equipment (photos
+								of the black-painted gear) → Membership, and the Video Library → /tutorials. The video-library
+								teaser is part of why the library is a conversion asset, not just a member tool.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Get Started 3-step -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Get Started — 3 Steps</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="step-grid">
+								<div class="step-card">
+									<div class="step-num">1</div>
+									<div class="step-title">Set Up a Time</div>
+									<div class="step-text">Text, email, or DM — don't call. We'll line up a visit.</div>
+								</div>
+								<div class="step-card">
+									<div class="step-num">2</div>
+									<div class="step-title">Check It Out</div>
+									<div class="step-text">Come in and see the place. Your first lift is on us.</div>
+								</div>
+								<div class="step-card">
+									<div class="step-num">3</div>
+									<div class="step-title">Sign Up</div>
+									<div class="step-text">Join up and get your 24/7 key. That's it.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Reusable "Get Started" block — appears here and on the Membership page. Every step
+								reinforces in-person joining (no online checkout) and the text-don't-call rule. Editable
+								in CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Reviews + Location -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Reviews Link-Out + Location / Hours / Socials</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								"See what members are saying on Google →" (outbound link, reviews are not embedded).
+								Location: 1929 Post Rd, Plover WI · Hours: 24/7 with key · Socials: @habitfitnessgym ·
+								#CREATEDBYHABIT.
+							</div>
+							<div class="annotation">
+								Reviews link OUT to Google rather than embedding — confirmed decision. Location, hours,
+								and socials anchor the bottom of the page (and repeat in the footer site-wide). All
+								Plover — every old Stevens Point reference and the old Windy Drive address come off.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: MEMBERSHIP ── -->
+			<section class="wf-section" id="membership">
+				<div class="section-label"><span class="section-num">2</span> Membership &mdash; /membership</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Membership</span>
+							<span>Personal Training</span>
+							<span>Video Library</span>
+							<span>FAQ</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Membership</div>
+							<div class="wf-subtext">Flat, transparent pricing. No contract. First lift on us.</div>
+						</div>
+
+						<!-- Tiers -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Pricing Tiers — Front and Center</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="tier-grid">
+								<div class="tier-card">
+									<div class="tier-name">Individual</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">Base membership · price TBD</div>
+								</div>
+								<div class="tier-card">
+									<div class="tier-name">Student</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">price TBD</div>
+								</div>
+								<div class="tier-card">
+									<div class="tier-name">Couple</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">price TBD</div>
+								</div>
+								<div class="tier-card">
+									<div class="tier-name">Family</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">price TBD</div>
+								</div>
+								<div class="tier-card">
+									<div class="tier-name">Month-to-Month</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">tier or billing option? TBD</div>
+								</div>
+							</div>
+							<div class="annotation">
+								~5 tiers, pricing the first thing visitors see — making cost obvious is the whole point
+								of this page. Tier names + prices are CMS-editable. Two open items: confirm the 5th tier
+								and exact prices, and resolve whether "month-to-month" is its own tier or a billing
+								option on the others.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Member Perks -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Member Perks</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="chip-row">
+								<span class="chip">24/7 access</span>
+								<span class="chip">Free WiFi</span>
+								<span class="chip">Top-notch training environment</span>
+								<span class="chip">Member-chosen music</span>
+								<span class="chip">Community</span>
+								<span class="chip">Judgement-free culture</span>
+								<span class="chip">In-house merch</span>
+								<span class="chip">Trainer access</span>
+							</div>
+							<div class="wf-body-text" style="margin-top: 16.8px">
+								"First lift on us. No risk, no contract."
+							</div>
+							<div class="annotation">
+								Full perks list, then the reassurance line. Reinforces value before the join push. All
+								CMS-editable.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Get Started (reused) -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Get Started — 3 Steps (reused)</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="step-grid">
+								<div class="step-card">
+									<div class="step-num">1</div>
+									<div class="step-title">Set Up a Time</div>
+									<div class="step-text">Text, email, or DM — don't call.</div>
+								</div>
+								<div class="step-card">
+									<div class="step-num">2</div>
+									<div class="step-title">Check It Out</div>
+									<div class="step-text">First lift on us.</div>
+								</div>
+								<div class="step-card">
+									<div class="step-num">3</div>
+									<div class="step-title">Sign Up</div>
+									<div class="step-text">Get your 24/7 key.</div>
+								</div>
+							</div>
+							<div style="text-align: center; margin-top: 19.6px">
+								<div class="wf-cta accent">💬 Shoot Us a Text →</div>
+							</div>
+							<div class="annotation">
+								Same "Get Started" block as Home. The primary CTA is a one-tap text — an
+								<code style="font-family: 'Inter', sans-serif">sms:</code> link that opens the phone's
+								messaging app prefilled to Andy's number (desktop falls back to the contact page /
+								number). No online checkout — texting sets up the in-person visit.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: PERSONAL TRAINING ── -->
+			<section class="wf-section" id="personal-training">
+				<div class="section-label"><span class="section-num">3</span> Personal Training &mdash; /personal-training</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Membership</span>
+							<span class="active">Personal Training</span>
+							<span>Video Library</span>
+							<span>FAQ</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Personal Training</div>
+							<div class="wf-subtext">One-on-one, fully customized — no cookie-cutter programs.</div>
+						</div>
+
+						<!-- Lead -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">What We Offer</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								"One-on-one, fully customized training with experienced trainers — no brand-new trainers,
+								no cookie-cutter programs." Followed by who it's for and what to expect.
+							</div>
+							<div class="annotation">
+								Lead copy sets the bar: experienced trainers, fully tailored. Editable in CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Trainer bios -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Trainer Bios</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<!-- Featured: Andy (owner) -->
+							<div style="display: flex; gap: 22.4px; flex-wrap: wrap; border: 2.1px dashed var(--accent-border); border-radius: 8.4px; padding: 19.6px; background: var(--accent-soft)">
+								<div class="img-placeholder" style="height: 210px; flex: 1; min-width: 140px; border-color: var(--accent-border)">
+									<div class="img-label" style="font-size: 14px">Andy<br />trainer photo</div>
+								</div>
+								<div style="flex: 2.4; min-width: 240px">
+									<div class="wf-heading-md" style="margin-bottom: 2.8px">Andy Peterson</div>
+									<div class="tier-note" style="font-size: 16.8px; color: var(--accent-bright); margin-bottom: 11.2px">Owner / Personal Trainer</div>
+									<div class="wf-body-text" style="margin-bottom: 11.2px">
+										Paragraph 1 — who Andy is, his background as a lifter, why he opened Habit. The
+										featured, slightly longer bio.
+									</div>
+									<div class="wf-body-text" style="margin-bottom: 11.2px">
+										Paragraph 2 — his training philosophy and approach: one-on-one, fully customized, no
+										cookie-cutter programs.
+									</div>
+									<div class="wf-body-text" style="margin: 0">
+										Paragraph 3 — what working with him looks like, who he's a fit for.
+									</div>
+								</div>
+							</div>
+
+							<!-- Standard trainers -->
+							<div style="display: flex; gap: 16.8px; flex-wrap: wrap; margin-top: 16.8px">
+								<div style="flex: 1; min-width: 200px; border: 2.1px dashed var(--line); border-radius: 8.4px; padding: 19.6px; background: var(--surface)">
+									<div class="img-placeholder" style="height: 140px; margin-bottom: 14px">
+										<div class="img-label" style="font-size: 14px">trainer photo</div>
+									</div>
+									<div class="wf-heading-sm" style="margin-bottom: 2.8px">Trainer Name</div>
+									<div class="tier-note" style="font-size: 15.4px; margin-bottom: 11.2px">Personal Trainer</div>
+									<div class="wf-body-text" style="margin: 0">
+										One-paragraph bio — background, specialty, training style.
+									</div>
+								</div>
+								<div style="flex: 1; min-width: 200px; border: 2.1px dashed var(--line); border-radius: 8.4px; padding: 19.6px; background: var(--surface)">
+									<div class="img-placeholder" style="height: 140px; margin-bottom: 14px">
+										<div class="img-label" style="font-size: 14px">trainer photo</div>
+									</div>
+									<div class="wf-heading-sm" style="margin-bottom: 2.8px">Trainer Name</div>
+									<div class="tier-note" style="font-size: 15.4px; margin-bottom: 11.2px">Personal Trainer</div>
+									<div class="wf-body-text" style="margin: 0">
+										One-paragraph bio — background, specialty, training style.
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Each trainer card: photo, name, and title. Andy (Owner / Personal Trainer) is featured —
+								slightly larger card with a few paragraphs; the other two trainers (Personal Trainer) get
+								a single paragraph each. All photos, names, titles, and bios are CMS-editable. Content +
+								exact trainer count are pending from Andy.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Packages -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Pricing / Packages</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="tier-grid" style="grid-template-columns: repeat(3, 1fr)">
+								<div class="tier-card">
+									<div class="tier-name">Package</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">details TBD</div>
+								</div>
+								<div class="tier-card">
+									<div class="tier-name">Package</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">details TBD</div>
+								</div>
+								<div class="tier-card">
+									<div class="tier-name">Package</div>
+									<div class="tier-price">$ —</div>
+									<div class="tier-note">details TBD</div>
+								</div>
+							</div>
+							<div style="text-align: center; margin-top: 19.6px">
+								<div class="wf-cta accent">💬 Shoot Us a Text →</div>
+							</div>
+							<div class="annotation">
+								Packages + rates are pending from Andy. Structure shown is a placeholder for however many
+								packages he runs. The CTA is a one-tap text (<code style="font-family: 'Inter', sans-serif">sms:</code>
+								link, desktop falls back to the contact page) — booking happens in person.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 4: VIDEO LIBRARY ── -->
+			<section class="wf-section" id="video-library">
+				<div class="section-label"><span class="section-num">4</span> Video Library &mdash; /tutorials</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Membership</span>
+							<span>Personal Training</span>
+							<span class="active">Video Library</span>
+							<span>FAQ</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Video Library</div>
+							<div class="wf-subtext">Every machine, explained. Search it or scan the QR on the floor.</div>
+						</div>
+
+						<!-- Access decision -->
+						<div class="decision-box">
+							<div class="decision-label">Decision — Library access</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A — leaning</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										Public (v1 default). Anyone can browse — doubles as a conversion asset and a reason
+										to come in. No login.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										Members-only. Adds login/auth and more scope; makes the library an exclusivity perk.
+										Can be added later as an upsell.
+									</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px">
+								Leaning A for v1; Andy to confirm. Gating can be bolted on later without changing the
+								underlying data.
+							</div>
+						</div>
+
+						<!-- Library UI -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Search + Faceted Filters + Grid</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<div class="search-bar">🔍 Search by machine name or nickname (e.g. "pulldown", "lat machine")…</div>
+
+							<div class="filter-row">
+								<span class="filter-label">Muscle group:</span>
+								<span class="filter-pill active">Chest</span>
+								<span class="filter-pill">Back</span>
+								<span class="filter-pill">Shoulders</span>
+								<span class="filter-pill">Arms</span>
+								<span class="filter-pill">Legs</span>
+								<span class="filter-pill">Glutes</span>
+								<span class="filter-pill">Core</span>
+								<span class="filter-pill">Cardio</span>
+								<span class="filter-pill">Full Body</span>
+							</div>
+
+							<div class="filter-row">
+								<span class="filter-label">Equipment:</span>
+								<span class="filter-pill">Selectorized</span>
+								<span class="filter-pill active">Plate-loaded</span>
+								<span class="filter-pill">Cable</span>
+								<span class="filter-pill">Free weight</span>
+								<span class="filter-pill">Smith machine</span>
+								<span class="filter-pill">Cardio</span>
+								<span class="filter-pill">Functional</span>
+							</div>
+
+							<div class="video-grid">
+								<div class="video-card">
+									<div class="img-placeholder" style="height: 98px">
+										<div class="img-label" style="font-size: 12.6px">thumbnail</div>
+									</div>
+									<div class="video-name">Lat Pulldown</div>
+									<div class="badge-row">
+										<span class="badge muscle">Back</span>
+										<span class="badge equip">Cable</span>
+									</div>
+								</div>
+								<div class="video-card">
+									<div class="img-placeholder" style="height: 98px">
+										<div class="img-label" style="font-size: 12.6px">thumbnail</div>
+									</div>
+									<div class="video-name">Leg Press</div>
+									<div class="badge-row">
+										<span class="badge muscle">Legs</span>
+										<span class="badge equip">Plate-loaded</span>
+									</div>
+								</div>
+								<div class="video-card">
+									<div class="img-placeholder" style="height: 98px">
+										<div class="img-label" style="font-size: 12.6px">thumbnail</div>
+									</div>
+									<div class="video-name">Hip Thrust</div>
+									<div class="badge-row">
+										<span class="badge muscle">Glutes</span>
+										<span class="badge equip">Plate-loaded</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="annotation">
+								Two independent filters (muscle group AND/OR equipment type) plus free-text search across
+								name + nicknames is what keeps the library findable as it grows from 30 to 300 machines —
+								a single category tree would force the lat pulldown to live under either "Back" or "Cable"
+								when it's both. Muscle-group chips toggle (multi-select); equipment is a second filter
+								row; the grid re-filters live with no reload. On mobile the chips wrap and the search box
+								stays pinned at the top. Every card: thumbnail + machine name + muscle badge + equipment
+								badge. All entries managed in the one "Machine/Video" CMS dataset.
+							</div>
+						</div>
+
+						<div class="wf-block" style="border-style: solid; border-color: rgba(194,170,110,0.45); background: rgba(194,170,110,0.07)">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Build Rule — Locked Taxonomy</div>
+							</div>
+							<div class="wf-body-text" style="margin: 0">
+								Muscle group and equipment type are <strong>locked dropdowns</strong> — staff pick from
+								fixed lists, never free-type. Aliases (nicknames) and secondary muscles feed search only,
+								they're not filters. This keeps the filters from fragmenting ("Back" vs "back" vs "Lats")
+								and keeps staff entry idiotproof.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── MACHINE DETAIL TEMPLATE (QR) ── -->
+			<section class="wf-section" id="machine-detail">
+				<div class="section-label"><span class="section-num">★</span> Machine Detail Template (QR target) &mdash; /m/[slug]</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Membership</span>
+							<span>Personal Training</span>
+							<span>Video Library</span>
+							<span>FAQ</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Machine Detail (QR Page)</div>
+							<div class="wf-subtext">
+								What a member sees after scanning the QR sticker on a machine — on their phone, at the
+								machine.
+							</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Branded Player + Title + Badges</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 252px">
+								<div class="img-icon">▶</div>
+								<div class="img-label">
+									Branded facade video player (tap to load)<br />
+									Unlisted YouTube behind a Habit-branded thumbnail
+								</div>
+							</div>
+							<div style="margin-top: 19.6px">
+								<div class="wf-heading-md" style="margin-bottom: 11.2px">Lat Pulldown</div>
+								<div class="badge-row" style="margin-bottom: 16.8px">
+									<span class="badge muscle">Back</span>
+									<span class="badge equip">Cable</span>
+								</div>
+								<div class="wf-body-text" style="margin: 0">
+									Optional description (rich text) — blank by default. Andy can add form cues or notes per
+									machine whenever he wants.
+								</div>
+							</div>
+							<div class="annotation">
+								Mobile-first by definition — every scan is a phone at a machine. Facade player loads the
+								video only on tap for speed. Title + muscle/equipment badges come straight from the same
+								"Machine/Video" record that powers the library card. Description is optional.
+							</div>
+						</div>
+
+						<div class="wf-block" style="border-style: solid; border-color: rgba(194,170,110,0.45); background: rgba(194,170,110,0.07)">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">QR Durability Rule</div>
+							</div>
+							<div class="wf-body-text" style="margin: 0">
+								The QR encodes the stable <strong>/m/[slug]</strong> URL — decoupled from the video. Andy
+								can swap the video anytime without reprinting a single sticker. Slugs are flat and human
+								(e.g. <em>lat-pulldown</em>), never category-prefixed, so recategorizing never breaks a
+								printed QR. Duplicate machines (three identical leg presses) = one record / one slug, all
+								stickers point to it. Multi-exercise stations = one QR / one page for v1, key movements
+								timestamped in the single video.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 5: FAQ ── -->
+			<section class="wf-section" id="faq">
+				<div class="section-label"><span class="section-num">5</span> FAQ &mdash; /faq</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Membership</span>
+							<span>Personal Training</span>
+							<span>Video Library</span>
+							<span class="active">FAQ</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">FAQ</div>
+							<div class="wf-subtext">The stuff people ask before they come in.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Questions &amp; Answers</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="faq-list">
+								<div class="faq-row">
+									<div class="faq-q">Is there a contract?</div>
+									<div class="faq-a">No. No contracts, ever.</div>
+								</div>
+								<div class="faq-row">
+									<div class="faq-q">Can I try it first?</div>
+									<div class="faq-a">Yes — your first lift is on us. No risk.</div>
+								</div>
+								<div class="faq-row">
+									<div class="faq-q">What are the hours?</div>
+									<div class="faq-a">24/7 with your key.</div>
+								</div>
+								<div class="faq-row">
+									<div class="faq-q">What's expected of members?</div>
+									<div class="faq-a">
+										Respect the gym, the equipment, and each other. Leave it better than you found it.
+										Positivity only. Clean up after yourself. No shoes (house rule). Chalk allowed, gym
+										bags allowed.
+									</div>
+								</div>
+								<div class="faq-row">
+									<div class="faq-q">How do I join?</div>
+									<div class="faq-a">Three steps: set up a time, come check it out (first lift on us), sign up and get your key.</div>
+								</div>
+								<div class="faq-row">
+									<div class="faq-q">Do you do group fitness?</div>
+									<div class="faq-a">No — for group classes we point you to Fire Fitness in Plover.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Seed questions from Andy's existing content + the house rules. Each Q&amp;A is CMS-editable
+								and reorderable — Andy adds questions as they come up. Full FAQ content is pending final
+								review with Andy.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 6: ABOUT ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label"><span class="section-num">6</span> About &mdash; /about</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Membership</span>
+							<span>Personal Training</span>
+							<span>Video Library</span>
+							<span>FAQ</span>
+							<span class="active">About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">About</div>
+							<div class="wf-subtext">How the gym is run, and what to expect.</div>
+						</div>
+
+						<!-- Direction decision -->
+						<div class="decision-box">
+							<div class="decision-label">Decision — About page direction</div>
+							<div class="option-grid three">
+								<div class="option-card">
+									<div class="option-label">Option A</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										"How the gym runs" — culture + house rules front and center. The way it's run is the
+										differentiator, so lead with it.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										Owner/story-led — Andy's story and ethos carry the page, house rules folded in
+										underneath.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option C</div>
+									<div class="wf-body-text" style="font-size: 16.8px; margin: 0">
+										Hybrid — culture-led with a short owner note up top. Best of both.
+									</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px">
+								Needs Andy's call. The block below is built as the culture/house-rules direction (A);
+								swap emphasis if he picks B or C.
+							</div>
+						</div>
+
+						<!-- Culture + house rules -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Culture &amp; House Rules</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								The standards Andy holds everyone to: respect the gym, the equipment, and each other.
+								Leave it better than you found it. Positivity only. Clean up after yourself. No shoes.
+								Chalk allowed, gym bags allowed. Ran by a lifter, for lifters — judgement-free, high
+								standards, safe and welcoming for every level.
+							</div>
+							<div class="chip-row" style="margin-top: 8.4px">
+								<span class="chip">Respect</span>
+								<span class="chip">Leave it better</span>
+								<span class="chip">Positivity only</span>
+								<span class="chip">Clean up</span>
+								<span class="chip">No shoes</span>
+								<span class="chip">Judgement-free</span>
+							</div>
+							<div class="annotation">
+								This is the differentiator — how the gym is run, not a generic bio. The "anti-weirdo" /
+								safe-space value is real; reflect it in tone without making the site feel exclusionary.
+								All copy CMS-editable. Final About content is pending from Andy.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 7: CONTACT ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label"><span class="section-num">7</span> Contact &mdash; /contact</div>
+
+				<div class="wireframe-card">
+					<div class="sticky-cta">Join Now</div>
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Habit Fitness</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Membership</span>
+							<span>Personal Training</span>
+							<span>Video Library</span>
+							<span>FAQ</span>
+							<span>About</span>
+							<span class="active">Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Contact</div>
+							<div class="wf-subtext">Text, don't call — usually won't answer the phone.</div>
+						</div>
+
+						<!-- Contact methods -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">How to Reach Us</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+
+							<!-- Primary: Send a Text -->
+							<div style="display: flex; align-items: center; justify-content: space-between; gap: 19.6px; flex-wrap: wrap; border: 2.1px dashed var(--accent-border); border-radius: 8.4px; padding: 19.6px 22.4px; background: var(--accent-soft); margin-bottom: 22.4px">
+								<div>
+									<div class="wf-heading-sm" style="margin-bottom: 2.8px">Fastest Way to Reach Us</div>
+									<div class="wf-body-text" style="margin: 0">Text us — it's how Andy actually responds.</div>
+								</div>
+								<div class="wf-cta accent" style="margin-top: 0">💬 Shoot Us a Text →</div>
+							</div>
+							<div class="annotation" style="margin-top: 0; margin-bottom: 22.4px">
+								The "Shoot Us a Text" button is an <code style="font-family: 'Inter', sans-serif">sms:</code>
+								link — tapping it on a phone opens the native messaging app with Andy's number
+								(715-496-7136) already filled in, ready to type. This is the primary, preferred contact
+								path; it directly serves the text-don't-call rule. On desktop it falls back to showing
+								the number to text. Number is CMS-editable.
+							</div>
+
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22.4px">
+								<div>
+									<div class="wf-body-text"><strong>Text</strong><br />(715) 496-7136 <span style="font-size: 15.4px; color: rgba(236,233,225,0.5)">— don't call</span></div>
+									<div class="wf-body-text" style="margin-top: 11.2px"><strong>Email</strong><br />habitfitnessllc@gmail.com</div>
+								</div>
+								<div>
+									<div class="wf-body-text"><strong>Instagram DM</strong><br />@habitfitnessgym</div>
+									<div class="wf-body-text" style="margin-top: 11.2px"><strong>Find Us</strong><br />1929 Post Rd, Plover WI · 24/7</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Carry the line verbatim: "Don't call — usually won't answer." Text, email, and IG DM are
+								the channels. Phone number is tap-to-call/text on mobile. All editable in CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Form -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Form — Prefer to Write It Out?</div>
+							</div>
+							<div class="filter-row" style="margin-bottom: 5.6px">
+								<span class="filter-label">I'm interested in:</span>
+								<span class="filter-pill active">Membership</span>
+								<span class="filter-pill">Personal Training</span>
+								<span class="filter-pill" style="border-style: dashed; color: var(--accent); border-color: var(--accent)">+ confirm set</span>
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Text or Email</div>
+									<div class="field-placeholder">How we reach you</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Message *</div>
+									<div class="field-placeholder" style="min-height: 84px">What are you looking for?</div>
+								</div>
+							</div>
+							<div style="margin-top: 16.8px">
+								<div class="wf-cta accent">Send Message →</div>
+							</div>
+							<div class="annotation">
+								The form is the backup channel — kept because some people will still reach out this way,
+								even though texting is the path Andy prefers. Message field is required; interest pills
+								let people self-tag (Membership, Personal Training, + any others Andy confirms).
+								Submissions route to Andy — which channel (text line vs email) is still open. Spam
+								protection is non-AI per the hard constraint. No AI anywhere.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>📍 1929 Post Rd, Plover WI · 24/7 · Text (715) 496-7136 — don't call · Reviews on Google ↗</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label"><span class="section-num">✓</span> Confirmed Decisions</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No Online Signup / Checkout</strong> — Joining is in-person by design. Every
+									page funnels to "come in for a tour" via text or the contact form.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Sticky "Join Now" — Site-Wide</strong> — Fixed bottom-right on every page, all
+									funneling to the in-person visit.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Text-First CTAs</strong> — The primary "reach out / join" CTAs (sticky Join Now,
+									hero, Membership, Personal Training) open a one-tap text via an
+									<code style="font-family: 'Inter', sans-serif">sms:</code> link to Andy's number — the
+									channel he actually answers. On desktop they fall back to the contact page / number.
+									Navigational CTAs (e.g. View All Memberships) stay page links; the contact form is the
+									written backup.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Reviews Link Out to Google</strong> — Not embedded on the site. The old on-site
+									testimonials section comes off.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No AI Anywhere</strong> — Hard constraint. No AI features, including spam
+									protection on the contact form.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Everything CMS-Editable</strong> — Custom CMS. Andy delegates routine changes to
+									one direct contact (Latz) — no agency queue, no monthly Latz fee, he owns it forever.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Video System v1</strong> — QR codes on every machine → branded /m/[slug] page,
+									plus a public faceted library, both powered by one "Machine/Video" dataset.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Library Taxonomy</strong> — Two locked-enum facets (muscle group + equipment
+									type) + alias search. Staff pick from fixed dropdowns — never free-typed.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>QR Durability</strong> — QR encodes the stable /m/[slug] URL, decoupled from the
+									video. Swap videos anytime, never reprint stickers.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Machine Edge Cases</strong> — Duplicate machines = one record / one slug.
+									Multi-exercise stations = one QR / one page for v1.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Mobile-First Throughout</strong> — Every QR scan is a phone at a machine; mobile
+									is the primary surface site-wide.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Plover-Only Migration</strong> — Every old Stevens Point reference and the old
+									Windy Drive address/map come off. New site is Plover-only, on habitfitnessgym.com.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label"><span class="section-num">?</span> Discussion Checklist</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Membership Tiers + Prices</strong> — Confirm the 5th tier and exact prices for
+									all tiers (Student, Couple, Family, Month-to-month, + base). Resolve whether
+									"month-to-month" is a discrete tier or a billing option.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>About Page Direction (A / B / C)</strong> — Culture + house-rules, owner/story-led,
+									or hybrid. Needs Andy's call before the page is built.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Contact Form Routing</strong> — Which number/inbox receives texts and form
+									submissions? Confirm the channel.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Video Library Access (A / B)</strong> — Public for v1 (leaning) vs members-only.
+									Andy to confirm. Gating can be added later.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Video Library Nav Placement (A / B)</strong> — Top-level nav item vs surfaced
+									from Home + Membership only.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Contact Interest Pills</strong> — Confirm the full set beyond Membership +
+									Personal Training.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Brand Colors (Hex) + Fonts</strong> — "Dark military tan" and "cross diamond
+									grey" need real hex values; fonts not locked. Provisional values in use here until the
+									designer brief locks them.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Photography + Brand Assets</strong> — Premier gym/equipment photos and exact
+									color specs still needed. The whole premier look hangs on these — all on Andy.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Machine List + First Batch of Videos</strong> — Every machine with muscle group +
+									equipment type assigned, aliases, and the first uploaded Unlisted YouTube videos. Blocks
+									the Video Library build.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
