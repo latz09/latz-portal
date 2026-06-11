@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Habit Fitness — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB + OVERLAY ── */
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px; right: 20px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(13,27,42,0.35);
+    z-index: 300;
+    cursor: pointer;
+  }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 280ms ease;
+  }
+
+  .mobile-overlay.show { opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'HABIT';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.flag-orange { color: #ffb27a; }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .data-value code {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: var(--gray-100);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--navy);
+  }
+
+  .data-value .confirm {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--orange);
+    background: var(--orange-light);
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--orange-light) !important;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+  .badge-feature { background: var(--yellow); color: var(--navy); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  .phase .blocker {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--orange);
+    background: var(--orange-light);
+    border-left: 3px solid var(--orange);
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE: TABLET ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  /* ── RESPONSIVE: MOBILE ── */
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay.show { display: block; }
+
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Habit Fitness</div>
+    <div class="status-pill">Pre-Proposal</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏋️</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE OVERLAY + FAB -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth · Internal</div>
+    <h1>Habit Fitness</h1>
+    <div class="sub">habitfitnessgym.com · Website Rebuild · Pre-Proposal Stage</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Andy Peterson, Owner</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value flag-orange">TBD — No Proposal Yet</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit</span>
+        <span class="value flag-orange">None — Pre-Proposal</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Stage</span>
+        <span class="value">Discovery Done → Proposal</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://habitfitnessgym.com" target="_blank">habitfitnessgym.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value flag-orange">Text Only (no calls)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏋️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Andy Peterson</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Owner / Operator — solo, "one-man show"</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value">Unknown <span class="confirm">Confirm</span></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">Text-only — will not answer calls <span class="confirm">Confirm #</span></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Maker</span>
+            <span class="data-value">Andy alone. Decides everything. Fast, but picky on branding.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Client Type</span>
+            <span class="data-value">Independent 24/7 premier gym</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">1929 Post Rd, Plover WI</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Members</span>
+            <span class="data-value">~300 today · goal 500</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Recent Move</span>
+            <span class="data-value">Relocated from Stevens Point — roughly doubled in size</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Positioning</span>
+            <span class="data-value">Anti-corporate / anti-franchise. No contracts. Flat, transparent pricing.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Audience, Culture & Operational Quirks</h3>
+        <div class="data-row">
+          <span class="data-label">Primary Audience</span>
+          <span class="data-value">Young-skewing now. Growing women's membership (seen as a safe space). Wants more families + middle-aged professionals; space should feel non-intimidating.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Core Differentiator</span>
+          <span class="data-value">How the gym is run — respectful, positive, straightforward, to-the-point. Priced higher on purpose so it never gets fully packed.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Safety Value</span>
+          <span class="data-value">"Anti-weirdo" — nips problems early so everyone feels safe. A real operating value, not marketing.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">House Rules</span>
+          <span class="data-value">Respect, clean up after yourself, no shoes, etc. These matter to him — drive the About page.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Reinvestment</span>
+          <span class="data-value">Members pay for the place, so revenue goes back into equipment/facility constantly.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>HARD CONSTRAINT: Anti-AI</strong>
+          <span>Andy does not want anything AI-related anywhere on the site or in the pitch. Do not include, mention, or propose any AI feature. Spam protection on the contact form must be non-AI.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>The site has ONE job: get the right person to book an in-person tour.</strong>
+        <p>Everything funnels to "come in" — via text or the contact form. No online signup, no checkout. Conversion goal is the in-person visit, not a web transaction.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why Now / Pain Points</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Current site is "fairly basic" — wants it done correctly</li>
+            <li><span class="check-icon">🔴</span> Wants one reliable person (Latz) to delegate changes to — not an agency queue</li>
+            <li><span class="check-icon">🔴</span> Paying ~$300–400/yr for what he has now</li>
+            <li><span class="check-icon">🔴</span> Membership + pricing not obvious enough to drive the right walk-ins</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Simple, premier-feeling site — obvious what's offered + what it costs</li>
+            <li><span class="check-icon">✅</span> Drives the right people to come in for a tour/meeting</li>
+            <li><span class="check-icon">✅</span> Andy can delegate changes to one direct contact</li>
+            <li><span class="check-icon">✅</span> Tutorial video system in place — a real differentiator no Square site matches</li>
+            <li><span class="check-icon">✅</span> No monthly fees to Latz; he owns it forever</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🚧</span>
+        <div class="callout-body">
+          <strong>Explicitly NOT in scope</strong>
+          <span>Online membership signup / paid checkout (intentional — joining is in-person) · On-site reviews/testimonials (point people to Google instead) · Domain acquisition of habitfitness.com (Latz not driving this) · Any AI features (hard constraint) · Future ventures: recovery, retail, meal-prep (separate sites, later).</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open questions pending</strong>
+          <span>5th membership tier + exact prices for all tiers · About page concept/content direction · Confirm contact routing (which number receives texts/form submissions) · Video library gating — confirmed open to public for v1; tell Andy it can be gated to members later.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">📄</span>
+        <div class="callout-body">
+          <strong>No proposal issued yet — all figures TBD</strong>
+          <span>Pre-proposal stage. No contract, no deposit. Next step is wireframe + proposal with the pricing conversation.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core Site Build</strong></td>
+            <td>5 pages, custom CMS, sticky Join Now, contact form, Google reviews link-out</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Tutorial Video System</strong></td>
+            <td>Optional bundled line item — QR pages + searchable library (strong value anchor)</td>
+            <td class="amount">TBD</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Contract</strong></td>
+            <td>To be set in proposal</td>
+            <td class="amount"><strong>TBD</strong></td>
+          </tr>
+          <tr class="pending-row">
+            <td>⏳ Deposit</td>
+            <td>None — pre-proposal stage</td>
+            <td class="amount">$0</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">~$20/month — paid directly to Vercel, no markup. No monthly fees to Latz.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">habitfitnessgym.com — client's existing registration</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Video Hosting</span>
+          <span class="data-value">YouTube (unlisted) = $0 — free CDN, no per-stream cost</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Spend (anchor)</span>
+          <span class="data-value">~$300–400/yr on the existing site</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Budget sensitivity — internal</strong>
+          <span>Andy said if a custom build is "crazy" expensive he knows enough to do it himself on Square, or hire someone cheaper. He wants to delegate to Latz, but the price has to justify it. Lead with value + ownership; frame the gap between "Square DIY" and a real custom premier build. The video-system bundle is the strongest value anchor.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story (for the proposal)</strong>
+          <span>He owns it forever — no lock-in, no monthly Latz fee, custom build (not a template), built to convert, one direct contact for changes. Plus the tutorial video system: a differentiator no Square site can match.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Short, fast cycle — inbound cold text → on-site meeting in days</strong>
+          <span>Andy came in warm and direct. One text thread, quick scheduling, in-person discovery already done. Now at the wireframe + proposal step. Dates approximate — confirm against phone.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Inbound</div>
+          <div class="timeline-title">Cold Text from Andy</div>
+          <div class="timeline-desc">"Andy with Habit Fitness. Looking for someone to build my website. Let's schedule a time to swing in and chat — let me know."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Same Day</div>
+          <div class="timeline-title">Jordan Replied</div>
+          <div class="timeline-desc">Offered to swing by Wed or Thu, daytime, to talk through what he's looking for.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Reply</div>
+          <div class="timeline-title">Andy Sets Expectations</div>
+          <div class="timeline-desc">"It's fairly basic, just want someone to do it correctly, and when I want changes I have the guy to do it. What time tomorrow works? Anytime mid-day or late morning."</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Scheduling</div>
+          <div class="timeline-title">Meeting Locked</div>
+          <div class="timeline-desc">Agreed: Wed, noon, on-site. Door code 5151#.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Wed ~Noon</div>
+          <div class="timeline-title">Discovery Meeting (On-Site)</div>
+          <div class="timeline-desc">Full scope discussion — the basis of this document. Toured the space, talked positioning, video system, house rules, pricing direction.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Now</div>
+          <div class="timeline-title">Compiling Source of Truth</div>
+          <div class="timeline-desc">This document. Next up: wireframe + proposal.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Next</div>
+          <div class="timeline-title">Proposal Delivery & Pricing Conversation</div>
+          <div class="timeline-desc">Lead with value/ownership. Frame the Square-DIY vs. custom-premier gap. Bundle the video system as the value anchor.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Proposed Scope (pre-proposal — not yet approved)</strong>
+          <span>5 core pages + a tutorial video system. Premier/elite feel, dark direction, mobile-first. Simple, straightforward, "idiotproof." Site-wide CTAs all funnel to "come in for a meeting/tour" via text or form.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Membership</h4>
+          <ul>
+            <li>~5 tiers, pricing front and center</li>
+            <li>Tiers: Student, Couple, Family, Month-to-month + confirm 5th (likely base Individual/Standard)</li>
+            <li>Note: "month-to-month" may be a billing option vs. a discrete tier — confirm</li>
+            <li>CTA into "come in for a tour"</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Personal Training</h4>
+          <ul>
+            <li>Details + pricing</li>
+            <li>Conversion path to in-person meeting</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>FAQ</h4>
+          <ul>
+            <li>Q&A list (content pending from Andy)</li>
+            <li>Reduces friction before a tour</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static + Form</span>
+          <h4>Contact</h4>
+          <ul>
+            <li>Message field — required</li>
+            <li>Interest selector pills: Membership, Personal Training, [others TBD]</li>
+            <li>Routes to Andy via text/email notification — confirm routing</li>
+            <li>"Text, don't call" messaging unmistakable</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>About</h4>
+          <ul>
+            <li>Concept open — direction: "how the gym is run / what to expect"</li>
+            <li>House rules, respect, clean-up, no shoes, the culture</li>
+            <li>NOT a generic bio</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--yellow);">
+          <span class="page-badge badge-feature">Feature · v1</span>
+          <h4>Tutorial Video System</h4>
+          <ul>
+            <li>QR on every machine → branded page at /m/[slug] (not raw YouTube)</li>
+            <li>Public library — sticky search + faceted filters (muscle group AND/OR equipment)</li>
+            <li>One CMS "Machine/Video" dataset powers both QR pages + library</li>
+            <li>Priced as an optional bundled line item</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Two independent facets + searchable aliases is what makes the library findable.</strong>
+        <p>Muscle group + equipment type as two separate filters (not one tree) plus alias search is what lets the library scale from 30 to 300 machines without the filters ever getting messy.</p>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🧭</span>
+        <div class="callout-body">
+          <strong>Central library decision: TWO independent facets + free-text search — NOT a category tree</strong>
+          <span>A single hierarchy forces a machine like the lat pulldown to live under either "Back" or "Cable" when it's both. Faceted filtering lets a member filter by muscle group AND/OR equipment type and find it either way. This is the core design decision for the library — surface it in the wireframe.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Site-Wide Elements</h3>
+        <div class="data-row">
+          <span class="data-label">Sticky CTA</span>
+          <span class="data-value">"Join Now" button, fixed bottom-right corner</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">CTA Direction</span>
+          <span class="data-value">All CTAs point to "come in for a meeting/tour" — no online signup</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Reviews</span>
+          <span class="data-value">Link out to Google — not embedded on the site</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Tone</span>
+          <span class="data-value">Simple, straightforward, idiotproof — but premier/elite in feel</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Tutorial Video System — Detail</h3>
+        <div class="data-row">
+          <span class="data-label">QR Behavior</span>
+          <span class="data-value">QR on each machine opens a branded tutorial page at /m/[slug] — never raw YouTube</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Library Access</span>
+          <span class="data-value">PUBLIC for v1 — a browse/search view of the same Machine/Video dataset that powers the QR pages. Can be gated to members later (Andy to confirm).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Library UX</span>
+          <span class="data-value">Sticky search box at top · muscle-group filter chips (toggle, multi) · equipment-type filter (dropdown or secondary chip row) · responsive thumbnail grid that re-filters live.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Card Anatomy</span>
+          <span class="data-value">Thumbnail + machine name + muscle-group badge + equipment-type badge</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Mobile</span>
+          <span class="data-value">Chips wrap; search stays pinned at top</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">QR Detail Page (/m/[slug])</span>
+          <span class="data-value">Branded facade/lite YouTube player + title + muscle/equipment badges + optional description (blank by default).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Backend</span>
+          <span class="data-value">Unlisted YouTube (not Private — Private can't be embedded). Free hosting/CDN.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Data Model</span>
+          <span class="data-value">One "Machine/Video" content type, two views (QR detail page + library). See Technical for the field-level schema.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">QR Durability</span>
+          <span class="data-value">QR encodes the stable site URL, decoupled from the video — swap videos anytime, never reprint stickers. Optional CMS "Print QR" button per machine.</span>
+        </div>
+      </div>
+
+      <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.65;">
+        <span class="page-badge badge-gray">Not in Scope</span>
+        <h4>Cut / Out of Scope</h4>
+        <ul>
+          <li>Online signup / checkout — joining is in-person by design</li>
+          <li>On-site reviews/testimonials — point to Google</li>
+          <li>Domain acquisition of habitfitness.com</li>
+          <li>Any AI features (hard constraint)</li>
+          <li>Recovery / retail / meal-prep sites — separate, later</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Nearly everything is client-dependent — this is the timeline driver</strong>
+          <span>All of Section 6 blocks the build. Premier visuals are critical and entirely on Andy. Set clear expectations in the proposal: prompt content = fast launch.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">💲</span>
+            <div>
+              <strong>Membership Tiers + Prices</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Confirm all 5 tiers + exact prices. Resolve whether "month-to-month" is a tier or a billing option.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏋️</span>
+            <div>
+              <strong>Personal Training Details + Pricing</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Programs, rates, what's offered</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">❓</span>
+            <div>
+              <strong>FAQ Content / Q&A List</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Common questions before joining</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📖</span>
+            <div>
+              <strong>About Page Content</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">House rules, culture, "what to expect" — direction still open</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Gym / Equipment Photography</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Premier visuals are critical to the whole look. All on Andy.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Brand Assets</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Logo in hand (color lockup, "Support Local"). Exact colors — "dark military tan," "cross diamond grey" — still vague; pin down hex values.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Partial — Awaiting specs</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📋</span>
+            <div>
+              <strong>Full Machine List</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Every machine with muscle group + equipment type assigned per machine (maps to the locked enums).</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏷️</span>
+            <div>
+              <strong>Alternate Names / Aliases per Machine</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Common nicknames members search by (e.g. "pulldown," "lat machine") — feeds search only.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎬</span>
+            <div>
+              <strong>Tutorial Videos (Unlisted YouTube)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Staff-produced, uploaded as Unlisted YouTube. Needed to populate the video system.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">⭐</span>
+            <div>
+              <strong>Google Business / Reviews Link</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">For the link-out (no on-site reviews)</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📲</span>
+            <div>
+              <strong>Contact Routing</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Which number receives texts / form submissions</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Decision: Domain (.com vs current)</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Stay on habitfitnessgym.com unless he acquires habitfitness.com. Latz not driving acquisition.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔒</span>
+            <div>
+              <strong>Decision: Library Gating</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Open vs members-only. Leaning open for v1.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Awaiting confirm</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom, built from scratch — no clutter, staff-editable</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel (~$20/mo, client pays directly, no markup)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Forms</span>
+            <span class="data-value">Contact handler + spam protection (non-AI), notify Andy by text/email</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain & Brand Handles</h3>
+          <div class="data-row">
+            <span class="data-label">Current Domain</span>
+            <span class="data-value">habitfitnessgym.com</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Wanted Domain</span>
+            <span class="data-value">habitfitness.com — owned by a third party (likely brokerage, possibly thousands). Unlikely to pursue now.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Plan</span>
+            <span class="data-value">Stay on current domain unless he acquires the .com. Latz not driving acquisition; share thoughts only if asked.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Instagram</span>
+            <span class="data-value">Same mismatch — someone holds "habitfitness"; he's on a longer handle. Note for brand consistency.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Video Delivery & QR</h3>
+        <div class="data-row">
+          <span class="data-label">Embeds</span>
+          <span class="data-value">Unlisted YouTube via youtube-nocookie.com, rel=0, playsinline=1. Facade/lite-embed (branded thumbnail, load iframe on tap) for speed.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">YT Chrome</span>
+          <span class="data-value">modestbranding deprecated — can reduce but not fully remove YouTube chrome on iframe. (Premium host upgrade is a future upsell.)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">QR</span>
+          <span class="data-value">Short path /m/&lt;slug&gt; for fast scan. Error-correction level Q for durability. Laminated/vinyl stickers.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>CMS Data Model — "Machine/Video" Content Type</h3>
+        <div class="data-row">
+          <span class="data-label">title</span>
+          <span class="data-value">String — machine/exercise name</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">slug</span>
+          <span class="data-value">String — drives the QR URL. Flat and human (e.g. <code>lat-pulldown</code>). NEVER category-prefixed, so recategorizing never breaks a printed QR.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">muscleGroup</span>
+          <span class="data-value">Single-select, LOCKED enum — Axis 1 / primary filter</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">equipmentType</span>
+          <span class="data-value">Single-select, LOCKED enum — Axis 2 / secondary filter</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">secondaryTags</span>
+          <span class="data-value">Multi-select — other muscles worked. Feeds search/relevance, NOT shown as a filter.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">aliases</span>
+          <span class="data-value">String list — alternate names for search only (e.g. "pulldown", "lat machine")</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">videoId</span>
+          <span class="data-value">String — Unlisted YouTube ID</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">description</span>
+          <span class="data-value">Rich text, optional, blank by default</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Search Matches</span>
+          <span class="data-value">Across title + aliases + secondaryTags</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Locked Enum — muscleGroup (Axis 1)</h3>
+          <p style="font-size:13px;color:var(--gray-600);line-height:1.7;">Chest · Back · Shoulders · Arms · Legs · <strong>Glutes</strong> · Core · Cardio · Full Body / Functional</p>
+          <p style="font-size:12px;color:var(--gray-600);margin-top:10px;">Glutes is intentionally split out from Legs — heavily searched, especially for the growing women's demographic.</p>
+        </div>
+        <div class="card">
+          <h3>Locked Enum — equipmentType (Axis 2)</h3>
+          <p style="font-size:13px;color:var(--gray-600);line-height:1.7;">Selectorized machine · Plate-loaded · Cable · Free weight · Smith machine · Cardio · Functional / Bodyweight</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>BUILD RULE: muscleGroup + equipmentType must be locked dropdowns — never free-typed by staff</strong>
+          <span>If staff can type them, the filters fragment ("Back" vs "back" vs "Lats") and the library breaks. Locked enums also keep staff entry idiotproof, per Andy's ask.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Edge Cases</h3>
+        <div class="data-row">
+          <span class="data-label">Duplicate Machines</span>
+          <span class="data-value">e.g. three identical leg presses → ONE record. All identical QR stickers point to the same slug. Do not create duplicates.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Multi-Exercise Stations</span>
+          <span class="data-value">Cable crossover, functional trainer → v1: one QR / one page per physical station, key movements timestamped within the single video. Per-exercise entries = v2 expansion.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Requirements</h3>
+        <div class="data-row">
+          <span class="data-label">Mobile-First</span>
+          <span class="data-value">Every QR scan is on a phone at a machine — mobile is the primary surface</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Performance</span>
+          <span class="data-value">Fast load — facade embeds, optimized media</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Visual Quality</span>
+          <span class="data-value">Premier/elite, dark direction (black / white-grey / dark-military-tan accent)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">UX</span>
+          <span class="data-value">Simple, idiotproof — minimal friction to "come in"</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Constraint</span>
+          <span class="data-value">No AI anywhere — including spam protection</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Not started — gated on proposal acceptance + content delivery</strong>
+          <span>Estimates below are for the proposal. Nearly every phase has a client-content blocker. Refine once scope + price are locked.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Weeks 1–2</div>
+          <h4>Discovery & Content</h4>
+          <ul>
+            <li>Lock membership tiers + pricing</li>
+            <li>Settle About direction</li>
+            <li>Collect photos, brand specifics, PT + FAQ content</li>
+          </ul>
+          <span class="blocker">⚠ Blocker: all of Section 6 is client-dependent</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Weeks 2–3</div>
+          <h4>Design / Wireframe</h4>
+          <ul>
+            <li>Dark premier direction — black / white-grey / dark-military-tan accent</li>
+            <li>District507 styling cue</li>
+            <li>Build in branding feedback rounds (he's picky)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 3–5</div>
+          <h4>Build — Core Site</h4>
+          <ul>
+            <li>5 pages + custom CMS</li>
+            <li>Sticky Join Now</li>
+            <li>Contact form (required message + interest pills)</li>
+            <li>Google reviews link-out</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 5–6</div>
+          <h4>Build — Video System</h4>
+          <ul>
+            <li>Faceted Machine/Video CMS model with LOCKED enums (muscleGroup + equipmentType)</li>
+            <li>Public library page: sticky search + muscle-group chips + equipment filter + live-filtering grid + badged cards</li>
+            <li>/m/[slug] QR detail pages — branded facade player + muscle/equipment badges</li>
+            <li>QR generation + facade embeds</li>
+          </ul>
+          <span class="blocker">⚠ Blocker: needs the machine list + first batch of uploaded videos</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">Week 7</div>
+          <h4>Review, QA & Launch</h4>
+          <ul>
+            <li>Mobile QA + speed pass</li>
+            <li>QR print test on real machines</li>
+            <li>Launch on current domain</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>This build is the audition — overdeliver, then pitch the ventures</strong>
+          <span>All of these were mentioned by Andy directly. Real LTV is the three future ventures + recovery business. Nail this project first; keep these on the radar, don't push now.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🧊 Recovery Business Site</h4>
+          <div class="price">Highest-value future project</div>
+          <p>Saunas, cold plunge, red light therapy — "premier way," likely in the connected unit next door. Separate site. The big one.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🛒 Retail Storefront Site</h4>
+          <div class="price">TBD</div>
+          <p>GNC-style supplement/retail arm. Separate site, later.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🍱 Meal-Prep / Food System</h4>
+          <div class="price">TBD</div>
+          <p>Format to be defined by Andy. Separate site, later.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔒 Video Library Member-Gating</h4>
+          <div class="price">Rough add-on</div>
+          <p>Add auth to lock the library to members. Pitch only if he wants exclusivity.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎥 Premium Video Host Upgrade</h4>
+          <div class="price">Pennies/min (Cloudflare Stream / Mux)</div>
+          <p>Fully branded player, zero YouTube branding. Pitch only if he reacts to YouTube chrome.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🗓️ Timing Note</h4>
+          <div class="price">After this build</div>
+          <p>Pitch the three ventures once this project proves Latz is his go-to. Keep on the radar; don't push now.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Text only, will not answer calls. Blunt, no-nonsense, premium-but-plainspoken. Mirror that — be direct, skip the polish, talk business outcomes, don't overstay. Confirm his email and the exact text number; both are still unknown/unconfirmed.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Branding — Budget Extra Cycles</div>
+        <p>He's picky about branding. Get exact color values early — "dark military tan" and "cross diamond grey" are vague; pin down real hex. District507 (district507.com) is his styling reference: clean, dark, premium. Plan for extra feedback rounds in the design phase.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Budget Risk</div>
+        <p>Anchors at ~$300–400/yr and is openly willing to DIY on Square or hire cheaper if custom feels "crazy." The proposal must sell value/ownership and justify the gap between Square-DIY and a real custom premier build. Lean on the video-system bundle as the value anchor.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Hard Constraint — Anti-AI</div>
+        <p>Do not pitch or include any AI feature, anywhere. Even spam protection on the contact form must be non-AI. This is non-negotiable for him.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Positioning & Culture</div>
+        <p>Premier/elite, intentionally higher-priced to avoid being packed. ~300 members → 500 goal. Safe/welcoming/"anti-weirdo" is a genuine operating value — reflect it in tone without making the site feel exclusionary. The way the gym is run is the differentiator; the About page should carry it.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">LTV / Strategic</div>
+        <p>The real upside is the three future ventures + the recovery business. This build is the foot in the door — overdeliver to become his go-to vendor. Door code for site access: 5151#.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ── Scrollspy ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Mobile nav (FAB + overlay) ──
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openMenu() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('show');
+    fab.textContent = '✕';
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('show');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Each nav link: close menu, wait for slide-out, then smooth-scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
