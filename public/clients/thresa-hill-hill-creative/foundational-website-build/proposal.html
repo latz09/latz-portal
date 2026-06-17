@@ -1,29 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Website Proposal — Hill Creative, LLC | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-border: rgba(24,161,173,0.25);
+    --dark: #0a0a0a;
+    --dark-header: #0f0f0f;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
+    --gray-300: #9ca3af;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { height: auto !important; overflow: visible !important; }
+    .sidebar { display: none !important; }
+    .mobile-fab { display: none !important; }
+    .sidebar-overlay { display: none !important; }
+    .no-print { display: none !important; }
+    body { background: white; margin: 0; }
+    .page-wrap { margin-left: 0 !important; height: auto !important; overflow: visible !important; }
+    .cover { min-height: 0 !important; height: auto !important; padding: 72px 64px !important; page-break-after: always; }
+    .main { padding: 44px 64px 64px !important; }
+    section { page-break-inside: avoid; margin-bottom: 56px !important; }
+    .invest-cards { page-break-inside: avoid; }
+    .process-list { page-break-inside: avoid; }
+    .next-box { page-break-inside: avoid; }
+    .doc-footer { page-break-inside: avoid; }
+    a { color: inherit !important; text-decoration: none !important; }
+    .proof-row { display: none !important; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 300px;
+    height: 100vh;
+    background: var(--dark);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-top { padding: 30px 24px 26px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-wordmark { display: flex; align-items: center; gap: 9px; margin-bottom: 22px; }
+  .sidebar-dot { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  .sidebar-wordmark-text { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .sidebar-client { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 4px; }
+  .sidebar-doctype { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .sidebar-nav { padding: 22px 11px; flex: 1; }
+  .nav-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 11px 14px 6px; }
+  .nav-link { display: flex; align-items: center; gap: 11px; padding: 11px 14px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 17px; font-weight: 400; border-radius: 7px; border-left: 2px solid transparent; margin-bottom: 2px; transition: all 0.12s; }
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-left-color: var(--teal); font-weight: 500; }
+  .nav-link .num { font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.2); width: 22px; flex-shrink: 0; }
+  .nav-link.active .num { color: var(--teal); }
+  .sidebar-cta { padding: 22px 16px; border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+  .sidebar-cta-btn { display: block; width: 100%; padding: 14px 18px; background: var(--teal); color: var(--white); text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600; text-align: center; letter-spacing: 0.01em; transition: background 0.15s; }
+  .sidebar-cta-btn:hover { background: #1ab2bf; }
+  .sidebar-footer { padding: 19px 24px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; line-height: 2; flex-shrink: 0; }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.28s; }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  /* ── MOBILE FAB ── */
+  .mobile-fab { display: none; position: fixed; bottom: 20px; left: 20px; width: 52px; height: 52px; border-radius: 50%; background: var(--dark); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 22px; cursor: pointer; z-index: 300; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── STICKY CTA ── */
+  a.sticky-cta { display: none; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { margin-left: 300px; min-height: 100vh; }
+
+  /* ── COVER ── */
+  .cover { background: var(--dark-header); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(24,161,173,0.12) 0%, transparent 65%); pointer-events: none; }
+  .cover-top { padding: 38px 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .cover-wordmark { font-family: 'Fraunces', serif; font-size: 25px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: -0.01em; }
+  .cover-doc-type { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 6px 16px; border-radius: 5px; }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 96px 64px 80px; position: relative; z-index: 1; }
+  .cover-overline { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; display: flex; align-items: center; gap: 16px; }
+  .cover-overline::before { content: ''; width: 44px; height: 1px; background: var(--teal); opacity: 0.5; }
+  .cover-client { font-family: 'Fraunces', serif; font-size: 66px; font-weight: 600; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .cover-sub { font-size: 22px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 70px; }
+  .cover-meta-strip { display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 9px; overflow: hidden; width: fit-content; }
+  .cover-meta-item { padding: 19px 32px; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 6px; }
+  .cover-meta-item:last-child { border-right: none; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .cover-meta-value { font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.88); }
+  .cover-footer { padding: 32px 64px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-left { font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+  .cover-footer-right { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: right; line-height: 2; }
+
+  /* ── MAIN ── */
+  .main { padding: 76px 88px 108px; }
+  section { margin-bottom: 82px; scroll-margin-top: 24px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
+  .sec-badge { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-500); background: var(--white); border: 1px solid var(--gray-200); padding: 4px 12px; border-radius: 5px; text-transform: uppercase; flex-shrink: 0; }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 33px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; }
+  .sec-rule { height: 1px; background: var(--gray-100); margin-bottom: 38px; margin-top: 16px; }
+
+  /* ── OPENING ── */
+  .opening-wrap { border-left: 3px solid var(--teal); padding-left: 32px; max-width: 920px; }
+  .opening-salutation { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 600; color: var(--gray-900); margin-bottom: 24px; }
+  .opening-wrap p { font-size: 20px; color: var(--gray-700); line-height: 1.8; margin-bottom: 20px; }
+  .opening-wrap p:last-child { margin-bottom: 0; }
+  .opening-wrap strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── STAGE INTRO ── */
+  .stage-intro { font-size: 19px; color: var(--gray-600); line-height: 1.7; margin-bottom: 24px; max-width: 880px; }
+  .stage-intro strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PAGE CARDS ── */
+  .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+  .page-card { background: var(--white); border: 1px solid var(--gray-100); border-top: 2px solid var(--gray-700); border-radius: 9px; padding: 22px 24px; }
+  .page-card.stage2 { border-top-color: var(--gray-300); }
+  .page-card-stage { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 8px; display: block; }
+  .page-card-title { font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 3px; }
+  .page-card-slug { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--gray-400); letter-spacing: 0.06em; margin-bottom: 14px; display: block; }
+  .page-card ul { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 14px; }
+  .page-card ul li { font-size: 16px; color: var(--gray-600); padding: 3.5px 0 3.5px 18px; position: relative; line-height: 1.5; }
+  .page-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-400); font-size: 14px; }
+
+  /* ── ALWAYS INCLUDED ── */
+  .always-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; }
+  .always-item { background: var(--white); border: 1px solid var(--gray-100); border-radius: 8px; padding: 19px 22px; }
+  .always-label { font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+  .always-label .dot { width: 5px; height: 5px; background: var(--gray-400); border-radius: 50%; flex-shrink: 0; }
+  .always-desc { font-size: 15px; color: var(--gray-500); line-height: 1.5; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box { background: var(--dark-header); border-radius: 10px; padding: 42px 48px; margin-bottom: 0; border-left: 3px solid var(--teal); }
+  .highlight-box p { font-size: 19px; color: rgba(255,255,255,0.88); line-height: 1.8; margin-bottom: 16px; font-weight: 400; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: var(--white); font-weight: 600; }
+
+  /* ── INVESTMENT ── */
+  .invest-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+  .invest-card { border: 1px solid var(--gray-100); border-radius: 10px; padding: 32px 30px; background: var(--white); position: relative; }
+  .invest-card.featured { border-color: var(--gray-300); border-width: 1.5px; }
+  .featured-pill { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--teal); color: var(--white); font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 16px; border-radius: 5px; white-space: nowrap; }
+  .invest-card-name { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .invest-card-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--gray-900); margin-bottom: 11px; }
+  .invest-card-desc { font-size: 16px; color: var(--gray-500); line-height: 1.55; margin-bottom: 26px; }
+  .invest-price { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 3px; letter-spacing: -0.02em; }
+  .invest-price-note { font-size: 15px; color: var(--gray-400); margin-bottom: 24px; }
+  .invest-list { list-style: none; padding: 0; border-top: 1px solid var(--gray-100); padding-top: 19px; }
+  .invest-list li { font-size: 16px; color: var(--gray-600); padding: 4.5px 0 4.5px 22px; position: relative; line-height: 1.45; }
+  .invest-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gray-500); font-size: 14px; top: 5px; }
+  .invest-summary { background: var(--gray-900); border-radius: 10px; padding: 32px 38px; display: flex; align-items: center; justify-content: space-between; gap: 26px; flex-wrap: wrap; margin-bottom: 16px; }
+  .invest-summary-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 6px; }
+  .invest-summary-amount { font-family: 'Fraunces', serif; font-size: 50px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+  .invest-summary-schedule { font-size: 16px; color: rgba(255,255,255,0.65); margin-top: 8px; }
+  .hosting-row { background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 8px; padding: 19px 24px; display: flex; align-items: flex-start; gap: 13px; }
+  .hosting-row .icon { font-size: 21px; flex-shrink: 0; margin-top: 1px; }
+  .hosting-row p { font-size: 16px; color: var(--gray-600); line-height: 1.6; }
+  .hosting-row strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── PROCESS ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 54px 1fr; gap: 22px; padding-bottom: 38px; position: relative; }
+  .process-step:last-child { padding-bottom: 0; }
+  .process-step::after { content: ''; position: absolute; left: 26px; top: 54px; bottom: 0; width: 2px; background: var(--gray-100); }
+  .process-step:last-child::after { display: none; }
+  .step-num { width: 54px; height: 54px; background: var(--gray-900); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-body { padding-top: 11px; }
+  .step-title { font-size: 19px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+  .step-desc { font-size: 17px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note { margin-top: 32px; padding: 19px 24px; background: var(--white); border: 1px solid var(--gray-100); border-radius: 8px; font-size: 16px; color: var(--gray-500); line-height: 1.65; }
+  .timeline-note strong { color: var(--gray-700); }
+
+  /* ── NEXT STEPS ── */
+  .next-box { background: var(--dark-header); border-radius: 13px; padding: 54px 58px; text-align: center; position: relative; overflow: hidden; }
+  .next-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(24,161,173,0.1) 0%, transparent 65%); pointer-events: none; }
+  .next-overline { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; position: relative; }
+  .next-title { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 600; color: var(--white); margin-bottom: 14px; letter-spacing: -0.01em; position: relative; }
+  .next-sub { font-size: 19px; color: rgba(255,255,255,0.65); margin-bottom: 42px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+  .cta-row { display: flex; gap: 13px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; position: relative; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 9px; padding: 16px 30px; border-radius: 8px; font-size: 17px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.01em; }
+  .cta-btn.primary { background: var(--teal); color: var(--white); }
+  .cta-btn.primary:hover { background: #1ab2bf; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(24,161,173,0.3); }
+  .cta-btn.primary-dim { background: rgba(24,161,173,0.7); color: var(--white); }
+  .cta-btn.primary-dim:hover { background: rgba(24,161,173,0.85); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.1); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.11); }
+  .next-contact { font-size: 16px; color: rgba(255,255,255,0.4); margin-top: 22px; position: relative; line-height: 1.7; }
+  .next-contact a { color: var(--teal); text-decoration: none; }
+
+  /* ── PROOF ROW ── */
+  .proof-row { display: flex; align-items: center; justify-content: center; gap: 11px; padding: 32px 0 0; margin-top: 28px; border-top: 1px solid var(--gray-100); text-align: center; }
+  .proof-row p { font-size: 16px; color: var(--gray-400); }
+  .proof-row a { font-size: 16px; font-weight: 600; color: var(--teal); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--gray-100); margin: 70px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--dark); padding: 28px 88px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .footer-left { display: flex; align-items: center; gap: 11px; }
+  .footer-dot { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; }
+  .footer-lwd { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .footer-tagline { font-size: 15px; color: rgba(255,255,255,0.2); letter-spacing: 0.03em; margin-top: 3px; }
+  .footer-right { font-size: 15px; color: rgba(255,255,255,0.4); text-align: right; line-height: 1.9; }
+  .footer-right a { color: rgba(255,255,255,0.55); text-decoration: none; }
+
+  /* ── RESPONSIVE 900px ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-300px); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-fab { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar-overlay.visible { pointer-events: auto; }
+    .page-wrap { margin-left: 0; }
+    .cover-top, .cover-body, .cover-footer { padding-left: 20px; padding-right: 20px; }
+    .main { padding: 44px 24px 90px; }
+    .doc-footer { padding-left: 24px; padding-right: 24px; }
+    .cover-client { font-size: 48px; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .cover-meta-strip { flex-direction: column; width: 100%; }
+    .cover-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .cover-meta-item:last-child { border-bottom: none; }
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-btn { justify-content: center; width: 100%; }
+    a.sticky-cta {
+      position: fixed; bottom: 20px; right: 20px; z-index: 200;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 13px 24px; background: var(--teal); color: var(--white) !important;
+      border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+      text-decoration: none !important; box-shadow: 0 4px 20px rgba(24,161,173,0.35);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+  }
+
+  /* ── RESPONSIVE 600px ── */
+  @media (max-width: 600px) {
+    .page-grid { grid-template-columns: 1fr; }
+    .invest-cards { grid-template-columns: 1fr; }
+    .always-grid { grid-template-columns: 1fr 1fr; }
+    .invest-summary { flex-direction: column; text-align: center; }
+    .next-box { padding: 40px 22px; }
+    .main { padding: 40px 16px 90px; }
+    .proof-row { flex-direction: column; align-items: center; gap: 4px; }
+    .cover-client { font-size: 40px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-wordmark-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Hill Creative, LLC</div>
+    <div class="sidebar-doctype">Website Proposal</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Sections</div>
+    <a href="#opening" class="nav-link active"><span class="num">01</span> A Note From Jordan</a>
+    <a href="#scope" class="nav-link"><span class="num">02</span> What You're Getting</a>
+    <a href="#why" class="nav-link"><span class="num">03</span> Why This Matters</a>
+    <a href="#investment" class="nav-link"><span class="num">04</span> Investment</a>
+    <a href="#process" class="nav-link"><span class="num">05</span> How It Works</a>
+    <a href="#next-steps" class="nav-link"><span class="num">06</span> Get Started</a>
+  </div>
+  <div class="sidebar-cta">
+    <a href="#next-steps" class="sidebar-cta-btn">Get Started →</a>
+  </div>
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br>
+    (715) 630-5689<br>
+    LatzWebDesign.com
+  </div>
+</nav>
+
+<button class="mobile-fab" id="fab" aria-label="Menu">☰</button>
+<a href="#next-steps" class="sticky-cta no-print">Get Started →</a>
+
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-wordmark">Latz Web Design</div>
+      <span class="cover-doc-type">Website Proposal</span>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline">Prepared for</div>
+      <div class="cover-client">Hill Creative,<br>LLC</div>
+      <div class="cover-sub">Editorial Photography Website &nbsp;·&nbsp; Two-Stage Build &nbsp;·&nbsp; June 2026</div>
+      <div class="cover-meta-strip">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Prepared by</span>
+          <span class="cover-meta-value">Jordan Latz</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contact</span>
+          <span class="cover-meta-value">Thresa Hill</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Pages</span>
+          <span class="cover-meta-value">3 → 6</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Project Total</span>
+          <span class="cover-meta-value">$3,500</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">jordan@latzwebdesign.com<br>(715) 630-5689</div>
+      <div class="cover-footer-right">LatzWebDesign.com<br>Stevens Point, WI</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <section id="opening">
+      <div class="sec-header">
+        <span class="sec-badge">01</span>
+        <span class="sec-title">A Note From Jordan</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="opening-wrap">
+        <div class="opening-salutation">Thresa,</div>
+        <p>You said something when we talked that I keep coming back to: <strong>you don't want people to feel sold to — you want them to land on your site and feel like they've already decided, and they're just there to figure out the next step.</strong> That's not a design preference. That's the whole thing. Everything I'm proposing is built around it.</p>
+        <p>You're not someone who needs convincing about what you want. You built a full mockup in Base44 yourself because you couldn't find a developer who'd get it right — and it's genuinely good. You've been burned before by WP and Bluehost folks who didn't deliver. Your GoDaddy site is, in your words, "here's everything I do, good luck figuring it out." You even lost a lead because a chat notification slipped past you. None of that is a knowledge gap on your end. It's a tooling gap.</p>
+        <p>So I'm not going to pitch you. You already see this site in your head. What you need is someone to actually build the thing you're picturing — properly, fast, and so that <strong>you own it forever.</strong> The wireframe we went through proved we're reading from the same page: you reviewed it, gave real feedback, and signed off on the direction.</p>
+        <p>This proposal is just the path to making it real. I've split it into <strong>two stages</strong> so you can start now — without dropping the whole thing at once — and finish the full vision whenever you're ready.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="scope">
+      <div class="sec-header">
+        <span class="sec-badge">02</span>
+        <span class="sec-title">What You're Getting</span>
+      </div>
+      <div class="sec-rule"></div>
+      <p class="stage-intro"><strong>One project, two stages.</strong> Stage 1 is a real, functional 3-page site you can launch and use right away. Stage 2 builds three dedicated service pages on top of it and turns the contact page into a smart router — no rebuild, it picks up exactly where Stage 1 leaves off.</p>
+      <div class="page-grid">
+        <div class="page-card">
+          <span class="page-card-stage">Stage 1 — Starter Site</span>
+          <div class="page-card-title">Homepage</div>
+          <span class="page-card-slug">/</span>
+          <ul>
+            <li>Hero with personality — your work, your voice</li>
+            <li>Short intro about you, linking out to the About page</li>
+            <li>Service overviews: Real Estate · Branding · Family/Portraits</li>
+            <li>A swipeable image carousel for each service — scroll left/right through the work</li>
+            <li>Nav dropdowns that smooth-scroll to each section</li>
+            <li>All portfolio content managed through a simple CMS you control</li>
+            <li>In-context CTAs to contact</li>
+            <li>Testimonial section</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <span class="page-card-stage">Stage 1 — Starter Site</span>
+          <div class="page-card-title">About</div>
+          <span class="page-card-slug">/about</span>
+          <ul>
+            <li>Your story and photojournalistic background</li>
+            <li>Brand photo + personality</li>
+            <li>That Stonebridge "here's who I am" energy</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <span class="page-card-stage">Stage 1 — Starter Site</span>
+          <div class="page-card-title">Contact</div>
+          <span class="page-card-slug">/contact</span>
+          <ul>
+            <li>Phone, email, and social links</li>
+            <li>Clean contact form straight to your inbox</li>
+            <li>No more missed chat notifications</li>
+          </ul>
+        </div>
+        <div class="page-card stage2">
+          <span class="page-card-stage">Stage 2 — Full Build</span>
+          <div class="page-card-title">Real Estate</div>
+          <span class="page-card-slug">/real-estate</span>
+          <ul>
+            <li>Property photography portfolio</li>
+            <li>Swipeable carousel gallery</li>
+            <li>Process steps: Book → Shoot → Next-Day Delivery → Use</li>
+            <li>Calendly embed for direct booking</li>
+            <li>Shoot-prep PDF download · starting at $200+</li>
+          </ul>
+        </div>
+        <div class="page-card stage2">
+          <span class="page-card-stage">Stage 2 — Full Build</span>
+          <div class="page-card-title">Branding / Content</div>
+          <span class="page-card-slug">/branding</span>
+          <ul>
+            <li>Brand photography portfolio</li>
+            <li>Swipeable gallery + session overview</li>
+            <li>HoneyBook inquiry form embed</li>
+            <li>Premium feel — built for your growth area</li>
+          </ul>
+        </div>
+        <div class="page-card stage2">
+          <span class="page-card-stage">Stage 2 — Full Build</span>
+          <div class="page-card-title">Portraits &amp; Lifestyle</div>
+          <span class="page-card-slug">/portraits</span>
+          <ul>
+            <li>Family, senior &amp; couples gallery</li>
+            <li>Seasonal availability note</li>
+            <li>HoneyBook inquiry form</li>
+            <li>Warm, photojournalistic tone</li>
+          </ul>
+        </div>
+      </div>
+      <p class="stage-intro" style="margin-bottom:28px;"><strong>Stage 2 also upgrades the Contact page</strong> with conditional routing — a visitor picks what they need, and Real Estate gets Calendly while everything else gets the HoneyBook form. The right tool, automatically, for the right client.</p>
+      <div class="always-grid">
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Mobile-First</div>
+          <div class="always-desc">Agents and clients browse on phones. Built for that from day one.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> SEO Foundations</div>
+          <div class="always-desc">Page titles, meta descriptions, clean URLs, fast load times.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Live Dev Link</div>
+          <div class="always-desc">Watch it come together. Give feedback as we build.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Editorial &amp; Warm</div>
+          <div class="always-desc">Your Stonebridge direction — rose/sage/teal, editorial, never salesy.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> You Own It</div>
+          <div class="always-desc">Your code, your domain, no platform lock-in, no monthly fee to me.</div>
+        </div>
+        <div class="always-item">
+          <div class="always-label"><span class="dot"></span> Fast &amp; Reliable</div>
+          <div class="always-desc">Next.js on Vercel. Global CDN, auto SSL, no GoDaddy mystery.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="why">
+      <div class="sec-header">
+        <span class="sec-badge">03</span>
+        <span class="sec-title">Why This Site Matters</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="highlight-box">
+        <p>You serve three completely different audiences through one front door. Real estate agents want speed — book and go. Branding clients need to feel the vibe before they reach out. Family clients want to feel welcome. <strong>Right now, all three hit the same GoDaddy page and are left to figure it out themselves.</strong></p>
+        <p>That's not a small thing. You already lost a lead to a missed GoDaddy chat notification — the site isn't just a portfolio, it's your routing system, your first impression, and the thing that either builds trust or loses the client before they ever reach out.</p>
+        <p>And you're actively pushing into branding work this year. <strong>You need a site that supports who you're becoming — not just who you've been.</strong> That's exactly what Stage 1 starts and Stage 2 completes.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="investment">
+      <div class="sec-header">
+        <span class="sec-badge">04</span>
+        <span class="sec-title">Investment</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="invest-cards">
+        <div class="invest-card">
+          <div class="invest-card-name">Stage 1</div>
+          <div class="invest-card-title">Starter Site</div>
+          <div class="invest-card-desc">A real, launchable 3-page site — Home, About, Contact. Editorial design, mobile-first, routing built in. Live and working for you in weeks.</div>
+          <div class="invest-price">$1,500</div>
+          <div class="invest-price-note">50% deposit = $750 to start · $750 at completion</div>
+          <ul class="invest-list">
+            <li>3 custom pages — Home, About, Contact</li>
+            <li>Editorial design system from your direction</li>
+            <li>Homepage that introduces all three services</li>
+            <li>Service overviews with portfolio + CTAs</li>
+            <li>Testimonial section</li>
+            <li>Real contact form straight to your inbox</li>
+            <li>Custom CMS — swap portfolio images, testimonials, and content on your own</li>
+            <li>Mobile-first, SEO foundations — you own the code</li>
+          </ul>
+        </div>
+        <div class="invest-card featured">
+          <div class="featured-pill">Full Vision</div>
+          <div class="invest-card-name">Stage 2</div>
+          <div class="invest-card-title">Full Build</div>
+          <div class="invest-card-desc">Builds on Stage 1 with three dedicated service pages and smart contact routing. The complete site you mapped out — no rebuild, no starting over.</div>
+          <div class="invest-price">$2,000</div>
+          <div class="invest-price-note">50% deposit = $1,000 when you're ready · $1,000 at completion</div>
+          <ul class="invest-list">
+            <li>Everything in Stage 1</li>
+            <li>3 dedicated pages — Real Estate · Branding · Portraits</li>
+            <li>Swipeable portfolio galleries</li>
+            <li>Calendly booking + shoot-prep PDF (Real Estate)</li>
+            <li>HoneyBook inquiry embeds (Branding + Portraits)</li>
+            <li>Smart contact routing by client type</li>
+            <li>6 pages total — the full vision, built once</li>
+          </ul>
+        </div>
+      </div>
+      <div class="invest-summary">
+        <div>
+          <div class="invest-summary-label">Full project</div>
+          <div class="invest-summary-amount">$3,500</div>
+          <div class="invest-summary-schedule">You're starting with Stage 1 — just $750 today. 50% deposit · 50% at completion, each stage.</div>
+        </div>
+        <a href="#next-steps" class="cta-btn primary no-print">Move Forward →</a>
+      </div>
+      <div class="hosting-row">
+        <span class="icon">🏠</span>
+        <p><strong>Hosting:</strong> Vercel's free tier will likely cover you — Pro is just $20/month if you ever outgrow it. Includes SSL, analytics, and a global CDN. Right now you're paying for GoDaddy Website Builder <em>plus</em> your domain; the new setup costs you less annually — and unlike GoDaddy, you actually own everything.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="process">
+      <div class="sec-header">
+        <span class="sec-badge">05</span>
+        <span class="sec-title">How It Works</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Deposit &amp; Kickoff</div>
+            <div class="step-desc">Your $750 deposit locks in the project. I'll reach out within 24 hours and send a simple content checklist — portfolio images, your brand photo, testimonials, and any brand assets you've got.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Design &amp; Build</div>
+            <div class="step-desc">You've already given me a big head start — the wireframe's approved and your design direction is clear (the Base44 mockup, the Stonebridge reference, rose/sage/teal, Cormorant Garamond + Jost). I'll bring you <strong>two design directions</strong> to react to, then build it out with a live preview link so you can watch it come together in real time.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Review &amp; Refine</div>
+            <div class="step-desc">Feedback throughout — not rigid revision rounds. Once the design direction is locked, the rest comes together naturally. No guessing, no surprises.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Launch &amp; Handoff</div>
+            <div class="step-desc">I'll connect your domain (DNS from GoDaddy over to Vercel), you cancel the GoDaddy Website Builder, the final Stage 1 balance is due, and you own everything — code, hosting, domain. Stage 2 kicks off whenever you're ready.</div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-note">
+        <strong>Timeline:</strong> With your content delivered promptly, Stage 1 is realistic at <strong>4–5 weeks</strong> from deposit to launch. You mentioned wanting to be live in 1–2 months — Stage 1 fits very comfortably inside that.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="next-steps">
+      <div class="sec-header">
+        <span class="sec-badge">06</span>
+        <span class="sec-title">Ready to Move Forward?</span>
+      </div>
+      <div class="sec-rule"></div>
+      <div class="next-box">
+        <div class="next-overline">— Next Steps —</div>
+        <div class="next-title">Let's start with Stage 1.</div>
+        <div class="next-sub">Your $750 deposit locks in the project and gets us building. Stage 2 happens later, on your timeline — or reach out first if you've got questions.</div>
+        <div class="cta-row">
+          <a id="btn-1500" href="#" target="_blank" class="cta-btn primary">💳 Pay Deposit — Stage 1 ($750)</a>
+          <a id="btn-2000" href="#" target="_blank" class="cta-btn primary-dim">💳 Pay Deposit — Stage 2 ($1,000)</a>
+        </div>
+        <div class="cta-row">
+          <a href="mailto:jordan@latzwebdesign.com" class="cta-btn ghost">✉️ Email a Question</a>
+          <a href="tel:7156305689" class="cta-btn ghost">📞 (715) 630-5689</a>
+        </div>
+        <div class="next-contact">
+          Each stage is 50% to start, 50% at completion. Stage 2 deposit happens when you're ready for it.<br>
+          <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">
+      <div class="footer-dot"></div>
+      <div>
+        <div class="footer-lwd">Latz Web Design</div>
+        <div class="footer-tagline">Custom Websites · No Monthly Fees · You Own It Forever</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+      <a href="tel:7156305689">(715) 630-5689</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CLIENT CONFIG — update these before sending
+  // ─────────────────────────────────────────────
+  const PAYPAL_1500 = 'https://www.paypal.com/invoice/p/#SHDERN2HN7DLY3TV';  // Stage 1 deposit ($750)
+  const PAYPAL_2000 = '';  // Stage 2 deposit ($1,000) — not needed yet, leave blank
+  // ─────────────────────────────────────────────
+
+  const btn1500 = document.getElementById('btn-1500');
+  const btn2000 = document.getElementById('btn-2000');
+
+  if (PAYPAL_1500) btn1500.href = PAYPAL_1500;
+  else btn1500.style.opacity = '0.4';
+
+  if (PAYPAL_2000) {
+    btn2000.href = PAYPAL_2000;
+  } else {
+    btn2000.style.display = 'none';
+  }
+
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id], .cover');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar
+  const fab = document.getElementById('fab');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  let open = false;
+
+  function openSidebar() {
+    open = true;
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar(cb) {
+    open = false;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    setTimeout(() => { overlay.style.display = 'none'; if (cb) cb(); }, 280);
+  }
+
+  fab.addEventListener('click', () => open ? closeSidebar() : openSidebar());
+  overlay.addEventListener('click', () => closeSidebar());
+
+  document.querySelectorAll('.sidebar .nav-link, .sidebar-cta-btn').forEach(link => {
+    link.addEventListener('click', e => {
+      if (window.innerWidth <= 900 && open) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeSidebar(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
