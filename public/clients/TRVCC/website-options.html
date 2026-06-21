@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>TRVCC Website — Options & Approach | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b2620;
+    --pine:#26432f;
+    --pine-deep:#1a2f22;
+    --brass:#b07f2c;
+    --brass-soft:#c99a45;
+    --paper:#f5f2ea;
+    --card:#ffffff;
+    --line:#e3ddce;
+    --muted:#6a7068;
+    --green-tint:#eef2ea;
+    --rule:#d8d2c2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+
+  /* Header */
+  header{
+    background:var(--pine-deep);
+    color:#f3efe4;
+    position:relative;
+    overflow:hidden;
+    padding:38px 0 40px;
+  }
+  header .contour{
+    position:absolute;inset:0;opacity:.16;pointer-events:none;
+  }
+  header .wrap{position:relative;z-index:1}
+  .brand{
+    font-family:'Inter';font-weight:600;font-size:13px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--brass-soft);
+  }
+  .prepared{
+    font-size:13px;color:#b9c3b6;margin-top:6px;letter-spacing:.01em;
+  }
+  header h1{
+    font-family:'Fraunces';font-weight:600;font-size:34px;line-height:1.12;
+    margin-top:18px;color:#fbf8f0;letter-spacing:-.01em;
+  }
+  header h1 .accent{color:var(--brass-soft)}
+
+  /* Intro note */
+  .note{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:3px solid var(--brass);
+    border-radius:4px;
+    padding:24px 26px;
+    margin:-26px 0 0;
+    position:relative;z-index:2;
+    box-shadow:0 8px 30px rgba(26,47,34,.07);
+  }
+  .note p{margin-bottom:12px}
+  .note p:last-child{margin-bottom:0}
+
+  section{padding:34px 0}
+  .eyebrow{
+    font-family:'Inter';font-weight:600;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--brass);margin-bottom:10px;
+  }
+  h2{
+    font-family:'Fraunces';font-weight:600;font-size:25px;line-height:1.2;
+    letter-spacing:-.01em;margin-bottom:14px;
+  }
+  h3{font-family:'Fraunces';font-weight:600;font-size:20px;margin-bottom:4px}
+  p{margin-bottom:14px}
+  p:last-child{margin-bottom:0}
+  .lead{color:#3a423a}
+  strong{font-weight:600}
+
+  .divider{height:1px;background:var(--rule);border:0;margin:0 auto;max-width:760px}
+
+  /* Tier cards */
+  .tier{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:26px 26px 24px;
+    margin-bottom:18px;
+  }
+  .tier.featured{border:1.5px solid var(--pine);box-shadow:0 6px 24px rgba(38,67,47,.08)}
+  .tier-top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:14px;flex-wrap:wrap;margin-bottom:6px;
+  }
+  .tier-label{
+    display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+  }
+  .tier.featured .tier-label{color:var(--pine)}
+  .price{
+    font-family:'Fraunces';font-weight:600;font-size:22px;white-space:nowrap;
+    color:var(--pine);
+  }
+  .price small{display:block;font-family:'Inter';font-weight:500;font-size:11px;
+    letter-spacing:.04em;color:var(--muted);text-transform:uppercase;text-align:right}
+  .tier > p{color:#3f463e;font-size:16px}
+  .pc{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:18px}
+  .pc h4{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:9px}
+  .pc ul{list-style:none}
+  .pc li{font-size:15px;line-height:1.5;padding-left:22px;position:relative;margin-bottom:8px;color:#39403a}
+  .pc li::before{position:absolute;left:0;top:0;font-weight:600}
+  .pros li::before{content:"+";color:#2f7d4f}
+  .cons li::before{content:"–";color:#b08a3a}
+
+  /* Raffle callout */
+  .raffle{
+    background:var(--green-tint);
+    border:1px solid #d3ddcd;
+    border-radius:8px;padding:24px 26px;
+  }
+  .raffle .tier-top{margin-bottom:10px}
+
+  /* Zeffy box */
+  .zeffy{
+    background:var(--pine);
+    color:#eef2e9;
+    border-radius:10px;
+    padding:30px 28px;
+  }
+  .zeffy .eyebrow{color:var(--brass-soft)}
+  .zeffy h2{color:#fff}
+  .zeffy p{color:#d8e0d4}
+  .zeffy strong{color:#fff}
+  .btn{
+    display:inline-block;background:var(--brass);color:#1c1407;
+    font-weight:600;font-size:15px;letter-spacing:.01em;
+    padding:13px 22px;border-radius:6px;text-decoration:none;margin-top:8px;
+    transition:background .15s ease;
+  }
+  .btn:hover{background:var(--brass-soft)}
+  .btn-note{font-size:13px;color:#aebaa9;margin-top:10px}
+
+  /* Close */
+  .close-block .lead{font-size:18px}
+  .signoff{margin-top:22px;font-size:16px;color:#39403a}
+  .signoff .name{font-family:'Fraunces';font-weight:600;font-size:19px;color:var(--ink);display:block;margin-bottom:2px}
+
+  footer{
+    background:var(--pine-deep);color:#cdd6c8;padding:26px 0;margin-top:10px;
+    font-size:14px;
+  }
+  footer a{color:var(--brass-soft);text-decoration:none}
+  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media (max-width:560px){
+    body{font-size:16px}
+    header h1{font-size:27px}
+    h2{font-size:22px}
+    .pc{grid-template-columns:1fr;gap:14px}
+    .tier-top{flex-direction:column;gap:4px}
+    .price small{text-align:left}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="contour" viewBox="0 0 760 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g fill="none" stroke="#c99a45" stroke-width="1">
+      <path d="M-20,60 C120,20 240,90 380,60 520,30 640,95 800,55"/>
+      <path d="M-20,95 C120,55 240,125 380,95 520,65 640,130 800,90"/>
+      <path d="M-20,130 C120,90 240,160 380,130 520,100 640,165 800,125"/>
+      <path d="M-20,165 C120,125 240,195 380,165 520,135 640,200 800,160"/>
+      <path d="M-20,200 C120,160 240,230 380,200 520,170 640,235 800,195"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="brand">Latz Web Design</div>
+    <div class="prepared">Prepared for the Tomorrow River Valley Conservation Club</div>
+    <h1>Your new website —<br>a couple of <span class="accent">honest paths forward</span></h1>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="note">
+    <p>Joe — this has been on my mind since we talked, so I did some real digging before throwing a number at you. Your situation is a little unique: the site itself is straightforward, but the store side (memberships, the banquet, and especially the raffle) has some moving parts worth getting right.</p>
+    <p>Rather than write up one big formal proposal, I wanted to lay out the lay of the land first, so you and the board can see the options before we lock anything in. <strong>Consider this a starting point for the conversation, not a final quote.</strong></p>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="eyebrow">The short version</div>
+    <h2>What you're really building</h2>
+    <p class="lead">Two things, side by side: a clean, modern site you can update yourselves and actually be proud of — and a store that does real work for the club (apparel, memberships with the tree add-on, banquet tickets, sponsors, and down the road, raffle tickets).</p>
+    <p>The site part is the easy part. The store is where the decisions are, and it really comes down to one question: <strong>do you want everything custom-built and fully owned, or would you rather lean on a free nonprofit platform for the store and keep your costs down?</strong> Both are good answers. Here's how they compare.</p>
+  </section>
+</div>
+
+<hr class="divider">
+
+<div class="wrap">
+  <section>
+    <div class="eyebrow">Option A · Lower cost</div>
+    <h2>Custom site, store powered by Zeffy</h2>
+
+    <div class="tier">
+      <div class="tier-top">
+        <span class="price">≈ $4,500<small>Ballpark, one-time</small></span>
+      </div>
+      <p><strong>What you're paying me to build is the website</strong> — a fully custom, modern site you own: your home page, your history, programs, hunter safety, sponsors, events, and a simple way to keep it all updated yourselves. The store, memberships, and banquet tickets are <strong>built right into your site</strong>, so people browse and buy without ever leaving — Zeffy securely powers the checkout right there on the page, for free. Think of it as: I build the storefront and everything around it; Zeffy quietly handles the payment inside it.</p>
+      <div style="background:#f3f0e7;border:1px solid var(--line);border-radius:6px;padding:14px 18px;margin-bottom:4px;font-size:15px;line-height:1.55">
+        <strong style="display:block;margin-bottom:4px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)">In plain terms</strong>
+        <span style="color:#3f463e"><strong>I build:</strong> your custom website + the tools to update it. &nbsp;·&nbsp; <strong>Zeffy handles:</strong> the free checkout for your store, memberships, and tickets.</span>
+      </div>
+      <div class="pc">
+        <div class="pros">
+          <h4>What's good</h4>
+          <ul>
+            <li>No platform fees and no processing fees on the store — ever. You keep 100% of every sale.</li>
+            <li>Lower up-front cost, because I'm not hand-coding a custom store on top of the site.</li>
+            <li>One dashboard for apparel, memberships, tickets, and your member records.</li>
+            <li>No monthly fee, and the website itself is fully yours.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>The trade-off</h4>
+          <ul>
+            <li>The store/checkout runs on Zeffy's system, so that piece isn't custom-owned like the rest of the site.</li>
+            <li>You'd manage two places: the website in your tools, the store in Zeffy.</li>
+            <li>Buyers see a small optional "tip Zeffy" prompt at checkout (they can skip it).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section style="padding-top:6px">
+    <div class="eyebrow">Option B · Fully owned</div>
+    <h2>Custom site, custom store</h2>
+
+    <div class="tier featured">
+      <span class="tier-label">Everything built and owned by you</span>
+      <div class="tier-top">
+        <span class="price">≈ $6,500<small>Ballpark, one-time</small></span>
+      </div>
+      <p>Same site, but the store is built from scratch too — your apparel, your membership system with the tree deposit, your sponsors — all living in one place, all yours, top to bottom. Nothing depends on an outside platform.</p>
+      <div class="pc">
+        <div class="pros">
+          <h4>What's good</h4>
+          <ul>
+            <li>Every part is custom and owned by the club — no third-party platform involved.</li>
+            <li>You manage everything in one set of tools.</li>
+            <li>The cleanest possible experience for your members and buyers.</li>
+            <li>Built to grow with whatever you add next.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>The trade-off</h4>
+          <ul>
+            <li>Higher up-front cost — you're paying for everything to be hand-built.</li>
+            <li>Standard payment processing fees apply (small % per sale), where Zeffy covers those.</li>
+            <li>A bit more build time before it's all live.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section style="padding-top:6px">
+    <div class="raffle">
+      <span class="tier-label" style="color:var(--pine)">A separate piece · either option</span>
+      <div class="tier-top">
+        <h3>The raffle tickets</h3>
+        <span class="price">Separate phase<small>Priced once scoped</small></span>
+      </div>
+      <p style="margin-bottom:0;color:#39403a">Wisconsin treats raffles as regulated gambling, and selling tickets online comes with specific rules and a state raffle license. One thing worth knowing up front: <strong>Wisconsin doesn't allow raffle tickets to be sold online through an automated checkout</strong> — so even though Zeffy (and platforms like it) advertise a raffle feature, a Wisconsin club can't legally use it that way. The state requires tickets to be handled face-to-face. It's still doable — other Wisconsin clubs run online raffles using a manual, hand-completed process that follows the rules — but that takes a custom approach, which is exactly why I'd treat it as its own phase once the license is sorted, rather than baking it into the first build. That keeps your launch simple and the raffle done right.</p>
+    </div>
+  </section>
+</div>
+
+<hr class="divider">
+
+<div class="wrap">
+  <section>
+    <div class="zeffy">
+      <div class="eyebrow">Worth a look</div>
+      <h2>What's Zeffy?</h2>
+      <p>It's a fundraising and payment platform built only for nonprofits. It handles donations, store sales, memberships, and event tickets — and because it's funded by optional tips from buyers, <strong>the nonprofit pays zero fees.</strong> Over 100,000 nonprofits use it.</p>
+      <p>In plain terms: when you sell a $25 hat or a $125 banquet ticket, <strong>you keep the full amount</strong> — not $25 minus 2.9% + 30¢ the way you would on Stripe, PayPal, or Shopify. Those processing fees are covered by an optional tip the buyer can add (or skip) at checkout.</p>
+      <p>I've been watching their walkthrough, and honestly — after seeing it, this looks like it could check a lot of boxes for things you may need, may eventually need, or didn't even know you needed. <strong>But I could be wrong; this isn't my organization.</strong> You'll know better than me what fits how the club actually runs, so I'd love for you to take a look and tell me what you think.</p>
+      <a class="btn" href="https://www.zeffy.com/home/demo" target="_blank" rel="noopener">Watch the Zeffy walkthrough →</a>
+      <div class="btn-note">A quick, plain-English overview of how it works.</div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="close-block">
+    <div class="eyebrow">Where I'd start</div>
+    <h2>Honestly? It comes down to budget and feel.</h2>
+    <p class="lead">We can absolutely go full custom — and you've seen the price for that. Or we lean on Zeffy for the store and get you most of the same result for less. Neither is the "wrong" call; it depends on what the board's comfortable spending and how much you value having every last piece owned in-house.</p>
+    <p>Before I dove all the way down the rabbit hole on every option, I figured this was a good place to start the conversation. So take a look, watch the Zeffy walkthrough, and let me know: <strong>is the Zeffy route something you'd be interested in, or do you have the budget for the full custom build?</strong></p>
+    <p>It may be worth talking this through with the board first — both the direction and the budget — since that's really a group decision. I'm also heading out on vacation next week, so I won't have the detailed proposal over before then anyway, which works out: it gives you time to discuss it together. Once you've landed on a direction, I'll put together the full proposal and a wireframe so you've got something concrete to vote on.</p>
+    <div class="signoff">
+      <span class="name">Jordan Latz</span>
+      Latz Web Design — Stevens Point, WI<br>
+      No rush. Reach out whenever you've had a chance to look.
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Latz Web Design</span>
+    <span><a href="mailto:Jordan@LatzWebDesign.com">Jordan@LatzWebDesign.com</a> · (715) 630-5689</span>
+  </div>
+</footer>
+
+</body>
+</html>
