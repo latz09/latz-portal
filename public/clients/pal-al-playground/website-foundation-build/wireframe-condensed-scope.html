@@ -1,0 +1,1875 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Indoor Playground (Wisconsin Rapids) — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				/* ── PROVISIONAL PALETTE — branding/logo not locked ── */
+				--primary: #10243e;        /* deep navy ink */
+				--primary-mid: #1d3a5f;
+				--accent: #f4a93d;          /* warm marigold sunshine */
+				--accent-light: rgba(244, 169, 61, 0.1);
+				--light: #fbf6ec;           /* warm cream */
+				--light-dark: #f1e9d8;
+				--mid: #5e6b7e;
+				--teal: #1b9aa6;            /* fresh teal — secondary */
+				--green: #1b9aa6;           /* CMS tag color */
+				--green-light: rgba(27, 154, 166, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(16, 36, 62, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(16, 36, 62, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 4px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 24px;
+				font-weight: 600;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(251, 246, 236, 0.4);
+				letter-spacing: 0.06em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(244, 169, 61, 0.15);
+				border: 1px solid rgba(244, 169, 61, 0.4);
+				border-radius: 5px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.22);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(251, 246, 236, 0.45);
+				text-decoration: none;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 18px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 3px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(244, 169, 61, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 34px;
+				right: 34px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 31px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Fraunces', serif;
+				font-size: 48px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 20px;
+				color: rgba(16, 36, 62, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 2px solid rgba(16, 36, 62, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(16, 36, 62, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(16, 36, 62, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 17px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: #c77e1a;
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 3px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(16, 36, 62, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 3px solid var(--primary);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Fraunces', serif;
+				font-weight: 600;
+				font-size: 20px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 16px;
+				color: rgba(16, 36, 62, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(16, 36, 62, 0.04);
+				border-left: 4px solid rgba(16, 36, 62, 0.2);
+				border-radius: 0 5px 5px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 3px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: rgba(244, 169, 61, 0.05);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: #c77e1a;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 3px dashed rgba(16, 36, 62, 0.15);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(251, 246, 236, 0.5);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Fraunces', serif;
+				font-size: 36px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Fraunces', serif;
+				font-size: 25px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Fraunces', serif;
+				font-size: 20px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-subtext {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 20px;
+				color: rgba(16, 36, 62, 0.5);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 18px;
+				color: rgba(16, 36, 62, 0.62);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(16, 36, 62, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				padding: 13px 31px;
+				border-radius: 5px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--primary);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 3px solid var(--primary);
+				padding: 20px 31px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 15px;
+				color: rgba(251, 246, 236, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(16, 36, 62, 0.07);
+				border: 3px dashed rgba(16, 36, 62, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(16, 36, 62, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── PILLAR / VALUE CARDS ── */
+			.pillar-grid {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 14px;
+				margin-top: 17px;
+			}
+
+			.pillar-card {
+				border: 3px dashed rgba(16, 36, 62, 0.2);
+				border-radius: 8px;
+				padding: 20px 17px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.pillar-icon {
+				font-size: 28px;
+				margin-bottom: 8px;
+			}
+
+			.pillar-label {
+				font-family: 'Fraunces', serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			/* ── PATH / CTA CARDS ── */
+			.path-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin-top: 17px;
+			}
+
+			.path-card {
+				border: 3px dashed rgba(16, 36, 62, 0.2);
+				border-radius: 8px;
+				padding: 20px 17px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.path-icon {
+				font-size: 28px;
+				margin-bottom: 8px;
+			}
+
+			.path-label {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.path-note {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 14px;
+				color: var(--teal);
+				font-weight: 500;
+			}
+
+			/* ── FAQ ACCORDION ── */
+			.faq-list {
+				display: flex;
+				flex-direction: column;
+				gap: 11px;
+				margin-top: 14px;
+			}
+
+			.faq-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 17px;
+				border: 2px dashed rgba(16, 36, 62, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.faq-q {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 18px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.faq-toggle {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 22px;
+				color: var(--accent);
+				flex-shrink: 0;
+			}
+
+			/* ── MEMBERSHIP VALUE BOX ── */
+			.value-box {
+				border: 3px dashed var(--teal);
+				border-radius: 8px;
+				padding: 25px;
+				background: rgba(27, 154, 166, 0.06);
+				text-align: center;
+				margin-top: 14px;
+			}
+
+			.value-math {
+				font-family: 'Fraunces', serif;
+				font-size: 28px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.form-field {
+				border: 2px dashed rgba(16, 36, 62, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 15px;
+				color: rgba(16, 36, 62, 0.4);
+				margin-bottom: 6px;
+			}
+
+			.field-placeholder {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 18px;
+				color: rgba(16, 36, 62, 0.3);
+			}
+
+			/* ── INFO ROWS (plan your visit) ── */
+			.info-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.info-cell {
+				border: 2px dashed rgba(16, 36, 62, 0.2);
+				border-radius: 7px;
+				padding: 17px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.info-cell strong {
+				font-family: 'Fraunces', serif;
+				font-size: 18px;
+				color: var(--primary);
+				display: block;
+				margin-bottom: 4px;
+			}
+
+			.info-cell span {
+				font-family: 'DM Sans', sans-serif;
+				font-size: 16px;
+				color: rgba(16, 36, 62, 0.55);
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Fraunces', serif;
+				font-size: 16px;
+				font-weight: 600;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 120px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(16, 36, 62, 0.1);
+				color: var(--primary);
+				border: 2px dashed var(--primary);
+			}
+
+			.sitemap-box.prelaunch {
+				background: rgba(244, 169, 61, 0.12);
+				color: var(--primary);
+				border: 2px dashed var(--accent);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25px;
+				color: rgba(16, 36, 62, 0.3);
+				padding: 0 11px;
+				align-self: center;
+				margin-top: -20px;
+			}
+
+			/* ── CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(16, 36, 62, 0.12);
+				font-family: 'DM Sans', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+				line-height: 1.5;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 45px 34px 110px;
+				}
+				.pillar-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+				.path-grid,
+				.info-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 34px 22px 110px;
+				}
+				.doc-title {
+					font-size: 38px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(16, 36, 62, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 14px 20px;
+				}
+				.wf-body {
+					padding: 28px 22px 39px;
+				}
+				.pillar-grid,
+				.path-grid,
+				.form-grid,
+				.info-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 6px 0;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 6px;
+				}
+				.check-item {
+					font-size: 16px;
+					gap: 11px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Indoor Playground<br />(Wisconsin Rapids)</div>
+				<div class="sidebar-doctype">Site Wireframes</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#parties" class="nav-link"><span class="nav-icon">🎈</span> Birthday Parties</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Indoor Playground (Wisconsin Rapids)</div>
+				<div class="doc-sub">
+					2-Page Site &nbsp;·&nbsp; Home + Birthday Parties &nbsp;·&nbsp; Rhomb Handoff
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">2 in scope</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Allison Hewett</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value warn">Proposal stage</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 28px; font-size: 18px; padding: 16px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each
+				page and how it should behave, not how it should be designed. Layout, hierarchy, and visual
+				treatment are in the designer's hands.
+			</div>
+
+			<!-- SCOPE CHANGE NOTE -->
+			<div class="decision-box" style="margin-bottom: 28px">
+				<div class="decision-label">Reduced Scope — Two Pages</div>
+				<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+					Based on budget feedback, the build is now <strong>two pages</strong>: a single-scroll
+					<strong>Home</strong> page and a standalone <strong>Birthday Parties</strong> page.
+					The former About, FAQ, Memberships, and Plan Your Visit pages are now
+					<strong>sections within Home</strong>, and the separate pre-launch page is gone — its
+					"opening soon" messaging and email capture fold into Home, which launches early in a
+					stripped-down state and expands as opening approaches. Birthday Parties stays standalone
+					to hold its local-SEO target. Nothing about positioning, the Rhomb handoff, or the
+					content itself changed — only how many URLs it lives across.
+				</div>
+			</div>
+
+			<!-- BRAND VOICE COORDINATION -->
+			<div
+				style="border: 3px solid var(--teal); border-radius: 8px; padding: 22px 24px; margin-bottom: 50px; background: rgba(27, 154, 166, 0.06)"
+			>
+				<div
+					style="font-family: 'Architects Daughter', cursive; font-size: 15px; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 11px; display: flex; align-items: center; gap: 8px"
+				>
+					✍️ Brand Voice &amp; Messaging
+				</div>
+				<div class="wf-body-text" style="margin-bottom: 0; font-size: 18px">
+					Brand voice, messaging, and wording across the site will be coordinated with
+					<strong>Allison &amp; Alex Hewett</strong> and <strong>Pookie Rosa</strong> of
+					<strong>Pookie Rosa Marketing</strong>, who leads brand voice and marketing strategy.
+					Headlines and copy shown throughout these wireframes are <strong>placeholders</strong> to
+					illustrate structure and intent — final wording comes through that coordination.
+				</div>
+			</div>
+
+			<!-- PROVISIONAL BRANDING NOTE -->
+			<div class="decision-box" style="margin-bottom: 50px">
+				<div class="decision-label">Provisional Colors &amp; Fonts — Not Locked</div>
+				<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+					Logo and branding are still in progress (Allison expects the logo in 1–2 weeks). The
+					navy / marigold / teal / warm-cream palette and the Fraunces + DM Sans pairing shown here
+					are a <strong>provisional placeholder</strong> chosen to lean into the brand's actual
+					positioning — calm, family-owned, "no screens," not a loud arcade. They are easy to swap
+					once the logo lands. Final palette and type are flagged in the Discussion Checklist.
+				</div>
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label"><span class="section-num">0</span> Site Map</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">
+								Indoor Playground · Wisconsin Rapids
+							</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								2 pages · single-scroll Home + standalone Birthday Parties · custom CMS · all
+								purchase paths link out to Rhomb
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 8px; align-items: center">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span
+										style="font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7"
+										>/</span
+									>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Birthday Parties<br /><span
+										style="font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 400; opacity: 0.7"
+										>/birthday-parties</span
+									>
+								</div>
+							</div>
+						</div>
+
+						<div
+							style="text-align: center; margin-top: 24px; font-family: 'Architects Daughter', cursive; font-size: 16px; color: var(--mid)"
+						>
+							Home is one long scroll →&nbsp;&nbsp;Hero · Email Capture · About · Plan Your
+							Visit · Memberships · Day Pass · Parties Teaser · FAQ
+						</div>
+
+						<div class="annotation" style="margin-top: 24px">
+							Two pages on one domain. Home is a single-scroll page that absorbs what used to be
+							the About, Plan Your Visit, Memberships, and FAQ pages as in-page sections, plus the
+							pre-launch email capture — it ships early in a stripped-down "opening soon" state
+							and expands as launch nears. Birthday Parties stays a real page at
+							/birthday-parties so it can own the "birthday party Wisconsin Rapids" search target.
+							Logo click returns to the top of Home. Every "buy / book" path links out to a
+							specific Rhomb product — the marketing site itself never embeds booking, payment, or
+							waivers.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── HOME (single scroll) ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label"><span class="section-num">1</span> Home Page &mdash; / (single scroll)</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Indoor Playground</div>
+						<div class="wf-nav-links">
+							<span>About</span>
+							<span>Plan Your Visit</span>
+							<span>Memberships</span>
+							<span>Birthday Parties</span>
+							<span>FAQ</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Phased-launch note -->
+						<div class="decision-box" style="margin-top: 0">
+							<div class="decision-label">Behavior — Phased Launch</div>
+							<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+								Home ships early in a stripped-down "opening soon" state: hero, brand pillars,
+								build-out photos, and the email capture. As opening nears, the remaining
+								sections (About, Plan Your Visit, Memberships, Day Pass, FAQ) turn on and the
+								placeholder photos swap to real kids-playing shots — all from the CMS, no
+								rebuild. One URL the whole way through.
+							</div>
+						</div>
+
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 220px">
+								<div class="img-icon">🛝</div>
+								<div class="img-label">
+									Hero image — logo (pending) + photo of the play space<br />
+									Build-out shots pre-launch, real-kid photos after opening
+								</div>
+							</div>
+							<div style="margin-top: 22px; text-align: center">
+								<div class="wf-heading-lg">Big Fun. No Screens.</div>
+								<div class="wf-subtext">
+									17,000 square feet of indoor play — opening soon in Wisconsin Rapids.
+								</div>
+							</div>
+
+							<div class="pillar-grid">
+								<div class="pillar-card">
+									<div class="pillar-icon">📵</div>
+									<div class="pillar-label">No Screens</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🏡</div>
+									<div class="pillar-label">Family-Owned</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🔑</div>
+									<div class="pillar-label">Self-Service</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">📐</div>
+									<div class="pillar-label">17,000 sq ft</div>
+								</div>
+								<div class="pillar-card">
+									<div class="pillar-icon">🎉</div>
+									<div class="pillar-label">Opening Soon</div>
+								</div>
+							</div>
+
+							<div class="path-grid">
+								<div class="path-card">
+									<div class="path-icon">🎫</div>
+									<div class="path-label">Buy a Day Pass</div>
+									<div class="path-note">→ Rhomb · new tab</div>
+								</div>
+								<div class="path-card">
+									<div class="path-icon">🎟️</div>
+									<div class="path-label">Get a Yearly Membership</div>
+									<div class="path-note">→ Rhomb · new tab</div>
+								</div>
+								<div class="path-card">
+									<div class="path-icon">🎈</div>
+									<div class="path-label">Book Your Party</div>
+									<div class="path-note">→ Rhomb · new tab</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Brand pillars sit front and center — "no screens" and family-owned are what make a
+								parent choose this over a loud, screen-heavy arcade. The three primary actions are
+								mobile-first (parents browse on phones late at night) and each deep-links to its
+								<em>specific</em> Rhomb product URL in a new tab, so the site stays open behind the
+								booking. Before launch, the buy/book actions can be hidden and the email capture
+								below takes their place.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Email capture (pre-launch) -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Email Capture — "Be First to Know"</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="form-grid">
+								<div class="form-field full">
+									<div class="field-label">Email Address *</div>
+									<div class="field-placeholder">you@email.com</div>
+								</div>
+							</div>
+							<div style="margin-top: 14px; text-align: center">
+								<div class="wf-cta accent">Notify Me →</div>
+							</div>
+
+							<div style="display: flex; gap: 11px; flex-wrap: wrap; margin-top: 20px">
+								<div class="img-placeholder" style="height: 120px; flex: 1; min-width: 120px">
+									<div class="img-label" style="font-size: 14px">build-out 1</div>
+								</div>
+								<div class="img-placeholder" style="height: 120px; flex: 1; min-width: 120px">
+									<div class="img-label" style="font-size: 14px">build-out 2</div>
+								</div>
+								<div class="img-placeholder" style="height: 120px; flex: 1; min-width: 120px">
+									<div class="img-label" style="font-size: 14px">build-out 3</div>
+								</div>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Decision — Early-Bird Interest Capture</div>
+								<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+									Add an optional "interested in an early-bird membership / opening-week
+									reservation" checkbox to the signup? Captures higher-intent leads, but adds
+									friction. Decide before Home goes live in pre-launch mode.
+								</div>
+							</div>
+							<div class="annotation">
+								This is the pre-launch engine — it builds a launch email list before Rhomb traffic
+								exists. The build-out photos get swapped for real kids-playing shots after opening
+								with one-click CMS replacement, no broken layout. Email provider for the pre-launch
+								window is TBD; once Rhomb is live, its built-in email automations take over and
+								there's no separate newsletter platform to maintain.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- About section -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">About — Founders' Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px">
+								<div class="img-placeholder" style="height: 130px; flex: 1; min-width: 140px">
+									<div class="img-label" style="font-size: 14px">Allison — photo</div>
+								</div>
+								<div class="img-placeholder" style="height: 130px; flex: 1; min-width: 140px">
+									<div class="img-label" style="font-size: 14px">Alex — photo</div>
+								</div>
+							</div>
+							<div class="wf-body-text">
+								The "why" behind the venture — two local parents who wanted a screen-free place for
+								their own kids and built it. Individual photos of Allison and Alex, their roots in
+								Wisconsin Rapids, and the wider community they serve (Stevens Point, Wausau).
+								Roughly 2–3 short paragraphs.
+							</div>
+							<div class="decision-box">
+								<div class="decision-label">To Confirm — Story Development</div>
+								<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+									The founders' story will be developed with Allison, Alex, and Pookie to match the
+									brand voice. We'll lock the working approach at kickoff — owner interview, client
+									draft, or Pookie-led — but the section is ready either way.
+								</div>
+							</div>
+							<div class="annotation">
+								Family-owned and locally connected is a core trust signal for an unstaffed venue —
+								it belongs on the page, not a buried sub-page. Naming Wisconsin Rapids, Stevens
+								Point, and Wausau here also feeds the 45-mile local-search radius. Fully editable so
+								the owners can update it as the business grows.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Plan Your Visit section -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Plan Your Visit</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="info-grid">
+								<div class="info-cell">
+									<strong>Hours</strong><span>[from Allison]</span>
+								</div>
+								<div class="info-cell">
+									<strong>Pricing</strong><span>Day pass &amp; membership [from Allison]</span>
+								</div>
+								<div class="info-cell">
+									<strong>Age Range</strong><span>[age cap TBD]</span>
+								</div>
+								<div class="info-cell">
+									<strong>What to Bring</strong><span>Socks required</span>
+								</div>
+								<div class="info-cell">
+									<strong>Adult / Chaperone Policy</strong><span>[policy TBD]</span>
+								</div>
+								<div class="info-cell">
+									<strong>Food</strong><span>Vending only · no kitchen</span>
+								</div>
+								<div class="info-cell">
+									<strong>Parking &amp; WiFi</strong><span>[details TBD]</span>
+								</div>
+								<div class="info-cell">
+									<strong>Accessibility</strong><span>[details TBD]</span>
+								</div>
+							</div>
+							<div class="annotation">
+								The practical logistics parents check before a first visit, all editable in the
+								CMS. Several details (hours, pricing, age cap, policies) are deferred until after
+								the proposal is accepted — placeholders hold their spots so the section can ship
+								and fill in.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Memberships section -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Memberships — Value Pitch</div>
+								<span class="cms-tag">CMS · pricing editable</span>
+							</div>
+							<div class="value-box">
+								<div class="value-math">"Pays for itself in just X visits."</div>
+								<div class="wf-body-text" style="margin-bottom: 0">
+									A short day-pass-vs-membership pitch that makes the yearly membership the obvious
+									choice for regulars. Exact numbers fill in once pricing is set.
+								</div>
+							</div>
+							<div style="text-align: center; margin-top: 17px">
+								<div class="wf-cta accent">Become a Member →</div>
+								<div class="path-note" style="margin-top: 8px">→ Rhomb membership product · new tab</div>
+							</div>
+							<div class="annotation">
+								Memberships are the highest-lifetime-value product, so Home pitches them rather than
+								just linking them. With the dedicated Memberships page cut from scope, this section
+								carries the pitch and the full membership detail lives in Rhomb — the CTA deep-links
+								to the Rhomb membership product in a new tab. Pricing is in the CMS so Allison can
+								adjust it without a developer.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Day Pass CTA section -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Day Pass CTA</div>
+							</div>
+							<div style="text-align: center; padding: 14px 0">
+								<div class="wf-heading-md">Just Visiting? Grab a Day Pass</div>
+								<div class="wf-body-text" style="max-width: 560px; margin: 0 auto">
+									For families who aren't ready to commit to a membership — a one-visit option,
+									priced and sold in Rhomb.
+								</div>
+								<div class="wf-cta">Buy a Day Pass →</div>
+								<div class="path-note" style="margin-top: 8px">→ Rhomb day pass product · new tab</div>
+							</div>
+							<div class="annotation">
+								Day pass is the low-commitment entry point that often converts to a membership
+								later. Like every purchase path, it deep-links to its specific Rhomb product URL in
+								a new tab — no generic storefront landing.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Birthday Parties teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Birthday Parties Teaser</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 22px; flex-wrap: wrap">
+								<div class="img-placeholder" style="height: 140px; flex: 1; min-width: 180px">
+									<div class="img-icon">🎈</div>
+									<div class="img-label">Photo — party room</div>
+								</div>
+								<div style="flex: 2; min-width: 240px">
+									<div class="wf-heading-md">Throw the Party They'll Remember</div>
+									<div class="wf-body-text">
+										Short pitch — two party rooms, bring-your-own decorations, no-screens fun.
+										Links to the full Birthday Parties page.
+									</div>
+									<span
+										style="font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--primary); font-weight: 600"
+										>See Birthday Parties →</span
+									>
+								</div>
+							</div>
+							<div class="annotation">
+								This teaser is the only on-site link to the standalone Birthday Parties page —
+								booking still happens in Rhomb, but the dedicated page exists to hold the local-SEO
+								target, so Home points to it rather than to Rhomb directly here.
+							</div>
+							<div class="annotation" style="border-left-color: var(--accent); background: rgba(244, 169, 61, 0.07)">
+								🏷️ <strong>Tier note:</strong> shown here as a <strong>teaser</strong> for the
+								<strong>Full tier</strong> ($3,250), where it drives traffic to the dedicated
+								Birthday Parties page. In the <strong>Standard tier</strong> ($2,750) there's no
+								standalone page, so this becomes a slightly fuller party pitch that links directly
+								to the Rhomb party product. The block stays in the same spot either way.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- FAQ section -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">FAQ — Accordion</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="faq-list">
+								<div class="faq-row">
+									<span class="faq-q">How does self-service PIN entry work?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+								<div class="faq-row">
+									<span class="faq-q">Are socks required?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+								<div class="faq-row">
+									<span class="faq-q">What ages is it for?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+								<div class="faq-row">
+									<span class="faq-q">Do adults need to stay? Chaperone policy?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+								<div class="faq-row">
+									<span class="faq-q">Can we bring outside food?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+								<div class="faq-row">
+									<span class="faq-q">How do you keep it clean and safe?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+								<div class="faq-row">
+									<span class="faq-q">Are there security cameras?</span>
+									<span class="faq-toggle">+</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Accordion-style, parent-first — for an unstaffed venue the FAQ does the reassuring a
+								front desk normally would, especially the self-service PIN entry and the
+								cleanliness / safety / camera questions. Owners add and reorder Q&amp;As in the CMS
+								as new questions come in. Several answers (age cap, chaperone, outside food) are
+								deferred until after acceptance.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Footer content -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Footer</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="info-grid">
+								<div class="info-cell">
+									<strong>Contact</strong><span>Email + phone [from Allison]</span>
+								</div>
+								<div class="info-cell">
+									<strong>Hours</strong><span>[from Allison]</span>
+								</div>
+								<div class="info-cell">
+									<strong>Location</strong><span>Wisconsin Rapids, WI · serving Stevens Point &amp; Wausau</span>
+								</div>
+								<div class="info-cell">
+									<strong>Social</strong><span>Facebook / Instagram [links from Allison]</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Footer repeats contact, hours, location, and social on every screen. Naming
+								Wisconsin Rapids, Stevens Point, and Wausau here reinforces the 45-mile local-search
+								radius site-wide. Phone is tap-to-call on mobile.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 · Wisconsin Rapids, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── BIRTHDAY PARTIES ── -->
+			<section class="wf-section" id="parties">
+				<div class="section-label">
+					<span class="section-num">2</span> Birthday Parties &mdash; /birthday-parties
+					<span
+						style="font-family: 'Architects Daughter', cursive; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border: 2px solid var(--accent); border-radius: 5px; padding: 3px 12px; margin-left: 4px; white-space: nowrap"
+						>🏷️ Full Tier · $3,250</span
+					>
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Indoor Playground</div>
+						<div class="wf-nav-links">
+							<span>About</span>
+							<span>Plan Your Visit</span>
+							<span>Memberships</span>
+							<span class="active">Birthday Parties</span>
+							<span>FAQ</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Birthday Parties at [Venue Name]</div>
+							<div class="wf-subtext">
+								Stress-free birthdays in Wisconsin Rapids, Stevens Point &amp; Wausau.
+							</div>
+						</div>
+
+						<div class="annotation" style="border-left-color: var(--accent); background: rgba(244, 169, 61, 0.07); margin-top: 0; margin-bottom: 18px; font-size: 17px">
+							🏷️ <strong>This whole page is Full-tier only ($3,250).</strong> In the Standard
+							tier ($2,750) there's no standalone Parties page — the content below lives instead
+							as a richer party section on Home, linking straight to the Rhomb party product. The
+							Home wireframe is identical in both tiers; only the Home teaser swaps from a teaser
+							(Full) to a fuller pitch (Standard).
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Confirmed — Why This Page Stays Standalone</div>
+							<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+								The H1 is <strong>"Birthday Parties at [Venue Name]"</strong> and the page keeps
+								its own URL specifically to own the "birthday party Wisconsin Rapids" search
+								(plus Stevens Point and Wausau). That SEO value is the reason it survived the
+								scope cut while About / FAQ / Memberships folded into Home.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Decision — Nav Label</div>
+							<div class="wf-body-text" style="margin-bottom: 0; font-size: 17px">
+								The page H1 stays "Birthday Parties at [Venue Name]" (confirmed for SEO). The nav
+								link label is open — "Birthday Parties," "Parties," or "Events." Pick what reads
+								cleanest in the nav without losing the SEO target on the page itself.
+							</div>
+						</div>
+
+						<!-- Party overview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Party Overview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 160px; margin-bottom: 14px">
+								<div class="img-icon">🎉</div>
+								<div class="img-label">Photo — party room</div>
+							</div>
+							<div class="wf-body-text">
+								What a party here looks like — the two party rooms, the no-screens environment,
+								bring-your-own decorations at launch (no add-on packages yet), and the geo mentions
+								(Wisconsin Rapids, Stevens Point, Wausau) for local search.
+							</div>
+							<div style="text-align: center; margin-top: 6px">
+								<div class="wf-cta accent">Book Your Party →</div>
+								<div class="path-note" style="margin-top: 8px">→ Rhomb party product · new tab</div>
+							</div>
+							<div class="annotation">
+								"Book Your Party" deep-links to the Rhomb party product in a new tab. Booking itself
+								happens entirely in Rhomb — the marketing site doesn't handle it.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Waiver explainer -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">How Guest Waivers Work</div>
+							</div>
+							<div class="wf-body-text">
+								A brief, plain-English explainer: the host books the party in Rhomb, gets a
+								shareable waiver link, and each guest completes their own waiver and receives their
+								own access code by email. The host can track who's completed it.
+							</div>
+							<div class="annotation">
+								This is explanation only — the site never touches the waiver flow. It exists so
+								parents understand the process before they book, which removes a common point of
+								hesitation.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Inquiry form -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Party Inquiry Form — Questions Only</div>
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email *</div>
+									<div class="field-placeholder">you@email.com</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Your Question</div>
+									<div class="field-placeholder" style="min-height: 60px">
+										Custom requests, large groups, special needs...
+									</div>
+								</div>
+							</div>
+							<div style="margin-top: 14px">
+								<div class="wf-cta">Send Question →</div>
+							</div>
+							<div class="annotation">
+								Scoped to <strong>questions only</strong> — custom requests, large groups, special
+								needs. It is deliberately <strong>not</strong> a booking form and <strong>not</strong>
+								a waiver — Rhomb owns both. Submissions go to the owners' email.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 · Wisconsin Rapids, WI</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Scope — Two Pages</strong> — Reduced from the original pre-launch + 6-page
+									plan to a single-scroll Home and a standalone Birthday Parties page, based on
+									budget. About, FAQ, Memberships, and Plan Your Visit are now Home sections; the
+									pre-launch email capture folds into Home, which launches early in an "opening
+									soon" state.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Rhomb Is Locked</strong> — Bookings, payments, day passes, memberships, party
+									bookings, waivers, and PIN access all live in Rhomb. The marketing site links out
+									only — no embedded booking or commerce. (Rhomb vs Roller is closed.)
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Deep-Link CTAs, New Tab</strong> — Every "buy / book" button links to its
+									specific Rhomb product URL and opens in a new tab — never a generic "Book Now." The
+									marketing site stays open behind the booking.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Memberships Pitched on Home</strong> — Highest-LTV product, so it gets a
+									real value-math pitch in a Home section (not just a link). The dedicated
+									Memberships page was cut; full membership detail lives in Rhomb.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Birthday Parties Stays a Page</strong> — It's the one secondary page in
+									scope: kept standalone with H1 "Birthday Parties at [Venue Name]" to own the
+									"birthday party Wisconsin Rapids" search (plus Stevens Point and Wausau).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Party Inquiry = Questions Only</strong> — The party form handles questions
+									(custom requests, large groups, special needs). Booking and waivers stay in Rhomb.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>No Newsletter Platform</strong> — Rhomb's built-in email automations cover
+									marketing email after launch. No separate newsletter tool.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Mobile-First</strong> — Parents browse on phones late at night; the site is
+									designed phone-first.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Image-Swap-Friendly CMS</strong> — Photos go from empty build-out to
+									kids-playing post-launch with one-click replacement, no broken layouts.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Google Business Profile at Launch</strong> — Set up at launch with handoff
+									docs; the owners own it going forward — no recurring service.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Colors &amp; Fonts Not Locked</strong> — Logo and branding are in progress.
+									The navy / marigold / teal / cream palette and Fraunces + DM Sans pairing here are
+									provisional placeholders, easy to swap once the logo lands.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Copy Workflow with Pookie</strong> — Pookie leads brand voice and messaging.
+									Confirm the working split — what she delivers vs. what gets drafted and routed for
+									her and the owners' approval — so timeline and scope stay clear.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>About Story — Interview vs Client-Drafted</strong> — Jordan interviews and
+									writes, or the owners draft it. Ties into the copy-ownership question.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Birthday Parties Nav Label</strong> — "Birthday Parties," "Parties," or
+									"Events" in the nav. The page H1 stays "Birthday Parties" regardless.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Pre-Launch Email Provider</strong> — Which provider captures emails while
+									Home is in its early "opening soon" phase, before Rhomb is live?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Early-Bird Interest Field</strong> — Add an optional early-bird
+									membership / opening-week interest field to the Home email capture, or keep it to
+									email only?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Rhomb Storefront Customization Depth</strong> — How far beyond logo + name does
+									Rhomb let the storefront be branded? Affects how seamless the handoff feels. (Awaiting
+									Rhomb sales reply.)
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Domain</strong> — Owners secure the domain and hand over registrar login at
+									kickoff.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Deferred Content</strong> — Hours, day-pass &amp; membership pricing, age cap,
+									chaperone policy, outside-food rules, and owner photos all come in after acceptance.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' },
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) {
+					closeMenu();
+				} else {
+					openMenu();
+				}
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
