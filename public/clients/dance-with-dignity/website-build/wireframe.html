@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Dance with Dignity — Site Wireframe | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #16282a;
+				--primary-mid: #223c3e;
+				--accent: #4a9fd8;
+				--accent-light: rgba(74, 159, 216, 0.08);
+				--light: #f4f6f6;
+				--light-dark: #e6ebeb;
+				--mid: #5c6b6b;
+				--green: #4a8f6a;
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(22, 40, 42, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(22, 40, 42, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Sora', sans-serif;
+				font-size: 24px;
+				font-weight: 700;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(244, 246, 246, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(74, 143, 106, 0.18);
+				border: 1px solid rgba(74, 143, 106, 0.4);
+				border-radius: 6px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--green);
+				border-radius: 50%;
+			}
+
+			.status-pill span {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--green);
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(244, 246, 246, 0.45);
+				text-decoration: none;
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 3px solid transparent;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(74, 159, 216, 0.15);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 15px;
+				width: 20px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 34px;
+				right: 34px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 30px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Sora', sans-serif;
+				font-size: 48px;
+				font-weight: 800;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.12;
+			}
+
+			.doc-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 20px;
+				color: rgba(22, 40, 42, 0.55);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1.5px solid rgba(22, 40, 42, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(22, 40, 42, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(22, 40, 42, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Inter', sans-serif;
+				font-size: 17px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: #b5772f;
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+			.meta-value.flag {
+				color: var(--accent);
+			}
+
+			/* ── FLAG NOTE ── */
+			.flag-note {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				line-height: 1.55;
+				padding: 15px 22px;
+				background: var(--accent-light);
+				border-left: 4px solid rgba(74, 159, 216, 0.4);
+				border-radius: 0 6px 6px 0;
+				margin-bottom: 20px;
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 19px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(22, 40, 42, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Sora', sans-serif;
+				font-weight: 700;
+				font-size: 21px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(22, 40, 42, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.wf-nav-links span.ext {
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				line-height: 1.55;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(22, 40, 42, 0.04);
+				border-left: 4px solid rgba(22, 40, 42, 0.2);
+				border-radius: 0 6px 6px 0;
+			}
+
+			.annotation.ext-link {
+				background: var(--accent-light);
+				border-left-color: rgba(74, 159, 216, 0.5);
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: var(--accent-light);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			.ext-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: var(--accent);
+				border: 1px solid var(--accent);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(22, 40, 42, 0.18);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(244, 246, 246, 0.4);
+				scroll-margin-top: 45px;
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Sora', sans-serif;
+				font-size: 36px;
+				font-weight: 800;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.wf-heading-md {
+				font-family: 'Sora', sans-serif;
+				font-size: 25px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Sora', sans-serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-subtext {
+				font-family: 'Inter', sans-serif;
+				font-size: 20px;
+				color: rgba(22, 40, 42, 0.55);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: rgba(22, 40, 42, 0.65);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(22, 40, 42, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--primary);
+			}
+			.wf-cta.outline {
+				background: transparent;
+				border: 1.5px solid var(--light);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 20px 31px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(244, 246, 246, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(22, 40, 42, 0.07);
+				border: 2px dashed rgba(22, 40, 42, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(22, 40, 42, 0.45);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── QUICK LINKS / SERVICES GRID ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin: 20px 0;
+			}
+
+			.quick-link-card {
+				border: 2px dashed rgba(22, 40, 42, 0.2);
+				border-radius: 8px;
+				padding: 20px 17px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.quick-link-icon {
+				font-size: 28px;
+				margin-bottom: 8px;
+			}
+
+			.quick-link-label {
+				font-family: 'Sora', sans-serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.quick-link-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(22, 40, 42, 0.5);
+				line-height: 1.4;
+			}
+
+			/* ── TESTIMONIAL CARDS ── */
+			.testimonial-strip {
+				display: flex;
+				gap: 14px;
+				margin-top: 17px;
+				overflow-x: auto;
+				padding-bottom: 6px;
+			}
+
+			.testimonial-card {
+				border: 1.5px dashed rgba(22, 40, 42, 0.2);
+				border-radius: 7px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.6);
+				min-width: 220px;
+				flex: 1;
+			}
+
+			.testimonial-name {
+				font-family: 'Sora', sans-serif;
+				font-size: 16px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.testimonial-source {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: var(--green);
+				margin-bottom: 8px;
+				font-weight: 600;
+			}
+
+			.testimonial-quote {
+				font-family: 'Inter', sans-serif;
+				font-size: 16px;
+				color: rgba(22, 40, 42, 0.65);
+				font-style: italic;
+				line-height: 1.5;
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(22, 40, 42, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: rgba(22, 40, 42, 0.45);
+				margin-bottom: 6px;
+			}
+
+			.field-placeholder {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: rgba(22, 40, 42, 0.3);
+			}
+
+			/* ── SOCIAL ROW ── */
+			.social-row {
+				display: flex;
+				gap: 14px;
+				flex-wrap: wrap;
+				margin-top: 14px;
+			}
+
+			.social-chip {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				border: 1.5px dashed rgba(22, 40, 42, 0.2);
+				border-radius: 7px;
+				padding: 12px 18px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.social-icon {
+				font-size: 20px;
+			}
+
+			.social-name {
+				font-family: 'Sora', sans-serif;
+				font-size: 15px;
+				font-weight: 700;
+				color: var(--primary);
+			}
+
+			.social-handle {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: rgba(22, 40, 42, 0.5);
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Sora', sans-serif;
+				font-size: 15px;
+				font-weight: 700;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 130px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 8px;
+				margin-top: 10px;
+				flex-wrap: wrap;
+				justify-content: center;
+				max-width: 460px;
+			}
+
+			.sitemap-box.tertiary {
+				background: rgba(74, 159, 216, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--accent);
+				font-size: 13px;
+				min-width: 90px;
+				padding: 7px 12px;
+				font-weight: 600;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(22, 40, 42, 0.12);
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px;
+				margin-top: 14px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(22, 40, 42, 0.2);
+				border-radius: 8px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+			}
+
+			/* ── PALETTE SWATCHES ── */
+			.swatch-row {
+				display: flex;
+				gap: 12px;
+				flex-wrap: wrap;
+				margin-top: 12px;
+			}
+			.swatch {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+			.swatch-color {
+				width: 52px;
+				height: 52px;
+				border-radius: 8px;
+				border: 2px solid rgba(22, 40, 42, 0.15);
+			}
+			.swatch-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(22, 40, 42, 0.5);
+				text-align: center;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 45px 30px 100px;
+				}
+				.quick-links,
+				.option-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(22, 40, 42, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.option-grid,
+				.form-grid,
+				.quick-links {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 12px;
+					gap: 8px;
+				}
+				.testimonial-strip {
+					flex-direction: column;
+				}
+				.testimonial-card {
+					min-width: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Dance with Dignity</div>
+				<div class="sidebar-doctype">Site Wireframe — Single Page</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Page</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home — /</a>
+
+				<div class="nav-group-label">Sections (in-page)</div>
+				<a href="#hero" class="nav-link"><span class="nav-icon">🎧</span> Hero</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">🎙️</span> About / Bio</a>
+				<a href="#services" class="nav-link"><span class="nav-icon">💿</span> Services</a>
+				<a href="#live-request" class="nav-link"><span class="nav-icon">🔗</span> Live Request It</a>
+				<a href="#booking" class="nav-link"><span class="nav-icon">📅</span> Booking CTA</a>
+				<a href="#reviews" class="nav-link"><span class="nav-icon">⭐</span> Reviews</a>
+				<a href="#facebook-photos" class="nav-link"><span class="nav-icon">📸</span> Facebook Photos</a>
+				<a href="#footer-block" class="nav-link"><span class="nav-icon">📬</span> Footer & Socials</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframe · Content &amp; Structure</div>
+				<div class="doc-title">Dance with Dignity</div>
+				<div class="doc-sub">
+					1-Page Wedding DJ Site &nbsp;·&nbsp; Landing Page Build (Option 1 · $800–$1,200)
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Scope</span>
+						<span class="meta-value">Single page</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Ryan Bair</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Payment</span>
+						<span class="meta-value flag">50% start · 2×25% TBD</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="flag-note">
+				✏️ Layouts shown are illustrative — they communicate what content needs
+				to exist and how it should behave, not how it should be designed. Layout,
+				hierarchy, and visual treatment are in the designer's hands.
+			</div>
+
+			<!-- PROVISIONAL BRAND NOTE -->
+			<div class="flag-note" style="background: rgba(200, 130, 60, 0.08); border-left-color: rgba(200, 130, 60, 0.4);">
+				🎨 Colors and fonts below are <strong>provisional and low-confidence</strong>.
+				The palette was loosely pulled from a screenshot of Ryan's No Song Requests
+				app profile banner — that's a third-party app image, not an actual Dance
+				with Dignity brand asset. No real logo file exists yet either. Treat this
+				direction as a placeholder until Ryan provides real brand input. See
+				Discussion Checklist.
+				<div class="swatch-row">
+					<div class="swatch"><div class="swatch-color" style="background: #16282a;"></div><div class="swatch-label">Primary<br />#16282A</div></div>
+					<div class="swatch"><div class="swatch-color" style="background: #4a9fd8;"></div><div class="swatch-label">Accent<br />#4A9FD8</div></div>
+					<div class="swatch"><div class="swatch-color" style="background: #f4f6f6; border-color: rgba(22,40,42,0.3);"></div><div class="swatch-label">Light<br />#F4F6F6</div></div>
+					<div class="swatch"><div class="swatch-color" style="background: #5c6b6b;"></div><div class="swatch-label">Mid<br />#5C6B6B</div></div>
+					<div class="swatch"><div class="swatch-color" style="background: #4a8f6a;"></div><div class="swatch-label">Green<br />#4A8F6A</div></div>
+				</div>
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">Dance with Dignity</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								1 page · single scrolling landing page · custom-built, no CMS platform fees
+							</div>
+						</div>
+
+						<div class="sitemap">
+							<div class="sitemap-node">
+								<div class="sitemap-box">Home<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">/</span></div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">Hero</div>
+									<div class="sitemap-box tertiary">About</div>
+									<div class="sitemap-box tertiary">Services</div>
+									<div class="sitemap-box tertiary">Live Request It</div>
+									<div class="sitemap-box tertiary">Booking</div>
+									<div class="sitemap-box tertiary">Reviews</div>
+									<div class="sitemap-box tertiary">FB Photos</div>
+									<div class="sitemap-box tertiary">Footer</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation">
+							Everything lives on one scrolling page at dancewithdignity.com —
+							no sub-pages in this build. The boxes above are in-page anchor
+							sections, not separate URLs. Nav bar links scroll to each
+							section. "Live Request It" is the one exception — that button
+							sends visitors <em>off</em> the site to Ryan's existing No Song
+							Requests app, it isn't a section Jordan is building.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── HOME PAGE (single continuous page) ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home — /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Dance with Dignity</div>
+						<div class="wf-nav-links">
+							<span>About</span>
+							<span>Services</span>
+							<span class="ext">Live Request It ↗</span>
+							<span>Reviews</span>
+							<span>Book Now</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- HERO -->
+						<div class="wf-block" id="hero">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 220px">
+								<div class="img-icon">🎧</div>
+								<div class="img-label">
+									Hero photo — Ryan performing / DJ setup at a wedding<br />
+									No usable photo assets yet — need real shots from Ryan<br />
+									Logo mark also needed (none exists currently)
+								</div>
+							</div>
+							<div style="margin-top: 20px; text-align: center">
+								<div class="wf-heading-lg">Dance with Dignity</div>
+								<div class="wf-subtext">Making Your Night Special Since 2005</div>
+								<div style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(22, 40, 42, 0.45); margin-bottom: 14px;">DJ services by RJNAL / Ryan David</div>
+								<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+									<div class="wf-cta">Check Availability →</div>
+									<div class="wf-cta accent">Live Request It ↗</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Hero headline is the business name, "Dance with Dignity" — that's
+								what this site is for. The tagline "Making Your Night Special
+								Since 2005" runs underneath it. "RJNAL / Ryan David" — Ryan's
+								personal DJ alias — appears only as a small credit line, not the
+								headline: per client emails, RJNAL and Ryan David are separate,
+								secondary alias pages Ryan flagged as future/optional, not part
+								of this build. Photo and logo both still need to be sourced —
+								see Discussion Checklist. Two CTAs: one scrolls to Booking, one
+								is the external Live Request It link (see decision box below on
+								how prominent this should be).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- ABOUT / BIO -->
+						<div class="wf-block" id="about">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">About / Bio — Credibility</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+								<div class="img-placeholder" style="height: 140px; flex: 1; min-width: 180px;">
+									<div class="img-icon">🎙️</div>
+									<div class="img-label">Photo of Ryan — headshot or in-action shot</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">20+ Years Making Weddings Unforgettable</div>
+									<div class="wf-body-text">
+										Bio copy covering: DJing since 2005, radio background, and
+										what that experience means for a wedding crowd — reading a
+										room, keeping the night moving, handling anything live.
+										Credibility-first angle rather than a generic "about me."
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Copy is placeholder — Jordan will write the final version
+								based on a discussion with Ryan (radio background, notable
+								gigs, years active). Ryan approves the copy before it goes
+								live. If he opts into the CMS, he'll have the ability to
+								update it himself afterward. Details on the copywriting and
+								CMS process will be spelled out in the proposal.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- SERVICES -->
+						<div class="wf-block" id="services">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Services Overview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">💍</div>
+									<div class="quick-link-label">Wedding DJ</div>
+									<div class="quick-link-sub">Placeholder — Ryan to confirm exact service list</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🎤</div>
+									<div class="quick-link-label">MC Services</div>
+									<div class="quick-link-sub">Announcements, timeline, crowd engagement</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🔊</div>
+									<div class="quick-link-label">Sound &amp; Lighting</div>
+									<div class="quick-link-sub">If applicable — confirm with Ryan</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Service cards are placeholder categories based on "wedding DJ,
+								MC, etc." from the intake. Jordan will write the final list,
+								pricing tiers (if any), and descriptions based on a discussion
+								with Ryan, and Ryan approves the copy before it goes live. If
+								he opts into the CMS, he'll have the ability to add or change
+								services himself afterward. Details on the copywriting and CMS
+								process will be spelled out in the proposal.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- LIVE REQUEST IT -->
+						<div class="wf-block" id="live-request" style="border-color: rgba(74, 159, 216, 0.4);">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Live Request It — External Feature</div>
+								<span class="ext-tag">Links off-site ↗</span>
+							</div>
+							<div style="text-align: center; padding: 20px 0;">
+								<div class="wf-heading-md">Song Requests, Tips &amp; Shoutouts — Live at Your Event</div>
+								<div class="wf-body-text" style="max-width: 520px; margin: 0 auto;">
+									Guests can request songs, send tips, and drop shoutouts in
+									real time during the event using Ryan's live request app.
+									This button sends visitors to his existing No Song Requests
+									profile — it's a differentiator worth showing off, not
+									something to bury.
+								</div>
+								<div class="wf-cta accent">Live Request It ↗</div>
+							</div>
+							<div class="annotation ext-link">
+								🔗 <strong>This links externally</strong> to
+								app.nosongrequests.com/RJNAL — a third-party live-event tool
+								Ryan already uses at gigs. Jordan is not rebuilding song
+								request/tip functionality on the new site — this is a clearly
+								labeled outbound button, not on-site content. Should open in a
+								new tab.
+							</div>
+							<div class="decision-box">
+								<div class="decision-label">Option A / B — Placement Prominence</div>
+								<div class="option-grid">
+									<div class="option-card">
+										<div class="option-label">Option A</div>
+										<div class="wf-body-text" style="font-size: 16px; margin-bottom: 0;">
+											Hero-level CTA — shown as one of the two primary buttons
+											at the top of the page, right next to "Check
+											Availability." Treats it as a headline differentiator
+											for prospective clients evaluating DJs.
+										</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option B</div>
+										<div class="wf-body-text" style="font-size: 16px; margin-bottom: 0;">
+											Secondary nav / footer link only — present but lower
+											priority, since it's mainly useful to guests <em>during</em>
+											an event Ryan is already booked for, not to couples
+											deciding whether to hire him.
+										</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top: 14px;">
+									Depends on whether this is meant to win new bookings or
+									serve guests at events already booked. Wireframe currently
+									shows Option A (hero-level) — flag for discussion.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- BOOKING CTA -->
+						<div class="wf-block" id="booking">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Booking / Contact Form</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Simple form to get the conversation started — not a full
+								booking/payment flow in this build.
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email *</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Phone Number</div>
+									<div class="field-placeholder">(###) ###-####</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Event Date</div>
+									<div class="field-placeholder">MM / DD / YYYY</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Tell Ryan About Your Event</div>
+									<div class="field-placeholder" style="min-height: 60px;">Venue, guest count, vibe, anything else...</div>
+								</div>
+							</div>
+							<div style="margin-top: 16px;">
+								<div class="wf-cta">Send Inquiry →</div>
+							</div>
+							<div class="annotation">
+								Submissions email straight to Ryan — no login, no dashboard,
+								no monthly software fee. Name, email required; phone and event
+								date optional but recommended. Server-side validation backs up
+								client-side.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- REVIEWS -->
+						<div class="wf-block" id="reviews">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Reviews / Testimonials</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-strip">
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-source">Google Review</div>
+									<div class="testimonial-quote">Review quote transcribed from a Google review — placeholder text.</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-source">Thank-You Card</div>
+									<div class="testimonial-quote">Review quote transcribed from a handwritten thank-you card — placeholder text.</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Client Name</div>
+									<div class="testimonial-source">Google Review</div>
+									<div class="testimonial-quote">Review quote transcribed from a Google review — placeholder text.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Scrolling/horizontal testimonial strip. Reviews go in through
+								the CMS if Ryan opts into one — otherwise Jordan places them
+								directly in the site during build. No live Google
+								widget/API pull — content comes from Ryan's actual Google
+								reviews and thank-you cards, which Ryan transcribes and hands
+								off as text.
+							</div>
+							<div class="annotation" style="background: rgba(200, 130, 60, 0.08); border-left-color: rgba(200, 130, 60, 0.4);">
+								⚑ Flag: some Google reviews or thank-you card quotes may run
+								long. Long-form quotes could need truncation, a "read more"
+								treatment, or a length cap — worth checking once Ryan's actual
+								reviews are in hand.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- FACEBOOK / PHOTO GALLERY -->
+						<div class="wf-block" id="facebook-photos">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Facebook Photos / Gallery</div>
+							</div>
+							<div class="wf-body-text">
+								Two ways to handle event photos on the site — see options
+								below. Which one gets built is optional and confirmed in the
+								proposal, not decided here.
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Option 01 / 02 — Photo Presentation</div>
+								<div class="option-grid" style="grid-template-columns: 1fr;">
+									<div class="option-card">
+										<div class="option-label">Option 01 — Facebook Link Only</div>
+										<div class="quick-links" style="grid-template-columns: 1fr; margin: 0 0 10px;">
+											<div class="quick-link-card" style="text-align: left; display: flex; align-items: center; gap: 16px;">
+												<div class="quick-link-icon" style="margin-bottom: 0;">📸</div>
+												<div>
+													<div class="quick-link-label">See More Photos on Facebook</div>
+													<div class="quick-link-sub">facebook.com/dancewithdignity</div>
+												</div>
+											</div>
+										</div>
+										<div class="wf-body-text" style="font-size: 16px; margin-bottom: 0;">
+											A single outbound card/button pointing to Ryan's
+											Facebook page, where his event photos already live.
+											Opens in a new tab. No photos hosted on-site.
+										</div>
+									</div>
+									<div class="option-card">
+										<div class="option-label">Option 02 — Curated Scrolling Gallery</div>
+										<div class="wf-body-text" style="font-size: 16px; margin-bottom: 0;">
+											8–12 curated photos hosted on-site in a horizontal
+											scrolling gallery, pulled from Ryan's best event
+											shots. Requires Ryan to supply the photos.
+										</div>
+									</div>
+								</div>
+								<div class="annotation" style="margin-top: 14px;">
+									Option 02 is optional, not part of the base build — pricing
+									and scope for the on-site gallery are covered in the
+									proposal. Option 01 (Facebook link) is the default if the
+									gallery add-on isn't selected or photos aren't ready in
+									time.
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- FOOTER / SOCIALS BLOCK -->
+						<div class="wf-block" id="footer-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Info &amp; Socials</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Footer contact block: email, phone (if Ryan wants it public),
+								and social links.
+							</div>
+							<div class="social-row">
+								<div class="social-chip">
+									<span class="social-icon">📘</span>
+									<div>
+										<div class="social-name">Facebook</div>
+										<div class="social-handle">/dancewithdignity</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Facebook is the only social account confirmed in client
+								communication — Ryan specifically asked for a link to his
+								Facebook photos page. Footer also repeats the booking CTA and
+								contact email — standard end-of-page pattern.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Dance with Dignity · dancewithdignity.com</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Single-Page Scope</strong> — Option 1 from the
+									pre-proposal ($800–$1,200). One scrolling home page, no
+									sub-pages in this build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Custom-Built, No Monthly Fees</strong> — Not
+									WordPress, not a template. Ryan owns the site outright.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Client Owns Everything</strong> — No ongoing platform
+									costs tied to Jordan.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Payment Milestones</strong> — 50% to get started, then
+									two 25% payments (exact milestones TBD).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Live Request It Is a Link, Not a Rebuild</strong> —
+									No Song Requests functionality stays on the third-party app;
+									the new site only links out to it.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Confirmed Social Link — Facebook</strong> — Facebook
+									(facebook.com/dancewithdignity) is the one confirmed social
+									link, per Ryan's request for a photos page link. Instagram,
+									Mixcloud, and SoundCloud are not confirmed — see Discussion
+									Checklist.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Brand Fonts &amp; Colors Not Locked</strong> — Palette
+									shown is a rough guess pulled from a third-party app banner
+									screenshot, not an actual Dance with Dignity brand asset.
+									Fonts (Sora / Inter) are placeholder choices. Needs real
+									brand direction from Ryan.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>No Usable Logo File Exists</strong> — Needs to be
+									sourced from Ryan or created from scratch as part of this
+									project.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Photo Assets Needed</strong> — No real photos on hand
+									yet for hero, bio, or event shots. Ryan needs to supply
+									these before final build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Live Request It — How Prominent?</strong> — Is this a
+									headline differentiator for booking new clients, or a minor
+									convenience mostly used at events he's already booked? See
+									decision box in Live Request It section.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Confirm Other Social Accounts</strong> — Ryan should
+									confirm whether he has active Instagram, Mixcloud, or
+									SoundCloud accounts he wants linked. Don't assume these
+									exist — pull real handles directly from Ryan before
+									including them in the build. Only Facebook is confirmed
+									today.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Photo Presentation — Option 01 vs. 02</strong> —
+									Facebook link only (Option 01, default) vs. a curated
+									on-site scrolling gallery of 8–12 images (Option 02,
+									optional add-on — requires Ryan to supply photos). Pricing
+									and scope for Option 02 are covered in the proposal.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Domain / Redirect Strategy</strong> —
+									dancewithdignity.com is the live domain; Ryan also owns the
+									.net. Need to confirm redirect setup (.net → .com) at launch.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Future Add-Ons (Not This Build)</strong> — À la carte
+									possibilities to flag for later: separate RJNAL / Ryan David
+									alias pages, location-specific landing pages, and a blog.
+									Good upsell path once the core site is live.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('.wf-section[id], .wf-block[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
