@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Log Homes — Update Checklist</title>
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --off-white: #f7f9fa;
+    --gray-200: #e2e8f0;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--off-white);
+    color: var(--gray-800);
+    line-height: 1.5;
+    padding: 40px 20px 80px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .header {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: white;
+  }
+  .header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .header .sub { font-size: 14px; color: rgba(255,255,255,0.65); }
+
+  .progress-bar-track {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    height: 8px;
+    margin-top: 18px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    background: var(--teal);
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    transition: width 0.25s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 8px;
+  }
+
+  .section {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-note {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 14px;
+  }
+  .section-note.waiting {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #7a5f00;
+  }
+
+  ul.items { list-style: none; }
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .item:hover { background: var(--teal-light); }
+
+  .item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-200);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+    position: relative;
+    background: white;
+    transition: all 0.15s;
+  }
+  .item input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .item label {
+    font-size: 14px;
+    color: var(--gray-800);
+    cursor: pointer;
+    flex: 1;
+  }
+  .item.checked label {
+    color: var(--gray-600);
+    text-decoration: line-through;
+    text-decoration-color: var(--green);
+  }
+
+  .item .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag-new { background: var(--teal-light); color: var(--teal); }
+  .tag-wait { background: #fffef0; color: #a07d00; border: 1px solid #e6d96b; }
+  .tag-out { background: #fef2f2; color: #dc2626; }
+  .tag-bonus { background: #fff7ed; color: var(--orange); }
+
+  .reset-btn {
+    display: block;
+    margin: 30px auto 0;
+    background: none;
+    border: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .reset-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--gray-600);
+    margin-top: 30px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="eyebrow">Latz Web Design · Classic Log Homes</div>
+    <h1>Site Update Checklist</h1>
+    <div class="sub">From Jeff's 7/7 emails — work through this on the live preview this week</div>
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 of 0 complete</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📦 Package Contents Copy <span class="tag tag-new">Home + Every Plan Page</span></div>
+    <div class="section-note">Applies wherever this list appears — home page "What We Ship" block AND "Included in your package" on every floor plan detail page.</div>
+    <ul class="items" data-section="package">
+      <li class="item"><input type="checkbox" id="pkg1"><label for="pkg1">Remove "numbered" from log wall description — logs are <strong>not</strong> numbered</label></li>
+      <li class="item"><input type="checkbox" id="pkg2"><label for="pkg2">Change "Roof system (trusses or rafters)" → <strong>"Log and timber roof components"</strong></label></li>
+      <li class="item"><input type="checkbox" id="pkg3"><label for="pkg3">Change "Fasteners, hardware, and spikes" → <strong>"Log screws, hardware, and PVC tape"</strong></label></li>
+      <li class="item"><input type="checkbox" id="pkg4"><label for="pkg4">Change "Heavy timber floor joists" → <strong>"Heavy log or timber floor joists"</strong></label></li>
+      <li class="item"><input type="checkbox" id="pkg5"><label for="pkg5">Change "Gable-end logs or log siding" → <strong>"Full log gables with detailed instructions, or log siding option"</strong></label></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🔢 Years-in-Business Consistency <span class="tag tag-wait">Waiting on Jeff</span></div>
+    <ul class="items" data-section="years">
+      <li class="item"><input type="checkbox" id="yr1"><label for="yr1">Replace "50+ years" (Support section) with the correct, agreed figure</label></li>
+      <li class="item"><input type="checkbox" id="yr2"><label for="yr2">Pick one consistent phrasing site-wide, e.g. "22+ years in the log home business, 43 years across all phases of construction"</label></li>
+      <li class="item"><input type="checkbox" id="yr3"><label for="yr3">Check: hero trust strip, Four Pillars Bar, How We're Built, Support section, footer</label></li>
+    </ul>
+    <div class="section-note waiting">⚑ Waiting on Jeff to confirm exact framing before finalizing</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🛠️ How It Works — Rework Steps</div>
+    <ul class="items" data-section="process">
+      <li class="item"><input type="checkbox" id="proc1"><label for="proc1">Step 1: Choose log style and size (full or half logs) <span class="tag tag-new">New</span></label></li>
+      <li class="item"><input type="checkbox" id="proc2"><label for="proc2">Step 2: Ballpark quote/cost for plans based on their dream cabin or log home</label></li>
+      <li class="item"><input type="checkbox" id="proc3"><label for="proc3">Step 3: Once plan is final — submit request for logs/timbers needed</label></li>
+    </ul>
+    <div class="section-note">Note: skip building anything for "detailed Purchase Agreement emailed" — that's an after/Phase 2 item, not going in now.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📋 Deliverables to Add</div>
+    <ul class="items" data-section="deliverables">
+      <li class="item"><input type="checkbox" id="del1"><label for="del1">Construction drawings — mention settling details specifically</label></li>
+      <li class="item"><input type="checkbox" id="del2"><label for="del2">Window/door schedule</label></li>
+      <li class="item"><input type="checkbox" id="del3"><label for="del3">3D images</label></li>
+      <li class="item"><input type="checkbox" id="del4"><label for="del4">"3D print of your home — coming soon" (teaser line, no build needed)</label></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">💬 Text-First Contact Push</div>
+    <ul class="items" data-section="text">
+      <li class="item"><input type="checkbox" id="txt1"><label for="txt1">Update primary CTA copy to lead with text, not call (e.g. "Text your name to (715) 887-2550 to get started")</label></li>
+      <li class="item"><input type="checkbox" id="txt2"><label for="txt2">Add <code>sms:</code> click-to-text links alongside existing <code>tel:</code> click-to-call — hero, Support section, Ready to Get Started component</label></li>
+      <li class="item"><input type="checkbox" id="txt3"><label for="txt3">Update contact form intro copy to encourage a quick text with name to kick off the conversation</label></li>
+      <li class="item"><input type="checkbox" id="txt4"><label for="txt4">Confirm GA4 event fires for text clicks same as call clicks</label></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🦅 Header / Nav / Logo</div>
+    <ul class="items" data-section="header">
+      <li class="item"><input type="checkbox" id="hdr1"><label for="hdr1">Confirm sticky/floating navbar on scroll (should already be built — verify only)</label></li>
+      <li class="item"><input type="checkbox" id="hdr2"><label for="hdr2">Tagline "Design Through Completion" — flag with Jeff, leans "turnkey builder," conflicts with supplier-coach positioning <span class="tag tag-wait">Discuss on call</span></label></li>
+      <li class="item"><input type="checkbox" id="hdr3"><label for="hdr3">Logo/eagle — <strong>out of scope this round</strong>, addressed in email reply. No action unless Jeff sends AI art to work with <span class="tag tag-out">Out of Scope</span></label></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⏳ Still Waiting on Jeff</div>
+    <ul class="items" data-section="waiting">
+      <li class="item"><input type="checkbox" id="wait1"><label for="wait1">Final years-in-business framing</label></li>
+      <li class="item"><input type="checkbox" id="wait2"><label for="wait2">"Heavy log/timber (option 1)" — his own note flagged as incomplete, needs more detail from him</label></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🔍 Bonus — Noticed While Reviewing <span class="tag tag-bonus">Your Own QA</span></div>
+    <div class="section-note">Not from Jeff — caught these while reviewing the live site.</div>
+    <ul class="items" data-section="bonus">
+      <li class="item"><input type="checkbox" id="bon1"><label for="bon1">Featured Floor Plans section currently shows 3 duplicate "The Sportsman" cards — needs real plan variety before launch</label></li>
+      <li class="item"><input type="checkbox" id="bon2"><label for="bon2">Floor plan detail page "About This Plan" section still has wireframe placeholder/instructional text live — needs real plan copy</label></li>
+    </ul>
+  </div>
+
+  <button class="reset-btn" id="resetBtn">Reset all checkmarks</button>
+  <div class="footer-note">Progress saves automatically in this browser · Latz Web Design</div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = 'clh-update-checklist-v1';
+  const checkboxes = document.querySelectorAll('.item input[type="checkbox"]');
+
+  function loadState() {
+    let state = {};
+    try {
+      state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) { state = {}; }
+    checkboxes.forEach(cb => {
+      if (state[cb.id]) {
+        cb.checked = true;
+        cb.closest('.item').classList.add('checked');
+      }
+    });
+    updateProgress();
+  }
+
+  function saveState() {
+    const state = {};
+    checkboxes.forEach(cb => { state[cb.id] = cb.checked; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function updateProgress() {
+    const total = checkboxes.length;
+    const done = Array.from(checkboxes).filter(cb => cb.checked).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' of ' + total + ' complete';
+  }
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      cb.closest('.item').classList.toggle('checked', cb.checked);
+      saveState();
+      updateProgress();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('Reset all checkmarks?')) {
+      checkboxes.forEach(cb => {
+        cb.checked = false;
+        cb.closest('.item').classList.remove('checked');
+      });
+      saveState();
+      updateProgress();
+    }
+  });
+
+  loadState();
+</script>
+
+</body>
+</html>
