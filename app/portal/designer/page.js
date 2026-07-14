@@ -34,11 +34,10 @@ export default async function DesignerPortalIndex() {
 			{handoffClients?.length > 0 && (
 				<div className='mt-16 pt-8 border-t border-white/10'>
 					<p className='font-mono text-sm lg:text-base tracking-widest uppercase mb-2 text-white/50'>
-						Build In Progress
+						Awaiting Client / In Build
 					</p>
 					<p className='text-sm lg:text-base text-white/75 mb-6'>
-						Design is complete on these — they are being built or awaiting
-						client feedback.{' '}
+						{`These are moving forward outside the design phase — either waiting on the client to respond (feedback, direction choice, approval) or in active development. No design action needed unless you're flagged directly.`}
 						<span className='text-warning/75 font-semibold font-mono'>No action needed.</span>
 					</p>
 					<ClientProjectList
