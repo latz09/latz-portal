@@ -38,7 +38,7 @@ export default async function DesignerPortalIndex() {
 					</p>
 					<p className='text-sm lg:text-base text-white/75 mb-6'>
 						{`These are moving forward outside the design phase — either waiting on the client to respond (feedback, direction choice, approval) or in active development. No design action needed unless you're flagged directly.`}
-						<span className='text-warning/75 font-semibold font-mono'>No action needed.</span>
+						
 					</p>
 					<ClientProjectList
 						variant='designer'
