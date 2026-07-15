@@ -1,0 +1,1878 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Redevelopment Resources — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Libre+Franklin:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--navy: #1c2b3a;
+				--navy-dark: #0f1a24;
+				--navy-mid: #2a3f52;
+				--red: #9c3b2e;
+				--red-light: rgba(156, 59, 46, 0.08);
+				--tan: #f0e9dc;
+				--tan-dark: #e3d8c3;
+				--tan-mid: #e8dfc9;
+				--green: #4a6741;
+				--green-light: rgba(74, 103, 65, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+				background: var(--tan);
+				background-image:
+					linear-gradient(rgba(28, 43, 58, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(28, 43, 58, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--navy);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--navy);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--navy-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 22px;
+				font-weight: 800;
+				color: var(--tan);
+				line-height: 1.2;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(240, 233, 220, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 16px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(74, 103, 65, 0.2);
+				border: 1px solid rgba(74, 103, 65, 0.4);
+				border-radius: 5px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: #6fae5e;
+				border-radius: 50%;
+			}
+
+			.status-pill span {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: #4a6741;
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(240, 233, 220, 0.45);
+				text-decoration: none;
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 3px solid transparent;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: var(--tan);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--tan);
+				background: rgba(156, 59, 46, 0.15);
+				border-left-color: var(--red);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 34px;
+				right: 34px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--red);
+				color: var(--tan);
+				border: none;
+				font-size: 31px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--red);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 48px;
+				font-weight: 800;
+				color: var(--navy);
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 20px;
+				color: rgba(28, 43, 58, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1.5px solid rgba(28, 43, 58, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(28, 43, 58, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(28, 43, 58, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Inter', sans-serif;
+				font-size: 17px;
+				font-weight: 500;
+				color: var(--navy);
+			}
+
+			.meta-value.warn { color: var(--red); }
+			.meta-value.ok { color: var(--green); }
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--navy);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--navy);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--navy);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(28, 43, 58, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 2px solid var(--navy);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Libre Franklin', sans-serif;
+				font-weight: 800;
+				font-size: 18px;
+				color: var(--navy);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(28, 43, 58, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--navy);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--navy);
+				line-height: 1.5;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(28, 43, 58, 0.04);
+				border-left: 4px solid rgba(28, 43, 58, 0.2);
+				border-radius: 0 6px 6px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 3px dashed var(--red);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: rgba(156, 59, 46, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--red);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── PROVISIONAL TAG ── */
+			.prov-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--red);
+				border: 1px dashed var(--red);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(240, 233, 220, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 11px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 36px;
+				font-weight: 800;
+				color: var(--navy);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 25px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+
+			.wf-subtext {
+				font-family: 'Inter', sans-serif;
+				font-size: 20px;
+				color: rgba(28, 43, 58, 0.5);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: rgba(28, 43, 58, 0.6);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(28, 43, 58, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--red);
+				color: var(--tan);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--navy);
+				padding: 20px 31px;
+				background: var(--navy);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(240, 233, 220, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(28, 43, 58, 0.07);
+				border: 2px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--navy);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(28, 43, 58, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── STAT BAR ── */
+			.stat-bar {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 14px;
+				margin-top: 10px;
+			}
+			.stat-card {
+				border: 1.5px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 7px;
+				padding: 16px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+			.stat-num {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 28px;
+				font-weight: 800;
+				color: var(--navy);
+			}
+			.stat-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(28, 43, 58, 0.5);
+				margin-top: 4px;
+			}
+
+			/* ── SERVICE / QUICK LINKS GRID ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin: 20px 0;
+			}
+
+			.quick-link-card {
+				border: 2px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 8px;
+				padding: 20px 17px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.quick-link-icon {
+				font-size: 28px;
+				margin-bottom: 8px;
+			}
+
+			.quick-link-label {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--navy);
+			}
+
+			.quick-link-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: rgba(28, 43, 58, 0.5);
+				margin-top: 4px;
+			}
+
+			/* ── SERVE GRID (public/private sector) ── */
+			.serve-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px;
+				margin-top: 14px;
+			}
+			.serve-card {
+				border: 2px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 8px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.55);
+			}
+			.serve-card-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--red);
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				margin-bottom: 8px;
+			}
+
+			/* ── SUB-SERVICE LIST ── */
+			.subservice-list {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				margin-top: 12px;
+			}
+			.subservice-row {
+				border: 1.5px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 6px;
+				padding: 13px 17px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+			.subservice-name {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 3px;
+			}
+			.subservice-desc {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(28, 43, 58, 0.55);
+			}
+
+			/* ── PROJECT TABLE ── */
+			.project-table {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				margin-top: 14px;
+			}
+			.project-row {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				border: 1.5px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 6px;
+				padding: 11px 17px;
+				background: rgba(255, 255, 255, 0.6);
+				flex-wrap: wrap;
+			}
+			.project-badge {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12px;
+				background: rgba(28, 43, 58, 0.08);
+				color: var(--navy);
+				border-radius: 4px;
+				padding: 5px 10px;
+				font-weight: 700;
+				white-space: nowrap;
+			}
+			.project-info {
+				flex: 1;
+				min-width: 160px;
+			}
+			.project-name {
+				font-family: 'Inter', sans-serif;
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--navy);
+			}
+			.project-meta {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				color: rgba(28, 43, 58, 0.45);
+			}
+			.project-row.more-row {
+				opacity: 0.55;
+				justify-content: center;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+			}
+
+			/* ── TESTIMONIAL CARDS ── */
+			.testimonial-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin-top: 17px;
+			}
+			.testimonial-card {
+				border: 1.5px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 7px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+			.testimonial-name {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 6px;
+			}
+			.testimonial-quote {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(28, 43, 58, 0.6);
+				font-style: italic;
+				line-height: 1.5;
+			}
+
+			/* ── FLAGSHIP CALLOUT ── */
+			.flagship-box {
+				border: 3px solid var(--red);
+				border-radius: 8px;
+				padding: 22px;
+				margin: 20px 0;
+				background: rgba(156, 59, 46, 0.05);
+				display: flex;
+				gap: 20px;
+				flex-wrap: wrap;
+			}
+			.flagship-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--red);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin-bottom: 8px;
+				display: block;
+			}
+
+			/* ── SERVICE REFERENCE CARD (condensed service pages) ── */
+			.service-ref-card {
+				border: 2px dashed rgba(28, 43, 58, 0.3);
+				border-radius: 8px;
+				padding: 28px 31px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+			.service-ref-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 11px;
+				margin-bottom: 6px;
+			}
+			.service-ref-meta {
+				font-family: 'Inter', sans-serif;
+				font-size: 17px;
+				color: rgba(28, 43, 58, 0.7);
+				line-height: 1.7;
+				margin-top: 10px;
+			}
+			.service-ref-meta strong {
+				color: var(--navy);
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+			.form-field {
+				border: 1.5px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+			.form-field.full { grid-column: 1 / -1; }
+			.field-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(28, 43, 58, 0.4);
+				margin-bottom: 6px;
+			}
+			.field-placeholder {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: rgba(28, 43, 58, 0.3);
+			}
+
+			/* ── BOARD/TEAM GRID ── */
+			.board-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin-top: 17px;
+			}
+			.board-card {
+				border: 1.5px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 7px;
+				padding: 17px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+			.board-name {
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--navy);
+				margin-bottom: 4px;
+			}
+			.board-role {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(28, 43, 58, 0.5);
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--navy);
+				color: var(--tan);
+				font-family: 'Libre Franklin', sans-serif;
+				font-size: 16px;
+				font-weight: 700;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 120px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(28, 43, 58, 0.1);
+				color: var(--navy);
+				border: 1.5px dashed var(--navy);
+			}
+
+			.sitemap-box.tertiary {
+				background: rgba(156, 59, 46, 0.1);
+				color: var(--navy);
+				border: 1.5px dashed var(--red);
+				font-size: 13px;
+				min-width: 90px;
+				padding: 7px 12px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25px;
+				color: rgba(28, 43, 58, 0.3);
+				padding: 0 11px;
+				align-self: center;
+				margin-top: -20px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 8px;
+				margin-top: 8px;
+				max-width: 220px;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist { list-style: none; padding: 0; }
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(28, 43, 58, 0.12);
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: var(--navy);
+			}
+
+			.check-item:last-child { border-bottom: none; }
+			.check-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px;
+				margin-top: 14px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(28, 43, 58, 0.2);
+				border-radius: 8px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--red);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root { --sidebar-w: 280px; }
+				.main { padding: 45px 34px 112px; }
+				.quick-links, .board-grid, .testimonial-grid, .stat-bar { grid-template-columns: repeat(2, 1fr); }
+			}
+
+			@media (max-width: 680px) {
+				.sidebar { transform: translateX(-100%); }
+				.sidebar.mobile-open { transform: translateX(0); }
+				.sidebar-overlay { display: block; }
+				.mobile-fab { display: flex; }
+				.main { margin-left: 0; padding: 34px 22px 112px; }
+				.doc-title { font-size: 34px; }
+				.doc-meta-strip { flex-direction: column; width: 100%; }
+				.meta-item { border-right: none; border-bottom: 1px solid rgba(28, 43, 58, 0.1); }
+				.meta-item:last-child { border-bottom: none; }
+				.wf-nav-links { display: none; }
+				.wf-nav { padding: 14px 20px; }
+				.wf-body { padding: 28px 22px 39px; }
+				.option-grid, .form-grid, .quick-links, .board-grid, .testimonial-grid, .serve-grid, .stat-bar {
+					grid-template-columns: 1fr;
+				}
+				.sitemap { flex-direction: column; align-items: center; }
+				.sitemap-arrow { transform: rotate(90deg); margin: 0; padding: 6px 0; }
+				.sitemap-children { flex-direction: column; align-items: center; }
+				.wf-footer { flex-direction: column; text-align: center; gap: 6px; }
+				.check-item { font-size: 16px; gap: 11px; }
+				.project-row { flex-direction: column; align-items: flex-start; }
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Redevelopment Resources</div>
+				<div class="sidebar-doctype">Site Wireframes — Rebuild</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#who-we-serve" class="nav-link"><span class="nav-icon">🤝</span> Who We Serve</a>
+				<a href="#analysis" class="nav-link"><span class="nav-icon">📊</span> Analysis</a>
+				<a href="#strategy" class="nav-link"><span class="nav-icon">🧭</span> Strategy</a>
+				<a href="#redevelopment" class="nav-link"><span class="nav-icon">🏚️</span> Redevelopment</a>
+				<a href="#financing" class="nav-link"><span class="nav-icon">💰</span> Financing</a>
+				<a href="#implementation" class="nav-link"><span class="nav-icon">🛠️</span> Implementation</a>
+				<a href="#our-projects" class="nav-link"><span class="nav-icon">🏆</span> Our Projects</a>
+				<a href="#who-we-are" class="nav-link"><span class="nav-icon">👥</span> Who We Are</a>
+				<a href="#contact-us" class="nav-link"><span class="nav-icon">📬</span> Contact Us</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Redevelopment Resources</div>
+				<div class="doc-sub">
+					Full-Site Rebuild &nbsp;·&nbsp; IA Restructure + Case Study System + CMS
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">10 page types</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Kristen Fish-Peterson</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Brand Colors</span>
+						<span class="meta-value warn">Provisional</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 56px; font-size: 18px; padding: 17px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands. Colors and fonts used throughout this wireframe are provisional placeholders — see meta strip and discussion checklist.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">Redevelopment Resources</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								10 page types · corrected IA · Services becomes a real dropdown, not a mislabeled "Our Projects"
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 8px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box">Home<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">/</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Who We Serve<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">/who-we-serve</span></div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">Public Sector</div>
+									<div class="sitemap-box tertiary">Private Sector</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Services ▾<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">dropdown</span></div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">Analysis</div>
+									<div class="sitemap-box tertiary">Strategy</div>
+									<div class="sitemap-box tertiary">Redevelopment</div>
+									<div class="sitemap-box tertiary">Financing</div>
+									<div class="sitemap-box tertiary">Implementation</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Our Projects<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">/our-projects</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Who We Are<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">/who-we-are</span></div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">Contact Us<br /><span style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7;">/contact-us</span></div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 28px">
+							Same domain throughout. "Services" is corrected from its current mislabeled placement under "Our Projects" — it becomes its own nav dropdown revealing Analysis, Strategy, Redevelopment, Financing, and Implementation, each a real page with its own identity. "Our Projects" becomes the actual case-study destination, curated from project rows across all five service pages plus the site's testimonials. Who We Serve is shown here as a single hub with two sub-sections — see the Option A/B decision on that page for the alternative (4 separate pages, matching the current live structure).
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label"><span class="section-num">1</span> Home Page &mdash; /</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 250px">
+								<div class="img-icon">🏛️</div>
+								<div class="img-label">Hero image — redevelopment project, downtown streetscape, or team photo</div>
+							</div>
+							<div style="margin-top: 20px; text-align: center">
+								<div class="wf-heading-lg">Redevelopment Resources</div>
+								<div class="wf-subtext">Economic development consulting for municipalities, organizations, and private developers.</div>
+								<div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+									<div class="wf-cta">See Our Services →</div>
+									<div class="wf-cta accent">View Our Work →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Hero headline and subhead are CMS-editable. Two primary CTAs point to Services and Our Projects — the two things a first-time visitor most needs to find.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Stats bar -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">By the Numbers</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="stat-bar">
+								<div class="stat-card"><div class="stat-num">[X]</div><div class="stat-label">Projects Completed</div></div>
+								<div class="stat-card"><div class="stat-num">[X]</div><div class="stat-label">Communities Served</div></div>
+								<div class="stat-card"><div class="stat-num">[X]</div><div class="stat-label">Years of Combined Experience</div></div>
+								<div class="stat-card"><div class="stat-num">[X]</div><div class="stat-label">Market &amp; Site Studies</div></div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Services quick links -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Services Overview</div>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card"><div class="quick-link-icon">📊</div><div class="quick-link-label">Analysis</div><div class="quick-link-sub">Market, fiscal &amp; site studies</div></div>
+								<div class="quick-link-card"><div class="quick-link-icon">🧭</div><div class="quick-link-label">Strategy</div><div class="quick-link-sub">Organizational &amp; planning</div></div>
+								<div class="quick-link-card"><div class="quick-link-icon">🏚️</div><div class="quick-link-label">Redevelopment</div><div class="quick-link-sub">Blighted building reuse</div></div>
+								<div class="quick-link-card"><div class="quick-link-icon">💰</div><div class="quick-link-label">Financing</div><div class="quick-link-sub">TIF, grants &amp; deal structure</div></div>
+								<div class="quick-link-card"><div class="quick-link-icon">🛠️</div><div class="quick-link-label">Implementation</div><div class="quick-link-sub">Grant &amp; loan administration</div></div>
+							</div>
+							<div class="annotation">
+								Five cards, one per service page — this is the corrected structure replacing the current mislabeled "Our Projects" nav item. Each card links directly to its service page. Content pulled from CMS so descriptions can be refined without a developer.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Who we serve teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Who We Serve — Teaser</div>
+							</div>
+							<div class="serve-grid">
+								<div class="serve-card"><div class="serve-card-label">Public Sector</div><div class="wf-body-text" style="margin-bottom: 0;">Municipalities and organizations navigating growth, blight, and planning decisions.</div></div>
+								<div class="serve-card"><div class="serve-card-label">Private Sector</div><div class="wf-body-text" style="margin-bottom: 0;">Entrepreneurs and private developers bringing a project or property to life.</div></div>
+							</div>
+							<div class="annotation">
+								Short teaser linking to the full Who We Serve page. Copy is a summary — full detail lives on that page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Testimonial preview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Client Feedback — Preview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-grid">
+								<div class="testimonial-card"><div class="testimonial-name">Fitchburg, WI</div><div class="testimonial-quote">Placeholder pull-quote from the client testimonial.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">Elkhorn, WI</div><div class="testimonial-quote">Placeholder pull-quote from the client testimonial.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">Stevens Point, WI</div><div class="testimonial-quote">Placeholder pull-quote from the client testimonial.</div></div>
+							</div>
+							<div style="margin-top: 12px; text-align: center;">
+								<span style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--navy); font-weight: 600;">See All Client Stories →</span>
+							</div>
+							<div class="annotation">
+								Currently all 12 full testimonials sit in one unstructured wall on the homepage. This section instead shows a curated preview of 3 and links out to the full Our Projects / Case Studies page, where all 12 named testimonials (Fitchburg, Sheboygan, Elkhorn, Stevens Point, West Bend, Thompson ND, Kewaunee, Pulaski, Merrill, Erie County NY, Baraboo, Colorado Springs) live properly organized.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: WHO WE SERVE ── -->
+			<section class="wf-section" id="who-we-serve">
+				<div class="section-label"><span class="section-num">2</span> Who We Serve &mdash; /who-we-serve</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Who We Serve</div>
+							<div class="wf-subtext">Public and private sector partners, working toward the same goal: communities that thrive.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Public Sector</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="serve-grid">
+								<div class="serve-card"><div class="serve-card-label">Municipalities</div><div class="wf-body-text" style="margin-bottom: 0;">Villages, cities, and counties working through planning, redevelopment, and financing decisions.</div></div>
+								<div class="serve-card"><div class="serve-card-label">Organizations</div><div class="wf-body-text" style="margin-bottom: 0;">Economic development corporations, chambers, and regional partnerships.</div></div>
+							</div>
+							<div class="annotation">
+								Each sub-section names the audience, describes the kind of work Redevelopment Resources does for them, and links to the relevant service pages. CMS-managed so descriptions can be refreshed as the client base evolves.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Private Sector</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="serve-grid">
+								<div class="serve-card"><div class="serve-card-label">Entrepreneurs</div><div class="wf-body-text" style="margin-bottom: 0;">Business owners looking to open, expand, or relocate.</div></div>
+								<div class="serve-card"><div class="serve-card-label">Private Developers</div><div class="wf-body-text" style="margin-bottom: 0;">Developers bringing a redevelopment or new-build project to life, including financing structure.</div></div>
+							</div>
+							<div class="annotation">
+								Same treatment as Public Sector above — audience name, description, links to relevant services.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">4 Separate Pages vs. 1 Hub Page</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A — Current Structure</div>
+									<div class="wf-body-text" style="font-size: 15px; margin-bottom: 0;">Keep Municipalities, Organizations, Entrepreneurs, and Private Developers as 4 separate sub-pages, matching the live site today. More room per audience, more URLs to maintain.</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B — Condensed Hub</div>
+									<div class="wf-body-text" style="font-size: 15px; margin-bottom: 0;">Condense into this single hub page with 4 sections, as shown above. Faster for a visitor to scan and compare; fewer pages to keep updated.</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px;">
+								This wireframe illustrates Option B (condensed hub). Final direction depends on how much distinct content each audience truly needs — to be confirmed with Kristen.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: ANALYSIS ── -->
+			<section class="wf-section" id="analysis">
+				<div class="section-label"><span class="section-num">3</span> Analysis &mdash; /analysis</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span class="active">Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Analysis</div>
+							<div class="wf-subtext">Data-driven studies that ground every decision in real numbers.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Intro</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">Short intro paragraph explaining the Analysis service category — what it covers and why clients start here. CMS-editable.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Sub-Services</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="subservice-list">
+								<div class="subservice-row"><div class="subservice-name">Market / Economic / Fiscal Impact Analysis</div><div class="subservice-desc">Short description of this sub-service.</div></div>
+								<div class="subservice-row"><div class="subservice-name">Targeted Industry Analysis</div><div class="subservice-desc">Short description of this sub-service.</div></div>
+								<div class="subservice-row"><div class="subservice-name">Housing Market Study</div><div class="subservice-desc">Short description of this sub-service.</div></div>
+								<div class="subservice-row"><div class="subservice-name">Community Assessment</div><div class="subservice-desc">Short description of this sub-service.</div></div>
+								<div class="subservice-row"><div class="subservice-name">Financial Feasibility Analysis</div><div class="subservice-desc">Short description of this sub-service.</div></div>
+								<div class="subservice-row"><div class="subservice-name">Development Site Analysis</div><div class="subservice-desc">Short description of this sub-service.</div></div>
+							</div>
+							<div class="annotation">
+								Each sub-service is its own CMS entry — name and short description. New sub-services can be added without a developer.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Analysis Projects</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="project-table">
+								<div class="project-row"><span class="project-badge">CASE</span><div class="project-info"><div class="project-name">[Client Name] — Market &amp; Economic Impact Analysis</div><div class="project-meta">[Location] · [Year]</div></div></div>
+								<div class="project-row"><span class="project-badge">CASE</span><div class="project-info"><div class="project-name">[Client Name] — Housing Market Study</div><div class="project-meta">[Location] · [Year]</div></div></div>
+								<div class="project-row"><span class="project-badge">CASE</span><div class="project-info"><div class="project-name">[Client Name] — Development Site Analysis</div><div class="project-meta">[Location] · [Year]</div></div></div>
+								<div class="project-row more-row">+ ~7 more projects, pulled from the existing project list</div>
+							</div>
+							<div class="annotation">
+								Roughly 10 project rows on the live site today. Each row is a CMS entry — client name, project type, location, year. The strongest of these feed into the curated Our Projects page; the full table stays here as the complete record for this service category.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block" style="background: rgba(156, 59, 46, 0.04); border-color: rgba(156, 59, 46, 0.3);">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Note</div>
+							</div>
+							<div class="annotation" style="margin-top: 0;">
+								This page is the reference for how the four remaining service pages are structured — Strategy, Redevelopment, Financing, and Implementation each follow this same structure: intro → sub-service list → project table. Redevelopment carries one additional narrative block beyond this shared structure — see its condensed entry below for details.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 4: STRATEGY (condensed — see Analysis, page 3) ── -->
+			<section class="wf-section" id="strategy">
+				<div class="section-label"><span class="section-num">4</span> Strategy &mdash; /strategy</div>
+
+				<div class="service-ref-card">
+					<div class="service-ref-header">
+						<div class="wf-heading-sm" style="margin-bottom: 0;">Strategy</div>
+						<span class="cms-tag">CMS managed</span>
+					</div>
+					<div class="annotation" style="margin-top: 8px;">
+						Same page structure as Analysis (page 3) — intro, sub-service list, project table.
+					</div>
+					<div class="service-ref-meta">
+						<div><strong>Sub-services:</strong> Organizational Structure, Planning &amp; Real Estate Re/development</div>
+						<div><strong>Project table:</strong> 12 rows</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 5: REDEVELOPMENT (condensed — see Analysis, page 3 — plus one additional block) ── -->
+			<section class="wf-section" id="redevelopment">
+				<div class="section-label"><span class="section-num">5</span> Redevelopment &mdash; /redevelopment</div>
+
+				<div class="service-ref-card">
+					<div class="service-ref-header">
+						<div class="wf-heading-sm" style="margin-bottom: 0;">Redevelopment</div>
+						<span class="cms-tag">CMS managed</span>
+					</div>
+					<div class="annotation" style="margin-top: 8px;">
+						Same page structure as Analysis (page 3) — intro, sub-service list, project table.
+					</div>
+					<div class="service-ref-meta">
+						<div><strong>Sub-service:</strong> Redevelopment of Blighted Buildings</div>
+						<div><strong>Project table:</strong> 6 rows</div>
+					</div>
+
+					<div class="section-divider"></div>
+
+					<div class="wf-block" style="margin-bottom: 0;">
+						<div class="wf-block-header">
+							<div class="wf-heading-sm">Additional Block — "Our Redevelopment Projects" Narrative</div>
+							<span class="cms-tag">CMS managed</span>
+						</div>
+						<div class="wf-body-text">
+							The one section not shared with the other four service pages. Tells the Irish Hospital Apartments adaptive-reuse story: former hospital → law enforcement center → vacant → multifamily housing, using a nine-source capital stack, fully occupied since November 2022.
+						</div>
+						<div class="img-placeholder" style="height: 120px;">
+							<div class="img-icon">🏥</div>
+							<div class="img-label">[photo – Ribbon Cutting] — currently unfilled on the live site</div>
+						</div>
+						<div class="wf-body-text" style="margin-top: 14px; margin-bottom: 0;">
+							East Elementary Apartments is mentioned in this section as the next project already underway.
+						</div>
+						<div class="annotation">
+							This narrative also appears as the flagship entry on Our Projects — see that page for the case-study format decision. Here, it lives in context as the anchor example of what Redevelopment services produce.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 6: FINANCING (condensed — see Analysis, page 3) ── -->
+			<section class="wf-section" id="financing">
+				<div class="section-label"><span class="section-num">6</span> Financing &mdash; /financing</div>
+
+				<div class="service-ref-card">
+					<div class="service-ref-header">
+						<div class="wf-heading-sm" style="margin-bottom: 0;">Financing</div>
+						<span class="cms-tag">CMS managed</span>
+					</div>
+					<div class="annotation" style="margin-top: 8px;">
+						Same page structure as Analysis (page 3) — intro, sub-service list, project table.
+					</div>
+					<div class="service-ref-meta">
+						<div><strong>Sub-services:</strong> Tax Increment Financing, Grant Writing and Administration, Deal Structuring</div>
+						<div><strong>Project table:</strong> 9 rows, including the CWED administration entry</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 7: IMPLEMENTATION (condensed — see Analysis, page 3) ── -->
+			<section class="wf-section" id="implementation">
+				<div class="section-label"><span class="section-num">7</span> Implementation &mdash; /implementation</div>
+
+				<div class="service-ref-card">
+					<div class="service-ref-header">
+						<div class="wf-heading-sm" style="margin-bottom: 0;">Implementation</div>
+						<span class="cms-tag">CMS managed</span>
+					</div>
+					<div class="annotation" style="margin-top: 8px;">
+						Same page structure as Analysis (page 3) — intro, sub-service list, project table.
+					</div>
+					<div class="service-ref-meta">
+						<div><strong>Sub-services:</strong> Grant &amp; Loan Administration, Incentive Policy Writing, Real Estate Management</div>
+						<div><strong>Project table:</strong> 8 rows, including staff-extension and executive-recruitment entries</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 8: OUR PROJECTS / CASE STUDIES ── -->
+			<section class="wf-section" id="our-projects">
+				<div class="section-label"><span class="section-num">8</span> Our Projects / Case Studies &mdash; /our-projects</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span class="active">Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Our Projects</div>
+							<div class="wf-subtext">The real work behind the services — curated from ~44 projects and 12 client stories.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Curation Note</div>
+							</div>
+							<div class="wf-body-text">
+								This page draws from three existing sources: the roughly 44 project rows spread across the five service pages, the 12 full client testimonials currently sitting in an unstructured wall on the homepage, and the 3 existing dedicated project pages (Langlade County, Asset Mapping and Needs Analysis, Phelps WI Market Analysis). Rather than duplicating every row, this page curates the strongest stories and links back to the relevant service page for the complete project list.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Flagship Case Study</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="flagship-box">
+								<div class="img-placeholder" style="height: 140px; flex: 1; min-width: 200px;">
+									<div class="img-icon">🏥</div>
+									<div class="img-label">Irish Hospital / East Elementary — adaptive reuse</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<span class="flagship-tag">Flagship Story</span>
+									<div class="wf-heading-md" style="font-size: 22px;">Irish Hospital Apartments / East Elementary Apartments</div>
+									<div class="wf-body-text">Former hospital → law enforcement center → vacant → multifamily housing. Nine-source capital stack. Fully occupied since November 2022. Confirmed as the strongest material on the entire site.</div>
+									<div class="wf-cta accent">Read the Full Case Study →</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Client Stories</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-grid">
+								<div class="testimonial-card"><div class="testimonial-name">Fitchburg, WI</div><div class="testimonial-quote">Placeholder pull-quote — full testimonial on record.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">Sheboygan, WI</div><div class="testimonial-quote">Placeholder pull-quote — full testimonial on record.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">Elkhorn, WI</div><div class="testimonial-quote">Placeholder pull-quote — full testimonial on record.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">Stevens Point, WI</div><div class="testimonial-quote">Placeholder pull-quote — full testimonial on record.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">West Bend, WI</div><div class="testimonial-quote">Placeholder pull-quote — full testimonial on record.</div></div>
+								<div class="testimonial-card"><div class="testimonial-name">+ 7 more</div><div class="testimonial-quote">Thompson ND, Kewaunee, Pulaski, Merrill, Erie County NY, Baraboo, Colorado Springs.</div></div>
+							</div>
+							<div class="annotation">
+								All 12 testimonials get a proper home here instead of an unstructured homepage wall. Fitchburg and Elkhorn are flagged as strong enough for dedicated treatment — see the decision box below.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Existing Dedicated Project Pages</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="project-table">
+								<div class="project-row"><span class="project-badge">PAGE</span><div class="project-info"><div class="project-name">Langlade County</div><div class="project-meta">Existing dedicated page — carried into the rebuild</div></div></div>
+								<div class="project-row"><span class="project-badge">PAGE</span><div class="project-info"><div class="project-name">Asset Mapping and Needs Analysis</div><div class="project-meta">Existing dedicated page — carried into the rebuild</div></div></div>
+								<div class="project-row"><span class="project-badge">PAGE</span><div class="project-info"><div class="project-name">Phelps WI Market Analysis</div><div class="project-meta">Existing dedicated page — carried into the rebuild</div></div></div>
+							</div>
+							<div class="annotation">
+								These three pages already exist on the live site and already work as dedicated case studies. They carry forward into the rebuild regardless of the modal-vs-page decision below.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Modal Cards vs. Dedicated Case-Study Pages</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A — Modal Expandable Cards</div>
+									<div class="wf-body-text" style="font-size: 15px; margin-bottom: 0;">Every case study opens in an expandable card or modal on this page. Faster to build and maintain, keeps everything in one place.</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B — Dedicated Pages</div>
+									<div class="wf-body-text" style="font-size: 15px; margin-bottom: 0;">The strongest 3–4 stories each get a full dedicated page with its own URL — better for SEO and for sharing a single story directly.</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px;">
+								Recommendation: dedicated pages at minimum for the Irish Hospital / East Elementary story and the Fitchburg / Elkhorn testimonials — this is the strongest material on the whole site and deserves its own URL. Remaining stories can use the lighter modal-card treatment. Final call to be confirmed with Kristen.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 9: WHO WE ARE ── -->
+			<section class="wf-section" id="who-we-are">
+				<div class="section-label"><span class="section-num">9</span> Who We Are &mdash; /who-we-are</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span class="active">Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Who We Are</div>
+							<div class="wf-subtext">The team behind the analysis, strategy, and financing.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Our Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">Firm history, philosophy, and approach. 2–3 paragraphs covering founding, mission, and what sets the firm apart. CMS-managed so the client can update as the business grows.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Experience — By the Numbers</div>
+								<span class="prov-tag">Reconcile with homepage</span>
+							</div>
+							<div class="stat-bar">
+								<div class="stat-card"><div class="stat-num">165+</div><div class="stat-label">Years Combined Experience</div></div>
+								<div class="stat-card"><div class="stat-num">80</div><div class="stat-label">Market Studies</div></div>
+								<div class="stat-card"><div class="stat-num">100</div><div class="stat-label">Site Analyses</div></div>
+							</div>
+							<div class="annotation">
+								These figures come from the current bio copy. The homepage stats bar shows different, seemingly inconsistent numbers (780 projects / 127 members / 324 customers / 24 awards) — both sets need to be reconciled into one accurate figure set with Kristen before launch.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Team</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="board-grid">
+								<div class="board-card"><div class="board-name">Team Member Name</div><div class="board-role">Title</div></div>
+								<div class="board-card"><div class="board-name">Team Member Name</div><div class="board-role">Title</div></div>
+								<div class="board-card"><div class="board-name">Team Member Name</div><div class="board-role">Title</div></div>
+							</div>
+							<div class="annotation">
+								Team roster is CMS-managed — add or update team members without calling Jordan. Number of team members and bios to be confirmed with Kristen.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 10: CONTACT US ── -->
+			<section class="wf-section" id="contact-us">
+				<div class="section-label"><span class="section-num">10</span> Contact Us &mdash; /contact-us</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span class="active">Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 28px">
+							<div class="wf-heading-lg">Contact Us</div>
+							<div class="wf-subtext">Tell us about your project — public or private sector.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Office Info</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+								<div class="wf-body-text"><strong>Address</strong><br />Office address here</div>
+								<div class="wf-body-text"><strong>Phone</strong><br />(###) ###-####<br /><span style="font-size: 13px; color: rgba(28,43,58,0.4);">click-to-call on mobile</span></div>
+								<div class="wf-body-text"><strong>Email</strong><br />info@redevelopmentresources.com</div>
+							</div>
+							<div class="annotation">
+								Office address, click-to-call phone, and email — all CMS-editable.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Form</div>
+							</div>
+							<div class="form-grid">
+								<div class="form-field"><div class="field-label">Name *</div><div class="field-placeholder">Your name</div></div>
+								<div class="form-field"><div class="field-label">Email *</div><div class="field-placeholder">your@email.com</div></div>
+								<div class="form-field"><div class="field-label">Organization</div><div class="field-placeholder">Municipality, company, or organization</div></div>
+								<div class="form-field"><div class="field-label">Sector</div><div class="field-placeholder">Public / Private</div></div>
+								<div class="form-field full"><div class="field-label">How can we help?</div><div class="field-placeholder" style="min-height: 70px;">Tell us about your project...</div></div>
+							</div>
+							<div style="margin-top: 16px;"><div class="wf-cta">Send Message →</div></div>
+							<div class="annotation">
+								Name and email required; organization and sector help route the inquiry appropriately. Submissions go to Kristen's email. Client-side validation with server-side backup.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label"><span class="section-num">✓</span> Confirmed Decisions</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Restructure, Not Just Trim</strong> — Kristen wants pages reorganized so visitors understand services faster, not simply shortened.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>"Our Projects" Nav Correction</strong> — The current nav label "Our Projects" is misapplied to what are actually the five service categories. This is being corrected as an information-architecture fix, not a cosmetic relabel.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Case Study Raw Material</strong> — Far more extensive than initially assumed: ~44 project rows across the five service pages, plus 12 full named testimonials (Fitchburg, Sheboygan, Elkhorn, Stevens Point, West Bend, Thompson ND, Kewaunee, Pulaski, Merrill, Erie County NY, Baraboo, Colorado Springs).</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Flagship Case Study Confirmed</strong> — The Irish Hospital Apartments / East Elementary Apartments adaptive-reuse story (former hospital → law enforcement center → vacant → multifamily housing, nine-source capital stack, fully occupied since Nov 2022) is the flagship case study for the site.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Open to Brand Refresh</strong> — Client is open to a brand refresh if the current branding reads as dated.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label"><span class="section-num">?</span> Discussion Checklist</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Who We Serve — 4 Pages vs. 1 Hub</strong> — Keep the current 4 separate sub-pages (Municipalities, Organizations, Entrepreneurs, Private Developers) or condense into the single hub page shown in this wireframe.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Our Projects — Modal vs. Dedicated Pages</strong> — Whether case studies open as modal/expandable cards or get their own dedicated pages. Recommend dedicated pages at minimum for Irish Hospital / East Elementary and the Fitchburg / Elkhorn testimonials.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Brand Colors &amp; Fonts</strong> — Colors used in this wireframe (navy, champagne/taupe, brick red) are provisional, carried over from ~2019–2021 branding work with no exact hex values on hand. Fonts are not yet confirmed at all — none used here should be treated as final. Awaiting brand files from the client, or a decision to pursue a refresh.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Stats Reconciliation</strong> — Homepage stats bar (780 projects / 127 members / 324 customers / 24 awards) doesn't reconcile with the bio's stated figures (165+ years combined experience, 80 market studies, 100 site analyses). Need one accurate, confirmed set of numbers from Kristen.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Case Study Depth</strong> — How many stories get full dedicated treatment versus a summary card on Our Projects, once the modal-vs-pages decision above is settled.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
