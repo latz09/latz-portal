@@ -1,0 +1,1857 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Pal's Park — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #1f3a52;
+				--primary-mid: #2f5773;
+				--accent: #ff7a45;
+				--accent-light: rgba(255, 122, 69, 0.08);
+				--light: #fff8ef;
+				--light-dark: #f7ecd9;
+				--mid: #5c6b75;
+				--green: #3f9d6e;
+				--green-light: rgba(63, 157, 110, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Nunito', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(31, 58, 82, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(31, 58, 82, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Nunito', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 24px;
+				font-weight: 700;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Nunito', sans-serif;
+				font-size: 14px;
+				color: rgba(255, 248, 239, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(63, 157, 110, 0.16);
+				border: 1px solid rgba(63, 157, 110, 0.4);
+				border-radius: 5px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--green);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Nunito', sans-serif;
+				font-size: 13px;
+				font-weight: 700;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--green);
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Nunito', sans-serif;
+				font-size: 12px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(255, 248, 239, 0.45);
+				text-decoration: none;
+				font-family: 'Nunito', sans-serif;
+				font-size: 18px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 3px solid transparent;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(255, 122, 69, 0.14);
+				border-left-color: var(--accent);
+				font-weight: 600;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Nunito', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 34px;
+				right: 34px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 30px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 48px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'Nunito', sans-serif;
+				font-size: 20px;
+				color: rgba(31, 58, 82, 0.55);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1.5px solid rgba(31, 58, 82, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(31, 58, 82, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(31, 58, 82, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Nunito', sans-serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.72);
+				border: 2px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(31, 58, 82, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 30px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Baloo 2', sans-serif;
+				font-weight: 700;
+				font-size: 21px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 22px;
+				align-items: center;
+				font-family: 'Nunito', sans-serif;
+				font-size: 17px;
+				color: rgba(31, 58, 82, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 700;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			.wf-nav-links span.external {
+				color: var(--accent);
+				font-weight: 700;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				line-height: 1.55;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(31, 58, 82, 0.04);
+				border-left: 4px solid rgba(31, 58, 82, 0.2);
+				border-radius: 0 6px 6px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: rgba(255, 122, 69, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(31, 58, 82, 0.18);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(255, 248, 239, 0.5);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 11px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 36px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 25px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-subtext {
+				font-family: 'Nunito', sans-serif;
+				font-size: 20px;
+				color: rgba(31, 58, 82, 0.55);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Nunito', sans-serif;
+				font-size: 18px;
+				color: rgba(31, 58, 82, 0.65);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(31, 58, 82, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Nunito', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--white);
+			}
+			.wf-cta.outline {
+				background: transparent;
+				border: 1.5px solid var(--light);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 20px 30px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Nunito', sans-serif;
+				font-size: 15px;
+				color: rgba(255, 248, 239, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(31, 58, 82, 0.07);
+				border: 2px dashed rgba(31, 58, 82, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(31, 58, 82, 0.45);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── PRODUCT / OFFER CARDS ── */
+			.product-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 17px;
+				margin-top: 17px;
+			}
+
+			.product-card {
+				border: 1.5px dashed rgba(31, 58, 82, 0.2);
+				border-radius: 7px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.62);
+				text-align: center;
+			}
+
+			.product-name {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.product-price {
+				font-family: 'Nunito', sans-serif;
+				font-size: 16px;
+				color: rgba(31, 58, 82, 0.55);
+				margin-bottom: 6px;
+			}
+
+			.product-action {
+				font-family: 'Nunito', sans-serif;
+				font-size: 15px;
+				color: var(--accent);
+				font-weight: 700;
+			}
+
+			/* ── FILTER ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 11px;
+				align-items: center;
+				margin-bottom: 20px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: rgba(31, 58, 82, 0.4);
+			}
+
+			.filter-pill {
+				font-family: 'Nunito', sans-serif;
+				font-size: 17px;
+				border: 1.5px solid rgba(31, 58, 82, 0.2);
+				border-radius: 28px;
+				padding: 4px 17px;
+				color: rgba(31, 58, 82, 0.5);
+			}
+
+			.filter-pill.active {
+				border-color: var(--primary);
+				color: var(--primary);
+				font-weight: 700;
+			}
+
+			/* ── QUICK LINKS / BRAND PILLARS ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 14px;
+				margin: 20px 0;
+			}
+
+			.quick-link-card {
+				border: 2px dashed rgba(31, 58, 82, 0.2);
+				border-radius: 8px;
+				padding: 20px 17px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.quick-link-icon {
+				font-size: 28px;
+				margin-bottom: 8px;
+			}
+
+			.quick-link-label {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--primary);
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(31, 58, 82, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'Nunito', sans-serif;
+				font-size: 15px;
+				color: rgba(31, 58, 82, 0.4);
+				margin-bottom: 6px;
+			}
+
+			.field-placeholder {
+				font-family: 'Nunito', sans-serif;
+				font-size: 18px;
+				color: rgba(31, 58, 82, 0.3);
+			}
+
+			/* ── FAQ ── */
+			.faq-list {
+				display: flex;
+				flex-direction: column;
+				gap: 11px;
+				margin-top: 14px;
+			}
+
+			.faq-item {
+				border: 1.5px dashed rgba(31, 58, 82, 0.2);
+				border-radius: 7px;
+				padding: 17px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.faq-q {
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.faq-q::before {
+				content: 'Q';
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Nunito', sans-serif;
+				font-size: 13px;
+				font-weight: 800;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			.faq-a {
+				font-family: 'Nunito', sans-serif;
+				font-size: 16px;
+				color: rgba(31, 58, 82, 0.6);
+				line-height: 1.55;
+				padding-left: 34px;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 16px;
+				font-weight: 700;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 120px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(31, 58, 82, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box.external {
+				background: rgba(255, 122, 69, 0.08);
+				color: var(--accent);
+				border: 1.5px dashed var(--accent);
+				font-size: 14px;
+				min-width: 110px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 24px;
+				color: rgba(31, 58, 82, 0.3);
+				padding: 0 11px;
+				align-self: center;
+				margin-top: -18px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 8px;
+				margin-top: 8px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			.sitemap-box.tertiary {
+				background: rgba(63, 157, 110, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--green);
+				font-size: 13px;
+				min-width: 90px;
+				padding: 7px 12px;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(31, 58, 82, 0.12);
+				font-family: 'Nunito', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px;
+				margin-top: 14px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(31, 58, 82, 0.2);
+				border-radius: 8px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 45px 34px 112px;
+				}
+				.product-grid,
+				.quick-links {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 34px 22px 112px;
+				}
+				.doc-title {
+					font-size: 38px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(31, 58, 82, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 14px 20px;
+				}
+				.wf-body {
+					padding: 28px 22px 39px;
+				}
+				.option-grid,
+				.product-grid,
+				.quick-links,
+				.form-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 6px 0;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 6px;
+				}
+				.check-item {
+					font-size: 16px;
+					gap: 11px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Pal's Park</div>
+				<div class="sidebar-doctype">Site Wireframes</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#offerings" class="nav-link"><span class="nav-icon">🎈</span> Offerings</a>
+				<a href="#prelaunch" class="nav-link"><span class="nav-icon">🚧</span> Pre-Launch (New)</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Pal's Park</div>
+				<div class="doc-sub">2-Page Website &nbsp;·&nbsp; Foundational Build &nbsp;+&nbsp; New: Pre-Launch Landing Page</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">2 in scope <span style="color: var(--accent); font-weight: 700;">+ 1 pending</span></span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Allison &amp; Alex Hewett</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value ok">✓ Received</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 22px; font-size: 18px; padding: 17px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed.
+			</div>
+			<div class="annotation" style="margin-bottom: 22px; font-size: 18px; padding: 17px 22px; border-left-color: rgba(63,157,110,0.4); background: rgba(63,157,110,0.05);">
+				📋 This wireframe reflects conversations and the Website Content Brief from Pookie Rosa Marketing (Jul 10, 2026), plus follow-up email discussion. The new Pre-Launch page below is a starting point — final structure depends on copy length and complexity, which Pookie is still finalizing.
+			</div>
+			<div class="annotation" style="margin-bottom: 56px; font-size: 18px; padding: 17px 22px; border-left-color: rgba(255,122,69,0.4); background: rgba(255,122,69,0.05);">
+				🎨 Colors and fonts shown throughout are provisional placeholders only — the real brand palette and typography are pending the designer meeting. See Discussion Checklist below.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">Pal's Park</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								2 pages · Rhomb handles all bookings &amp; transactions off-site
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 8px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span style="font-size: 12px; font-family: 'Nunito', sans-serif; font-weight: 400; opacity: 0.7;">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Offerings<br /><span style="font-size: 12px; font-family: 'Nunito', sans-serif; font-weight: 400; opacity: 0.7;">/offerings</span>
+								</div>
+								<div class="sitemap-children">
+									<div class="sitemap-box tertiary">Memberships</div>
+									<div class="sitemap-box tertiary">Day Passes</div>
+									<div class="sitemap-box tertiary">Parties</div>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box external">
+									Rhomb ↗<br /><span style="font-size: 11px; opacity: 0.8;">external booking portal</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 28px">
+							Both pages live on the same domain. Rhomb is not a page on this site — it's an external booking and payment portal that Home and Offerings link out to. Confirmed: no embedded checkout anywhere on the site. Nav is consistent across both pages; logo click returns to Home.
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div style="text-align: center; margin-bottom: 14px;">
+							<div class="wf-heading-sm" style="margin-bottom: 4px;">Plus — New: Pre-Launch Landing Page</div>
+							<div class="wf-subtext" style="margin-bottom: 0;">A standalone page, separate from the nav above</div>
+						</div>
+						<div class="sitemap" style="gap: 8px;">
+							<div class="sitemap-node">
+								<div class="sitemap-box tertiary" style="min-width: 160px; font-size: 15px; padding: 10px 18px;">
+									Coming Soon<br /><span style="font-size: 12px; font-family: 'Nunito', sans-serif; font-weight: 400; opacity: 0.7;">/coming-soon (path TBD)</span>
+								</div>
+							</div>
+						</div>
+						<div class="annotation">
+							This page is NOT connected to the Home/Offerings nav — it has no nav bar of its own and nothing links back to it once the main site is live. It exists only so Pal's Park can start capturing interest before the full site launches. Must be live August 18, 2026 (confirmed, non-negotiable). See Page 3 below.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home — "Who We Are &amp; Why" &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Pal's Park</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Offerings</span>
+							<span class="external">Book Now ↗</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 224px">
+								<div class="img-icon">🧸</div>
+								<div class="img-label">
+									Hero image — kids playing in the space, bright and energetic<br />
+									Photo from Allison &amp; Alex — pending<br />
+									Stock photo fallback if needed before launch
+								</div>
+							</div>
+							<div style="margin-top: 22px; text-align: center">
+								<div class="wf-heading-lg">Where Little Adventurers Play</div>
+								<div class="wf-subtext">Placeholder headline — final copy in development.</div>
+								<div class="wf-cta">See What We Offer →</div>
+								<div style="margin-top: 14px; font-family: 'Architects Daughter', cursive; font-size: 15px; color: rgba(31, 58, 82, 0.4);">
+									*optional — small "Coming Month 2026" launch tag could sit here
+								</div>
+							</div>
+							<div class="annotation">
+								Hero photo is pending from Allison &amp; Alex. Headline and subhead copy shown here are placeholders — final brand voice and messaging is being developed by Pookie Rosa Marketing. Hero CTA leads to the Offerings page. The full Home page launches live as soon as content and photos are ready — no interim placeholder page planned.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Founders' Story -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Founders' Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 22px; flex-wrap: wrap;">
+								<div class="img-placeholder" style="height: 168px; flex: 1; min-width: 200px;">
+									<div class="img-icon">👨‍👩‍👧</div>
+									<div class="img-label">Photo of Allison &amp; Alex<br />Pending from client</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">Why We Started Pal's Park</div>
+									<div class="wf-body-text">
+										Short story of Allison &amp; Alex — why they opened the playground, what they wanted for families in the area. 2–3 short paragraphs. Copy is placeholder pending brand voice work.
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Photos are pending from the client. Copy ownership is resolved — Pookie Rosa Marketing is developing the brand voice, messaging, and copy direction for this section (confirmed directly by Pookie, Jun 7). This is no longer an open item on our end; once Pookie delivers copy, Allison &amp; Alex can update it anytime via CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Brand Pillars -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Brand Pillars</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🧼</div>
+									<div class="quick-link-label">Safe &amp; Clean Play</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🏡</div>
+									<div class="quick-link-label">Locally Owned</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🎈</div>
+									<div class="quick-link-label">Fun for Every Age</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🤝</div>
+									<div class="quick-link-label">Community First</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Four short pillar statements reinforcing what Pal's Park stands for. Icons and labels shown here are placeholders illustrating the format only — final wording and tone will come from Pookie Rosa Marketing's brand voice development, already in progress. Each pillar is editable in CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Founders Club Teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Founders Club Teaser</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="text-align: center; padding: 10px 0;">
+								<div class="wf-heading-md">OG Pals — Founding Member Pre-Sale</div>
+								<div class="wf-body-text" style="max-width: 480px; margin: 0 auto;">
+									Placeholder blurb promoting early membership sign-ups ahead of opening. Program name "OG Pals" is a placeholder pending the client's final name.
+								</div>
+								<div class="wf-cta accent">Join the Founders Club →</div>
+							</div>
+							<div class="annotation">
+								Per brief Q13: the Home page needs its own dedicated section promoting early membership sign-ups, with a Rhomb link for pre-sale purchases — separate from the more prominent Founders Club treatment on the new Pre-Launch page. Full copy, final program name, and the Rhomb link are pending from the client — hold this as a placeholder block until finalized.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- FAQ -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">FAQ</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="faq-list">
+								<div class="faq-item">
+									<div class="faq-q">Do I need to book in advance?</div>
+									<div class="faq-a">Placeholder answer — walk-ins vs. reservations policy to be confirmed.</div>
+								</div>
+								<div class="faq-item">
+									<div class="faq-q">What ages is the playground appropriate for?</div>
+									<div class="faq-a">Placeholder answer — age range and any toddler-specific areas.</div>
+								</div>
+								<div class="faq-item">
+									<div class="faq-q">Do you serve food?</div>
+									<div class="faq-a">Vending machines only — no kitchen or food service on-site.</div>
+								</div>
+								<div class="faq-item">
+									<div class="faq-q">Can I bring my own party decorations?</div>
+									<div class="faq-a">Yes — bring-your-own-decorations for both party rooms. No rental add-ons offered.</div>
+								</div>
+								<div class="faq-item">
+									<div class="faq-q">What are your hours?</div>
+									<div class="faq-a">Placeholder — hours from Allison &amp; Alex.</div>
+								</div>
+							</div>
+							<div style="margin-top: 14px; text-align: center;">
+								<span style="font-family: 'Nunito', sans-serif; font-size: 15px; color: var(--primary); font-weight: 700; text-decoration: underline;">Download Full Policy (PDF) →</span>
+							</div>
+							<div class="annotation">
+								Confirmed approach (per Website Content Brief Q3/Q11): this section shows condensed, parent-facing FAQ copy — Pookie is editing Allison's full policy draft down to web-ready language. A separate downloadable PDF of the complete policy document is linked from this section for visitors who want full details. The full rules/policy document itself is never imported as on-page text — PDF only. Each FAQ is a question/answer pair managed in our CMS — Allison &amp; Alex can add, edit, reorder, or remove questions anytime without calling Jordan. Questions and answers shown here are placeholders illustrating the format.
+							</div>
+							<div class="decision-box">
+								<div class="decision-label">Full Policy PDF — Who Designs It</div>
+								Jordan's on-brand PDF design service was raised twice in the brief as worth discussing for this document. Pending client decision on whether they want Jordan to design the PDF or handle it themselves.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Sign Me Up CTA -->
+						<div class="wf-block" style="background: var(--primary); padding: 28px; border-radius: 8px; border-color: var(--primary);">
+							<div style="text-align: center;">
+								<div class="wf-heading-md" style="color: var(--light);">Ready to Join the Fun?</div>
+								<div class="wf-body-text" style="color: rgba(255,248,239,0.6); max-width: 460px; margin: 0 auto 6px;">
+									Placeholder supporting line — final copy pending brand voice work.
+								</div>
+								<div class="wf-cta accent">Sign Me Up →</div>
+							</div>
+						</div>
+						<div class="annotation">
+							Confirmed: this CTA sits at the bottom of the Home page, after the Founders' Story and the rest of the page content. It links out to Rhomb — Rhomb handles all membership sign-ups and transactions. No embedded checkout on this site.
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- General Inquiry Form -->
+						<div class="wf-block" id="home-inquiry">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">General Inquiry Form</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								For general questions — not for booking. Memberships, day passes, and party bookings all happen directly through Rhomb.
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email *</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Your Question</div>
+									<div class="field-placeholder" style="min-height: 60px;">What can we help with?</div>
+								</div>
+							</div>
+							<div style="margin-top: 14px;">
+								<div class="wf-cta">Send Message →</div>
+							</div>
+							<div class="annotation">
+								Confirmed: a general inquiry form for any question sits at the bottom of both pages — not tied to bookings. Party, membership, and day pass bookings all route through Rhomb directly. Submissions here go to Allison &amp; Alex's inbox. Same form appears at the bottom of the Offerings page.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Pal's Park</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: OFFERINGS ── -->
+			<section class="wf-section" id="offerings">
+				<div class="section-label">
+					<span class="section-num">2</span> Offerings — "Everything We Offer" &mdash; /offerings
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Pal's Park</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Offerings</span>
+							<span class="external">Book Now ↗</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Intro -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Intro</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-lg">Everything We Offer</div>
+							<div class="wf-body-text">
+								Short intro paragraph orienting visitors to the three ways to visit: memberships, single-visit day passes, and birthday parties. Vending machines available on-site — no food or kitchen service.
+							</div>
+							<div class="annotation">
+								Brief overview copy above the three offering sections below. Confirms vending-only refreshments so visitors aren't expecting a café or kitchen.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Memberships -->
+						<div class="wf-block" id="memberships">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Memberships</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="product-grid">
+								<div class="product-card">
+									<div class="product-name">Little Explorer</div>
+									<div class="product-price">1 child · monthly</div>
+									<div class="product-action">View on Rhomb →</div>
+								</div>
+								<div class="product-card">
+									<div class="product-name">Family Membership</div>
+									<div class="product-price">Up to 4 · monthly</div>
+									<div class="product-action">View on Rhomb →</div>
+								</div>
+								<div class="product-card">
+									<div class="product-name">Punch Pass</div>
+									<div class="product-price">10 visits</div>
+									<div class="product-action">View on Rhomb →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Membership tier names and descriptions are managed in our CMS, but all sign-ups and payments happen on Rhomb — "View on Rhomb" opens Rhomb's booking portal in a new tab. Confirmed: no embedded checkout, site links out only. Tier names and pricing shown are placeholders.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Day Passes -->
+						<div class="wf-block" id="day-passes">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Day Passes</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="product-grid">
+								<div class="product-card">
+									<div class="product-name">Weekday Pass</div>
+									<div class="product-price">Single visit</div>
+									<div class="product-action">View on Rhomb →</div>
+								</div>
+								<div class="product-card">
+									<div class="product-name">Weekend Pass</div>
+									<div class="product-price">Single visit</div>
+									<div class="product-action">View on Rhomb →</div>
+								</div>
+								<div class="product-card">
+									<div class="product-name">Toddler Time Pass</div>
+									<div class="product-price">Under 2</div>
+									<div class="product-action">View on Rhomb →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Same pattern as Memberships — pass names and descriptions live in our CMS, purchase happens on Rhomb. Pass types and naming shown are placeholders pending client confirmation.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Birthday Parties -->
+						<div class="wf-block" id="birthday-parties">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Birthday Parties</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Two private party rooms, each seating up to 24 guests. Families bring their own decorations — no rental add-ons or décor upsells offered.
+							</div>
+							<div class="product-grid" style="grid-template-columns: repeat(2, 1fr);">
+								<div class="product-card">
+									<div class="product-name">Party Room 1</div>
+									<div class="product-price">Seats up to 24 · 2 hrs exclusive use</div>
+									<div class="product-action">Check Availability →</div>
+								</div>
+								<div class="product-card">
+									<div class="product-name">Party Room 2</div>
+									<div class="product-price">Seats up to 24 · 2 hrs exclusive use</div>
+									<div class="product-action">Check Availability →</div>
+								</div>
+							</div>
+							<div class="img-placeholder" style="height: 140px; margin-top: 17px;">
+								<div class="img-icon">📷</div>
+								<div class="img-label">
+									Party room photos — pending<br />
+									Build-out isn't far enough along yet; holding as visual placeholder per client instruction
+								</div>
+							</div>
+							<div style="margin-top: 17px;">
+								<div class="wf-heading-sm" style="margin-bottom: 8px;">Pricing &amp; Policies</div>
+								<div class="wf-body-text">
+									$250 base rate — 2 hours, up to 10 children, unlimited adult entry. $9 per additional child (non-member). Members save 10%. Booking includes 15 minutes setup and 15 minutes cleanup on either side of the 2-hour block.
+								</div>
+								<div class="wf-body-text">
+									<strong>Allowed:</strong> bring your own food and non-alcoholic beverages; tables, tablecloths, and balloons for decorating (a $40 fee applies for helium balloons lost in the ceiling).
+								</div>
+								<div class="wf-body-text">
+									<strong>Not allowed:</strong> glass dishes, chafing dishes, outside caterers, alcohol, wall hangings, nails, tacks, tape, or piñatas.
+								</div>
+							</div>
+							<div style="text-align: center; margin-top: 22px; padding: 20px; border: 2px dashed rgba(31,58,82,0.15); border-radius: 8px;">
+								<div class="wf-heading-sm">Ready to Celebrate?</div>
+								<div class="wf-cta accent" style="margin-top: 8px;">Check Availability &amp; Book on Rhomb →</div>
+							</div>
+							<div class="annotation">
+								Confirmed (per Website Content Brief Q6): two party rooms, seating up to 24 each, bring-your-own-decorations, no rental add-ons. All bookings happen through Rhomb only — no drop-ins. Real-time room availability lives on Rhomb's side — this button opens Rhomb's live calendar in a new tab. Site links out only, no embedded booking. Once booked, the entrance code is emailed to the party booker to share with their guests. No separate party inquiry form — general questions about parties (or anything else) go through the inquiry form at the bottom of this page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- General Inquiry Form -->
+						<div class="wf-block" id="offerings-inquiry">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">General Inquiry Form</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								For general questions — not for booking. Memberships, day passes, and party bookings all happen directly through Rhomb.
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email *</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Your Question</div>
+									<div class="field-placeholder" style="min-height: 60px;">What can we help with?</div>
+								</div>
+							</div>
+							<div style="margin-top: 14px;">
+								<div class="wf-cta">Send Message →</div>
+							</div>
+							<div class="annotation">
+								Same general inquiry form as the bottom of the Home page — for any question, not tied to bookings. Submissions go to Allison &amp; Alex's inbox.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Pal's Park</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: PRE-LAUNCH LANDING PAGE (NEW) ── -->
+			<section class="wf-section" id="prelaunch">
+				<div class="section-label">
+					<span class="section-num">3</span> Pre-Launch Landing Page — "Coming Soon" &mdash; standalone, no main nav
+				</div>
+
+				<div class="annotation" style="margin-bottom: 17px; border-left-color: rgba(255,122,69,0.4); background: rgba(255,122,69,0.05);">
+					⚠️ This page is being offered as a lean, single-scroll addition at no extra charge — logo, coming soon messaging, brief description, and Founders Club/email capture. Additional sections, integrated photography, or a custom-built capture backend would be scoped and priced separately if requested. Must be live <strong>August 18, 2026</strong> — confirmed, non-negotiable per client.
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Pal's Park</div>
+						<div class="wf-nav-links">
+							<span style="font-style: italic; opacity: 0.6;">No nav — standalone single-scroll page</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 180px">
+								<div class="img-icon">🎉</div>
+								<div class="img-label">Logo, tagline "Play. Jump. Party."</div>
+							</div>
+							<div style="margin-top: 17px; text-align: center;">
+								<div class="wf-heading-lg">Coming Soon</div>
+								<div class="wf-subtext">Opening timeframe messaging — exact date/season language TBD from Pookie</div>
+							</div>
+							<div class="annotation">
+								This is a single-scroll page, not a scaled-down version of the full site. Its primary purpose is email capture, not storytelling.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Brief Description -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Brief Description</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Short paragraph — who Pal's Park is and what's coming. NOT the full founders' story from the Home page.
+							</div>
+							<div class="annotation">
+								Content pending from Pookie. Length and depth of this section may shift once copy is delivered — don't treat the current placeholder length as final.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Founders Club Teaser / Email Capture -->
+						<div class="wf-block" style="background: var(--primary); padding: 28px; border-radius: 8px; border-color: var(--primary);">
+							<div style="text-align: center;">
+								<div class="wf-heading-md" style="color: var(--light);">OG Pals — Founding Member Pre-Sale</div>
+								<div class="wf-body-text" style="color: rgba(255,248,239,0.6); max-width: 460px; margin: 0 auto 6px;">
+									Placeholder copy — full program details, name, and any promo/Rhomb codes pending from client.
+								</div>
+								<div style="max-width: 340px; margin: 14px auto 0;">
+									<div class="form-field full" style="background: rgba(255,255,255,0.9);">
+										<div class="field-label">Email *</div>
+										<div class="field-placeholder">your@email.com</div>
+									</div>
+								</div>
+								<div class="wf-cta accent" style="margin-top: 10px;">Become a Founding Pal →</div>
+							</div>
+						</div>
+						<div class="annotation">
+							This is the primary functional purpose of the page — it should be the visual focus, not a minor mention. Program name shown ("OG Pals") is a placeholder per the brief, pending a final name from the client. Full copy, final program name, and any promo/Rhomb codes are pending (per Website Content Brief Q9/Q13). Founders Club teaser and email capture are combined into one block here — a single clear ask, not two competing CTAs.
+						</div>
+						<div class="decision-box">
+							<div class="decision-label">Open Question — Email Capture Method (may affect scope)</div>
+							How this is captured depends on the client's answer, and the options carry different scope implications:
+							<ul style="margin: 10px 0 0 20px; padding: 0;">
+								<li style="margin-bottom: 6px;"><strong>Rhomb</strong> (if Founders Club sign-up is an actual transaction) — likely no additional scope, since Rhomb integration is already part of the build.</li>
+								<li style="margin-bottom: 6px;"><strong>Third-party tool</strong> (Mailchimp or similar, for a no-cost waitlist) — minimal scope impact, mostly an embed/integration.</li>
+								<li><strong>Custom-built form</strong> (data stored/managed on Jordan's own backend) — this is real additional development work (form handling, storage, and likely an admin view of signups) and would likely fall outside the pre-launch page being offered as a free inclusion.</li>
+							</ul>
+							<div style="margin-top: 10px;">Pending client answer before this block can be finalized or priced.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Minimal Footer -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Footer</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Minimal — contact info, social links if available. No nav back to main site pages, since they aren't live yet.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Pal's Park</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+
+				<div class="decision-box" style="margin-top: 20px;">
+					<div class="decision-label">Client to Confirm Page Depth</div>
+					Desired depth/complexity of this page is still open — options range from bare-minimum (logo + coming soon + email capture) to the fuller version shown above (adds brief description + Founders Club section). The current wireframe reflects the fuller version per Jordan's proposal in email; awaiting client confirmation.
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Two-Page Structure</strong> — Home (About + FAQ) and Offerings (Memberships, Day Passes, Parties). No other pages in this build.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>"Sign Me Up" CTA Placement</strong> — Sits at the bottom of the Home page, after the Founders' Story and remaining page content.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Rhomb Handles All Transactions</strong> — Site links out only for memberships, day passes, and party bookings. No embedded checkout anywhere on the site.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Party Availability on Rhomb</strong> — Real-time party room availability calendar lives on Rhomb's side, not on this site.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Vending Only</strong> — No food or kitchen service on-site.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Two Party Rooms</strong> — Bring-your-own-decorations, no rental add-ons offered.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Logo Received</strong> — Received Jul 4, pending design team review.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Deposit Received</strong> — Payment confirmed.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Copy &amp; Brand Voice Ownership Resolved</strong> — Pookie Rosa Marketing is developing messaging and brand voice for the site (confirmed directly by Pookie, Jun 7).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Party Booking &amp; Inquiry Form Resolved</strong> — Party bookings direct visitors to Rhomb. A general inquiry form for all other questions sits at the bottom of both the Home and Offerings pages (confirmed by client).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>FAQ Approach</strong> — Condensed, parent-facing FAQ copy on the Home page, plus a downloadable full policy PDF for visitors wanting complete details.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Party Room Details, Pricing &amp; Policies Confirmed</strong> — Two rooms, up to 24 guests each, $250 base rate, additional-child fee, member discount, and decoration/food policies (see Offerings page for full figures).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Day Pass &amp; Membership Pricing Confirmed</strong> — See Website Content Brief for full figures.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Hours Confirmed</strong> — Weekdays 8am–8pm, Weekends 8am–9pm, 365 days a year.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Waiver Handled Through Rhomb</strong> — Waivers are completed entirely at purchase on Rhomb — no waiver content needed on the website.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Content Workflow</strong> — All copy flows through Pookie Rosa Marketing before reaching Jordan — expect finalized, web-ready copy only.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Colors &amp; Fonts Not Locked</strong> — Provisional placeholders used throughout this wireframe. Final brand palette and typography pending the designer meeting.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Pre-Launch Landing Page — Scope &amp; Pricing</strong> — Offered as an inclusion, pending client agreement on scope and pricing.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Email Capture Method</strong> — Rhomb, a third-party tool, or a custom build for the Founders Club pre-sale — pending client answer.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Founders Club Program Name</strong> — Placeholder "OG Pals" used throughout; final name pending from client.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Full Policy PDF — Design Ownership</strong> — Client's own design vs. Jordan's on-brand PDF design service.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Domain/DNS</strong> — Pookie is registering the domain via Namecheap — confirm TLD selection and DNS pointing requirements.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Sequencing Confirmation</strong> — Jordan has proposed focusing on the Pre-Launch page first, with the main site build to follow once Founders' Story, About, and FAQ copy are finalized.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
