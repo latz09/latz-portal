@@ -1,29 +1,1584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Redevelopment Resources — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(.4,0,.2,1);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 24px 4px;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'RR';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 160px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 40px 56px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight-box strong { font-weight: 700; }
+  .highlight-box p { font-size: 14px; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-mid); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--green-light) !important;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--orange-light) !important;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .budget-table .optional-row td {
+    color: var(--gray-600);
+    font-style: italic;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+  .badge-open { background: #fffbcc; color: #a07d00; }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--gray-600);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-block p { font-size: 13px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── MOBILE NAV FAB ── */
+  .nav-fab {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    box-shadow: 0 4px 14px rgba(13,27,42,0.35);
+    cursor: pointer;
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 280ms ease;
+  }
+
+  .sidebar-overlay.visible { display: block; opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      width: 240px;
+      transform: translateX(-100%);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.3);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .nav-fab { display: flex; }
+
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header { padding: 32px 20px 28px; }
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Redevelopment Resources</div>
+    <div class="status-pill">Proposal Stage</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏢</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<button class="nav-fab" id="navFab">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Redevelopment Resources</h1>
+    <div class="sub">redevelopment-resources.com · Full Site Rebuild</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Kristen Fish-Peterson, CEcD, EDFP</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Base Contract</span>
+        <span class="value">$5,500 <span style="color:rgba(255,255,255,0.4); font-weight:400;">(up to $9,400 w/ add-ons)</span></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Received</span>
+        <span class="value">Not yet ⏳</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Balance Due</span>
+        <span class="value">TBD — pending add-on decision</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://redevelopment-resources.com" target="_blank">redevelopment-resources.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">(715) 581-1452</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏢</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Kristen Fish-Peterson, CEcD, EDFP</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Owner / Principal & CEO</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:kristen@redevelopment-resources.com">kristen@redevelopment-resources.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Firm Phone</span>
+            <span class="data-value">(715) 581-1452</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Maker</span>
+            <span class="data-value">Kristen — sole principal, no board/committee approval needed</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Client Type</span>
+            <span class="data-value">Economic development & redevelopment consulting firm (WI-based)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Service Area</span>
+            <span class="data-value">Municipalities, EDCs, private developers & entrepreneurs across WI, NE, VA, ND, NY, MN</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Team Experience</span>
+            <span class="data-value">165+ combined years across the team</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Related Entity</span>
+            <span class="data-value">Also administers the CWED loan fund (cwedfund.com) — same contact, different site</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">🤝</span>
+        <div class="callout-body">
+          <strong>Existing Relationship — Repeat Client</strong>
+          <span>Kristen is already a Latz Web Design client: cwedfund.com was a prior ~$14,000 build for the CWED loan fund she administers. This rebuild is a separate site/project, but there's established trust and a proven track record to lean on.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📬</span>
+        <div class="callout-body">
+          <strong>How This Project Started</strong>
+          <span>Kristen emailed Jun 23 asking about an $8,300 "ADA compliance audit" pitch her current vendor was pressuring her to buy on this exact site. Jordan's honest, no-charge answer (and a free WAVE/PageSpeed audit) is what turned into this rebuild — not an outbound sales pitch. Worth remembering how this one opened.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Approved base scope: $5,500 — Full Site Rebuild</strong>
+        <p>Corrected site structure/navigation, consistently built service pages (Analysis / Strategy / Redevelopment / Financing / Implementation), and a properly built Our Projects / Case Studies page. Wireframe already built and sent. Four optional add-ons priced separately, not yet confirmed by Kristen.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why She Came to Us</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Current site (built by a different vendor, live only since ~late June) loads in 9.3s — Google's "good" bar is under 2.5s</li>
+            <li><span class="check-icon">🔴</span> Performance score 62/100, SEO 77/100 on Google's own PageSpeed test</li>
+            <li><span class="check-icon">🔴</span> Paid $300 upfront + $2,000 for 6 months of SEO — no measurable results ("I'm getting what I paid for")</li>
+            <li><span class="check-icon">🔴</span> Vendor pressuring her weekly to buy more add-ons, including a bogus $8,300 "ADA certification"</li>
+            <li><span class="check-icon">🔴</span> "Our Projects" nav item is mislabeled — it actually shows services, not case studies</li>
+            <li><span class="check-icon">🔴</span> Broken Implementation page link; homepage stats bar doesn't match her bio's stated figures</li>
+            <li><span class="check-icon">🔴</span> ~45 real project write-ups and 12 full named testimonials sitting buried/unused</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Fast, real SEO built in from the start — cwedfund.com (built by Jordan) scores 100/100 SEO for reference</li>
+            <li><span class="check-icon">✅</span> Clean, consistently built service pages across Analysis/Strategy/Redevelopment/Financing/Implementation</li>
+            <li><span class="check-icon">✅</span> Correctly labeled nav, working links, and an Our Projects/Case Studies page that actually surfaces her 45 projects + 12 testimonials</li>
+            <li><span class="check-icon">✅</span> No monthly plugin fees, no recurring "SEO retainer" — she owns the site outright</li>
+            <li><span class="check-icon">✅</span> Homepage stats reconciled and accurate to her real bio figures</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">➕</span>
+        <div class="callout-body">
+          <strong>Add-Ons: Priced, Not Yet Confirmed</strong>
+          <span>Brand Refresh ($1,500), Interactive Project Map ($900), RFP Capabilities Packet ($700), Resource/Insights Blog ($800) — à la carte, not tiered. Full ceiling if she selects all four: $9,400. Awaiting her decision before finalizing the invoice.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly NOT in This Scope</strong>
+          <span>Irish Hospital Apartments (separate project), East Elementary Apartments (future, contingent on tax credits), and any general real-estate-portfolio site are adjacent pipeline — not part of this rebuild. Keep proposals separate even though it's one client relationship.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open Questions — Get Answers Before Building Final Structure</strong>
+          <span>(1) Who We Serve: 4 separate pages vs. 1 condensed hub. (2) Our Projects: modal cards vs. dedicated pages for the strongest stories. (3) Brand colors/fonts unconfirmed — current site uses ~2019–2021 navy/champagne/brick-red, exact hex and font names still needed. (4) Homepage stats bar numbers need reconciling with Kristen directly.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Base Package</strong></td>
+            <td>Corrected structure/nav, consistent service pages, Our Projects/Case Studies page</td>
+            <td class="amount">$5,500</td>
+          </tr>
+          <tr class="optional-row">
+            <td>Brand Refresh (optional)</td>
+            <td>Not yet confirmed</td>
+            <td class="amount">$1,500</td>
+          </tr>
+          <tr class="optional-row">
+            <td>Interactive Project Map (optional)</td>
+            <td>Not yet confirmed</td>
+            <td class="amount">$900</td>
+          </tr>
+          <tr class="optional-row">
+            <td>RFP Capabilities Packet (optional)</td>
+            <td>Not yet confirmed</td>
+            <td class="amount">$700</td>
+          </tr>
+          <tr class="optional-row">
+            <td>Resource/Insights Blog (optional)</td>
+            <td>Not yet confirmed</td>
+            <td class="amount">$800</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Confirmed Total (base only)</strong></td>
+            <td>Full ceiling if all add-ons selected: $9,400</td>
+            <td class="amount"><strong>$5,500</strong></td>
+          </tr>
+          <tr class="pending-row">
+            <td>⏳ Deposit</td>
+            <td>No deposit link built yet — invoice goes out once add-ons are confirmed. Standard terms: 50% at scope confirmation.</td>
+            <td class="amount">$0 of 50%</td>
+          </tr>
+          <tr>
+            <td><strong>Balance at Launch</strong></td>
+            <td>Remaining 50%, due at launch</td>
+            <td class="amount"><strong>TBD</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">Vercel (standard Latz stack) — exact monthly figure TBD, to be confirmed in the formal proposal</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Vendor Spend</span>
+          <span class="data-value">$300 one-time build + $2,000 for 6 months of SEO already paid, with no measurable results — advise her to not renew anything with them</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story (for the proposal)</strong>
+          <span>She's already spent $2,300 on a plugin-heavy, template-built site that loads in 9.3 seconds and scores 62/100 on performance — with a vendor now upselling her weekly. A one-time $5,500 rebuild with SEO built in and no recurring plugin/SEO retainer is the contrast to lead with.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>An ADA question turned into a full rebuild — and a much bigger conversation</strong>
+          <span>Started Jun 23 as a one-off question about a scammy compliance pitch. Turned into a free audit, then a rebuild ask, then Kristen opening up about her entire property portfolio (Irish Hospital Apartments, a second Iowa building, and a since-collapsed IL project) and wanting one unified web strategy.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Jun 23</div>
+          <div class="timeline-title">Initial Question — ADA "Compliance" Pressure</div>
+          <div class="timeline-desc">Kristen emails asking about an $8,300 ADA registration/audit pitch from the vendor who recently rebuilt her site — says it "feels like a money grab." Mentions she's getting the same pressure on a separate apartment building site too, and is surprised Jordan never mentioned needing this.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Wed, Jun 24 — 6:16 AM</div>
+          <div class="timeline-title">Jordan Debunks the Pitch</div>
+          <div class="timeline-desc">No government registry or certification exists to "register" a site for ADA. Explains the typical scheme: a big one-time "audit" fee plus a recurring widget subscription that isn't even a real legal defense. Flags that her homepage is set to noindex (hurting SEO). Runs both her sites through WAVE — Jordan's own build scores 10/10, the redevelopment site comes back with a good number of flagged issues. Offers a free, no-pitch look at the site's real accessibility.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Wed, Jun 24 — 8:03 AM</div>
+          <div class="timeline-title">Kristen Takes the Offer</div>
+          <div class="timeline-desc">Confirms her gut instinct was right, thanks Jordan for the detail, and takes him up on the free look. Admits she doesn't trust the vendor who built the site — "every week they try to sell me something else." Notes the cheap upfront price should have been the red flag.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Thu, Jun 25 — 5:59 AM</div>
+          <div class="timeline-title">Vacation Heads-Up + Rebuild Offer</div>
+          <div class="timeline-desc">Jordan flags he's out west through Jul 2–3. Offers a full free audit of the whole site as a rebuild starting point if she's actually considering leaving the platform, vs. a quick look if she just wants to patch what's there. Asks about any renewal dates to plan around.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Thu, Jun 25 — 8:00 PM</div>
+          <div class="timeline-title">Site Context + Unrelated CWED Ticket</div>
+          <div class="timeline-desc">Kristen shares the redevelopment site just went live last month and she's not pleased with it — will tell the full story later. Separately flags that a CWED event she published isn't showing on the live site — asks if it's a cache issue.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Jul 3 — 2:02 PM</div>
+          <div class="timeline-title">CWED Event Bug Resolved</div>
+          <div class="timeline-desc">Jordan confirms it's not a cache issue — the event published fine in Sanity, but its date was set to February and the site auto-hides past events. Asks for the correct date to fix it.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Jul 3 — 2:31 PM</div>
+          <div class="timeline-title">Full Audit Delivered</div>
+          <div class="timeline-desc">Google PageSpeed: 62/100 performance, 77/100 SEO, 9.3s to load main content (vs. Google's &lt;2.5s bar) — cwedfund.com scores 100 on SEO for comparison. Dozens of separate plugin files loading before render. Design reads template-like in places; copy is largely generic/AI-written with stock photos, undercutting a firm with 165+ years of real expertise. Asks what she's paying upfront and recurring. Offers a 15-minute call.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Jul 3 — 3:56 PM</div>
+          <div class="timeline-title">CWED Event Was a Test</div>
+          <div class="timeline-desc">Kristen clarifies the event date should've been June 25 — it was just a test, fine that it didn't go live. Her intern is now handling event posting.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Jul 3 — 4:34 PM</div>
+          <div class="timeline-title">🎉 Wants to Move — And Reveals the Bigger Picture</div>
+          <div class="timeline-desc">Confirms she wants to move the site to Jordan. Paid $300 for the build + $2,000 for 6 months of SEO with no visible results. Money is tight right now. Opens up about a much larger need: Irish Hospital Apartments (Iowa, similar ADA pressure from its original builder), a second Iowa property pending financing, and a large IL housing project — wants one unified web strategy across everything. Proposes meeting times.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Jul 6 — 9:48 AM</div>
+          <div class="timeline-title">Scoping Questions + Ballpark Sent</div>
+          <div class="timeline-desc">Jordan confirms Friday for the call, floats a $3,500–$6,000 range for the redevelopment rebuild (SEO built in, no monthly fees, full ownership), and flags a possible bundle discount depending on how the other properties shake out. Sends discovery questions on Irish Hospital Apartments, the property-management platforms she's weighing, the second Iowa property, and the IL project.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Jul 6 — 10:16 AM</div>
+          <div class="timeline-title">Answers + Budget Confirmed</div>
+          <div class="timeline-desc">Kristen confirms $3,500–$6,000 is doable once outstanding invoices are paid. Shares Irish Hospital Apartments link, confirms she's weighing RentRedi vs. TurboTenant, confirms the second property is in Pleasantville, IA (already owned, pending rehab funding), and says the IL project is "falling apart" but she still wants a site for her real estate holdings generally. Most urgent: the redevelopment rebuild and Irish Hospital Apartments.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Jul 7 — 5:11 PM</div>
+          <div class="timeline-title">Call Confirmed</div>
+          <div class="timeline-desc">Jordan confirms Friday 10am call.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Jul 13 — 5:19 PM</div>
+          <div class="timeline-title">Proposal Delay — Son's Birthday</div>
+          <div class="timeline-desc">Jordan flags he forgot his son's birthday is the next day and pushes delivery of both proposals to Wednesday rather than rushing them out. Kristen replies same evening — no issue at all, told him to enjoy the birthday.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Now</div>
+          <div class="timeline-title">Proposals in Progress</div>
+          <div class="timeline-desc">Wireframe already built and sent. Both the redevelopment rebuild proposal and the Irish Hospital Apartments proposal are due out this week. No deposit collected yet — awaiting her add-on decision before invoicing.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Approved Base Scope: Full Site Rebuild ($5,500)</strong>
+          <span>Wireframe already built and sent, using a condensed Services template pattern: Analysis fully spelled out as the reference page, Strategy/Financing/Implementation condensed to template references, and Redevelopment condensed with one extra narrative block for the Irish Hospital Apartments adaptive-reuse story.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Base Scope</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Corrected structure and navigation</li>
+            <li>Homepage stats bar — needs reconciling with her bio's actual figures</li>
+            <li>Quick links into the corrected service pages</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Base Scope</span>
+          <h4>Analysis</h4>
+          <ul>
+            <li>Fully spelled-out reference page — sets the template for the other services</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Base Scope</span>
+          <h4>Strategy / Financing / Implementation</h4>
+          <ul>
+            <li>Condensed to the Analysis template pattern</li>
+            <li>Implementation page currently has a broken link to fix</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Base Scope</span>
+          <h4>Redevelopment</h4>
+          <ul>
+            <li>Condensed template, plus one extra narrative block for the Irish Hospital adaptive-reuse story</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">Base Scope</span>
+          <h4>Our Projects / Case Studies</h4>
+          <ul>
+            <li>Currently mislabeled in nav — actually shows services, not case studies</li>
+            <li>Needs to properly surface ~45 real project rows + 12 full named testimonials sitting unused</li>
+            <li>Open question: modal cards vs. dedicated pages for the strongest stories</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--yellow);">
+          <span class="page-badge badge-open">Open Question</span>
+          <h4>Who We Serve</h4>
+          <ul>
+            <li>Undecided: 4 separate pages vs. 1 condensed hub</li>
+            <li>Get her preference before finalizing structure</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Optional Add-On</span>
+          <h4>Brand Refresh — $1,500</h4>
+          <ul>
+            <li>Current branding is ~2019–2021 navy/champagne/brick-red</li>
+            <li>Not confirmed yet</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Optional Add-On</span>
+          <h4>Interactive Project Map — $900</h4>
+          <ul>
+            <li>Not confirmed yet</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Optional Add-On</span>
+          <h4>RFP Capabilities Packet — $700</h4>
+          <ul>
+            <li>Not confirmed yet</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.7;">
+          <span class="page-badge badge-gray">Optional Add-On</span>
+          <h4>Resource / Insights Blog — $800</h4>
+          <ul>
+            <li>Not confirmed yet</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>CMS / Platform</h3>
+        <div class="data-row">
+          <span class="data-label">Status</span>
+          <span class="data-value">Not yet scoped — flag as an open item for the formal proposal (CWED/Hancock precedent uses Sanity, but nothing confirmed for this rebuild)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Content Ownership</span>
+          <span class="data-value">~45 real project write-ups + 12 named testimonials currently live on the site but buried — plan to extract directly rather than re-request from Kristen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Several open decisions are blocking a final proposal</strong>
+          <span>Structure and pricing can't fully lock until Kristen weighs in on add-ons and a couple of layout questions. Get these resolved alongside sending the proposal.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content & Decision Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">➕</span>
+            <div>
+              <strong>Add-On Decision</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Which, if any, of the four optional add-ons (Brand Refresh, Interactive Project Map, RFP Packet, Blog) she wants included</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Brand Colors & Fonts</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Current site uses ~2019–2021 navy/champagne/brick-red — need exact hex codes and font names, or confirmation she wants the Brand Refresh add-on instead</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📊</span>
+            <div>
+              <strong>Homepage Stats Reconciliation</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Current homepage stats bar doesn't match figures in her bio — need the correct numbers</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📐</span>
+            <div>
+              <strong>Who We Serve — Structure Preference</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">4 separate pages vs. 1 condensed hub</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🗂️</span>
+            <div>
+              <strong>Our Projects — Format Preference</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Modal cards vs. dedicated pages for the strongest project stories</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📝</span>
+            <div>
+              <strong>Sign-Off to Invoice</strong><br>
+              <span style="font-size:12px;color:var(--gray-600);">Confirmation of final scope needed to trigger the 50% deposit invoice</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack (Standard Latz Build)</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — exact monthly cost TBD in formal proposal</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Not yet scoped — open item</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Current Site — What's Being Fixed</h3>
+          <div class="data-row">
+            <span class="data-label">Performance</span>
+            <span class="data-value">62/100 (Google PageSpeed), 9.3s to load main content vs. Google's &lt;2.5s bar</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SEO</span>
+            <span class="data-value">77/100 — cwedfund.com (Jordan-built) scores 100/100 for comparison</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Root Cause</span>
+            <span class="data-value">Page-builder site — dozens of separate plugin files loading before render</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Known Bugs</span>
+            <span class="data-value">"Our Projects" nav mislabeled; broken Implementation page link</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Accessibility</h3>
+        <div class="data-row">
+          <span class="data-label">Standard</span>
+          <span class="data-value">Built in from the start per standard Latz practice — not sold as a separate paid "audit" package</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Context</span>
+          <span class="data-value">This is the exact concern the old vendor tried to monetize at $8,300 — real accessibility work here is a natural selling point against that pitch</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Domain & Migration</h3>
+        <div class="data-row">
+          <span class="data-label">Current Domain</span>
+          <span class="data-value">redevelopment-resources.com</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Migration Plan</span>
+          <span class="data-value">TBD — logistics to be worked out once scope/proposal is confirmed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Pre-contract — no deposit yet</strong>
+          <span>Phases below are prospective, pending Kristen's add-on decision and deposit. She's noted she has invoices out that will fund the deposit once paid.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Now</div>
+          <h4>Finalize Scope & Send Proposal</h4>
+          <ul>
+            <li>Deliver formal rebuild proposal (due this week, alongside Irish Hospital Apartments proposal)</li>
+            <li>Get her add-on decision (Brand Refresh, Project Map, RFP Packet, Blog)</li>
+            <li>Resolve Who We Serve and Our Projects structure questions</li>
+            <li>Get brand colors/fonts and homepage stats figures</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">On Deposit</div>
+          <h4>Kickoff & Build</h4>
+          <ul>
+            <li>Invoice 50% deposit once scope is confirmed</li>
+            <li>Build service page templates from the existing wireframe</li>
+            <li>Build the corrected Our Projects/Case Studies page</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Mid-Build</div>
+          <h4>Content Migration & Refinement</h4>
+          <ul>
+            <li>Migrate the ~45 real projects + 12 testimonials off the current site</li>
+            <li>Fix broken Implementation link and nav labeling</li>
+            <li>Reconcile homepage stats with her actual bio figures</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Launch</div>
+          <h4>Final Review & Go Live</h4>
+          <ul>
+            <li>Final review with Kristen</li>
+            <li>Domain cutover</li>
+            <li>Final 50% invoice sent at launch</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Adjacent Pipeline</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Kristen wants one unified web strategy across her whole portfolio</strong>
+          <span>These are separate projects/proposals from the redevelopment rebuild, but worth tracking together — she's explicitly said she sees Jordan as the single point of contact for all of it.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🏢 Irish Hospital Apartments Site</h4>
+          <div class="price">~$1,800–$3,000</div>
+          <p>Forest City, IA — a converted historic hospital, 8 units, always fully occupied. Separate proposal in progress alongside this one. Pending her decision between RentRedi and TurboTenant for rent-payment/property management (neither has a public API, which affects integration approach).</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🏫 East Elementary Apartments Site</h4>
+          <div class="price">~$1,200–$2,000</div>
+          <p>Pleasantville, IA — a former elementary school she already owns, contingent on two tax credit applications clearing. Would reuse the Irish Hospital template pattern once financing is secured.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>➕ Unselected Add-Ons</h4>
+          <div class="price">$700–$1,500 each</div>
+          <p>Any of the four current add-ons (Brand Refresh, Project Map, RFP Packet, Blog) she doesn't select now — worth revisiting after launch once she sees the rebuilt site live.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📦 Portfolio Bundle Discount</h4>
+          <div class="price">TBD</div>
+          <p>She's explicitly open to bundling pricing across the redevelopment site, Irish Hospital, and future Iowa/IL properties. Worth structuring proposals so a bundle discount is easy to offer if multiple projects land together.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Jun 23–24 — How This Started</div>
+        <p>Kristen came in with a specific, narrow question about a scammy $8,300 "ADA compliance audit" pitch — not shopping for a rebuild. The honest, no-charge answer (plus a free WAVE/PageSpeed look) is what opened the door. Worth remembering: she came to us because we hadn't tried to sell her that same thing.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Vendor Pattern — Watch For This With Her</div>
+        <p>She's now run into the same upsell pattern on two separate properties: her redevelopment site's SEO vendor charged $2,000 for six months with no real results, and Irish Hospital Apartments' original builder (Accent Graphix) is now trying to sell her a $500 "fix" for issues they created themselves in their 2022 build. This context is exactly why she values ownership over recurring fees — lean into that in proposals.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">IL Project — Handle Lightly</div>
+        <p>The Illinois housing development she was pursuing personally fell through during this relationship. She's mentioned wanting a general real-estate-holdings site instead. Don't dwell on the IL project specifics in client-facing communication — it's a sensitive, recent loss for her.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Detail-oriented and sharp — she caught her own CMS event-date mistake and correctly smelled the ADA audit pitch as a scam on instinct before ever asking Jordan. Runs multiple businesses and properties simultaneously and communicates in bursts across topics in the same email. Generally responsive, but has gone quiet on threads before re-engaging (the original Oct-era proposal history precedent applies here too — don't read silence as disinterest). Has explicitly said she values directness, and sees Jordan as a trusted single point of contact for a growing portfolio of web needs — not just this one project.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Repeat-Client Leverage</div>
+        <p>cwedfund.com (a prior ~$14K Latz build for the loan fund she also administers) is a strong, concrete reference point already sitting in front of her — it scored 100/100 SEO in the same test where her current redevelopment site scored 77/100. Use it as proof, not just a claim.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav FAB
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('navFab');
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeSidebar();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
