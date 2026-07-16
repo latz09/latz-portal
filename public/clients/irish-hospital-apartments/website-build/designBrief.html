@@ -1,29 +1,752 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Irish Hospital Apartments — Designer Brief | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #0a0a0a;
+    --sidebar-border: rgba(255,255,255,0.06);
+    --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
+    --teal-light: #e8f7f8;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --text: #111827;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 228px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+    transform: translateX(0);
+  }
+
+  .sidebar-top { padding: 22px 18px 18px; border-bottom: 1px solid var(--sidebar-border); }
+
+  .sidebar-wordmark { display: flex; align-items: center; gap: 7px; margin-bottom: 18px; }
+  .sidebar-wordmark .dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+
+  .lwd-text {
+    font-family: 'DM Mono', monospace; font-size: 9.5px; color: rgba(255,255,255,0.3);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+
+  .sidebar-client {
+    font-family: 'Fraunces', serif; font-size: 15.5px; font-weight: 600;
+    color: rgba(255,255,255,0.92); line-height: 1.2; margin-bottom: 3px;
+  }
+
+  .sidebar-doctype {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.22);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  .sidebar-status {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 11px;
+    background: rgba(24,161,173,0.08); border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px; padding: 3px 9px;
+  }
+
+  .pulse { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .sidebar-status span {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--teal);
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+  }
+
+  .sidebar-nav { padding: 10px 8px; flex: 1; }
+
+  .nav-group-label {
+    font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.18); padding: 10px 8px 4px;
+  }
+
+  .nav-link {
+    display: flex; align-items: center; gap: 9px; padding: 6px 8px;
+    color: rgba(255,255,255,0.38); text-decoration: none; font-size: 12.5px;
+    font-weight: 400; border-radius: 5px; transition: all 0.12s; margin-bottom: 1px;
+  }
+
+  .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: var(--teal); background: rgba(24,161,173,0.07); font-weight: 500; }
+
+  .nav-icon { font-size: 12px; width: 16px; text-align: center; flex-shrink: 0; opacity: 0.6; }
+  .nav-link.active .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 14px 18px; border-top: 1px solid var(--sidebar-border);
+    font-family: 'DM Mono', monospace; font-size: 8.5px; color: rgba(255,255,255,0.18);
+    letter-spacing: 0.06em; line-height: 2;
+  }
+
+  /* OVERLAY + FAB */
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    z-index: 150; opacity: 0; transition: opacity 280ms cubic-bezier(0.4,0,0.2,1);
+  }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  .fab-menu {
+    display: none; position: fixed; bottom: 24px; right: 20px; width: 52px; height: 52px;
+    border-radius: 50%; background: var(--teal); color: #fff; font-size: 20px; border: none;
+    z-index: 300; box-shadow: 0 4px 16px rgba(24,161,173,0.4); cursor: pointer;
+    align-items: center; justify-content: center;
+  }
+
+  /* MAIN */
+  .main { margin-left: 228px; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER — light, teal glow */
+  .page-header {
+    background: var(--white);
+    padding: 52px 60px 44px;
+    border-bottom: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 72% 50%, rgba(24,161,173,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .header-overline {
+    font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .header-overline::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--teal); opacity: 0.5; }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif; font-size: 40px; font-weight: 600;
+    color: var(--gray-900); line-height: 1.08; margin-bottom: 7px; letter-spacing: -0.6px;
+  }
+
+  .page-header .sub { color: var(--gray-500); font-size: 13px; font-weight: 300; letter-spacing: 0.02em; }
+
+  .header-meta {
+    display: flex; gap: 0; margin-top: 34px; border: 1px solid var(--gray-200);
+    border-radius: 7px; overflow: hidden; width: fit-content; background: var(--gray-50);
+  }
+
+  .meta-item { padding: 13px 22px; border-right: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 4px; }
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gray-400);
+  }
+
+  .meta-value { font-size: 12.5px; font-weight: 500; color: var(--gray-700); }
+  .meta-value.ok { color: var(--green); }
+  .meta-value.warn { color: #b45309; }
+
+  /* CONTENT */
+  .content { padding: 48px 60px 96px; flex: 1; }
+  section { margin-bottom: 64px; scroll-margin-top: 32px; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+
+  .section-num {
+    font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--teal);
+    background: var(--teal-dim); border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px; padding: 2px 7px; font-weight: 500; letter-spacing: 0.06em;
+  }
+
+  .section-header h2 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.2px; }
+
+  .section-divider { height: 1px; background: var(--gray-200); margin-bottom: 22px; }
+
+  .card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px 22px; margin-bottom: 10px; }
+
+  .card-title {
+    font-family: 'DM Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .data-row { display: grid; grid-template-columns: 144px 1fr; gap: 14px; align-items: start; padding: 8px 0; border-bottom: 1px solid var(--gray-100); }
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-400); letter-spacing: 0.04em; padding-top: 1px; }
+  .data-value { font-size: 13px; color: var(--gray-700); font-weight: 400; line-height: 1.5; }
+  .data-value a { color: var(--teal); text-decoration: none; }
+  .data-value a:hover { text-decoration: underline; }
+
+  .callout { border-radius: 7px; padding: 13px 17px; margin-bottom: 12px; display: flex; gap: 11px; align-items: flex-start; border: 1px solid transparent; }
+  .callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+  .callout-body p, .callout-body span { font-size: 12px; line-height: 1.55; }
+
+  .callout.info { background: var(--teal-light); border-color: rgba(24,161,173,0.2); color: #0e7490; }
+  .callout.warn { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+  .callout.neutral { background: var(--gray-50); border-color: var(--gray-200); color: var(--gray-600); }
+
+  /* HIGHLIGHT BOX — light teal, not dark */
+  .highlight-box {
+    background: var(--teal-light);
+    border: 1px solid rgba(24,161,173,0.15);
+    border-left: 3px solid var(--teal);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+  }
+
+  .highlight-box strong {
+    font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--teal);
+    letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px;
+  }
+
+  .highlight-box p { font-size: 14px; color: var(--gray-700); line-height: 1.65; font-weight: 300; font-family: 'Fraunces', serif; }
+
+  .mockup-ref {
+    display: flex; align-items: center; gap: 13px; background: var(--gray-50);
+    border: 1px solid var(--gray-200); border-radius: 7px; padding: 13px 15px;
+    text-decoration: none; transition: border-color 0.12s, background 0.12s; margin-bottom: 10px;
+  }
+  .mockup-ref:hover { border-color: var(--teal); background: var(--teal-light); }
+  .mockup-ref .ref-icon { font-size: 18px; flex-shrink: 0; }
+  .mockup-ref .ref-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .mockup-ref .ref-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+  .mockup-ref .ref-url { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--teal); margin-top: 1px; }
+
+  .swatch-row { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .swatch-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .swatch-chip { width: 56px; height: 56px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); }
+  .swatch-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-500); letter-spacing: 0.03em; }
+
+  .page-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 17px 18px; position: relative; overflow: hidden; }
+  .page-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--teal); }
+  .page-card h4 { font-family: 'Fraunces', serif; font-size: 14.5px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .page-card .page-url { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--gray-400); letter-spacing: 0.04em; margin-bottom: 11px; }
+  .page-card ul { list-style: none; padding: 0; }
+  .page-card ul li { font-size: 12px; color: var(--gray-600); padding: 3px 0 3px 13px; position: relative; line-height: 1.45; }
+  .page-card ul li::before { content: '—'; position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 5px; }
+
+  .page-badge {
+    display: inline-block; font-family: 'DM Mono', monospace; font-size: 8.5px; font-weight: 500;
+    padding: 2px 7px; border-radius: 4px; margin-bottom: 7px; letter-spacing: 0.06em;
+    text-transform: uppercase; border: 1px solid transparent;
+  }
+  .badge-static { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .badge-cta { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+
+  .asset-list { list-style: none; padding: 0; }
+  .asset-list li { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--gray-100); }
+  .asset-list li:last-child { border-bottom: none; }
+  .asset-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
+  .asset-body { flex: 1; }
+  .asset-body strong { font-size: 13px; font-weight: 600; color: var(--gray-800); display: block; margin-bottom: 2px; }
+  .asset-body span { font-size: 11.5px; color: var(--gray-500); line-height: 1.45; }
+  .asset-status { margin-left: auto; flex-shrink: 0; padding-top: 1px; }
+
+  .pill {
+    display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+    font-family: 'DM Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid transparent;
+  }
+  .pill-orange { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+
+  .question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .question-item:last-child { border-bottom: none; }
+  .question-text { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .question-context { font-size: 12px; color: var(--gray-500); line-height: 1.55; }
+
+  .arrow-list { list-style: none; padding: 0; margin-top: 10px; }
+  .arrow-list li { font-size: 12px; color: var(--gray-600); padding: 4px 0 4px 15px; position: relative; line-height: 1.4; }
+  .arrow-list li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 10px; top: 5px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .page-header, .content { padding-left: 36px; padding-right: 36px; }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 240px;
+      transform: translateX(-100%);
+      transition: transform 280ms cubic-bezier(0.4,0,0.2,1);
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .two-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .header-meta { flex-direction: column; width: 100%; }
+    .meta-item { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .meta-item:last-child { border-bottom: none; }
+    .sidebar-overlay { display: block; }
+    .fab-menu { display: flex; }
+  }
+
+  @media (max-width: 680px) {
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; }
+    .callout { flex-direction: column; gap: 6px; }
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header { padding: 32px 20px 28px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="dot"></div>
+      <span class="lwd-text">Latz Web Design</span>
+    </div>
+    <div class="sidebar-client">Irish Hospital Apartments</div>
+    <div class="sidebar-doctype">Designer Brief</div>
+    <div class="sidebar-status">
+      <div class="pulse"></div>
+      <span>In Progress</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Brief</div>
+    <a href="#snapshot" class="nav-link active"><span class="nav-icon">📋</span> Project Snapshot</a>
+    <a href="#client" class="nav-link"><span class="nav-icon">🏢</span> Client & Audience</a>
+    <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand & Direction</a>
+    <a href="#pages" class="nav-link"><span class="nav-icon">📄</span> Page & Content</a>
+    <a href="#assets" class="nav-link"><span class="nav-icon">📦</span> Assets & Status</a>
+    <a href="#questions" class="nav-link"><span class="nav-icon">💬</span> Let's Talk</a>
+  </div>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<button class="fab-menu" id="fabMenu">☰</button>
+
+<div class="main">
+
+  <div class="page-header">
+    <div class="header-overline">Designer Brief · For Alyssa</div>
+    <h1>Irish Hospital Apartments</h1>
+    <div class="sub">Single Landing Page &nbsp;·&nbsp; Brand Refresh</div>
+
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Contact</span>
+        <span class="meta-value">Kristen Fish-Peterson — Owner</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Pages</span>
+        <span class="meta-value">1 in scope</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deposit</span>
+        <span class="meta-value warn">Sent — awaiting receipt</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Brand</span>
+        <span class="meta-value warn">Open to reimagine</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Wireframe</span>
+        <span class="meta-value">Included — <code style="font-family:'DM Mono',monospace;">wireframe.html</code>, same folder</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <section id="snapshot">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Snapshot</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="highlight-box">
+        <strong>The job</strong>
+        <p>Give Irish Hospital Apartments a landing page that finally matches the building. It's a converted 1930s hospital in Forest City, Iowa — fully occupied since November 2022 — and right now the site undersells that story. One page needs to do three things: hook a curious visitor with the real history, make applying feel like an easy next step, and get current residents to rent pay or maintenance requests fast, with zero friction.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The Build</div>
+          <div class="data-row"><span class="data-label">Scope</span><span class="data-value">Single landing page — Hero, Building Story, Amenities, Resident Services</span></div>
+          <div class="data-row"><span class="data-label">Brand</span><span class="data-value">Full refresh in scope — logo, palette, supporting graphics all open</span></div>
+          <div class="data-row"><span class="data-label">Stack</span><span class="data-value">Next.js, React, Tailwind, Vercel</span></div>
+          <div class="data-row"><span class="data-label">Resident Services</span><span class="data-value">External CTA links out to RentRedi or TurboTenant — platform TBD, design should not depend on which one wins</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Not in Scope</div>
+          <div class="data-row"><span class="data-label">Rental platform</span><span class="data-value">No build-time integration — clean external link-out only</span></div>
+          <div class="data-row"><span class="data-label">Unit listings</span><span class="data-value">No individual unit-by-unit showcase in this build — future upsell</span></div>
+          <div class="data-row"><span class="data-label">Availability grid</span><span class="data-value">Building is always fully occupied — a vacancy grid would add nothing here</span></div>
+          <div class="data-row"><span class="data-label">Photo shoot</span><span class="data-value">No new photography — working from what already exists</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="client">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Client & Audience</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">The Client</div>
+          <div class="data-row"><span class="data-label">Who She Is</span><span class="data-value">Kristen Fish-Peterson personally led the two-year adaptive reuse of this building — nine sources in the capital stack. She's not a distant property manager; she's the person who made this place happen.</span></div>
+          <div class="data-row"><span class="data-label">Our Contact</span><span class="data-value">Kristen, Owner — decisive, moves fast once committed, done waiting on a slow vendor.</span></div>
+          <div class="data-row"><span class="data-label">Tone</span><span class="data-value">Warm, historic, a little proud. Not corporate, not generic-apartment-complex.</span></div>
+          <div class="data-row"><span class="data-label">Positioning</span><span class="data-value">Workforce housing — real and unpretentious, not luxury-market.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">The Audience</div>
+          <div class="data-row"><span class="data-label">Prospects</span><span class="data-value">Deciding whether to apply. Mobile-heavy, casual browsing — this is the story-and-persuasion audience.</span></div>
+          <div class="data-row"><span class="data-label">Current Residents</span><span class="data-value">Repeat visitors who just want to pay rent or file a maintenance request. Speed over persuasion.</span></div>
+          <div class="data-row"><span class="data-label">Devices</span><span class="data-value">Mostly mobile for prospects; mixed for residents returning to pay rent.</span></div>
+          <div class="data-row"><span class="data-label">Key Insight</span><span class="data-value">The building is always fully occupied — there's rarely urgency to "sell" vacancy. Tone can lean toward pride and character rather than a hard sales push.</span></div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Vibe in one sentence</strong>
+          <span>A small-town Iowa landmark, brought back to life — proud of its history, confident without being closed-off, nothing sterile or corporate about it.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="brand">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Brand & Visual Direction</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚪</span>
+        <div class="callout-body">
+          <strong>Real history, wide-open direction — this is the fun one</strong>
+          <span>Kristen isn't attached to the current mark. She's fully on board with refining it or reworking it entirely, as long as it stays grounded in the real building — not generic apartment-marketing aesthetics. Full latitude on logo, palette, and supporting graphics.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">The Real Story — This Is the Actual Brand Asset</div>
+        <div class="data-row"><span class="data-label">Then</span><span class="data-value">Built in the 1930s as a hospital in Forest City, IA. Later became a law enforcement center. Then sat vacant.</span></div>
+        <div class="data-row"><span class="data-label">The Turn</span><span class="data-value">Kristen personally led a two-year adaptive reuse — nine sources in the capital stack — to bring it back as apartments.</span></div>
+        <div class="data-row"><span class="data-label">Now</span><span class="data-value">Fully occupied since November 2022. A landmark building doing real work in a town of ~4,000, home to Winnebago Industries.</span></div>
+        <div class="data-row"><span class="data-label">Why It Matters</span><span class="data-value">This history is worth more than any logo or color choice — it's the emotional hook the whole page should hang on, more than an amenity list ever could.</span></div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">What Currently Exists — Reference Only, Not a Constraint</div>
+          <div class="swatch-row">
+            <div class="swatch-block"><div class="swatch-chip" style="background:#8B1E24;"></div><span class="swatch-label">Crimson</span></div>
+            <div class="swatch-block"><div class="swatch-chip" style="background:#5A3A2E;"></div><span class="swatch-label">Dark brown</span></div>
+            <div class="swatch-block"><div class="swatch-chip" style="background:#A8A29E;"></div><span class="swatch-label">Warm stone gray</span></div>
+          </div>
+          <p style="font-size:11.5px;color:var(--gray-500);line-height:1.55;">Approximate current palette — sampled for reference, not locked in.</p>
+          <div class="data-row"><span class="data-label">Current Logo</span><span class="data-value">Badge-shaped mark inspired by an actual doorknob plate from the building — a nice detail, but not precious. Worth keeping in spirit, or replacing entirely.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Reference — Your Creative Sandbox</div>
+          <a class="mockup-ref" href="https://irishhospitalapartments.com" target="_blank" rel="noopener">
+            <div class="ref-icon">🖥️</div>
+            <div>
+              <div class="ref-label">Current live site</div>
+              <div class="ref-name">irishhospitalapartments.com</div>
+              <div class="ref-url">Click to view ↗</div>
+            </div>
+          </a>
+          <p style="font-size:11.5px;color:var(--gray-500);line-height:1.55;margin-bottom:4px;">Current logo, colors, and photography all live here — treat the visual system as a loose starting point, not a floor.</p>
+          <ul class="arrow-list">
+            <li>Does the crimson/brown/stone palette earn its place, or is there something truer to small-town, historic-building Iowa?</li>
+            <li>Is there a tasteful way to nod to "converted hospital" without it feeling gimmicky?</li>
+            <li>What does "proud, historic, unpretentious" look like typographically?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pages">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Page & Content</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout neutral">
+        <span class="callout-icon">📐</span>
+        <div class="callout-body">
+          <strong>A basic wireframe maps section order — these notes cover intent</strong>
+          <span>A basic wireframe (<code style="font-family:'DM Mono',monospace;">wireframe.html</code>, in this same folder) maps out section order and content blocks for this page. It's intentionally light — structure only, no layout or visual direction. Your read on it is genuinely wanted: reorder, merge, split, or push back on anything that doesn't serve the design. Once you've had a look, let Jordan know your thoughts and a refined version will go together before anything goes to the client.</span>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Hero</h4>
+          <div class="page-url">#hero</div>
+          <ul>
+            <li>First impression — proud, historic, not sterile</li>
+            <li>Existing photography available — building exterior, in hand</li>
+            <li>Copy adaptable from current "Where History Meets Modernity" line</li>
+            <li>Primary CTA toward application, secondary nod to residents</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Building Story</h4>
+          <div class="page-url">#story</div>
+          <ul>
+            <li>The real hook: 1930s hospital → law enforcement center → vacant → 2-year adaptive reuse</li>
+            <li>Kristen's personal role leading the project — nine capital sources</li>
+            <li>Fully occupied since November 2022 — a point of pride, not a sales stat</li>
+            <li>This section should do more emotional work than any amenity bullet list</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Section</span>
+          <h4>Amenities</h4>
+          <div class="page-url">#amenities</div>
+          <ul>
+            <li>Existing amenity list from current site is adaptable — hardwood-style flooring, designer kitchens, quartz counters</li>
+            <li>Centrally located — near Waldorf University, Hy-Vee, downtown Forest City</li>
+            <li>Keep grounded and real, not luxury-market language</li>
+            <li>Unit interior photography already in hand</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cta">CTA Panel</span>
+          <h4>Resident Services</h4>
+          <div class="page-url">#services</div>
+          <ul>
+            <li>Three clear actions: Apply, Pay Rent, Maintenance Request</li>
+            <li>All three link externally — to RentRedi or TurboTenant, platform not yet finalized</li>
+            <li>Design must not depend on which platform wins — treat as a clean link-out, not an embed</li>
+            <li>Speed and clarity over persuasion — this is for people who already live here</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="assets">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Assets & Content Status</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="card">
+        <div class="card-title">What We Have / What's Coming</div>
+        <ul class="asset-list">
+          <li>
+            <span class="asset-icon">📸</span>
+            <div class="asset-body"><strong>Photography</strong><span>Professional shots already exist on the current site — building exterior and unit interiors. Reusable, no new shoot needed.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">✍️</span>
+            <div class="asset-body"><strong>Copy</strong><span>Largely adaptable from the current site's "Where History Meets Modernity" positioning and amenity list — needs polish, not a rewrite from scratch.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">Adaptable</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🏥</span>
+            <div class="asset-body"><strong>Building History Details</strong><span>Hospital → law enforcement center → vacant → adaptive reuse timeline, plus Kristen's personal role — confirmed, in hand for Building Story section.</span></div>
+            <span class="asset-status"><span class="pill pill-teal">In Hand</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🎨</span>
+            <div class="asset-body"><strong>Current Logo & Colors</strong><span>Crimson/brown/stone palette and doorknob-plate badge logo — reference only, not a constraint. See Brand section.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Reference Only</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">📁</span>
+            <div class="asset-body"><strong>Brand Asset Files</strong><span>Requested from Kristen — any existing logo files, brand colors, and fonts tied to the current mark. Not required given the creative freedom on this project, but useful reference if they exist. Waiting on her reply.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🔗</span>
+            <div class="asset-body"><strong>Resident Platform Link</strong><span>RentRedi vs. TurboTenant — client decision still pending. Design the CTA panel to be platform-agnostic; link swap is a quick update once decided.</span></div>
+            <span class="asset-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="asset-icon">🌐</span>
+            <div class="asset-body"><strong>Domain</strong><span>irishhospitalapartments.com — Jordan handles DNS transfer at launch.</span></div>
+            <span class="asset-status"><span class="pill pill-gray">Jordan Handles</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">☕</span>
+        <div class="callout-body">
+          <strong>Bring your instincts — not just answers</strong>
+          <span>This brand direction is wide open, and that's the exciting part. These are conversation starters, not a checklist — if you've got a direction you want to run with, let's hear it.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Open Design Questions</div>
+        <div class="question-item">
+          <div class="question-text">How far do we push the "converted hospital" story visually?</div>
+          <div class="question-context">Is there a tasteful way to nod to that history — a detail, a motif, a subtle callback — without it feeling gimmicky or like a theme park?</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Is the doorknob-plate logo worth keeping in spirit, or does this need a fresh mark?</div>
+          <div class="question-context">Kristen's genuinely open either way. If the badge concept still serves the story once refined, great — if a new mark tells it better, that's on the table too.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">How do we handle "always full" in tone?</div>
+          <div class="question-context">Proud and confident without sounding closed-off to a genuinely interested prospect. This isn't a hard sell — but it shouldn't feel unwelcoming either.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Does the current crimson/brown/stone palette earn its place?</div>
+          <div class="question-context">Or is there something that better captures small-town, historic-building Iowa — Forest City, not a luxury urban rehab.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('fabMenu');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    fab.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    document.body.style.overflow = '';
+    setTimeout(() => { overlay.style.display = 'none'; }, 280);
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeSidebar();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

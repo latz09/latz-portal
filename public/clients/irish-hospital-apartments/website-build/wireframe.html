@@ -1,29 +1,641 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Irish Hospital Apartments — Site Wireframe | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #2b1a14;
+				--primary-mid: #40291f;
+				--accent: #8b2635;
+				--accent-light: rgba(139, 38, 53, 0.08);
+				--light: #f2e8d8;
+				--light-dark: #e8dcc4;
+				--mid: #6b5d4f;
+				--green: #55694a;
+				--green-light: rgba(85, 105, 74, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Source Sans 3', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(43, 26, 20, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(43, 26, 20, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0; left: 0;
+				width: 100%; height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible { opacity: 1; pointer-events: auto; }
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0; left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand { padding: 34px 28px 28px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+			.sidebar-lwd { font-family: 'Source Sans 3', sans-serif; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 11px; }
+			.sidebar-client { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--light); line-height: 1.2; margin-bottom: 6px; }
+			.sidebar-doctype { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: rgba(242,232,216,0.4); letter-spacing: 0.08em; margin-bottom: 17px; }
+
+			.status-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(139,38,53,0.2); border: 1px solid rgba(139,38,53,0.4); border-radius: 5px; padding: 6px 14px; }
+			.status-dot { width: 7px; height: 7px; background: #e0666a; border-radius: 50%; animation: pulse 2.5s infinite; }
+			@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+			.status-pill span { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #e0666a; }
+
+			.sidebar-nav { padding: 17px 11px; flex: 1; }
+			.nav-group-label { font-family: 'Source Sans 3', sans-serif; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 17px 14px 7px; }
+			.nav-link { display: flex; align-items: center; gap: 13px; padding: 10px 14px; color: rgba(242,232,216,0.45); text-decoration: none; font-family: 'Source Sans 3', sans-serif; font-size: 17px; font-weight: 400; border-radius: 7px; transition: all 0.12s; border-left: 3px solid transparent; margin-bottom: 2px; }
+			.nav-link:hover { color: var(--light); background: rgba(255,255,255,0.05); }
+			.nav-link.active { color: var(--light); background: rgba(139,38,53,0.15); border-left-color: var(--accent); font-weight: 500; }
+			.nav-icon { font-size: 17px; width: 22px; text-align: center; flex-shrink: 0; }
+
+			.sidebar-footer { padding: 20px 28px; border-top: 1px solid rgba(255,255,255,0.06); font-family: 'Source Sans 3', sans-serif; font-size: 12px; color: rgba(255,255,255,0.18); letter-spacing: 0.05em; line-height: 2; }
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none; position: fixed; bottom: 24px; right: 24px;
+				width: 73px; height: 73px; border-radius: 50%;
+				background: var(--accent); color: var(--light);
+				border: none; font-size: 30px; z-index: 300;
+				box-shadow: 0 4px 16px rgba(0,0,0,0.25); cursor: pointer;
+				align-items: center; justify-content: center;
+			}
+			.mobile-fab:active { transform: scale(0.92); }
+
+			/* ── MAIN ── */
+			.main { margin-left: var(--sidebar-w); min-height: 100vh; padding: 67px 62px 140px; }
+
+			.doc-header { margin-bottom: 73px; }
+			.doc-overline { font-family: 'Architects Daughter', cursive; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 11px; }
+			.doc-title { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--primary); margin-bottom: 8px; line-height: 1.15; }
+			.doc-sub { font-family: 'Source Sans 3', sans-serif; font-size: 20px; color: rgba(43,26,20,0.5); font-weight: 300; }
+
+			.doc-meta-strip { display: flex; gap: 0; margin-top: 34px; border: 2px solid rgba(43,26,20,0.15); border-radius: 8px; overflow: hidden; width: fit-content; background: rgba(255,255,255,0.5); flex-wrap: wrap; }
+			.meta-item { padding: 14px 28px; border-right: 1px solid rgba(43,26,20,0.1); display: flex; flex-direction: column; gap: 4px; }
+			.meta-item:last-child { border-right: none; }
+			.meta-label { font-family: 'Architects Daughter', cursive; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(43,26,20,0.4); }
+			.meta-value { font-family: 'Source Sans 3', sans-serif; font-size: 17px; font-weight: 500; color: var(--primary); }
+			.meta-value.warn { color: var(--accent); }
+			.meta-value.ok { color: var(--green); }
+
+			.wf-section { margin-bottom: 90px; scroll-margin-top: 45px; }
+			.section-label { font-family: 'Architects Daughter', cursive; font-size: 15px; color: var(--primary); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+			.section-label::after { content: ''; flex: 1; height: 1px; background: var(--primary); opacity: 0.15; }
+			.section-num { background: var(--primary); color: var(--light); font-family: 'Architects Daughter', cursive; font-size: 15px; width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+			.wireframe-card { background: rgba(255,255,255,0.7); border: 3px solid var(--primary); border-radius: 8px; box-shadow: 7px 7px 0 rgba(43,26,20,0.1); overflow: hidden; }
+
+			.wf-nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 31px; border-bottom: 3px solid var(--primary); background: var(--white); flex-wrap: wrap; gap: 10px; }
+			.wf-nav-logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 21px; color: var(--primary); }
+			.wf-nav-links { display: flex; gap: 20px; align-items: center; font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: rgba(43,26,20,0.5); flex-wrap: wrap; }
+			.wf-nav-links span.active { color: var(--primary); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+
+			.wf-body { padding: 39px 39px 50px; }
+
+			.annotation { font-family: 'Architects Daughter', cursive; font-size: 17px; color: var(--primary); line-height: 1.5; margin-top: 14px; padding: 11px 20px; background: rgba(43,26,20,0.04); border-left: 4px solid rgba(43,26,20,0.2); border-radius: 0 6px 6px 0; }
+			.annotation.assumption { border-left-color: var(--accent); background: rgba(139,38,53,0.05); }
+
+			.decision-box { border: 3px dashed var(--accent); border-radius: 8px; padding: 20px 22px; margin: 20px 0; background: rgba(139,38,53,0.04); }
+			.decision-label { font-family: 'Architects Daughter', cursive; font-size: 15px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 11px; display: flex; align-items: center; gap: 8px; }
+			.decision-label::before { content: '⚑'; }
+
+			.cms-tag { font-family: 'Architects Daughter', cursive; font-size: 14px; color: var(--green); border: 1px solid var(--green); border-radius: 4px; padding: 3px 11px; display: inline-block; white-space: nowrap; }
+
+			.wf-block { border: 3px dashed rgba(43,26,20,0.15); border-radius: 8px; padding: 25px 22px; margin-bottom: 22px; background: rgba(242,232,216,0.4); }
+			.wf-block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 17px; flex-wrap: wrap; gap: 11px; }
+
+			.wf-heading-lg { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+			.wf-heading-md { font-family: 'Playfair Display', serif; font-size: 25px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+			.wf-heading-sm { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+			.wf-subtext { font-family: 'Source Sans 3', sans-serif; font-size: 20px; color: rgba(43,26,20,0.5); font-style: italic; margin-bottom: 20px; line-height: 1.5; }
+			.wf-body-text { font-family: 'Source Sans 3', sans-serif; font-size: 18px; color: rgba(43,26,20,0.65); line-height: 1.6; margin-bottom: 14px; }
+			.section-divider { border: none; border-top: 1px dashed rgba(43,26,20,0.15); margin: 28px 0; }
+
+			.wf-cta { display: inline-block; background: var(--primary); color: var(--light); font-family: 'Source Sans 3', sans-serif; font-size: 18px; font-weight: 600; padding: 13px 31px; border-radius: 5px; margin-top: 11px; }
+			.wf-cta.accent { background: var(--accent); color: var(--light); }
+			.wf-cta.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+
+			.wf-footer { border-top: 3px solid var(--primary); padding: 20px 31px; background: var(--primary); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+			.wf-footer span { font-family: 'Source Sans 3', sans-serif; font-size: 15px; color: rgba(242,232,216,0.4); }
+
+			.img-placeholder { background: rgba(43,26,20,0.07); border: 3px dashed rgba(43,26,20,0.2); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px; padding: 28px; }
+			.img-placeholder .img-icon { font-family: 'Architects Daughter', cursive; font-size: 39px; opacity: 0.3; color: var(--primary); }
+			.img-placeholder .img-label { font-family: 'Architects Daughter', cursive; font-size: 17px; color: rgba(43,26,20,0.45); text-align: center; line-height: 1.6; }
+
+			.quick-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+			.quick-link-card { border: 3px dashed rgba(43,26,20,0.2); border-radius: 8px; padding: 20px 17px; text-align: center; background: rgba(255,255,255,0.5); }
+			.quick-link-icon { font-size: 28px; margin-bottom: 8px; }
+			.quick-link-label { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--primary); }
+
+			.service-row { display: flex; gap: 17px; flex-wrap: wrap; margin-top: 14px; }
+			.service-card { flex: 1; min-width: 200px; border: 3px dashed rgba(43,26,20,0.2); border-radius: 8px; padding: 22px; background: rgba(255,255,255,0.55); text-align: center; }
+			.service-icon { font-size: 26px; margin-bottom: 10px; }
+			.service-name { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+			.service-note { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: rgba(43,26,20,0.5); margin-bottom: 12px; }
+
+			.checklist { list-style: none; padding: 0; }
+			.check-item { display: flex; align-items: flex-start; gap: 17px; padding: 14px 0; border-bottom: 1px dashed rgba(43,26,20,0.12); font-family: 'Source Sans 3', sans-serif; font-size: 18px; color: var(--primary); }
+			.check-item:last-child { border-bottom: none; }
+			.check-icon { font-size: 19px; flex-shrink: 0; margin-top: 1px; }
+
+			.provisional-banner {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--accent);
+				line-height: 1.6;
+				padding: 17px 22px;
+				background: rgba(139,38,53,0.06);
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				margin-bottom: 34px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root { --sidebar-w: 280px; }
+				.main { padding: 44px 34px 110px; }
+				.quick-links { grid-template-columns: repeat(2, 1fr); }
+			}
+
+			@media (max-width: 680px) {
+				.sidebar { transform: translateX(-100%); }
+				.sidebar.mobile-open { transform: translateX(0); }
+				.sidebar-overlay { display: block; }
+				.mobile-fab { display: flex; }
+				.main { margin-left: 0; padding: 24px 16px 80px; }
+				.doc-title { font-size: 28px; }
+				.doc-meta-strip { flex-direction: column; width: 100%; }
+				.meta-item { border-right: none; border-bottom: 1px solid rgba(43,26,20,0.1); }
+				.meta-item:last-child { border-bottom: none; }
+				.wf-nav-links { display: none; }
+				.wf-nav { padding: 10px 14px; }
+				.wf-body { padding: 20px 16px 28px; }
+				.quick-links { grid-template-columns: 1fr; }
+				.service-row { flex-direction: column; }
+				.wf-footer { flex-direction: column; text-align: center; gap: 4px; }
+				.check-item { font-size: 12px; gap: 8px; }
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Irish Hospital Apartments</div>
+				<div class="sidebar-doctype">Site Wireframe — Landing Page</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Internal Review</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Sections</div>
+				<a href="#hero" class="nav-link active"><span class="nav-icon">🏥</span> Hero</a>
+				<a href="#story" class="nav-link"><span class="nav-icon">📜</span> Building Story</a>
+				<a href="#amenities" class="nav-link"><span class="nav-icon">🛋️</span> Amenities</a>
+				<a href="#resident-services" class="nav-link"><span class="nav-icon">🔑</span> Resident Services</a>
+				<a href="#footer-content" class="nav-link"><span class="nav-icon">📍</span> Footer</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframe · Content &amp; Structure</div>
+				<div class="doc-title">Irish Hospital Apartments</div>
+				<div class="doc-sub">Single-Page Landing Site &nbsp;·&nbsp; Fast Structural Draft — v1</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Internal Review</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Scope</span>
+						<span class="meta-value">1 page</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Kristen</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Colors / Fonts</span>
+						<span class="meta-value warn">Provisional</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 24px; font-size: 18px; padding: 17px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands. This is a fast v1 for structural feedback — a more detailed pass follows once Kristen's input comes back.
+			</div>
+
+			<!-- PROVISIONAL PALETTE / FONT NOTE -->
+			<div class="provisional-banner">
+				🎨 Colors and fonts shown here are placeholders only — a full brand refresh is running in parallel and will very likely replace this crimson / dark-brown / warm-stone palette and these fonts. Don't read anything into the specific hues or typefaces.
+			</div>
+
+			<!-- SINGLE PAGE NOTE -->
+			<div class="annotation" style="margin-bottom: 40px;">
+				📍 Single-page build — no site map needed. Everything below lives on one page at <strong>/</strong>.
+			</div>
+
+			<!-- ── PAGE (ALL SECTIONS) ── -->
+			<section class="wf-section" id="hero">
+				<div class="section-label">
+					<span class="section-num">1</span> Hero
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Irish Hospital Apartments</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Apply</span>
+							<span>Pay Rent</span>
+							<span>Maintenance</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 220px">
+								<div class="img-icon">🏛️</div>
+								<div class="img-label">
+									Real building photography — already in hand from the current site<br />
+									No new photo shoot planned
+								</div>
+							</div>
+							<div style="margin-top: 20px; text-align: center">
+								<div class="wf-heading-lg">Irish Hospital Apartments</div>
+								<div class="wf-subtext">Tagline — historic character, reimagined for modern living</div>
+								<div class="wf-cta accent">Apply for a Unit →</div>
+							</div>
+							<div class="annotation">
+								Building name, tagline, and primary CTA. Photography reused from the current site.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Irish Hospital Apartments</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- STORY -->
+			<section class="wf-section" id="story">
+				<div class="section-label">
+					<span class="section-num">2</span> Building Story
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Building Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 160px">
+								<div class="img-icon">🕰️</div>
+								<div class="img-label">Historic building photo — existing photography</div>
+							</div>
+							<div class="wf-body-text" style="margin-top: 16px">
+								The real history: built as a hospital in the 1930s → later a law enforcement center → sat vacant → adaptive reuse led personally by Kristen, financed through a nine-source capital stack → fully occupied since November 2022.
+							</div>
+							<div class="annotation">
+								Copy can largely be adapted from the current site's existing content — not written from scratch.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- AMENITIES -->
+			<section class="wf-section" id="amenities">
+				<div class="section-label">
+					<span class="section-num">3</span> Amenities
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Amenities</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🪵</div>
+									<div class="quick-link-label">Hardwood-Style Flooring</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🍽️</div>
+									<div class="quick-link-label">Quartz Countertops</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🎨</div>
+									<div class="quick-link-label">Designer Kitchens</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">👨‍👩‍👧</div>
+									<div class="quick-link-label">Family Friendly</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🎓</div>
+									<div class="quick-link-label">Near Waldorf University</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">📍</div>
+									<div class="quick-link-label">Walk to Downtown Forest City</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Amenity list — editable in CMS. No unit-by-unit spec grid on this page (see assumption below).
+							</div>
+							<div class="annotation assumption">
+								📝 Current assumption: building is always fully occupied (8 units), so this page skips a live availability grid or per-unit spec listing — that detail is assumed to live on the rental platform instead. Open to designer/client pushback.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- RESIDENT SERVICES -->
+			<section class="wf-section" id="resident-services">
+				<div class="section-label">
+					<span class="section-num">4</span> Resident Services
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Resident Services</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="service-row">
+								<div class="service-card">
+									<div class="service-icon">🔑</div>
+									<div class="service-name">Apply for a Unit</div>
+									<div class="service-note">Links out to rental platform</div>
+									<div class="wf-cta accent" style="font-size: 15px; padding: 9px 20px;">Apply →</div>
+								</div>
+								<div class="service-card">
+									<div class="service-icon">💳</div>
+									<div class="service-name">Pay Rent</div>
+									<div class="service-note">Links out to rental platform</div>
+									<div class="wf-cta" style="font-size: 15px; padding: 9px 20px;">Pay Rent →</div>
+								</div>
+								<div class="service-card">
+									<div class="service-icon">🛠️</div>
+									<div class="service-name">Submit a Maintenance Request</div>
+									<div class="service-note">Links out to rental platform</div>
+									<div class="wf-cta" style="font-size: 15px; padding: 9px 20px;">Submit Request →</div>
+								</div>
+							</div>
+
+							<div class="decision-box">
+								<div class="decision-label">Platform Not Yet Finalized</div>
+								<div class="wf-body-text" style="margin-bottom: 0;">
+									Choosing between RentRedi and TurboTenant. All three buttons link externally to whichever platform is selected — this page doesn't need to change either way, so it isn't blocking the build.
+								</div>
+							</div>
+
+							<div class="annotation">
+								Three actions, each an outbound link. Exact destination URLs get filled in once the platform is chosen.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FOOTER CONTENT -->
+			<section class="wf-section" id="footer-content">
+				<div class="section-label">
+					<span class="section-num">5</span> Footer
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Footer</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Contact info and building address. Same content that appears on the current site.
+							</div>
+							<div class="annotation">
+								Standard footer content block — phone/email and address, editable in CMS.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Irish Hospital Apartments — [Address Placeholder]</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Photography Reused</strong> — Real building photos already exist from the current site. No new photo shoot planned.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Copy Adapted, Not Rewritten</strong> — Most page copy can be adapted from the current site's existing content.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Single-Page Scope</strong> — Hero, Building Story, Amenities, Resident Services, Footer. No multi-page site map for this build.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Rental Platform — RentRedi vs. TurboTenant</strong> — Not yet finalized. Doesn't block the build; the three Resident Services links just point wherever the client decides.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Unit Specs — On-Page or Platform-Only</strong> — Open question. Current assumption (noted in Amenities) is that specs live on the rental platform since the building stays fully occupied.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Brand Refresh In Progress</strong> — Colors, logo, and graphics are not locked. A parallel brand refresh will supersede whatever's shown in this wireframe once decided.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
