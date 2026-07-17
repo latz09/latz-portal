@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { TbChevronRight } from 'react-icons/tb'
+import Card from '@/app/components/ui/Card'
 
 const variantStyles = {
   internal: { accent: 'text-teal' },
@@ -18,7 +18,7 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
   const s = variantStyles[variant]
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 max-w-5xl mx-auto">
       {clients.map(client => (
         <div key={client.slug}>
           <p className="font-mono text-sm lg:text-base text-white tracking-widest uppercase mb-3">
@@ -26,10 +26,10 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
           </p>
           <div className="inline-flex flex-col gap-3 w-full mx-auto pl-2 lg:pl-4">
             {client.projects.map(project => (
-              <Link
+              <Card
                 key={project.slug}
                 href={hrefBuilder(client.slug, project.slug)}
-                className="group w-full flex flex-col gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-6 py-4 transition-colors"
+                className="group w-full flex flex-col gap-4"
               >
                 <div className="flex justify-between items-center">
                   <span className="font-medium lg:text-lg text-white">{project.name}</span>
@@ -48,7 +48,7 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
                     {project.docCount} documents
                   </span>
                 </div>
-              </Link>
+              </Card>
             ))}
           </div>
         </div>

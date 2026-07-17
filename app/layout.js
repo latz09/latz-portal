@@ -31,7 +31,7 @@ export default async function RootLayout({ children }) {
       lang='en'
       className={`${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className='min-h-full flex flex-col bg-linear-to-r from-dark via-dark-mid to-dark'>
+      <body className='min-h-full flex flex-col bg-linear-to-r from-dark via-dark to-dark-mid'>
         {children}
         {isInternal && <GlobalSearch />}
         <script

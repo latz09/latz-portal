@@ -3,7 +3,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, Children } from 'react';
 import {
 	TbEdit,
 	TbCheck,
@@ -12,20 +12,66 @@ import {
 	TbMail,
 	TbPinFilled,
 	TbPin,
+	TbNote,
+	TbBulb,
+	TbListCheck,
+	TbLink,
+	TbPaperclip,
+	TbAlertTriangle,
 } from 'react-icons/tb';
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const TYPE_COLORS = {
-	general: 'text-white/40',
-	idea: 'text-purple',
-	task: 'text-teal',
-	link: 'text-warning',
-	asset: 'text-white/40',
-	email: 'text-teal',
+// Icon + color per type. Task and Email share teal (both are "action" items),
+// but the icon shape tells them apart at a glance — color alone couldn't,
+// since the theme only has 5 accent tokens to work with.
+const TYPE_CONFIG = {
+	general: { icon: TbNote, color: 'text-white/40' },
+	idea: { icon: TbBulb, color: 'text-purple' },
+	task: { icon: TbListCheck, color: 'text-teal' },
+	link: { icon: TbLink, color: 'text-warning' },
+	asset: { icon: TbPaperclip, color: 'text-white/50' },
+	email: { icon: TbMail, color: 'text-teal' },
 };
+
+const URL_TEST = /^https?:\/\/[^\s]+$/;
+const URL_SPLIT = /(https?:\/\/[^\s]+)/g;
+
+function shortenUrl(url) {
+	try {
+		const u = new URL(url);
+		const path = u.pathname.length > 20 ? u.pathname.slice(0, 20) + '…' : u.pathname;
+		return `${u.hostname}${path}`;
+	} catch {
+		return url;
+	}
+}
+
+// Turns any plain-typed URL inside note body text into a clean clickable
+// link, without needing the Sanity editor to manually apply a link mark.
+function linkifyChildren(children) {
+	return Children.map(children, (child) => {
+		if (typeof child !== 'string') return child;
+		return child.split(URL_SPLIT).map((part, i) =>
+			URL_TEST.test(part) ? (
+				<a
+					key={i}
+					href={part}
+					target='_blank'
+					rel='noopener noreferrer'
+					onClick={(e) => e.stopPropagation()}
+					className='text-teal underline hover:text-white transition-colors break-all'
+				>
+					{shortenUrl(part)}
+				</a>
+			) : (
+				part
+			),
+		);
+	});
+}
 
 const PORTABLE_TEXT_COMPONENTS = {
 	types: {
@@ -81,14 +127,16 @@ const PORTABLE_TEXT_COMPONENTS = {
 	},
 	listItem: {
 		bullet: ({ children }) => (
-			<li style={{ marginBottom: '0.25rem' }}>{children}</li>
+			<li style={{ marginBottom: '0.25rem' }}>{linkifyChildren(children)}</li>
 		),
 		number: ({ children }) => (
-			<li style={{ marginBottom: '0.25rem' }}>{children}</li>
+			<li style={{ marginBottom: '0.25rem' }}>{linkifyChildren(children)}</li>
 		),
 	},
 	block: {
-		normal: ({ children }) => <p className='mb-2 last:mb-0'>{children}</p>,
+		normal: ({ children }) => (
+			<p className='mb-2 last:mb-0'>{linkifyChildren(children)}</p>
+		),
 	},
 };
 
@@ -150,12 +198,15 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 }
 
 function NoteHeader({ note, pinned, onPinToggle, pinning }) {
+	const { icon: TypeIcon, color } = TYPE_CONFIG[note.type] || TYPE_CONFIG.general;
+
 	return (
 		<div className='flex items-center justify-between'>
 			<div className='flex items-center gap-2 min-w-0'>
 				<span
-					className={`font-mono text-[10px] tracking-widest uppercase border rounded px-1.5 py-0.5 shrink-0 ${TYPE_COLORS[note.type]}`}
+					className={`inline-flex items-center gap-1 font-mono text-[10px] tracking-widest uppercase border rounded px-1.5 py-0.5 shrink-0 ${color} border-current/30`}
 				>
+					<TypeIcon className='text-xs' />
 					{note.type}
 				</span>
 				<span className='text-sm font-medium truncate'>{note.title}</span>
@@ -193,8 +244,21 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 	);
 }
 
-function NoteClientLink({ clientName, clientSlug }) {
+function NoteContextLink({ clientName, clientSlug, projectName, projectSlug }) {
 	if (!clientName) return null;
+
+	if (projectName && clientSlug && projectSlug) {
+		return (
+			<Link
+				href={`/clients/${clientSlug}/${projectSlug}`}
+				onClick={(e) => e.stopPropagation()}
+				className='font-mono text-xs text-teal hover:text-white transition-colors w-fit'
+			>
+				{clientName} · {projectName} →
+			</Link>
+		);
+	}
+
 	return clientSlug ? (
 		<Link
 			href={`/clients/${clientSlug}`}
@@ -219,7 +283,7 @@ function NoteBody({ body, open }) {
 	);
 }
 
-function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
+function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 	const isEmail = note.type === 'email';
 	const isSent = !!note.sentAt;
 
@@ -238,9 +302,22 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, open }) {
 					<TbEdit className='text-base lg:text-lg' />
 				</a>
 				{isEmail && isSent && (
-					<span className='flex items-center gap-1 lg:gap-1.5 font-mono text-xs text-white/60'>
-						<TbMailCheck className='text-xs lg:text-base text-teal' />
-						{getSentLabel(note.sentAt)} 
+					<span
+						className={`flex items-center gap-1 lg:gap-1.5 font-mono text-xs ${
+							overdue ? 'text-danger font-semibold' : 'text-white/60'
+						}`}
+					>
+						{overdue ? (
+							<TbAlertTriangle className='text-xs lg:text-base text-danger' />
+						) : (
+							<TbMailCheck className='text-xs lg:text-base text-teal' />
+						)}
+						{getSentLabel(note.sentAt)}
+						{overdue && (
+							<span className='font-mono text-[9px] tracking-widest uppercase bg-danger/20 text-danger border border-danger/40 rounded px-1 py-0.5 ml-1'>
+								Overdue
+							</span>
+						)}
 					</span>
 				)}
 			</div>
@@ -330,6 +407,14 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 		}
 	}
 
+	// State stripe: overdue beats pinned beats normal. Purely a left-edge
+	// accent so the state reads before you even look at the text.
+	const stripe = overdue
+		? 'border-l-[0.5px] border-l-danger'
+		: pinned
+			? 'border-l-[0.5px] border-l-warning'
+			: '';
+
 	return (
 		<>
 			{confirming && (
@@ -341,12 +426,12 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 				/>
 			)}
 			<div
-				className={`flex flex-col border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${
+				className={`flex flex-col border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${stripe} ${
 					pinned
 						? 'bg-dark hover:bg-warning/10 border-warning/10'
 						: overdue
-							? 'bg-danger/5 hover:bg-danger/10 border-danger/20 mx-2'
-							: 'bg-white/5 hover:bg-white/10 border-white/10 mx-2'
+							? 'bg-danger/20 hover:bg-danger/10 border-danger/20 mx-2'
+							: 'bg-dark hover:bg-white/10 border-white/10 mx-2'
 				}`}
 				onClick={() => setOpen(!open)}
 			>
@@ -356,17 +441,19 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 					onPinToggle={handlePinToggle}
 					pinning={pinning}
 				/>
-				<NoteClientLink
+				<NoteContextLink
 					clientName={note.clientName}
 					clientSlug={note.clientSlug}
+					projectName={note.projectName}
+					projectSlug={note.projectSlug}
 				/>
 				<NoteBody body={note.body} open={open} />
 				<NoteFooter
 					note={hydratedNote}
-					open={open}
 					onArchiveClick={() => setConfirming(true)}
 					onSendClick={handleSend}
 					sending={sending}
+					overdue={overdue}
 				/>
 			</div>
 		</>

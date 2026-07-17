@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import Card from '@/app/components/ui/Card';
 
 const statusColors = {
 	active: 'text-teal',
@@ -36,15 +36,12 @@ export default function ProjectList({ projects, clientSlug }) {
 	return (
 		<div className='flex flex-col gap-3 max-w-4xl mx-auto w-full'>
 			{projects.map((project, i) => (
-				<Link
+				<Card
 					key={project.slug}
 					href={`/clients/${clientSlug}/${project.slug}`}
-					className={`flex flex-col gap-4 border rounded-xl px-6 py-4 transition-colors ${
-						i === selected
-							? 'bg-white/10 border-white/30'
-							: 'bg-white/5 hover:bg-white/10 border-white/10'
-					}`}
+					selected={i === selected}
 					onMouseEnter={() => setSelected(i)}
+					className='flex flex-col gap-4'
 				>
 					<div className='flex justify-between'>
 						<span className='font-medium lg:text-lg'>{project.name}</span>
@@ -62,7 +59,7 @@ export default function ProjectList({ projects, clientSlug }) {
 							{project.docCount} documents
 						</span>
 					</div>
-				</Link>
+				</Card>
 			))}
 		</div>
 	);

@@ -1,20 +1,53 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { TbChevronDown } from 'react-icons/tb';
+import Card from '../ui/Card';
+import { getDeadlineStatus } from '../portal/deadlineUtils';
+
+function getNextMilestone(client) {
+	let next = null;
+	client.projects?.forEach((project) => {
+		project.deadlines?.forEach((d) => {
+			if (d.completed) return;
+			const status = getDeadlineStatus(d.date);
+			if (!(status.isPast || status.isUpcoming)) return;
+			if (!next || new Date(d.date) < new Date(next.date)) next = d;
+		});
+	});
+	return next;
+}
 
 function ClientCard({ client }) {
+	const next = getNextMilestone(client);
+	const nextDate = next ? new Date(next.date) : null;
+
 	return (
-		<Link
+		<Card
 			href={`/clients/${client.slug}`}
-			className='w-full grid bg-white/5 gap-0.5 hover:bg-dark border border-white/10 rounded px-6 py-4 transition-colors'
+			className='flex flex-col gap-1 h-full'
 		>
+			
 			<h3 className='font-medium text-lg text-white'>{client.name}</h3>
 			<span className='font-mono text-sm text-teal'>
 				{client.activeProjects} active · {client.totalProjects} total
 			</span>
-		</Link>
+			{next && (
+				<div className='flex items-center gap-3 pb-3 mb-2 border-b border-white/10 pt-3'>
+					<div className='flex flex-col items-center justify-center leading-none shrink-0 w-10 h-10 rounded bg-warning/10 border border-warning/20'>
+						<span className='font-mono text-[9px] text-warning uppercase tracking-wide'>
+							{nextDate.toLocaleDateString('en-US', { month: 'short' })}
+						</span>
+						<span className='font-mono text-base font-semibold text-white mt-0.5'>
+							{nextDate.getDate()}
+						</span>
+					</div>
+					<span className='font-mono text-xs lg:text-sm text-white/90 line-clamp-2'>
+						{next.title}
+					</span>
+				</div>
+			)}
+		</Card>
 	);
 }
 
@@ -111,7 +144,7 @@ export default function ClientList({ clients }) {
 	);
 
 	return (
-		<div className='flex flex-col lg:mb-12 max-w-3xl mx-auto'>
+		<div className='flex flex-col'>
 			{active.length > 0 && (
 				<>
 					<p className='font-mono text-xs text-white/40 tracking-widest uppercase mb-3'>

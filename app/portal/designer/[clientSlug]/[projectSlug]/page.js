@@ -6,6 +6,7 @@ import DocumentList from '@/app/components/portal/DocumentList';
 import DeadlineList from '@/app/components/portal/DeadlineList';
 import PortalFooter from '@/app/components/portal/PortalFooter';
 import ResourceList from '@/app/components/portal/ResourceList';
+import DesignerBudgetLine from '@/app/components/portal/DesignerBudgetLine';
 
 export default async function DesignerPortal({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -30,6 +31,7 @@ export default async function DesignerPortal({ params }) {
 				clientName={clientName}
 				projectName={project.name}
 			/>
+			<DesignerBudgetLine designerPayment={project.designerPayment} />
 			<ProjectLinks
 				variant='designer'
 				previewUrl={project.previewUrl}

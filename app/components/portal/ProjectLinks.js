@@ -1,81 +1,36 @@
-import {
-	TbExternalLink,
-	TbBrandFigma,
-	TbDatabase,
-	TbBrandVercel,
-} from 'react-icons/tb';
-import { BsClaude } from 'react-icons/bs';
+import {TbExternalLink, TbBrandFigma, TbDatabase, TbBrandVercel} from 'react-icons/tb'
+import {BsClaude} from 'react-icons/bs'
+import Pill from '@/app/components/ui/Pill'
 
 const links = {
-	internal: ['preview', 'figma', 'studio', 'vercel', 'ai'],
-	designer: ['preview', 'figma'],
-	client: ['preview'],
-};
+  internal: ['preview', 'figma', 'studio', 'vercel', 'ai'],
+  designer: ['preview', 'figma'],
+  client: ['preview'],
+}
 
 const config = {
-	preview: {
-		label: 'Live Preview',
-		icon: TbExternalLink,
-		color: 'text-teal     border-teal/30   hover:bg-teal/10',
-	},
-	figma: {
-		label: 'Figma',
-		icon: TbBrandFigma,
-		color: 'text-purple   border-purple/30 hover:bg-purple/10',
-	},
-	studio: {
-		label: 'Sanity Studio',
-		icon: TbDatabase,
-		color: 'text-white/50 border-white/10  hover:bg-white/5',
-	},
-	vercel: {
-		label: 'Vercel',
-		icon: TbBrandVercel,
-		color: 'text-white/50 border-white/10  hover:bg-white/5',
-	},
-	ai: {
-		label: 'AI',
-		icon: BsClaude,
-		color: 'text-white/50 border-white/10  hover:bg-white/5',
-	},
-};
+  preview: {label: 'Live Preview', icon: TbExternalLink, accent: 'teal'},
+  figma: {label: 'Figma', icon: TbBrandFigma, accent: 'purple'},
+  studio: {label: 'Sanity Studio', icon: TbDatabase, accent: 'white'},
+  vercel: {label: 'Vercel', icon: TbBrandVercel, accent: 'white'},
+  ai: {label: 'AI', icon: BsClaude, accent: 'white'},
+}
 
-export default function ProjectLinks({
-	variant,
-	previewUrl,
-	figmaUrl,
-	studioUrl,
-	vercelUrl,
-  aiProjectLink
-}) {
-	const urls = {
-		preview: previewUrl,
-		figma: figmaUrl,
-		studio: studioUrl,
-		vercel: vercelUrl,
-		ai: aiProjectLink,
-	};
-	const allowed = links[variant];
+export default function ProjectLinks({variant, previewUrl, figmaUrl, studioUrl, vercelUrl, aiProjectLink}) {
+  const urls = {preview: previewUrl, figma: figmaUrl, studio: studioUrl, vercel: vercelUrl, ai: aiProjectLink}
+  const available = links[variant].filter((key) => urls[key])
+  if (!available.length) return null
 
-	const available = allowed.filter((key) => urls[key]);
-	if (!available.length) return null;
-
-	return (
-		<div className='flex flex-wrap gap-2 mb-10'>
-			{available.map((key) => {
-				const { label, icon: Icon, color } = config[key];
-				return (
-					<a
-						key={key}
-						href={urls[key]}
-						target='_blank'
-						className={`inline-flex items-center gap-2 font-mono text-xs px-4 py-2 rounded-full border transition-colors ${color}`}
-					>
-						<Icon className='text-sm' />
-						{label}
-					</a>
-				);
-			})}
-		</div>
-	);
+  return (
+    <div className='flex flex-wrap gap-2 mb-10'>
+      {available.map((key) => {
+        const {label, icon, accent} = config[key]
+        return (
+          <Pill key={key} href={urls[key]} icon={icon} accent={accent}>
+            {label}
+          </Pill>
+        )
+      })}
+    </div>
+  )
 }

@@ -8,18 +8,19 @@ import PortalFooter from '../components/portal/PortalFooter';
 import StudioLink from '../components/portal/StudioLink';
 import ClientList from '../components/dashboard/ClientList';
 import NoteList from '../components/dashboard/NoteList';
+import Link from 'next/link';
 
 export default async function Home() {
 	const [clients, notes] = await Promise.all([f(Q), f(NQ)]);
 
 	return (
-		<main className='max-w-7xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
+		<main className='max-w-360 mx-auto px-3 lg:px-6 py-6 lg:py-12 w-full'>
 			<PortalPageHeader
 				variant='internal'
 				label='All Active Projects - Latz Web Design'
 				title='Studio Latz'
 			/>
-			<div className='flex gap-3 mb-12 max-w-3xl mx-auto'>
+			<div className='flex gap-3 mb-12'>
 				<a
 					href='/portal/designer'
 					target='_blank'
@@ -27,6 +28,12 @@ export default async function Home() {
 				>
 					Designer View →
 				</a>
+				<Link
+					href='/clients'
+					className='font-mono text-xs px-4 py-2 rounded-full bg-teal/20 text-white hover:bg-teal/70 transition-colors'
+				>
+					 Table Overview →
+				</Link>
 				<StudioLink />
 				<form
 					action={async () => {
@@ -43,15 +50,18 @@ export default async function Home() {
 					</button>
 				</form>
 			</div>
-			<div className='max-w-3xl mx-auto'>
-				<ClientList clients={clients} />
+			<div className='flex flex-col lg:grid lg:grid-cols-[1fr_380px] lg:gap-12 lg:items-start'>
+				<div className='order-2 lg:order-1'>
+					<NoteList notes={notes} />
+					<UpcomingDeadlines clients={clients} variant='internal' />
+				</div>
+				<div className='order-1 lg:order-2 mt-0 mb-16 lg:mt-0 lg:mb-0 lg:h-[calc(100vh-160px)] lg:overflow-y-auto lg:sticky lg:top-8 lg:pl-2'>
+					<ClientList clients={clients} />
+				</div>
 			</div>
-			<div className='mt-16'></div>
-			<NoteList notes={notes} />
-			<div className="max-w-3xl mx-auto">
-				<UpcomingDeadlines clients={clients} variant='internal' />
-				<PortalFooter />
 
+			<div className='max-w-3xl mx-auto'>
+				<PortalFooter />
 				<form
 					action={async () => {
 						'use server';

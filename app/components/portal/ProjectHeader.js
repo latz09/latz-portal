@@ -18,7 +18,7 @@ export default function ProjectHeader({
 	const s = variantStyles[variant];
 
 	return (
-		<div className='mb-12'>
+		<div className='mb-6'>
 			<Link
 				href={backHref}
 				className={`font-mono text-xs text-white tracking-widest uppercase hover:opacity-70 transition-opacity`}
@@ -37,14 +37,13 @@ export default function ProjectHeader({
 			</p>
 			<div className='grid gap-2 mt-2'>
 				<h1 className='text-4xl font-semibold'>{clientName}</h1>
-				<p className=' mb-1 text-warning'>{projectName}</p>
+				<p className=' my-1 text-warning/80'>{projectName}</p>
 				{month && year && (
 					<span className='font-mono text-xs text-white/70'>
 						{month}/{year}
 					</span>
 				)}
 			</div>
-			
 		</div>
 	);
 }

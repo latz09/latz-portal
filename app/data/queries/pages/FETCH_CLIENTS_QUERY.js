@@ -1,17 +1,20 @@
 export const FETCH_CLIENTS_QUERY = `
   *[_type == "client"] | order(name asc) {
+    _id,
     name,
     "slug": slug.current,
-    "activeProjects": count(projects[status == "active"]),
-    "onHoldProjects": count(projects[status == "on-hold"]),
-    "potentialProjects": count(projects[status == "potential"]),
-    "completeProjects": count(projects[status == "complete"]),
-    "totalProjects": count(projects),
-    "projects": projects[] {
+    "activeProjects": count(*[_type == "project" && client._ref == ^._id && status == "active"]),
+    "onHoldProjects": count(*[_type == "project" && client._ref == ^._id && status == "on-hold"]),
+    "potentialProjects": count(*[_type == "project" && client._ref == ^._id && status == "potential"]),
+    "completeProjects": count(*[_type == "project" && client._ref == ^._id && status == "complete"]),
+    "totalProjects": count(*[_type == "project" && client._ref == ^._id]),
+    "projects": *[_type == "project" && client._ref == ^._id] {
       name,
       "slug": slug.current,
       month,
       year,
+      clientPayment,
+      designerPayment,
       "deadlines": deadlines[] | order(date asc) {
         _key,
         title,

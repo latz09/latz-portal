@@ -1,13 +1,14 @@
 export const FETCH_DESIGNER_PORTAL_QUERY = `
-  *[_type == "client" && slug.current == $clientSlug][0] {
-    name,
-    "slug": slug.current,
-    "project": projects[slug.current == $projectSlug][0] {
+  *[_type == "project" && client->slug.current == $clientSlug && slug.current == $projectSlug][0] {
+    "name": client->name,
+    "slug": client->slug.current,
+    "project": {
       name,
       "slug": slug.current,
       status,
       month,
       year,
+      designerPayment,
       previewUrl,
       figmaUrl,
       docs[] {

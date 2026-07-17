@@ -6,6 +6,8 @@ import DocumentList from '@/app/components/portal/DocumentList';
 import DeadlineList from '@/app/components/portal/DeadlineList';
 import PortalLinks from '@/app/components/portal/PortalLinks';
 import ResourceList from '@/app/components/portal/ResourceList';
+import ProjectMoneySummary from '@/app/components/portal/Projectmoneysummary';
+import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -13,7 +15,7 @@ export default async function ProjectPage({ params }) {
 	const { _id, name: clientName, project } = data;
 
 	return (
-		<main className='max-w-4xl mx-auto px-3 lg:px-6 py-8 lg:py-16'>
+		<main className='max-w-340 mx-auto px-3 lg:px-6 py-8 lg:py-16'>
 			<ProjectHeader
 				variant='internal'
 				backHref={`/clients/${clientSlug}`}
@@ -23,6 +25,15 @@ export default async function ProjectPage({ params }) {
 				month={project.month}
 				year={project.year}
 			/>
+			<ProjectTimeline
+				estimateWeeksLow={project.estimateWeeksLow}
+				estimateWeeksHigh={project.estimateWeeksHigh}
+				clientPayment={project.clientPayment}
+			/>
+			<ProjectMoneySummary
+				clientPayment={project.clientPayment}
+				designerPayment={project.designerPayment}
+			/>
 			<ProjectLinks
 				variant='internal'
 				previewUrl={project.previewUrl}
@@ -31,6 +42,7 @@ export default async function ProjectPage({ params }) {
 				vercelUrl={project.vercelUrl}
 				aiProjectLink={project.aiProjectLink}
 			/>
+
 			<DocumentList
 				variant='internal'
 				docs={project.docs}
