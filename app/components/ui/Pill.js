@@ -9,7 +9,7 @@
  *   <Pill href={previewUrl} icon={TbExternalLink} accent="teal">Live Preview</Pill>
  *   <Pill onClick={...} accent="white">Sign Out</Pill>
  */
-import { ACCENTS } from "../utils/variantColors"
+import { ACCENTS } from "@/app/utils/variantColors"
 
 export default function Pill({href, onClick, icon: Icon, accent = 'white', children, external = true}) {
   const colors = ACCENTS[accent] || ACCENTS.white

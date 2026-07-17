@@ -6,7 +6,7 @@ import DocumentList from '@/app/components/portal/DocumentList';
 import DeadlineList from '@/app/components/portal/DeadlineList';
 import PortalLinks from '@/app/components/portal/PortalLinks';
 import ResourceList from '@/app/components/portal/ResourceList';
-import ProjectMoneySummary from '@/app/components/portal/Projectmoneysummary';
+import ProjectMoneySummary from '@/app/components/portal/ProjectMoneySummary';
 import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
 
 export default async function ProjectPage({ params }) {

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { TbArrowRight } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate, DaysIndicator } from './deadlineUtils';
 
-import { ACCENTS, accentForVariant } from '../utils/variantColors';
+import { ACCENTS, accentForVariant } from '@/app/utils/variantColors';
 
 export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 	const accent = accentForVariant(variant);
