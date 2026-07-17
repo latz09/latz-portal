@@ -276,7 +276,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm text-white/80 max-w-none wrap-break-word ${open ? '' : 'line-clamp-2'}`}
+			className={`text-sm lg:text-base text-white/80 max-w-none wrap-break-word ${open ? '' : 'line-clamp-2'}`}
 		>
 			<PortableText value={body} components={PORTABLE_TEXT_COMPONENTS} />
 		</div>
@@ -289,7 +289,7 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 
 	return (
 		<div
-			className='flex items-center justify-between pt-1 border-t border-white/5 mt-1'
+			className='flex items-center justify-between pt-1 border-t border-white/5 mt-auto'
 			onClick={(e) => e.stopPropagation()}
 		>
 			{/* Edit + sent badge — left side */}

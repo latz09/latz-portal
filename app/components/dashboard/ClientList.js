@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb';
 import Card from '../ui/Card';
-import { getDeadlineStatus } from '../portal/deadlineUtils';
+import { getDeadlineStatus, formatDate } from '../portal/deadlineUtils';
 
 function getNextMilestone(client) {
 	let next = null;
@@ -27,13 +27,8 @@ function ClientCard({ client }) {
 			href={`/clients/${client.slug}`}
 			className='flex flex-col gap-1 h-full'
 		>
-			
-			<h3 className='font-medium text-lg text-white'>{client.name}</h3>
-			<span className='font-mono text-sm text-teal'>
-				{client.activeProjects} active · {client.totalProjects} total
-			</span>
 			{next && (
-				<div className='flex items-center gap-3 pb-3 mb-2 border-b border-white/10 pt-3'>
+				<div className='flex items-center gap-3 pb-3 mb-2 border-b border-white/10'>
 					<div className='flex flex-col items-center justify-center leading-none shrink-0 w-10 h-10 rounded bg-warning/10 border border-warning/20'>
 						<span className='font-mono text-[9px] text-warning uppercase tracking-wide'>
 							{nextDate.toLocaleDateString('en-US', { month: 'short' })}
@@ -42,11 +37,15 @@ function ClientCard({ client }) {
 							{nextDate.getDate()}
 						</span>
 					</div>
-					<span className='font-mono text-xs lg:text-sm text-white/90 line-clamp-2'>
+					<span className='font-mono text-xs lg:text-sm text-white/60 line-clamp-2'>
 						{next.title}
 					</span>
 				</div>
 			)}
+			<h3 className='font-medium text-lg text-white'>{client.name}</h3>
+			<span className='font-mono text-sm text-teal'>
+				{client.activeProjects} active · {client.totalProjects} total
+			</span>
 		</Card>
 	);
 }
@@ -81,16 +80,18 @@ function CollapsibleSection({ label, clients, defaultOpen = false }) {
 	);
 }
 
-function StatusTabs({ onHold, potential }) {
+function StatusTabs({ onHold, leads, onIce }) {
 	const [activeTab, setActiveTab] = useState(null);
 
-	if (!onHold.length && !potential.length) return null;
+	if (!onHold.length && !leads.length && !onIce.length) return null;
 
 	const tabs = [];
 	if (onHold.length)
 		tabs.push({ key: 'onHold', label: 'On Hold', clients: onHold });
-	if (potential.length)
-		tabs.push({ key: 'potential', label: 'Potential', clients: potential });
+	if (leads.length)
+		tabs.push({ key: 'leads', label: 'Leads', clients: leads });
+	if (onIce.length)
+		tabs.push({ key: 'onIce', label: 'On Ice', clients: onIce });
 
 	const activeClients = tabs.find((t) => t.key === activeTab)?.clients || [];
 
@@ -129,17 +130,25 @@ export default function ClientList({ clients }) {
 	const onHold = clients.filter(
 		(c) => c.activeProjects === 0 && c.onHoldProjects > 0,
 	);
-	const potential = clients.filter(
+	const leads = clients.filter(
 		(c) =>
 			c.activeProjects === 0 &&
 			c.onHoldProjects === 0 &&
 			c.potentialProjects > 0,
+	);
+	const onIce = clients.filter(
+		(c) =>
+			c.activeProjects === 0 &&
+			c.onHoldProjects === 0 &&
+			c.potentialProjects === 0 &&
+			c.onIceProjects > 0,
 	);
 	const complete = clients.filter(
 		(c) =>
 			c.activeProjects === 0 &&
 			c.onHoldProjects === 0 &&
 			c.potentialProjects === 0 &&
+			c.onIceProjects === 0 &&
 			c.completeProjects > 0,
 	);
 
@@ -159,7 +168,7 @@ export default function ClientList({ clients }) {
 			)}
 
 			<div className='space-y-4'>
-				<StatusTabs onHold={onHold} potential={potential} />
+				<StatusTabs onHold={onHold} leads={leads} onIce={onIce} />
 
 				{complete.length > 0 && (
 					<CollapsibleSection

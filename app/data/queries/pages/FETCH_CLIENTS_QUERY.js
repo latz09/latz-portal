@@ -6,6 +6,7 @@ export const FETCH_CLIENTS_QUERY = `
     "activeProjects": count(*[_type == "project" && client._ref == ^._id && status == "active"]),
     "onHoldProjects": count(*[_type == "project" && client._ref == ^._id && status == "on-hold"]),
     "potentialProjects": count(*[_type == "project" && client._ref == ^._id && status == "potential"]),
+    "onIceProjects": count(*[_type == "project" && client._ref == ^._id && status == "on-ice"]),
     "completeProjects": count(*[_type == "project" && client._ref == ^._id && status == "complete"]),
     "totalProjects": count(*[_type == "project" && client._ref == ^._id]),
     "projects": *[_type == "project" && client._ref == ^._id] {

@@ -4,15 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { TbCheck } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
+import { STATUS_LABELS, STATUS_COLORS, STATUS_ORDER } from '@/app/utils/statusConfig';
 
-const STATUS_COLORS = {
-	active: 'text-teal',
-	complete: 'text-white/50 italic line-through',
-	'on-hold': 'text-warning',
-	potential: 'text-white/40',
-};
-
-const STATUS_FILTERS = ['all', 'active', 'on-hold', 'potential', 'complete'];
+const STATUS_FILTERS = ['all', ...STATUS_ORDER];
 const PAYMENT_FILTERS = ['all', 'outstanding', 'paid'];
 
 function formatMoney(n) {
@@ -64,8 +58,7 @@ function ClientPaymentCell({ clientPayment }) {
 }
 
 function DesignerPaymentCell({ designerPayment }) {
-	if (!designerPayment?.assigned)
-		return <span className='text-white/20'>—</span>;
+	if (!designerPayment?.assigned) return <span className='text-white/20'>—</span>;
 	const { quoteLow, quoteHigh, actualAmount, status } = designerPayment;
 	const isPaid = status === 'paid';
 	const amount = actualAmount
@@ -112,7 +105,7 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 							STATUS_COLORS[p.status] || 'text-white/40'
 						}`}
 					>
-						{p.status}
+						{STATUS_LABELS[p.status] || p.status}
 					</span>
 				)}
 			</div>
@@ -184,7 +177,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									: 'text-white/40 border-white/10 hover:text-white/60'
 							}`}
 						>
-							{s}
+							{s === 'all' ? 'All' : STATUS_LABELS[s] || s}
 						</button>
 					))}
 				</div>
@@ -277,7 +270,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 											STATUS_COLORS[p.status] || 'text-white/40'
 										}`}
 									>
-										{p.status}
+										{STATUS_LABELS[p.status] || p.status}
 									</td>
 								)}
 								<td className='px-4 py-3'>

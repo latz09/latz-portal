@@ -72,7 +72,7 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 					Up Next
 				</p>
 			</div>
-			<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
+			<div className='grid sm:grid-cols-2 gap-6 lg:gap-8'>
 				{notes.map((note) => (
 					<NoteCard
 						key={note._id}
@@ -216,7 +216,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 			/>
 
 			{active.length > 0 && (
-				<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
+				<div className='grid sm:grid-cols-2 gap-6 lg:gap-0'>
 					{visible.map((note) => (
 						<NoteCard
 							key={note._id}
