@@ -6,7 +6,7 @@ import UpcomingDeadlines from './UpcomingDeadlines';
 import ProjectsTable from './ProjectsTable';
 
 export default function DesignerHomeView({ clients, handoffClients, tableProjects }) {
-	const [view, setView] = useState('table');
+	const [view, setView] = useState('cards');
 
 	return (
 		<div>
@@ -23,11 +23,12 @@ export default function DesignerHomeView({ clients, handoffClients, tableProject
 				</button>
 				<button
 					onClick={() => setView('table')}
-					className={`font-mono text-xs px-4 py-2 rounded-full border transition-colors ${
+					className={`font-mono text-xs px-4 py-2 rounded-full border transition-colors opacity-40 ${
 						view === 'table'
 							? 'bg-purple/20 text-purple border-purple/40'
 							: 'text-white/40 border-white/10 hover:text-white/60'
 					}`}
+					disabled
 				>
 					Table
 				</button>
