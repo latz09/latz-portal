@@ -276,7 +276,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm text-white/80 max-w-none ${open ? '' : 'line-clamp-2'}`}
+			className={`text-sm text-white/80 max-w-none wrap-break-word ${open ? '' : 'line-clamp-2'}`}
 		>
 			<PortableText value={body} components={PORTABLE_TEXT_COMPONENTS} />
 		</div>
@@ -426,7 +426,7 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 				/>
 			)}
 			<div
-				className={`flex flex-col border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${stripe} ${
+				className={`flex flex-col min-w-0 border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${stripe} ${
 					pinned
 						? 'bg-dark hover:bg-warning/10 border-warning/10'
 						: overdue
