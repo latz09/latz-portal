@@ -428,7 +428,7 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 			<div
 				className={`flex flex-col min-w-0 border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${stripe} ${
 					pinned
-						? 'bg-dark hover:bg-warning/10 border-warning/10'
+						? 'shadow shadow-dark-mid/75 hover:shadow-dark-mid hover:bg-warning/10 border-warning/10'
 						: overdue
 							? 'bg-danger/20 hover:bg-danger/10 border-danger/20 mx-2'
 							: 'bg-dark hover:bg-white/10 border-white/10 mx-2'
