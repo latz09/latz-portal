@@ -14,25 +14,26 @@ export default async function Home() {
 
 	return (
 		<main className='max-w-360 mx-auto px-3 lg:px-6 py-6 lg:py-12 w-full'>
-			<p className="text-white/60 mb-5 lg:mb-8 text-sm lg:text-base tracking-wider font-semibold  normal-case text-center lg:text-start">Latz Web Development</p>
+			<p className='text-white/60 mb-5 lg:mb-8 text-sm lg:text-base tracking-wider font-semibold  normal-case text-center lg:text-start'>
+				Latz Web Development
+			</p>
 			<div className='flex flex-col lg:flex-row gap-3 mb-12'>
 				<StudioLink className='order-1 lg:order-3 w-full justify-center lg:w-auto' />
 
 				<div className='flex gap-3 order-2 lg:order-1'>
-						<Link
+					<Link
 						href='/clients'
-						className='flex-1 lg:flex-none inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full bg-teal/20 text-white hover:bg-teal/70 transition-colors'
+						className='flex-1 lg:flex-none inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full border border-teal/30 text-teal hover:bg-teal/10 transition-colors'
 					>
 						Table Overview →
 					</Link>
 					<a
 						href='/portal/designer'
 						target='_blank'
-						className='flex-1 lg:flex-none inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full bg-purple/20 text-white hover:bg-purple/70 transition-colors'
+						className='flex-1 lg:flex-none inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full border border-purple/30 text-purple hover:bg-purple/10 transition-colors'
 					>
 						Designer View →
 					</a>
-				
 				</div>
 
 				<form
