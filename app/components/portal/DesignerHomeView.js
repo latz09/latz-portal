@@ -6,7 +6,7 @@ import UpcomingDeadlines from './UpcomingDeadlines';
 import ProjectsTable from './ProjectsTable';
 
 export default function DesignerHomeView({ clients, handoffClients, tableProjects }) {
-	const [view, setView] = useState('cards');
+	const [view, setView] = useState('table');
 
 	return (
 		<div>
@@ -28,7 +28,7 @@ export default function DesignerHomeView({ clients, handoffClients, tableProject
 							? 'bg-purple/20 text-purple border-purple/40'
 							: 'text-white/40 border-white/10 hover:text-white/60'
 					}`}
-					disabled
+					
 				>
 					Table
 				</button>

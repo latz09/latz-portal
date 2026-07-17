@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb';
 import Card from '../ui/Card';
-import { getDeadlineStatus, formatDate } from '../portal/deadlineUtils';
+import { getDeadlineStatus } from '../portal/deadlineUtils';
 
 function getNextMilestone(client) {
 	let next = null;
@@ -12,15 +12,34 @@ function getNextMilestone(client) {
 			if (d.completed) return;
 			const status = getDeadlineStatus(d.date);
 			if (!(status.isPast || status.isUpcoming)) return;
-			if (!next || new Date(d.date) < new Date(next.date)) next = d;
+			// Reuse the already-safely-parsed local date from getDeadlineStatus
+			// instead of re-parsing the raw string with `new Date(d.date)` —
+			// that constructor treats "YYYY-MM-DD" as UTC midnight, which
+			// shifts a full day earlier once converted back to local time.
+			if (!next || status.date < next.date) {
+				next = { ...d, date: status.date };
+			}
 		});
 	});
 	return next;
 }
 
+// Soonest due date first. Clients with no upcoming milestone at all sink
+// to the bottom of the group instead of breaking the sort.
+function sortByNextMilestone(clients) {
+	return [...clients].sort((a, b) => {
+		const aNext = getNextMilestone(a);
+		const bNext = getNextMilestone(b);
+		if (!aNext && !bNext) return 0;
+		if (!aNext) return 1;
+		if (!bNext) return -1;
+		return aNext.date - bNext.date;
+	});
+}
+
 function ClientCard({ client }) {
 	const next = getNextMilestone(client);
-	const nextDate = next ? new Date(next.date) : null;
+	const nextDate = next?.date ?? null;
 
 	return (
 		<Card
@@ -126,22 +145,28 @@ function StatusTabs({ onHold, leads, onIce }) {
 }
 
 export default function ClientList({ clients }) {
-	const active = clients.filter((c) => c.activeProjects > 0);
-	const onHold = clients.filter(
-		(c) => c.activeProjects === 0 && c.onHoldProjects > 0,
+	const active = sortByNextMilestone(
+		clients.filter((c) => c.activeProjects > 0),
 	);
-	const leads = clients.filter(
-		(c) =>
-			c.activeProjects === 0 &&
-			c.onHoldProjects === 0 &&
-			c.potentialProjects > 0,
+	const onHold = sortByNextMilestone(
+		clients.filter((c) => c.activeProjects === 0 && c.onHoldProjects > 0),
 	);
-	const onIce = clients.filter(
-		(c) =>
-			c.activeProjects === 0 &&
-			c.onHoldProjects === 0 &&
-			c.potentialProjects === 0 &&
-			c.onIceProjects > 0,
+	const leads = sortByNextMilestone(
+		clients.filter(
+			(c) =>
+				c.activeProjects === 0 &&
+				c.onHoldProjects === 0 &&
+				c.potentialProjects > 0,
+		),
+	);
+	const onIce = sortByNextMilestone(
+		clients.filter(
+			(c) =>
+				c.activeProjects === 0 &&
+				c.onHoldProjects === 0 &&
+				c.potentialProjects === 0 &&
+				c.onIceProjects > 0,
+		),
 	);
 	const complete = clients.filter(
 		(c) =>

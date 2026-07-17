@@ -30,13 +30,13 @@ function NextDueCell({ deadlines }) {
 	return (
 		<div className='flex flex-col'>
 			<span
-				className={`font-mono text-xxs lg:text-xs ${
+				className={`font-mono text-xs ${
 					next.computed.isPast ? 'text-danger font-semibold' : 'text-white/70'
 				}`}
 			>
 				{formatDate(next.computed.date)}
 			</span>
-			<span className='text-xxs lg:text-xs text-white/40 truncate max-w-40'>
+			<span className='text-xs text-white/40 truncate max-w-[160px]'>
 				{next.title}
 			</span>
 		</div>
@@ -49,7 +49,7 @@ function ClientPaymentCell({ clientPayment }) {
 	const { totalAmount, depositPaid, finalPaid } = clientPayment;
 	return (
 		<div className='flex flex-col'>
-			<span className='text-white text-sm lg:text-base'>{formatMoney(totalAmount)}</span>
+			<span className='text-white text-sm'>{formatMoney(totalAmount)}</span>
 			<span className='font-mono text-[10px] text-white/40'>
 				{depositPaid ? '✓ dep' : '○ dep'} · {finalPaid ? '✓ final' : '○ final'}
 			</span>
@@ -69,8 +69,8 @@ function DesignerPaymentCell({ designerPayment }) {
 
 	return (
 		<div className='flex flex-col'>
-			<span className='text-sm lg:text-base flex items-center gap-1'>
-				{isPaid && <TbCheck className='text-xs lg:text-sm text-teal shrink-0' />}
+			<span className='text-sm flex items-center gap-1'>
+				{isPaid && <TbCheck className='text-xs text-teal shrink-0' />}
 				<span
 					className={
 						isPaid ? 'text-teal line-through decoration-teal/70' : 'text-purple'
@@ -97,11 +97,11 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 			<div className='flex items-start justify-between gap-3'>
 				<div className='flex flex-col'>
 					<span className='text-white font-medium'>{p.name}</span>
-					<span className='text-xs lg:text-sm text-white/50'>{p.clientName}</span>
+					<span className='text-xs text-white/50'>{p.clientName}</span>
 				</div>
 				{isInternal && (
 					<span
-						className={`font-mono text-xs lg:text-sm uppercase shrink-0 ${
+						className={`font-mono text-xs uppercase shrink-0 ${
 							STATUS_COLORS[p.status] || 'text-white/40'
 						}`}
 					>
@@ -171,7 +171,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 						<button
 							key={s}
 							onClick={() => setFilter(s)}
-							className={`font-mono text-xs lg:text-sm tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
+							className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
 								filter === s
 									? 'bg-teal/20 text-teal border-teal/40'
 									: 'text-white/40 border-white/10 hover:text-white/60'
@@ -189,7 +189,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 						<button
 							key={f}
 							onClick={() => setPaymentFilter(f)}
-							className={`font-mono text-xs lg:text-sm tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
+							className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
 								paymentFilter === f
 									? 'bg-purple/20 text-purple border-purple/40'
 									: 'text-white/40 border-white/10 hover:text-white/60'
@@ -212,7 +212,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 					/>
 				))}
 				{filtered.length === 0 && (
-					<p className='px-4 py-8 text-center text-white/30 font-mono text-sm lg:text-base'>
+					<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
 						No projects match this filter.
 					</p>
 				)}
@@ -223,26 +223,26 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				<table className='w-full text-left border-collapse'>
 					<thead>
 						<tr className='border-b border-white/10 bg-white/5'>
-							<th className='font-mono text-xs lg:text-sm text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Client
 							</th>
-							<th className='font-mono text-xs lg:text-sm text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Project
 							</th>
 							{isInternal && (
-								<th className='font-mono text-xs lg:text-sm text-white/40 uppercase tracking-widest px-4 py-3'>
+								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 									Status
 								</th>
 							)}
-							<th className='font-mono text-xs lg:text-sm text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Next Due
 							</th>
 							{isInternal && (
-								<th className='font-mono text-xs lg:text-sm text-white/40 uppercase tracking-widest px-4 py-3'>
+								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 									Client $
 								</th>
 							)}
-							<th className='font-mono text-xs lg:text-sm text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								{isInternal ? 'Designer $' : 'Design Budget'}
 							</th>
 						</tr>
@@ -253,10 +253,10 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 								key={p._id}
 								className='border-b border-white/5 hover:bg-white/5 transition-colors'
 							>
-								<td className='px-4 py-3 text-sm lg:text-base text-white/80 whitespace-nowrap'>
+								<td className='px-4 py-3 text-sm text-white/80 whitespace-nowrap'>
 									{p.clientName}
 								</td>
-								<td className='px-4 py-3 text-sm lg:text-base'>
+								<td className='px-4 py-3 text-sm'>
 									<Link
 										href={hrefFor(p)}
 										className='text-teal hover:text-white transition-colors'
@@ -266,7 +266,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 								</td>
 								{isInternal && (
 									<td
-										className={`px-4 py-3 font-mono text-xs lg:text-sm uppercase ${
+										className={`px-4 py-3 font-mono text-xs uppercase ${
 											STATUS_COLORS[p.status] || 'text-white/40'
 										}`}
 									>
@@ -290,7 +290,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 							<tr>
 								<td
 									colSpan={colCount}
-									className='px-4 py-8 text-center text-white/30 font-mono text-sm lg:text-base'
+									className='px-4 py-8 text-center text-white/30 font-mono text-sm'
 								>
 									No projects match this filter.
 								</td>
