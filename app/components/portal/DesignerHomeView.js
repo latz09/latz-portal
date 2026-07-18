@@ -23,7 +23,7 @@ export default function DesignerHomeView({ clients, handoffClients, tableProject
 				</button>
 				<button
 					onClick={() => setView('table')}
-					className={`font-mono text-xs px-4 py-2 rounded-full border transition-colors opacity-40 ${
+					className={`font-mono text-xs px-4 py-2 rounded-full border transition-colors  ${
 						view === 'table'
 							? 'bg-purple/20 text-purple border-purple/40'
 							: 'text-white/40 border-white/10 hover:text-white/60'

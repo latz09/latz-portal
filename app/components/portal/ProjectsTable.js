@@ -23,6 +23,19 @@ function getNextDeadline(deadlines) {
 	return upcoming[0] || null;
 }
 
+// Soonest due date first; projects with no upcoming deadline at all sink
+// to the bottom instead of breaking the sort.
+function sortByNextDue(projects) {
+	return [...projects].sort((a, b) => {
+		const aNext = getNextDeadline(a.deadlines);
+		const bNext = getNextDeadline(b.deadlines);
+		if (!aNext && !bNext) return 0;
+		if (!aNext) return 1;
+		if (!bNext) return -1;
+		return aNext.computed.date - bNext.computed.date;
+	});
+}
+
 function NextDueCell({ deadlines }) {
 	const next = getNextDeadline(deadlines);
 	if (!next) return <span className='text-white/20'>—</span>;
@@ -95,10 +108,10 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 			className='flex flex-col gap-3 border border-white/10 bg-white/5 hover:bg-white/10 rounded-xl px-4 py-4 transition-colors'
 		>
 			<div className='flex items-start justify-between gap-3'>
-				<div className='flex flex-col'>
-					<span className='text-white font-medium'>{p.name}</span>
-					<span className='text-xs text-white/50'>{p.clientName}</span>
-				</div>
+	<div className='flex flex-col'>
+		<span className='text-white font-medium'>{p.clientName}</span>
+		<span className='text-xs text-white/50'>{p.name}</span>
+	</div>
 				{isInternal && (
 					<span
 						className={`font-mono text-xs uppercase shrink-0 ${
@@ -155,6 +168,8 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				: p.designerPayment?.status !== 'paid',
 		);
 	}
+
+	filtered = sortByNextDue(filtered);
 
 	const hrefFor = (p) =>
 		isInternal
