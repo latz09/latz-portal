@@ -4,10 +4,30 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { TbCheck } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
-import { STATUS_LABELS, STATUS_COLORS, STATUS_ORDER } from '@/app/utils/statusConfig';
+import {
+	STATUS_LABELS,
+	STATUS_COLORS,
+	STATUS_ORDER,
+} from '@/app/utils/statusConfig';
 
 const STATUS_FILTERS = ['all', ...STATUS_ORDER];
 const PAYMENT_FILTERS = ['all', 'outstanding', 'paid'];
+
+// Internal "Design Payments" tab buckets — driven by designerPayment.status,
+// not project status.
+const DESIGNER_PAYMENT_FILTERS = ['owed', 'upcoming', 'paid', 'all'];
+const DESIGNER_PAYMENT_LABELS = {
+	owed: 'Owed',
+	upcoming: 'Upcoming',
+	paid: 'Paid',
+	all: 'All',
+};
+
+function bucketForDesignerPayment(status) {
+	if (status === 'paid') return 'paid';
+	if (status === 'delivered' || status === 'invoiced') return 'owed';
+	return 'upcoming'; // not-started, in-progress, or unset
+}
 
 function formatMoney(n) {
 	if (n === undefined || n === null) return null;
@@ -23,8 +43,6 @@ function getNextDeadline(deadlines) {
 	return upcoming[0] || null;
 }
 
-// Soonest due date first; projects with no upcoming deadline at all sink
-// to the bottom instead of breaking the sort.
 function sortByNextDue(projects) {
 	return [...projects].sort((a, b) => {
 		const aNext = getNextDeadline(a.deadlines);
@@ -33,6 +51,16 @@ function sortByNextDue(projects) {
 		if (!aNext) return 1;
 		if (!bNext) return -1;
 		return aNext.computed.date - bNext.computed.date;
+	});
+}
+
+// Owed first (you need to act), then upcoming, then paid sinks to bottom.
+const PAYMENT_SORT_WEIGHT = { owed: 0, upcoming: 1, paid: 2 };
+function sortByPaymentUrgency(projects) {
+	return [...projects].sort((a, b) => {
+		const aBucket = bucketForDesignerPayment(a.designerPayment?.status);
+		const bBucket = bucketForDesignerPayment(b.designerPayment?.status);
+		return PAYMENT_SORT_WEIGHT[aBucket] - PAYMENT_SORT_WEIGHT[bBucket];
 	});
 }
 
@@ -71,7 +99,8 @@ function ClientPaymentCell({ clientPayment }) {
 }
 
 function DesignerPaymentCell({ designerPayment }) {
-	if (!designerPayment?.assigned) return <span className='text-white/20'>—</span>;
+	if (!designerPayment?.assigned)
+		return <span className='text-white/20'>—</span>;
 	const { quoteLow, quoteHigh, actualAmount, status } = designerPayment;
 	const isPaid = status === 'paid';
 	const amount = actualAmount
@@ -99,7 +128,7 @@ function DesignerPaymentCell({ designerPayment }) {
 	);
 }
 
-// ─── Mobile card (used below lg breakpoint instead of the table) ───────────
+// ─── Mobile card ─────────────────────────────────────────────────────────
 
 function MobileProjectCard({ p, isInternal, hrefFor }) {
 	return (
@@ -108,10 +137,10 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 			className='flex flex-col gap-3 border border-white/10 bg-white/5 hover:bg-white/10 rounded-xl px-4 py-4 transition-colors'
 		>
 			<div className='flex items-start justify-between gap-3'>
-	<div className='flex flex-col'>
-		<span className='text-white font-medium'>{p.clientName}</span>
-		<span className='text-xs text-white/50'>{p.name}</span>
-	</div>
+				<div className='flex flex-col'>
+					<span className='text-white font-medium'>{p.clientName}</span>
+					<span className='text-xs text-white/50'>{p.name}</span>
+				</div>
 				{isInternal && (
 					<span
 						className={`font-mono text-xs uppercase shrink-0 ${
@@ -152,24 +181,39 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 // ─── Main component ──────────────────────────────────────────────────────
 
 export default function ProjectsTable({ projects, variant = 'internal' }) {
+	const [view, setView] = useState('projects'); // 'projects' | 'payments' — internal only
 	const [filter, setFilter] = useState('active');
-	const [paymentFilter, setPaymentFilter] = useState('outstanding');
+	const [paymentFilter, setPaymentFilter] = useState('owed');
+	const [clientPaymentFilter, setClientPaymentFilter] = useState('outstanding');
 	const isInternal = variant === 'internal';
+	const isPaymentsView = isInternal && view === 'payments';
 
 	let filtered = projects;
 
-	if (isInternal) {
+	if (isPaymentsView) {
+		// Only projects actually assigned to the designer belong on this tab.
+		filtered = projects.filter((p) => p.designerPayment?.assigned);
+		if (paymentFilter !== 'all') {
+			filtered = filtered.filter(
+				(p) =>
+					bucketForDesignerPayment(p.designerPayment?.status) === paymentFilter,
+			);
+		}
+		filtered = sortByPaymentUrgency(filtered);
+	} else if (isInternal) {
 		filtered =
 			filter === 'all' ? projects : projects.filter((p) => p.status === filter);
-	} else if (paymentFilter !== 'all') {
-		filtered = projects.filter((p) =>
-			paymentFilter === 'paid'
-				? p.designerPayment?.status === 'paid'
-				: p.designerPayment?.status !== 'paid',
-		);
+		filtered = sortByNextDue(filtered);
+	} else {
+		if (clientPaymentFilter !== 'all') {
+			filtered = projects.filter((p) =>
+				clientPaymentFilter === 'paid'
+					? p.designerPayment?.status === 'paid'
+					: p.designerPayment?.status !== 'paid',
+			);
+		}
+		filtered = sortByNextDue(filtered);
 	}
-
-	filtered = sortByNextDue(filtered);
 
 	const hrefFor = (p) =>
 		isInternal
@@ -180,7 +224,26 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 
 	return (
 		<div className='w-full'>
+			{/* Projects / Design Payments toggle — internal only */}
 			{isInternal && (
+				<div className='flex gap-2 mb-4'>
+					{['projects', 'payments'].map((v) => (
+						<button
+							key={v}
+							onClick={() => setView(v)}
+							className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
+								view === v
+									? 'bg-purple/20 text-purple border-purple/40'
+									: 'text-white/40 border-white/10 hover:text-white/60'
+							}`}
+						>
+							{v === 'projects' ? 'Projects' : 'Design Payments'}
+						</button>
+					))}
+				</div>
+			)}
+
+			{isInternal && !isPaymentsView && (
 				<div className='flex gap-2 mb-4 flex-wrap'>
 					{STATUS_FILTERS.map((s) => (
 						<button
@@ -198,14 +261,32 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				</div>
 			)}
 
-			{!isInternal && (
+			{isPaymentsView && (
 				<div className='flex gap-2 mb-4 flex-wrap'>
-					{PAYMENT_FILTERS.map((f) => (
+					{DESIGNER_PAYMENT_FILTERS.map((f) => (
 						<button
 							key={f}
 							onClick={() => setPaymentFilter(f)}
 							className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
 								paymentFilter === f
+									? 'bg-purple/20 text-purple border-purple/40'
+									: 'text-white/40 border-white/10 hover:text-white/60'
+							}`}
+						>
+							{DESIGNER_PAYMENT_LABELS[f]}
+						</button>
+					))}
+				</div>
+			)}
+
+			{!isInternal && (
+				<div className='flex gap-2 mb-4 flex-wrap'>
+					{PAYMENT_FILTERS.map((f) => (
+						<button
+							key={f}
+							onClick={() => setClientPaymentFilter(f)}
+							className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
+								clientPaymentFilter === f
 									? 'bg-purple/20 text-purple border-purple/40'
 									: 'text-white/40 border-white/10 hover:text-white/60'
 							}`}
@@ -216,7 +297,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				</div>
 			)}
 
-			{/* Mobile: stacked cards, no horizontal scroll */}
+			{/* Mobile */}
 			<div className='flex flex-col gap-3 lg:hidden'>
 				{filtered.map((p) => (
 					<MobileProjectCard
@@ -228,12 +309,14 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				))}
 				{filtered.length === 0 && (
 					<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
-						No projects match this filter.
+						{isPaymentsView
+							? 'Nothing here.'
+							: 'No projects match this filter.'}
 					</p>
 				)}
 			</div>
 
-			{/* Desktop: full table */}
+			{/* Desktop */}
 			<div className='hidden lg:block overflow-x-auto border border-white/10 rounded-xl'>
 				<table className='w-full text-left border-collapse'>
 					<thead>
@@ -244,7 +327,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Project
 							</th>
-							{isInternal && (
+							{isInternal && !isPaymentsView && (
 								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 									Status
 								</th>
@@ -252,7 +335,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Next Due
 							</th>
-							{isInternal && (
+							{isInternal && !isPaymentsView && (
 								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 									Client $
 								</th>
@@ -279,7 +362,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 										{p.name}
 									</Link>
 								</td>
-								{isInternal && (
+								{isInternal && !isPaymentsView && (
 									<td
 										className={`px-4 py-3 font-mono text-xs uppercase ${
 											STATUS_COLORS[p.status] || 'text-white/40'
@@ -291,7 +374,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 								<td className='px-4 py-3'>
 									<NextDueCell deadlines={p.deadlines} />
 								</td>
-								{isInternal && (
+								{isInternal && !isPaymentsView && (
 									<td className='px-4 py-3'>
 										<ClientPaymentCell clientPayment={p.clientPayment} />
 									</td>
@@ -307,7 +390,9 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									colSpan={colCount}
 									className='px-4 py-8 text-center text-white/30 font-mono text-sm'
 								>
-									No projects match this filter.
+									{isPaymentsView
+										? 'Nothing here.'
+										: 'No projects match this filter.'}
 								</td>
 							</tr>
 						)}
