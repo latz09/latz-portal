@@ -38,11 +38,26 @@ export const FETCH_PROJECT_QUERY = `
         caption,
         category
       },
-      resources[] {
+   resources[] {
         label,
         url,
         type,
         audience
+      },
+      journeySteps[] {
+        _key,
+        status,
+        enteredWaitingAt,
+        completedAt,
+        generators[]-> {
+          _id,
+          title,
+          "slug": slug.current,
+          link,
+          icon,
+          derivedFrom,
+          deprecated
+        }
       }
     }
   }
