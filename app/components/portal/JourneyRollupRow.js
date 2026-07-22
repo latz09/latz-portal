@@ -33,50 +33,60 @@ export default function JourneyRollupRow({ project }) {
   const age = ageLabel(project);
 
   return (
-     <Link
+    <Link
       href={href}
-      className='grid grid-cols-[1fr] lg:grid-cols-[280px_1fr_140px] items-center gap-4 lg:gap-8 bg-white/5 hover:bg-white/10 border border-white/10 rounded px-4 lg:px-6 py-4 transition-colors group'
+      className='block bg-white/5 hover:bg-white/10 border border-white/10 rounded px-4 lg:px-6 py-4 transition-colors group'
     >
-      {/* name + status */}
-      <div className='flex flex-col min-w-0'>
-        <span className='font-medium text-base lg:text-lg leading-tight truncate'>
-          {project.clientName}
-        </span>
-        <span className='font-mono text-xs text-white/40 truncate mt-0.5'>
-          {project.name}
-        </span>
-      </div>
+      {/* desktop: 3 aligned columns · mobile: stacked */}
+      <div className='flex flex-col gap-3 lg:grid lg:grid-cols-[280px_1fr_140px] lg:items-center lg:gap-8'>
 
-      {/* progress + phase/next — hidden on smallest screens, shown lg */}
-      <div className='hidden lg:flex flex-col gap-2 min-w-0'>
-        <div className='flex items-center gap-3'>
-          <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden max-w-48'>
-            <span className='block h-full bg-teal rounded-full' style={{ width: `${pct}%` }} />
-          </span>
-          <span className='font-mono text-xs lg:text-base text-white/60 tabular-nums shrink-0'>
-            {doneCount}/{total}
-          </span>
-        </div>
-        <div className='flex items-center gap-2 font-mono text-[11px] min-w-0'>
-          <span className={`uppercase tracking-wide shrink-0 ${allDone ? 'text-teal' : 'text-white/50'}`}>
-            {allDone ? 'Complete' : (PHASE_LABELS[currentPhase] || currentPhase || '—')}
-          </span>
-          {!allDone && nextUp && (
-            <span className='text-white/30 truncate'>
-              → {stepTitle(nextUp.step)}
+        {/* name + status */}
+        <div className='flex items-start justify-between gap-3 min-w-0'>
+          <div className='flex flex-col min-w-0'>
+            <span className='font-medium text-sm lg:text-base leading-tight truncate'>
+              {project.clientName}
+            </span>
+            <span className='font-mono text-xs text-white/40 truncate mt-0.5'>
+              {project.name}
+            </span>
+          </div>
+          {/* age shows here on mobile (top-right of the card) */}
+          {age && (
+            <span className={`lg:hidden font-mono text-[11px] shrink-0 ${STATUS_TINT[project.status] || 'text-white/40'}`}>
+              {age}
             </span>
           )}
         </div>
-      </div>
 
-      {/* age + arrow */}
-      <div className='flex items-center gap-4 shrink-0'>
-        {age && (
-          <span className={`hidden sm:block font-mono text-[11px] ${STATUS_TINT[project.status] || 'text-white/40'}`}>
-            {age}
-          </span>
-        )}
-        <TbArrowRight className='text-white/25 group-hover:text-teal transition-colors' />
+        {/* progress + phase/next — now visible on all sizes */}
+        <div className='flex flex-col gap-2 min-w-0'>
+          <div className='flex items-center gap-3'>
+            <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden lg:max-w-48'>
+              <span className='block h-full bg-teal rounded-full' style={{ width: `${pct}%` }} />
+            </span>
+            <span className='font-mono text-xs text-white/60 tabular-nums shrink-0'>
+              {doneCount}/{total}
+            </span>
+          </div>
+          <div className='flex items-center gap-2 font-mono text-[11px] min-w-0'>
+            <span className={`uppercase tracking-wide shrink-0 ${allDone ? 'text-teal' : 'text-white/50'}`}>
+              {allDone ? 'Complete' : (PHASE_LABELS[currentPhase] || currentPhase || '—')}
+            </span>
+            {!allDone && nextUp && (
+              <span className='text-white/30 truncate'>→ {stepTitle(nextUp.step)}</span>
+            )}
+          </div>
+        </div>
+
+        {/* age (desktop) + arrow */}
+        <div className='flex items-center justify-between lg:justify-end gap-4 shrink-0'>
+          {age && (
+            <span className={`hidden lg:block font-mono text-[11px] ${STATUS_TINT[project.status] || 'text-white/40'}`}>
+              {age}
+            </span>
+          )}
+          <TbArrowRight className='text-white/25 group-hover:text-teal transition-colors ml-auto lg:ml-0' />
+        </div>
       </div>
     </Link>
   );
