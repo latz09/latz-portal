@@ -27,6 +27,12 @@ export default async function Home() {
 					>
 						Table Overview →
 					</Link>
+					<Link
+						href='/dashboard/journey'
+						className='flex-1 lg:flex-none inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full border border-teal/30 text-teal hover:bg-teal/10 transition-colors'
+					>
+						Pipeline →
+					</Link>
 					<a
 						href='/portal/designer'
 						target='_blank'

@@ -44,7 +44,7 @@ export const FETCH_PROJECT_QUERY = `
         type,
         audience
       },
-      journeySteps[] {
+     journeySteps[] {
         _key,
         status,
         enteredWaitingAt,
@@ -56,7 +56,8 @@ export const FETCH_PROJECT_QUERY = `
           link,
           icon,
           derivedFrom,
-          deprecated
+          deprecated,
+          phase
         }
       }
     }

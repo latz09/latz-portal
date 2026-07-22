@@ -8,7 +8,7 @@ import PortalLinks from '@/app/components/portal/PortalLinks';
 import ResourceList from '@/app/components/portal/ResourceList';
 import ProjectMoneySummary from '@/app/components/portal/ProjectMoneySummary';
 import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
-import JourneyMap from '@/app/components/portal/JourneyMap';
+import JourneyPreview from '@/app/components/portal/JourneyPreview';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -44,9 +44,11 @@ export default async function ProjectPage({ params }) {
 				aiProjectLink={project.aiProjectLink}
 			/>
 
-			<JourneyMap
+			<JourneyPreview
 				journeySteps={project.journeySteps}
 				clientPayment={project.clientPayment}
+				clientSlug={clientSlug}
+				projectSlug={projectSlug}
 			/>
 
 			<DocumentList
