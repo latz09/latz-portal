@@ -83,7 +83,7 @@ export default function JourneyRow({ step, index, clientPayment }) {
           {!isDone && isMilestone && (
             <span
               className={`font-mono text-[12px] mt-1 ${
-                dueDate ? 'text-warning' : 'text-warning/40'
+                dueDate ? 'text-warning/60' : 'text-warning/40'
               }`}
             >
               {dueDate ? `Due ${formatDue(dueDate)}` : 'Milestone — no date set'}
