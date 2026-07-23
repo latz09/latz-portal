@@ -29,7 +29,7 @@ export default function JourneyRollup({ projects }) {
       <div className='flex flex-wrap gap-2 mb-6'>
         <button
           onClick={() => setSelected(null)}
-          className={`font-mono text-sm lg:text-base tracking-wide uppercase px-3 py-1.5 rounded-full border transition-colors ${
+          className={`font-mono text-xs lg:text-sm tracking-wide uppercase px-3 py-1.5 rounded-full border transition-colors ${
             selected === null
               ? 'bg-teal/15 border-teal/40 text-teal'
               : 'bg-transparent border-white/10 text-white/35 hover:text-white/60'
@@ -44,7 +44,7 @@ export default function JourneyRollup({ projects }) {
             <button
               key={f.value}
               onClick={() => setSelected(active ? null : f.value)}
-              className={`font-mono text-sm lg:text-base tracking-wide uppercase px-3 py-1.5 rounded-full border transition-colors ${
+              className={`font-mono text-xs lg:text-sm tracking-wide uppercase px-3 py-1.5 rounded-full border transition-colors ${
                 active
                   ? 'bg-teal/15 border-teal/40 text-teal'
                   : 'bg-transparent border-white/10 text-white/35 hover:text-white/60'
