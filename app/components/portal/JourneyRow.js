@@ -1,6 +1,6 @@
 import {
   TbCircleDot, TbFileText, TbCurrencyDollar, TbSparkles,
-  TbLayout, TbPencil, TbBook, TbRocket, TbExternalLink, TbCheck,
+  TbLayout, TbPencil, TbBook, TbRocket, TbExternalLink, TbCheck, TbStarFilled,
 } from 'react-icons/tb';
 import {
   JOURNEY_STATUS_LABELS,
@@ -19,6 +19,15 @@ function pickIcon({ money, hasLink, iconKey }) {
   return TbCircleDot;
 }
 
+function formatDue(dueDate) {
+  // append time so a YYYY-MM-DD string isn't parsed as UTC midnight
+  // and shifted a day back in local time
+  return new Date(dueDate + 'T00:00:00').toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
 export default function JourneyRow({ step, index, clientPayment }) {
   const { status, date, money } = resolveStep(step, clientPayment);
   const gens = step.generators || [];
@@ -29,6 +38,8 @@ export default function JourneyRow({ step, index, clientPayment }) {
   const dLabel = dateLabel(status, date, money, step.waitingOn);
 
   const isDone = status === 'done';
+  const isMilestone = gens.some((g) => g?.isMilestone);
+  const dueDate = step.dueDate;
   const Icon = isDone ? TbCheck : pickIcon({ money, hasLink: links.length > 0, iconKey });
 
   const pillLabel = money
@@ -50,6 +61,11 @@ export default function JourneyRow({ step, index, clientPayment }) {
         <span className={`font-mono text-xs tabular-nums shrink-0 ${isDone ? 'text-white/15' : 'text-white/25'}`}>
           {String(index + 1).padStart(2, '0')}
         </span>
+        {isMilestone && (
+          <TbStarFilled
+            className={`shrink-0 ${isDone ? 'text-warning/30 text-xs' : 'text-warning text-sm'}`}
+          />
+        )}
         <Icon className={`shrink-0 ${isDone ? 'text-teal/40 text-sm' : 'text-teal text-lg'}`} />
         <div className='flex flex-col min-w-0'>
           <span
@@ -62,6 +78,18 @@ export default function JourneyRow({ step, index, clientPayment }) {
               <span className='font-mono text-[10px] text-danger/70 ml-2 uppercase'>deprecated</span>
             )}
           </span>
+
+          {/* milestone due date — shows alongside the waiting/status line */}
+          {!isDone && isMilestone && (
+            <span
+              className={`font-mono text-[12px] mt-1 ${
+                dueDate ? 'text-warning' : 'text-warning/40'
+              }`}
+            >
+              {dueDate ? `Due ${formatDue(dueDate)}` : 'Milestone — no date set'}
+            </span>
+          )}
+
           {dLabel && !isDone && (
             <span className='font-mono text-[12px] text-warning mt-1'>{dLabel}</span>
           )}
