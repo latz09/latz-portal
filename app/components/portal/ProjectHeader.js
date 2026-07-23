@@ -36,11 +36,11 @@ export default function ProjectHeader({
 						: 'Internal'}
 			</p>
 			<div className='grid gap-2 mt-2'>
-				<h1 className='text-4xl font-semibold'>{clientName}</h1>
+				<h1 className=' text-xl lg:text-2xl font-semibold'>{clientName}</h1>
 				<p className=' my-1 text-warning/80'>{projectName}</p>
 				{month && year && (
 					<span className='font-mono text-xs text-white/70'>
-						{month}/{year}
+						Initial Contact: {month}/{year}
 					</span>
 				)}
 			</div>

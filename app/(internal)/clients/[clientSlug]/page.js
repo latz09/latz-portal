@@ -10,15 +10,15 @@ export default async function ClientPage({ params }) {
 	const { name, slug, projects, notes } = data;
 
 	return (
-		<main className='px-3 lg:px-6 py-16'>
+		<main className='px-3 lg:px-6 py-5 lg:py-10'>
 			<div className='max-w-4xl mx-auto mb-12'>
 				<Link
 					href='/'
 					className='font-mono text-xs text-white tracking-widest uppercase hover:opacity-70 transition-opacity'
 				>
-					← Portal
+					← Dashboard
 				</Link>
-				<h1 className='text-4xl font-semibold mt-4'>{name}</h1>
+				<h1 className='text-xl lg:text-2xl font-semibold opacity-90 mt-3 lg:mt-4'>{name}</h1>
 			</div>
 
 			<ProjectList projects={projects} clientSlug={slug} />

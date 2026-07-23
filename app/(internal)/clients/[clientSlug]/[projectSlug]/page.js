@@ -16,11 +16,12 @@ export default async function ProjectPage({ params }) {
 	const { _id, name: clientName, project } = data;
 
 	return (
-		<main className='max-w-340 mx-auto px-3 lg:px-6 py-8 lg:py-16'>
+		<main className='max-w-7xl w-full mx-auto px-3 lg:px-6 py-8 lg:py-16'>
 			<ProjectHeader
 				variant='internal'
 				backHref={`/clients/${clientSlug}`}
-				backLabel={clientName}
+				// backLabel={clientName}
+				backLabel={'Client Dashboard'}
 				clientName={clientName}
 				projectName={project.name}
 				month={project.month}

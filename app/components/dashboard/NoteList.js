@@ -20,10 +20,10 @@ function AddNoteButton({ onClick }) {
 	return (
 		<button
 			onClick={onClick}
-			className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/30 px-2 py-0.5 rounded'
+			className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/0 shadow shadow-white/10 p-3 cursor-pointer rounded-full bg-white/20'
 		>
 			<TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
-			Add Item
+			
 		</button>
 	);
 }
@@ -38,7 +38,7 @@ function EmptyState({ onAdd }) {
 
 function NoteListHeader({ onAdd }) {
 	return (
-		<div className='flex items-center justify-between mb-4 lg:mb-6'>
+		<div className='flex items-center justify-between mb-1 lg:mb-2'>
 			<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase'>
 				Notes & Todos
 			</p>
@@ -65,11 +65,11 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 	if (!notes.length) return null;
 
 	return (
-		<div className='mb-8 sm:mb-16 py-8 sm:py-16'>
-			<div className='flex items-center gap-2 mb-3'>
-				<TbPinFilled className='text-warning text-sm' />
-				<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase mb-2'>
-					Up Next
+		<div className='mb-8 sm:mb-16 py-5 sm:py-10'>
+			<div className='flex items-center gap-2 mb-5'>
+				<TbPinFilled className='text-warning text-sm ' />
+				<p className='font-mono text-xs lg:text-sm text-warning/50 tracking-widest   '>
+					Pinned
 				</p>
 			</div>
 			<div className='grid sm:grid-cols-2 gap-6 lg:gap-8'>
