@@ -26,7 +26,7 @@ export default function JourneyRow({ step, index, clientPayment }) {
   const iconKey = gens[0]?.icon;
   const links = gens.filter((g) => g?.link);
   const deprecated = gens.some((g) => g?.deprecated);
-  const dLabel = dateLabel(status, date, money);
+  const dLabel = dateLabel(status, date, money, step.waitingOn);
 
   const isDone = status === 'done';
   const Icon = isDone ? TbCheck : pickIcon({ money, hasLink: links.length > 0, iconKey });
@@ -63,7 +63,7 @@ export default function JourneyRow({ step, index, clientPayment }) {
             )}
           </span>
           {dLabel && !isDone && (
-            <span className='font-mono text-[11px] text-white/30 mt-0.5'>{dLabel}</span>
+            <span className='font-mono text-[12px] text-warning mt-1'>{dLabel}</span>
           )}
         </div>
       </div>

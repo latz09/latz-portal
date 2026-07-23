@@ -47,6 +47,7 @@ export const FETCH_PROJECT_QUERY = `
      journeySteps[] {
         _key,
         status,
+        waitingOn,
         enteredWaitingAt,
         completedAt,
         dueDate,

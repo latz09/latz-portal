@@ -14,7 +14,7 @@ export const PHASE_LABELS = {
 	'h-postlaunch': 'H · Post-Launch',
 };
 
-// Phase order — used to find a project's current (earliest not-done) phase.
+// Phase order — used to find a project's current phase.
 export const PHASE_ORDER = [
 	'a-outreach',
 	'b-close',
@@ -25,6 +25,12 @@ export const PHASE_ORDER = [
 	'g-launch',
 	'h-postlaunch',
 ];
+
+export const WAITING_ON_LABELS = {
+	client: 'client',
+	designer: 'designer',
+	other: 'other',
+};
 
 // Resolve one step's effective status. Money steps ignore their stored status
 // and read clientPayment; everything else uses its own status + hidden date.
@@ -58,10 +64,16 @@ export function resolveStep(step, clientPayment) {
 	return { status, date, money: false };
 }
 
-export function dateLabel(status, date, money) {
+export function dateLabel(status, date, money, waitingOn) {
+	// Waiting renders even with no date, so the state is never invisible.
+	if (status === 'waiting') {
+		const who = WAITING_ON_LABELS[waitingOn];
+		const on = who ? ` on ${who}` : '';
+		if (!date) return `Waiting${on}`;
+		return `Waiting${on} since ${formatDate(getDeadlineStatus(date).date)}`;
+	}
 	if (!date) return null;
 	const formatted = formatDate(getDeadlineStatus(date).date);
-	if (status === 'waiting') return `Waiting since ${formatted}`;
 	if (status === 'done') return `${money ? 'Paid' : 'Done'} ${formatted}`;
 	return null;
 }
@@ -78,9 +90,10 @@ export function stepTitle(step) {
 
 // Derives the preview summary from the full step list:
 //  - counts done vs total
-//  - current phase = phase of the earliest not-done step
+//  - current phase = earliest step that's neither done nor waiting
 //  - active = steps currently in-progress or waiting
-//  - nextUp = first to-do step after the active ones
+//  - blockers = steps currently waiting
+//  - nextUp = first to-do step
 export function summarizeJourney(journeySteps, clientPayment) {
 	if (!journeySteps?.length) return null;
 
@@ -92,14 +105,21 @@ export function summarizeJourney(journeySteps, clientPayment) {
 	const doneCount = resolved.filter((r) => r.status === 'done').length;
 	const total = resolved.length;
 
-	const firstNotDone = resolved.find((r) => r.status !== 'done');
-	const currentPhase = firstNotDone?.step.generators?.[0]?.phase ?? null;
+	// Current phase = earliest step that's neither done NOR waiting.
+	// A Waiting step is out of your hands, so it shouldn't anchor the phase
+	// marker — otherwise one long block (domain access, designer turnaround)
+	// makes every project read as stuck in an early phase.
+	const firstActionable = resolved.find(
+		(r) => r.status !== 'done' && r.status !== 'waiting',
+	);
+	const fallback = resolved.find((r) => r.status !== 'done'); // all remaining are waiting
+	const currentPhase =
+		(firstActionable ?? fallback)?.step.generators?.[0]?.phase ?? null;
 
 	const active = resolved.filter(
 		(r) => r.status === 'in-progress' || r.status === 'waiting',
 	);
-
-	// next up = first todo that isn't already in the active list
+	const blockers = resolved.filter((r) => r.status === 'waiting');
 	const nextUp = resolved.find((r) => r.status === 'todo') ?? null;
 
 	return {
@@ -107,6 +127,7 @@ export function summarizeJourney(journeySteps, clientPayment) {
 		total,
 		currentPhase,
 		active,
+		blockers,
 		nextUp,
 		allDone: doneCount === total,
 	};

@@ -12,6 +12,7 @@ export const FETCH_ALL_JOURNEYS_QUERY = `
     journeySteps[] {
       _key,
       status,
+      waitingOn,
       enteredWaitingAt,
       completedAt,
       generators[]-> {

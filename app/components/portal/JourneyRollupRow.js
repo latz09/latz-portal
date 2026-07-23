@@ -8,6 +8,12 @@ const STATUS_TINT = {
   potential: 'text-white/40',
 };
 
+const WAITING_ON_LABELS = {
+  client: 'client',
+  designer: 'designer',
+  other: 'other',
+};
+
 function ageLabel(project) {
   const paid = project.clientPayment?.depositPaidDate;
   if (paid) {
@@ -23,11 +29,17 @@ function ageLabel(project) {
   return null;
 }
 
+function blockerLabel({ step }) {
+  const title = stepTitle(step);
+  const who = WAITING_ON_LABELS[step.waitingOn];
+  return who ? `${title} (${who})` : title;
+}
+
 export default function JourneyRollupRow({ project }) {
   const summary = summarizeJourney(project.journeySteps, project.clientPayment);
   if (!summary) return null;
 
-  const { doneCount, total, currentPhase, nextUp, allDone } = summary;
+  const { doneCount, total, currentPhase, nextUp, blockers, allDone } = summary;
   const pct = total ? Math.round((doneCount / total) * 100) : 0;
   const href = `/clients/${project.clientSlug}/${project.slug}/journey`;
   const age = ageLabel(project);
@@ -58,16 +70,17 @@ export default function JourneyRollupRow({ project }) {
           )}
         </div>
 
-        {/* progress + phase/next — now visible on all sizes */}
+        {/* progress + phase/next + blockers */}
         <div className='flex flex-col gap-2 min-w-0'>
           <div className='flex items-center gap-3'>
-         <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden'>
+            <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden'>
               <span className='block h-full bg-teal rounded-full' style={{ width: `${pct}%` }} />
             </span>
             <span className='font-mono text-xs text-white/60 tabular-nums shrink-0'>
               {doneCount}/{total}
             </span>
           </div>
+
           <div className='flex items-center gap-2 font-mono text-[11px] min-w-0'>
             <span className={`uppercase tracking-wide shrink-0 ${allDone ? 'text-teal' : 'text-white/50'}`}>
               {allDone ? 'Complete' : (PHASE_LABELS[currentPhase] || currentPhase || '—')}
@@ -76,6 +89,15 @@ export default function JourneyRollupRow({ project }) {
               <span className='text-white/30 truncate'>→ {stepTitle(nextUp.step)}</span>
             )}
           </div>
+
+          {blockers?.length > 0 && (
+            <div className='flex items-center gap-1.5 font-mono text-[11px] text-warning/70 min-w-0'>
+              <span className='shrink-0'>⏳</span>
+              <span className='truncate'>
+                waiting on {blockers.map(blockerLabel).join(', ')}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* age (desktop) + arrow */}
