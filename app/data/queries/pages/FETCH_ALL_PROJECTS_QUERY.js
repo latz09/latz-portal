@@ -8,6 +8,13 @@ export const FETCH_ALL_PROJECTS_QUERY = `
     "clientSlug": client->slug.current,
     clientPayment,
     designerPayment,
+     "journeyMilestones": journeySteps[
+        defined(dueDate) && status != "done" && generators[0]->isMilestone == true
+      ] {
+        _key,
+        "date": dueDate,
+        "title": generators[0]->title
+      },
     deadlines[] {
       title,
       date,

@@ -7,20 +7,29 @@ import { getDeadlineStatus } from '../portal/deadlineUtils';
 
 function getNextMilestone(client) {
 	let next = null;
+
+	const consider = (item, isMilestone) => {
+		const status = getDeadlineStatus(item.date);
+		if (!(status.isPast || status.isUpcoming)) return;
+		// Reuse the already-safely-parsed local date from getDeadlineStatus
+		// instead of re-parsing the raw string with `new Date(d.date)` —
+		// that constructor treats "YYYY-MM-DD" as UTC midnight, which
+		// shifts a full day earlier once converted back to local time.
+		if (!next || status.date < next.date) {
+			next = { ...item, date: status.date, isMilestone };
+		}
+	};
+
 	client.projects?.forEach((project) => {
 		project.deadlines?.forEach((d) => {
 			if (d.completed) return;
-			const status = getDeadlineStatus(d.date);
-			if (!(status.isPast || status.isUpcoming)) return;
-			// Reuse the already-safely-parsed local date from getDeadlineStatus
-			// instead of re-parsing the raw string with `new Date(d.date)` —
-			// that constructor treats "YYYY-MM-DD" as UTC midnight, which
-			// shifts a full day earlier once converted back to local time.
-			if (!next || status.date < next.date) {
-				next = { ...d, date: status.date };
-			}
+			consider(d, false);
 		});
+		// journey milestones — already filtered in the query to dated,
+		// not-done steps whose catalog entry is flagged isMilestone
+		project.journeyMilestones?.forEach((m) => consider(m, true));
 	});
+
 	return next;
 }
 
@@ -107,8 +116,7 @@ function StatusTabs({ onHold, leads, onIce }) {
 	const tabs = [];
 	if (onHold.length)
 		tabs.push({ key: 'onHold', label: 'On Hold', clients: onHold });
-	if (leads.length)
-		tabs.push({ key: 'leads', label: 'Leads', clients: leads });
+	if (leads.length) tabs.push({ key: 'leads', label: 'Leads', clients: leads });
 	if (onIce.length)
 		tabs.push({ key: 'onIce', label: 'On Ice', clients: onIce });
 

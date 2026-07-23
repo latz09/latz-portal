@@ -49,6 +49,7 @@ export const FETCH_PROJECT_QUERY = `
         status,
         enteredWaitingAt,
         completedAt,
+        dueDate,
         generators[]-> {
           _id,
           title,
@@ -57,7 +58,8 @@ export const FETCH_PROJECT_QUERY = `
           icon,
           derivedFrom,
           deprecated,
-          phase
+          phase,
+          isMilestone
         }
       }
     }

@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { TbChevronDown, TbCheck, TbExternalLink } from 'react-icons/tb';
+import { TbChevronDown, TbCheck, TbExternalLink, TbStarFilled } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate, DaysIndicator } from './deadlineUtils';
+import { PHASE_LABELS } from '@/app/utils/journeyHelpers';
 
 function CompletedDeadlines({ deadlines, variant, clientId, projectKey }) {
 	const [open, setOpen] = useState(false);
@@ -64,27 +65,51 @@ function CompletedDeadlines({ deadlines, variant, clientId, projectKey }) {
 
 export default function DeadlineList({
 	deadlines,
+	journeySteps,
 	variant = 'internal',
 	clientId,
 	projectKey,
+	clientSlug,
+	projectSlug,
 }) {
-	if (!deadlines?.length) return null;
-
 	const accentColor = variant === 'designer' ? 'text-purple' : 'text-teal';
 
-	const active = deadlines.filter((d) => !d.completed);
-	const completed = deadlines.filter((d) => d.completed);
+	// free-floating deadlines
+	const active = (deadlines || [])
+		.filter((d) => !d.completed)
+		.map((d) => ({ ...d, isMilestone: false }));
+	const completed = (deadlines || []).filter((d) => d.completed);
+
+	// journey milestones: dated, not done, flagged on the catalog
+	const milestones = (journeySteps || [])
+		.filter(
+			(s) =>
+				s.dueDate &&
+				s.status !== 'done' &&
+				s.generators?.[0]?.isMilestone,
+		)
+		.map((s) => ({
+			_key: s._key,
+			title: s.generators[0].title,
+			description: PHASE_LABELS[s.generators[0].phase] || s.generators[0].phase,
+			date: s.dueDate,
+			isMilestone: true,
+		}));
+
+	const items = [...active, ...milestones].sort((a, b) => {
+		return getDeadlineStatus(a.date).date - getDeadlineStatus(b.date).date;
+	});
+
+	if (!items.length && !completed.length) return null;
 
 	return (
 		<div className='mt-12'>
-		<p className='font-mono text-xs lg:text-base tracking-widest uppercase mb-4 text-warning'>
-    {variant === 'designer' ? 'Upcoming design milestones' : 'All upcoming milestones'}
-</p>
+			<p className='font-mono text-xs lg:text-base tracking-widest uppercase mb-4 text-warning'>
+				{variant === 'designer' ? 'Upcoming design milestones' : 'All upcoming milestones'}
+			</p>
 			<div className='flex flex-col gap-3'>
-				{active.map((d, i) => {
-					const { isPast, isToday, daysUntil, date } = getDeadlineStatus(
-						d.date,
-					);
+				{items.map((d, i) => {
+					const { isPast, isToday, daysUntil, date } = getDeadlineStatus(d.date);
 					const studioUrl =
 						variant === 'internal' && clientId
 							? `https://latz-portal.sanity.studio/structure/client;${clientId}`
@@ -92,17 +117,24 @@ export default function DeadlineList({
 
 					return (
 						<div
-							key={i}
+							key={`${d._key}-${i}`}
 							className={`flex items-start justify-between border rounded px-6 py-4 gap-6 ${
-								variant === 'designer'
-									? 'border-purple/60 bg-purple/10'
-									: d.audience?.includes('designer')
+								d.isMilestone
+									? 'border-warning/50 bg-warning/10'
+									: variant === 'designer'
 										? 'border-purple/60 bg-purple/10'
-										: 'border-teal/60 bg-teal/10'
+										: d.audience?.includes('designer')
+											? 'border-purple/60 bg-purple/10'
+											: 'border-teal/60 bg-teal/10'
 							}`}
 						>
 							<div className='flex flex-col gap-1'>
-								<span className='font-medium text-lg'>{d.title}</span>
+								<span className='font-medium text-lg flex items-center gap-2'>
+									{d.isMilestone && (
+										<TbStarFilled className='text-warning text-sm shrink-0' />
+									)}
+									{d.title}
+								</span>
 								{d.description && (
 									<span className='text-sm text-white/70 mt-0.5'>
 										{d.description}
@@ -110,17 +142,28 @@ export default function DeadlineList({
 								)}
 								<span className='font-mono text-xs text-white/30 mt-1 lg:mt-2'>
 									{formatDate(date)}
+									{d.isMilestone && <span className='ml-2 text-warning/70'>milestone</span>}
 								</span>
-								{studioUrl && (
+								{d.isMilestone && clientSlug && projectSlug ? (
 									<a
-										href={studioUrl}
-										target='_blank'
-										rel='noopener noreferrer'
+										href={`/clients/${clientSlug}/${projectSlug}/journey`}
 										className='flex items-center gap-1 font-mono text-xs text-white/30 hover:text-warning transition-colors mt-1 w-fit'
 									>
 										<TbExternalLink className='text-sm' />
-										mark complete in studio
+										view in journey
 									</a>
+								) : (
+									studioUrl && (
+										<a
+											href={studioUrl}
+											target='_blank'
+											rel='noopener noreferrer'
+											className='flex items-center gap-1 font-mono text-xs text-white/30 hover:text-warning transition-colors mt-1 w-fit'
+										>
+											<TbExternalLink className='text-sm' />
+											mark complete in studio
+										</a>
+									)
 								)}
 							</div>
 							<DaysIndicator

@@ -62,9 +62,12 @@ export default async function ProjectPage({ params }) {
 			<ResourceList variant='internal' resources={project.resources} />
 			<DeadlineList
 				deadlines={project.deadlines}
+				journeySteps={project.journeySteps}
 				variant='internal'
 				clientId={_id}
 				projectKey={project._key}
+				clientSlug={clientSlug}
+				projectSlug={projectSlug}
 			/>
 			<PortalLinks
 				clientSlug={clientSlug}

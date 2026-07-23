@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { TbCheck } from 'react-icons/tb';
+import { TbCheck, TbStarFilled } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
+
 import {
 	STATUS_LABELS,
 	STATUS_COLORS,
@@ -34,19 +35,26 @@ function formatMoney(n) {
 	return `$${n.toLocaleString()}`;
 }
 
-function getNextDeadline(deadlines) {
-	if (!deadlines?.length) return null;
-	const upcoming = deadlines
-		.filter((d) => !d.completed)
+function getNextDeadline(project) {
+	const items = [
+		...(project.deadlines || [])
+			.filter((d) => !d.completed)
+			.map((d) => ({ ...d, isMilestone: false })),
+		// journey milestones — already filtered in the query to dated,
+		// not-done steps whose catalog entry is flagged isMilestone
+		...(project.journeyMilestones || []).map((m) => ({ ...m, isMilestone: true })),
+	];
+	if (!items.length) return null;
+
+	return items
 		.map((d) => ({ ...d, computed: getDeadlineStatus(d.date) }))
-		.sort((a, b) => a.computed.date - b.computed.date);
-	return upcoming[0] || null;
+		.sort((a, b) => a.computed.date - b.computed.date)[0];
 }
 
 function sortByNextDue(projects) {
 	return [...projects].sort((a, b) => {
-		const aNext = getNextDeadline(a.deadlines);
-		const bNext = getNextDeadline(b.deadlines);
+		const aNext = getNextDeadline(a);
+		const bNext = getNextDeadline(b);
 		if (!aNext && !bNext) return 0;
 		if (!aNext) return 1;
 		if (!bNext) return -1;
@@ -64,8 +72,8 @@ function sortByPaymentUrgency(projects) {
 	});
 }
 
-function NextDueCell({ deadlines }) {
-	const next = getNextDeadline(deadlines);
+function NextDueCell({ project }) {
+	const next = getNextDeadline(project);
 	if (!next) return <span className='text-white/20'>—</span>;
 
 	return (
@@ -77,7 +85,8 @@ function NextDueCell({ deadlines }) {
 			>
 				{formatDate(next.computed.date)}
 			</span>
-			<span className='text-xs text-white/40 truncate max-w-[160px]'>
+			<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
+				{next.isMilestone && <TbStarFilled className='text-warning text-[9px] shrink-0' />}
 				{next.title}
 			</span>
 		</div>
@@ -157,7 +166,7 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 					<span className='font-mono text-[10px] text-white/30 uppercase tracking-widest mb-1'>
 						Next Due
 					</span>
-					<NextDueCell deadlines={p.deadlines} />
+					<NextDueCell project={p} />
 				</div>
 				{isInternal && (
 					<div className='flex flex-col min-w-0'>
@@ -372,7 +381,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									</td>
 								)}
 								<td className='px-4 py-3'>
-									<NextDueCell deadlines={p.deadlines} />
+									<NextDueCell project={p} />
 								</td>
 								{isInternal && !isPaymentsView && (
 									<td className='px-4 py-3'>

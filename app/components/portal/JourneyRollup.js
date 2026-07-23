@@ -18,14 +18,14 @@ function ageMs(p) {
 
 export default function JourneyRollup({ projects }) {
   // null = show all; otherwise the single selected status
-  const [selected, setSelected] = useState(null);
+ const [selected, setSelected] = useState('active');
 
   const visible = projects
     .filter((p) => selected === null || p.status === selected)
     .sort((a, b) => ageMs(b) - ageMs(a));
 
   return (
-    <div>
+    <div className="w-full">
       <div className='flex flex-wrap gap-2 mb-6'>
         <button
           onClick={() => setSelected(null)}

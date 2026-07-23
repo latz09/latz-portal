@@ -24,6 +24,15 @@ export const FETCH_CLIENTS_QUERY = `
         audience,
         completed,
         completedAt
+      },
+      "journeyMilestones": journeySteps[
+        defined(dueDate) && status != "done" && generators[0]->isMilestone == true
+      ] {
+        _key,
+        "date": dueDate,
+        status,
+        "title": generators[0]->title,
+        "phase": generators[0]->phase
       }
     }
   }

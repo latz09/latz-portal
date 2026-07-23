@@ -61,7 +61,7 @@ export default function JourneyRollupRow({ project }) {
         {/* progress + phase/next — now visible on all sizes */}
         <div className='flex flex-col gap-2 min-w-0'>
           <div className='flex items-center gap-3'>
-            <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden lg:max-w-48'>
+         <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden'>
               <span className='block h-full bg-teal rounded-full' style={{ width: `${pct}%` }} />
             </span>
             <span className='font-mono text-xs text-white/60 tabular-nums shrink-0'>
