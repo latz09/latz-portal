@@ -16,7 +16,7 @@ export default async function ProjectPage({ params }) {
 	const { _id, name: clientName, project } = data;
 
 	return (
-		<main className='max-w-7xl w-full mx-auto px-3 lg:px-6 py-8 lg:py-16'>
+		<main className='page-enter max-w-7xl w-full mx-auto px-3 lg:px-6 py-8 lg:py-16'>
 			<ProjectHeader
 				variant='internal'
 				backHref={`/clients/${clientSlug}`}
