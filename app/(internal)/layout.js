@@ -8,14 +8,14 @@ export default function InternalLayout({ children }) {
 		<>
 			<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
 				<div className='max-w-360 mx-auto px-3 lg:px-6 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
-
 					{/* mobile: title + New Client on one row · desktop: title only */}
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
-						<p className='text-white/60 text-sm tracking-wider font-semibold'>
-							Latz Web Development
-						</p>
+						<Link href='/dashboard'>
+							<p className='text-white/60 text-sm tracking-wider font-semibold'>
+								Latz Web Development
+							</p>
+						</Link>
 						<div className='flex items-center gap-2 lg:hidden'>
-				
 							<StudioLink type='project' />
 						</div>
 					</div>
