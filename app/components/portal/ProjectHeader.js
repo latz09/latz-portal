@@ -43,7 +43,7 @@ export default function ProjectHeader({
 
 			<div className='grid gap-2 mt-4'>
 				<p className='text-xl lg:text-2xl text-white/80'>{projectName}</p>
-				<h1 className='mb-2 font-semibold'>{clientName}</h1>
+				
 				{month && year && (
 					<span className='font-mono text-xs text-white/70'>
 						Initial Contact: {month}/{year}
