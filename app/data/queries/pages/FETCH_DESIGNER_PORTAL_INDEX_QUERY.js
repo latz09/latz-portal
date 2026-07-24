@@ -13,6 +13,7 @@ export const FETCH_DESIGNER_PORTAL_INDEX_QUERY = `
       status,
       month,
       year,
+      designerPayment,
       "docCount": count(docs[audience match "designer"]),
       "deadlines": deadlines[audience match "designer"] | order(date asc) {
         _key,

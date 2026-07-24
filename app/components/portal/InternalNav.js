@@ -17,9 +17,18 @@ const DESIGNER = { href: '/portal/designer', label: 'Designer View →' };
 export default function InternalNav() {
 	const pathname = usePathname();
 	const [open, setOpen] = useState(false);
+	const [leaving, setLeaving] = useState(false);
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => setMounted(true), []);
+
+	// Close on navigation rather than on tap — the menu animates out while
+	// the new route loads, so the wait happens behind the overlay instead
+	// of on a stale page.
+	useEffect(() => {
+		setOpen(false);
+		setLeaving(false);
+	}, [pathname]);
 
 	// lock body scroll while the menu is open
 	useEffect(() => {
@@ -29,6 +38,11 @@ export default function InternalNav() {
 		};
 	}, [open]);
 
+	const close = () => {
+		setOpen(false);
+		setLeaving(false);
+	};
+
 	const isActive = (href) => {
 		if (href === '/dashboard') return pathname === '/dashboard';
 		return pathname === href || pathname.startsWith(href + '/');
@@ -36,19 +50,31 @@ export default function InternalNav() {
 
 	const current = TABS.find((t) => isActive(t.href)) || TABS[0];
 
+	// Always mounted (just hidden when closed) so Next can prefetch the
+	// routes before the menu is ever opened.
 	const menu = (
-		<div className='fixed inset-0 z-[100] lg:hidden'>
+		<div
+			className={`fixed inset-0 z-[100] lg:hidden transition-opacity duration-200 ${
+				open ? 'opacity-100' : 'opacity-0 invisible pointer-events-none'
+			}`}
+		>
 			{/* overlay — full viewport, tap to close */}
 			<div
-				className='absolute inset-0 bg-black/70 backdrop-blur-md'
-				onClick={() => setOpen(false)}
+				className={`absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-300 ${
+					leaving ? 'opacity-60' : 'opacity-100'
+				}`}
+				onClick={close}
 			/>
 
-			{/* panel */}
-			<div className='relative flex flex-col gap-2 p-5 pt-6'>
+			{/* panel — lifts and fades on navigate */}
+			<div
+				className={`relative flex flex-col gap-2 p-5 pt-6 ${
+					leaving ? 'overlay-leaving' : ''
+				}`}
+			>
 				<div className='flex justify-end mb-2'>
 					<button
-						onClick={() => setOpen(false)}
+						onClick={close}
 						aria-label='Close menu'
 						className='p-2 rounded-full text-white/50 hover:text-white transition-colors'
 					>
@@ -59,10 +85,10 @@ export default function InternalNav() {
 				{TABS.map((t) => {
 					const active = isActive(t.href);
 					return (
-			<Link
+						<Link
 							key={t.href}
 							href={t.href}
-							onClick={() => setOpen(false)}
+							onClick={() => setLeaving(true)}
 							className={`font-mono px-5 rounded-xl border transition-colors ${
 								active
 									? 'text-base py-3 bg-[#12151c] border-white/[0.06] text-white/35'
@@ -78,12 +104,11 @@ export default function InternalNav() {
 						</Link>
 					);
 				})}
-
 				<a
-				href={DESIGNER.href}
+					href={DESIGNER.href}
 					target='_blank'
 					rel='noopener noreferrer'
-					onClick={() => setOpen(false)}
+					onClick={close}
 					className='font-mono text-lg px-5 py-4 rounded-xl border border-purple/40 bg-[#1a1730] text-purple active:bg-[#221d3d] transition-colors'
 				>
 					{DESIGNER.label}
@@ -105,7 +130,7 @@ export default function InternalNav() {
 				</button>
 			</div>
 
-			{mounted && open && createPortal(menu, document.body)}
+			{mounted && createPortal(menu, document.body)}
 
 			{/* ── Desktop: pill row ── */}
 			<div className='hidden lg:flex gap-2 flex-wrap'>

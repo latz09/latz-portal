@@ -1,6 +1,7 @@
 import { signOut } from '@/auth';
 import InternalNav from '@/app/components/portal/InternalNav';
 import StudioLink from '@/app/components/portal/StudioLink';
+import Link from 'next/link';
 
 export default function InternalLayout({ children }) {
 	return (
@@ -10,9 +11,11 @@ export default function InternalLayout({ children }) {
 
 					{/* mobile: title + New Client on one row · desktop: title only */}
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
+						<Link href='/'>
 						<p className='text-white/60 text-sm tracking-wider font-semibold'>
 							Latz Web Development
 						</p>
+						</Link>
 						<StudioLink className='lg:hidden' />
 					</div>
 

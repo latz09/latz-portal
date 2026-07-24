@@ -2,14 +2,36 @@
 
 import Link from 'next/link';
 import { TbArrowRight, TbStarFilled } from 'react-icons/tb';
-import { getDeadlineStatus, formatDate, DaysIndicator } from './deadlineUtils';
+import { getDeadlineStatus, formatDate } from './deadlineUtils';
 import { PHASE_LABELS } from '@/app/utils/journeyHelpers';
-import { ACCENTS, accentForVariant } from '@/app/utils/variantColors';
+
+function DaysBadge({ isPast, isToday, daysUntil }) {
+	if (isToday) {
+		return (
+			<div className='text-right shrink-0'>
+				<p className='text-lg font-semibold leading-none text-warning'>Today</p>
+			</div>
+		);
+	}
+
+	const tone = isPast ? 'text-danger' : 'text-white/70';
+	const n = Math.abs(daysUntil);
+
+	return (
+		<div className='text-right shrink-0'>
+			<p className={`text-xl font-semibold leading-none tabular-nums ${tone}`}>
+				{n}
+			</p>
+			<p
+				className={`font-mono text-[10px] mt-1 ${isPast ? 'text-danger/70' : 'text-white/30'}`}
+			>
+				{isPast ? (n === 1 ? 'day ago' : 'days ago') : n === 1 ? 'day' : 'days'}
+			</p>
+		</div>
+	);
+}
 
 export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
-	const accent = accentForVariant(variant);
-	const accentColor = accent.text;
-
 	const items = [];
 	clients?.forEach((client) => {
 		client.projects?.forEach((project) => {
@@ -49,73 +71,94 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 	if (!items.length) return null;
 
 	return (
-		<div className='inline-flex flex-col mt-16 pt-8 border-t border-white/10 w-full'>
-			<p
-				className={` ${accentColor} font-mono text-sm lg:text-base tracking-widest uppercase mb-4`}
-			>
+		<div className='mt-12 pt-8 border-t border-white/[0.08] w-full'>
+			<p className='font-mono text-[10px] lg:text-xs tracking-widest uppercase text-white/40 mb-4'>
 				{variant === 'designer'
 					? 'Upcoming design milestones'
 					: 'All upcoming milestones'}
 			</p>
-			<div className='flex flex-col gap-5 lg:pl-4'>
-				{items.map((d, i) => {
-					const ring = d.isMilestone
-						? 'border-warning/30 hover:border-warning/50'
-						: variant === 'designer' || d.audience?.includes('designer')
-							? ACCENTS.purple.ring
-							: ACCENTS.teal.ring;
+
+			<div className='flex flex-col gap-3'>
+			{items.map((d, i) => {
+					const isDesigner =
+						variant === 'designer' || d.audience?.includes('designer');
+
+					// ── EDIT 1 goes here (replaces the existing surface const) ──
+					const surface = isDesigner
+						? 'bg-purple/[0.06] border-purple/25 hover:bg-purple/[0.1]'
+						: d.isMilestone
+							? 'bg-white/[0.03] border-warning/25 hover:bg-white/[0.06]'
+							: d.isPast
+								? 'bg-white/[0.03] border-danger/20 hover:bg-white/[0.06]'
+								: 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06]';
+
+					const href =
+						variant === 'internal'
+							? d.isMilestone
+								? `/clients/${d.clientSlug}/${d.projectSlug}/journey`
+								: `/clients/${d.clientSlug}/${d.projectSlug}`
+							: `/portal/designer/${d.clientSlug}/${d.projectSlug}`;
 
 					return (
 						<Link
 							key={`${d._key}-${i}`}
-							href={
-								variant === 'internal'
-									? d.isMilestone
-										? `/clients/${d.clientSlug}/${d.projectSlug}/journey`
-										: `/clients/${d.clientSlug}/${d.projectSlug}`
-									: `/portal/designer/${d.clientSlug}/${d.projectSlug}`
-							}
-							className={`group flex flex-col border rounded px-6 py-4 gap-4 transition-colors ${ring}`}
+							href={href}
+							className={`group flex flex-col border rounded-xl px-5 py-4 gap-3 transition-colors ${surface}`}
 						>
-							<div className='flex items-start justify-between gap-6'>
-								<div className='flex flex-col gap-1'>
-									<span className={`font-mono text-sm text-white/70 `}>
-										<span className='text-base lg:text-lg text-white/80 '>
-											{' '}
+							<div className='flex items-start justify-between gap-4'>
+								<div className='flex flex-col gap-1.5 min-w-0'>
+
+									{/* ── EDIT 2 goes here (replaces the client·project span) ── */}
+									<span className='font-mono text-[11px] truncate flex items-center gap-2'>
+										{isDesigner && (
+											<span className='text-[9px] tracking-widest uppercase text-purple/80 border border-purple/30 rounded px-1.5 py-0.5 shrink-0'>
+												Design
+											</span>
+										)}
+										<span className='text-white/35 truncate'>
 											{d.clientName}
-										</span>{' '}
-										· {d.projectName}
+											<span className='text-white/20'> · </span>
+											{d.projectName}
+										</span>
 									</span>
-									<span className='font-medium text-lg mt-2 flex items-center gap-2'>
+
+									<span className='text-base font-medium text-white leading-tight flex items-center gap-2'>
 										{d.isMilestone && (
-											<TbStarFilled className='text-warning text-sm shrink-0' />
+											<TbStarFilled className='text-warning text-xs shrink-0' />
 										)}
 										{d.title}
 									</span>
+
 									{d.description && (
-										<span className='text-sm text-white/70 mt-0.5 lg:mt-1 line-clamp-2 '>
+										<span className='text-sm text-white/50 line-clamp-2'>
 											{d.description}
 										</span>
 									)}
 								</div>
-								<DaysIndicator
+
+								<DaysBadge
 									isPast={d.isPast}
 									isToday={d.isToday}
 									daysUntil={d.daysUntil}
-									accentColor={accentColor}
 								/>
 							</div>
-							<div className='flex items-center justify-between mt-8'>
-								<span
-									className={`font-mono text-xs ${d.isMilestone ? 'text-warning' : accentColor}`}
-								>
+
+							<div className='flex items-center justify-between gap-3 pt-2.5 border-t border-white/[0.06]'>
+								<span className='font-mono text-[11px] text-white/35'>
 									{formatDate(d.date)}
-									{d.isMilestone && <span className='text-white/30 ml-2'>milestone</span>}
+									{d.isMilestone && (
+										<span className='text-warning/50 ml-2'>milestone</span>
+									)}
 								</span>
 								<span
-									className={`font-mono text-xs lg:text-base flex items-center gap-1 text-teal opacity-80 group-hover:opacity-100 transition-opacity`}
+									className={`font-mono text-[11px] flex items-center gap-1 transition-colors ${
+										isDesigner
+											? 'text-purple/60 group-hover:text-purple'
+											: 'text-white/35 group-hover:text-teal'
+									}`}
 								>
-									{d.isMilestone ? 'view journey' : 'view project'} <TbArrowRight size={12} />
+									{d.isMilestone ? 'view journey' : 'view project'}
+									<TbArrowRight size={12} />
 								</span>
 							</div>
 						</Link>

@@ -20,28 +20,46 @@ function AddNoteButton({ onClick }) {
 	return (
 		<button
 			onClick={onClick}
-			className='flex items-center gap-1 font-mono text-sm lg:text-lg text-white/70 hover:text-warning/75 transition-colors border border-warning/0 shadow shadow-white/10 p-3 cursor-pointer rounded-full bg-white/20'
+			className='inline-flex items-center gap-1.5 font-mono text-[11px] tracking-wide uppercase px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/50 hover:text-warning hover:border-warning/30 transition-colors'
 		>
-			<TbPlus className='text-xs md:text-sm lg:text-lg text-warning' />
-			
+			<TbPlus className='text-sm' />
+			Add
 		</button>
 	);
 }
 
 function EmptyState({ onAdd }) {
 	return (
-		<div className='flex justify-center'>
+		<div className='flex flex-col items-center gap-3 py-10 border border-white/[0.08] rounded-xl bg-white/[0.02]'>
+			<p className='font-mono text-[11px] text-white/25'>No notes right now.</p>
 			<AddNoteButton onClick={onAdd} />
 		</div>
 	);
 }
 
+function SectionLabel({ children, icon: Icon, tone = 'text-white/40' }) {
+	return (
+		<span
+			className={`inline-flex items-center gap-2 font-mono text-[10px] lg:text-xs tracking-widest uppercase ${tone}`}
+		>
+			{Icon && <Icon className='text-xs' />}
+			{children}
+		</span>
+	);
+}
+
+function CountPill({ children }) {
+	return (
+		<span className='font-mono text-[10px] bg-black/40 text-white/50 border border-white/10 rounded-full px-2 py-0.5'>
+			{children}
+		</span>
+	);
+}
+
 function NoteListHeader({ onAdd }) {
 	return (
-		<div className='flex items-center justify-between mb-1 lg:mb-2'>
-			<p className='font-mono text-xs lg:text-base text-warning/80 tracking-widest uppercase'>
-				Notes & Todos
-			</p>
+		<div className='flex items-center justify-between mb-5'>
+			<SectionLabel>Notes &amp; Todos</SectionLabel>
 			<AddNoteButton onClick={onAdd} />
 		</div>
 	);
@@ -51,7 +69,7 @@ function ExpandToggle({ expanded, count, onToggle }) {
 	return (
 		<button
 			onClick={onToggle}
-			className='flex items-center gap-2 font-mono text-sm lg:text-base text-white/50 hover:text-white/60 transition-colors pt-1'
+			className='flex items-center gap-2 font-mono text-[11px] tracking-wide text-white/35 hover:text-white/60 transition-colors pt-1'
 		>
 			<TbChevronDown
 				className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
@@ -65,14 +83,13 @@ function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
 	if (!notes.length) return null;
 
 	return (
-		<div className='mb-8 sm:mb-16 py-5 sm:py-10'>
-			<div className='flex items-center gap-2 mb-5'>
-				<TbPinFilled className='text-warning text-sm ' />
-				<p className='font-mono text-xs lg:text-sm text-warning/50 tracking-widest   '>
+		<div className='mb-10'>
+			<div className='mb-3'>
+				<SectionLabel icon={TbPinFilled} tone='text-warning/70'>
 					Pinned
-				</p>
+				</SectionLabel>
 			</div>
-			<div className='grid sm:grid-cols-2 gap-6 lg:gap-8'>
+			<div className='grid sm:grid-cols-2 gap-3'>
 				{notes.map((note) => (
 					<NoteCard
 						key={note._id}
@@ -116,31 +133,27 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 				: `${oldestDays} days ago`;
 
 	return (
-		<div className='mt-6 border-t border-white/10 pt-6'>
+		<div className='mt-8 border-t border-white/[0.08] pt-6'>
 			<button
 				onClick={handleOpen}
 				className='flex items-center justify-between w-full mb-4 group'
 			>
 				<div className='flex items-center gap-3'>
-					<p className='font-mono text-xs lg:text-base text-white/50 tracking-widest uppercase'>
-						Awaiting Reply
-					</p>
-					<span className='font-mono text-xs bg-dark text-teal border border-teal/50 rounded-full px-2 py-0.5'>
-						{notes.length}
-					</span>
+					<SectionLabel>Awaiting Reply</SectionLabel>
+					<CountPill>{notes.length}</CountPill>
 					{!open && (
-						<span className='font-mono text-xs text-white/30'>
+						<span className='font-mono text-[11px] text-white/25'>
 							oldest {oldestLabel}
 						</span>
 					)}
 				</div>
 				<TbChevronDown
-					className={`text-white/30 group-hover:text-white/50 transition-all duration-200 ${open ? 'rotate-180' : ''}`}
+					className={`text-white/25 group-hover:text-white/50 transition-all duration-200 ${open ? 'rotate-180' : ''}`}
 				/>
 			</button>
 
 			{open && (
-				<div className='grid sm:grid-cols-2 gap-6 lg:gap-4'>
+				<div className='grid sm:grid-cols-2 gap-3'>
 					{sorted.map((note) => (
 						<NoteCard
 							key={note._id}
@@ -199,6 +212,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	if (notes.length === 0) {
 		return (
 			<div className='mb-12'>
+				<NoteListHeader onAdd={handleAddNote} />
 				<EmptyState onAdd={handleAddNote} />
 			</div>
 		);
@@ -216,7 +230,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 			/>
 
 			{active.length > 0 && (
-				<div className='grid sm:grid-cols-2 gap-6 lg:gap-0'>
+				<div className='grid sm:grid-cols-2 gap-3'>
 					{visible.map((note) => (
 						<NoteCard
 							key={note._id}

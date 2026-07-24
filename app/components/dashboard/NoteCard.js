@@ -17,23 +17,22 @@ import {
 	TbListCheck,
 	TbLink,
 	TbPaperclip,
-	TbAlertTriangle,
 } from 'react-icons/tb';
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-// Icon + color per type. Task and Email share teal (both are "action" items),
-// but the icon shape tells them apart at a glance — color alone couldn't,
-// since the theme only has 5 accent tokens to work with.
+// Icon per type. Color is held back to white/30 for the label itself —
+// only the glyph carries a tint, so six note types don't turn the board
+// into a color chart.
 const TYPE_CONFIG = {
-	general: { icon: TbNote, color: 'text-white/40' },
-	idea: { icon: TbBulb, color: 'text-purple' },
-	task: { icon: TbListCheck, color: 'text-teal' },
-	link: { icon: TbLink, color: 'text-warning' },
-	asset: { icon: TbPaperclip, color: 'text-white/50' },
-	email: { icon: TbMail, color: 'text-teal' },
+	general: { icon: TbNote, color: 'text-white/30' },
+	idea: { icon: TbBulb, color: 'text-purple/70' },
+	task: { icon: TbListCheck, color: 'text-teal/70' },
+	link: { icon: TbLink, color: 'text-warning/70' },
+	asset: { icon: TbPaperclip, color: 'text-white/40' },
+	email: { icon: TbMail, color: 'text-teal/70' },
 };
 
 const URL_TEST = /^https?:\/\/[^\s]+$/;
@@ -42,7 +41,8 @@ const URL_SPLIT = /(https?:\/\/[^\s]+)/g;
 function shortenUrl(url) {
 	try {
 		const u = new URL(url);
-		const path = u.pathname.length > 20 ? u.pathname.slice(0, 20) + '…' : u.pathname;
+		const path =
+			u.pathname.length > 20 ? u.pathname.slice(0, 20) + '…' : u.pathname;
 		return `${u.hostname}${path}`;
 	} catch {
 		return url;
@@ -81,7 +81,7 @@ const PORTABLE_TEXT_COMPONENTS = {
 				<Image
 					src={value.url}
 					alt={value.caption || ''}
-					className='rounded max-w-full my-2 aspect-square'
+					className='rounded-lg max-w-full my-2 aspect-square'
 					width={500}
 					height={500}
 				/>
@@ -106,8 +106,8 @@ const PORTABLE_TEXT_COMPONENTS = {
 			<ul
 				style={{
 					listStyleType: 'disc',
-					paddingLeft: '1.25rem',
-					marginBottom: '0.5rem',
+					paddingLeft: '1.1rem',
+					marginBottom: '0.4rem',
 				}}
 			>
 				{children}
@@ -117,8 +117,8 @@ const PORTABLE_TEXT_COMPONENTS = {
 			<ol
 				style={{
 					listStyleType: 'decimal',
-					paddingLeft: '1.25rem',
-					marginBottom: '0.5rem',
+					paddingLeft: '1.1rem',
+					marginBottom: '0.4rem',
 				}}
 			>
 				{children}
@@ -127,10 +127,10 @@ const PORTABLE_TEXT_COMPONENTS = {
 	},
 	listItem: {
 		bullet: ({ children }) => (
-			<li style={{ marginBottom: '0.25rem' }}>{linkifyChildren(children)}</li>
+			<li style={{ marginBottom: '0.2rem' }}>{linkifyChildren(children)}</li>
 		),
 		number: ({ children }) => (
-			<li style={{ marginBottom: '0.25rem' }}>{linkifyChildren(children)}</li>
+			<li style={{ marginBottom: '0.2rem' }}>{linkifyChildren(children)}</li>
 		),
 	},
 	block: {
@@ -144,7 +144,7 @@ function getSentLabel(sentAt) {
 	if (!sentAt) return null;
 	const days = Math.floor((Date.now() - new Date(sentAt)) / 86_400_000);
 	if (days === 0) return 'Sent today';
-	if (days === 1) return 'Sent yest.';
+	if (days === 1) return 'Sent yesterday';
 	return `Sent ${days} days ago`;
 }
 
@@ -153,14 +153,14 @@ function getSentLabel(sentAt) {
 function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 	return (
 		<div
-			className='fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4'
+			className='fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4'
 			onClick={(e) => {
 				if (e.target === e.currentTarget) onCancel();
 			}}
 		>
-			<div className='w-full max-w-sm bg-dark border border-white/10 rounded-lg shadow-2xl flex flex-col'>
+			<div className='w-full max-w-sm bg-[#12151c] border border-white/15 rounded-xl shadow-2xl shadow-black/60 flex flex-col'>
 				<div className='flex items-center justify-between px-5 py-4 border-b border-white/10'>
-					<p className='font-mono text-xs tracking-widest uppercase text-warning/80'>
+					<p className='font-mono text-[10px] tracking-widest uppercase text-white/40'>
 						Archive Note
 					</p>
 					<button
@@ -186,7 +186,7 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 						<button
 							onClick={onConfirm}
 							disabled={archiving}
-							className='font-mono text-xs bg-teal/20 hover:bg-teal/30 disabled:opacity-40 disabled:cursor-not-allowed text-teal border border-teal/30 rounded px-4 py-1.5 transition-colors'
+							className='font-mono text-xs bg-teal/15 hover:bg-teal/25 disabled:opacity-40 disabled:cursor-not-allowed text-teal border border-teal/30 rounded-lg px-4 py-1.5 transition-colors'
 						>
 							{archiving ? 'Archiving…' : 'Archive'}
 						</button>
@@ -198,27 +198,28 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 }
 
 function NoteHeader({ note, pinned, onPinToggle, pinning }) {
-	const { icon: TypeIcon, color } = TYPE_CONFIG[note.type] || TYPE_CONFIG.general;
+	const { icon: TypeIcon, color } =
+		TYPE_CONFIG[note.type] || TYPE_CONFIG.general;
 
 	return (
-		<div className='flex items-center justify-between'>
-			<div className='flex items-center gap-2 min-w-0'>
-				<span
-					className={`inline-flex items-center gap-1 font-mono text-[10px] tracking-widest uppercase border rounded px-1.5 py-0.5 shrink-0 ${color} border-current/30`}
-				>
-					<TypeIcon className='text-xs' />
+		<div className='flex items-start justify-between gap-2'>
+			<div className='flex flex-col min-w-0 gap-1'>
+				<span className='inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-white/30'>
+					<TypeIcon className={`text-xs ${color}`} />
 					{note.type}
 				</span>
-				<span className='text-sm font-medium truncate'>{note.title}</span>
+				<span className='text-sm font-medium text-white leading-tight'>
+					{note.title}
+				</span>
 			</div>
-			<div className='flex items-center shrink-0 lg:ml-2'>
+			<div className='flex items-center shrink-0 -mr-1.5 -mt-1'>
 				<a
 					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
 					target='_blank'
 					onClick={(e) => e.stopPropagation()}
-					className='hidden sm:block text-warning/70 hover:text-warning transition-colors p-2'
+					className='hidden sm:block text-white/20 hover:text-warning transition-colors p-2'
 				>
-					<TbEdit className='text-base lg:text-lg' />
+					<TbEdit className='text-base' />
 				</a>
 				<button
 					onClick={(e) => {
@@ -229,14 +230,14 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 					className={`transition-colors p-2 ${
 						pinned
 							? 'text-warning hover:text-warning/60'
-							: 'text-white/20 hover:text-warning/70'
+							: 'text-white/15 hover:text-warning/70'
 					} ${pinning ? 'opacity-40' : ''}`}
 					title={pinned ? 'Unpin' : 'Pin to Do Now'}
 				>
 					{pinned ? (
-						<TbPinFilled className='text-base lg:text-lg' />
+						<TbPinFilled className='text-base' />
 					) : (
-						<TbPin className='text-base lg:text-lg' />
+						<TbPin className='text-base' />
 					)}
 				</button>
 			</div>
@@ -247,12 +248,15 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 function NoteContextLink({ clientName, clientSlug, projectName, projectSlug }) {
 	if (!clientName) return null;
 
+	const cls =
+		'font-mono text-[11px] text-white/40 hover:text-teal transition-colors w-fit';
+
 	if (projectName && clientSlug && projectSlug) {
 		return (
 			<Link
 				href={`/clients/${clientSlug}/${projectSlug}`}
 				onClick={(e) => e.stopPropagation()}
-				className='font-mono text-xs text-teal hover:text-white transition-colors w-fit'
+				className={cls}
 			>
 				{clientName} · {projectName} →
 			</Link>
@@ -263,12 +267,12 @@ function NoteContextLink({ clientName, clientSlug, projectName, projectSlug }) {
 		<Link
 			href={`/clients/${clientSlug}`}
 			onClick={(e) => e.stopPropagation()}
-			className='font-mono text-xs text-teal hover:text-white transition-colors w-fit'
+			className={cls}
 		>
 			{clientName} →
 		</Link>
 	) : (
-		<span className='font-mono text-xs text-white/30 mb-1'>{clientName}</span>
+		<span className='font-mono text-[11px] text-white/25'>{clientName}</span>
 	);
 }
 
@@ -276,7 +280,9 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm lg:text-base text-white/80 max-w-none wrap-break-word ${open ? '' : 'line-clamp-2'}`}
+			className={`text-sm text-white/65 max-w-none wrap-break-word ${
+				open ? '' : 'line-clamp-2'
+			}`}
 		>
 			<PortableText value={body} components={PORTABLE_TEXT_COMPONENTS} />
 		</div>
@@ -289,33 +295,29 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 
 	return (
 		<div
-			className='flex items-center justify-between pt-1 border-t border-white/5 mt-auto'
+			className='flex items-center justify-between gap-3 pt-2.5 border-t border-white/[0.06] mt-auto'
 			onClick={(e) => e.stopPropagation()}
 		>
-			{/* Edit + sent badge — left side */}
-			<div className='flex items-center gap-2'>
+			{/* Edit + sent state — left side */}
+			<div className='flex items-center gap-2 min-w-0'>
 				<a
 					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
 					target='_blank'
-					className='sm:hidden text-warning/70 hover:text-warning transition-colors p-2'
+					className='sm:hidden text-white/20 hover:text-warning transition-colors py-1.5 pr-1'
 				>
-					<TbEdit className='text-base lg:text-lg' />
+					<TbEdit className='text-base' />
 				</a>
 				{isEmail && isSent && (
 					<span
-						className={`flex items-center gap-1 lg:gap-1.5 font-mono text-xs ${
-							overdue ? 'text-danger font-semibold' : 'text-white/60'
+						className={`flex items-center gap-1.5 font-mono text-[11px] truncate ${
+							overdue ? 'text-danger' : 'text-white/35'
 						}`}
 					>
-						{overdue ? (
-							<TbAlertTriangle className='text-xs lg:text-base text-danger' />
-						) : (
-							<TbMailCheck className='text-xs lg:text-base text-teal' />
-						)}
+						{!overdue && <TbMailCheck className='text-sm text-teal/60' />}
 						{getSentLabel(note.sentAt)}
 						{overdue && (
-							<span className='font-mono text-[9px] tracking-widest uppercase bg-danger/20 text-danger border border-danger/40 rounded px-1 py-0.5 ml-1'>
-								Overdue
+							<span className='text-[10px] tracking-widest uppercase text-danger/60'>
+								· overdue
 							</span>
 						)}
 					</span>
@@ -323,22 +325,22 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 			</div>
 
 			{/* Actions — right side */}
-			<div className='flex items-center gap-1'>
+			<div className='flex items-center gap-1 shrink-0'>
 				{isEmail && !isSent && (
 					<button
 						onClick={onSendClick}
 						disabled={sending}
-						className='flex items-center gap-1.5 font-mono text-xs text-white/70 hover:text-teal disabled:opacity-40 transition-colors py-1.5 px-2'
+						className='flex items-center gap-1.5 font-mono text-[11px] text-white/40 hover:text-teal disabled:opacity-40 transition-colors py-1.5 px-2'
 					>
-						<TbMail className='text-base text-teal' />
+						<TbMail className='text-sm' />
 						{sending ? 'Marking…' : 'Mark sent'}
 					</button>
 				)}
 				<button
 					onClick={onArchiveClick}
-					className='flex items-center gap-1.5 font-mono text-xs text-white/70 hover:text-teal transition-colors py-1.5 px-2 group'
+					className='flex items-center gap-1.5 font-mono text-[11px] text-white/40 hover:text-teal transition-colors py-1.5 px-2 group'
 				>
-					<TbCheck className='text-sm text-teal group-hover:-translate-y-1 transition duration-300' />
+					<TbCheck className='text-sm group-hover:-translate-y-0.5 transition duration-300' />
 					{isEmail && isSent ? 'Got reply' : 'Mark complete'}
 				</button>
 			</div>
@@ -347,7 +349,14 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 }
 
 // ─── Main Component ──────────────────────────────────────────────────────────
-export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue }) {
+
+export default function NoteCard({
+	note,
+	onArchive,
+	onSent,
+	onPinToggle,
+	overdue,
+}) {
 	const [open, setOpen] = useState(note.pinned ?? false);
 	const [confirming, setConfirming] = useState(false);
 	const [archiving, setArchiving] = useState(false);
@@ -407,13 +416,14 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 		}
 	}
 
-	// State stripe: overdue beats pinned beats normal. Purely a left-edge
-	// accent so the state reads before you even look at the text.
-	const stripe = overdue
-		? 'border-l-[0.5px] border-l-danger'
-		: pinned
-			? 'border-l-[0.5px] border-l-warning'
-			: '';
+	// Surface, not flood. Overdue and pinned change the border and lift —
+	// the state signal itself lives in the footer, so seven overdue cards
+	// don't turn the section into a wall of red.
+	const surface = pinned
+		? 'bg-white/[0.06] border-warning/25 shadow-lg shadow-black/30'
+		: overdue
+			? 'bg-white/[0.03] border-danger/25'
+			: 'bg-white/[0.03] border-white/[0.08]';
 
 	return (
 		<>
@@ -426,13 +436,7 @@ export default function NoteCard({ note, onArchive, onSent, onPinToggle, overdue
 				/>
 			)}
 			<div
-				className={`flex flex-col min-w-0 border rounded px-4 py-3 transition-colors gap-2 cursor-pointer ${stripe} ${
-					pinned
-						? 'shadow shadow-dark-mid/75 hover:shadow-dark-mid hover:bg-warning/10 border-warning/10'
-						: overdue
-							? 'bg-danger/20 hover:bg-danger/10 border-danger/20 mx-2'
-							: 'bg-dark hover:bg-white/10 border-white/10 mx-2'
-				}`}
+				className={`flex flex-col min-w-0 h-full border rounded-xl px-4 py-3.5 gap-2.5 cursor-pointer transition-colors hover:bg-white/[0.07] ${surface}`}
 				onClick={() => setOpen(!open)}
 			>
 				<NoteHeader

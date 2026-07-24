@@ -7,12 +7,13 @@ const variantStyles = {
 export default function PortalPageHeader({ variant, label, title }) {
   const color = variantStyles[variant]
   return (
-    <div className="mb-12">
-     
-      <h1 className="text-3xl lg:text-4xl opacity-80 font-semibold">{title}</h1>
-       <p className={`font-mono text-xs lg:text-sm ${color} opacity-90 tracking-widest  mt-1 lg:mt-2 pl-1.25`}>
-        {label}
-      </p>
-    </div>
+ <div className='mb-8'>
+				<p className='font-mono text-[11px] tracking-widest uppercase text-purple/70 mb-2'>
+					Alyssa Shurbert-Hetzel
+				</p>
+				<h1 className='text-2xl lg:text-3xl font-semibold text-white'>
+					Your Active Projects
+				</h1>
+			</div>
   )
 }
