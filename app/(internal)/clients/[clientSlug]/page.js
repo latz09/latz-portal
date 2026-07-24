@@ -10,7 +10,7 @@ export default async function ClientPage({ params }) {
 	const { name, slug, projects, notes } = data;
 
 	return (
-		<main className='px-3 lg:px-6 py-5 lg:py-10'>
+		<main className='page-enter px-3 lg:px-6 py-5 lg:py-10'>
 			<div className='max-w-4xl mx-auto mb-12'>
 				<Link
 					href='/'

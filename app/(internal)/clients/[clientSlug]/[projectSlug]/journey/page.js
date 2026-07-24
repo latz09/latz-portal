@@ -16,7 +16,7 @@ export default async function JourneyPage({ params }) {
 	const pct = total ? Math.round((done / total) * 100) : 0;
 
 	return (
-		<main className='max-w-7xl mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
+		<main className='page-enter max-w-7xl mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
 			<Link
 				href={`/clients/${clientSlug}/${projectSlug}`}
 				className='inline-flex items-center gap-2 font-mono text-sm text-white/50 hover:text-teal transition-colors mb-10'

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { TbCheck, TbStarFilled } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
+import PortfolioSummary from './PortfolioSummary';
 
 import {
 	STATUS_LABELS,
@@ -14,8 +15,7 @@ import {
 const STATUS_FILTERS = ['all', ...STATUS_ORDER];
 const PAYMENT_FILTERS = ['all', 'outstanding', 'paid'];
 
-// Internal "Design Payments" tab buckets — driven by designerPayment.status,
-// not project status.
+// Designer ledger buckets — driven by designerPayment.status, not project status.
 const DESIGNER_PAYMENT_FILTERS = ['owed', 'upcoming', 'paid', 'all'];
 const DESIGNER_PAYMENT_LABELS = {
 	owed: 'Owed',
@@ -42,7 +42,10 @@ function getNextDeadline(project) {
 			.map((d) => ({ ...d, isMilestone: false })),
 		// journey milestones — already filtered in the query to dated,
 		// not-done steps whose catalog entry is flagged isMilestone
-		...(project.journeyMilestones || []).map((m) => ({ ...m, isMilestone: true })),
+		...(project.journeyMilestones || []).map((m) => ({
+			...m,
+			isMilestone: true,
+		})),
 	];
 	if (!items.length) return null;
 
@@ -86,7 +89,9 @@ function NextDueCell({ project }) {
 				{formatDate(next.computed.date)}
 			</span>
 			<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
-				{next.isMilestone && <TbStarFilled className='text-warning text-[9px] shrink-0' />}
+				{next.isMilestone && (
+					<TbStarFilled className='text-warning text-[9px] shrink-0' />
+				)}
 				{next.title}
 			</span>
 		</div>
@@ -190,17 +195,17 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 // ─── Main component ──────────────────────────────────────────────────────
 
 export default function ProjectsTable({ projects, variant = 'internal' }) {
-	const [view, setView] = useState('projects'); // 'projects' | 'payments' — internal only
+	const [view, setView] = useState('projects'); // 'projects' | 'money' — internal only
 	const [filter, setFilter] = useState('active');
 	const [paymentFilter, setPaymentFilter] = useState('owed');
 	const [clientPaymentFilter, setClientPaymentFilter] = useState('outstanding');
 	const isInternal = variant === 'internal';
-	const isPaymentsView = isInternal && view === 'payments';
+	const isMoneyView = isInternal && view === 'money';
 
 	let filtered = projects;
 
-	if (isPaymentsView) {
-		// Only projects actually assigned to the designer belong on this tab.
+	if (isMoneyView) {
+		// Ledger below the summary — only projects assigned to the designer.
 		filtered = projects.filter((p) => p.designerPayment?.assigned);
 		if (paymentFilter !== 'all') {
 			filtered = filtered.filter(
@@ -229,14 +234,14 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 			? `/clients/${p.clientSlug}/${p.slug}`
 			: `/portal/designer/${p.clientSlug}/${p.slug}`;
 
-	const colCount = isInternal ? 6 : 4;
+	const colCount = isInternal && !isMoneyView ? 6 : 4;
 
 	return (
 		<div className='w-full'>
-			{/* Projects / Design Payments toggle — internal only */}
+			{/* Projects / Money toggle — internal only */}
 			{isInternal && (
 				<div className='flex gap-2 mb-4'>
-					{['projects', 'payments'].map((v) => (
+					{['projects', 'money'].map((v) => (
 						<button
 							key={v}
 							onClick={() => setView(v)}
@@ -246,13 +251,16 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									: 'text-white/40 border-white/10 hover:text-white/60'
 							}`}
 						>
-							{v === 'projects' ? 'Projects' : 'Design Payments'}
+							{v === 'projects' ? 'Projects' : 'Money'}
 						</button>
 					))}
 				</div>
 			)}
 
-			{isInternal && !isPaymentsView && (
+			{/* Money view: portfolio summary above the designer ledger */}
+			{isMoneyView && <PortfolioSummary projects={projects} />}
+
+			{isInternal && !isMoneyView && (
 				<div className='flex gap-2 mb-4 flex-wrap'>
 					{STATUS_FILTERS.map((s) => (
 						<button
@@ -270,22 +278,27 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				</div>
 			)}
 
-			{isPaymentsView && (
-				<div className='flex gap-2 mb-4 flex-wrap'>
-					{DESIGNER_PAYMENT_FILTERS.map((f) => (
-						<button
-							key={f}
-							onClick={() => setPaymentFilter(f)}
-							className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
-								paymentFilter === f
-									? 'bg-purple/20 text-purple border-purple/40'
-									: 'text-white/40 border-white/10 hover:text-white/60'
-							}`}
-						>
-							{DESIGNER_PAYMENT_LABELS[f]}
-						</button>
-					))}
-				</div>
+			{isMoneyView && (
+				<>
+					<p className='font-mono text-xs text-white/40 tracking-widest uppercase mb-3'>
+						Design Payments
+					</p>
+					<div className='flex gap-2 mb-4 flex-wrap'>
+						{DESIGNER_PAYMENT_FILTERS.map((f) => (
+							<button
+								key={f}
+								onClick={() => setPaymentFilter(f)}
+								className={`font-mono text-xs tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors ${
+									paymentFilter === f
+										? 'bg-purple/20 text-purple border-purple/40'
+										: 'text-white/40 border-white/10 hover:text-white/60'
+								}`}
+							>
+								{DESIGNER_PAYMENT_LABELS[f]}
+							</button>
+						))}
+					</div>
+				</>
 			)}
 
 			{!isInternal && (
@@ -318,9 +331,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				))}
 				{filtered.length === 0 && (
 					<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
-						{isPaymentsView
-							? 'Nothing here.'
-							: 'No projects match this filter.'}
+						{isMoneyView ? 'Nothing here.' : 'No projects match this filter.'}
 					</p>
 				)}
 			</div>
@@ -336,7 +347,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Project
 							</th>
-							{isInternal && !isPaymentsView && (
+							{isInternal && !isMoneyView && (
 								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 									Status
 								</th>
@@ -344,7 +355,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 								Next Due
 							</th>
-							{isInternal && !isPaymentsView && (
+							{isInternal && !isMoneyView && (
 								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
 									Client $
 								</th>
@@ -371,7 +382,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 										{p.name}
 									</Link>
 								</td>
-								{isInternal && !isPaymentsView && (
+								{isInternal && !isMoneyView && (
 									<td
 										className={`px-4 py-3 font-mono text-xs uppercase ${
 											STATUS_COLORS[p.status] || 'text-white/40'
@@ -383,7 +394,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 								<td className='px-4 py-3'>
 									<NextDueCell project={p} />
 								</td>
-								{isInternal && !isPaymentsView && (
+								{isInternal && !isMoneyView && (
 									<td className='px-4 py-3'>
 										<ClientPaymentCell clientPayment={p.clientPayment} />
 									</td>
@@ -399,7 +410,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									colSpan={colCount}
 									className='px-4 py-8 text-center text-white/30 font-mono text-sm'
 								>
-									{isPaymentsView
+									{isMoneyView
 										? 'Nothing here.'
 										: 'No projects match this filter.'}
 								</td>

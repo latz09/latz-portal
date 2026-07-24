@@ -7,7 +7,7 @@ export default async function ClientPortal({ params }) {
 	const { name: clientName, project } = data;
 
 	return (
-		<main className='max-w-3xl mx-auto px-6 py-16'>
+		<main className='page-enter max-w-3xl mx-auto px-6 py-16'>
 			<div className='mb-12'>
 				<p className='font-mono text-xs text-teal tracking-widest uppercase mb-2'>
 					Latz Web Design

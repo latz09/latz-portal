@@ -10,14 +10,16 @@ export default async function Home() {
 	const [clients, notes] = await Promise.all([f(Q), f(NQ)]);
 
 	return (
-		<main className='max-w-360 mx-auto px-3 lg:px-6 py-6 lg:py-12 w-full'>
+		<main className=' max-w-360 mx-auto px-3 lg:px-6 py-6 lg:py-12 w-full'>
 			<div className='flex flex-col lg:grid lg:grid-cols-[1fr_380px] lg:gap-12 lg:items-start'>
-				<div className='order-2 lg:order-1'>
+				<div className='dash-col-2 order-2 lg:order-1'>
 					<NoteList notes={notes} />
 					<UpcomingDeadlines clients={clients} variant='internal' />
 				</div>
 				<div className='order-1 lg:order-2 mt-0 mb-16 lg:mt-0 lg:mb-0 lg:h-[calc(100vh-160px)] lg:overflow-y-auto lg:sticky lg:top-8 lg:pl-2'>
-					<ClientList clients={clients} />
+					<div className='dash-col-1'>
+						<ClientList clients={clients} />
+					</div>
 				</div>
 			</div>
 

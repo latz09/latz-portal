@@ -6,7 +6,7 @@ export default async function JourneyRollupPage() {
 	const projects = await f(Q);
 
 	return (
-		<main className='max-w-7xl md:mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
+		<main className='page-enter max-w-7xl md:mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
 			<JourneyRollup projects={projects} />
 		</main>
 	);
