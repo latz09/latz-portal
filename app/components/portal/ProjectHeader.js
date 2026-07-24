@@ -14,30 +14,36 @@ export default function ProjectHeader({
 	projectName,
 	month,
 	year,
+	action,
 }) {
 	const s = variantStyles[variant];
 
 	return (
 		<div className='mb-6'>
-			<Link
-				href={backHref}
-				className={`font-mono text-xs text-white tracking-widest uppercase hover:opacity-70 transition-opacity`}
-			>
-				← {backLabel}
-			</Link>
-			<p
-				className={`font-mono opacity-70 lg:text-end text-xs ${s.label} tracking-widest uppercase mt-4 mb-2`}
-			>
-				LWD ·{' '}
-				{variant === 'designer'
-					? 'Alyssa'
-					: variant === 'client'
-						? 'Client Portal'
-						: 'Internal'}
-			</p>
-			<div className='grid gap-2 mt-2'>
-				<h1 className=' text-xl lg:text-2xl font-semibold'>{clientName}</h1>
-				<p className=' my-1 text-warning/80'>{projectName}</p>
+			<div className='flex items-start justify-between gap-4'>
+				<Link
+					href={backHref}
+					className='font-mono text-xs text-warning tracking-widest uppercase hover:opacity-70 transition-opacity'
+				>
+					← {backLabel}
+				</Link>
+
+				{/* Internal drops the "LWD · Internal" label — the nav bar already
+				    says where you are. Designer and client keep it for context. */}
+				{action ? (
+					<div className='shrink-0'>{action}</div>
+				) : variant !== 'internal' ? (
+					<p
+						className={`font-mono opacity-70 text-xs ${s.label} tracking-widest uppercase shrink-0`}
+					>
+						LWD · {variant === 'designer' ? 'Alyssa' : 'Client Portal'}
+					</p>
+				) : null}
+			</div>
+
+			<div className='grid gap-2 mt-4'>
+				<p className='text-xl lg:text-2xl text-white/80'>{projectName}</p>
+				<h1 className='mb-2 font-semibold'>{clientName}</h1>
 				{month && year && (
 					<span className='font-mono text-xs text-white/70'>
 						Initial Contact: {month}/{year}

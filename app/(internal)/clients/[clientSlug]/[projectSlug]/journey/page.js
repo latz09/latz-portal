@@ -4,6 +4,7 @@ import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_PROJECT_QUERY as Q } from '@/app/data/queries/pages/FETCH_PROJECT_QUERY';
 import JourneyMap from '@/app/components/portal/JourneyMap';
 import { summarizeJourney } from '@/app/utils/journeyHelpers';
+import StudioLink from '@/app/components/portal/StudioLink';
 
 export default async function JourneyPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -17,12 +18,15 @@ export default async function JourneyPage({ params }) {
 
 	return (
 		<main className='page-enter max-w-7xl mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
-			<Link
-				href={`/clients/${clientSlug}/${projectSlug}`}
-				className='inline-flex items-center gap-2 font-mono text-sm text-white/50 hover:text-teal transition-colors mb-10'
-			>
-				<TbArrowLeft /> Back to {project.name} dashboard
-			</Link>
+			<div className='grid md:flex items-center justify-between gap-4 mb-10'>
+				<Link
+					href={`/clients/${clientSlug}/${projectSlug}`}
+					className='inline-flex items-center gap-2 font-mono text-sm text-white/50 hover:text-warning transition-colors'
+				>
+					<TbArrowLeft className="text-warning" /> {project.name}
+				</Link>
+				<StudioLink type='project' id={project._id} label='Edit journey' />
+			</div>
 
 			<div className='mb-10'>
 				<p className='font-mono text-sm tracking-widest uppercase text-teal mb-3'>

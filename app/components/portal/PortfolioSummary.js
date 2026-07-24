@@ -1,4 +1,5 @@
 const ACTIVE_WORK = ['active', 'on-hold'];
+const COMMITTED = ['active', 'on-hold', 'complete'];
 
 function money(n) {
 	if (!n) return '$0';
@@ -53,10 +54,11 @@ function Stat({ label, value, sub, tone = 'text-white' }) {
 }
 
 export default function PortfolioSummary({ projects }) {
-	// Receivables and payables span all statuses except on-ice — a finished
-	// project with an unpaid final is still money in, and an unpaid designer
-	// bill on a complete project is still money out.
-	const live = projects.filter((p) => p.status !== 'on-ice');
+	// Committed money only — signed work (active, on-hold, complete). Leads
+	// get their own line below so the headline numbers never mix money owed
+	// with money that might never happen. A finished project with an unpaid
+	// final is still money in, so complete stays counted.
+	const live = projects.filter((p) => COMMITTED.includes(p.status));
 	const activeWork = projects.filter((p) => ACTIVE_WORK.includes(p.status));
 	const leads = projects.filter((p) => p.status === 'potential');
 
@@ -136,15 +138,17 @@ export default function PortfolioSummary({ projects }) {
 			</div>
 
 			{leadValue > 0 && (
-				<div className='mt-5 pt-4 border-t border-white/10 flex items-center justify-between gap-4'>
-					<span className='font-mono text-[11px] text-white/35 uppercase tracking-widest'>
-						Leads not yet committed
-					</span>
-					<span className='font-mono text-sm text-warning tabular-nums'>
-						{money(leadValue)}
-						<span className='text-white/30 ml-2'>
-							{leads.length} project{leads.length === 1 ? '' : 's'}
+				<div className='mt-5 pt-4 border-t border-white/10 flex items-end justify-between gap-4'>
+					<div className='flex flex-col gap-1'>
+						<span className='font-mono text-[10px] text-white/30 uppercase tracking-widest'>
+							Proposals out
 						</span>
+						<span className='text-base lg:text-lg font-semibold tabular-nums text-warning'>
+							{money(leadValue)}
+						</span>
+					</div>
+					<span className='font-mono text-[11px] text-white/30 pb-0.5'>
+						{leads.length} lead{leads.length === 1 ? '' : 's'} · not counted above
 					</span>
 				</div>
 			)}

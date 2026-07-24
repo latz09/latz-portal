@@ -9,6 +9,7 @@ import ResourceList from '@/app/components/portal/ResourceList';
 import ProjectMoneySummary from '@/app/components/portal/ProjectMoneySummary';
 import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
 import JourneyPreview from '@/app/components/portal/JourneyPreview';
+import StudioLink from '@/app/components/portal/StudioLink';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -16,16 +17,16 @@ export default async function ProjectPage({ params }) {
 	const { _id, name: clientName, project } = data;
 
 	return (
-		<main className='page-enter max-w-7xl w-full mx-auto px-3 lg:px-6 py-8 lg:py-16'>
+		<main className='page-enter max-w-7xl w-full mx-auto px-3 lg:px-6 py-4 lg:py-10'>
 			<ProjectHeader
 				variant='internal'
 				backHref={`/clients/${clientSlug}`}
-				// backLabel={clientName}
-				backLabel={'Client Dashboard'}
+				backLabel={clientName}
 				clientName={clientName}
 				projectName={project.name}
 				month={project.month}
 				year={project.year}
+				action={<StudioLink type='project' id={project._id} label='Edit project' />}
 			/>
 			<ProjectTimeline
 				estimateWeeksLow={project.estimateWeeksLow}
@@ -44,6 +45,8 @@ export default async function ProjectPage({ params }) {
 				vercelUrl={project.vercelUrl}
 				aiProjectLink={project.aiProjectLink}
 			/>
+
+			
 
 			<JourneyPreview
 				journeySteps={project.journeySteps}
