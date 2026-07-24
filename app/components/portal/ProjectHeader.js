@@ -20,7 +20,7 @@ export default function ProjectHeader({
 
 	return (
 		<div className='mb-6'>
-			<div className='flex items-start justify-between gap-4'>
+			<div className='flex items-center justify-between gap-4 mb-3 lg:mb-6'>
 				<Link
 					href={backHref}
 					className='font-mono text-xs text-warning tracking-widest uppercase hover:opacity-70 transition-opacity'

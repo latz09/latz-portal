@@ -21,10 +21,10 @@ export default async function JourneyPage({ params }) {
 			<div className='flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-4 mb-10'>
 				<Link
 					href={`/clients/${clientSlug}/${projectSlug}`}
-					className='group inline-flex items-start gap-2 text-warning hover:opacity-70 transition-opacity mb-2'
+					className='group inline-flex items-center gap-2 text-warning hover:opacity-70 transition-opacity mb-2'
 				>
 					<TbArrowLeft className='mt-1 shrink-0' />
-					<span className='flex flex-col gap-0.5'>
+					<span className='flex flex-col gap-2'>
 						<span className='font-mono text-[10px] text-white tracking-widest uppercase opacity-70'>
 							{clientName}
 						</span>
@@ -38,7 +38,7 @@ export default async function JourneyPage({ params }) {
 					type='project'
 					id={project._id}
 					label='Edit journey'
-					className='self-start shrink-0'
+					className='self-center lg:self-start shrink-0'
 				/>
 			</div>
 
