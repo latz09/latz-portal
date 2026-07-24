@@ -18,23 +18,28 @@ export default async function JourneyPage({ params }) {
 
 	return (
 		<main className='page-enter max-w-7xl mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
-			<div className='grid md:flex items-center justify-between gap-4 mb-10'>
+			<div className='flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-4 mb-10'>
 				<Link
 					href={`/clients/${clientSlug}/${projectSlug}`}
-					className='inline-flex items-center gap-2 font-mono text-sm text-white/50 hover:text-warning transition-colors'
+					className='group inline-flex items-start gap-2 text-warning hover:opacity-70 transition-opacity mb-2'
 				>
-					<TbArrowLeft className="text-warning" /> {project.name}
+					<TbArrowLeft className='mt-1 shrink-0' />
+					<span className='flex flex-col gap-0.5'>
+						<span className='font-mono text-[10px] text-white tracking-widest uppercase opacity-70'>
+							{clientName}
+						</span>
+						<span className='font-mono text-xs lg:text-sm tracking-widest uppercase'>
+							{project.name}
+						</span>
+					</span>
 				</Link>
-				<StudioLink type='project' id={project._id} label='Edit journey' />
-			</div>
 
-			<div className='mb-10'>
-				<p className='font-mono text-sm tracking-widest uppercase text-teal mb-3'>
-					{clientName}
-				</p>
-				<h1 className='font-fraunces text-sm lg:text-base text-white/75'>
-					{project.name} — Journey
-				</h1>
+				<StudioLink
+					type='project'
+					id={project._id}
+					label='Edit journey'
+					className='self-start shrink-0'
+				/>
 			</div>
 
 			{/* overall progress bar */}
@@ -44,7 +49,8 @@ export default async function JourneyPage({ params }) {
 						Overall Progress
 					</span>
 					<span className='font-mono text-sm text-white/70 tabular-nums'>
-						{done}<span className='text-white/30'>/{total}</span>
+						{done}
+						<span className='text-white/30'>/{total}</span>
 						<span className='text-teal ml-3'>{pct}%</span>
 					</span>
 				</div>
