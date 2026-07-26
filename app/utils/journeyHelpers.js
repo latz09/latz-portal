@@ -3,6 +3,12 @@ import {
 	getDeadlineStatus,
 } from '@/app/components/portal/deadlineUtils';
 
+const DESIGN_MILESTONE_ORDER = [
+	'Design Sync',
+	'Design Direction',
+	'Full Design',
+];
+
 export const PHASE_LABELS = {
 	'a-outreach': 'A · Initial Outreach',
 	'b-close': 'B · Proposal & Close',
@@ -131,4 +137,60 @@ export function summarizeJourney(journeySteps, clientPayment) {
 		nextUp,
 		allDone: doneCount === total,
 	};
+}
+
+export function designerDueItems(project) {
+	const items = [];
+
+	(project.journeyMilestones || []).forEach((m) => {
+		items.push({
+			key: m._key,
+			title: m.title,
+			date: m.date || null,
+			isMilestone: true,
+			done: m.status === 'done',
+			waiting: m.status === 'waiting',
+			waitingOn: m.waitingOn || null,
+		});
+	});
+
+	(project.deadlines || []).forEach((d) => {
+		items.push({
+			key: d._key,
+			title: d.title,
+			date: d.date || null,
+			isMilestone: false,
+			done: !!d.completed,
+			waiting: false,
+			waitingOn: null,
+		});
+	});
+
+	return items;
+}
+// Soonest-wins for the table/card cell.
+//  - if anything is dated, return the soonest dated (starred if milestone)
+//  - if nothing is dated, return the earliest-in-sequence undated milestone
+//    as a TBD marker, so she still sees what's coming
+export function nextDesignerDue(project) {
+	const items = designerDueItems(project).filter((i) => !i.done);
+	if (!items.length) return null;
+
+	const dated = items
+		.filter((i) => i.date)
+		.map((i) => ({ ...i, computed: getDeadlineStatus(i.date) }))
+		.sort((a, b) => a.computed.date - b.computed.date);
+
+	if (dated.length) return { ...dated[0], tbd: false };
+
+	// nothing dated — surface the next milestone in sequence as TBD
+	const milestones = items.filter((i) => i.isMilestone);
+	if (!milestones.length) return null;
+
+	milestones.sort(
+		(a, b) =>
+			(DESIGN_MILESTONE_ORDER.indexOf(a.title) + 1 || 99) -
+			(DESIGN_MILESTONE_ORDER.indexOf(b.title) + 1 || 99),
+	);
+	return { ...milestones[0], tbd: true, computed: null };
 }

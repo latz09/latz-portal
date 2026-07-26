@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { TbChevronRight } from 'react-icons/tb';
+import { TbChevronRight, TbStarFilled } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
+import { nextDesignerDue } from '@/app/utils/journeyHelpers';
 
 const statusColors = {
 	active: 'text-teal',
@@ -13,8 +14,6 @@ const monthNames = [
 	'Jul','Aug','Sep','Oct','Nov','Dec',
 ];
 
-// Written out rather than built with a template literal — Tailwind scans
-// source for complete class strings, so `text-${accent}` never gets generated.
 const ACCENT = {
 	designer: { text: 'text-purple', chevron: 'text-purple' },
 	internal: { text: 'text-teal', chevron: 'text-teal' },
@@ -33,8 +32,6 @@ function money(n) {
 	return `$${Math.round(n).toLocaleString()}`;
 }
 
-// Designer budget for one project — actual if she's given a number,
-// otherwise the quoted range.
 function budgetLabel(dp) {
 	if (!dp?.assigned) return null;
 	if (dp.actualAmount) return money(dp.actualAmount);
@@ -47,43 +44,30 @@ function budgetLabel(dp) {
 	return null;
 }
 
-// Soonest upcoming/overdue deadline for one project, with its title.
-function getNextDeadline(deadlines) {
-	let next = null;
-	deadlines?.forEach((d) => {
-		if (d.completed) return;
-		const status = getDeadlineStatus(d.date);
-		if (!(status.isPast || status.isUpcoming)) return;
-		if (!next || status.date < next.computed.date) {
-			next = { ...d, computed: status };
-		}
-	});
-	return next;
+// Date used for sorting cards — the soonest actionable due, or null.
+function sortDate(project) {
+	const next = nextDesignerDue(project);
+	
+	return next && !next.tbd && next.computed ? next.computed.date : null;
 }
 
-// Just the date — used for sorting.
-function getNextDeadlineDate(deadlines) {
-	return getNextDeadline(deadlines)?.computed.date ?? null;
-}
-
-// Soonest first; anything with no upcoming date sinks to the bottom
-// instead of breaking the sort.
-function sortByNextDate(items, getDate) {
+// Soonest first; anything with no dated due (TBD / waiting-no-date / none)
+// sinks to the bottom instead of breaking the sort.
+function sortByDue(items) {
 	return [...items].sort((a, b) => {
-		const aDate = getDate(a);
-		const bDate = getDate(b);
-		if (!aDate && !bDate) return 0;
-		if (!aDate) return 1;
-		if (!bDate) return -1;
-		return aDate - bDate;
+		const ad = sortDate(a);
+		const bd = sortDate(b);
+		if (!ad && !bd) return 0;
+		if (!ad) return 1;
+		if (!bd) return -1;
+		return ad - bd;
 	});
 }
 
 export default function ClientProjectList({ variant, clients, hrefBuilder }) {
 	const accent = ACCENT[variant] || ACCENT.internal;
 
-	// Flatten client → projects into one list so the sort is global —
-	// soonest deadline first regardless of which client it belongs to.
+	// Flatten client → projects into one list so the sort is global.
 	const flat = [];
 	clients?.forEach((client) => {
 		client.projects?.forEach((project) => {
@@ -95,7 +79,7 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
 		});
 	});
 
-	const sorted = sortByNextDate(flat, (p) => getNextDeadlineDate(p.deadlines));
+	const sorted = sortByDue(flat);
 
 	if (!sorted.length) return null;
 
@@ -107,20 +91,25 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
 				const payStatus = dp?.assigned
 					? PAYMENT_LABELS[dp.status || 'not-started']
 					: null;
-				const nextDue = getNextDeadline(project.deadlines);
-
+				const next = nextDesignerDue(project);
+	const isWaiting = next?.waiting;
 				return (
+					
 					<Link
 						key={`${project.clientSlug}-${project.slug}`}
 						href={hrefBuilder(project.clientSlug, project.slug)}
-						className='group flex flex-col justify-between gap-3 h-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-5 py-4 transition-colors'
+						className={`group flex flex-col justify-between gap-3 h-full border rounded-xl px-5 py-4 transition-all duration-200 ${
+							isWaiting
+								? 'bg-white/[0.02] border-white/[0.05] opacity-75 scale-[0.98] hover:opacity-100 hover:scale-100 hover:bg-white/[0.06] hover:border-white/[0.08]'
+								: 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06]'
+						}`}
 					>
 						<div className='flex items-start justify-between gap-3'>
 							<div className='flex flex-col gap-1 min-w-0'>
 								<span className='font-mono text-[10px] text-white/30 uppercase tracking-widest truncate'>
 									{project.clientName}
 								</span>
-								<span className='text-base font-mono font text-white leading-tight mb-1'>
+								<span className='text-base font-medium text-white leading-tight'>
 									{project.name}
 								</span>
 							</div>
@@ -129,17 +118,29 @@ export default function ClientProjectList({ variant, clients, hrefBuilder }) {
 							/>
 						</div>
 
-						{nextDue ? (
+						{/* next due — mirrors the table cell */}
+						{next ? (
 							<div className='flex flex-col gap-0.5 min-w-0'>
-								<span
-									className={`font-mono text-[11px] ${
-										nextDue.computed.isPast ? 'text-danger' : 'text-white/60'
-									}`}
-								>
-									{formatDate(nextDue.computed.date)}
-								</span>
-								<span className='text-sm text-white/45 line-clamp-2'>
-									{nextDue.title}
+								{next.waiting ? (
+									<span className='font-mono text-[11px] text-warning/80'>
+										Waiting{next.waitingOn ? ` on ${next.waitingOn}` : ''}
+									</span>
+								) : next.tbd ? (
+									<span className='font-mono text-[11px] text-white/30'>TBD</span>
+								) : (
+									<span
+										className={`font-mono text-[11px] ${
+											next.computed?.isPast ? 'text-danger' : 'text-white/60'
+										}`}
+									>
+										{formatDate(next.computed.date)}
+									</span>
+								)}
+								<span className='text-sm text-white/45 line-clamp-2 flex items-start gap-1.5'>
+									{next.isMilestone && (
+										<TbStarFilled className='text-warning text-[10px] mt-1 shrink-0' />
+									)}
+									{next.title}
 								</span>
 							</div>
 						) : (

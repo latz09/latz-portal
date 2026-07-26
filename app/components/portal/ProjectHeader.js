@@ -41,8 +41,9 @@ export default function ProjectHeader({
 				) : null}
 			</div>
 
-			<div className='grid gap-2 mt-4'>
-				<p className='text-xl lg:text-2xl text-white/80'>{projectName}</p>
+			<div className='grid gap-1 lg:gap-2 mt-2 lg:mt-4'>
+				<p className='text-base lg:text-xl text-white/80'>{projectName}</p>
+				<p className='text-xs lg:text-base text-white/80'>{clientName}</p>
 				
 				{month && year && (
 					<span className='font-mono text-xs text-white/70'>

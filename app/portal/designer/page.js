@@ -1,3 +1,6 @@
+
+// /portal/designer/page.js
+
 import { signOut } from '@/auth';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_DESIGNER_PORTAL_INDEX_QUERY as Q } from '@/app/data/queries/pages/FETCH_DESIGNER_PORTAL_INDEX_QUERY';
@@ -19,7 +22,7 @@ export default async function DesignerPortalIndex() {
 			<PortalPageHeader
 				variant='designer'
 				label='Alyssa Shurbert-Hetzel'
-				title='Your Active Projects'
+				title='Active Projects'
 			/>
 
 			<DesignerHomeView

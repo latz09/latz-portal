@@ -25,6 +25,18 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
         completed,
         completedAt
       },
+"journeyMilestones": journeySteps[
+        (defined(dueDate) || status == "waiting") &&
+        generators[0]->isMilestone == true &&
+        generators[0]->phase in ["c-kickoff", "d-design"]
+      ] {
+        _key,
+        "date": dueDate,
+        status,
+        waitingOn,
+        "title": generators[0]->title,
+        "phase": generators[0]->phase
+      },
       inspiration[] {
         "url": image.asset->url,
         caption,

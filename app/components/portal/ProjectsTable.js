@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { TbCheck, TbStarFilled } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
 import PortfolioSummary from './PortfolioSummary';
-
+import { nextDesignerDue } from '@/app/utils/journeyHelpers';
 import {
 	STATUS_LABELS,
 	STATUS_COLORS,
@@ -75,7 +75,70 @@ function sortByPaymentUrgency(projects) {
 	});
 }
 
-function NextDueCell({ project }) {
+function NextDueCell({ project, variant }) {
+	// Designer: pool her design milestones + one-off deadlines, soonest wins,
+	// TBD fallback for the next undated milestone.
+if (variant === 'designer') {
+		const next = nextDesignerDue(project);
+
+		// No upcoming due — say what state the project is in instead of "—".
+		if (!next) {
+			const paid = project.designerPayment?.status === 'paid';
+			const isComplete = project.status === 'complete';
+
+			let label;
+			let tone = 'text-white/30';
+
+			if (paid) {
+				label = 'Paid · closed';
+			} else if (isComplete) {
+				// her work's done, payment is what's outstanding
+				label = 'Project closed · payment due';
+				tone = 'text-purple/70';
+			} else {
+				// active/on-hold, no design deadline — delivered, you're building
+				label = 'In progress · being built';
+			}
+
+			return <span className='font-mono text-xs'><span className={tone}>{label}</span></span>;
+		}
+
+		if (next.tbd) {
+			return (
+				<div className='flex flex-col'>
+					<span className='font-mono text-xs text-white/30'>TBD</span>
+					<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
+						<TbStarFilled className='text-warning/60 text-[9px] shrink-0' />
+						{next.title}
+					</span>
+				</div>
+			);
+		}
+
+return (
+			<div className='flex flex-col'>
+				{next.waiting ? (
+					<span className='font-mono text-[11px] lg:text-sm text-warning/85'>
+						Waiting{next.waitingOn ? ` on ${next.waitingOn}` : ''}
+					</span>
+				) : (
+					<span
+						className={`font-mono text-xs ${
+							next.computed.isPast ? 'text-danger font-semibold' : 'text-white/70'
+						}`}
+					>
+						{formatDate(next.computed.date)}
+					</span>
+				)}
+				<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
+					{next.isMilestone && <TbStarFilled className='text-warning text-[9px] shrink-0' />}
+					{next.title}
+				</span>
+			</div>
+		);
+	}
+
+	// Internal: existing behavior
 	const next = getNextDeadline(project);
 	if (!next) return <span className='text-white/20'>—</span>;
 
@@ -89,9 +152,7 @@ function NextDueCell({ project }) {
 				{formatDate(next.computed.date)}
 			</span>
 			<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
-				{next.isMilestone && (
-					<TbStarFilled className='text-warning text-[9px] shrink-0' />
-				)}
+				{next.isMilestone && <TbStarFilled className='text-warning text-[9px] shrink-0' />}
 				{next.title}
 			</span>
 		</div>
@@ -144,7 +205,90 @@ function DesignerPaymentCell({ designerPayment }) {
 
 // ─── Mobile card ─────────────────────────────────────────────────────────
 
-function MobileProjectCard({ p, isInternal, hrefFor }) {
+// Compact monospace ledger row — designer mobile view.
+function DesignerLedgerRow({ p, hrefFor }) {
+	const dp = p.designerPayment;
+	const bucket = bucketForDesignerPayment(dp?.status);
+	const next = nextDesignerDue(p);
+
+	const dotColor =
+		bucket === 'paid'
+			? 'bg-teal'
+			: bucket === 'owed'
+				? 'bg-purple'
+				: 'bg-white/30';
+
+	const amount = dp?.actualAmount
+		? formatMoney(dp.actualAmount)
+		: dp?.quoteLow && dp?.quoteHigh
+			? dp.quoteLow === dp.quoteHigh
+				? formatMoney(dp.quoteHigh)
+				: `${formatMoney(dp.quoteLow)}–${formatMoney(dp.quoteHigh)}`
+			: null;
+
+	// one-line due summary
+	let dueLine = null;
+	let dueTone = 'text-white/40';
+	if (next) {
+		if (next.waiting) {
+			dueLine = `Waiting${next.waitingOn ? ` · ${next.waitingOn}` : ''}`;
+			dueTone = 'text-warning/80';
+		} else if (next.tbd) {
+			dueLine = `TBD · ${next.title}`;
+		} else {
+			dueLine = `${formatDate(next.computed.date)} · ${next.title}`;
+			dueTone = next.computed.isPast ? 'text-danger' : 'text-white/50';
+		}
+	} else if (dp?.status === 'paid') {
+		dueLine = 'Paid · closed';
+	} else if (p.status === 'complete') {
+		dueLine = 'Closed · payment due';
+		dueTone = 'text-purple/70';
+	} else {
+		dueLine = 'In progress';
+	}
+
+	return (
+		<Link
+			href={hrefFor(p)}
+			className='flex items-center justify-between gap-3 py-3 border-b border-white/[0.06] active:bg-white/[0.03] transition-colors'
+		>
+			<div className='flex items-start gap-2.5 min-w-0'>
+				<span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${dotColor}`} />
+				<div className='flex flex-col min-w-0'>
+					<span className='font-mono text-xs text-white/50 truncate'>
+						{p.clientName}
+					</span>
+					<span className='font-mono text-sm text-white/90 truncate leading-tight'>
+						{p.name}
+					</span>
+					{dueLine && (
+						<span className={`font-mono text-[11px] truncate mt-0.5 ${dueTone}`}>
+							{dueLine}
+						</span>
+					)}
+				</div>
+			</div>
+
+			<div className='flex flex-col items-end shrink-0'>
+				{amount && (
+					<span
+						className={`font-mono text-sm tabular-nums leading-none ${
+							bucket === 'paid' ? 'text-teal' : 'text-purple'
+						}`}
+					>
+						{amount}
+					</span>
+				)}
+				<span className='font-mono text-[10px] text-white/30 mt-1 capitalize'>
+					{(dp?.status || 'not-started').replace('-', ' ')}
+				</span>
+			</div>
+		</Link>
+	);
+}
+
+function MobileProjectCard({ p, isInternal, hrefFor, variant  }) {
 	return (
 		<Link
 			href={hrefFor(p)}
@@ -171,7 +315,7 @@ function MobileProjectCard({ p, isInternal, hrefFor }) {
 					<span className='font-mono text-[10px] text-white/30 uppercase tracking-widest mb-1'>
 						Next Due
 					</span>
-					<NextDueCell project={p} />
+					<NextDueCell project={p} variant={variant} />
 				</div>
 				{isInternal && (
 					<div className='flex flex-col min-w-0'>
@@ -219,6 +363,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 			filter === 'all' ? projects : projects.filter((p) => p.status === filter);
 		filtered = sortByNextDue(filtered);
 	} else {
+		// designer
 		if (clientPaymentFilter !== 'all') {
 			filtered = projects.filter((p) =>
 				clientPaymentFilter === 'paid'
@@ -226,7 +371,17 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 					: p.designerPayment?.status !== 'paid',
 			);
 		}
-		filtered = sortByNextDue(filtered);
+		// sort by her soonest design due — dated first, TBD/none last
+		filtered = [...filtered].sort((a, b) => {
+			const an = nextDesignerDue(a);
+			const bn = nextDesignerDue(b);
+			const ad = an && !an.tbd ? an.computed.date : null;
+			const bd = bn && !bn.tbd ? bn.computed.date : null;
+			if (!ad && !bd) return 0;
+			if (!ad) return 1;
+			if (!bd) return -1;
+			return ad - bd;
+		});
 	}
 
 	const hrefFor = (p) =>
@@ -319,22 +474,36 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				</div>
 			)}
 
-			{/* Mobile */}
-			<div className='flex flex-col gap-3 lg:hidden'>
-				{filtered.map((p) => (
-					<MobileProjectCard
-						key={p._id}
-						p={p}
-						isInternal={isInternal}
-						hrefFor={hrefFor}
-					/>
-				))}
-				{filtered.length === 0 && (
-					<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
-						{isMoneyView ? 'Nothing here.' : 'No projects match this filter.'}
-					</p>
-				)}
-			</div>
+		{/* Mobile */}
+			{isInternal ? (
+				<div className='flex flex-col gap-3 lg:hidden'>
+					{filtered.map((p) => (
+						<MobileProjectCard
+							key={p._id}
+							p={p}
+							isInternal={isInternal}
+							hrefFor={hrefFor}
+							variant={variant}
+						/>
+					))}
+					{filtered.length === 0 && (
+						<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
+							No projects match this filter.
+						</p>
+					)}
+				</div>
+			) : (
+				<div className='flex flex-col lg:hidden'>
+					{filtered.map((p) => (
+						<DesignerLedgerRow key={p._id} p={p} hrefFor={hrefFor} />
+					))}
+					{filtered.length === 0 && (
+						<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
+							Nothing here.
+						</p>
+					)}
+				</div>
+			)}
 
 			{/* Desktop */}
 			<div className='hidden lg:block overflow-x-auto border border-white/10 rounded-xl'>
@@ -392,7 +561,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									</td>
 								)}
 								<td className='px-4 py-3'>
-									<NextDueCell project={p} />
+									<NextDueCell project={p} variant={variant} />
 								</td>
 								{isInternal && !isMoneyView && (
 									<td className='px-4 py-3'>

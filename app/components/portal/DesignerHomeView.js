@@ -13,7 +13,7 @@ export default function DesignerHomeView({ clients, handoffClients, tableProject
 		<div>
 			<DesignerSummary projects={tableProjects} />
 
-			<div className='flex gap-2 mb-8'>
+			<div className='flex gap-2 mb-5 lg:mb-8'>
 				<button
 					onClick={() => setView('cards')}
 					className={`font-mono text-xs px-4 py-2 rounded-full border transition-colors ${

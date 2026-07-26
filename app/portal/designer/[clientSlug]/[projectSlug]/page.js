@@ -1,3 +1,5 @@
+// /portal/designer/[clientSlug]/[projectSlug]/page.js
+
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_DESIGNER_PORTAL_QUERY as Q } from '@/app/data/queries/pages/FETCH_DESIGNER_PORTAL_QUERY';
 import ProjectHeader from '@/app/components/portal/ProjectHeader';
@@ -7,6 +9,7 @@ import DeadlineList from '@/app/components/portal/DeadlineList';
 import PortalFooter from '@/app/components/portal/PortalFooter';
 import ResourceList from '@/app/components/portal/ResourceList';
 import DesignerBudgetLine from '@/app/components/portal/DesignerBudgetLine';
+import DesignerMilestones from '@/app/components/portal/DesignerMilestones';
 
 export default async function DesignerPortal({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -23,7 +26,7 @@ export default async function DesignerPortal({ params }) {
 		project.resources?.filter((r) => r.audience?.includes('designer')) ?? [];
 
 	return (
-		<main className='max-w-4xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
+		<main className='max-w-7xl mx-auto px-3 lg:px-6 py-8 lg:py-16 w-full'>
 			<ProjectHeader
 				variant='designer'
 				backHref='/portal/designer'
@@ -32,6 +35,7 @@ export default async function DesignerPortal({ params }) {
 				projectName={project.name}
 			/>
 			<DesignerBudgetLine designerPayment={project.designerPayment} />
+			<DesignerMilestones project={project} />
 			<ProjectLinks
 				variant='designer'
 				previewUrl={project.previewUrl}

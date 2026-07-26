@@ -31,10 +31,14 @@ export default function DesignerSummary({ projects }) {
 			: `${money(inFlightLow)}–${money(inFlightHigh)}`;
 
 	return (
-		<p className='font-mono text-[11px] text-white/35 mb-8'>
-			<span className='text-purple'> {money(owed)} </span> delivered &amp; awaiting payment
-			<span className='text-white/20 mx-2'>·</span>
-			<span className='text-white/60'>{range}</span> still to deliver
-		</p>
+		<div className='font-mono text-[11px] text-white/35 mb-8 grid gap-2'>
+			<div>
+				<span className='text-purple'> {money(owed)} </span> delivered &amp;
+				awaiting payment
+			</div>
+			<div>
+				<span className='text-white/60'>{range}</span> still to deliver
+			</div>
+		</div>
 	);
 }
