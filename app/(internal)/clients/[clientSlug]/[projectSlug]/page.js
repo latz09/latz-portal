@@ -11,6 +11,7 @@ import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
 import JourneyPreview from '@/app/components/portal/JourneyPreview';
 import StudioLink from '@/app/components/portal/StudioLink';
 import ProjectMilestones from '@/app/components/portal/ProjectMilestones';
+import LostBanner from '@/app/components/portal/LostBanner';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -48,19 +49,27 @@ export default async function ProjectPage({ params }) {
 				vercelUrl={project.vercelUrl}
 				aiProjectLink={project.aiProjectLink}
 			/>
-			<div className='grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mt-4 mb-6'>
-				<ProjectMilestones
-					journeySteps={project.journeySteps}
-					clientSlug={clientSlug}
-					projectSlug={projectSlug}
+{project.status === 'on-ice' ? (
+				<LostBanner
+					reason={project.lostReason}
+					month={project.month}
+					year={project.year}
 				/>
-				<JourneyPreview
-					journeySteps={project.journeySteps}
-					clientPayment={project.clientPayment}
-					clientSlug={clientSlug}
-					projectSlug={projectSlug}
-				/>
-			</div>
+			) : (
+				<div className='grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mt-4 mb-6'>
+					<ProjectMilestones
+						journeySteps={project.journeySteps}
+						clientSlug={clientSlug}
+						projectSlug={projectSlug}
+					/>
+					<JourneyPreview
+						journeySteps={project.journeySteps}
+						clientPayment={project.clientPayment}
+						clientSlug={clientSlug}
+						projectSlug={projectSlug}
+					/>
+				</div>
+			)}
 
 			<DocumentList
 				variant='internal'

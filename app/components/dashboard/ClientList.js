@@ -193,7 +193,7 @@ function ViewDropdown({ groups, current, onSelect }) {
 		<div className='relative mb-4'>
 		<button
 				onClick={() => setOpen((o) => !o)}
-				className='flex items-center justify-between w-1/3  md:w-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-5 py-3 group transition-colors'
+				className='flex items-center justify-between w-1/2  md:w-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-5 py-3 group transition-colors'
 			>
 				<span className='flex items-center gap-2'>
 					<span className='font-mono text-xs text-white/70 tracking-widest uppercase group-hover:text-white/90 transition-colors'>

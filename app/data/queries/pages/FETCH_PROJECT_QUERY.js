@@ -8,6 +8,7 @@ export const FETCH_PROJECT_QUERY = `
       name,
       "slug": slug.current,
       status,
+      lostReason,
       month,
       year,
       estimateWeeksLow,
