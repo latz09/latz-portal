@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { TbChevronDown } from 'react-icons/tb';
+import { TbChevronDown, TbStarFilled } from 'react-icons/tb';
 import Card from '../ui/Card';
 import { getDeadlineStatus } from '../portal/deadlineUtils';
 
@@ -25,12 +25,29 @@ function getNextMilestone(client) {
 			if (d.completed) return;
 			consider(d, false);
 		});
-		// journey milestones — already filtered in the query to dated,
-		// not-done steps whose catalog entry is flagged isMilestone
-		project.journeyMilestones?.forEach((m) => consider(m, true));
+		// journey milestones — skip waiting ones; they're delivered and sitting
+		// with the client, so they surface on their own line, not as a due date.
+		project.journeyMilestones?.forEach((m) => {
+			if (m.status === 'waiting') return;
+			consider(m, true);
+		});
 	});
 
 	return next;
+}
+
+// Milestones parked in "waiting" across a client's projects — delivered,
+// awaiting the client. Surfaced as a small line rather than a fake due date.
+function getWaitingMilestones(client) {
+	const waiting = [];
+	client.projects?.forEach((project) => {
+		project.journeyMilestones?.forEach((m) => {
+			if (m.status === 'waiting') {
+				waiting.push({ title: m.title, waitingOn: m.waitingOn || null });
+			}
+		});
+	});
+	return waiting;
 }
 
 // Soonest due date first. Clients with no upcoming milestone at all sink
@@ -45,10 +62,10 @@ function sortByNextMilestone(clients) {
 		return aNext.date - bNext.date;
 	});
 }
-
 function ClientCard({ client }) {
 	const next = getNextMilestone(client);
 	const nextDate = next?.date ?? null;
+	const waiting = getWaitingMilestones(client);
 
 	return (
 		<Card
@@ -65,11 +82,28 @@ function ClientCard({ client }) {
 							{nextDate.getDate()}
 						</span>
 					</div>
-					<span className='font-mono text-xs lg:text-sm text-white/60 line-clamp-2'>
+					<span className='font-mono text-xs lg:text-sm text-white/60 line-clamp-2 flex items-center gap-1.5'>
+						{next.isMilestone && (
+							<TbStarFilled className='text-warning text-[11px] shrink-0' />
+						)}
 						{next.title}
 					</span>
 				</div>
 			)}
+
+			{waiting.length > 0 && (
+				<div className='flex items-center gap-1.5 font-mono text-[11px] text-warning/70 mb-2 min-w-0'>
+					<span className='shrink-0'>⏳</span>
+					<span className='truncate'>
+						{waiting[0].title}
+						{waiting[0].waitingOn ? ` · waiting on ${waiting[0].waitingOn}` : ' · waiting'}
+						{waiting.length > 1 && (
+							<span className='text-white/30'> +{waiting.length - 1}</span>
+						)}
+					</span>
+				</div>
+			)}
+
 			<h3 className='font-medium text-lg text-white'>{client.name}</h3>
 			<span className='font-mono text-sm text-teal'>
 				{client.activeProjects} active · {client.totalProjects} total

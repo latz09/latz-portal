@@ -19,7 +19,7 @@ export default function JourneyPreview({ journeySteps, clientPayment, clientSlug
   const href = `/clients/${clientSlug}/${projectSlug}/journey`;
 
   return (
-    <div className='my-10 '>
+    <div >
       <div className='flex items-center justify-between gap-3 mb-4'>
         <p className='font-mono text-xs lg:text-base text-white/60 tracking-widest uppercase'>
           Journey Map

@@ -10,6 +10,7 @@ import ProjectMoneySummary from '@/app/components/portal/ProjectMoneySummary';
 import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
 import JourneyPreview from '@/app/components/portal/JourneyPreview';
 import StudioLink from '@/app/components/portal/StudioLink';
+import ProjectMilestones from '@/app/components/portal/ProjectMilestones';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -26,7 +27,9 @@ export default async function ProjectPage({ params }) {
 				projectName={project.name}
 				month={project.month}
 				year={project.year}
-				action={<StudioLink type='project' id={project._id} label='Edit project' />}
+				action={
+					<StudioLink type='project' id={project._id} label='Edit project' />
+				}
 			/>
 			<ProjectTimeline
 				estimateWeeksLow={project.estimateWeeksLow}
@@ -45,15 +48,19 @@ export default async function ProjectPage({ params }) {
 				vercelUrl={project.vercelUrl}
 				aiProjectLink={project.aiProjectLink}
 			/>
-
-			
-
-			<JourneyPreview
-				journeySteps={project.journeySteps}
-				clientPayment={project.clientPayment}
-				clientSlug={clientSlug}
-				projectSlug={projectSlug}
-			/>
+			<div className='grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mt-4 mb-6'>
+				<ProjectMilestones
+					journeySteps={project.journeySteps}
+					clientSlug={clientSlug}
+					projectSlug={projectSlug}
+				/>
+				<JourneyPreview
+					journeySteps={project.journeySteps}
+					clientPayment={project.clientPayment}
+					clientSlug={clientSlug}
+					projectSlug={projectSlug}
+				/>
+			</div>
 
 			<DocumentList
 				variant='internal'

@@ -50,7 +50,7 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 				}
 			});
 
-			// journey milestones (already filtered in the query)
+		// journey milestones (already filtered in the query)
 			project.journeyMilestones?.forEach((m) => {
 				const status = getDeadlineStatus(m.date);
 				if (status.isPast || status.isUpcoming) {
@@ -59,6 +59,8 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 						...base,
 						...status,
 						isMilestone: true,
+						waiting: m.status === 'waiting',
+						waitingOn: m.waitingOn || null,
 						description: PHASE_LABELS[m.phase] || m.phase,
 					});
 				}
@@ -79,18 +81,15 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 			</p>
 
 			<div className='flex flex-col gap-3'>
-			{items.map((d, i) => {
+		{items.map((d, i) => {
 					const isDesigner =
 						variant === 'designer' || d.audience?.includes('designer');
 
-					// ── EDIT 1 goes here (replaces the existing surface const) ──
-					const surface = isDesigner
-						? 'bg-purple/[0.06] border-purple/25 hover:bg-purple/[0.1]'
-						: d.isMilestone
-							? 'bg-white/[0.03] border-warning/25 hover:bg-white/[0.06]'
-							: d.isPast
-								? 'bg-white/[0.03] border-danger/20 hover:bg-white/[0.06]'
-								: 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06]';
+					const surface = d.isMilestone
+						? 'bg-white/[0.03] border-warning/25 hover:bg-white/[0.06]'
+						: d.isPast
+							? 'bg-white/[0.03] border-danger/20 hover:bg-white/[0.06]'
+							: 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06]';
 
 					const href =
 						variant === 'internal'
@@ -103,23 +102,16 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 						<Link
 							key={`${d._key}-${i}`}
 							href={href}
-							className={`group flex flex-col border rounded-xl px-5 py-4 gap-3 transition-colors ${surface}`}
+							className={`group flex flex-col border rounded-xl px-5 py-4 gap-3 transition-all ${surface} ${
+								d.waiting ? 'opacity-70 scale-[0.99] origin-left hover:opacity-100 hover:scale-100' : ''
+							}`}
 						>
 							<div className='flex items-start justify-between gap-4'>
 								<div className='flex flex-col gap-1.5 min-w-0'>
-
-									{/* ── EDIT 2 goes here (replaces the client·project span) ── */}
-									<span className='font-mono text-[11px] truncate flex items-center gap-2'>
-										{isDesigner && (
-											<span className='text-[9px] tracking-widest uppercase text-purple/80 border border-purple/30 rounded px-1.5 py-0.5 shrink-0'>
-												Design
-											</span>
-										)}
-										<span className='text-white/35 truncate'>
-											{d.clientName}
-											<span className='text-white/20'> · </span>
-											{d.projectName}
-										</span>
+									<span className='font-mono text-[11px] text-white/35 truncate'>
+										{d.clientName}
+										<span className='text-white/20'> · </span>
+										{d.projectName}
 									</span>
 
 									<span className='text-base font-medium text-white leading-tight flex items-center gap-2'>
@@ -129,18 +121,30 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 										{d.title}
 									</span>
 
-									{d.description && (
-										<span className='text-sm text-white/50 line-clamp-2'>
-											{d.description}
+									{d.waiting ? (
+										<span className='font-mono text-[11px] text-warning/80'>
+											Waiting{d.waitingOn ? ` on ${d.waitingOn}` : ''} since {formatDate(d.date)}
 										</span>
+									) : (
+										d.description && (
+											<span className='text-sm text-white/50 line-clamp-2'>
+												{d.description}
+											</span>
+										)
 									)}
 								</div>
 
-								<DaysBadge
-									isPast={d.isPast}
-									isToday={d.isToday}
-									daysUntil={d.daysUntil}
-								/>
+								{d.waiting ? (
+									<span className='font-mono text-[11px] text-warning/70 shrink-0 pt-1'>
+										Delivered
+									</span>
+								) : (
+									<DaysBadge
+										isPast={d.isPast}
+										isToday={d.isToday}
+										daysUntil={d.daysUntil}
+									/>
+								)}
 							</div>
 
 							<div className='flex items-center justify-between gap-3 pt-2.5 border-t border-white/[0.06]'>
