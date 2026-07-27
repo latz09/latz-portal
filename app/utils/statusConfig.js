@@ -1,12 +1,13 @@
 // Single source of truth for project status display. The underlying stored
-// value for "Leads" stays "potential" on purpose — renaming the string itself
-// would require migrating every existing lead document. Only the label changes.
+// value for "Leads" stays "potential" and "Lost" stays "on-ice" on purpose —
+// renaming the strings would require migrating every existing document.
+// Only the labels change.
 
 export const STATUS_LABELS = {
 	active: 'Active',
 	'on-hold': 'On Hold',
 	potential: 'Leads',
-	'on-ice': 'On Ice',
+	'on-ice': 'Lost',
 	complete: 'Complete',
 }
 

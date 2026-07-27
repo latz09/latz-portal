@@ -152,7 +152,7 @@ function StatusTabs({ onHold, leads, onIce }) {
 		tabs.push({ key: 'onHold', label: 'On Hold', clients: onHold });
 	if (leads.length) tabs.push({ key: 'leads', label: 'Leads', clients: leads });
 	if (onIce.length)
-		tabs.push({ key: 'onIce', label: 'On Ice', clients: onIce });
+		tabs.push({ key: 'onIce', label: 'Lost', clients: onIce });
 
 	const activeClients = tabs.find((t) => t.key === activeTab)?.clients || [];
 
@@ -186,7 +186,64 @@ function StatusTabs({ onHold, leads, onIce }) {
 	);
 }
 
+function ViewDropdown({ groups, current, onSelect }) {
+	const [open, setOpen] = useState(false);
+
+	return (
+		<div className='relative mb-4'>
+		<button
+				onClick={() => setOpen((o) => !o)}
+				className='flex items-center justify-between w-1/3  md:w-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-5 py-3 group transition-colors'
+			>
+				<span className='flex items-center gap-2'>
+					<span className='font-mono text-xs text-white/70 tracking-widest uppercase group-hover:text-white/90 transition-colors'>
+						{current.label}
+					</span>
+					<span className='font-mono text-xs text-white/30'>
+						{current.clients.length}
+					</span>
+				</span>
+				<TbChevronDown
+					className={`text-white/40 group-hover:text-white/70 transition-all ${
+						open ? 'rotate-180' : ''
+					}`}
+				/>
+			</button>
+
+			{open && (
+				<>
+					<div className='fixed inset-0 z-10' onClick={() => setOpen(false)} />
+					<div className='absolute left-0 top-full mt-2 z-20 flex flex-col gap-0.5 p-1.5 rounded-xl border border-white/10 bg-[#12151c] shadow-xl min-w-full'>
+						{groups.map((g) => {
+							const isCurrent = g.key === current.key;
+							return (
+								<button
+									key={g.key}
+									onClick={() => {
+										onSelect(g.key);
+										setOpen(false);
+									}}
+									className={`flex items-center justify-between gap-4 px-3 py-4 md:py-2 rounded-lg font-mono text-xs uppercase tracking-wide transition-colors ${
+										isCurrent
+											? 'bg-white/5 text-teal'
+											: 'text-white/50 hover:bg-white/5 hover:text-white/80'
+									}`}
+								>
+									<span>{g.label}</span>
+									<span className='text-white/25'>{g.clients.length}</span>
+								</button>
+							);
+						})}
+					</div>
+				</>
+			)}
+		</div>
+	);
+}
+
 export default function ClientList({ clients }) {
+	const [view, setView] = useState('active');
+
 	const active = sortByNextMilestone(
 		clients.filter((c) => c.activeProjects > 0),
 	);
@@ -219,31 +276,29 @@ export default function ClientList({ clients }) {
 			c.completeProjects > 0,
 	);
 
+	// only groups with clients become options; Active always first
+	const groups = [
+		{ key: 'active', label: 'Active', clients: active },
+		{ key: 'onHold', label: 'On Hold', clients: onHold },
+		{ key: 'leads', label: 'Leads', clients: leads },
+		{ key: 'onIce', label: 'Lost', clients: onIce },
+		{ key: 'complete', label: 'Complete', clients: complete },
+	].filter((g) => g.clients.length > 0);
+
+	// if the selected group emptied out, fall back to the first available
+	const current =
+		groups.find((g) => g.key === view) || groups[0] || null;
+
+	if (!current) return null;
+
 	return (
 		<div className='flex flex-col'>
-			{active.length > 0 && (
-				<>
-					<p className='font-mono text-xs text-white/40 tracking-widest uppercase mb-3'>
-						Active
-					</p>
-					<div className='flex flex-col gap-3 mb-6'>
-						{active.map((client) => (
-							<ClientCard key={client.slug} client={client} />
-						))}
-					</div>
-				</>
-			)}
+			<ViewDropdown groups={groups} current={current} onSelect={setView} />
 
-			<div className='space-y-4'>
-				<StatusTabs onHold={onHold} leads={leads} onIce={onIce} />
-
-				{complete.length > 0 && (
-					<CollapsibleSection
-						label='Complete'
-						clients={complete}
-						defaultOpen={false}
-					/>
-				)}
+			<div className='flex flex-col gap-3'>
+				{current.clients.map((client) => (
+					<ClientCard key={client.slug} client={client} />
+				))}
 			</div>
 		</div>
 	);
