@@ -1,29 +1,2165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Nicholson Construction — Site Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #111111;
+				--primary-mid: #2e2e2e;
+				--accent: #ed1c24;
+				--accent-light: rgba(237, 28, 36, 0.08);
+				--light: #f6f4f0;
+				--light-dark: #ece9e2;
+				--mid: #8c8c8c;
+				--green: #4e7a51;
+				--green-light: rgba(78, 122, 81, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Oswald', sans-serif;
+				font-size: 24px;
+				font-weight: 700;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Inter', sans-serif;
+				font-size: 14px;
+				color: rgba(246, 244, 240, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(78, 122, 81, 0.15);
+				border: 1px solid rgba(78, 122, 81, 0.4);
+				border-radius: 6px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--green);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Inter', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--green);
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(246, 244, 240, 0.45);
+				text-decoration: none;
+				font-family: 'Inter', sans-serif;
+				font-size: 17.5px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(237, 28, 36, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Inter', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 34px;
+				right: 34px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--white);
+				border: none;
+				font-size: 31px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Oswald', sans-serif;
+				font-size: 48px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.12;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-sub {
+				font-family: 'Inter', sans-serif;
+				font-size: 20px;
+				color: rgba(17, 17, 17, 0.5);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1.5px solid rgba(17, 17, 17, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(17, 17, 17, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(17, 17, 17, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Inter', sans-serif;
+				font-size: 17px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(17, 17, 17, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+			}
+
+			.wf-nav-logo {
+				font-family: 'Oswald', sans-serif;
+				font-weight: 700;
+				font-size: 20px;
+				color: var(--primary);
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				font-family: 'Inter', sans-serif;
+				font-size: 16px;
+				color: rgba(17, 17, 17, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(17, 17, 17, 0.04);
+				border-left: 3px solid rgba(17, 17, 17, 0.2);
+				border-radius: 0 4px 4px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: rgba(237, 28, 36, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 3px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── ADD-ON TAG ── */
+			.addon-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--accent);
+				border: 1px solid var(--accent);
+				border-radius: 3px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── EMAIL PREVIEW MOCK ── */
+			.email-preview {
+				border: 1.5px solid rgba(17, 17, 17, 0.2);
+				border-radius: 8px;
+				overflow: hidden;
+				background: var(--white);
+				max-width: 460px;
+				margin-top: 6px;
+			}
+			.email-preview-header {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Oswald', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+				padding: 14px 20px;
+			}
+			.email-preview-body {
+				padding: 20px;
+			}
+			.email-preview-body .wf-body-text {
+				margin-bottom: 14px;
+			}
+
+			/* ── ADD-ON LIST ── */
+			.addon-list {
+				display: flex;
+				flex-direction: column;
+				gap: 11px;
+				margin-top: 17px;
+			}
+			.addon-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				border: 1.5px dashed rgba(17, 17, 17, 0.2);
+				border-radius: 6px;
+				padding: 16px 20px;
+				background: rgba(255, 255, 255, 0.6);
+				flex-wrap: wrap;
+			}
+			.addon-row-name {
+				font-family: 'Oswald', sans-serif;
+				font-size: 19px;
+				font-weight: 600;
+				color: var(--primary);
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+			.addon-row-price {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--accent);
+				white-space: nowrap;
+			}
+
+			/* ── FRIEND DEAL CALLOUT ── */
+			.friend-deal {
+				border: 2px solid var(--accent);
+				border-radius: 8px;
+				padding: 22px;
+				margin-top: 22px;
+				background: rgba(237, 28, 36, 0.06);
+			}
+			.friend-deal-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(17, 17, 17, 0.15);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(246, 244, 240, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 11px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Oswald', sans-serif;
+				font-size: 36px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-heading-md {
+				font-family: 'Oswald', sans-serif;
+				font-size: 25px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 8px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Oswald', sans-serif;
+				font-size: 20px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 6px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-subtext {
+				font-family: 'Inter', sans-serif;
+				font-size: 20px;
+				color: rgba(17, 17, 17, 0.5);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: rgba(17, 17, 17, 0.62);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.placeholder-pending {
+				color: var(--accent);
+				font-style: italic;
+				opacity: 0.75;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(17, 17, 17, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--white);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 20px 31px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(246, 244, 240, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(17, 17, 17, 0.07);
+				border: 2px dashed rgba(17, 17, 17, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(17, 17, 17, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── PROJECT / SERVICE CARDS ── */
+			.card-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 17px;
+				margin-top: 17px;
+			}
+
+			.wf-card {
+				border: 1.5px dashed rgba(17, 17, 17, 0.2);
+				border-radius: 5px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.wf-card-name {
+				font-family: 'Oswald', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+				margin-bottom: 4px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.wf-card-desc {
+				font-family: 'Inter', sans-serif;
+				font-size: 16px;
+				color: rgba(17, 17, 17, 0.6);
+				line-height: 1.5;
+			}
+
+			.role-line {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: var(--accent);
+				font-weight: 500;
+				margin-top: 6px;
+			}
+
+			.signature-badge {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: var(--accent);
+				border: 1px solid var(--accent);
+				border-radius: 3px;
+				padding: 2px 8px;
+				display: inline-block;
+				margin-left: 8px;
+				vertical-align: middle;
+			}
+
+			/* ── FILTER ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 11px;
+				align-items: center;
+				margin-bottom: 20px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: rgba(17, 17, 17, 0.4);
+			}
+
+			.filter-pill {
+				font-family: 'Inter', sans-serif;
+				font-size: 17px;
+				border: 1.5px solid rgba(17, 17, 17, 0.2);
+				border-radius: 20px;
+				padding: 4px 17px;
+				color: rgba(17, 17, 17, 0.5);
+			}
+
+			.filter-pill.active {
+				border-color: var(--primary);
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.form-field {
+				border: 1.5px dashed rgba(17, 17, 17, 0.2);
+				border-radius: 5px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'Inter', sans-serif;
+				font-size: 15px;
+				color: rgba(17, 17, 17, 0.4);
+				margin-bottom: 5px;
+			}
+
+			.field-placeholder {
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: rgba(17, 17, 17, 0.3);
+			}
+
+			/* ── SERVICE / VALUE GRID ── */
+			.service-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Oswald', sans-serif;
+				font-size: 15px;
+				font-weight: 600;
+				padding: 11px 20px;
+				border-radius: 4px;
+				text-align: center;
+				min-width: 120px;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(17, 17, 17, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box.heart {
+				border-color: var(--accent);
+				color: var(--primary);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25px;
+				color: rgba(17, 17, 17, 0.3);
+				padding: 0 8px;
+				align-self: center;
+				margin-top: -14px;
+			}
+
+			.sitemap-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: var(--accent);
+			}
+
+			/* ── CHECKLIST ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(17, 17, 17, 0.12);
+				font-family: 'Inter', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+				line-height: 1.55;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── OPTION CARDS ── */
+			.option-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px;
+				margin-top: 14px;
+			}
+
+			.option-card {
+				border: 2px dashed rgba(17, 17, 17, 0.2);
+				border-radius: 8px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.option-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 45px 34px 112px;
+				}
+				.card-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 34px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.option-grid,
+				.form-grid,
+				.card-grid,
+				.service-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 16px;
+					gap: 11px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Nicholson Construction</div>
+				<div class="sidebar-doctype">Site Wireframes</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#projects" class="nav-link"><span class="nav-icon">📸</span> Projects / Gallery</a>
+				<a href="#about" class="nav-link"><span class="nav-icon">👤</span> About</a>
+				<a href="#contact" class="nav-link"><span class="nav-icon">📬</span> Contact</a>
+
+				<div class="nav-group-label">Pricing</div>
+				<a href="#addons" class="nav-link"><span class="nav-icon">＋</span> Optional Add-Ons</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Nicholson Construction</div>
+				<div class="doc-sub">
+					4-Page Website Build &nbsp;·&nbsp; Custom Home Construction · Central Wisconsin
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">4 in scope</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Billy Nicholson</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value ok">✓ Received</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- FRAMING CALLOUT -->
+			<div
+				class="annotation"
+				style="margin-bottom: 56px; font-size: 18px; padding: 18px 24px; border-left-width: 4px;"
+			>
+				✏️ This is a content &amp; structure map — not the design. It shows what
+				goes on each page and how it behaves. The look and feel (clean,
+				image-forward, in the spirit of the Revelations Architects site you liked)
+				gets applied in the design stage that comes next. Don't read the plain
+				styling here as the final look.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">Nicholson Construction</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								4 pages · custom CMS for projects, gallery, featured items, services, testimonials, and copy
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 6px; align-items: center">
+							<div class="sitemap-node">
+								<div class="sitemap-box">
+									Home<br /><span style="font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7; text-transform: none;">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary heart">
+									Projects<br /><span style="font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7; text-transform: none;">/projects</span>
+								</div>
+								<div class="sitemap-tag">the heart of the site</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									About<br /><span style="font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7; text-transform: none;">/about</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Contact<br /><span style="font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 400; opacity: 0.7; text-transform: none;">/contact</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 28px">
+							All 4 pages live on the same domain (NC715.com). Nav is consistent
+							across all pages; logo click returns Home. Individual project
+							detail views are dynamic routes under Projects, each opening that
+							project's full gallery. Testimonials is not its own page in this
+							build — reviews embed on Home and on individual project detail
+							views. A standalone testimonials page is a future CMS add once
+							there are enough reviews (see discussion checklist).
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home Page &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Nicholson Construction</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Projects</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+							</div>
+							<div class="img-placeholder" style="height: 240px">
+								<div class="img-icon">🏡</div>
+								<div class="img-label">
+									Hero image — strong landscape shot from the new photography<br />
+									Signature wood-exterior build
+								</div>
+							</div>
+							<div style="margin-top: 22px; text-align: center">
+								<div class="wf-heading-lg">Built alongside the best. Finished like it's our own.</div>
+								<div class="wf-subtext">
+									Second-generation custom home construction in central
+									Wisconsin — from full builds to the wood-and-finish work that
+									sets a home apart.
+								</div>
+								<div class="wf-cta accent">Start a project →</div>
+							</div>
+							<div class="annotation">
+								Headline and subhead carry the positioning. Two alternate
+								headlines are pending Billy's one-sentence descriptor of the
+								business: "The crew the best builders bring in." (boldest) or
+								"Custom homes worth building right." (safest). Hero copy is
+								CMS-editable. The revarch-style, photo-forward look is a
+								design-stage decision, not shown here — this wireframe is layout
+								and content only.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- What we do -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">What We Do</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text" style="font-style: italic;">
+								All forms of construction, one standard. Here's where we do our
+								best work.
+							</div>
+							<div class="service-grid">
+								<div class="wf-card">
+									<div class="wf-card-name">Custom Home Construction <span class="signature-badge">signature</span></div>
+									<div class="wf-card-desc">Ground-up custom homes built to your vision, not a template.</div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-card-name">Wood Exteriors <span class="signature-badge">signature</span></div>
+									<div class="wf-card-desc">Our specialty. The detail work most people notice first and remember longest.</div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-card-name">Decorative Concrete</div>
+									<div class="wf-card-desc">Flatwork and finishes that hold up and stand out.</div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-card-name">Excavation</div>
+									<div class="wf-card-desc">Site prep and groundwork done right from the first cut.</div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-card-name">Renovations &amp; Remodels</div>
+									<div class="wf-card-desc">Bringing older spaces up to how you actually live now.</div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-card-name">Outdoor Living</div>
+									<div class="wf-card-desc">Patios, structures, and spaces that pull the indoors out.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Custom homes and wood exteriors lead as the signature offerings;
+								the rest are supporting services. Final list and order are
+								pending Billy's confirmation.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Featured work -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Featured Work</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text" style="font-style: italic;">
+								A look at recent projects. Every one gets an honest note on what
+								we did.
+							</div>
+							<div class="card-grid">
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 110px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">project photo</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Full custom build</div>
+								</div>
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 110px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">project photo</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Decorative concrete + wood exteriors</div>
+								</div>
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 110px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">project photo</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Framing &amp; exterior, in partnership with <span class="placeholder-pending">[[ lead builder ]]</span>, Sand Valley</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Billy flags which projects are featured via CMS; each pulls a
+								main photo, a project name, and its honest role line, and links
+								into the Projects gallery. Featured project names and roles are
+								pending Billy's 3–5 chosen projects.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- About blurb -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">About Blurb</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 22px; flex-wrap: wrap;">
+								<div class="img-placeholder" style="height: 160px; flex: 1; min-width: 180px;">
+									<div class="img-icon">👤</div>
+									<div class="img-label">Real portrait of Billy<br />from new photography</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-body-text">
+										Nicholson Construction is a second-generation builder run by
+										Billy Nicholson — a guy who grew up on job sites and still
+										answers his own phone. Homes across central Wisconsin, built
+										with the care you'd want on your own.
+									</div>
+									<span style="font-family: 'Inter', sans-serif; font-size: 18px; color: var(--primary); font-weight: 600;">More about Billy →</span>
+								</div>
+							</div>
+							<div class="annotation">
+								Short, warm intro to Billy and the business. Photo + copy. Links
+								to the full About page. Copy managed in CMS.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Testimonials -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Testimonials — Embedded</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="card-grid">
+								<div class="wf-card">
+									<div class="wf-body-text" style="font-style: italic; margin-bottom: 8px;">"<span class="placeholder-pending">[[ real client quote ]]</span>"</div>
+									<div style="font-family: 'Inter', sans-serif; font-size: 15px; color: rgba(17,17,17,0.55);">— <span class="placeholder-pending">[[ first name / last initial ]]</span>, <span class="placeholder-pending">[[ project type or town ]]</span></div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-body-text" style="font-style: italic; margin-bottom: 8px;">"<span class="placeholder-pending">[[ real client quote ]]</span>"</div>
+									<div style="font-family: 'Inter', sans-serif; font-size: 15px; color: rgba(17,17,17,0.55);">— <span class="placeholder-pending">[[ first name / last initial ]]</span>, <span class="placeholder-pending">[[ project type or town ]]</span></div>
+								</div>
+								<div class="wf-card">
+									<div class="wf-body-text" style="font-style: italic; margin-bottom: 8px;">"<span class="placeholder-pending">[[ real client quote ]]</span>"</div>
+									<div style="font-family: 'Inter', sans-serif; font-size: 15px; color: rgba(17,17,17,0.55);">— <span class="placeholder-pending">[[ first name / last initial ]]</span>, <span class="placeholder-pending">[[ project type or town ]]</span></div>
+								</div>
+							</div>
+							<div class="annotation">
+								Home shows 3 featured reviews. Billy flags featured reviews via
+								CMS. Reviews also embed on individual project detail views. Real
+								quotes and the usable review count are pending Billy — quotes are
+								intentionally left blank here, not invented.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Closing CTA -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Closing CTA</div>
+							</div>
+							<div style="text-align: center; padding: 14px 0;">
+								<div class="wf-heading-md">Building this year? Let's talk.</div>
+								<div class="wf-body-text" style="max-width: 560px; margin: 0 auto;">
+									Tell us about your project and you'll hear back from Billy
+									directly — no bots, no ticket numbers, no runaround.
+								</div>
+								<div class="wf-cta accent">Start a project →</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Footer (site-wide) -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Footer — Site-Wide</div>
+							</div>
+							<div class="wf-body-text" style="margin-bottom: 4px;"><strong>Nicholson Construction LLC</strong></div>
+							<div class="wf-body-text" style="margin-bottom: 4px;">Custom homes · Central Wisconsin</div>
+							<div class="wf-body-text" style="margin-bottom: 12px;">715-347-8887 · billy@nc715.com</div>
+							<div class="wf-body-text" style="font-style: italic; margin-bottom: 0;">
+								Always looking to work with quality contractors. Get in touch →
+							</div>
+							<div class="annotation">
+								Site-wide footer content. Phone number is tap-to-call on mobile.
+								The quiet contractor line speaks to the partner audience without
+								competing with the homeowner-facing CTAs above it.
+							</div>
+						</div>
+
+						<!-- DECISION BOX: Landing structure -->
+						<div class="decision-box">
+							<div class="decision-label">Option A / B — Landing Structure</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A</div>
+									<div class="wf-card-desc" style="font-size: 17px;">
+										Traditional home page with the sections above — hero, What
+										we do, Featured work, About blurb, testimonials, closing CTA.
+										More copy and service context up front.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B</div>
+									<div class="wf-card-desc" style="font-size: 17px;">
+										Gallery-forward landing (revarch-style) that opens almost
+										straight into the project mosaic — hero plus minimal
+										sections below. Image-first, copy-light.
+									</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px;">
+								Structural/content decision Billy needs to weigh in on. Drives
+								how much of the home page is copy vs. the project mosaic.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Nicholson Construction LLC</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: PROJECTS / GALLERY ── -->
+			<section class="wf-section" id="projects">
+				<div class="section-label">
+					<span class="section-num">2</span> Projects / Gallery &mdash; /projects
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Nicholson Construction</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Projects</span>
+							<span>About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Header -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Header</div>
+							</div>
+							<div class="wf-heading-lg">The work.</div>
+							<div class="wf-subtext">
+								Organized by what we do — not where it's built. Tap any project
+								to see the full gallery.
+							</div>
+							<div class="filter-row">
+								<span class="filter-label">Filter by capability:</span>
+								<span class="filter-pill active">All</span>
+								<span class="filter-pill">Custom homes</span>
+								<span class="filter-pill">Wood exteriors</span>
+								<span class="filter-pill">Concrete</span>
+								<span class="filter-pill">Outdoor living</span>
+								<span class="filter-pill">Renovations</span>
+							</div>
+							<div class="annotation">
+								Filtering is by capability, not by location or resort — a
+								homeowner should never see an internal name like "Sedge 14."
+								Categories are CMS-managed. Categories are provisional pending
+								Billy's photo audit — see the dependency note below.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- DEPENDENCY BOX -->
+						<div class="decision-box">
+							<div class="decision-label">Dependency — Categories Depend on Billy's Photo Library</div>
+							<div class="wf-card-desc" style="font-size: 17px;">
+								The capability filters shown (Custom homes / Wood exteriors /
+								Concrete / Outdoor living / Renovations) are a proposed structure
+								— NOT confirmed. Two things from Billy drive whether this works:
+								(1) Do these feel like the right categories for how he wants his
+								work seen? (2) Does he actually have enough complete projects —
+								multiple good images each — to fill each category? A filter with
+								only one thin project behind it looks worse than not having it.
+								The good news: the library is likely larger than the 10 Sand
+								Valley Drive folders — Billy mentioned other properties beyond the
+								Sand Valley builds, some fully his (see the discussion checklist),
+								which should help fill categories like "full custom build." The
+								gallery structure depends on how many usable projects he has, and
+								in what categories, once those are pulled in. Confirm the full
+								photo library before finalizing categories.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Project grid -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Project Grid</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="card-grid">
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 140px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">main project photo<br />opens full gallery</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Full custom build</div>
+								</div>
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 140px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">main project photo<br />opens full gallery</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Decorative concrete + wood exteriors</div>
+								</div>
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 140px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">main project photo<br />opens full gallery</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Framing &amp; exterior, in partnership with <span class="placeholder-pending">[[ lead builder ]]</span>, Sand Valley</div>
+								</div>
+								<div class="wf-card">
+									<div class="img-placeholder" style="height: 140px; margin-bottom: 11px;">
+										<div class="img-label" style="font-size: 14px;">main project photo<br />opens full gallery</div>
+									</div>
+									<div class="wf-card-name"><span class="placeholder-pending">[[ project name ]]</span></div>
+									<div class="role-line">Renovation &amp; finish work</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Each project is a main photo that opens that project's full image
+								gallery. Billy adds and edits projects and uploads images himself
+								via CMS. The honest role line directly answers what Billy asked
+								for in person — a way to show he was contracted in on the Sand
+								Valley work and didn't build all of it solo. It lets him use those
+								photos while being straight about his role, exactly as he
+								requested. Project names and which role applies to each are
+								pending Billy's 3–5 projects.
+							</div>
+						</div>
+
+						<!-- DECISION BOX: Role-line placement -->
+						<div class="decision-box">
+							<div class="decision-label">Option A / B — Where the Role Line Appears</div>
+							<div class="option-grid">
+								<div class="option-card">
+									<div class="option-label">Option A</div>
+									<div class="wf-card-desc" style="font-size: 17px;">
+										Role line lives only on the project detail view. Cleanest,
+										most revarch — tiles stay pure image + project name on hover.
+									</div>
+								</div>
+								<div class="option-card">
+									<div class="option-label">Option B</div>
+									<div class="wf-card-desc" style="font-size: 17px;">
+										Role line shows as a small second line in the tile hover
+										overlay, under the project name. Sets expectations before
+										the click.
+									</div>
+								</div>
+							</div>
+							<div class="annotation" style="margin-top: 14px;">
+								Content decision — needs a call. Affects how much the tiles say
+								before a visitor opens a project.
+							</div>
+						</div>
+
+						<!-- DECISION BOX: Gallery slideshow add-on -->
+						<div class="decision-box">
+							<div class="decision-label">Confirm &amp; Invoice — Per-Project Gallery Slideshow · $425</div>
+							<div class="wf-card-desc" style="font-size: 17px;">
+								Each project's main photo opens a full gallery with a custom
+								fade-transition slideshow. We discussed this back in late 2024 and
+								Billy verbally agreed to the concept — it was never invoiced. Firm
+								price: $425. The base gallery is in signed scope; this
+								fade-slideshow interaction is the add-on. Confirm to include.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Nicholson Construction LLC</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: ABOUT ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label">
+					<span class="section-num">3</span> About &mdash; /about
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Nicholson Construction</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Projects</span>
+							<span class="active">About</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Story -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Our Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-lg">Built on a family name.</div>
+							<div style="display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px;">
+								<div class="img-placeholder" style="height: 200px; flex: 1; min-width: 200px;">
+									<div class="img-icon">👤</div>
+									<div class="img-label">Real portrait / on-site action shot<br />of Billy — from new photography</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-body-text">
+										Billy Nicholson grew up on job sites, learning the trade
+										from his father — hard work, honesty, and an eye for the
+										details that separate a good build from a great one. Today
+										he carries that name forward as a second-generation builder.
+									</div>
+									<div class="wf-body-text">
+										As a dad and a husband, Billy knows a home is more than a
+										structure — it's where a family's life happens. That's the
+										standard behind every project, whether Nicholson runs the
+										whole build or works shoulder-to-shoulder with the region's
+										best builders on the parts that have to be perfect.
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Story copy is CMS-managed. Open question: does Billy have a real
+								photo of himself and/or his crew? The About page leans on it — see
+								the team-photo item in the discussion checklist.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Mission & Vision -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Mission &amp; Vision</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="margin-bottom: 16px;">
+								<div class="wf-heading-sm" style="color: var(--accent); margin-bottom: 4px;">Mission</div>
+								<div class="wf-body-text" style="margin-bottom: 0;">
+									Uphold our family's legacy of craftsmanship, and build every
+									home like our name is on it — because it is.
+								</div>
+							</div>
+							<div>
+								<div class="wf-heading-sm" style="color: var(--accent); margin-bottom: 4px;">Vision</div>
+								<div class="wf-body-text" style="margin-bottom: 0;">
+									To be central Wisconsin's most trusted name in custom homes —
+									building places that outlast the hands that built them.
+								</div>
+							</div>
+							<div class="annotation">
+								Billy explicitly asked to shorten the original long mission and
+								vision — these are the trimmed one-liners.
+							</div>
+						</div>
+
+						<!-- DECISION BOX: Meet the Team add-on -->
+						<div class="decision-box">
+							<div class="decision-label">Add-On — "Meet the Team" Section · $150–300</div>
+							<div class="wf-card-desc" style="font-size: 17px;">
+								We discussed a possible "meet the team" section/page — individual
+								crew members with photos and short bios. Not in base scope. Price
+								depends on complexity and what Billy envisions (simple row of
+								names/photos vs. full bios): $150–300. Confirm if he still wants
+								it, and whether he has crew photos to support it.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Nicholson Construction LLC</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 4: CONTACT ── -->
+			<section class="wf-section" id="contact">
+				<div class="section-label">
+					<span class="section-num">4</span> Contact &mdash; /contact
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Nicholson Construction</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Projects</span>
+							<span>About</span>
+							<span class="active">Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Contact form -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Form</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-lg">Tell us what you're building.</div>
+							<div class="wf-subtext">
+								Fill this out and it comes straight to Billy. You'll hear back
+								directly — usually within a day.
+							</div>
+
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Phone</div>
+									<div class="field-placeholder">(###) ###-####</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">&nbsp;</div>
+									<div class="field-placeholder">&nbsp;</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Tell us about your project</div>
+									<div class="field-placeholder" style="min-height: 70px;">What are you looking to build?</div>
+								</div>
+							</div>
+
+							<div style="margin-top: 16px;">
+								<div class="wf-cta accent">Send it →</div>
+							</div>
+
+							<div class="annotation">
+								Submitting notifies Billy by email AND stores the entry in the
+								CMS. In signed scope.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Automated reply email add-on -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Automated Reply Email</div>
+								<span class="addon-tag">Add-On</span>
+							</div>
+							<div class="wf-body-text" style="margin-bottom: 0;">
+								The confirmation email the visitor instantly receives after
+								submitting:
+							</div>
+							<div class="email-preview">
+								<div class="email-preview-header">Nicholson Construction</div>
+								<div class="email-preview-body">
+									<div class="wf-body-text">
+										Thanks for reaching out to Nicholson Construction. We've got
+										your message and Billy will be in touch shortly.
+									</div>
+									<div class="wf-cta accent" style="margin-top: 0;">Call now</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Optional add-on. Every time someone submits the contact form, they
+								instantly receive an on-brand automated email from Nicholson
+								Construction confirming we got their message — reinforces the brand
+								and sets expectations. Can include anything Billy wants (hours, a
+								"Call now" button, links). Standard price: $400–500. Not in base
+								scope.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Direct contact -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Direct Contact</div>
+							</div>
+							<div class="wf-body-text" style="font-style: italic;">
+								Prefer to call or email? That works too.
+							</div>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+								<div>
+									<div class="wf-body-text" style="margin-bottom: 8px;">
+										<strong>Phone</strong><br />715-347-8887<br /><span style="font-size: 15px; color: rgba(17,17,17,0.4);">tap-to-call on mobile</span>
+									</div>
+									<div class="wf-body-text">
+										<strong>Email</strong><br />billy@nc715.com
+									</div>
+								</div>
+								<div>
+									<div class="wf-body-text">
+										<strong>Service Area</strong><br />Serving Stevens Point and central Wisconsin
+									</div>
+									<div class="img-placeholder" style="height: 120px; margin-top: 8px;">
+										<div class="img-label" style="font-size: 14px;">optional map /<br />service-area block</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Google Business setup so this info surfaces in search — in signed
+								scope. Phone is tap-to-call on mobile.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Nicholson Construction LLC</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── OPTIONAL ADD-ONS ── -->
+			<section class="wf-section" id="addons">
+				<div class="section-label">
+					<span class="section-num">＋</span> Optional Add-Ons
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-body-text" style="font-size: 19px; font-style: italic;">
+							Optional enhancements beyond the signed $4,500 base. None of these
+							gate launch — the base site goes live on its own, and add-ons can
+							layer on whenever Billy's ready.
+						</div>
+
+						<div class="addon-list">
+							<div class="addon-row">
+								<div class="addon-row-name">Per-Project Gallery + Fade Slideshow</div>
+								<div class="addon-row-price">$425 <span style="font-weight: 400; color: rgba(17,17,17,0.4); font-size: 15px;">standard</span></div>
+							</div>
+							<div class="addon-row">
+								<div class="addon-row-name">"Meet the Team" Section</div>
+								<div class="addon-row-price">$150–300 <span style="font-weight: 400; color: rgba(17,17,17,0.4); font-size: 15px;">standard</span></div>
+							</div>
+							<div class="addon-row">
+								<div class="addon-row-name">Automated On-Brand Contact Auto-Reply</div>
+								<div class="addon-row-price">$400–500 <span style="font-weight: 400; color: rgba(17,17,17,0.4); font-size: 15px;">standard</span></div>
+							</div>
+						</div>
+
+						<div class="friend-deal">
+							<div class="friend-deal-label">The Friend Deal</div>
+							<div class="wf-body-text" style="margin-bottom: 0;">
+								The pricing above is what each of these features normally runs on
+								its own. If you'd like all three, I'll do the whole set for an
+								even <strong>$500</strong> — a friends-and-family rate, priced at
+								just my time and my designer's. Completely optional: your site
+								launches on its own regardless, and this can layer on whenever
+								you're ready.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Scope &amp; Price</strong> — Full site-wide CMS +
+									contact form integration, $4,500. Deposit paid ($2,250);
+									$2,250 balance due at launch.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Always Included</strong> — Mobile-first, on-site SEO,
+									UX, copywriting, custom UI/UX, growth-friendly framework.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Contact Form</strong> — Email notification to Billy +
+									CMS storage of every entry.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Google Business Setup</strong> — So contact and
+									service-area info surfaces in search.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Hosting</strong> — Built on Vercel, handed off to Billy
+									at $20/mo direct. No monthly fees to Latz — he owns it.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Domain</strong> — NC715.com stays where it is at GoDaddy
+									(his). No registrar migration — we point it at the Vercel deploy
+									from GoDaddy's DNS at launch. He owns and keeps the domain.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Everything CMS-Editable</strong> — Projects, gallery,
+									featured items, services, testimonials, and About copy all
+									editable by Billy.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Logo</strong> — Final files in hand (black/red,
+									#ED1C24).
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Positioning</strong> — The "crew the best builders
+									bring in" angle + honest role tags isn't confirmed by Billy
+									yet. Needs his blessing.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Primary Audience</strong> — Confirm homeowners lead
+									(vs. homeowners + contractor partners).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Sand Valley Permission</strong> — Anything he can't
+									show or name on Sand Valley projects (GC or resort sign-off)?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Featured Projects</strong> — Strongest 3–5 projects to
+									feature / most genuinely "his."
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Other / Non-Sand-Valley Projects</strong> — Billy
+									mentioned he has other properties beyond the Sand Valley builds,
+									some fully his. These are strong candidates for "full custom
+									build" role tags and lead/featured spots. Get details + photos.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Photo Library Audit</strong> — How many complete projects
+									(multiple good images each) does Billy have, and in what
+									categories? Drives whether the gallery's capability filters work
+									as shown. Blocking for the Projects page.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Projects Categories</strong> — Do the proposed capability
+									categories fit how Billy wants his work seen? Confirm or revise.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Service List &amp; Order</strong> — Confirm the final
+									service list and priority order (wood exteriors + custom homes
+									lead).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>New Photography</strong> — Lock a photo-day for hero
+									shots, a real portrait, and 2–3 projects he was primary on.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Team Photo</strong> — Does Billy have a usable photo of
+									himself and/or his crew? The About page depends on it.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Testimonials Count</strong> — How many usable reviews
+									exist right now? Drives whether a standalone page ever appears.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>One-Sentence Descriptor</strong> — How Billy describes
+									Nicholson to a stranger. Basis for hero copy + alternate
+									headline.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Per-Project Slideshow ($425)</strong> — Confirm &amp;
+									invoice. Discussed late 2024, verbally agreed, never invoiced.
+									Base gallery is in scope; fade-slideshow is the add-on.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Meet-the-Team Add-On ($150–300)</strong> — Still wanted?
+									Depends on his vision + crew photos.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Auto-Reply Email Add-On ($400–500)</strong> — Wanted?
+									What should it say / include?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Add-On Friend Deal ($500 all three)</strong> — All three
+									add-ons together for an even $500 (friends-and-family rate).
+									Fully optional; doesn't affect the base site or its launch.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Landing Structure (Home Option A/B)</strong> —
+									Traditional sectioned home page vs. gallery-forward
+									revarch-style landing.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Role-Line Placement (Projects Option A/B)</strong> —
+									Detail view only vs. also in the tile hover overlay.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Standalone Testimonials Page</strong> — Hold until 6+
+									reviews exist before adding it via CMS?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Aesthetic Direction</strong> — Get Billy's AND the
+									designer's read. Three inputs pull against each other: the
+									final logo (bold black/red), an older business card (green/gold
+									serif, classy/understated), and the revarch inspiration
+									(minimal, earthy, photo-forward). Colors are locked to the
+									logo, but overall treatment — how heavily red is used, whether
+									the green/gold card influences anything, type direction — is
+									TBD. Do not assume a resolution.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Fonts Not Locked</strong> — Heading: Oswald or Archivo
+									Narrow. Body: Inter or DM Sans. Provisional values shown in
+									this wireframe; confirm with the designer.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
