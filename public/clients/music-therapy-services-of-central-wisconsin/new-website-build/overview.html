@@ -1,29 +1,1612 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Music Therapy Services of Central WI — Project Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #18a1ad;
+    --teal-light: #e8f7f8;
+    --teal-mid: #b3e5e9;
+    --yellow: #ffee65;
+    --white: #ffffff;
+    --off-white: #f7f9fa;
+    --gray-100: #f0f2f4;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0D1B2A;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 21px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 320px;
+    height: 100vh;
+    background: var(--navy);
+    padding: 42px 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 32px 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 26px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--orange);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 14px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 10px 32px 5px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px 32px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: rgba(24,161,173,0.5);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.08);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 26px 32px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  /* ── MOBILE FAB + OVERLAY ── */
+  .nav-fab {
+    display: none;
+    position: fixed;
+    bottom: 22px; right: 22px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(13,27,42,0.35);
+    z-index: 300;
+    cursor: pointer;
+  }
+
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.28s ease;
+  }
+  .nav-overlay.visible { display: block; opacity: 1; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 320px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    padding: 64px 72px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: 'MTSCW';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 165px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 46px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.15;
+    max-width: 780px;
+  }
+
+  .page-header .sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 19px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 42px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .header-meta-item .value {
+    font-size: 19px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .header-meta-item .value.pending { color: var(--yellow); }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 52px 72px 100px;
+  }
+
+  section {
+    margin-bottom: 72px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .section-icon {
+    width: 42px; height: 42px;
+    background: var(--teal);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 22px;
+  }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    padding-top: 2px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 19px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 10px;
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 24px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+  .callout-body p, .callout-body span { font-size: 17px; line-height: 1.5; }
+
+  .callout.info { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .callout.warn { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .callout.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout.alert { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout.yellow { background: #fffbcc; border-left: 4px solid #d4a800; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--yellow);
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 22px;
+  }
+
+  .highlight-box strong { font-weight: 700; font-size: 20px; }
+  .highlight-box p { font-size: 19px; margin-top: 10px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--teal-mid);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+    padding-left: 26px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 6px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .timeline-item.pending::before { background: var(--gray-400); box-shadow: 0 0 0 2px var(--gray-400); }
+  .timeline-item.active::before { background: var(--orange); box-shadow: 0 0 0 3px var(--orange-light); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 3px 0;
+  }
+
+  .timeline-desc {
+    font-size: 17px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 19px;
+  }
+
+  .budget-table th {
+    background: var(--navy);
+    color: white;
+    padding: 14px 22px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .budget-table td {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: var(--off-white); }
+
+  .budget-table .total-row td {
+    background: var(--teal-light) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 20px;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--orange-light) !important;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px;
+    border-top: 3px solid var(--teal);
+  }
+
+  .page-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 17px;
+    color: var(--gray-600);
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 14px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-cms { background: var(--teal-light); color: var(--teal); }
+  .badge-static { background: var(--gray-100); color: var(--gray-600); }
+  .badge-form { background: #fef3c7; color: #b45309; }
+  .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── CONTENT CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 17px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: white;
+    border: 2px dashed var(--gray-200);
+    border-radius: 12px;
+    padding: 28px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--teal); }
+
+  .upsell-card h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .upsell-card p { font-size: 17px; color: var(--gray-600); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 26px;
+    align-items: start;
+  }
+
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--teal-mid);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 17px;
+    color: var(--gray-600);
+    padding: 4px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 5px; color: var(--teal); }
+
+  .phase .blocker {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--orange);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: #fffef0;
+    border: 1px solid #e6d96b;
+    border-radius: 10px;
+    padding: 22px 28px;
+    margin-bottom: 16px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #a07d00;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .note-block p { font-size: 17px; color: var(--gray-800); line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 260px; }
+    .main { margin-left: 260px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 44px; padding-right: 44px; }
+    .phase { grid-template-columns: 72px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 300px;
+      min-width: 0;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .nav-fab { display: flex; }
+
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .page-header { padding: 32px 20px 28px; }
+    .page-header h1 { font-size: 26px; }
+
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .data-row { grid-template-columns: 1fr; gap: 2px; }
+    .data-label { font-size: 10px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Music Therapy Services<br>of Central Wisconsin</div>
+    <div class="status-pill">Proposal Stage</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🎵</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="nav-overlay" id="navOverlay"></div>
+<button class="nav-fab" id="navFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth · Internal</div>
+    <h1>Music Therapy Services of Central Wisconsin</h1>
+    <div class="sub">mtscw.com · Website Redesign · Proposal Pending</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">Elizabeth — Social Media Coord.</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Decision-Maker</span>
+        <span class="value">Richelle — Owner</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value pending">Pending — Not Quoted</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit</span>
+        <span class="value pending">None — Proposal Stage</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://mtscw.com" target="_blank">mtscw.com</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phone</span>
+        <span class="value">715-470-4884</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🎵</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Elizabeth</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Social Media Coordinator — project champion, <strong>not</strong> the decision-maker</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:socialmedia@mtscw.com">socialmedia@mtscw.com</a><br><span style="font-size:15px;color:var(--gray-600);">General inbox scheduling@mtscw.com also reaches her</span></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value">715-470-4884 (number she called from)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Clinic Main Line</span>
+            <span class="data-value">715-204-4101</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Day-to-Day Contact</span>
+            <span class="data-value">Elizabeth handles comms — but substance (scope, budget, service list) defers to Richelle</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Client Type</span>
+            <span class="data-value">Music therapy clinic (LLC) · women-owned</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Location</span>
+            <span class="data-value">Stevens Point, WI</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">In Business</span>
+            <span class="data-value">~20+ years (est. ~1999)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision-Maker</span>
+            <span class="data-value">Richelle — Owner (final say on scope + budget)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Practitioners</span>
+            <span class="data-value">Board-certified music therapists</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Status</span>
+            <span class="data-value">Long waitlist — actively recruiting new therapists</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Domain</span>
+            <span class="data-value">mtscw.com (on Turbify, ~20 yrs old)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>About the Practice</h3>
+        <div class="data-row">
+          <span class="data-label">What They Do</span>
+          <span class="data-value">Use music to reach non-musical goals — fine motor skills, regulation, etc. Mostly work with kids with special needs.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Dual Audience ⚠️</span>
+          <span class="data-value"><strong>The defining feature of this project.</strong> (1) Parents of kids with special needs — learn about the practice, get started. (2) Prospective music therapists — recruiting / careers.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Brand Vibe</span>
+          <span class="data-value">Professional, clinical, evidence-based — but fun, colorful, and kid-friendly</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Branding</span>
+          <span class="data-value">Keeping existing logo + blue (brightening the blue). Logo files already in hand.</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✏️</span>
+        <div class="callout-body">
+          <strong>Owner name spelling confirmed: Richelle</strong>
+          <span>Resolved — it's "Richelle," matching their team page. (Elizabeth said "Rachelle" on the call, which caused the earlier ambiguity.) Safe to use in the proposal, wireframe, and site.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🧭</span>
+        <div class="callout-body">
+          <strong>Decision structure: champion vs. decision-maker</strong>
+          <span>Elizabeth is the friendly champion who walks everything to Richelle. Richelle owns the yes/no. Anything about scope, budget, or the service list is pending Richelle — keep deliverables simple enough for Elizabeth to present.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Stage: PROPOSAL PENDING — due to client by end of this week (week of 7/28/2026)</strong>
+        <p>Discovery is done. Plan: quote a consolidated core custom site at the <strong>low end</strong> of the range, and present per-service pages + Fusion portal embed as add-ons they can grow into. Client self-identified as a smaller business and wants to start low — lead with value, don't oversell.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Came to Us</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Current site not mobile-accessible — viewport locked at scale=1, can't pinch-zoom</li>
+            <li><span class="check-icon">🔴</span> Logo doesn't link back to the homepage</li>
+            <li><span class="check-icon">🔴</span> Too many / confusing tabs — "Get Started" (= referral) sits confusingly next to Contact</li>
+            <li><span class="check-icon">🔴</span> Dated look — ~20-year-old Turbify build</li>
+            <li><span class="check-icon">🔴</span> No easy self-editing — want to make simple updates themselves</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Consolidated, clear tab structure — no more confusion</li>
+            <li><span class="check-icon">✅</span> Fully mobile-first + accessible (zoom works, WCAG)</li>
+            <li><span class="check-icon">✅</span> Serves both audiences — parents AND an elevated Careers path for recruiting</li>
+            <li><span class="check-icon">✅</span> Custom CMS so the team can self-edit</li>
+            <li><span class="check-icon">✅</span> Referral form as reliable, core intake infrastructure</li>
+            <li><span class="check-icon">✅</span> Brighter, fun-but-clinical brand they own outright</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly NOT in scope for v1</strong>
+          <span>Per-service SEO pages (deferred — some listed services no longer offered; group is summer-only; final list pending Richelle). Fusion portal API embed (stays a plain external link). Services stays a single page for now. All three are named future upsells.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open questions still pending going into the proposal</strong>
+          <span>Final page count + service list (Richelle) · where the referral form currently routes · exact Turbify monthly cost + contract status · Elizabeth's design-inspiration homework (therapy sites she likes). <em>(Owner name spelling now confirmed: Richelle.)</em></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>Nothing quoted or paid yet — proposal not sent</strong>
+          <span>All figures below are internal reference only, from the playbook. No numbers have gone to the client. Deposit: none.</span>
+        </div>
+      </div>
+
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th>Notes (internal reference only)</th>
+            <th class="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Consolidated Core Custom Build</strong></td>
+            <td>~5–6 pages, custom CMS, referral + contact forms, mobile-first. Quote at the LOW end.</td>
+            <td class="amount">$3,500 – $6,000</td>
+          </tr>
+          <tr>
+            <td>Per-Service SEO Pages (add-on)</td>
+            <td>Present as phase-2 growth option, once service list is settled</td>
+            <td class="amount">Add-on TBD</td>
+          </tr>
+          <tr>
+            <td>Fusion Portal API Embed (add-on)</td>
+            <td>Present as growth option; stays a plain link for v1</td>
+            <td class="amount">Add-on TBD</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Proposed Contract Total</strong></td>
+            <td>To be finalized in proposal — lead low</td>
+            <td class="amount"><strong>PENDING</strong></td>
+          </tr>
+          <tr class="pending-row">
+            <td>⏳ Deposit</td>
+            <td>No proposal sent, no deposit received</td>
+            <td class="amount">$0 — Pending</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top:22px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">$20/month — paid directly to Vercel by the client, <strong>in their name</strong></span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Maintenance to Latz</span>
+          <span class="data-value">None. No monthly/retainer fees — future work is project-by-project.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Current Turbify Cost</span>
+          <span class="data-value">Client believes ~$30/mo, month-to-month — UNCONFIRMED. Elizabeth to verify cost + whether under contract.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Domain</span>
+          <span class="data-value">mtscw.com — migration path TBD (transfer or point DNS to Vercel)</span>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+          <strong>Value Story (for the proposal)</strong>
+          <span>They own the site forever — no template lock-in, no monthly platform fee to Latz. Trade an aging ~$30/mo Turbify site for a custom, accessible, dual-audience site on $20/mo hosting they control. Own it, self-edit it, and grow it project-by-project.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY TIMELINE -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Fast start — voicemail to discovery call in under 24 hours</strong>
+          <span>Elizabeth reached out 7/27; discovery call happened 7/28. Momentum is good. The gating factor from here is Richelle's sign-off, not client interest.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 27, 2026</div>
+          <div class="timeline-title">Inbound Voicemail</div>
+          <div class="timeline-desc">Elizabeth left a voicemail asking about updating the website.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 28, 2026</div>
+          <div class="timeline-title">Callback Attempt + Text</div>
+          <div class="timeline-desc">Jordan attempted a callback voicemail — didn't seem to go through (no beep). Followed up with a text to 715-470-4884.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 28, 2026</div>
+          <div class="timeline-title">Discovery Call (~16 min)</div>
+          <div class="timeline-desc">Covered current site problems, the dual audience, working scope, brand direction, budget range, and timeline. Local designer angle landed well. Jordan committed to sending a proposal + wireframe by end of week.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">By end of week (wk of Jul 28)</div>
+          <div class="timeline-title">⏳ Proposal + Wireframe Due — NEXT</div>
+          <div class="timeline-desc">Jordan to deliver a proposal (core site quoted low, add-ons presented) plus a simple wireframe Elizabeth can walk to Richelle. This is the current open commitment.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Pending</div>
+          <div class="timeline-title">Richelle Review + Approval</div>
+          <div class="timeline-desc">Owner sign-off on scope and budget. Deposit + kickoff follow approval.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Working scope direction — to be confirmed in the proposal</strong>
+          <span>Consolidate the current bloated tab structure into a lean, dual-audience site. Privacy policy moves to the footer (not its own tab). Custom CMS for self-editing. Mobile-first / accessible. Mostly reuse existing copy; client handles minor content updates themselves.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Home</h4>
+          <ul>
+            <li>Dual-audience entry: parents + prospective therapists</li>
+            <li>Brightened blue, fun-but-clinical brand</li>
+            <li>Clear paths to Get Started and Careers</li>
+            <li>Mobile-first, zoom enabled, accessible</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>About + Meet the Team</h4>
+          <ul>
+            <li>Practice history (~20+ yrs, women-owned)</li>
+            <li>Board-certified therapist bios + photos</li>
+            <li>Evidence-based positioning</li>
+            <li>Team editable via CMS</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static (v1)</span>
+          <h4>Services</h4>
+          <ul>
+            <li>Single page for v1 — reuse existing copy</li>
+            <li>Final service list pending Richelle</li>
+            <li>Note: some listed services no longer offered</li>
+            <li>Group = summer-only; individual = year-round</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-form">Form · Core Intake</span>
+          <h4>Get Started / Referral</h4>
+          <ul>
+            <li>Referral form = PRIMARY intake path</li>
+            <li>Social workers / case managers submit here</li>
+            <li>Treat as core infrastructure — must be reliable</li>
+            <li>Open: where do submissions currently route?</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-form">Form</span>
+          <h4>Contact</h4>
+          <ul>
+            <li>Keep existing contact form</li>
+            <li>Clinic line 715-204-4101, click-to-call</li>
+            <li>Clearly separated from the referral flow</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-static">Static · Elevated</span>
+          <h4>Careers / Join Our Team</h4>
+          <ul>
+            <li>Elevated to serve the recruiting audience</li>
+            <li>Waitlist = active need for new therapists</li>
+            <li>Speaks to prospective music therapists directly</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge badge-gray">Not in Scope (v1)</span>
+          <h4>Per-Service SEO Pages</h4>
+          <ul>
+            <li>Deferred — service list not settled</li>
+            <li>Phase-2 SEO play (individual, group, etc.)</li>
+            <li>Named future upsell</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--gray-400); opacity: 0.6;">
+          <span class="page-badge badge-gray">Not in Scope (v1)</span>
+          <h4>Fusion Portal Embed</h4>
+          <ul>
+            <li>Patient portal stays an external link</li>
+            <li>app.fusionwebclinic.com — third-party</li>
+            <li>API embed deferred to a future phase</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>CMS Overview</h3>
+        <div class="data-row">
+          <span class="data-label">Platform</span>
+          <span class="data-value">Custom CMS (built from scratch, no clutter) — client explicitly wants self-edit</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Who Uses It</span>
+          <span class="data-value">Elizabeth + clinic staff for minor content updates</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Manageable Content</span>
+          <span class="data-value">Team directory, basic page copy; form submissions handled separately</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Privacy Policy</span>
+          <span class="data-value">Moves to footer — no longer its own tab</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Most of these unblock only after Richelle approves</strong>
+          <span>The service list and page count in particular gate the build. Get the easy confirmations (Turbify cost, referral routing, name spelling) moving in parallel so nothing stalls at kickoff.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Content & Confirmation Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Logo Files</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Existing logo + blue, to be brightened. Already in hand.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In Hand — Review</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📝</span>
+            <div>
+              <strong>Final Service List</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Which services stay/go — some listed are no longer offered. Gates the Services page + future SEO pages.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending — Richelle</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✏️</span>
+            <div>
+              <strong>Owner Name Spelling</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Confirmed: <strong>Richelle</strong> (matches team page).</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>Existing Copy</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Mostly reuse from current site; client will do minor updates themselves.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Partial — Reuse</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📥</span>
+            <div>
+              <strong>Referral Form Routing</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Where do current submissions go? Core intake — need destination before rebuild.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💻</span>
+            <div>
+              <strong>Turbify Cost + Contract Status</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Confirm ~$30/mo and whether month-to-month or under contract. Elizabeth to verify.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">👥</span>
+            <div>
+              <strong>Team Bios + Photos</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Names, roles, headshots for the Meet the Team page.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💡</span>
+            <div>
+              <strong>Design Inspiration Homework</strong><br>
+              <span style="font-size:15px;color:var(--gray-600);">Therapy sites Elizabeth likes — to anchor the "fun but clinical" direction.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Proposed Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js 13+ (App Router)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom CMS — built from scratch, no clutter</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel ($20/mo, client pays directly, in their name)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">SSL</span>
+            <span class="data-value">Auto via Vercel</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Current Site & Migration</h3>
+          <div class="data-row">
+            <span class="data-label">Current Platform</span>
+            <span class="data-value">Turbify (formerly Yahoo Small Business), ~20 yrs old</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Cost</span>
+            <span class="data-value">~$30/mo, month-to-month — UNCONFIRMED, verifying</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">mtscw.com — transfer or point DNS to Vercel</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Known Defects</span>
+            <span class="data-value">Viewport scale=1 (no pinch-zoom); logo doesn't link home; confusing tabs; dated look</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Third-Party & Forms</h3>
+        <div class="data-row">
+          <span class="data-label">Patient Portal</span>
+          <span class="data-value">app.fusionwebclinic.com — external link, stays as-is for v1. Possible future API embed (deferred).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Referral Form</span>
+          <span class="data-value">Primary intake path — social workers / case managers submit referrals. Core infrastructure. Open: current routing destination.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Contact Form</span>
+          <span class="data-value">Keep — general inquiries, separated from referral flow</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Accessibility Requirements</h3>
+        <div class="data-row">
+          <span class="data-label">Standard</span>
+          <span class="data-value">WCAG-compliant, mobile-first</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Zoom</span>
+          <span class="data-value">Fix the current viewport lock — pinch-zoom must work</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Contrast</span>
+          <span class="data-value">Brightened blue must still pass contrast on text/buttons</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Navigation</span>
+          <span class="data-value">Simple, consolidated — logo links home; clear Get Started vs Contact</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🗒️</span>
+        <div class="callout-body">
+          <strong>No hard deadline — "sooner rather than later"</strong>
+          <span>Jordan quoted ~4–8 weeks once underway, depending on final scope and how fast the client returns info/assets. Build hasn't started — this is pre-approval.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">This Week — NOW</div>
+          <h4>Proposal & Wireframe</h4>
+          <ul>
+            <li>Quote consolidated core site at the low end</li>
+            <li>Present per-service pages + portal embed as add-ons</li>
+            <li>Build a simple wireframe Elizabeth can walk to Richelle</li>
+            <li>Owner name confirmed: Richelle — safe to use in copy</li>
+          </ul>
+          <div class="blocker">⚠ Blocker: none — this is Jordan's open commitment, due end of week</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Pending Approval</div>
+          <h4>Review, Approval & Kickoff</h4>
+          <ul>
+            <li>Richelle reviews scope + budget, gives the yes/no</li>
+            <li>Finalize service list + page count</li>
+            <li>Deposit + kickoff; set up repo, Vercel, custom CMS</li>
+            <li>Confirm Turbify cost/contract + referral form routing</li>
+          </ul>
+          <div class="blocker">⚠ Blocker: Richelle sign-off + deposit</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Weeks 1–4 (of build)</div>
+          <h4>Design & Development</h4>
+          <ul>
+            <li>Build Home, About + Team, Services, Careers</li>
+            <li>Rebuild referral + contact forms (fix routing)</li>
+            <li>Custom CMS for self-editing</li>
+            <li>Brighten blue; fun-but-clinical visual system</li>
+            <li>Share live dev link for Elizabeth/Richelle to review</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Weeks 3–6 (of build)</div>
+          <h4>Content, Accessibility & Launch</h4>
+          <ul>
+            <li>Reuse existing copy; integrate team bios/photos</li>
+            <li>Accessibility pass — zoom, contrast, mobile</li>
+            <li>Domain transfer / DNS cutover to Vercel</li>
+            <li>Advise client to cancel Turbify before it renews</li>
+            <li>Launch — final invoice; post-launch check-in</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>All three were raised by the client — present as growth options, not pressure</strong>
+          <span>Budget is tight and they want to start low. Put these in the proposal as clearly-labeled add-ons they can grow into, then revisit post-launch once they're comfortable.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📄 Per-Service SEO Pages</h4>
+          <div class="price">Add-on — quote at proposal</div>
+          <p>Dedicated pages for individual, group, etc. once the service list is settled with Richelle. The main SEO play — deferred from v1 because the list isn't final and some services are seasonal or discontinued.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔗 Fusion Portal API Embed</h4>
+          <div class="price">Add-on — quote at proposal</div>
+          <p>Embed the Fusion Web Clinic portal via API instead of a plain external link, if the API supports it. Smoother patient experience — deferred from v1, stays a link for now.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📣 Ongoing Content / Social Support</h4>
+          <div class="price">Project-by-project</div>
+          <p>Elizabeth runs their social. Room to help with content updates or coordinated web/social pushes over time. No retainer — offered as needed, project-by-project.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Jul 28, 2026 — Post-Discovery</div>
+        <p>Elizabeth is friendly, easy, and a genuine champion — but she defers to Richelle on substance ("I'm the social media person, not the owner"). Read her as the advocate who carries things to the decision-maker, not the decision-maker. Keep the proposal and wireframe simple enough that she can present them cleanly on her own.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Local Angle</div>
+        <p>She specifically wanted a LOCAL designer. Jordan being in Stevens Point (McDill Pond area) landed well — lean into that. Same-town, direct-communication is a real differentiator here, not just a nicety.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Budget Posture</div>
+        <p>Client self-identified as a smaller business and wants to start at the low end. Lead low, show the upside, don't oversell. The move is a lean core site now + clearly-labeled add-ons they can grow into — not a maxed-out first quote.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Design Challenge</div>
+        <p>The dual audience is the whole project. Parents of kids with special needs and prospective therapists need different journeys off the homepage. "Fun, colorful, kid-friendly" has to coexist with "professional, clinical, evidence-based." Get Elizabeth's inspiration examples to anchor the balance before designing.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Resolved — Owner Name</div>
+        <p>Owner name is <strong>Richelle</strong> — confirmed, matching their team page. Elizabeth said "Rachelle" on the call, which is what created the earlier ambiguity, but Richelle is correct. Use it confidently in the proposal, wireframe, and site.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ── Active nav on scroll (scrollspy) ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Mobile FAB nav ──
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('navFab');
+  const overlay = document.getElementById('navOverlay');
+
+  function openMenu() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+  }
+  function closeMenu() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Nav link tap on mobile: close, wait for slide-out, then smooth-scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
