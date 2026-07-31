@@ -1,29 +1,1661 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Music Therapy Services of Central WI — Site Wireframes | Latz Web Design</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #38457a; /* logo blue */
+				--primary-rgb: 56, 69, 122;
+				--accent: #2e9fe0; /* brightened blue — provisional */
+				--accent-rgb: 46, 159, 224;
+				--light: #eff1fa; /* light indigo tint */
+				--mid: #9a9fc0; /* muted indigo-gray */
+				--mid-rgb: 154, 159, 192;
+				--green: #16a34a;
+				--warn: #ea580c;
+				--warn-light: #fff7ed;
+				--ink: #1f2d3a;
+				--white: #ffffff;
+				--sidebar-text: rgba(255, 255, 255, 0.62);
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			html {
+				scroll-behavior: smooth;
+			}
+
+			body {
+				font-family: 'Nunito Sans', sans-serif;
+				background: var(--light);
+				color: var(--ink);
+				line-height: 1.6;
+				font-size: 18px;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* ===== SIDEBAR OVERLAY ===== */
+			.sidebar-overlay {
+				display: none;
+			}
+
+			/* ===== SIDEBAR ===== */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 336px;
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+			}
+
+			.sidebar-top {
+				padding: 30px 26px 22px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+			}
+
+			.sb-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--accent);
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				margin-bottom: 16px;
+			}
+
+			.sb-client {
+				font-family: 'Nunito', sans-serif;
+				font-size: 24px;
+				font-weight: 800;
+				color: rgba(255, 255, 255, 0.95);
+				line-height: 1.15;
+				margin-bottom: 5px;
+			}
+
+			.sb-doctype {
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.4);
+				letter-spacing: 0.04em;
+			}
+
+			.sb-status {
+				display: inline-flex;
+				align-items: center;
+				gap: 7px;
+				margin-top: 15px;
+				background: rgba(22, 163, 74, 0.14);
+				border: 1px solid rgba(22, 163, 74, 0.4);
+				border-radius: 5px;
+				padding: 5px 12px;
+			}
+
+			.sb-status .dot {
+				width: 7px;
+				height: 7px;
+				background: #4ade80;
+				border-radius: 50%;
+				animation: pulse 2s infinite;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.3;
+				}
+			}
+
+			.sb-status span {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: #86efac;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-nav {
+				padding: 14px 14px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12.5px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.32);
+				padding: 16px 12px 6px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 9px 14px;
+				color: var(--sidebar-text);
+				text-decoration: none;
+				font-size: 17.5px;
+				font-weight: 400;
+				border-radius: 7px;
+				border-left: 3px solid transparent;
+				transition: all 0.12s;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: rgba(255, 255, 255, 0.92);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: #ffffff;
+				background: rgba(46, 159, 224, 0.14);
+				border-left-color: var(--accent);
+				font-weight: 700;
+			}
+
+			.nav-num {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				width: 20px;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 26px;
+				border-top: 1px solid rgba(255, 255, 255, 0.09);
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 13px;
+				color: rgba(255, 255, 255, 0.4);
+				line-height: 1.9;
+			}
+			.sidebar-footer strong {
+				color: var(--accent);
+				font-weight: 700;
+			}
+
+			/* ===== MOBILE FAB ===== */
+			.mobile-fab {
+				display: none;
+			}
+
+			/* ===== MAIN ===== */
+			.main {
+				margin-left: 336px;
+				min-height: 100vh;
+				background-color: var(--light);
+				background-image: linear-gradient(
+						rgba(var(--primary-rgb), 0.05) 1px,
+						transparent 1px
+					),
+					linear-gradient(
+						90deg,
+						rgba(var(--primary-rgb), 0.05) 1px,
+						transparent 1px
+					);
+				background-size: 39px 39px;
+			}
+
+			/* ===== DOC HEADER ===== */
+			.doc-header {
+				background: var(--primary);
+				padding: 46px 56px 40px;
+				position: relative;
+				overflow: hidden;
+			}
+			.doc-header::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(
+					ellipse at 78% 40%,
+					rgba(46, 159, 224, 0.16) 0%,
+					transparent 62%
+				);
+				pointer-events: none;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 12px;
+			}
+
+			.doc-title {
+				font-family: 'Nunito', sans-serif;
+				font-size: 44px;
+				font-weight: 800;
+				color: #ffffff;
+				line-height: 1.08;
+				margin-bottom: 8px;
+				letter-spacing: -0.5px;
+			}
+
+			.doc-subline {
+				color: rgba(255, 255, 255, 0.6);
+				font-size: 18px;
+				font-weight: 400;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				margin-top: 30px;
+				border: 1px solid rgba(255, 255, 255, 0.13);
+				border-radius: 9px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.03);
+			}
+
+			.meta-item {
+				padding: 15px 26px;
+				border-right: 1px solid rgba(255, 255, 255, 0.13);
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 12.5px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.4);
+			}
+			.meta-value {
+				font-size: 17px;
+				font-weight: 700;
+				color: rgba(255, 255, 255, 0.9);
+			}
+			.meta-value.warn {
+				color: #fdba74;
+			}
+
+			/* ===== BODY WRAP ===== */
+			.doc-body {
+				padding: 40px 56px 100px;
+			}
+
+			.illustrative-note {
+				background: rgba(46, 159, 224, 0.08);
+				border: 1px solid rgba(46, 159, 224, 0.28);
+				border-radius: 8px;
+				padding: 16px 20px;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 18px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-bottom: 44px;
+				display: flex;
+				gap: 12px;
+				align-items: flex-start;
+			}
+			.illustrative-note .emoji {
+				font-size: 22px;
+				flex-shrink: 0;
+			}
+
+			/* ===== SECTION LABEL ===== */
+			.wf-section {
+				margin-bottom: 52px;
+				scroll-margin-top: 24px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--primary);
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				margin-bottom: 18px;
+			}
+			.section-label .num {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 34px;
+				height: 34px;
+				background: var(--primary);
+				color: var(--light);
+				border-radius: 50%;
+				font-size: 16px;
+				flex-shrink: 0;
+			}
+			.section-label .txt {
+				flex-shrink: 0;
+			}
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 2px;
+				background: rgba(var(--primary-rgb), 0.16);
+			}
+
+			/* ===== WIREFRAME CARD ===== */
+			.wf-card {
+				background: #fdfefe;
+				border: 2px solid var(--primary);
+				border-radius: 10px;
+				box-shadow: 7px 7px 0 rgba(var(--primary-rgb), 0.1);
+				overflow: hidden;
+			}
+
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+			.wf-logo {
+				font-family: 'Nunito', sans-serif;
+				font-weight: 800;
+				font-size: 20px;
+				color: var(--primary);
+			}
+			.wf-logo .accent {
+				color: var(--accent);
+			}
+			.wf-logo-mark {
+				display: inline-block;
+				width: 17px;
+				height: 26px;
+				background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA4CAYAAACVFFp4AAAKbUlEQVR42sVZbXBU1Rl+3nPOvXc3JAgIjFD8AkdsGGsdkASEWZAQaKtFbS8zHSytTgfbH9o6CJLAeF1rEtRCRVrFMtTazqjlWtvRjiKJ6HYQkipQRTL1A62CdQQMECC7995zztsfu1Ha8SMbPnr+3Y89+9z383mfA5ykFQSBOO5K4P+8CAAymWDQZTOWnHn8vXKXOEmW4Yl1S4LYM28r5eyundFwFwBGUL6l6ETA+L4vwzA0NXXLrnVc709GF4pfKRS01lM72po2w/clwtCcFguF4Xrr+74E2WXWGmstR9baiEgykb0BADL7qun0uCwIBED8/scXjCPgEmtiUsr1pHQ8ZiYGxgFALpc1pwVQ5sXSb4lqpfIEQKx1vMyYeI61SQ+YzvR9XwLgckJDnXB+CbpYOSk2OlrX0dbcBAA1dQ3PA1QThuttuWHabwvlpsECALG90OiYILAmkwkUwATgHCLsB6jXOnzqYyibtQCIQaN10vNxd8F5M5fL6olXNE5zvcpLGNhVzMT14nRYiACg2g8cIgxmxnuduezRqbMaRwgl14AIRNgKAPv27aLTVhgH7umWDAwgwq4psxuGaSuflUJdGEdHNDG3AcC0kmtPcWFkAgi19cFg2OR9Jt4JYICS3sXM1hirt3e0NtWU/oJPl8v4w+hfPQzOK+nWCiEv1roQC6EkgdcBxJnMHbLcjVW/CmKWLACMSI26mVicYUxsGbBSuo7W+bdwZOjvAaZcjswpBeT7vgyzWTNlyk3DdHrgb5X0rtRJgYsmIyYhiThZvLV9Yd73z5ZhiLIBib4bJhBhGJrx05eOMRWDcsrxrkySvC4FCTtuhaPjwn1bN7b8xffXyzCca/qdvn2AI4CsnTh78Shh3ZwUarTRUcIgAWIWQklr9bqO1uYF8OcKhKEtpxiWaSGmIACq/cAVWj4hpVMCA6mUI5X0FBt9JBX3LAKIEVZzf8H0CZDvzxXZbNZWHoyXKbeiRieFGESOctLCmOQpY+JVJGTaqPRw318v4XeeEMcSX5ZRYRiaydOXjRUkFmtd0ERCgoTROlrY3to8hw2ek9J1jCejMJxrEIam1OX7tdSXUYwcYK2yP1Eq5WldSEhICZPMa29b/lipRA5jMExsf1Bb15Cz6uiOMFzdXW5T7UtQEwCurb0ljcrULhLyPCEV6STf0tF2d+P4WY0jXBYBA9eC7VAhHQIzGPwuG7Oyva35V73JcFJcFgQBAYCoSo8F0flEREbH76SS1J2TZ986xoHcJJV3I9gOA0DWJImxiQZwvuNVrK6ZuSQLZG25RP9zX+7sHEcAYNiOLIaNAgO/y+WyBWucVUp5FyVJT4FIlIi9dKRwFFuTJHHeEOTSSfUNFyFbHqi+vKgESRgdWSXEk5lMMIiBGTrOW0EyxdZ8CBCM0buN0f8U0nEAa5XjScvk/xfdPTFAIQDAkjzEYDC452hBftCTMl8hUEoqRxhrHmCLS4kECPSYPnjga8Ykq4VwHLaWwXwpAAwf3nnijDGsrmYAUA7eMybRAFRVZURE8jDA2poEIPGLjk0tHzGbhIlHbtv2m+RjeWSRtfodEpJIIHX8XidmoRJF3fqM2kPADsep8HTsVJ9bNe5DAO8K6Vmy+txiMcchAs4CQG9vWB2B8ZqULjNjPwD4pXg84RjKZAJZTFt+TCqPLOtbwnCuYUv3KSclhHRXTZndMIzBe8AY2ZuZDDuS2RIYm8ulsfTlzxlTpjQMStL0susOGJNEx5a2t7U018xccrOjKpbrJP8jBl1DhKntrc1nTZhx26Wuk+qwJjmcxM5Xt+WyB0oMk09GlrHvzxWbNy8/KEjM1zo66qaqmmrqG1ceGeSt2dOze0h7W8ujAHeDMGDCjCWXKanWKSflgLBwWy57oNhG+k5j+2TKIAhENpu1E+sW10rhPuh4lV+P890JCM+C0Q3CNAAjhXQEEUEn+Vs72u5eUa7QAAB9aoK5XI6DIBCPPty8Z8yo8x9JbOpNCDGQgUkETGDigYIEMfNmtsm8jrblf0QQCDzwgD2Zvexz5Zfe68umLxsHadOC8Q2p1J1H7bHK11pXHLtg9k3e2xtWR6eQMX7abH3fl3sPj70VwI9JiPPYWjDbQ0Q0kJnu6UH+rtdaVxz7H/B97vx9BURBEFBnJ9Teg/pxr+KMawr5Q6+C8TQTBAHzhZCjSEhYa7axia9vb7t756daY7Gm9QUUleOqmrqGe1IVgxZF+e7b2lub7ul9Pmn60nNZ0csgO1gKR1k2XZxEM9s33bu9tIME+hbcdFwR/EyylhveyQhDM2lmMJzJfMDWbOloa8kATOPH36iGDfPEhg2ro5q6JaHjVHw30fmCkl7KmPidpOvARc6QMycK6T2kdbxDHM0vaG9fWfisAbIkbLE67ob+YuhmoudVqih/OIcgEJkX73CBEbqqqlOX5rKzLWsLwNWmoF23cjQPGno9M0923QHjpFTjCkRrAfpbLgf9hRQ2kwlSBZXcQBIuW+aSMsYklRSReWrLC027wZy21oBBVyCbvT0HFHo3qa1b8jPppGqs0cVAYYK1mkE8zwq+N4mP1RkTve65vBMA1cxsmEdwhjEnFkQspZKxNU+8srFpT9FCVah0bPrXykmDuVg6mBlKecib/XsB7DbAKzY6dsT1BlxeW9f4B0v0sLSmwgox1/Wqvh9HR3Yzc6dU7lXGxNZao0AY8/LG5X+dOHXh1EhUHny1NXsIAIGxqqJqyBCti5XBcVLg7o/eBFAE9IHuOjI0GXBdkuQd+qTMGyTkCja8BQD+3tr07sT6hjla53+u3PR1Qqrriq2OkST5bczie0TmSimdq6yObYlJdtXOWlpHTGvTrKMJs5bNeeW5u95gSTfkj+0fwmwsACSRkrHE9n7VIQC4vK6x1pCYBCBFwm4/vOetFzo7w7i2vuEhJdMLdFKIpJNyjc6vZ/Ab6Yoht7NlFPLdCzramtb2aQz63CzL3WFKzbGozGez9qW25nYA7ceDra4OXNhoiiUDBhMRiIk22Sh5KqKj05lNl2XzJACMH7/AqawcwZ+VZf2aMn3fl/tKgng63SU3bFgdTapvuFoI78/GxAmRkMy2S0mu3ryhZf9pO1rorcS1freHQ+kdQqgLjU0ix6lIJUn+px2tzfdnMoEqfv0ncjWfIo2RyffHEZC1dCi1RipvrDFxEUzc83RHa/P9vu/LXld84vZTIen1no2F4VxTO7PxF0Kl5uskyjtuRcroQkcqcecDTEXhvLxxumxRIJMJ1COPZI3vd8qBo65ZI5V7k0niyHHTKa3j54Geq1/atPxg8WOnlz3bi/Jc5MtcLqsn1C89e8/hsc9I6SywJoFUrmd09FD3XvnN9o2/7CpaMGv7Y30qtwbV1Dd+hyBWSqnOAQPW6r2wevHWkhrSH4GhXEAEgKd8a8lgnciVUro/FEJBJ/ljIKyFzbdsbV2xr0RR+i3l9RFQUSCf/O1FlSav/pGuGDI66jnUxYIeJ2se3Nra8nrpPKPfIme/XDZ79irvsN0/E0QJGbFzS1v2358St/W2XLX+pC/fXy/7c8Dbl/UfqeZDKasgGjsAAAAASUVORK5CYII=') center / contain no-repeat;
+				vertical-align: middle;
+				margin-right: 7px;
+				position: relative;
+				top: -2px;
+			}
+			.wf-nav-links {
+				display: flex;
+				gap: 22px;
+				flex-wrap: wrap;
+			}
+			.wf-nav-link {
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 16px;
+				color: rgba(var(--primary-rgb), 0.5);
+				font-weight: 600;
+			}
+			.wf-nav-link.active {
+				color: var(--primary);
+				font-weight: 700;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+			.wf-nav-cta {
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 15px;
+				font-weight: 700;
+				color: var(--primary);
+				border: 2px solid var(--accent);
+				background: rgba(46, 159, 224, 0.12);
+				border-radius: 6px;
+				padding: 4px 12px;
+			}
+
+			.wf-body {
+				padding: 26px 26px 30px;
+			}
+
+			/* ===== WF BLOCK ===== */
+			.wf-block {
+				border: 2px dashed rgba(var(--mid-rgb), 0.7);
+				border-radius: 8px;
+				padding: 25px 22px;
+				background: rgba(46, 159, 224, 0.03);
+				margin-bottom: 22px;
+			}
+			.wf-block:last-child {
+				margin-bottom: 0;
+			}
+			.wf-block-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 8px;
+				margin-bottom: 14px;
+			}
+			.wf-block-title {
+				font-family: 'Nunito', sans-serif;
+				font-size: 22px;
+				font-weight: 700;
+				color: var(--primary);
+			}
+			.wf-block-sub {
+				font-family: 'Nunito', sans-serif;
+				font-size: 15px;
+				font-weight: 600;
+				color: var(--mid);
+			}
+
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 2px 11px;
+				white-space: nowrap;
+			}
+			.cms-tag.ext {
+				color: var(--warn);
+				border-color: var(--warn);
+			}
+
+			/* placeholder text lines */
+			.ph-text {
+				color: rgba(var(--primary-rgb), 0.55);
+				font-size: 17px;
+				line-height: 1.5;
+			}
+			.ph-head {
+				font-family: 'Nunito', sans-serif;
+				font-weight: 800;
+				font-size: 26px;
+				color: rgba(var(--primary-rgb), 0.8);
+				line-height: 1.2;
+				margin-bottom: 8px;
+			}
+			.ph-line {
+				height: 11px;
+				border-radius: 6px;
+				background: rgba(var(--primary-rgb), 0.1);
+				margin-bottom: 9px;
+			}
+			.ph-line.w90 { width: 90%; }
+			.ph-line.w75 { width: 75%; }
+			.ph-line.w60 { width: 60%; }
+			.ph-line.w45 { width: 45%; }
+
+			.seed-copy {
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 16.5px;
+				color: var(--ink);
+				line-height: 1.55;
+			}
+			.seed-copy p { margin-bottom: 8px; }
+			.seed-copy p:last-child { margin-bottom: 0; }
+			.seed-copy ul { margin: 6px 0 0 20px; }
+			.seed-copy li {
+				font-size: 16px;
+				color: rgba(56, 69, 122, 0.82);
+				margin-bottom: 3px;
+			}
+			.seed-tag {
+				display: inline-block;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: var(--accent);
+				border: 1px dashed var(--accent);
+				border-radius: 4px;
+				padding: 1px 9px;
+				margin-bottom: 9px;
+			}
+
+			.pill-btn {
+				display: inline-block;
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 16px;
+				font-weight: 700;
+				color: var(--white);
+				background: var(--accent);
+				border-radius: 7px;
+				padding: 9px 20px;
+				margin-top: 6px;
+				margin-right: 8px;
+			}
+			.pill-btn.ghost {
+				color: var(--primary);
+				background: transparent;
+				border: 2px solid var(--primary);
+			}
+
+			/* ===== ANNOTATION ===== */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				padding: 11px 18px;
+				background: rgba(var(--primary-rgb), 0.045);
+				border-left: 4px solid rgba(var(--primary-rgb), 0.25);
+				border-radius: 0 5px 5px 0;
+				margin-top: 14px;
+				line-height: 1.5;
+			}
+			.annotation strong {
+				font-weight: 400;
+				color: var(--accent);
+			}
+
+			/* ===== DECISION BOX ===== */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 18px 20px;
+				background: rgba(46, 159, 224, 0.05);
+				margin-top: 16px;
+			}
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				font-weight: 700;
+				margin-bottom: 10px;
+			}
+			.decision-opt {
+				font-size: 17px;
+				margin-bottom: 7px;
+				padding-left: 4px;
+			}
+			.decision-opt:last-child {
+				margin-bottom: 0;
+			}
+			.decision-opt b {
+				font-family: 'Nunito', sans-serif;
+				color: var(--primary);
+			}
+
+			/* ===== IMAGE PLACEHOLDER ===== */
+			.img-ph {
+				background: rgba(var(--primary-rgb), 0.07);
+				border: 2px dashed rgba(var(--primary-rgb), 0.25);
+				border-radius: 8px;
+				min-height: 118px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 6px;
+				padding: 20px;
+				text-align: center;
+			}
+			.img-ph .ico {
+				font-size: 26px;
+			}
+			.img-ph .lbl {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16px;
+				color: rgba(var(--primary-rgb), 0.7);
+				line-height: 1.4;
+			}
+
+			/* ===== FORM FIELDS ===== */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+			}
+			.form-field {
+				background: var(--white);
+				border: 1.5px dashed rgba(var(--mid-rgb), 0.8);
+				border-radius: 6px;
+				padding: 11px 14px;
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16px;
+				color: rgba(var(--primary-rgb), 0.6);
+			}
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+			.form-field.area {
+				grid-column: 1 / -1;
+				min-height: 72px;
+			}
+
+			/* ===== LIST/DOC ROWS ===== */
+			.list-row {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				border: 1.5px dashed rgba(var(--mid-rgb), 0.7);
+				border-radius: 6px;
+				padding: 12px 16px;
+				background: rgba(255, 255, 255, 0.65);
+				margin-bottom: 10px;
+			}
+			.list-row:last-child {
+				margin-bottom: 0;
+			}
+			.list-badge {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--white);
+				background: var(--primary);
+				border-radius: 5px;
+				padding: 4px 10px;
+				flex-shrink: 0;
+			}
+			.list-badge.accent {
+				background: var(--accent);
+			}
+			.list-main {
+				flex: 1;
+			}
+			.list-main .t {
+				font-family: 'Nunito', sans-serif;
+				font-weight: 700;
+				font-size: 17px;
+				color: var(--primary);
+			}
+			.list-main .d {
+				font-size: 15px;
+				color: rgba(var(--primary-rgb), 0.55);
+			}
+			.list-act {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				flex-shrink: 0;
+			}
+
+			/* two-path grid for dual audience */
+			.path-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+			}
+			.path-card {
+				border: 2px solid rgba(var(--primary-rgb), 0.2);
+				border-radius: 8px;
+				padding: 18px;
+				background: var(--white);
+			}
+			.path-card .pc-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+			.path-card .pc-title {
+				font-family: 'Nunito', sans-serif;
+				font-weight: 800;
+				font-size: 20px;
+				color: var(--primary);
+				margin: 4px 0 8px;
+			}
+
+			/* ===== CTA BAR ===== */
+			.cta-bar {
+				background: var(--primary);
+				border-radius: 8px;
+				padding: 22px 26px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+			.cta-bar .cta-txt {
+				font-family: 'Nunito', sans-serif;
+				font-weight: 700;
+				font-size: 20px;
+				color: var(--white);
+			}
+
+			/* ===== WF FOOTER (inside card) ===== */
+			.wf-footer {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+				flex-wrap: wrap;
+				border-top: 2px solid rgba(var(--primary-rgb), 0.15);
+				margin-top: 22px;
+				padding-top: 16px;
+			}
+			.wf-footer .fnav {
+				font-family: 'Nunito Sans', sans-serif;
+				font-size: 14px;
+				color: rgba(var(--primary-rgb), 0.5);
+				display: flex;
+				gap: 14px;
+				flex-wrap: wrap;
+			}
+			.wf-footer .fnav .priv {
+				color: var(--accent);
+				font-weight: 700;
+			}
+
+			/* ===== SITE MAP ===== */
+			.sitemap-wrap {
+				background: #fdfefe;
+				border: 2px solid var(--primary);
+				border-radius: 10px;
+				box-shadow: 7px 7px 0 rgba(var(--primary-rgb), 0.1);
+				padding: 30px 28px;
+			}
+			.sitemap-home {
+				display: flex;
+				justify-content: center;
+				margin-bottom: 8px;
+			}
+			.sm-node {
+				border: 2px solid var(--primary);
+				border-radius: 8px;
+				padding: 12px 20px;
+				background: var(--white);
+				text-align: center;
+				min-width: 140px;
+			}
+			.sm-node.home {
+				background: var(--primary);
+			}
+			.sm-node.home .sm-name {
+				color: var(--white);
+			}
+			.sm-node.ext {
+				border-style: dashed;
+				border-color: var(--warn);
+			}
+			.sm-name {
+				font-family: 'Nunito', sans-serif;
+				font-weight: 800;
+				font-size: 18px;
+				color: var(--primary);
+			}
+			.sm-slug {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--mid);
+			}
+			.sm-node.ext .sm-slug {
+				color: var(--warn);
+			}
+			.sm-connector {
+				display: flex;
+				justify-content: center;
+				color: rgba(var(--primary-rgb), 0.4);
+				font-size: 22px;
+				margin: 2px 0;
+			}
+			.sm-children {
+				display: flex;
+				justify-content: center;
+				gap: 14px;
+				flex-wrap: wrap;
+				margin-top: 8px;
+			}
+			.sm-footer-note {
+				margin-top: 20px;
+				display: flex;
+				gap: 14px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			/* ===== CHECK LISTS ===== */
+			.check-list {
+				background: #fdfefe;
+				border: 2px solid var(--primary);
+				border-radius: 10px;
+				box-shadow: 7px 7px 0 rgba(var(--primary-rgb), 0.1);
+				padding: 10px 26px;
+			}
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 14px;
+				padding: 16px 0;
+				border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+			}
+			.check-item:last-child {
+				border-bottom: none;
+			}
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.check-body strong {
+				font-family: 'Nunito', sans-serif;
+				font-size: 18px;
+				font-weight: 800;
+				color: var(--primary);
+				display: block;
+				margin-bottom: 3px;
+			}
+			.check-body span {
+				font-size: 16.5px;
+				color: rgba(var(--primary-rgb), 0.72);
+				line-height: 1.5;
+			}
+
+			/* ===== RESPONSIVE — TABLET ===== */
+			@media (max-width: 960px) {
+				.sidebar {
+					width: 280px;
+				}
+				.main {
+					margin-left: 280px;
+				}
+				.doc-header,
+				.doc-body {
+					padding-left: 32px;
+					padding-right: 32px;
+				}
+				.form-grid,
+				.path-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			/* ===== RESPONSIVE — MOBILE ===== */
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+					transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+					width: 300px;
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+					position: fixed;
+					inset: 0;
+					background: rgba(0, 0, 0, 0.45);
+					opacity: 0;
+					pointer-events: none;
+					transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+					z-index: 199;
+				}
+				.sidebar-overlay.visible {
+					opacity: 1;
+					pointer-events: auto;
+				}
+				.mobile-fab {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					position: fixed;
+					bottom: 24px;
+					right: 24px;
+					width: 73px;
+					height: 73px;
+					border-radius: 50%;
+					background: var(--accent);
+					color: var(--primary);
+					border: none;
+					font-size: 30px;
+					z-index: 300;
+					box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+					cursor: pointer;
+				}
+				.mobile-fab:active {
+					transform: scale(0.92);
+				}
+				.main {
+					margin-left: 0;
+					padding-bottom: 80px;
+				}
+				.doc-header {
+					padding: 32px 20px 28px;
+				}
+				.doc-title {
+					font-size: 30px;
+				}
+				.doc-body {
+					padding: 26px 16px 80px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 12px 16px;
+				}
+				.wf-body {
+					padding: 20px 15px 26px;
+				}
+				.form-grid,
+				.path-grid,
+				.sm-children {
+					grid-template-columns: 1fr;
+				}
+				.cta-bar,
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					align-items: center;
+				}
+				.check-item {
+					flex-wrap: wrap;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-top">
+				<div class="sb-label">Latz Web Design</div>
+				<div class="sb-client">Music Therapy Services of Central WI</div>
+				<div class="sb-doctype">Site Wireframes</div>
+				<div class="sb-status">
+					<span class="dot"></span>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-num">0</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-num">1</span> Home</a>
+				<a href="#about" class="nav-link"><span class="nav-num">2</span> Who We Are</a>
+				<a href="#services" class="nav-link"><span class="nav-num">3</span> Services</a>
+				<a href="#get-started" class="nav-link"><span class="nav-num">4</span> Get Started</a>
+				<a href="#careers" class="nav-link"><span class="nav-num">5</span> Careers</a>
+				<a href="#contact" class="nav-link"><span class="nav-num">6</span> Contact</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#confirmed" class="nav-link"><span class="nav-num">✓</span> Decided</a>
+				<a href="#discussion" class="nav-link"><span class="nav-num">?</span> To Finalize</a>
+			</div>
+
+			<div class="sidebar-footer">
+				jordan@latzwebdesign.com<br />
+				<strong>No fluff. Just results.</strong>
+			</div>
+		</nav>
+
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<div class="main">
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Music Therapy Services of Central Wisconsin</div>
+				<div class="doc-subline">Website Redesign · Content &amp; structure map</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value" style="color:#4ade80;">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">6 + footer</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Elizabeth</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value warn">Pending</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="doc-body">
+				<div class="illustrative-note">
+					<span class="emoji">✏️</span>
+					<span>These layouts are illustrative — they show what content lives on each page and how it behaves, not the final visual design. Colors and fonts here are a starting point (built around your logo blue), and we’ll refine them together.</span>
+				</div>
+
+				<!-- 0 — SITE MAP -->
+				<section class="wf-section" id="sitemap">
+					<div class="section-label">
+						<span class="num">0</span><span class="txt">Site Map</span>
+					</div>
+
+					<div class="sitemap-wrap">
+						<div class="sitemap-home">
+							<div class="sm-node home">
+								<div class="sm-name">Home</div>
+								<div class="sm-slug">/</div>
+							</div>
+						</div>
+						<div class="sm-connector">↓</div>
+						<div class="sm-children">
+							<div class="sm-node">
+								<div class="sm-name">Who We Are</div>
+								<div class="sm-slug">/who-we-are</div>
+							</div>
+							<div class="sm-node">
+								<div class="sm-name">Services</div>
+								<div class="sm-slug">/services</div>
+							</div>
+							<div class="sm-node">
+								<div class="sm-name">Get Started</div>
+								<div class="sm-slug">/get-started</div>
+							</div>
+							<div class="sm-node">
+								<div class="sm-name">Careers</div>
+								<div class="sm-slug">/careers</div>
+							</div>
+							<div class="sm-node">
+								<div class="sm-name">Contact</div>
+								<div class="sm-slug">/contact</div>
+							</div>
+						</div>
+
+						<div class="sm-footer-note">
+							<div class="sm-node ext">
+								<div class="sm-name">Patient Portal ↗</div>
+								<div class="sm-slug">external → Fusion</div>
+							</div>
+							<div class="sm-node ext" style="border-color: rgba(18,58,92,0.3);">
+								<div class="sm-name" style="color:var(--mid)">Privacy Policy</div>
+								<div class="sm-slug" style="color:var(--mid)">footer only</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 22px;">
+							Domain <strong>mtscw.com</strong> stays — we migrate it off Turbify to Vercel (client's account). Down from the current bloated tab set to <strong>6 core pages</strong>. About + Meet the Team are merged into <strong>Who We Are</strong>. Logo links back to Home on every page (currently broken on their site). Privacy lives in the footer. Patient Portal links out to Fusion Web Clinic — new tab, nothing hosted our end.
+						</div>
+					</div>
+				</section>
+
+				<!-- 1 — HOME -->
+				<section class="wf-section" id="home">
+					<div class="section-label">
+						<span class="num">1</span><span class="txt">Home &nbsp;·&nbsp; /</span>
+					</div>
+
+					<div class="wf-card">
+						<div class="wf-nav">
+							<div class="wf-logo"><span class="wf-logo-mark"></span>MTSCW</div>
+							<div class="wf-nav-links">
+								<span class="wf-nav-link active">Home</span>
+								<span class="wf-nav-link">Who We Are</span>
+								<span class="wf-nav-link">Services</span>
+								<span class="wf-nav-link">Get Started</span>
+								<span class="wf-nav-link">Careers</span>
+								<span class="wf-nav-link">Contact</span>
+							</div>
+							<span class="wf-nav-cta">Patient Portal ↗</span>
+						</div>
+
+						<div class="wf-body">
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Hero — Two Audiences</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-head">Music therapy that helps kids grow — one note at a time.</div>
+								<div class="ph-line w75"></div>
+								<div class="ph-line w60"></div>
+								<div style="margin-top:12px;">
+									<span class="pill-btn">Get Started &nbsp;→</span>
+									<span class="pill-btn ghost">Join Our Team &nbsp;→</span>
+								</div>
+								<div class="img-ph" style="margin-top:16px;">
+									<span class="ico">📷</span>
+									<span class="lbl">Warm photo — therapist working with a child in session</span>
+								</div>
+								<div class="annotation">Your homepage speaks to both audiences the moment someone lands — families looking for help, and music therapists looking to join your team. Two clear paths, right up front, so no one has to hunt for where they belong.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">What is Music Therapy?</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="seed-copy"><span class="seed-tag">current copy · tightened</span><p>Music is processed all across the brain — not in one single spot — which makes it a powerful way to work around damaged areas and build new connections. In a session, kids and adults might play instruments, sing, write songs, or move to music. No musical experience or talent is needed to benefit.</p></div>
+								<div class="annotation">A clear, welcoming explanation of music therapy for families, in everyday language. This copy comes from your current site, lightly tightened — your team has the final say on wording.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Services Preview</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="list-row"><span class="list-badge">Service</span><div class="list-main"><div class="t">Individual Music Therapy</div><div class="d">Year-round · starts with a full evaluation, then a care plan with goals you help set</div></div><span class="list-act">Learn more →</span></div>
+								<div class="list-row"><span class="list-badge">Service</span><div class="list-main"><div class="t">Group Music Therapy</div><div class="d">Seasonal — summer</div></div><span class="list-act">Learn more →</span></div>
+								<div class="annotation">A quick look at your core services that links through to the full page. Update a service once and it stays in sync everywhere it appears.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Why Families Trust Us</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-line w60"></div>
+								<div class="annotation">A trust strip up high — board certification, Neurologic Music Therapy training, 20+ years, and your local roots — so new families feel confident they’re in expert hands.</div>
+								<div class="decision-box">
+									<div class="decision-label">A choice to make — Family testimonials</div>
+									<div class="decision-opt"><b>Option 1:</b> Add a short testimonials section here and on Who We Are.</div>
+									<div class="decision-opt"><b>Option 2:</b> Hold off for now and add them later, once you’ve gathered a few.</div>
+									<div class="decision-opt" style="margin-top:8px; color:var(--mid);">Just let us know if you have quotes you’re able to share.</div>
+								</div>
+							</div>
+
+							<div class="cta-bar">
+								<span class="cta-txt">Ready to get started?</span>
+								<span class="pill-btn">Refer / Get Started</span>
+							</div>
+
+							<div class="wf-footer">
+								<div class="wf-logo" style="font-size:17px;">MTSCW</div>
+								<div class="fnav"><span>Who We Are</span><span>Services</span><span>Get Started</span><span>Careers</span><span>Contact</span><span class="priv">Privacy Policy</span></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 2 — WHO WE ARE -->
+				<section class="wf-section" id="about">
+					<div class="section-label">
+						<span class="num">2</span><span class="txt">Who We Are &nbsp;·&nbsp; /who-we-are</span>
+					</div>
+
+					<div class="wf-card">
+						<div class="wf-nav">
+							<div class="wf-logo"><span class="wf-logo-mark"></span>MTSCW</div>
+							<div class="wf-nav-links">
+								<span class="wf-nav-link">Home</span>
+								<span class="wf-nav-link active">Who We Are</span>
+								<span class="wf-nav-link">Services</span>
+								<span class="wf-nav-link">Get Started</span>
+								<span class="wf-nav-link">Careers</span>
+								<span class="wf-nav-link">Contact</span>
+							</div>
+							<span class="wf-nav-cta">Patient Portal ↗</span>
+						</div>
+
+						<div class="wf-body">
+							<div class="annotation" style="margin-bottom:20px;">Your about and team come together on one welcoming page. Because everything lives in your dashboard, keeping the team current — adding a new therapist or updating a bio — takes a couple of minutes and never needs a developer.</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Our Story</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="seed-copy"><span class="seed-tag">current copy · tightened</span><p>Music Therapy Services of Central Wisconsin began in 1999 and has helped thousands of individuals and groups across Central Wisconsin. We work to improve quality of life through music — especially for children and adults with developmental or neurological needs, illnesses, or life-changing events that affect their independence, connection, or comfort.</p></div>
+								<div class="annotation">Your story — 25+ years serving central Wisconsin, women-owned, and the mission behind the work. We’ll help you expand it a little from the current version.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Our Approach</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="seed-copy"><span class="seed-tag">current copy · tightened</span><p>Music therapy is an established, credentialed health profession: music used within a therapeutic relationship to reach functional, non-musical goals. Every technique is chosen from clinical and scientific evidence, targeting rehabilitative, adaptive, and developmental goals.</p></div>
+								<div class="annotation">How music therapy works and why it’s effective — the evidence-based side that builds confidence for families and referring providers alike.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">As Seen On — News Feature</span>
+									<span class="cms-tag">Embed / link</span>
+								</div>
+								<div class="img-ph"><span class="ico">▶️</span><span class="lbl">Local news segment about MTSCW — embed or link</span></div>
+								<div class="annotation">Your local news feature, right where families will see it — a credible, third-party look at your work. We’ll just need the link from you.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Meet the Team</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="path-grid">
+									<div class="path-card"><div class="img-ph" style="min-height:80px;"><span class="ico">📷</span><span class="lbl">Headshot</span></div><div class="list-main" style="margin-top:8px;"><div class="t">Richelle</div><div class="d">Owner · Board-Certified MT</div></div></div>
+									<div class="path-card"><div class="img-ph" style="min-height:80px;"><span class="ico">📷</span><span class="lbl">Headshot</span></div><div class="list-main" style="margin-top:8px;"><div class="t">Therapist</div><div class="d">Board-Certified MT</div></div></div>
+								</div>
+								<div class="annotation">Each team member gets a photo and bio you can edit yourself. Bios can run short or long — the design flexes to fit — and you can add or remove people anytime as your team grows.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Credentials &amp; Location</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="seed-copy"><span class="seed-tag">current copy · tightened</span><p>Our therapists are Board Certified (MT-BC) through The Certification Board for Music Therapists, registered with the State of Wisconsin, and hold advanced training in Neurologic Music Therapy.</p><p>2815 Post Road, Stevens Point, WI 54481</p></div>
+								<div class="annotation">Your certifications and training — MT-BC, Neurologic Music Therapy, and Wisconsin registration — alongside your Stevens Point location.</div>
+							</div>
+
+							<div class="wf-footer">
+								<div class="wf-logo" style="font-size:17px;">MTSCW</div>
+								<div class="fnav"><span>Who We Are</span><span>Services</span><span>Get Started</span><span>Careers</span><span>Contact</span><span class="priv">Privacy Policy</span></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 3 — SERVICES -->
+				<section class="wf-section" id="services">
+					<div class="section-label">
+						<span class="num">3</span><span class="txt">Services &nbsp;·&nbsp; /services</span>
+					</div>
+
+					<div class="wf-card">
+						<div class="wf-nav">
+							<div class="wf-logo"><span class="wf-logo-mark"></span>MTSCW</div>
+							<div class="wf-nav-links">
+								<span class="wf-nav-link">Home</span>
+								<span class="wf-nav-link">Who We Are</span>
+								<span class="wf-nav-link active">Services</span>
+								<span class="wf-nav-link">Get Started</span>
+								<span class="wf-nav-link">Careers</span>
+								<span class="wf-nav-link">Contact</span>
+							</div>
+							<span class="wf-nav-cta">Patient Portal ↗</span>
+						</div>
+
+						<div class="wf-body">
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Services Intro</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="seed-copy"><span class="seed-tag">current copy · tightened</span><p>Music therapy interventions reach functional, non-musical goals — improving motor skills, speech and language, cognition, and social/emotional areas. Available to individuals and groups, at our clinic and out in the community.</p></div>
+								<div class="annotation">A brief welcome that frames what you offer and who it helps, leading into the full list.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Service List</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="list-row"><span class="list-badge accent">1</span><div class="list-main"><div class="t">Individual Music Therapy</div><div class="d">Year-round</div></div></div>
+								<div class="list-row"><span class="list-badge accent">2</span><div class="list-main"><div class="t">Group Music Therapy</div><div class="d">Summer · connect through music in home, facility, or community settings</div></div></div>
+								<div class="list-row"><span class="list-badge accent">3</span><div class="list-main"><div class="t">Additional services — TBD</div><div class="d">Some current services being retired / updated</div></div></div>
+								<div class="annotation">We’ll finalize your exact service list together — a few offerings may have changed since the current site. Everything’s easy to update, and seasonal services like summer group therapy can be shown or hidden as needed.</div>
+								<div class="decision-box">
+									<div class="decision-label">A choice to make — Services layout</div>
+									<div class="decision-opt"><b>Option 1:</b> One Services page listing everything — clean and simple.</div>
+									<div class="decision-opt"><b>Option 2:</b> A dedicated page for each service — better for search, so someone looking for “group music therapy” lands right on it. A great option to add as you grow.</div>
+								</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Who We Help</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="seed-copy"><span class="seed-tag">current copy · tightened</span><p>Music therapists work with all ages across many needs, including:</p><ul><li>Autism</li><li>Cerebral Palsy</li><li>Down Syndrome</li><li>Alzheimer's &amp; Parkinson's Disease</li><li>Traumatic Brain Injury</li><li>Rehabilitation &amp; communication needs</li><li>Hospice &amp; palliative care</li><li>Learning, physical &amp; cognitive development</li></ul></div>
+								<div class="annotation">The populations and needs you serve — reassuring for families, and great for search so the right people find you.</div>
+							</div>
+
+							<div class="cta-bar">
+								<span class="cta-txt">Think music therapy could help?</span>
+								<span class="pill-btn">Get Started</span>
+							</div>
+
+							<div class="wf-footer">
+								<div class="wf-logo" style="font-size:17px;">MTSCW</div>
+								<div class="fnav"><span>Who We Are</span><span>Services</span><span>Get Started</span><span>Careers</span><span>Contact</span><span class="priv">Privacy Policy</span></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 4 — GET STARTED -->
+				<section class="wf-section" id="get-started">
+					<div class="section-label">
+						<span class="num">4</span><span class="txt">Get Started &nbsp;·&nbsp; /get-started</span>
+					</div>
+
+					<div class="wf-card">
+						<div class="wf-nav">
+							<div class="wf-logo"><span class="wf-logo-mark"></span>MTSCW</div>
+							<div class="wf-nav-links">
+								<span class="wf-nav-link">Home</span>
+								<span class="wf-nav-link">Who We Are</span>
+								<span class="wf-nav-link">Services</span>
+								<span class="wf-nav-link active">Get Started</span>
+								<span class="wf-nav-link">Careers</span>
+								<span class="wf-nav-link">Contact</span>
+							</div>
+							<span class="wf-nav-cta">Patient Portal ↗</span>
+						</div>
+
+						<div class="wf-body">
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">How to Begin</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-line w90"></div>
+								<div class="annotation">Two clear ways to begin, right up front: a referral from a social worker or case manager, or a family reaching out directly.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Referral Form — for professionals</span>
+									<span class="cms-tag">Form → routing TBD</span>
+								</div>
+								<div class="form-grid">
+									<div class="form-field">Date (auto — today)</div>
+									<div class="form-field">Referred by</div>
+									<div class="form-field">Title or company name</div>
+									<div class="form-field">Phone number</div>
+									<div class="form-field full">How do you know the patient?</div>
+									<div class="form-field full" style="font-size:15px; line-height:1.4;">☑ I confirm all releases have been submitted to MTSCW prior to completing this form. &nbsp;(Fax 715-204-4156 / scheduling@mtscw.com)</div>
+								</div>
+								<span class="pill-btn" style="margin-top:14px;">Submit Referral</span>
+								<div class="annotation">This mirrors your current referral form — the same simple fields, plus your release-confirmation checkbox. It collects only referrer information (no patient health details), so it stays private and straightforward, just like today.</div>
+								<div class="decision-box">
+									<div class="decision-label">A choice to make — Referral form</div>
+									<div class="decision-opt"><b>Option 1:</b> Keep it simple — rebuild your current referral form as-is on the new site.</div>
+									<div class="decision-opt"><b>Option 2:</b> Down the road, move the full release process online through a secure, HIPAA-compliant form so referrers can skip the fax. Something we can add whenever you’re ready.</div>
+								</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Families Start Here</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-line w75"></div>
+								<span class="pill-btn ghost">Contact Us</span>
+								<div class="annotation">For families who aren’t coming through a referral, a simple and friendly way to reach out and start the conversation.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">What Happens Next</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-line w75"></div>
+								<div class="annotation">Sets expectations for what happens after a referral — including a warm, upfront note about the current waitlist so families know what to expect.</div>
+							</div>
+
+							<div class="wf-footer">
+								<div class="wf-logo" style="font-size:17px;">MTSCW</div>
+								<div class="fnav"><span>Who We Are</span><span>Services</span><span>Get Started</span><span>Careers</span><span>Contact</span><span class="priv">Privacy Policy</span></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 5 — CAREERS -->
+				<section class="wf-section" id="careers">
+					<div class="section-label">
+						<span class="num">5</span><span class="txt">Careers &nbsp;·&nbsp; /careers</span>
+					</div>
+
+					<div class="wf-card">
+						<div class="wf-nav">
+							<div class="wf-logo"><span class="wf-logo-mark"></span>MTSCW</div>
+							<div class="wf-nav-links">
+								<span class="wf-nav-link">Home</span>
+								<span class="wf-nav-link">Who We Are</span>
+								<span class="wf-nav-link">Services</span>
+								<span class="wf-nav-link">Get Started</span>
+								<span class="wf-nav-link active">Careers</span>
+								<span class="wf-nav-link">Contact</span>
+							</div>
+							<span class="wf-nav-cta">Patient Portal ↗</span>
+						</div>
+
+						<div class="wf-body">
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Why Work Here</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-head" style="font-size:22px;">Build a career in music therapy — with a team that has fun doing it.</div>
+								<div class="ph-line w75"></div>
+								<div class="img-ph" style="margin-top:14px;"><span class="ico">📷</span><span class="lbl">Team photo — show the culture, the "fun" side</span></div>
+								<div class="annotation">A page that works as hard as your hiring does. Your culture, mission, and personality do the recruiting here — showing therapists exactly why they’d want to join your team.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Open Positions</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="list-row"><span class="list-badge accent">Open</span><div class="list-main"><div class="t">Board-Certified Music Therapist</div><div class="d">Stevens Point · Full / part-time</div></div><span class="list-act">Apply →</span></div>
+								<div class="annotation">Post and remove job openings yourself, anytime, right from your dashboard. When nothing’s open, the page automatically shows a friendly “check back soon” message.</div>
+								<div class="decision-box">
+									<div class="decision-label">A choice to make — Careers setup</div>
+									<div class="decision-opt"><b>Simple:</b> a “we’re hiring” page with a link to apply (by email or a site like Indeed).</div>
+									<div class="decision-opt"><b>Standard:</b> job listings you manage yourself, with applicants reaching out by email.</div>
+									<div class="decision-opt"><b>Full:</b> listings plus an on-site application form with resume uploads.</div>
+									<div class="decision-opt" style="margin-top:8px; color:var(--mid);">We’ll help you pick the level that fits how you like to hire.</div>
+								</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">What We Offer</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="ph-line w60"></div>
+								<div class="annotation">The reasons a therapist chooses you — benefits, supervision, growth, and your internship program.</div>
+							</div>
+
+							<div class="cta-bar">
+								<span class="cta-txt">Want to join the team?</span>
+								<span class="pill-btn">Apply Now</span>
+							</div>
+
+							<div class="wf-footer">
+								<div class="wf-logo" style="font-size:17px;">MTSCW</div>
+								<div class="fnav"><span>Who We Are</span><span>Services</span><span>Get Started</span><span>Careers</span><span>Contact</span><span class="priv">Privacy Policy</span></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 6 — CONTACT -->
+				<section class="wf-section" id="contact">
+					<div class="section-label">
+						<span class="num">6</span><span class="txt">Contact &nbsp;·&nbsp; /contact</span>
+					</div>
+
+					<div class="wf-card">
+						<div class="wf-nav">
+							<div class="wf-logo"><span class="wf-logo-mark"></span>MTSCW</div>
+							<div class="wf-nav-links">
+								<span class="wf-nav-link">Home</span>
+								<span class="wf-nav-link">Who We Are</span>
+								<span class="wf-nav-link">Services</span>
+								<span class="wf-nav-link">Get Started</span>
+								<span class="wf-nav-link">Careers</span>
+								<span class="wf-nav-link active">Contact</span>
+							</div>
+							<span class="wf-nav-cta">Patient Portal ↗</span>
+						</div>
+
+						<div class="wf-body">
+							<div class="annotation" style="margin-bottom:20px;">Kept separate from Get Started — general questions land here, professional referrals there. If you’d rather combine them into one page, that’s an easy change.</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Contact Details</span>
+									<span class="cms-tag">CMS editable</span>
+								</div>
+								<div class="list-row"><span class="list-badge">📍</span><div class="list-main"><div class="t">2815 Post Road, Stevens Point, WI 54481</div></div></div>
+								<div class="list-row"><span class="list-badge">📞</span><div class="list-main"><div class="t">715-204-4101</div><div class="d">Fax 715-204-4156</div></div></div>
+								<div class="list-row"><span class="list-badge">🕐</span><div class="list-main"><div class="t">Mon–Fri, 8am–6pm</div></div></div>
+								<div class="annotation">Your address, phone, fax, hours, and email — all editable yourself, so a change never means calling us.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Contact Form — general</span>
+									<span class="cms-tag">Form → routing TBD</span>
+								</div>
+								<div class="form-grid">
+									<div class="form-field">Name</div>
+									<div class="form-field">Email</div>
+									<div class="form-field full">Phone</div>
+									<div class="form-field area">Message</div>
+								</div>
+								<span class="pill-btn" style="margin-top:14px;">Send Message</span>
+								<div class="annotation">A simple “have a question?” form for general inquiries, separate from referrals. We’ll point submissions to whichever inbox you’d like.</div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Map</span>
+									<span class="cms-tag ext">Embed</span>
+								</div>
+								<div class="img-ph"><span class="ico">🗺️</span><span class="lbl">Embedded map — Stevens Point location</span></div>
+							</div>
+
+							<div class="wf-block">
+								<div class="wf-block-head">
+									<span class="wf-block-title">Patient Portal</span>
+									<span class="cms-tag ext">External link</span>
+								</div>
+								<span class="pill-btn ghost">Go to Patient Portal ↗</span>
+								<div class="annotation">A clear link to your existing Fusion patient portal — it opens in a new tab and works exactly as it does today. Nothing changes for your patients.</div>
+							</div>
+
+							<div class="wf-footer">
+								<div class="wf-logo" style="font-size:17px;">MTSCW</div>
+								<div class="fnav"><span>Who We Are</span><span>Services</span><span>Get Started</span><span>Careers</span><span>Contact</span><span class="priv">Privacy Policy</span></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- CONFIRMED DECISIONS -->
+				<section class="wf-section" id="confirmed">
+					<div class="section-label">
+						<span class="num">✓</span><span class="txt">What We’ve Decided</span>
+					</div>
+
+					<div class="check-list">
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Keep your logo &amp; blue</strong><span>We’re keeping your logo and brand blue — brightening it with more color for a warm, kid-friendly feel that’s still professional.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>You update it yourself</strong><span>A clean, simple dashboard with only what you need, so you can edit content in minutes — no developer required.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>A simpler menu</strong><span>Trimmed to 6 clear pages from the current, crowded navigation.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>About + team, together</strong><span>Your about and team info combine into one welcoming “Who We Are” page — and it stays effortless to keep current.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>One site, two audiences</strong><span>Your homepage speaks to families and to prospective therapists right away — both front and center.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Your referral form, kept simple</strong><span>We rebuild your current referral form as-is — referrer info and your release checkbox only — so no sensitive patient details ever touch the website.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Privacy in the footer</strong><span>Moved out of the main menu into the footer, where visitors expect to find it.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Patient portal stays put</strong><span>A simple link to your existing Fusion portal — nothing changes for your patients.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Your words, refined</strong><span>We reuse and tighten your existing copy instead of starting from scratch, with a little expansion on your story.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Built for phones</strong><span>Fast, mobile-friendly, and accessible — including fixes like pinch-to-zoom and a logo that takes you home.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>You own everything</strong><span>The site, code, and hosting are all in your name. Hosting is about $20/month paid directly — no maintenance fees, no lock-in, and future work is project-by-project.</span></div></div>
+						<div class="check-item"><span class="check-icon">✅</span><div class="check-body"><strong>Start core, grow later</strong><span>Roughly 4–8 weeks, no hard deadline. We start with the core build and add features whenever you’re ready.</span></div></div>
+					</div>
+				</section>
+
+				<!-- DISCUSSION CHECKLIST -->
+				<section class="wf-section" id="discussion">
+					<div class="section-label">
+						<span class="num">?</span><span class="txt">What We’ll Finalize Together</span>
+					</div>
+
+					<div class="check-list">
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Your service list</strong><span>Let’s confirm your current offerings together — a few may have changed since the old site.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Services layout</strong><span>One combined page now, or a dedicated page per service for stronger search visibility — your call (see the Services section).</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Careers setup</strong><span>How hands-on you’d like hiring to be on the site — from a simple “we’re hiring” to full applications (see the Careers section).</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Where your forms go</strong><span>Which inbox should receive referral and contact-form submissions.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Online reviews</strong><span>You don’t have many reviews online yet — an easy win we can help you start building to boost trust and search ranking.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Your news feature</strong><span>Send us the link to your local news segment so we can feature it on Who We Are.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Get Started &amp; Contact</strong><span>We’ve built these as separate pages — just say the word if you’d rather combine them into one.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Testimonials</strong><span>If you have family testimonials you’re able to share, we’ll add a spot for them.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Your current Turbify plan</strong><span>Worth confirming what you’re paying now and whether you’re month-to-month, so the switch is smooth.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Colors &amp; fonts</strong><span>We’re building around your logo blue; the brighter accent color and fonts are still open — send along any looks you love.</span></div></div>
+						<div class="check-item"><span class="check-icon">○</span><div class="check-body"><strong>Photos</strong><span>Whether to use existing photos or take new ones — and a heads-up that any images of children will need parent permission.</span></div></div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script>
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.sidebar .nav-link');
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.toggle(
+									'active',
+									link.getAttribute('href') === '#' + entry.target.id
+								);
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' }
+			);
+			sections.forEach((section) => observer.observe(section));
+
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+			document.querySelectorAll('.sidebar .nav-link').forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
