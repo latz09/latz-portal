@@ -50,8 +50,8 @@ function sortByNextMilestone(clients) {
 function ClientCard({ client }) {
 	return (
 		<Card href={getClientHref(client)} className='flex flex-col gap-1'>
-			<h3 className='font-medium text-lg text-white'>{client.name}</h3>
-			<span className='font-mono text-sm text-teal'>
+			<h3 className='lg:font-medium lg:text-lg text-white'>{client.name}</h3>
+			<span className='font-mono text-xs mt-0.5 lg:text-sm text-teal'>
 				{client.activeProjects} active · {client.totalProjects} total
 			</span>
 		</Card>

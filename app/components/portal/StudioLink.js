@@ -11,7 +11,7 @@ export default function StudioLink({
 }) {
   const base = type === 'project' ? PROJECT_BASE : CLIENT_BASE
   const href = id ? `${base};${id}` : base
-  const text = label ?? (id ? 'Edit' : type === 'project' ? 'New Project' : 'New Client')
+  const text = label ?? (id ? 'Edit' : type === 'project' ? 'Project' : 'New Client')
 
   return (
     <a

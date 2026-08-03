@@ -58,7 +58,7 @@ function DayCount({ daysUntil, isToday, isPast }) {
 	if (isToday) {
 		return (
 			<div className='text-right shrink-0'>
-				<p className='text-xl font-semibold leading-none text-warning'>Today</p>
+				<p className='text-lg md:text-xl font-semibold leading-none text-warning'>Today</p>
 			</div>
 		);
 	}
@@ -66,7 +66,7 @@ function DayCount({ daysUntil, isToday, isPast }) {
 	const tone = isPast ? 'text-danger' : 'text-teal';
 	return (
 		<div className='text-right shrink-0'>
-			<p className={`text-3xl font-semibold leading-none tabular-nums ${tone}`}>{n}</p>
+			<p className={`text-xl lg:text-3xl md:font-semibold leading-none tabular-nums ${tone}`}>{n}</p>
 			<p
 				className={`font-mono text-[11px] mt-1 ${isPast ? 'text-danger/60' : 'text-white/30'}`}
 			>
@@ -88,7 +88,7 @@ function DatedRow({ item }) {
 		>
 			<div className='flex items-center gap-3 min-w-0'>
 				{item.kind === 'milestone' ? (
-					<TbStarFilled className={`text-base shrink-0 ${starTone}`} />
+					<TbStarFilled className={`text-sm md:text-base shrink-0 ${starTone}`} />
 				) : (
 					<span className={`w-1.5 h-1.5 rounded-full shrink-0 ${dotTone}`} />
 				)}
@@ -98,7 +98,7 @@ function DatedRow({ item }) {
 						<span className='text-white/20'> · </span>
 						{item.projectName}
 					</span>
-					<span className='text-base font-medium text-white leading-tight truncate'>
+					<span className='text-sm md:text-base md:font-medium text-white leading-tight truncate'>
 						{item.title}
 					</span>
 				</div>
