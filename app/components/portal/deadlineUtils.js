@@ -1,6 +1,10 @@
-export function getDeadlineStatus(dateStr) {
+export function parseLocalDate(dateStr) {
 	const [year, month, day] = dateStr.split('-').map(Number);
-	const date = new Date(year, month - 1, day);
+	return new Date(year, month - 1, day);
+}
+
+export function getDeadlineStatus(dateStr) {
+	const date = parseLocalDate(dateStr);
 
 	const now = new Date();
 	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());

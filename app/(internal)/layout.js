@@ -1,22 +1,30 @@
 import { signOut } from '@/auth';
 import InternalNav from '@/app/components/portal/InternalNav';
 import StudioLink from '@/app/components/portal/StudioLink';
+import ClientSwitcher from '@/app/components/portal/ClientSwitcher';
 import Link from 'next/link';
+import { fetchContent as f } from '@/app/utils/cms/fetchContent';
+import { FETCH_CLIENTS_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENTS_QUERY';
 
-export default function InternalLayout({ children }) {
+export default async function InternalLayout({ children }) {
+	const clients = await f(Q);
+
 	return (
 		<>
 			<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
 				<div className='max-w-360 mx-auto px-3 lg:px-6 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
-					{/* mobile: title + New Client on one row · desktop: title only */}
+					{/* mobile: title + Clients + New Client on one row · desktop: title + Clients only */}
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
 						<Link href='/dashboard'>
 							<p className='text-white/60 text-sm tracking-wider font-semibold'>
 								Latz Web Development
 							</p>
 						</Link>
-						<div className='flex items-center gap-2 lg:hidden'>
-							<StudioLink type='project' />
+						<div className='flex items-center gap-2'>
+							<ClientSwitcher clients={clients} />
+							<div className='flex items-center gap-2 lg:hidden'>
+								<StudioLink type='project' />
+							</div>
 						</div>
 					</div>
 

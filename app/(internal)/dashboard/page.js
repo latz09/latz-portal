@@ -5,18 +5,22 @@ import UpcomingDeadlines from '@/app/components/portal/UpcomingDeadlines';
 import PortalFooter from '@/app/components/portal/PortalFooter';
 import ClientList from '@/app/components/dashboard/ClientList';
 import NoteList from '@/app/components/dashboard/NoteList';
+import FocusStrip from '@/app/components/dashboard/FocusStrip';
+import UpcomingLoad from '@/app/components/dashboard/UpcomingLoad';
 
 export default async function Home() {
 	const [clients, notes] = await Promise.all([f(Q), f(NQ)]);
 
 	return (
-		<main className=' max-w-360 mx-auto px-3 lg:px-6 py-3 lg:py-6 2xl:py-12 w-full'>
+		<main className=' max-w-400 mx-auto px-3 lg:px-6 py-3 lg:py-6 2xl:py-12 w-full'>
 			<div className='flex flex-col lg:grid lg:grid-cols-[1fr_380px] lg:gap-12 lg:items-start'>
-				<div className='dash-col-2 order-2 lg:order-1'>
+				<div className='dash-col-2'>
+					<UpcomingLoad clients={clients} />
+					<FocusStrip clients={clients} notes={notes} />
 					<NoteList notes={notes} />
 					<UpcomingDeadlines clients={clients} variant='internal' />
 				</div>
-				<div className='order-1 lg:order-2 mt-0 mb-16 lg:mt-0 lg:mb-0 lg:h-[calc(100vh-75px)] lg:overflow-y-auto lg:sticky lg:top-8 lg:pl-2'>
+				<div className='hidden lg:block lg:h-[calc(100vh-75px)] lg:overflow-y-auto lg:sticky lg:top-8 lg:pl-2'>
 					<div className='dash-col-1'>
 						<ClientList clients={clients} />
 					</div>

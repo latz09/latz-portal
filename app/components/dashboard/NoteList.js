@@ -1,9 +1,7 @@
-// components/dashboard/NoteList.jsx
-
 'use client';
 
 import { useState } from 'react';
-import { TbChevronDown, TbPlus, TbPinFilled } from 'react-icons/tb';
+import { TbChevronDown, TbPlus } from 'react-icons/tb';
 import NoteCard from './NoteCard';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -79,31 +77,6 @@ function ExpandToggle({ expanded, count, onToggle }) {
 	);
 }
 
-function PinnedSection({ notes, onArchive, onSent, onPinToggle }) {
-	if (!notes.length) return null;
-
-	return (
-		<div className='mb-10'>
-			<div className='mb-3'>
-				<SectionLabel icon={TbPinFilled} tone='text-warning/70'>
-					Pinned
-				</SectionLabel>
-			</div>
-			<div className='grid sm:grid-cols-2 gap-3'>
-				{notes.map((note) => (
-					<NoteCard
-						key={note._id}
-						note={note}
-						onArchive={onArchive}
-						onSent={onSent}
-						onPinToggle={onPinToggle}
-					/>
-				))}
-			</div>
-		</div>
-	);
-}
-
 function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 	const [open, setOpen] = useState(false);
 	const [sorted, setSorted] = useState([]);
@@ -153,7 +126,7 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 			</button>
 
 			{open && (
-				<div className='grid sm:grid-cols-2 gap-3'>
+				<div className='grid sm:grid-cols-2 gap-3 lg:gap-5'>
 					{sorted.map((note) => (
 						<NoteCard
 							key={note._id}
@@ -197,8 +170,7 @@ export default function NoteList({ notes: initialNotes = [] }) {
 		);
 	}
 
-	// Split into three groups
-	const pinned = notes.filter((n) => n.pinned);
+	// Pinned notes now live in the Focus Strip — this list is everything else.
 	const active = notes.filter(
 		(n) => !n.pinned && !(n.type === 'email' && n.sentAt),
 	);
@@ -222,15 +194,8 @@ export default function NoteList({ notes: initialNotes = [] }) {
 		<div className='mb-12 max-w-7xl mx-auto'>
 			<NoteListHeader onAdd={handleAddNote} />
 
-			<PinnedSection
-				notes={pinned}
-				onArchive={handleArchive}
-				onSent={handleSent}
-				onPinToggle={handlePinToggle}
-			/>
-
 			{active.length > 0 && (
-				<div className='grid sm:grid-cols-2 gap-3'>
+				<div className='grid sm:grid-cols-2 gap-3 lg:gap-5'>
 					{visible.map((note) => (
 						<NoteCard
 							key={note._id}

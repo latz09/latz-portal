@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
 export default function Card({href, onMouseEnter, selected, children, className = ''}) {
-  const base = 'block rounded-xl border px-6 py-4 transition-colors'
+  const base = 'block rounded-r border-l border-white/20  px-6 py-4 font-mono transition-colors'
   const state = selected
-    ? 'bg-white/10 border-white/30'
-    : 'bg-white/5 hover:bg-white/10 border-white/10'
+    ? 'bg-white/10 shadow-white border-teal opacity-100 '
+    : 'bg-white/0 hover:bg-white/10 md:opacity-70 hover:opacity-100  '
 
   if (href) {
     return (

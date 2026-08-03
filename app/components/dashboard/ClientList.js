@@ -1,53 +1,37 @@
 'use client';
 
 import { useState } from 'react';
-import { TbChevronDown, TbStarFilled } from 'react-icons/tb';
+import { TbChevronDown } from 'react-icons/tb';
 import Card from '../ui/Card';
 import { getDeadlineStatus } from '../portal/deadlineUtils';
+import { getClientHref } from '@/app/utils/clientLinks';
 
+// Still used for sort order only — soonest-due project surfaces first,
+// since that's the one most likely to be the next one you open. Focus Strip
+// is where the actual date/waiting details live.
 function getNextMilestone(client) {
 	let next = null;
 
-	const consider = (item, isMilestone) => {
+	const consider = (item) => {
 		const status = getDeadlineStatus(item.date);
 		if (!(status.isPast || status.isUpcoming)) return;
-		// Reuse the already-safely-parsed local date from getDeadlineStatus
-		// instead of re-parsing the raw string with `new Date(d.date)` —
-		// that constructor treats "YYYY-MM-DD" as UTC midnight, which
-		// shifts a full day earlier once converted back to local time.
 		if (!next || status.date < next.date) {
-			next = { ...item, date: status.date, isMilestone };
+			next = { date: status.date };
 		}
 	};
 
 	client.projects?.forEach((project) => {
 		project.deadlines?.forEach((d) => {
 			if (d.completed) return;
-			consider(d, false);
+			consider(d);
 		});
-		// journey milestones — skip waiting ones; they're delivered and sitting
-		// with the client, so they surface on their own line, not as a due date.
 		project.journeyMilestones?.forEach((m) => {
 			if (m.status === 'waiting') return;
-			consider(m, true);
+			consider(m);
 		});
 	});
 
 	return next;
-}
-
-// Milestones parked in "waiting" across a client's projects — delivered,
-// awaiting the client. Surfaced as a small line rather than a fake due date.
-function getWaitingMilestones(client) {
-	const waiting = [];
-	client.projects?.forEach((project) => {
-		project.journeyMilestones?.forEach((m) => {
-			if (m.status === 'waiting') {
-				waiting.push({ title: m.title, waitingOn: m.waitingOn || null });
-			}
-		});
-	});
-	return waiting;
 }
 
 // Soonest due date first. Clients with no upcoming milestone at all sink
@@ -62,48 +46,10 @@ function sortByNextMilestone(clients) {
 		return aNext.date - bNext.date;
 	});
 }
+
 function ClientCard({ client }) {
-	const next = getNextMilestone(client);
-	const nextDate = next?.date ?? null;
-	const waiting = getWaitingMilestones(client);
-
 	return (
-		<Card
-			href={`/clients/${client.slug}`}
-			className='flex flex-col gap-1 h-full'
-		>
-			{next && (
-				<div className='flex items-center gap-3 pb-3 mb-2 border-b border-white/10'>
-					<div className='flex flex-col items-center justify-center leading-none shrink-0 w-10 h-10 rounded bg-warning/10 border border-warning/20'>
-						<span className='font-mono text-[9px] text-warning uppercase tracking-wide'>
-							{nextDate.toLocaleDateString('en-US', { month: 'short' })}
-						</span>
-						<span className='font-mono text-base font-semibold text-white mt-0.5'>
-							{nextDate.getDate()}
-						</span>
-					</div>
-					<span className='font-mono text-xs lg:text-sm text-white/60 line-clamp-2 flex items-center gap-1.5'>
-						{next.isMilestone && (
-							<TbStarFilled className='text-warning text-[11px] shrink-0' />
-						)}
-						{next.title}
-					</span>
-				</div>
-			)}
-
-			{waiting.length > 0 && (
-				<div className='flex items-center gap-1.5 font-mono text-[11px] text-warning/70 mb-2 min-w-0'>
-					<span className='shrink-0'>⏳</span>
-					<span className='truncate'>
-						{waiting[0].title}
-						{waiting[0].waitingOn ? ` · waiting on ${waiting[0].waitingOn}` : ' · waiting'}
-						{waiting.length > 1 && (
-							<span className='text-white/30'> +{waiting.length - 1}</span>
-						)}
-					</span>
-				</div>
-			)}
-
+		<Card href={getClientHref(client)} className='flex flex-col gap-1'>
 			<h3 className='font-medium text-lg text-white'>{client.name}</h3>
 			<span className='font-mono text-sm text-teal'>
 				{client.activeProjects} active · {client.totalProjects} total
@@ -112,86 +58,12 @@ function ClientCard({ client }) {
 	);
 }
 
-function CollapsibleSection({ label, clients, defaultOpen = false }) {
-	const [open, setOpen] = useState(defaultOpen);
-
-	return (
-		<div>
-			<button
-				onClick={() => setOpen(!open)}
-				className='flex items-center ml-3 justify-start lg:justify-center gap-2 w-full mb-3 group'
-			>
-				<span className='font-mono text-xs text-warning tracking-widest uppercase'>
-					{label}
-				</span>
-				<span className='font-mono text-sm text-white/40'>
-					{clients.length}
-				</span>
-				<TbChevronDown
-					className={`text-white transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-				/>
-			</button>
-			{open && (
-				<div className='flex flex-col gap-3'>
-					{clients.map((client) => (
-						<ClientCard key={client.slug} client={client} />
-					))}
-				</div>
-			)}
-		</div>
-	);
-}
-
-function StatusTabs({ onHold, leads, onIce }) {
-	const [activeTab, setActiveTab] = useState(null);
-
-	if (!onHold.length && !leads.length && !onIce.length) return null;
-
-	const tabs = [];
-	if (onHold.length)
-		tabs.push({ key: 'onHold', label: 'On Hold', clients: onHold });
-	if (leads.length) tabs.push({ key: 'leads', label: 'Leads', clients: leads });
-	if (onIce.length)
-		tabs.push({ key: 'onIce', label: 'Lost', clients: onIce });
-
-	const activeClients = tabs.find((t) => t.key === activeTab)?.clients || [];
-
-	return (
-		<div>
-			<div className='flex items-center justify-evenly'>
-				{tabs.map((tab) => (
-					<button
-						key={tab.key}
-						onClick={() => setActiveTab(activeTab === tab.key ? null : tab.key)}
-						className={`font-mono text-xs tracking-widest uppercase px-4 py-2 rounded-t transition-colors ${
-							activeTab === tab.key
-								? 'bg-white/5 text-warning border border-white/10 border-b-0'
-								: 'text-white/70 hover:text-white/60 border border-warning/10'
-						}`}
-					>
-						{tab.label}
-						<span className='ml-2 text-sm'>{tab.clients.length}</span>
-					</button>
-				))}
-			</div>
-
-			{activeTab && (
-				<div className='flex flex-col gap-3 bg-white/5 border border-white/10 rounded-b rounded-tr p-4 mt-2'>
-					{activeClients.map((client) => (
-						<ClientCard key={client.slug} client={client} />
-					))}
-				</div>
-			)}
-		</div>
-	);
-}
-
 function ViewDropdown({ groups, current, onSelect }) {
 	const [open, setOpen] = useState(false);
 
 	return (
 		<div className='relative mb-4'>
-		<button
+			<button
 				onClick={() => setOpen((o) => !o)}
 				className='flex items-center justify-between w-1/2  md:w-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-5 py-3 group transition-colors'
 			>
@@ -286,8 +158,7 @@ export default function ClientList({ clients }) {
 	].filter((g) => g.clients.length > 0);
 
 	// if the selected group emptied out, fall back to the first available
-	const current =
-		groups.find((g) => g.key === view) || groups[0] || null;
+	const current = groups.find((g) => g.key === view) || groups[0] || null;
 
 	if (!current) return null;
 

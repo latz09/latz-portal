@@ -43,7 +43,12 @@ body {
 }
 .page-enter { animation: page-in 380ms cubic-bezier(0.16, 1, 0.3, 1); }
 
-
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .dash-col-1,
+  .dash-col-2,
+  .drawer-leaving { animation: none; }
+}
 /* ── dashboard: staggered columns ───────────────── */
 
 @keyframes dash-in {
@@ -70,8 +75,14 @@ body {
   from { opacity: 1; transform: translateY(0); }
   to   { opacity: 0; transform: translateY(-14px); }
 }
+
 .overlay-leaving { animation: overlay-out 260ms cubic-bezier(0.4, 0, 1, 1) forwards; }
 
+@keyframes drawer-out {
+	from { opacity: 1; transform: translateX(0); }
+	to   { opacity: 0; transform: translateX(24px); }
+}
+.drawer-leaving { animation: drawer-out 260ms cubic-bezier(0.4, 0, 1, 1) forwards; }
 
 @keyframes load-sweep {
   0%   { transform: translateX(-100%); }

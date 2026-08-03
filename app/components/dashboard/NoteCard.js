@@ -208,7 +208,7 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 					<TypeIcon className={`text-xs ${color}`} />
 					{note.type}
 				</span>
-				<span className='text-sm font-medium text-white leading-tight'>
+				<span className='mt-3 text-sm lg:text-base font-mono font-medium text-white '>
 					{note.title}
 				</span>
 			</div>
@@ -217,7 +217,7 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
 					target='_blank'
 					onClick={(e) => e.stopPropagation()}
-					className='hidden sm:block text-white/20 hover:text-warning transition-colors p-2'
+					className='hidden sm:block text-white/70 hover:text-warning transition-colors p-2'
 				>
 					<TbEdit className='text-base' />
 				</a>
@@ -280,7 +280,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm text-white/65 max-w-none wrap-break-word ${
+			className={`text-sm lg:text-base  text-white/75 max-w-none wrap-break-word ${
 				open ? '' : 'line-clamp-2'
 			}`}
 		>
@@ -420,10 +420,10 @@ export default function NoteCard({
 	// the state signal itself lives in the footer, so seven overdue cards
 	// don't turn the section into a wall of red.
 	const surface = pinned
-		? 'bg-white/[0.06] border-warning/25 shadow-lg shadow-black/30'
+		? 'bg-warning/5 border-warning/75 shadow-lg shadow-black/30'
 		: overdue
-			? 'bg-white/[0.03] border-danger/25'
-			: 'bg-white/[0.03] border-white/[0.08]';
+			? 'bg-danger/10 border-danger'
+			: 'bg-white/[0.0] border-white/40';
 
 	return (
 		<>
@@ -436,7 +436,7 @@ export default function NoteCard({
 				/>
 			)}
 			<div
-				className={`flex flex-col min-w-0 h-full border rounded-xl px-4 py-3.5 gap-2.5 cursor-pointer transition-colors hover:bg-white/[0.07] ${surface}`}
+				className={`flex flex-col min-w-0 h-full border rounded-sm px-3 lg:px-6 py-7 lg:py-10 gap-2.5 cursor-pointer transition-colors hover:bg-white/[0.07] ${surface}`}
 				onClick={() => setOpen(!open)}
 			>
 				<NoteHeader
