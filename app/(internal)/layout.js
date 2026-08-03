@@ -16,15 +16,15 @@ export default async function InternalLayout({ children }) {
 					{/* mobile: title + Clients + New Client on one row · desktop: title + Clients only */}
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
 						<Link href='/dashboard'>
-							<p className='text-white/60 text-sm tracking-wider font-semibold'>
+							<p className='text-white/60 text-xs lg:text-sm tracking-wider font-semibold'>
 								Latz Web Development
 							</p>
 						</Link>
 						<div className='flex items-center gap-2'>
-							<ClientSwitcher clients={clients} />
 							<div className='flex items-center gap-2 lg:hidden'>
 								<StudioLink type='project' />
 							</div>
+							<ClientSwitcher clients={clients} />
 						</div>
 					</div>
 

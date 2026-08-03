@@ -42,10 +42,10 @@ export default function ClientSwitcher({ clients }) {
 		if (e.target.closest('a')) setLeaving(true);
 	}
 
-	// Dashboard already has the full ClientList in its own sidebar (desktop)
-	// — no need for a second way to reach the same list on that one page.
-	// Hooks above still run every render either way; only the output bails.
-	if (pathname === '/dashboard') return null;
+	// Dashboard has its own ClientList sidebar on desktop, so the trigger
+	// hides there at the lg breakpoint — but mobile dropped that sidebar
+	// entirely, so it needs to stay reachable below lg on this one page.
+	const isDashboard = pathname === '/dashboard';
 
 	const drawer = (
 		<div
@@ -85,7 +85,9 @@ export default function ClientSwitcher({ clients }) {
 		<>
 			<button
 				onClick={() => setOpen(true)}
-				className='flex items-center gap-1.5 font-mono text-xs px-4 py-2 rounded-full bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/70 transition-colors shrink-0'
+				className={`items-center gap-1.5 font-mono text-xs px-4 py-2 rounded-full bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/70 transition-colors shrink-0 ${
+					isDashboard ? 'flex lg:hidden' : 'flex'
+				}`}
 			>
 				<TbUsers className='text-sm' />
 				Clients
