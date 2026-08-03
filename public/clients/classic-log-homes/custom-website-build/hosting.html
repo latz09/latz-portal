@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Hosting Handoff — Classic Log Homes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1E1E1E;
+    --bg-raised: #262521;
+    --cream: #FFF8E3;
+    --cream-muted: rgba(255,248,227,0.62);
+    --cream-faint: rgba(255,248,227,0.30);
+    --gold: #CFA240;
+    --gold-dim: rgba(207,162,64,0.14);
+    --dark-gold: #704D02;
+    --dark-gold-dim: rgba(112,77,2,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: relative;
+    padding: 64px 0 40px;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -140px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(207,162,64,0.10);
+    pointer-events: none;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(207,162,64,0.14);
+    pointer-events: none;
+  }
+
+  .overline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    max-width: 480px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .sub {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--cream-muted);
+    max-width: 440px;
+    position: relative;
+  }
+
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(207,162,64,0.20);
+    position: relative;
+  }
+
+  .meta-item .label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    margin-bottom: 4px;
+  }
+
+  .meta-item .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .meta-item .value.gold { color: var(--gold); }
+
+  /* ── WHY THIS CALLOUT ── */
+  .why-box {
+    background: var(--bg-raised);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 8px 0 44px;
+  }
+
+  .why-box strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .why-box p {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: var(--cream-muted);
+  }
+
+  /* ── STEPS ── */
+  .steps { margin-bottom: 40px; }
+
+  .step {
+    position: relative;
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 32px 28px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .step-num {
+    position: absolute;
+    top: -18px;
+    right: 6px;
+    font-size: 110px;
+    font-weight: 800;
+    color: var(--dark-gold);
+    opacity: 0.09;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .step-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dark-gold);
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .step h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1E1E1E;
+    margin-bottom: 10px;
+    position: relative;
+    max-width: 380px;
+  }
+
+  .step p {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: #4a4436;
+    max-width: 400px;
+    position: relative;
+    margin-bottom: 18px;
+  }
+
+  .step p:last-of-type { margin-bottom: 0; }
+
+  /* mockup UI illustrations */
+  .mockup {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid rgba(112,77,2,0.18);
+    border-radius: 8px;
+    padding: 16px 18px;
+    max-width: 400px;
+    margin-top: 18px;
+  }
+
+  .mockup-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mockup-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1E1E1E;
+  }
+
+  .mockup-sub {
+    font-size: 11px;
+    color: #8a8270;
+    margin-top: 2px;
+  }
+
+  .mockup-btn {
+    display: inline-block;
+    background: #1E1E1E;
+    color: var(--cream);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+
+  .mockup-input {
+    background: #f4f0e2;
+    border: 1px dashed rgba(112,77,2,0.35);
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #8a8270;
+    margin-top: 10px;
+  }
+
+  .mockup-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dark-gold);
+    background: var(--dark-gold-dim);
+    border: 1px solid rgba(112,77,2,0.30);
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  /* ── CLOSING HIGHLIGHT ── */
+  .closing {
+    background: var(--bg-raised);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+
+  .closing strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .closing p {
+    font-size: 14.5px;
+    color: var(--cream-muted);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid rgba(207,162,64,0.16);
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--cream-muted);
+  }
+
+  .footer .contact-line {
+    margin-bottom: 4px;
+  }
+
+  .footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer .tagline {
+    margin-top: 16px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+  }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 29px; }
+    .header { padding: 44px 0 32px; }
+    .step { padding: 26px 20px; }
+    .step-num { font-size: 80px; }
+    .meta-strip { gap: 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="overline">Hosting Handoff · Classic Log Homes</div>
+    <h1>Time to take the wheel on hosting</h1>
+    <div class="sub">One last step before classicloghomes.biz is fully live — a few minutes, and hosting runs on your account, not mine.</div>
+
+    <div class="meta-strip">
+      <div class="meta-item">
+        <div class="label">Domain</div>
+        <div class="value gold">classicloghomes.biz</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Status</div>
+        <div class="value">DNS Propagating — final step</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Time Needed</div>
+        <div class="value">About 5 minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY THIS MATTERS -->
+  <div class="why-box">
+    <strong>Why you're doing this</strong>
+    <p>You own this site — that means you own the hosting bill too. No monthly fee to me, ever. Once your card's on file, everything keeps running exactly like it does right now. Nothing changes except who's paying.</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-label">Step One</div>
+      <h3>Accept your invite</h3>
+      <p>Check your email for an invite from Vercel — it'll ask you to join <strong>Classic Log Homes</strong> as a team member. Click through and create a free account (or log in if you've already got one).</p>
+
+      <div class="mockup">
+        <div class="mockup-row">
+          <div>
+            <div class="mockup-label">Join Classic Log Homes on Vercel</div>
+            <div class="mockup-sub">Invite from jordan@latzwebdesign.com</div>
+          </div>
+          <span class="mockup-btn">Join Team</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-label">Step Two</div>
+      <h3>Add your card</h3>
+      <p>Once you're in, head to <strong>Settings → Billing → Add Card</strong>. Enter your card info — this is what covers hosting going forward.</p>
+
+      <div class="mockup">
+        <div class="mockup-row">
+          <div class="mockup-label">Settings &nbsp;→&nbsp; Billing</div>
+          <span class="mockup-btn">Add Card</span>
+        </div>
+        <div class="mockup-input">Card number · MM/YY · CVC</div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-label">Step Three</div>
+      <h3>Set it as default</h3>
+      <p>Make sure your new card is marked as the default payment method. That's what tells Vercel to bill you instead of me.</p>
+
+      <div class="mockup">
+        <div class="mockup-row">
+          <div class="mockup-label">Visa •••• 1767</div>
+          <span class="mockup-badge">Default</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <strong>That's it — you're done.</strong>
+    <p>Once your card's active, hosting is fully yours. No middleman, no surprise invoices, and you can update or cancel it any time — it's your account, outright.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="contact-line">Any questions, text or email me directly — <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></div>
+    <div class="contact-line">Jordan Latz · Latz Web Design</div>
+    <div class="tagline">No fluff. Just results.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
