@@ -33,8 +33,11 @@ function keyOf(client, project) {
 
 // ─── Item-level: overdue / due-soon / later — one row per dated thing ──────
 // Waiting milestones are excluded entirely — a milestone in "waiting" has
-// already left your hands, so a passed due date there means "sent on time,
-// now sitting with someone else," not overdue. That's the Waiting section.
+// already left your hands. That's the Waiting section, not this one.
+//
+// isDesigner: milestones read the catalog's assignedTo field; deadlines
+// (which have no catalog link) read the existing audience tag instead —
+// same signal capacityUtils.js already uses for Upcoming Load.
 
 function buildItemSignals(client, project) {
 	const overdue = [];
@@ -52,10 +55,18 @@ function buildItemSignals(client, project) {
 	const dated = [
 		...(project.deadlines || [])
 			.filter((d) => !d.completed && d.date)
-			.map((d) => ({ ...d, isMilestone: false })),
+			.map((d) => ({
+				...d,
+				isMilestone: false,
+				isDesigner: (d.audience || []).includes('designer'),
+			})),
 		...(project.journeyMilestonesAll || [])
 			.filter((m) => m.status !== 'done' && m.status !== 'waiting' && m.date)
-			.map((m) => ({ ...m, isMilestone: true })),
+			.map((m) => ({
+				...m,
+				isMilestone: true,
+				isDesigner: m.assignedTo === 'designer',
+			})),
 	];
 
 	dated.forEach((d) => {
@@ -69,6 +80,7 @@ function buildItemSignals(client, project) {
 			daysUntil: status.daysUntil,
 			isToday: status.isToday,
 			isPast: status.isPast,
+			isDesigner: d.isDesigner,
 			href,
 			...base,
 		};

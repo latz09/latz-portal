@@ -1,19 +1,7 @@
 import { parseLocalDate } from '@/app/components/portal/deadlineUtils';
 
-// Design-phase milestones classify as designer load. Everything else
-// (including deadlines without a 'designer' audience tag) counts as yours.
-const DESIGN_GEN_IDS = [
-	'73f5cfe6-b04d-45b8-ac60-7f6af5e31d13', // Design Sync
-	'213e1ddb-cdf8-4f31-b4e0-7ee49c9ce286', // Design Direction
-	'50fba12e-758c-4c7e-97d7-71108528f99a', // Full Design
-];
-
 const MIN_WEEKS = 8;
 const MAX_WEEKS = 16;
-
-function hasGenerator(step, ids) {
-	return (step.generatorRefs || []).some((r) => ids.includes(r));
-}
 
 function mondayOf(date) {
 	const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -46,6 +34,10 @@ function rangeLabel(start, end) {
 // buckets it into Monday-anchored weeks. Anything already overdue folds
 // into the current week's bucket instead of vanishing off the front —
 // it's still real load sitting on you right now.
+//
+// isDesigner reads the same catalog assignedTo field Focus Strip uses —
+// one flag, tagged once per catalog entry, instead of a hardcoded ID list
+// that silently misses any new/duplicated design-phase step you create.
 export function buildWeeklyLoad(clients) {
 	const today = new Date();
 	const thisMonday = mondayOf(today);
@@ -75,7 +67,7 @@ export function buildWeeklyLoad(clients) {
 					rawItems.push({
 						date: parseLocalDate(m.date),
 						title: m.title,
-						isDesigner: hasGenerator(m, DESIGN_GEN_IDS),
+						isDesigner: m.assignedTo === 'designer',
 						clientName: client.name,
 						projectName: project.name,
 						href: `/clients/${client.slug}/${project.slug}/journey`,

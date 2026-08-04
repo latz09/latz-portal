@@ -49,6 +49,7 @@ export const FETCH_CLIENTS_QUERY = `
         enteredWaitingAt,
         "title": generators[0]->title,
         "phase": generators[0]->phase,
+        "assignedTo": generators[0]->assignedTo,
         "generatorRefs": generators[]._ref
       }
     }
