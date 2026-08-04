@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Music Therapy Services of Central WI — Call Prep | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0F14; --surface:#141A2B; --surface-2:#141A2B;
+    --border:rgba(255,255,255,0.08); --border-soft:rgba(255,255,255,0.06); --border-strong:rgba(255,255,255,0.18);
+    --ink:rgba(255,255,255,0.95); --ink-2:rgba(255,255,255,0.70); --ink-3:rgba(255,255,255,0.46); --ink-4:rgba(255,255,255,0.30);
+    --teal:#1E8A94; --teal-dim:rgba(30,138,148,0.16); --teal-line:rgba(30,138,148,0.45);
+    --purple:#8B7FCF; --purple-dim:rgba(139,127,207,0.16); --purple-line:rgba(139,127,207,0.42);
+    --warning:#C9A227; --warning-dim:rgba(201,162,39,0.14); --warning-line:rgba(201,162,39,0.42);
+    --danger:#B3524A; --danger-dim:rgba(179,82,74,0.14); --danger-line:rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink-2);
+    line-height:1.55; padding-bottom:100px; -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'DM Mono',monospace;}
+  .wrap{max-width:1800px; margin:0 auto; padding:0 32px;}
+
+  /* HEADER */
+  header.top{
+    background:var(--bg); padding:56px 0 30px; margin-bottom:36px;
+    border-bottom:1px solid var(--border); position:relative; overflow:hidden;
+  }
+  header.top::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 900px 500px at 78% 0%, rgba(30,138,148,0.20) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  header.top .wrap{position:relative; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px;}
+  .top-label{
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--teal);
+    margin-bottom:16px; display:flex; align-items:center; gap:10px;
+  }
+  .top-label::before{content:''; display:inline-block; width:20px; height:1px; background:var(--teal); opacity:0.7;}
+  .top-title{font-family:'DM Sans',sans-serif; font-weight:700; font-size:33px; color:var(--ink); letter-spacing:-0.02em; line-height:1.15;}
+  .top-sub{color:var(--ink-3); font-size:13.5px; margin-top:10px; font-weight:300;}
+  .call-badge{
+    font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+    background:var(--warning-dim); border:1px solid var(--warning-line); color:var(--warning);
+    padding:9px 16px; border-radius:7px; white-space:nowrap; font-weight:500;
+  }
+  .meta-strip{position:relative; display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--border); border-radius:9px; overflow:hidden; margin-top:26px; background:rgba(255,255,255,0.015);}
+  .meta-item{flex:1; min-width:150px; padding:14px 18px; border-right:1px solid var(--border-soft);}
+  .meta-item:last-child{border-right:none;}
+  .meta-label{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); margin-bottom:6px;}
+  .meta-value{font-size:14px; color:var(--ink); font-weight:500;}
+  .meta-value.warn{color:var(--warning);}
+  .meta-value.ok{color:var(--teal);}
+
+  /* SECTION HEADER */
+  .sec-head{display:flex; align-items:center; gap:13px; margin:88px 0 22px;}
+  .sec-num{font-family:'DM Mono',monospace; font-size:11px; background:var(--teal-dim); color:var(--teal); border:1px solid var(--teal-line); border-radius:5px; padding:4px 10px; font-weight:500;}
+  .sec-title{font-family:'DM Sans',sans-serif; font-size:20px; font-weight:700; color:var(--ink); letter-spacing:-0.01em;}
+  .sec-divider{border-top:1px solid var(--border); margin-top:16px;}
+
+  /* BOTTOM LINE */
+  .bottomline{
+    background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:26px 28px; position:relative;
+    border-left:3px solid var(--teal); margin-bottom:8px;
+  }
+  .bottomline .lbl{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin-bottom:10px;}
+  .bottomline p{font-size:18px; font-weight:300; line-height:1.55; color:var(--ink-2);}
+  .bottomline b{font-weight:600; color:var(--ink);}
+
+  /* GRID */
+  .grid{display:grid; grid-template-columns:1fr; gap:16px;}
+  @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1200px){.grid.cols-3{grid-template-columns:1fr 1fr 1fr;}}
+
+  /* CARD */
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 22px; box-shadow:var(--shadow);}
+  .card-title{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); border-bottom:1px solid var(--border-soft); padding-bottom:10px; margin-bottom:14px;}
+  .row{display:grid; grid-template-columns:110px 1fr; gap:8px; font-size:14px; padding:6px 0;}
+  .row .l{font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-4);}
+  .row .v{color:var(--ink-2); font-weight:500;}
+  ul.bullets{list-style:none; padding:0;}
+  ul.bullets li{font-size:14px; padding:4px 0 4px 16px; position:relative; color:var(--ink-2);}
+  ul.bullets li:before{content:"–"; position:absolute; left:0; color:var(--ink-4);}
+
+  /* ALERT CARD (danger) */
+  .card.alert{background:var(--danger-dim); border-color:var(--danger-line);}
+  .card.alert .card-title{color:var(--danger); border-bottom-color:var(--danger-line);}
+  .card.alert p{font-size:14px; color:rgba(255,255,255,0.78);}
+  .card.alert b{color:#e0a9a4;}
+
+  /* PRICING LADDER */
+  .ladder{display:flex; flex-direction:column; gap:10px;}
+  .ladder .step{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;}
+  .ladder .step .name{font-weight:600; color:var(--ink); font-size:15px;}
+  .ladder .step .desc{font-size:13px; color:var(--ink-3); margin-top:4px; line-height:1.5;}
+  .ladder .step .amt{font-family:'DM Mono',monospace; font-size:14px; color:var(--ink-2); white-space:nowrap;}
+  .ladder .step.base{border-left:3px solid var(--teal); background:linear-gradient(90deg, var(--teal-dim), var(--surface) 40%);}
+  .ladder .step.base .amt{color:var(--teal); font-weight:600;}
+  .ladder .step.lever{border-left:3px solid var(--purple);}
+  .ladder .step.lever .amt{color:var(--purple);}
+
+  /* PILLS */
+  .pill{display:inline-block; font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.05em; border-radius:4px; padding:3px 8px; border:1px solid; margin-left:8px;}
+  .pill.orange{color:var(--purple); border-color:var(--purple-line); background:var(--purple-dim);}
+  .pill.teal{color:var(--purple); border-color:var(--purple-line); background:var(--purple-dim);}
+  .pill.gray{color:var(--ink-3); border-color:var(--border); background:var(--surface-2);}
+
+  /* SCENARIO CARDS */
+  .filter-bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
+  .filter-btn{font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:8px 16px; border-radius:7px; border:1px solid var(--border); background:var(--surface); color:var(--ink-3); cursor:pointer; transition:all .15s;}
+  .filter-btn:hover{border-color:var(--border-strong); color:var(--ink-2);}
+  .filter-btn.active{background:var(--teal); color:#ffffff; border-color:var(--teal); font-weight:500;}
+  .scenario{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px 20px; cursor:pointer; transition:box-shadow .15s, transform .1s, border-color .15s; position:relative;}
+  .scenario:hover{box-shadow:0 8px 28px rgba(0,0,0,0.5); transform:translateY(-2px); border-color:var(--border-strong);}
+  .scenario .cat-tag{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; display:inline-block; padding:3px 9px; border-radius:4px; border:1px solid;}
+  .scenario .cat-tag.pricing{background:var(--warning-dim); color:var(--warning); border-color:var(--warning-line);}
+  .scenario .cat-tag.scope{background:var(--teal-dim); color:var(--teal); border-color:var(--teal-line);}
+  .scenario .cat-tag.process{background:rgba(255,255,255,0.05); color:var(--ink-3); border-color:var(--border-strong);}
+  .scenario .cat-tag.technical{background:var(--purple-dim); color:var(--purple); border-color:var(--purple-line);}
+  .scenario .trigger{font-family:'DM Sans',sans-serif; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:10px; padding-right:24px; line-height:1.35; letter-spacing:-0.01em;}
+  .scenario .click-icon{position:absolute; top:18px; right:18px; color:var(--ink-4); font-size:13px;}
+  .scenario ul.bullets li{font-size:14px;}
+
+  /* SEED PLANTS */
+  .seed{background:var(--teal-dim); border:1px solid var(--teal-line); border-radius:8px; padding:13px 17px; font-size:14px; color:var(--ink-2); display:flex; gap:10px; align-items:flex-start;}
+  .seed .ic{flex-shrink:0;}
+  .seed b{color:var(--ink);}
+
+  /* CHECKLIST */
+  .checklist{display:flex; flex-direction:column; gap:0;}
+  .chk-item{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--border-soft);}
+  .chk-item:last-child{border-bottom:none;}
+  .chk-box{width:18px; height:18px; border:2px solid var(--ink-4); border-radius:4px; flex-shrink:0; margin-top:2px;}
+  .chk-text b{color:var(--ink); font-weight:600;}
+  .chk-text{font-size:14px; color:var(--ink-2);}
+
+  /* SCRIPTS (collapsible) */
+  details.script-block{background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+  details.script-block + details.script-block{margin-top:12px;}
+  details.script-block summary{
+    list-style:none; cursor:pointer; padding:18px 20px; display:flex; align-items:center;
+    justify-content:space-between; gap:12px; font-weight:600; color:var(--ink); font-size:15px;
+  }
+  details.script-block summary:hover{background:rgba(255,255,255,0.02);}
+  details.script-block summary::-webkit-details-marker{display:none;}
+  details.script-block summary .tag{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; padding:4px 10px; border-radius:5px; margin-right:12px; border:1px solid;}
+  details.script-block summary .tag.answer{background:var(--teal-dim); color:var(--teal); border-color:var(--teal-line);}
+  details.script-block summary .tag.voicemail{background:var(--warning-dim); color:var(--warning); border-color:var(--warning-line);}
+  details.script-block summary .chev{color:var(--ink-4); font-size:13px; transition:transform .15s; flex-shrink:0;}
+  details.script-block[open] summary .chev{transform:rotate(90deg); color:var(--teal);}
+  details.script-block .script-body{padding:0 20px 22px; font-size:16px; line-height:1.75; color:var(--ink-2); white-space:pre-line; border-top:1px solid var(--border-soft); padding-top:18px;}
+  details.script-block .script-body b{color:var(--ink);}
+
+  /* MODAL */
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); backdrop-filter:blur(3px); z-index:100; align-items:center; justify-content:center; padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--surface-2); border:1px solid var(--border-strong); border-radius:14px; max-width:640px; width:100%; max-height:82vh; overflow-y:auto; padding:34px; position:relative; box-shadow:0 24px 70px rgba(0,0,0,0.65);}
+  .modal-close{position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--border); font-size:16px; color:var(--ink-3); cursor:pointer;}
+  .modal-close:hover{background:rgba(255,255,255,0.1); color:var(--ink);}
+  .modal-cat{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); margin-bottom:12px;}
+  .modal-trigger{font-family:'DM Sans',sans-serif; font-size:21px; font-weight:700; color:var(--ink); margin-bottom:20px; padding-right:30px; line-height:1.35; letter-spacing:-0.01em;}
+  .modal-script{font-size:17px; line-height:1.75; color:var(--ink-2); white-space:pre-line;}
+  .modal-script b{color:var(--ink);}
+
+  @media(max-width:640px){
+    .top-title{font-size:24px;}
+    .wrap{padding:0 18px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div>
+      <div class="top-label">Call Prep · Follow-Up</div>
+      <div class="top-title">Music Therapy Services of Central WI</div>
+      <div class="top-sub">Contact: Elizabeth (Social Media Coordinator) · Decision-Maker: Richelle (Owner)</div>
+    </div>
+    <div class="call-badge">No Reply Since Proposal</div>
+  </div>
+  <div class="wrap">
+    <div class="meta-strip">
+      <div class="meta-item">
+        <div class="meta-label">Proposal Sent</div>
+        <div class="meta-value">Jul 31, 2026</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value warn">Silent — no reply yet</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Quoted</div>
+        <div class="meta-value">Starting at $3,500</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Terms</div>
+        <div class="meta-value">50% start / 50% launch</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Floor</div>
+        <div class="meta-value warn">Not set — see below</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- BOTTOM LINE -->
+  <div class="bottomline">
+    <div class="lbl">Bottom Line</div>
+    <p>This is a <b>warm, low-pressure check-in</b> — not a negotiation. Nobody's said no; four days of quiet from a small clinic mid-week is normal, not a red flag. Goal: find out where Elizabeth and Richelle are stuck, make the add-on decisions easy to carry back, and <b>don't chase a number you haven't decided on yourself yet.</b></p>
+  </div>
+
+  <!-- 01 WHERE THINGS STAND -->
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Where Things Stand</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="grid cols-3" style="margin-top:20px;">
+    <div class="card">
+      <div class="card-title">What They've Seen</div>
+      <div class="row"><span class="l">Jul 28</span><span class="v">Discovery call (~16 min)</span></div>
+      <div class="row"><span class="l">Jul 31</span><span class="v">Wireframe + Proposal sent together</span></div>
+      <div class="row"><span class="l">Wireframe</span><span class="v">6 pages, client-ready, site map + decisions locked</span></div>
+      <div class="row"><span class="l">Proposal</span><span class="v">Starting at $3,500, 4 "Room to Grow" add-ons</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Who You're Talking To</div>
+      <p style="font-size:14px; margin-bottom:8px;">Elizabeth is the <b style="color:var(--ink);">champion, not the decision-maker</b>. She called this a "we" but Richelle owns yes/no on scope + budget.</p>
+      <ul class="bullets">
+        <li>Keep it simple enough for Elizabeth to relay cleanly</li>
+        <li>If she's vague on add-ons, that's likely Richelle hasn't weighed in yet</li>
+        <li>Offer a direct call with Richelle if it'd help — don't force it</li>
+      </ul>
+    </div>
+    <div class="card alert">
+      <div class="card-title">⚠ Not Yet Decided (You)</div>
+      <p style="margin-bottom:8px;"><b>No floor is set for this deal.</b> $3,500 was already the deliberate low-end anchor for a self-identified small budget — there isn't much room to cut the base further without eating margin.</p>
+      <p>If price comes up, the real lever is the <b>add-on tiers</b> below, not a base discount. Decide before the call how far you're willing to flex.</p>
+    </div>
+  </div>
+
+  <!-- 02 PRICING LADDER -->
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Price &amp; Flex Points</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="ladder" style="margin-top:20px;">
+    <div class="step base">
+      <div>
+        <div class="name">Core Build — Locked</div>
+        <div class="desc">6 pages, custom CMS, referral + contact forms, mobile-first &amp; accessible. Already quoted low.</div>
+      </div>
+      <div class="amt">Starting at $3,500</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Careers Depth <span class="pill teal">flex point</span></div>
+        <div class="desc">Simple ("we're hiring" link) → Standard (CMS listings) → Full (on-site applications + resume upload). Pick the tier that fits their comfort, not the priciest one.</div>
+      </div>
+      <div class="amt">TBD by tier</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Services Layout <span class="pill teal">flex point</span></div>
+        <div class="desc">One combined page (included in base feel) vs. dedicated per-service pages. Easy to defer — service list isn't even final yet.</div>
+      </div>
+      <div class="amt">Add-on / deferrable</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Portal API Embed <span class="pill teal">flex point</span></div>
+        <div class="desc">Depends on whether Fusion's API even supports it — genuinely optional, easy to say "let's confirm and revisit."</div>
+      </div>
+      <div class="amt">Add-on / deferrable</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Confirmation Emails <span class="pill teal">flex point</span></div>
+        <div class="desc">Nice-to-have, not core infrastructure. Cheapest thing to drop if they're trying to trim.</div>
+      </div>
+      <div class="amt">Add-on / deferrable</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;" class="seed">
+    <span class="ic">💡</span>
+    <span><b>If pressed for a lower number:</b> don't discount blind. Ask "what were you thinking, budget-wise?" — then show them which add-ons flex before touching the base. The base is already the value play against a $30/mo Turbify site they'll pay forever.</span>
+  </div>
+
+  <!-- 03 SCRIPTS TO OPEN THE CALL -->
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Scripts to Open the Call</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p style="font-size:13px; color:var(--ink-3); margin:12px 0 16px;">Click to expand. Read as a starting point, not word-for-word — get into your own voice fast.</p>
+
+  <details class="script-block">
+    <summary>
+      <span><span class="tag answer">If She Answers</span>Opening Script</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="script-body">"Hey Elizabeth, it's Jordan from Latz Web Design — how's it going?
+
+Hope I'm catching you at an okay time. I sent the proposal and wireframe over on Wednesday and wanted to check in — no pressure at all, just wanted to see where things stand. Did you and Richelle get a chance to look through it?
+
+<b>[If yes, she has thoughts →]</b> let her talk first. Listen for whether it's price, the add-ons, or just "still reviewing." Don't fill the silence — let it land on her side.
+
+<b>[If she hasn't looked / Richelle hasn't seen it yet →]</b> "No worries at all — is there anything I can clarify to make that easier, or would it help if I hopped on a quick call with Richelle directly?"
+
+<b>[If everything's good and she's ready →]</b> "Great — want me to go ahead and get that deposit invoice over to you today?"</div>
+  </details>
+
+  <details class="script-block">
+    <summary>
+      <span><span class="tag voicemail">If No Answer</span>Voicemail Script</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="script-body">"Hey Elizabeth, it's Jordan with Latz Web Design. Just following up on the proposal and wireframe I sent over earlier this week — no rush at all, just wanted to check in and see if you or Richelle had any questions on it.
+
+Happy to hop on a quick call whenever works, or if it's easier, feel free to just call, text, or email me back — whatever's easiest on your end. Talk soon."
+
+<b>Keep it short — under 20 seconds.</b> No price talk, no urgency, no "just checking to see if you're still interested." Same low-pressure tone as the call itself. Follow with a quick text or email nudge if you don't hear back in a few days.</div>
+  </details>
+
+  <!-- 04 ANTICIPATED QUESTIONS -->
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <span class="sec-title">If They Ask You</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p style="font-size:13px; color:var(--ink-3); margin:12px 0 18px;">Click any card for the full script. Categories below — filter or just scan.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="pricing">Pricing</button>
+    <button class="filter-btn" data-filter="scope">Scope &amp; Add-Ons</button>
+    <button class="filter-btn" data-filter="process">Timeline &amp; Process</button>
+    <button class="filter-btn" data-filter="technical">Technical &amp; Migration</button>
+  </div>
+
+  <div class="grid cols-3" id="scenario-grid">
+
+    <div class="scenario" data-cat="pricing" data-modal="m1">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">"Is $3,500 the final number?"</div>
+      <ul class="bullets">
+        <li>Covers the full 6-page core build, locked</li>
+        <li>Final number sets once service list + add-ons chosen</li>
+        <li>No line items sprung on them later</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="pricing" data-modal="m2">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">"That's more than we expected"</div>
+      <ul class="bullets">
+        <li>Acknowledge — don't get defensive</li>
+        <li>Ask what number they had in mind</li>
+        <li>Show add-on tiers flex before touching the base</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="pricing" data-modal="m3">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">"Do we have to decide on the add-ons now?"</div>
+      <ul class="bullets">
+        <li>No — base covers the entire 6-page rebuild</li>
+        <li>Add-ons priced only if/when chosen</li>
+        <li>Can always add post-launch, project-by-project</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="m4">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">"What's the difference in Careers tiers?"</div>
+      <ul class="bullets">
+        <li>Simple: a "we're hiring" post + apply link</li>
+        <li>Standard: CMS-managed listings they update themselves</li>
+        <li>Full: on-site application + resume upload + routing</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="m5">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">"Do we need per-service pages now?"</div>
+      <ul class="bullets">
+        <li>No — service list isn't even final (Richelle's call)</li>
+        <li>Base ships with one clean Services page</li>
+        <li>Dedicated pages are a strong SEO add-on for later</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="m6">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">"Can we get the patient portal embedded?"</div>
+      <ul class="bullets">
+        <li>Depends on whether Fusion's API supports it</li>
+        <li>Confirm before promising — stays a clean link either way</li>
+        <li>Nothing changes for patients regardless</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="m7">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">"How long will this actually take?"</div>
+      <ul class="bullets">
+        <li>Realistic estimate: 5–7 weeks once kicked off</li>
+        <li>Wireframe's done, copy mostly exists, logo/colors in hand</li>
+        <li>Less to build from scratch than most projects start with</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="m8">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">"What happens if we say yes today?"</div>
+      <ul class="bullets">
+        <li>Send 50% deposit invoice same day</li>
+        <li>Kickoff within 24 hours of it clearing</li>
+        <li>1–2 design directions, then a live dev link to watch it build</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="m9">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">"What do you still need from us?"</div>
+      <ul class="bullets">
+        <li>Final service list + page count (Richelle)</li>
+        <li>Turbify cost/contract confirmation</li>
+        <li>Referral form routing, team bios/photos, design inspiration</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="technical" data-modal="m10">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag technical">Technical</span>
+      <div class="trigger">"Will we lose our Google ranking?"</div>
+      <ul class="bullets">
+        <li>No — proper redirects + on-page SEO preserve it</li>
+        <li>They're already targeting Stevens Point, Wausau, Rapids, Marshfield</li>
+        <li>Frame as strengthening, not risking, what they've built</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="technical" data-modal="m11">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag technical">Technical</span>
+      <div class="trigger">"Can we really update it ourselves?"</div>
+      <ul class="bullets">
+        <li>Yes — custom CMS, built for exactly what they manage</li>
+        <li>No developer, no waiting, no bloated plugin menu</li>
+        <li>This is the whole answer to Turbify's rigidity</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="technical" data-modal="m12">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag technical">Technical</span>
+      <div class="trigger">"What about our Turbify contract / domain?"</div>
+      <ul class="bullets">
+        <li>Still unconfirmed — Elizabeth was verifying cost + contract status</li>
+        <li>Need this before kickoff to plan the domain migration</li>
+        <li>Gentle nudge if it hasn't come back yet</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- 05 SEED PLANTS -->
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Seed Plants</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p style="font-size:13px; color:var(--ink-3); margin:12px 0 16px;">Always-visible talking points — drop these naturally if the call stalls or feels hesitant.</p>
+
+  <div class="grid cols-2">
+    <div class="seed"><span class="ic">🏆</span><span>25+ years of real credibility, and the website has never reflected it — that's the whole opportunity here.</span></div>
+    <div class="seed"><span class="ic">👥</span><span>This isn't just a redesign — it solves two problems at once: families finding help, and recruiting against a waitlist they can't keep up with.</span></div>
+    <div class="seed"><span class="ic">💰</span><span>Own it forever vs. Turbify's ~$30/mo forever. One clean number now, nothing recurring to us, ever.</span></div>
+    <div class="seed"><span class="ic">⚡</span><span>Wireframe's approved-ready and copy mostly exists — this can move faster than a typical from-scratch build.</span></div>
+    <div class="seed"><span class="ic">🧩</span><span>No pressure to decide every add-on today. The base covers the entire rebuild — add-ons are pure upside, whenever they're ready.</span></div>
+    <div class="seed"><span class="ic">📍</span><span>Same town — Stevens Point to Stevens Point. Happy to sit down in person if that makes this easier for Richelle to say yes.</span></div>
+  </div>
+
+  <!-- 06 READING THE CALL -->
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Reading the Call &amp; What's Next</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="grid cols-2" style="margin-top:20px;">
+    <div class="card">
+      <div class="card-title">Real Hesitation vs. Normal Stall</div>
+      <p style="font-size:13px; color:var(--ink-3); margin-bottom:12px;">Small clinic, owner-approval process — quiet or vague isn't automatically bad news. Listen for which one this actually is.</p>
+      <div class="row" style="grid-template-columns:1fr;"><span class="l" style="color:var(--warning); margin-bottom:4px;">Likely genuine budget/scope issue</span></div>
+      <ul class="bullets">
+        <li>Names a specific number or says "that's more than we budgeted"</li>
+        <li>Asks what could come out to lower the price</li>
+        <li>Mentions comparing to another quote</li>
+      </ul>
+      <div class="row" style="grid-template-columns:1fr; margin-top:10px;"><span class="l" style="color:var(--teal); margin-bottom:4px;">Likely just needs more time</span></div>
+      <ul class="bullets">
+        <li>Vague but warm — "let me run it by Richelle"</li>
+        <li>No pushback on the number itself, just hasn't decided</li>
+        <li>Still asking process questions (timeline, what's next)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Branch From Here</div>
+      <div class="row"><span class="l">Voicemail again</span><span class="v">Wait 2–3 days, send a light text nudge. No email yet — don't stack channels.</span></div>
+      <div class="row"><span class="l">Still deciding</span><span class="v">Don't leave it open-ended — get a specific day to follow up before hanging up.</span></div>
+      <div class="row"><span class="l">Ready to move</span><span class="v">Send the 50% deposit invoice same day. Confirm which add-ons in writing, right after the call.</span></div>
+    </div>
+  </div>
+
+  <!-- 07 CHECKLIST -->
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Pre-Call Checklist</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="checklist">
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Pull up the proposal and wireframe</b> — have both open in tabs in case she wants to walk through anything live.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Check email/text one more time before dialing</b> — confirm nothing came in since 7/31 that changes the frame.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Decide your real floor</b> — if price gets tight, know in advance how far you'll flex on add-ons before the call, not during it.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Have the deposit invoice process ready</b> — if she says yes today, be ready to send it same day, no delay.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Know the open asks</b> — final service list, Turbify cost/contract, referral routing, team bios/photos, design inspiration. Gentle nudge if the call allows.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-cat" id="modal-cat"></div>
+    <div class="modal-trigger" id="modal-trigger"></div>
+    <div class="modal-script" id="modal-script"></div>
+  </div>
+</div>
+
+<script>
+  const scripts = {
+    m1: {cat:"Pricing", trigger:"\u201cIs $3,500 the final number?\u201d",
+      body:"\u201cThat $3,500 covers the full core build — all six pages, the custom CMS, both forms, mobile and accessibility work, all connected and working. It's the starting point because the final number locks in once we settle your service list and any of the add-ons we talked about — but there's nothing itemized or sprung on you later. Whatever we land on, it's one clean number.\u201d"},
+    m2: {cat:"Pricing", trigger:"\u201cThat's more than we expected\u201d",
+      body:"\u201cTotally fair to say — I want this to feel right for where you're at. Can I ask what number you had in mind? ... [listen]\n\nHere's the thing: that $3,500 is already the lean version — I quoted it at the low end on purpose because I know you're watching budget. The stuff with real flex is the add-ons — Careers depth, per-service pages, the portal embed. We can keep those simple or skip them entirely for now and the core site still does everything you need. It's the same site either way, just fewer bells on it.\u201d"},
+    m3: {cat:"Pricing", trigger:"\u201cDo we have to decide on the add-ons now?\u201d",
+      body:"\u201cNot at all. The $3,500 base gets you the whole rebuild — home, who we are, services, get started, careers, contact, all connected with the CMS. The add-ons are purely optional, and only get priced in if you actually want them. You can even add them after launch, whenever it makes sense — no rush, no pressure to bundle everything in today.\u201d"},
+    m4: {cat:"Scope & Add-Ons", trigger:"\u201cWhat's the difference in Careers tiers?\u201d",
+      body:"\u201cThree levels, and you pick what fits how you actually hire:\n\nSimple — a 'we're hiring' page with a link to apply, wherever you already post.\n\nStandard — job listings you manage yourself right in the CMS, applicants reach out by email.\n\nFull — same listings, plus an actual on-site application with resume upload built in.\n\nGiven your waitlist, even Standard would be a real step up from what you have now. We don't have to pick the fanciest option — just the one that matches how you want to handle applicants.\u201d"},
+    m5: {cat:"Scope & Add-Ons", trigger:"\u201cDo we need per-service pages now?\u201d",
+      body:"\u201cNo — and honestly I'd hold off. Your service list isn't locked yet, some things you used to offer aren't current anymore, so building dedicated pages now means rebuilding them later. The base ships with one clean Services page that covers everything you offer today. Once Richelle finalizes the list, dedicated per-service pages are a strong add-on for search — 'group music therapy Stevens Point' lands right on its own page instead of buried in one. Good problem to solve in phase two.\u201d"},
+    m6: {cat:"Scope & Add-Ons", trigger:"\u201cCan we get the patient portal embedded?\u201d",
+      body:"\u201cMaybe — it comes down to whether Fusion Web Clinic's API actually supports that kind of embed. I haven't confirmed that yet, so I don't want to promise something I can't deliver. Either way, nothing changes for your patients — right now it's a clean link out to the portal, opens in a new tab, works exactly like it does today. If the API supports embedding, we can revisit it as an add-on down the line.\u201d"},
+    m7: {cat:"Timeline & Process", trigger:"\u201cHow long will this actually take?\u201d",
+      body:"\u201cRealistically, 5 to 7 weeks once we kick off. That's faster than most projects because you're not starting from zero — the wireframe's already built and approved-ready, most of your copy exists on the current site, and your logo and brand colors are already in hand. The parts that usually slow a project down are already done.\u201d"},
+    m8: {cat:"Timeline & Process", trigger:"\u201cWhat happens if we say yes today?\u201d",
+      body:"\u201cI'll send the 50% deposit invoice today, and once it clears I'm reaching out within 24 hours to kick things off. From there we settle on 1–2 real design directions based on your brand, and once you pick one, I build the first page live and hand you a working link — not a mockup, the actual site — so you can watch it come together and weigh in as we go, not just at the very end.\u201d"},
+    m9: {cat:"Timeline & Process", trigger:"\u201cWhat do you still need from us?\u201d",
+      body:"\u201cA handful of things, and none of them are urgent right this second: the final service list from Richelle, confirming what you're paying Turbify now and whether you're under contract, where referral form submissions should route, team bios and photos for Who We Are, and any therapy sites Elizabeth likes so I nail the tone. Most of that unblocks after Richelle gives the go-ahead — happy to get the easy ones (Turbify cost, routing) moving in the meantime if that's easier.\u201d"},
+    m10: {cat:"Technical & Migration", trigger:"\u201cWill we lose our Google ranking?\u201d",
+      body:"\u201cNo — that's handled as part of the migration, not an afterthought. I set up proper redirects so old links still work, and every page gets its own optimized title and description instead of one generic template. You're already showing up for Stevens Point, Wausau, Wisconsin Rapids, and Marshfield — we're building on that, not starting over.\u201d"},
+    m11: {cat:"Technical & Migration", trigger:"\u201cCan we really update it ourselves?\u201d",
+      body:"\u201cYes, genuinely. I build a custom CMS from scratch — not a bloated page builder with forty menus you'll never use. It's just what you actually manage: team members, service listings, job posts, basic page copy. You'll be able to add a new therapist or update hours in a couple minutes, no calling me, no waiting on a developer.\u201d"},
+    m12: {cat:"Technical & Migration", trigger:"\u201cWhat about our Turbify contract / domain?\u201d",
+      body:"\u201cThat's actually one of the last open items — Elizabeth was going to confirm what you're paying Turbify monthly and whether you're locked into a contract. I need that to plan the domain migration cleanly and make sure we don't leave you paying for two things at once. If that hasn't come back yet, no rush — just flag it as something we need before kickoff.\u201d"}
+  };
+
+  function openModal(id){
+    const s = scripts[id];
+    if(!s) return;
+    document.getElementById('modal-cat').textContent = s.cat;
+    document.getElementById('modal-trigger').textContent = s.trigger;
+    document.getElementById('modal-script').textContent = s.body;
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+  document.getElementById('modal-overlay').addEventListener('click', function(e){
+    if(e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeModal();
+  });
+
+  document.querySelectorAll('.scenario').forEach(function(card){
+    card.addEventListener('click', function(){
+      openModal(this.getAttribute('data-modal'));
+    });
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.getAttribute('data-filter');
+      document.querySelectorAll('.scenario').forEach(function(card){
+        if(filter === 'all' || card.getAttribute('data-cat') === filter){
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
