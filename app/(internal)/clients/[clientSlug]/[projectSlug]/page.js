@@ -26,7 +26,7 @@ export default async function ProjectPage({ params }) {
 				backLabel={clientName}
 				clientName={clientName}
 				projectName={project.name}
-				month={project.month}
+				month={'project.month'}
 				year={project.year}
 				action={
 					<StudioLink type='project' id={project._id} label='Edit project' />
@@ -58,10 +58,11 @@ export default async function ProjectPage({ params }) {
 			) : (
 				<div className='grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mt-4 mb-6'>
 					<ProjectMilestones
-						journeySteps={project.journeySteps}
-						clientSlug={clientSlug}
-						projectSlug={projectSlug}
-					/>
+	journeySteps={project.journeySteps}
+	clientPayment={project.clientPayment}
+	clientSlug={clientSlug}
+	projectSlug={projectSlug}
+/>
 					<JourneyPreview
 						journeySteps={project.journeySteps}
 						clientPayment={project.clientPayment}
