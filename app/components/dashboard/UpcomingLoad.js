@@ -127,7 +127,7 @@ export default function UpcomingLoad({ clients }) {
 				<div className='border border-white/[0.06] rounded-xl px-6 py-6 mt-2 bg-white/[0.02]'>
 					<div className='flex items-center gap-5 mb-6'>
 						<span className='flex items-center gap-2 font-mono text-xs text-white/40'>
-							<span className='w-2.5 h-2.5 rounded-full bg-teal' /> your work
+							<span className='w-2.5 h-2.5 rounded-full bg-teal' /> internal
 						</span>
 						<span className='flex items-center gap-2 font-mono text-xs text-white/40'>
 							<span className='w-2.5 h-2.5 rounded-full bg-purple' /> designer
