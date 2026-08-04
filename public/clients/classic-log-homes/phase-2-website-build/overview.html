@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Classic Log Homes — Phase 2 Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0F14;
+    --surface: #141A2B;
+    --surface-2: #141A2B;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.18);
+    --ink: rgba(255,255,255,0.95);
+    --ink-2: rgba(255,255,255,0.70);
+    --ink-3: rgba(255,255,255,0.46);
+    --ink-4: rgba(255,255,255,0.30);
+    --teal: #1E8A94;
+    --teal-dim: rgba(30,138,148,0.16);
+    --teal-line: rgba(30,138,148,0.42);
+    --purple: #8B7FCF;
+    --purple-dim: rgba(139,127,207,0.16);
+    --purple-line: rgba(139,127,207,0.42);
+    --warning: #C9A227;
+    --warning-dim: rgba(201,162,39,0.14);
+    --warning-line: rgba(201,162,39,0.42);
+    --danger: #B3524A;
+    --danger-dim: rgba(179,82,74,0.14);
+    --danger-line: rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink-2);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 248px;
+    height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 36px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 26px 26px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    color: var(--warning);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--warning);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 10px 26px 5px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 26px;
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.03);
+    border-left-color: var(--teal-line);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: var(--teal-dim);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 22px 26px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+
+  /* ── MOBILE NAV CONTROLS ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 248px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 900px 500px at 80% 0%, rgba(30,138,148,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: 'PHASE 2';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 130px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-header .overline::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+
+  .page-header h1 {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    position: relative;
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    position: relative;
+    display: flex;
+    gap: 0;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-soft);
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .header-meta-item:last-child { border-right: none; }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.green { color: var(--teal); }
+  .header-meta-item .value.orange { color: var(--warning); }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 56px 64px 100px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .section-icon {
+    width: 34px; height: 34px;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal-line);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 26px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    border: 1px solid;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  .callout.info { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.warn { background: var(--warning-dim); border-color: var(--warning-line); }
+  .callout.success { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.alert { background: var(--danger-dim); border-color: var(--danger-line); }
+  .callout.yellow { background: var(--warning-dim); border-color: var(--warning-line); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--warning);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+
+  .highlight-box strong { font-weight: 700; color: var(--ink); }
+  .highlight-box p { font-size: 14px; margin-top: 9px; color: var(--ink-2); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border-strong);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+  .timeline-item.pending::before { background: var(--ink-4); box-shadow: 0 0 0 2px var(--ink-4); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-line); animation: pulse 2s infinite; }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .budget-table th {
+    background: var(--surface);
+    color: var(--ink-3);
+    padding: 12px 18px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .budget-table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--ink-2);
+    background: var(--bg);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+  .budget-table .total-row td {
+    background: var(--teal-dim) !important;
+    color: var(--ink);
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--teal-dim) !important;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--warning-dim) !important;
+    color: var(--warning);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    border-top: 2px solid var(--teal);
+    box-shadow: var(--shadow);
+  }
+
+  .page-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .badge-static { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-new { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .badge-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-priority { background: var(--teal); color: #ffffff; border-color: var(--teal); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .pill-green { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-orange { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .pill-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-red { background: var(--danger-dim); color: var(--danger); border-color: var(--danger-line); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: var(--surface);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 22px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--purple); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 9px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--ink-3); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 22px;
+    align-items: start;
+    box-shadow: var(--shadow);
+  }
+
+  .phase-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--ink-4);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 14px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--warning);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay { display: block; }
+
+    .page-header { padding: 40px 20px 32px; }
+    .content { padding: 40px 20px 90px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header::after { font-size: 80px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Classic Log Homes</div>
+    <div class="status-pill">Phase 2 — Scoping</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🪵</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials & Pricing</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Phase 2 Scope Options</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Needed to Proceed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Roadmap</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Backlog & Phase 3</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Classic Log Homes, Inc.</h1>
+    <div class="sub">Phase 2 Scoping — Calculator, Photo Gallery, Floor Plan Categories</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Jeff Glaza, Owner</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phase 2 Value</span>
+        <span class="value orange">TBD — pricing due end of week</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phase 1 Status</span>
+        <span class="value green">✅ Live — final invoice out</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Received</span>
+        <span class="value">None yet — nothing approved</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value"><a href="https://classicloghomes.biz" target="_blank">classicloghomes.biz</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">(715) 887-2550 — text</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🪵</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Jeff Glaza</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Owner / Operator — sole decision-maker</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:classicloghomes@gmail.com">classicloghomes@gmail.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value"><a href="tel:7158872550">(715) 887-2550</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Preferred Contact</span>
+            <span class="data-value">Text first, phone second. Long calls happen — he talks in full stories, budget time.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Bandwidth Note</span>
+            <span class="data-value">Also runs CLH Trucking — keeps him genuinely busy/traveling. Affects responsiveness. Don't read delays as disinterest.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Business</span>
+            <span class="data-value">Classic Log Homes, Inc.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">What He Actually Does</span>
+            <span class="data-value">Log home <em>package supplier</em> — not a builder. Ships logs/materials/blueprints; customer or their contractor builds.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Experience</span>
+            <span class="data-value">22+ years in log homes · 43+ years construction overall</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Process</span>
+            <span class="data-value">Jeff decides. No committee. But wants a rough budget number from himself before committing — asked Jordan for that framing.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Phase 1 shipped</strong>
+          <span>Site is live at classicloghomes.biz — full migration off WordPress to Next.js/Sanity/Vercel, complete. Domain nameservers moved from the previous developer's server to Jeff's own GoDaddy account — MX, SPF, DKIM, DMARC, SRV all reverified clean. Jeff now has full independent control of his own domain.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Nothing in Phase 2 is approved yet — this is a live scoping conversation.</strong>
+        <p>Jeff has three things he wants, ranked in his own words on the last call: the pricing calculator (top priority, by a wide margin), a photo/gallery page to replace linking out to Facebook, and — newly this call — real category landing pages for his floor plans, with barndominiums called out specifically as a niche he wants to own. Committed next step: Jordan reviews Richard's old Dropbox files and delivers pricing on all of it by end of week, priced as separate, independently-approvable line items so Jeff can pick à la carte.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why He's Coming Back</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Old WordPress calculator (Richard's custom build) has no home on the new site</li>
+            <li><span class="check-icon">🔴</span> Pricing data locked inside old ACF option fields — never extracted from the SQL dump</li>
+            <li><span class="check-icon">🔴</span> No on-site photo gallery — currently sends people to Facebook, which is a lead-capture and SEO leak</li>
+            <li><span class="check-icon">🔴</span> Floor plans aren't categorized — no dedicated barndominium presence despite Jeff seeing it as a real niche opportunity</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Jeff has a working calculator he trusts and didn't have to fight AI tools to build</li>
+            <li><span class="check-icon">✅</span> Portfolio content (finished builds, siding/stain examples) lives on-site, not on Facebook</li>
+            <li><span class="check-icon">✅</span> Barndominiums get their own indexable landing page — first-mover SEO position in a niche nobody else is building in logs</li>
+            <li><span class="check-icon">✅</span> Jeff approves each piece independently, on his own budget and timeline — no bundled pressure</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🐞</span>
+        <div class="callout-body">
+          <strong>Open bug — contact form email notification</strong>
+          <span>On the post-launch call, Jeff tested the contact form and did not receive the notification email, even though the submission saved correctly to Sanity. He mentioned changing an email setting in the CMS from Jordan's placeholder to his own — likely cause (typo, or a config field not wired to what actually sends the email). Status unclear — Jeff said he'd look at it right after the call. <strong>Verify before treating Phase 1 as fully closed.</strong></span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Jeff's self-attempted calculator rebuild — already happened, now closed</strong>
+          <span>Before this call, Jeff spent ~30–40 hours trying to rebuild the calculator himself on his own Hostinger hosting, using Gemini and then Claude. Got stuck in loops, the AI started modifying code tied to the live domain in ways that scared him, and he gave up. He's explicitly deferring to Jordan now and offered to pay for the time. Worth remembering when scoping: he's motivated, a little bruised by the experience, and wants a professional to just handle it.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly not being scoped this round</strong>
+          <span>"Projects/Plans in the Works" AI render gallery, file uploads on the contact form, and a dedicated About/Meet Jeff page are known backlog items from earlier conversations — not covered on this call, still outstanding, and not part of the current pricing push. See Backlog & Phase 3.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS & PRICING -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials & Phase 2 Pricing</h2>
+      </div>
+
+      <div class="card">
+        <h3>Phase 1 Recap</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Line Item</th>
+              <th>Notes</th>
+              <th class="amount">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Phase 1 — Website Rebuild</strong></td>
+              <td>Home + floor plan detail pages, self-edit CMS, DNS migration</td>
+              <td class="amount">$3,500</td>
+            </tr>
+            <tr class="paid-row">
+              <td>✅ Deposit Paid</td>
+              <td>May 27, 2026 — 50% upfront</td>
+              <td class="amount">$1,750</td>
+            </tr>
+            <tr class="pending-row">
+              <td>⏳ Final Balance</td>
+              <td>Invoice sent — confirm payment received</td>
+              <td class="amount">$1,750</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn" style="margin-top:16px;">
+        <span class="callout-icon">💳</span>
+        <div class="callout-body">
+          <strong>Payment method note</strong>
+          <span>PayPal or credit card (processing fee applies). Jeff asked about Zelle — Jordan doesn't currently offer it. Worth a decision if this becomes a recurring friction point across clients.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Phase 2 — Pricing Options (none approved yet)</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Notes</th>
+              <th class="amount">Range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Calculator — Stopgap</strong></td>
+              <td>Host existing WordPress calculator as-is on a subdomain (e.g. calculator.classicloghomes.biz), linked next to the price sheet. Retainer applied toward the real rebuild later. Quoted, awaiting Jeff's confirmation.</td>
+              <td class="amount">~$500</td>
+            </tr>
+            <tr>
+              <td><strong>Calculator — Trimmed Rebuild</strong></td>
+              <td>Core calculator only, native rebuild referencing Richard's Dropbox files</td>
+              <td class="amount">$1,400–$1,900</td>
+            </tr>
+            <tr>
+              <td><strong>Calculator — Full Rebuild</strong></td>
+              <td>Full feature parity — all ~15 pricing components. Jeff hasn't picked trimmed vs. full yet.</td>
+              <td class="amount">$2,800–$3,800</td>
+            </tr>
+            <tr>
+              <td><strong>Photo / Gallery Page</strong></td>
+              <td>Hero photo + albums (e.g. "Log Siding," "Finished Homes") + private tagging system. Priced independently — due end of week.</td>
+              <td class="amount">TBD</td>
+            </tr>
+            <tr>
+              <td><strong>Floor Plan Category Landing Pages</strong></td>
+              <td>Dedicated indexable pages per category (barndominiums, cabins, garages, etc.) rather than a single filtered page. Bigger SEO play — treat as Phase 2 or 3.</td>
+              <td class="amount">TBD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Pricing philosophy for this round</strong>
+          <span>Everything is priced as a separate, independently-approvable line item so Jeff can say yes/no to each piece on its own. He's already been asked for his rough Phase 2 budget to keep the scope realistic instead of guessing at what he can afford.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey — Phase 2 Thread</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Phase 1 closed the loop in ~10 weeks; Phase 2 conversation started the moment it launched</strong>
+          <span>May 20 referral → May 27 deposit → early Aug launch. Jeff came into the post-launch call already having tried and failed to self-build the calculator — this wasn't a cold pitch, he arrived motivated and ready to hand it off.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">May–Jul 2026</div>
+          <div class="timeline-title">Phase 1 Build & Launch</div>
+          <div class="timeline-desc">Full rebuild delivered — Next.js/Sanity/Vercel, migrated off WordPress, DNS fully cut over to Jeff's own GoDaddy account. Contact form built with honeypot spam protection.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Weeks before this call</div>
+          <div class="timeline-title">Jeff Attempts Self-Rebuild of Calculator</div>
+          <div class="timeline-desc">~30–40 hours on his own Hostinger account using Gemini, then Claude. Got stuck in loops, AI started touching code tied to the live domain, got scared, gave up. Offered to pay Jordan for the time instead.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Post-launch call</div>
+          <div class="timeline-title">Phase 2 Priorities Call</div>
+          <div class="timeline-desc">Jeff walked through his ranked priorities: calculator first, photo/gallery page second (newly detailed — albums, tagging, replacing Facebook links), floor plan category pages third (barndominium niche excitement). Contact form email bug surfaced and flagged. Jeff confirmed he'd rather defer to Jordan entirely on the calculator going forward.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">This week</div>
+          <div class="timeline-title">Pricing Delivery — Committed</div>
+          <div class="timeline-desc">Jordan pulls Richard's Dropbox files, reviews the old calculator logic, and delivers pricing for the calculator and photo gallery as separate, independently-approvable line items. Category landing pages priced or scoped further out.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Jeff Selects & Deposits</div>
+          <div class="timeline-desc">Jeff picks à la carte from what's quoted. Nothing moves to build until he approves and deposits on a specific item.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE OPTIONS -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Phase 2 Scope Options</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Three candidates, in Jeff's own priority order</strong>
+          <span>Calculator first by a wide margin, photo gallery second, floor plan categories third. Each is scoped and priced independently below — Jeff can approve any combination.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card" style="border-top-color: var(--ink-4);">
+          <span class="page-badge badge-priority">Priority 1</span>
+          <h4>Pricing Calculator</h4>
+          <ul>
+            <li>Old plugin was custom-coded by Richard; pricing logic lives in ACF option fields, never extracted from the SQL dump</li>
+            <li>Reference Richard's original Dropbox files to understand the logic, then reimplement natively — not a port of the WordPress code</li>
+            <li>Stopgap available: host the existing calculator as-is on a subdomain, retainer credited toward the real rebuild</li>
+            <li>Two rebuild tiers scoped: trimmed core vs. full ~15-component parity — Jeff to choose</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--warning);">
+          <span class="page-badge badge-new">Priority 2 — Newly Detailed</span>
+          <h4>Photo / Gallery Page</h4>
+          <ul>
+            <li>Not tied to specific floor plans — general portfolio: finished builds customers send in, log siding/stain color examples</li>
+            <li>Editable hero photo at the top, then "albums" (e.g. "Log Siding," "Finished Homes") — similar workflow to adding a new WordPress page</li>
+            <li>Each photo needs behind-the-scenes taggable keywords for Jeff's own reference on sales calls</li>
+            <li>Explicitly meant to replace linking out to Facebook — keeps content, and SEO/lead value, on-site</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card" style="border-top-color: var(--purple);">
+          <span class="page-badge badge-gray">Priority 3 — SEO Play</span>
+          <h4>Floor Plan Category Landing Pages</h4>
+          <ul>
+            <li>Dedicated all-plans page already planned once plan volume grows past ~6–12</li>
+            <li>New this call: real categories — cabins, garages, barndominiums, larger homes, smaller homes</li>
+            <li>Jeff is especially excited about barndominiums as a differentiator — "nobody's really building them out of logs"</li>
+            <li>Jordan's proposal: each category gets its own landing page (e.g. <code>/barndominiums</code>) for independent SEO indexing, not just a filter on one page</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--border-strong); opacity: 0.65;">
+          <span class="page-badge badge-gray">Backlog — Not This Round</span>
+          <h4>Known Phase 2/3 Items</h4>
+          <ul>
+            <li>"Projects/Plans in the Works" — AI render gallery for unfinished concepts</li>
+            <li>File uploads on the contact form</li>
+            <li>Dedicated About / Meet Jeff page</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Current Content Status (context for scoping)</h3>
+        <div class="data-row">
+          <span class="data-label">Floor Plans Live</span>
+          <span class="data-value">3 loaded (North Carolina + 2 more) — still missing some details/photos, Jeff aware</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Logo</span>
+          <span class="data-value">Jeff redesigning it himself, will send to Jordan to implement — sizing may need adjustment on receipt</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Copy Tweaks</span>
+          <span class="data-value">Jeff compiling his own list to send — minor wording changes</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEEDED TO PROCEED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Needed to Proceed</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Pricing is the current bottleneck — inputs below unblock it</strong>
+          <span>Jordan owes Jeff pricing by end of week. Everything else on this list is either info Jordan already has access to, or a decision sitting with Jeff.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📁</span>
+            <div>
+              <strong>Richard's Dropbox Files</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Reference for the calculator logic — Jordan pulls and reviews this week</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In Progress</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🧮</span>
+            <div>
+              <strong>Jeff's Decision: Stopgap vs. Rebuild</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">~$500 subdomain stopgap awaiting confirmation — or wait for full pricing and decide then</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🧮</span>
+            <div>
+              <strong>Jeff's Decision: Trimmed vs. Full Calculator</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Core calculator vs. all ~15 pricing components — needs pricing in hand first</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending Pricing</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💰</span>
+            <div>
+              <strong>Jeff's Rough Phase 2 Budget</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Requested by Jordan so scope stays realistic instead of guessing</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Requested — Awaiting</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🖼️</span>
+            <div>
+              <strong>Gallery Photos / Album Content</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Finished builds from customers, log siding/stain examples — needed once gallery is approved</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Not Yet Requested</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🐞</span>
+            <div>
+              <strong>Confirm Contact Form Email Fix</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Jeff said he'd look at his CMS email setting right after the call — verify it's resolved</span>
+            </div>
+            <span class="check-status"><span class="pill pill-red">Unverified</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>New Logo File</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Jeff redesigning himself — will send when ready</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">With Client</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Copy Tweak List</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Jeff compiling his own list of minor wording changes</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">With Client</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Current Stack (Phase 1)</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js — App Router</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Sanity Studio — Jeff has access once final invoice is paid</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Contact Form</span>
+            <span class="data-value">Honeypot spam protection — bots logged to Sanity as <code>isSpam: true</code>, no email sent, no friction for real users</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain & DNS</h3>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">classicloghomes.biz</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Nameservers</span>
+            <span class="data-value">Migrated from previous developer's (Richard Church) custom server to Jeff's own GoDaddy — full independent control</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Mail / DNS Records</span>
+            <span class="data-value">Full zone rebuilt from Richard's authoritative export — MX, SPF, DKIM, DMARC, SRV all reverified clean via mxtoolbox</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Calculator Subdomain (if stopgap approved)</span>
+            <span class="data-value">calculator.classicloghomes.biz — hosts the existing WordPress calculator as-is</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🐞</span>
+        <div class="callout-body">
+          <strong>Open bug: contact form notification email</strong>
+          <span>Form submissions save correctly to Sanity but the notification email didn't fire in Jeff's test. Likely tied to an email field Jeff edited himself in the CMS — needs a config check. Fix this before it's forgotten under Phase 2 pricing work.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔒</span>
+        <div class="callout-body">
+          <strong>Privacy / local-SEO tension — carries forward into any location-based content</strong>
+          <span>Jeff wants city-level location shown (Wisconsin Rapids) for trust and SEO, but explicitly not a full address. His wife is uncomfortable with strangers showing up unannounced — has happened before — while Jeff's away trucking. Keep "by appointment only" framing intact in any new page (gallery, categories) that references location.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Roadmap & Next Steps</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>No build timeline yet — pricing hasn't gone out</strong>
+          <span>Everything below is sequenced but not dated. Dates get added once Jeff approves specific line items.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">This week</div>
+          <h4>Pricing & Housekeeping</h4>
+          <ul>
+            <li>Verify contact form email bug is actually resolved</li>
+            <li>Confirm Phase 1 final invoice has been paid</li>
+            <li>Pull and review Richard's Dropbox files for calculator logic</li>
+            <li>Deliver pricing: calculator (stopgap + 2 rebuild tiers) and photo gallery, priced separately</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Upon Jeff's response</div>
+          <h4>Selection & Deposit</h4>
+          <ul>
+            <li>Jeff reviews pricing, picks à la carte based on his budget</li>
+            <li>Deposit collected on approved item(s) — PayPal or credit card</li>
+            <li>Scope locked per item, no bundled pressure</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Build — per approved item</div>
+          <h4>Execution</h4>
+          <ul>
+            <li>Calculator: native rebuild referencing Richard's logic, or stopgap subdomain setup</li>
+            <li>Gallery: hero + album structure, tagging system, content populated from Jeff</li>
+            <li>Category pages: scoped separately, likely a later build slot given SEO-play framing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Ongoing</div>
+          <h4>Backlog Revisit</h4>
+          <ul>
+            <li>Circle back on AI render gallery, contact form file uploads, About/Meet Jeff page once current round ships</li>
+            <li>Manage against Jordan's ~6–7 concurrent client capacity, not a fixed headcount</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKLOG & PHASE 3 -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Backlog & Phase 3 Candidates</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Outstanding from earlier scope-boundary conversations — not re-covered on this call</strong>
+          <span>Still real, still valuable, just not what Jeff is pushing on right now. Worth resurfacing once the current three items are priced and moving.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🖼️ "Projects/Plans in the Works" Gallery</h4>
+          <div class="price">TBD</div>
+          <p>AI render gallery for unfinished concepts — lets Jeff show prospects what's possible before a plan is finalized.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📎 Contact Form File Uploads</h4>
+          <div class="price">TBD</div>
+          <p>Let leads attach reference photos or documents directly on the contact form instead of a follow-up email.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>👤 About / Meet Jeff Page</h4>
+          <div class="price">TBD</div>
+          <p>Dedicated bio page — 22+ years in log homes, 43+ in construction. Builds trust for both owner-builder and contractor audiences.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The AI Rebuild Attempt — Read This Before the Calculator Conversation</div>
+        <p>Jeff spent real hours and real frustration trying to DIY the calculator with Gemini and Claude before coming back to Jordan. He described going in circles, the AI "forgetting" context and having him redo work, and eventually getting scared when it started touching code tied to the live domain. He's not shopping this around — he's handing it off and offered to pay for time. Don't undersell the value of just taking it off his plate.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Barndominiums — Possible Differentiator, Worth Taking Seriously</div>
+        <p>Jeff was genuinely excited on the call, framing it as a niche nobody else is building in logs. If category landing pages get approved, this is the one to build and optimize first — not just file alongside cabins and garages.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Privacy vs. SEO — Recurring Tension</div>
+        <p>City-level location (Wisconsin Rapids) is fine and wanted for trust/SEO. Full address is not — his wife has had strangers show up unannounced while Jeff's traveling for the trucking business. Keep "by appointment only" language anywhere location gets referenced going forward, including any new gallery or category pages.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Workload / Capacity Context</div>
+        <p>Jordan manages workload by scope and budget across roughly 6–7 concurrent clients, not a fixed headcount — already communicated to Jeff directly. Useful framing if Jeff pushes for a faster timeline than the queue allows.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Style</div>
+        <p>Jeff talks in long, meandering stories — personal life, the trucking business, chickens and coyotes included — before getting to the business point. Let the call run; the useful information is in there, it just takes longer to get to. Text first for anything quick.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Committed Next Step</div>
+        <p>Jordan pulls together Richard's Dropbox files, reviews everything, and delivers pricing by end of week — calculator and photo gallery priced as separate, independently-approvable line items. This is the thing that unblocks everything else in this document.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav FAB
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openNav() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('open');
+    fab.textContent = '✕';
+  }
+
+  function closeNav() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeNav();
+    else openNav();
+  });
+
+  overlay.addEventListener('click', closeNav);
+
+  // Nav link tap on mobile: close, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeNav();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
