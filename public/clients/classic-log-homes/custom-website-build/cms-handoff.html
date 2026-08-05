@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>CMS Handoff — Classic Log Homes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1E1E1E;
+    --bg-raised: #262521;
+    --cream: #FFF8E3;
+    --cream-muted: rgba(255,248,227,0.62);
+    --cream-faint: rgba(255,248,227,0.30);
+    --gold: #CFA240;
+    --gold-dim: rgba(207,162,64,0.14);
+    --dark-gold: #704D02;
+    --dark-gold-dim: rgba(112,77,2,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: relative;
+    padding: 64px 0 40px;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -140px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(207,162,64,0.10);
+    pointer-events: none;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(207,162,64,0.14);
+    pointer-events: none;
+  }
+
+  .overline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    max-width: 480px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .sub {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--cream-muted);
+    max-width: 460px;
+    position: relative;
+  }
+
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(207,162,64,0.20);
+    position: relative;
+  }
+
+  .meta-item .label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    margin-bottom: 4px;
+  }
+
+  .meta-item .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .meta-item .value.gold { color: var(--gold); }
+  .meta-item .value a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(207,162,64,0.4); }
+
+  /* ── STEPS ── */
+  .steps { margin: 8px 0 40px; }
+
+  .step {
+    position: relative;
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 32px 28px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .step-num {
+    position: absolute;
+    top: -18px;
+    right: 6px;
+    font-size: 110px;
+    font-weight: 800;
+    color: var(--dark-gold);
+    opacity: 0.09;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .step-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dark-gold);
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .step h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1E1E1E;
+    margin-bottom: 10px;
+    position: relative;
+    max-width: 400px;
+  }
+
+  .step p {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: #4a4436;
+    max-width: 420px;
+    position: relative;
+    margin-bottom: 18px;
+  }
+
+  .step p:last-of-type { margin-bottom: 0; }
+
+  .step a.studio-link {
+    color: var(--dark-gold);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(112,77,2,0.4);
+  }
+
+  /* mockup UI illustrations */
+  .mockup {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid rgba(112,77,2,0.18);
+    border-radius: 8px;
+    padding: 16px 18px;
+    max-width: 420px;
+    margin-top: 18px;
+  }
+
+  .mockup-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mockup-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1E1E1E;
+  }
+
+  .mockup-sub {
+    font-size: 11px;
+    color: #8a8270;
+    margin-top: 2px;
+  }
+
+  .mockup-btn {
+    display: inline-block;
+    background: #1E1E1E;
+    color: var(--cream);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+
+  .mockup-btn-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    color: #1E1E1E;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #d8d2bc;
+    width: 100%;
+  }
+
+  .mockup-alt-line {
+    text-align: center;
+    font-size: 10.5px;
+    color: #8a8270;
+    margin-top: 10px;
+  }
+
+  .mockup-bookmark {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f4f0e2;
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+
+  .mockup-bookmark .star { color: var(--dark-gold); font-size: 13px; }
+
+  .mockup-bookmark .url {
+    font-size: 11.5px;
+    color: #1E1E1E;
+    font-weight: 600;
+  }
+
+  /* ── CLOSING HIGHLIGHT ── */
+  .closing {
+    background: var(--bg-raised);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+
+  .closing strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .closing p {
+    font-size: 14.5px;
+    color: var(--cream-muted);
+    margin-bottom: 14px;
+  }
+
+  .closing p:last-child { margin-bottom: 0; }
+
+  .closing a {
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(207,162,64,0.4);
+  }
+
+  .closing ul {
+    list-style: none;
+    margin: 0 0 14px 0;
+  }
+
+  .closing li {
+    font-size: 14px;
+    color: var(--cream-muted);
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .closing li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  .closing li:last-child { margin-bottom: 0; }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid rgba(207,162,64,0.16);
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--cream-muted);
+  }
+
+  .footer .contact-line {
+    margin-bottom: 4px;
+  }
+
+  .footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer .tagline {
+    margin-top: 16px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+  }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 29px; }
+    .header { padding: 44px 0 32px; }
+    .step { padding: 26px 20px; }
+    .step-num { font-size: 80px; }
+    .meta-strip { gap: 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="overline">CMS Handoff · Classic Log Homes</div>
+    <h1>Make the content officially yours</h1>
+    <div class="sub">You own this site — here's how to get logged in and start editing it yourself, anytime.</div>
+
+    <div class="meta-strip">
+      <div class="meta-item">
+        <div class="label">Site</div>
+        <div class="value gold">classicloghomes.biz</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Your Studio</div>
+        <div class="value"><a href="https://classic-log-homes.sanity.studio">classic-log-homes.sanity.studio</a></div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Time Needed</div>
+        <div class="value">About 5 minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-label">Step One</div>
+      <h3>Accept your invite</h3>
+      <p>Check your email for an invite from Sanity, sent to this address. Click the button in that email to accept.</p>
+
+      <div class="mockup">
+        <div class="mockup-row">
+          <div>
+            <div class="mockup-label">You've been invited to Classic Log Homes</div>
+            <div class="mockup-sub">Invite from jordan@latzwebdesign.com</div>
+          </div>
+          <span class="mockup-btn">Accept Invite</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-label">Step Two</div>
+      <h3>Create your login</h3>
+      <p>"Sign in with Google" is fastest — one click if you're already logged into Gmail. Email and password works too, if you'd rather. Either way, use this same email address.</p>
+
+      <div class="mockup">
+        <div class="mockup-btn-google">Continue with Google</div>
+        <div class="mockup-alt-line">or use email &amp; password</div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-label">Step Three</div>
+      <h3>Bookmark your Studio</h3>
+      <p>You're in. From now on you don't need the invite email — go straight to your editor. Bookmark it; it's the only place you'll ever go to edit your site, no need to visit Sanity's own website.</p>
+
+      <div class="mockup">
+        <div class="mockup-bookmark">
+          <span class="star">★</span>
+          <span class="url">classic-log-homes.sanity.studio</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <strong>You're set up. Here's your full reference.</strong>
+    <p>I've also put together a complete <a href="https://www.classicloghomes.biz/cms-guide.html">editing guide</a> for your site. It walks through everything — adding content, editing your pages, and publishing changes. Bookmark it alongside your editor — it's also linked at the bottom of the screen once you're logged in, so you'll always be able to find it.</p>
+    <p>A couple of things it covers:</p>
+    <ul>
+      <li>Two tabs at the top of your editor — one for how your pages look and read, one for adding and managing things like floor plans and reviews. The guide explains when to use each.</li>
+      <li>Changes save as drafts first, so nothing shows up on the live site until you hit Publish.</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="contact-line">When you need help, you talk to me directly — no tickets, no bots. <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></div>
+    <div class="contact-line">Jordan Latz · Latz Web Design</div>
+    <div class="tagline">No fluff. Just results.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
