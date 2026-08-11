@@ -1,0 +1,1511 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Classic Log Homes — Gallery Wireframes | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Manrope:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #1e1e1e;
+				--primary-mid: #322f29;
+				--accent: #cfa240;
+				--accent-light: rgba(207, 162, 64, 0.08);
+				--light: #fff8e3;
+				--light-dark: #f3ecd2;
+				--mid: #7a7261;
+				--green: #5c7a52;
+				--green-light: rgba(92, 122, 82, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Manrope', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(30, 30, 30, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(30, 30, 30, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Manrope', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Manrope', sans-serif;
+				font-size: 24px;
+				font-weight: 800;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Manrope', sans-serif;
+				font-size: 14px;
+				color: rgba(255, 248, 227, 0.4);
+				letter-spacing: 0.06em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(207, 162, 64, 0.15);
+				border: 1px solid rgba(207, 162, 64, 0.35);
+				border-radius: 5px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Manrope', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.status-pill.ready {
+				background: rgba(92, 122, 82, 0.15);
+				border: 1px solid rgba(92, 122, 82, 0.35);
+			}
+
+			.status-pill.ready .status-dot {
+				background: var(--green);
+				animation: none;
+			}
+
+			.status-pill.ready span {
+				color: var(--green);
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Manrope', sans-serif;
+				font-size: 12px;
+				font-weight: 700;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(255, 248, 227, 0.45);
+				text-decoration: none;
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				font-weight: 500;
+				border-radius: 6px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(207, 162, 64, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 700;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Manrope', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 30px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Manrope', sans-serif;
+				font-size: 48px;
+				font-weight: 800;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.15;
+				letter-spacing: 0.01em;
+			}
+
+			.doc-sub {
+				font-family: 'Manrope', sans-serif;
+				font-size: 20px;
+				color: rgba(30, 30, 30, 0.55);
+				font-weight: 400;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1.5px solid rgba(30, 30, 30, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(30, 30, 30, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(30, 30, 30, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Manrope', sans-serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(30, 30, 30, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Manrope', sans-serif;
+				font-weight: 800;
+				font-size: 20px;
+				color: var(--primary);
+				letter-spacing: 0.01em;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				font-family: 'Manrope', sans-serif;
+				font-size: 16px;
+				font-weight: 500;
+				color: rgba(30, 30, 30, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 700;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(30, 30, 30, 0.04);
+				border-left: 4px solid rgba(30, 30, 30, 0.2);
+				border-radius: 0 6px 6px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: rgba(207, 162, 64, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(30, 30, 30, 0.15);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(255, 248, 227, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 11px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Manrope', sans-serif;
+				font-size: 36px;
+				font-weight: 800;
+				color: var(--primary);
+				margin-bottom: 8px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-md {
+				font-family: 'Manrope', sans-serif;
+				font-size: 25px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Manrope', sans-serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-subtext {
+				font-family: 'Manrope', sans-serif;
+				font-size: 20px;
+				color: rgba(30, 30, 30, 0.5);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				color: rgba(30, 30, 30, 0.6);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(30, 30, 30, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--primary);
+			}
+			.wf-cta.outline {
+				background: transparent;
+				border: 1.5px solid var(--light-dark);
+				color: var(--primary);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 20px 31px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Manrope', sans-serif;
+				font-size: 15px;
+				color: rgba(255, 248, 227, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(30, 30, 30, 0.07);
+				border: 2px dashed rgba(30, 30, 30, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(30, 30, 30, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── ALBUM / PHOTO GRID ── */
+			.album-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 17px;
+				margin-top: 17px;
+			}
+
+			.album-card {
+				border: 1.5px dashed rgba(30, 30, 30, 0.2);
+				border-radius: 7px;
+				padding: 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.album-name {
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-top: 8px;
+			}
+
+			.album-meta {
+				font-family: 'Manrope', sans-serif;
+				font-size: 14px;
+				color: rgba(30, 30, 30, 0.45);
+				margin-top: 2px;
+			}
+
+			.photo-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 12px;
+				margin-top: 17px;
+			}
+
+			.photo-tile {
+				position: relative;
+			}
+
+			.photo-tile .img-placeholder {
+				height: 130px;
+				padding: 10px;
+			}
+
+			.photo-tile .img-placeholder .img-icon {
+				font-size: 26px;
+			}
+
+			.photo-tile .img-placeholder .img-label {
+				font-size: 13px;
+			}
+
+			/* ── FILTER / STEP ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 11px;
+				align-items: center;
+				margin-bottom: 20px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: rgba(30, 30, 30, 0.4);
+			}
+
+			.filter-pill {
+				font-family: 'Manrope', sans-serif;
+				font-size: 17px;
+				border: 1.5px solid rgba(30, 30, 30, 0.2);
+				border-radius: 28px;
+				padding: 4px 17px;
+				color: rgba(30, 30, 30, 0.5);
+			}
+
+			.filter-pill.active {
+				border-color: var(--primary);
+				color: var(--primary);
+				font-weight: 700;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Manrope', sans-serif;
+				font-size: 15px;
+				font-weight: 700;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 130px;
+				letter-spacing: 0.01em;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(30, 30, 30, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box.new {
+				background: rgba(207, 162, 64, 0.15);
+				color: var(--primary);
+				border: 1.5px dashed var(--accent);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25px;
+				color: rgba(30, 30, 30, 0.3);
+				padding: 0 11px;
+				align-self: center;
+				margin-top: -20px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 8px;
+				margin-top: 8px;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(30, 30, 30, 0.12);
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+				line-height: 1.5;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── LIGHTBOX MOCK ── */
+			.lightbox-mock {
+				background: var(--primary);
+				border-radius: 8px;
+				padding: 28px;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.lightbox-stage {
+				width: 100%;
+				position: relative;
+			}
+
+			.lightbox-stage .img-placeholder {
+				background: rgba(255, 248, 227, 0.06);
+				border-color: rgba(255, 248, 227, 0.25);
+				height: 320px;
+			}
+
+			.lightbox-stage .img-placeholder .img-icon,
+			.lightbox-stage .img-placeholder .img-label {
+				color: rgba(255, 248, 227, 0.5);
+			}
+
+			.lb-nav-arrow {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				background: rgba(30, 30, 30, 0.4);
+				border: 1.5px solid rgba(255, 248, 227, 0.3);
+				color: var(--light);
+				border-radius: 50%;
+				width: 44px;
+				height: 44px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+			}
+			.lb-nav-arrow.prev { left: 14px; }
+			.lb-nav-arrow.next { right: 14px; }
+
+			.lightbox-caption-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				gap: 20px;
+				flex-wrap: wrap;
+				margin-top: 22px;
+			}
+
+			.lightbox-info {
+				color: var(--light);
+				max-width: 640px;
+			}
+
+			.lightbox-info .lb-title {
+				font-family: 'Manrope', sans-serif;
+				font-size: 22px;
+				font-weight: 700;
+				margin-bottom: 8px;
+			}
+
+			.lightbox-info .lb-desc {
+				font-family: 'Manrope', sans-serif;
+				font-size: 16px;
+				color: rgba(255, 248, 227, 0.6);
+				line-height: 1.5;
+			}
+
+			.lb-counter {
+				font-family: 'Manrope', sans-serif;
+				font-size: 15px;
+				color: rgba(255, 248, 227, 0.5);
+				white-space: nowrap;
+				margin-top: 4px;
+			}
+
+			.lightbox-thumbs {
+				display: flex;
+				gap: 11px;
+				margin-top: 25px;
+				overflow-x: auto;
+				padding-bottom: 2px;
+			}
+
+			.lb-thumb {
+				flex-shrink: 0;
+				width: 84px;
+				height: 63px;
+				border-radius: 5px;
+				background: rgba(255, 248, 227, 0.06);
+				border: 1.5px dashed rgba(255, 248, 227, 0.25);
+			}
+
+			.lb-thumb.active {
+				border: 1.5px solid var(--accent);
+				background: rgba(207, 162, 64, 0.12);
+			}
+
+			.lb-close {
+				position: absolute;
+				top: -10px;
+				right: -10px;
+				background: var(--accent);
+				color: var(--primary);
+				border-radius: 50%;
+				width: 34px;
+				height: 34px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: 700;
+				font-size: 16px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 45px 34px 112px;
+				}
+				.album-grid,
+				.photo-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(30, 30, 30, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.album-grid,
+				.photo-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 15px;
+					gap: 10px;
+				}
+				.lightbox-caption-row {
+					flex-direction: column;
+					gap: 8px;
+				}
+				.lightbox-stage .img-placeholder {
+					height: 200px;
+				}
+				.lb-thumb {
+					width: 64px;
+					height: 48px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Classic Log Homes</div>
+				<div class="sidebar-doctype">Site Wireframes — Phase 2: Gallery</div>
+				<div class="status-pill ready">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#gallery" class="nav-link"><span class="nav-icon">🖼️</span> Gallery</a>
+				<a href="#album-detail" class="nav-link"><span class="nav-icon">📂</span> Album Detail</a>
+				<a href="#lightbox" class="nav-link"><span class="nav-icon">🔍</span> Lightbox</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Classic Log Homes</div>
+				<div class="doc-sub">
+					Phase 2 &nbsp;·&nbsp; Photo Gallery — Gallery Index + Dynamic Album Detail + Lightbox
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">New Pages</span>
+						<span class="meta-value">2 + 1 reused component</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Jeff Glaza</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Replaces</span>
+						<span class="meta-value ok">Facebook link-out</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 56px; font-size: 18px; padding: 17px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each page and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">Classic Log Homes — Phase 2 Addition</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								Gallery replaces the Facebook album link — portfolio photos and their SEO value stay on-site.
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 8px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Home<br /><span style="font-size: 12px; font-weight: 400; opacity: 0.7">/</span>
+								</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Floor Plan Detail<br /><span style="font-size: 12px; font-weight: 400; opacity: 0.7">/floor-plans/[slug]</span>
+								</div>
+								<div class="album-meta" style="text-align: center; margin-top: 4px">existing · Phase 1</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box new">
+									Gallery<br /><span style="font-size: 12px; font-weight: 400; opacity: 0.7">/gallery</span>
+								</div>
+								<div class="sitemap-children">
+									<div class="sitemap-box new" style="font-size: 13px; min-width: 100px; padding: 7px 12px">
+										Album Detail<br /><span style="font-size: 11px; font-weight: 400; opacity: 0.7">/gallery/[album-slug]</span>
+									</div>
+								</div>
+								<div class="album-meta" style="text-align: center; margin-top: 4px">new · Phase 2</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 24px">
+							Gallery and Album Detail are new — everything else on the site is unchanged from Phase 1. Album Detail is a dynamic, indexable route: one real, crawlable URL per album, same template reused every time (same pattern as Floor Plan Detail). The Lightbox isn't a page at all — it's a reused overlay component that opens on top of the album grid.
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: GALLERY ── -->
+			<section class="wf-section" id="gallery">
+				<div class="section-label">
+					<span class="section-num">1</span> Gallery — /gallery
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Classic Log Homes</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Floor Plans</span>
+							<span class="active">Gallery</span>
+							<span>Reviews</span>
+							<span>Support</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Gallery Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 190px">
+								<div class="img-icon">🪵</div>
+								<div class="img-label">
+									Gallery header image — a real build or finished home<br />
+									Swappable by Jeff anytime, independent of any one album
+								</div>
+							</div>
+							<div style="margin-top: 20px; text-align: center">
+								<div class="wf-heading-lg">Our Work</div>
+								<div class="wf-subtext">Real packages, real builds, real families.</div>
+							</div>
+							<div class="annotation">
+								Headline, subtext, and hero image are all CMS-editable. This is the top of the page — album tiles start right below it.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Album Grid -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Album Grid</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="album-grid">
+								<div class="album-card">
+									<div class="img-placeholder" style="height: 100px">
+										<div class="img-label" style="font-size: 13px">album cover</div>
+									</div>
+									<div class="album-name">Sportsman 24x30 Build</div>
+									<div class="album-meta">Album · Wisconsin Rapids</div>
+								</div>
+								<div class="album-card">
+									<div class="img-placeholder" style="height: 100px">
+										<div class="img-label" style="font-size: 13px">album cover</div>
+									</div>
+									<div class="album-name">Tomahawk Lodge</div>
+									<div class="album-meta">Album · Tomahawk, WI</div>
+								</div>
+								<div class="album-card">
+									<div class="img-placeholder" style="height: 100px">
+										<div class="img-label" style="font-size: 13px">album cover</div>
+									</div>
+									<div class="album-name">Sawmill &amp; Mill Partners</div>
+									<div class="album-meta">Album · Behind the scenes</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Albums are their own CMS document type — not a fixed, hardcoded set. Jeff creates a new album, uploads a cover image, names it, and adds photos himself, anytime, with no need to call Jordan. Each tile shows a cover image and album name and links to that album's page at /gallery/[album-slug]. Number of albums is unlimited — the grid holds whatever Jeff has created.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Classic Log Homes, Inc. · Privacy Policy</span>
+						<span>Website by Latz Web Design</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: ALBUM DETAIL ── -->
+			<section class="wf-section" id="album-detail">
+				<div class="section-label">
+					<span class="section-num">2</span> Album Detail — /gallery/[album-slug]
+				</div>
+
+				<div class="annotation" style="margin-bottom: 22px; background: rgba(207, 162, 64, 0.06); border-left-color: var(--accent)">
+					🔁 <strong>Dynamic page design.</strong> This single page design renders for every album Jeff creates via CMS. URL slug, title, description, and the full ordered photo set all come from the per-album CMS document. Wireframe below shows ONE representative example using "[Album Name]" placeholders.
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Classic Log Homes</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Floor Plans</span>
+							<span class="active">Gallery</span>
+							<span>Reviews</span>
+							<span>Support</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Title & Description -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Album Title &amp; Description</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-lg" style="font-size: 30px">[Album Name]</div>
+							<div class="wf-body-text">
+								Text description of the album — what the build was, where it went, notable details. This same text doubles as on-page SEO copy for the album and as the default alt-text source for its photos when a photo doesn't have its own.
+							</div>
+							<div class="annotation">
+								Title and description are per-album CMS fields Jeff fills in once. Because this route is indexable, the description carries real SEO weight for this album — it's not just decorative copy.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Photo Grid -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Photo Grid</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="photo-grid">
+								<div class="photo-tile"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile" style="opacity: 0.4"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+								<div class="photo-tile" style="opacity: 0.4"><div class="img-placeholder"><div class="img-icon">📷</div><div class="img-label">photo</div></div></div>
+							</div>
+							<div style="text-align: center; margin-top: 20px">
+								<div class="wf-cta outline">Load more photos</div>
+							</div>
+							<div class="annotation">
+								Grid loads an initial batch of photos — roughly 4–8 to start — then loads the rest as the visitor keeps browsing. Some albums will hold well over 100 photos over time, even though launch content will be much smaller, so the loading pattern is built for that scale from day one rather than retrofitted later. Clicking any photo opens it in the full-screen lightbox.
+							</div>
+						</div>
+
+						<div class="decision-box">
+							<div class="decision-label">Pagination Pattern</div>
+							<div class="wf-body-text" style="margin-bottom: 0">
+								"Load more" button (shown above), infinite scroll, or numbered pages? Needs to hold up cleanly at 100+ photos per album without slowing the page down. Designer/dev call — flagged for discussion.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Classic Log Homes, Inc. · Privacy Policy</span>
+						<span>Website by Latz Web Design</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── LIGHTBOX ── -->
+			<section class="wf-section" id="lightbox">
+				<div class="section-label">
+					<span class="section-num">3</span> Lightbox — Reused Component
+				</div>
+
+				<div class="annotation" style="margin-bottom: 22px; background: rgba(207, 162, 64, 0.06); border-left-color: var(--accent)">
+					♻️ <strong>Not a new design.</strong> This reuses the lightbox component and visual style already built and live on the current site. It's wired up to the new album photo data — it isn't being redesigned. Mock below is simplified to show behavior, not a new visual treatment.
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div class="wf-block" style="background: transparent; border-color: rgba(30,30,30,0.15)">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Full-Screen Photo Viewer</div>
+							</div>
+
+							<div style="position: relative">
+								<div class="lightbox-mock">
+									<div class="lightbox-stage">
+										<div class="img-placeholder">
+											<div class="img-icon">🖼️</div>
+											<div class="img-label">Clicked photo, shown full-screen</div>
+										</div>
+										<span class="lb-nav-arrow prev">←</span>
+										<span class="lb-nav-arrow next">→</span>
+									</div>
+
+									<div class="lightbox-caption-row">
+										<div class="lightbox-info">
+											<div class="lb-title">[Photo Title]</div>
+											<div class="lb-desc">
+												[Photo description] — the same visible text used for on-page context and SEO alt text.
+											</div>
+										</div>
+										<div class="lb-counter">4 / 37</div>
+									</div>
+
+									<div class="lightbox-thumbs">
+										<div class="lb-thumb"></div>
+										<div class="lb-thumb active"></div>
+										<div class="lb-thumb"></div>
+										<div class="lb-thumb"></div>
+										<div class="lb-thumb"></div>
+										<div class="lb-thumb"></div>
+										<div class="lb-thumb"></div>
+									</div>
+								</div>
+								<div class="lb-close">✕</div>
+							</div>
+
+							<div class="annotation">
+								Opens directly to the photo that was clicked — not the first photo in the album. Title and description sit between the photo and the thumbnail strip, same as the current site's viewer. Left/right arrows and a counter let the visitor step through every photo in that album's full set, not just the initial loaded batch — the thumbnail strip at the bottom does the same and lets them jump straight to any photo. Closing returns to the album grid at the same scroll position the visitor left.
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Replaces the Facebook Link</strong> — Gallery keeps portfolio content and its SEO value on-site instead of sending visitors out to Facebook.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Self-Serve Albums</strong> — Albums are a dedicated CMS document type, not a hardcoded set. Jeff creates, edits, and removes albums himself anytime.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Dynamic, Indexable Album Pages</strong> — One real, crawlable URL per album at /gallery/[album-slug], same template reused for every album — same pattern as Floor Plan Detail.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Description Doubles as SEO Copy</strong> — Each album's description is both visible copy and the source for photo alt text and on-page SEO.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Built for Scale</strong> — Photo grid supports pagination or lazy-loading from launch, even though initial content is small — some albums will grow past 100 photos.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Lightbox Is Reused, Not Redesigned</strong> — Same component and visual style as the current live site, wired up to new album photo data. Each photo carries its own heading and description caption, shown between the photo and the thumbnail strip.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Keywords Are Hidden Metadata Only</strong> — Searchable for Jeff's own internal use. No public tag or filter UI anywhere in this flow.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>General Portfolio, Not Plan-Specific</strong> — Gallery photos are a general project portfolio, not tied to individual floor plans.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Nav Placement</strong> — Where exactly does "Gallery" land in the main nav now that the Facebook link is gone? Shown here between Floor Plans and Reviews — confirm with Jeff.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Initial Photo Batch Size</strong> — Spec calls for roughly 4–8 photos in the first load. Confirm the exact number.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Pagination Pattern</strong> — "Load more" button, infinite scroll, or numbered pages for the photo grid? Needs to hold up at 100+ photos per album.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Launch Album Count &amp; Content</strong> — How many albums and photos does Jeff have ready at launch? Affects whether pagination is even visible on day one.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Album Sort Order</strong> — Jeff-controlled order (like floor plans' sort_order) or newest-created first?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Lightbox Data Wiring</strong> — Confirm which existing lightbox instance gets reused — the one already used for floor plan renderings, or a separate implementation elsewhere on the site.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -49,7 +49,7 @@ export default async function ProjectPage({ params }) {
 				vercelUrl={project.vercelUrl}
 				aiProjectLink={project.aiProjectLink}
 			/>
-{project.status === 'on-ice' ? (
+			{project.status === 'on-ice' ? (
 				<LostBanner
 					reason={project.lostReason}
 					month={project.month}
@@ -58,11 +58,11 @@ export default async function ProjectPage({ params }) {
 			) : (
 				<div className='grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mt-4 mb-6'>
 					<ProjectMilestones
-	journeySteps={project.journeySteps}
-	clientPayment={project.clientPayment}
-	clientSlug={clientSlug}
-	projectSlug={projectSlug}
-/>
+						journeySteps={project.journeySteps}
+						clientPayment={project.clientPayment}
+						clientSlug={clientSlug}
+						projectSlug={projectSlug}
+					/>
 					<JourneyPreview
 						journeySteps={project.journeySteps}
 						clientPayment={project.clientPayment}

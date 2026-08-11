@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Classic Log Homes — Phase 2 Gallery Proposal | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark:#0a0a0a;
+    --dark-header:#0f0f0f;
+    --teal:#18a1ad;
+    --teal-dim:rgba(24,161,173,0.10);
+    --teal-border:rgba(24,161,173,0.25);
+    --green:#16a34a;
+    --off-white:#f9fafb;
+    --white:#ffffff;
+    --gray-50:#f9fafb;
+    --gray-100:#f3f4f6;
+    --gray-200:#e5e7eb;
+    --gray-400:#9ca3af;
+    --gray-500:#6b7280;
+    --gray-600:#4b5563;
+    --gray-700:#374151;
+    --gray-900:#111827;
+    --shadow-sm:0 1px 2px rgba(17,24,39,0.04);
+    --shadow-md:0 1px 3px rgba(17,24,39,0.05),0 8px 24px rgba(17,24,39,0.06);
+    --shadow-lg:0 4px 10px rgba(17,24,39,0.06),0 20px 44px rgba(17,24,39,0.09);
+    --ease:cubic-bezier(.4,0,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--off-white);
+    color:var(--gray-900);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--teal-dim);color:var(--gray-900);}
+  a{color:inherit;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px;}
+
+  /* ── mode visibility ── */
+  html:not([data-mode="deposit"]) .deposit-only{display:none !important;}
+  html[data-mode="deposit"] .consult-only{display:none !important;}
+
+  /* ── reveal-on-scroll ── */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .progress-next .pulse-dot{animation:none;}
+  }
+
+  /* ══════════ SIDEBAR ══════════ */
+  .sidebar{
+    position:fixed;top:0;left:0;width:220px;height:100vh;
+    background:var(--dark);
+    display:flex;flex-direction:column;
+    z-index:100;
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,255,255,0.15) transparent;
+    transition:transform .32s var(--ease);
+  }
+  .sidebar::-webkit-scrollbar{width:5px;}
+  .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:3px;}
+
+  .sb-top{padding:30px 26px 24px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .sb-brand{
+    display:flex;align-items:center;gap:8px;
+    font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--teal);
+    margin-bottom:20px;
+  }
+  .sb-brand .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+  .sb-client{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--white);line-height:1.32;}
+  .sb-doctype{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.32);letter-spacing:.08em;text-transform:uppercase;margin-top:10px;}
+
+  .sb-nav{padding:18px 14px;flex:1;}
+  .sb-nav a{
+    display:block;padding:11px 14px;margin-bottom:2px;
+    font-size:13.5px;color:rgba(255,255,255,0.55);text-decoration:none;
+    border-left:2px solid transparent;border-radius:0 4px 4px 0;
+    transition:all .15s var(--ease);
+  }
+  .sb-nav a:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.03);}
+  .sb-nav a.active{color:var(--teal);border-left-color:var(--teal);background:var(--teal-dim);font-weight:500;}
+
+  .sb-cta{
+    display:block;margin:6px 20px 20px;padding:12px 16px;
+    background:var(--teal);color:var(--dark);
+    font-size:13px;font-weight:600;text-align:center;text-decoration:none;
+    border-radius:6px;transition:transform .15s var(--ease),box-shadow .15s var(--ease);
+  }
+  .sb-cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(24,161,173,0.35);}
+
+  .sb-footer{
+    padding:18px 26px 24px;border-top:1px solid rgba(255,255,255,0.07);
+    font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);
+    letter-spacing:.03em;line-height:1.9;
+  }
+  .sb-footer a{color:rgba(255,255,255,0.45);text-decoration:none;}
+
+  /* mobile fab + overlay */
+  .fab{
+    display:none;position:fixed;bottom:20px;left:20px;width:50px;height:50px;
+    border-radius:50%;background:var(--teal);color:var(--dark);border:none;
+    font-size:20px;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(10,10,10,0.3);z-index:300;cursor:pointer;
+  }
+  .mobile-cta{
+    display:none;position:fixed;bottom:20px;right:20px;z-index:300;
+    background:var(--teal);color:var(--dark);border:none;border-radius:8px;
+    padding:14px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+    text-decoration:none;box-shadow:0 8px 24px rgba(10,10,10,0.3);
+  }
+  .nav-overlay{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:90;
+    opacity:0;transition:opacity .28s var(--ease);
+  }
+  .nav-overlay.visible{display:block;opacity:1;}
+
+  /* ══════════ MAIN ══════════ */
+  .main{margin-left:220px;min-height:100vh;}
+
+  /* ── cover ── */
+  .cover{
+    min-height:93vh;background:var(--dark-header);
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:44px 64px;position:relative;overflow:hidden;
+  }
+  .cover::before{
+    content:'';position:absolute;top:-20%;right:-10%;width:70%;height:70%;
+    background:radial-gradient(circle,rgba(24,161,173,0.16) 0%,rgba(24,161,173,0) 68%);
+    pointer-events:none;
+  }
+  .cover::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:linear-gradient(to bottom,black,transparent 55%);
+    mask-image:linear-gradient(to bottom,black,transparent 55%);
+    opacity:.5;
+  }
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
+  .cover-brand{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--white);}
+  .cover-badge{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.04);
+    padding:6px 14px;border-radius:20px;
+  }
+  .cover-body{position:relative;z-index:1;max-width:760px;}
+  .cover-overline{
+    display:flex;align-items:center;gap:12px;
+    font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:22px;
+  }
+  .cover-overline .dash{width:28px;height:1px;background:var(--teal-border);}
+  .cover-title{
+    font-family:'Fraunces',serif;font-weight:600;color:var(--white);
+    font-size:52px;line-height:1.08;letter-spacing:-0.015em;margin-bottom:34px;
+  }
+  .cover-meta{
+    display:flex;flex-wrap:wrap;border:1px solid rgba(255,255,255,0.09);border-radius:10px;overflow:hidden;
+  }
+  .cover-meta-item{
+    padding:18px 26px;border-right:1px solid rgba(255,255,255,0.09);
+    display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px;
+  }
+  .cover-meta-item:last-child{border-right:none;}
+  .cover-meta-item .label{
+    font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,0.32);
+  }
+  .cover-meta-item .value{font-size:15px;font-weight:500;color:var(--white);}
+  .cover-footer{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    position:relative;z-index:1;margin-top:40px;
+    font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:.03em;
+  }
+  .cover-footer a{color:rgba(255,255,255,0.5);text-decoration:none;}
+
+  /* ── content shell ── */
+  .content{padding:0;position:relative;}
+  .content-shadow{
+    position:absolute;top:0;left:0;right:0;height:90px;
+    background:linear-gradient(to bottom, rgba(24,161,173,0.22) 0%, rgba(24,161,173,0.08) 45%, rgba(24,161,173,0) 100%);
+    pointer-events:none;z-index:2;
+  }
+  section{padding:128px max(64px, calc((100% - 1200px) / 2));margin:0;scroll-margin-top:24px;}
+  .content > section:nth-of-type(odd){background:var(--white);}
+  .content > section:nth-of-type(even){background:var(--off-white);}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:34px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);}
+  .section-header .num{
+    font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--gray-500);
+    background:var(--gray-100);border-radius:5px;padding:5px 9px;letter-spacing:.04em;
+  }
+  .section-header h2{font-family:'Fraunces',serif;font-size:25px;font-weight:600;color:var(--gray-900);letter-spacing:-0.01em;}
+
+
+  /* ── 01 letter ── */
+  .letter-card{
+    background:var(--white);border:1px solid var(--gray-200);border-left:3px solid var(--teal);
+    border-radius:10px;padding:44px 48px;
+  }
+  .letter-card .letterhead{
+    font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gray-400);margin-bottom:20px;
+  }
+  .voice-sign{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--white);margin-top:18px;}
+  .letter-card .salutation{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;
+    color:var(--gray-900);margin-bottom:22px;
+  }
+  .letter-card p{font-size:15.5px;color:var(--gray-700);margin-bottom:18px;max-width:640px;}
+  .letter-card p:last-child{margin-bottom:0;}
+  .letter-card .sign{font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--gray-900);margin-top:26px;}
+
+  /* ── 02 getting ── */
+  .page-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:34px;}
+  .page-card{
+    background:var(--white);border:1px solid var(--gray-200);border-top:2px solid var(--gray-900);
+    border-radius:7px;padding:26px 28px;transition:box-shadow .2s var(--ease),transform .2s var(--ease);
+  }
+  .page-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+  .page-card h4{font-family:'DM Sans',sans-serif;font-weight:600;font-size:16.5px;color:var(--gray-900);margin-bottom:4px;}
+  .page-card .slug{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--gray-400);margin-bottom:14px;display:block;}
+  .page-card ul{list-style:none;}
+  .page-card ul li{font-size:13px;color:var(--gray-600);padding:4px 0 4px 16px;position:relative;line-height:1.45;}
+  .page-card ul li::before{content:'–';position:absolute;left:0;color:var(--gray-400);}
+
+  .always-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .always-item{
+    background:var(--white);border:1px solid var(--gray-200);border-radius:7px;
+    padding:16px 18px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:500;color:var(--gray-700);
+  }
+  .always-item .gdot{width:6px;height:6px;border-radius:50%;background:var(--gray-400);flex-shrink:0;}
+
+  .cap-label{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gray-500);margin:30px 0 14px;
+  }
+  .capability-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+  .capability-card{
+    background:var(--white);border:1px solid var(--gray-200);border-top:2px solid var(--gray-900);
+    border-radius:8px;padding:28px 26px;box-shadow:var(--shadow-sm);
+    transition:box-shadow .2s var(--ease),transform .2s var(--ease);
+  }
+  .capability-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+  .cap-eyebrow{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;font-weight:500;}
+  .capability-card h4{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--gray-900);margin-bottom:10px;line-height:1.3;}
+  .cap-intro{font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.5;}
+  .capability-card ul{list-style:none;}
+  .capability-card ul li{font-size:13px;color:var(--gray-700);padding:7px 0 7px 18px;position:relative;line-height:1.5;border-top:1px solid var(--gray-100);}
+  .capability-card ul li:first-child{border-top:none;}
+  .capability-card ul li::before{content:'–';position:absolute;left:0;color:var(--gray-400);}
+
+  /* ── 03 matters ── */
+  .highlight-box{
+    background:var(--dark-header);border-radius:9px;border-left:3px solid var(--teal);
+    padding:34px 38px;margin-bottom:28px;max-width:760px;
+  }
+  .highlight-box p{font-size:15.5px;font-weight:300;color:rgba(255,255,255,0.88);max-width:680px;}
+  .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .trust-badge{
+    background:var(--white);border:1px solid var(--gray-200);border-radius:7px;
+    padding:18px 20px;text-align:center;transition:box-shadow .2s var(--ease);
+  }
+  .trust-badge:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px);}
+  .trust-badge .t{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-400);margin-bottom:6px;}
+  .trust-badge .v{font-size:14px;font-weight:600;color:var(--gray-900);}
+
+  /* ── 04 investment ── */
+  .invest-cards{display:flex;justify-content:center;margin-bottom:26px;}
+  .invest-card{
+    background:var(--white);border:1px solid var(--gray-200);border-radius:10px;
+    padding:44px 48px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);position:relative;
+    display:flex;gap:44px;align-items:flex-start;
+  }
+  .invest-price-col{flex:1;min-width:0;}
+  .invest-title{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:16px;}
+  .invest-price{font-family:'Fraunces',serif;font-size:42px;font-weight:600;color:var(--gray-900);letter-spacing:-.01em;line-height:1.1;}
+  .invest-note{font-size:12.5px;color:var(--gray-500);margin-top:12px;line-height:1.5;}
+  .invest-features{list-style:none;flex:1;min-width:0;border-left:1px solid var(--gray-200);padding-left:36px;}
+  .invest-features li{display:flex;gap:10px;font-size:14px;color:var(--gray-700);padding:8px 0;}
+  .invest-features li .ck{color:var(--gray-400);flex-shrink:0;margin-top:1px;font-weight:600;}
+
+  .grow-block{margin-bottom:26px;}
+  .grow-label{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    font-weight:500;color:var(--gray-500);margin-bottom:14px;
+  }
+  .grow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px;}
+  .grow-card{
+    background:var(--white);border:1px dashed var(--gray-300,#d1d5db);border-radius:8px;
+    padding:18px 20px;transition:border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease);
+  }
+  .grow-card:hover{border-color:var(--gray-500);transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+  .grow-card .gc-title{font-size:13.5px;font-weight:600;color:var(--gray-900);margin-bottom:6px;}
+  .grow-card .gc-desc{font-size:12.5px;color:var(--gray-600);line-height:1.5;}
+  .grow-note{font-size:12.5px;color:var(--gray-500);line-height:1.55;}
+
+  .invest-summary{
+    background:var(--gray-900);border-radius:9px;padding:26px 34px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:26px;
+  }
+  .summary-left{display:flex;flex-direction:column;gap:4px;}
+  .summary-price{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--white);}
+  .summary-terms{font-size:12.5px;color:rgba(255,255,255,0.5);}
+  .summary-cta{
+    background:var(--teal);color:var(--dark-header);font-weight:600;font-size:14px;
+    padding:12px 22px;border-radius:6px;text-decoration:none;white-space:nowrap;
+    transition:transform .15s var(--ease),box-shadow .15s var(--ease);
+  }
+  .summary-cta:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(24,161,173,0.3);}
+
+  .hosting-callout{
+    background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:8px;
+    padding:20px 24px;font-size:13.5px;color:var(--gray-700);line-height:1.6;
+  }
+  .hosting-callout strong{color:var(--gray-900);}
+
+  /* ── 05 process ── */
+  .process-steps{display:flex;flex-direction:column;}
+  .progress-strip{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:36px;}
+  .progress-done{
+    display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;color:var(--gray-500);
+    background:var(--gray-50);border:1px solid var(--gray-200);border-radius:20px;padding:7px 14px;
+  }
+  .progress-done .check{color:var(--green);font-weight:700;}
+  .progress-line{width:20px;height:1px;background:var(--gray-200);flex-shrink:0;}
+  .progress-next{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--white);background:var(--gray-900);border-radius:20px;padding:8px 16px;
+  }
+  .progress-next .pulse-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;
+    animation:pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(24,161,173,0.55);}
+    50%{opacity:0.55;box-shadow:0 0 0 5px rgba(24,161,173,0);}
+  }
+  .ongoing-box{
+    margin-top:18px;background:var(--dark-header);border-radius:9px;border-left:3px solid var(--teal);
+    padding:26px 30px;max-width:680px;
+  }
+  .ongoing-label{
+    font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,0.4);margin-bottom:10px;
+  }
+  .ongoing-box p{font-size:16px;font-weight:400;color:rgba(255,255,255,0.9);max-width:620px;line-height:1.65;}
+  .process-step{display:flex;gap:24px;padding-bottom:30px;position:relative;}
+  .process-step:last-child{padding-bottom:0;}
+  .step-num{
+    width:44px;height:44px;border-radius:50%;background:var(--gray-900);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--white);position:relative;z-index:1;
+  }
+  .step-connector{position:absolute;left:22px;top:44px;bottom:0;width:1px;background:var(--gray-200);}
+  .process-step:last-child .step-connector{display:none;}
+  .step-body h4{font-size:16px;font-weight:600;color:var(--gray-900);margin-bottom:5px;padding-top:8px;}
+  .step-body p{font-size:13.5px;color:var(--gray-600);max-width:580px;line-height:1.55;}
+  .step-body p strong{color:var(--gray-900);font-weight:600;}
+
+  .timeline-note{
+    margin-top:8px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;
+    padding:18px 22px;font-size:13px;color:var(--gray-600);line-height:1.6;
+  }
+  .timeline-note strong{color:var(--gray-900);}
+
+  /* ── 06 next ── */
+  .next-box{
+    background:var(--dark-header);border-radius:12px;padding:64px 40px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .next-box::before{
+    content:'';position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:60%;height:80%;
+    background:radial-gradient(circle,rgba(24,161,173,0.18) 0%,rgba(24,161,173,0) 70%);pointer-events:none;
+  }
+  .next-box h2{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--white);letter-spacing:-0.01em;position:relative;z-index:1;margin-bottom:10px;}
+  .next-box .sub{color:rgba(255,255,255,0.55);font-size:14.5px;position:relative;z-index:1;margin-bottom:32px;}
+  .cta-row{display:flex;justify-content:center;gap:14px;position:relative;z-index:1;flex-wrap:wrap;}
+  .cta-btn{
+    display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:7px;
+    font-size:14px;font-weight:600;text-decoration:none;transition:transform .15s var(--ease),box-shadow .15s var(--ease);
+  }
+  .cta-primary{background:var(--teal);color:var(--dark-header);}
+  .cta-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(24,161,173,0.35);}
+  .cta-ghost{background:transparent;border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);}
+  .cta-ghost:hover{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.03);}
+  .contact-note{position:relative;z-index:1;margin-top:26px;font-size:12.5px;color:rgba(255,255,255,0.4);}
+  .contact-note a{color:var(--teal);text-decoration:none;}
+
+  .proof-row{text-align:center;margin-top:28px;font-size:13px;color:var(--gray-500);}
+  .proof-row a{color:var(--teal);text-decoration:none;font-weight:500;}
+
+  /* ══════════ RESPONSIVE ══════════ */
+  @media (max-width:900px){
+    .sidebar{transform:translateX(-100%);}
+    .sidebar.mobile-open{transform:translateX(0);}
+    .main{margin-left:0;}
+    .fab{display:flex;}
+    html:not([data-mode="deposit"]) .mobile-cta.consult-only{display:inline-flex !important;}
+    html[data-mode="deposit"] .mobile-cta.deposit-only{display:inline-flex !important;}
+    .cover-top,.cover-body,.cover-footer{padding-left:0;padding-right:0;}
+    .cover{padding-left:20px;padding-right:20px;}
+    .cover-title{font-size:38px;}
+    .content{padding:0;}
+    section{padding:88px 20px;}
+    .page-grid{grid-template-columns:1fr;}
+    .badge-grid{grid-template-columns:repeat(2,1fr);}
+    .grow-grid{grid-template-columns:1fr;}
+    .capability-grid{grid-template-columns:1fr;}
+    .invest-card{flex-direction:column;}
+    .invest-features{border-left:none;border-top:1px solid var(--gray-200);padding-left:0;padding-top:22px;margin-top:8px;}
+    .cta-row{flex-direction:column;align-items:stretch;}
+    .cta-btn{justify-content:center;width:100%;}
+  }
+  @media (max-width:600px){
+    .cover{padding:32px 20px;}
+    .cover-meta{flex-direction:column;}
+    .cover-meta-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.09);}
+    .cover-meta-item:last-child{border-bottom:none;}
+    .page-grid{grid-template-columns:1fr;}
+    .always-grid{grid-template-columns:repeat(2,1fr);}
+    .badge-grid{grid-template-columns:1fr 1fr;}
+    .invest-summary{flex-direction:column;text-align:center;}
+    .next-box{padding:44px 20px;}
+    .letter-card{padding:30px 26px;}
+    .invest-card{padding:32px 26px;}
+    .main{padding:0;}
+    .content{padding:0;}
+    section{padding:72px 16px;}
+    .proof-row{text-align:center;}
+  }
+
+  /* ── print ── */
+  @media print{
+    .sidebar,.fab,.mobile-cta,.nav-overlay,.proof-row{display:none !important;}
+    .main{margin-left:0;}
+    .cover{min-height:auto;padding:40px;}
+    .cover,.next-box,.highlight-box,.invest-summary,.dark-header{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    * {-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+    section{padding:28px 40px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<button class="fab" id="fab" aria-label="Open menu">☰</button>
+<a href="#next" class="mobile-cta consult-only">Let's Talk →</a>
+<a href="#next" class="mobile-cta deposit-only" id="mobileDepositCta">Get Started →</a>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <div class="sb-brand"><span class="dot"></span>Latz Web Design</div>
+    <div class="sb-client">Classic Log Homes</div>
+    <div class="sb-doctype">Phase 2 — Gallery Proposal</div>
+  </div>
+  <nav class="sb-nav">
+    <a href="#note" class="nav-link active">01 · A Note From Jordan</a>
+    <a href="#getting" class="nav-link">02 · What You're Getting</a>
+    <a href="#investment" class="nav-link">03 · Investment</a>
+    <a href="#process" class="nav-link">04 · How It Works</a>
+    <a href="#next" class="nav-link">05 · Ready to Move Forward?</a>
+  </nav>
+  <a href="#next" class="sb-cta consult-only">Let's Talk →</a>
+  <a href="#next" class="sb-cta deposit-only" id="sidebarDepositCta">Get Started →</a>
+  <div class="sb-footer">
+    <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a><br>
+    No fluff. Just results.
+  </div>
+</aside>
+
+<main class="main">
+
+  <section class="cover" id="cover">
+    <div class="cover-top">
+      <div class="cover-brand">Latz Web Design</div>
+      <div class="cover-badge">Phase 2 Proposal</div>
+    </div>
+    <div class="cover-body">
+      <div class="cover-overline"><span class="dash"></span>Prepared for</div>
+      <h1 class="cover-title">Classic Log Homes</h1>
+      <div class="cover-meta">
+        <div class="cover-meta-item"><span class="label">Prepared By</span><span class="value">Jordan Latz</span></div>
+        <div class="cover-meta-item"><span class="label">Date</span><span class="value">August 11, 2026</span></div>
+        <div class="cover-meta-item"><span class="label">Site</span><span class="value">Live Site (Phase 1)</span></div>
+        <div class="cover-meta-item"><span class="label">Scope</span><span class="value">Gallery Add-On</span></div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <span>jordan@latzwebdesign.com</span>
+      <span>latzwebdesign.com</span>
+    </div>
+  </section>
+
+  <div class="content">
+    <div class="content-shadow"></div>
+
+    <!-- 01 — A NOTE FROM JORDAN -->
+    <section id="note">
+      <div class="section-header reveal"><span class="num">01</span><h2>A Note From Jordan</h2></div>
+      <div class="letter-card reveal">
+        <div class="letterhead">Stevens Point, WI</div>
+        <p class="salutation">Jeff,</p>
+        <p>Phase 1's been live for a while now, and the dynamic floor/design page system is doing exactly what it was built to do. But there's still one spot where you're sending potential buyers off your own site: the gallery. Right now, anyone who wants to see a finished Classic Log Home has to go dig through one of your 50+ Facebook albums — all 1,400+ photos of it — instead of staying on the site that's actually trying to sell them a home.</p>
+        <p>For someone deciding on a purchase this size, real photos of homes you've actually built are the most convincing thing on your entire site — more than any floor plan or spec sheet. The wireframe I sent lays out how we fix that: one gallery page pulling in albums you manage yourself, and a single reusable template that gives every album — the 50 you have now and every one after — its own real, indexable page instead of a Facebook link.</p>
+        <p>Since we're reusing the lightbox and design language that's already live on your site, this is a lighter build than Phase 1 was — most of the heavy lifting's already done. You'll be able to create new albums yourself the moment a project wraps, no calling me for it.</p>
+        <p>Same deal as before — no fluff, no monthly fee, and you're still just a call or email away from me directly. Here's what it takes to get your galleries off Facebook and onto a site that's actually working for you.</p>
+        <p class="sign">— Jordan</p>
+      </div>
+    </section>
+
+    <!-- 02 — WHAT YOU'RE GETTING -->
+    <section id="getting">
+      <div class="section-header reveal"><span class="num">02</span><h2>What You're Getting</h2></div>
+
+      <div class="page-grid">
+        <div class="page-card reveal">
+          <h4>Gallery</h4><span class="slug">/gallery</span>
+          <ul>
+            <li>Editable hero image up top</li>
+            <li>Grid of your client-managed albums, pulled straight from your CMS</li>
+            <li>Every album you create shows up here automatically — no extra step</li>
+          </ul>
+        </div>
+        <div class="page-card reveal">
+          <h4>Album Detail</h4><span class="slug">/gallery/[album-slug]</span>
+          <ul>
+            <li>One reusable template powers every album — create a new one, get a new page instantly</li>
+            <li>Indexable, SEO-friendly URL and visible title & description for each album</li>
+            <li>Photo grid built for real volume — lazy-loaded/paginated for albums in the hundreds</li>
+            <li>Reuses your existing lightbox — nothing new for visitors to learn</li>
+            <li>Each photo carries a title, description, and an internal keyword field for your own search — not shown publicly</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="always-grid">
+        <div class="always-item reveal"><span class="gdot"></span>Mobile-First</div>
+        <div class="always-item reveal"><span class="gdot"></span>SEO Foundations</div>
+        <div class="always-item reveal"><span class="gdot"></span>Live Dev Link</div>
+        <div class="always-item reveal"><span class="gdot"></span>Copywriting</div>
+        <div class="always-item reveal"><span class="gdot"></span>You Own It</div>
+        <div class="always-item reveal"><span class="gdot"></span>Fast & Reliable</div>
+      </div>
+
+      <div class="cap-label reveal">Not Just a Gallery</div>
+      <div class="capability-grid">
+        <div class="capability-card reveal">
+          <div class="cap-eyebrow">Custom CMS</div>
+          <h4>Built For What You Actually Manage</h4>
+          <p class="cap-intro">Not a generic dashboard bolted onto a template — a content system built around your content.</p>
+          <ul>
+            <li>Structured for what you manage — services, team, job listings stay organized, not buried in a page builder</li>
+            <li>Edit exactly what you need. No bloated plugin menus, no clutter</li>
+            <li>Update photos, hours, copy, and listings yourself — no developer, no waiting</li>
+            <li>Yours to keep. No software license, no monthly CMS fee</li>
+          </ul>
+        </div>
+        <div class="capability-card reveal">
+          <div class="cap-eyebrow">Technical SEO</div>
+          <h4>SEO That's Actually Built In</h4>
+          <p class="cap-intro">Most sites bolt on a plugin and call it done. Here's what's actually running under yours:</p>
+          <ul>
+            <li>Every page optimized individually — its own title and description, not one template for the whole site</li>
+            <li>Structured data tells Google exactly what you are — hours, services, service area — so you're eligible for richer search results, not just a blue link</li>
+            <li>Real preview images when your site's shared on Facebook, LinkedIn, or text — not a broken thumbnail</li>
+            <li>Sitemap submitted, site verified with Google, indexing requested at launch — Google knows you exist from day one</li>
+          </ul>
+        </div>
+        <div class="capability-card reveal">
+          <div class="cap-eyebrow">Conversion-Focused</div>
+          <h4>Not Just Pretty — Built to Get You Leads</h4>
+          <p class="cap-intro">A beautiful site that doesn't convert is a brochure, not a business tool.</p>
+          <ul>
+            <li>Built mobile-first, because that's where most of your visitors actually are</li>
+            <li>Forms are spam-filtered, so your inbox gets real leads, not junk</li>
+            <li>Clear paths to action on every page — no guessing what you want a visitor to do next</li>
+            <li>Analytics wired up from day one, so you can see what's actually working</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 — INVESTMENT -->
+    <section id="investment">
+      <div class="section-header reveal"><span class="num">03</span><h2>Investment</h2></div>
+
+      <div class="invest-cards">
+        <div class="invest-card reveal">
+          <div class="invest-price-col">
+            <div class="invest-title">Gallery Add-On</div>
+            <div class="invest-price">$975</div>
+          </div>
+          <ul class="invest-features">
+            <li><span class="ck">✓</span> Gallery page + one reusable album template — covers every album, current and future</li>
+            <li><span class="ck">✓</span> Self-serve album creation — add a new one yourself, no calling us</li>
+            <li><span class="ck">✓</span> Built for your full library — 1,400+ photos, lazy-loaded so pages stay fast</li>
+            <li><span class="ck">✓</span> Reuses your site's existing lightbox — nothing new to learn</li>
+            <li><span class="ck">✓</span> Every album gets its own indexable, SEO-friendly page</li>
+            <li><span class="ck">✓</span> Yours the same way Phase 1 is — you own the code, forever</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="invest-summary reveal">
+        <div class="summary-left">
+          <div class="summary-price">$975</div>
+          <div class="summary-terms consult-only">50% to start · 50% at launch — invoiced once you give the go-ahead</div>
+          <div class="summary-terms deposit-only">50% to start · 50% at launch</div>
+        </div>
+        <a href="#next" class="summary-cta consult-only">Let's Finalize →</a>
+        <a href="#next" class="summary-cta deposit-only">Move Forward →</a>
+      </div>
+    </section>
+
+    <!-- 04 — HOW IT WORKS -->
+    <section id="process">
+      <div class="section-header reveal"><span class="num">04</span><h2>How It Works</h2></div>
+
+      <div class="progress-strip reveal">
+        <div class="progress-done"><span class="check">✓</span> Discovery Call</div>
+        <div class="progress-line"></div>
+        <div class="progress-done"><span class="check">✓</span> Wireframe</div>
+        <div class="progress-line"></div>
+        <div class="progress-done"><span class="check">✓</span> This Proposal</div>
+        <div class="progress-line"></div>
+        <div class="progress-next"><span class="pulse-dot"></span>You Are Here</div>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-num">1</div>
+          <div class="step-connector"></div>
+          <div class="step-body">
+            <h4 class="consult-only">Finalize Scope & Kickoff</h4>
+            <p class="consult-only">Just give me the go-ahead and I'll send an invoice for the 50% deposit. We're moving within 24 hours of it clearing.</p>
+            <h4 class="deposit-only">Deposit & Kickoff</h4>
+            <p class="deposit-only">Your deposit locks in the project and keeps things moving. I'll reach out within 24 hours to confirm any remaining details.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">2</div>
+          <div class="step-connector"></div>
+          <div class="step-body">
+            <h4>Design Direction — Mostly Already Decided</h4>
+            <p>Since the gallery lives on your existing site, we're extending the colors, type, and lightbox already live — not building a new design system from scratch. This step is really just confirming how the album grid and detail pages lay out before anything gets built.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">3</div>
+          <div class="step-connector"></div>
+          <div class="step-body">
+            <h4>Built Live, As We Go</h4>
+            <p>I build the gallery page and the album template, then hand you a live link — an actual working page, not a mockup. You'll be able to see it and start planning your first album uploads before we're even done.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">4</div>
+          <div class="step-connector"></div>
+          <div class="step-body">
+            <h4>Review & Refine</h4>
+            <p>A final pass on layout and photo handling — we'll fine-tune it together until it's ready to launch.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Launch & Handoff</h4>
+            <p>The gallery goes live on your site, linked in from your main nav, and you get self-serve album creation in your CMS, ready for your first uploads. <strong>The gallery's yours to fill and grow, forever.</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-note reveal">
+        <strong>Realistic estimate once we kick off: 2–3 weeks.</strong> Your wireframe's done and approved, and since we're reusing the lightbox and design system already live on your site, there's a lot less to build than a from-scratch page would need.
+      </div>
+
+      <div class="ongoing-box reveal">
+        <div class="ongoing-label">After Launch</div>
+        <p>I don't disappear once the gallery's live. Want to add tag filtering down the road, need a hand with a big migration batch, or just have an idea for the gallery? I'm a call or email away — you only pay when you actually need something. No retainer, no monthly fee, no ticket queue.</p>
+        <div class="voice-sign">— Jordan</div>
+      </div>
+    </section>
+
+    <!-- 05 — READY TO MOVE FORWARD -->
+    <section id="next">
+      <div class="next-box">
+        <h2>Ready to Move Forward?</h2>
+        <p class="sub consult-only">Give me the go-ahead, and I'll send over an invoice.</p>
+        <p class="sub deposit-only">Lock in your project with a 50% deposit.</p>
+        <div class="cta-row">
+          <a href="mailto:jordan@latzwebdesign.com?subject=Classic%20Log%20Homes%20Gallery%20-%20Let's%20Finalize" class="cta-btn cta-primary consult-only">Email Jordan →</a>
+          <a href="#" class="cta-btn cta-primary deposit-only" id="depositBtnPrimary">Get Started →</a>
+          <a href="tel:" class="cta-btn cta-ghost" id="phoneBtn" style="display:none;">Call Jordan</a>
+        </div>
+        <p class="contact-note consult-only">Each deposit is 50% — remainder due at launch. <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></p>
+        <p class="contact-note deposit-only">Each deposit is 50% — remainder due at launch. <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></p>
+      </div>
+      <div class="proof-row">Curious what it's like to work together? <a href="https://www.google.com/search?sca_esv=363f2324dce834b8&sxsrf=APpeQntHFLZz3AEl_yF-Gvv66PVinb0lQQ:1785514538835&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_3jcof7ZzOsTuyB6SIG2pgUKj43rjvrzBG6LL4aYFm7iVQUfrE3a8RTliZF3ukmrWMx1xk1td-atqQE2-vx355qzO_8J&q=Latz+Web+Design+Reviews&sa=X&ved=2ahUKEwjuhdD-p_2VAxVDjCsGHWGDOs8Q0bkNegQIMxAF&biw=1862&bih=894&dpr=1.1" target="_blank">See what clients are saying →</a></div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CLIENT CONFIG — update these before sending
+  // ─────────────────────────────────────────────
+  const ENGAGEMENT_MODE = 'consult';   // 'deposit' | 'consult'
+  const PAYPAL_975 = '';               // 50% deposit link ($487.50) — only used when ENGAGEMENT_MODE === 'deposit'
+  const JORDAN_PHONE = '';             // e.g. 'tel:7155551234' — leave blank to hide the phone button
+  // ─────────────────────────────────────────────
+
+  document.documentElement.setAttribute('data-mode', ENGAGEMENT_MODE);
+
+  if (ENGAGEMENT_MODE === 'deposit') {
+    document.querySelectorAll('#depositBtnPrimary, #sidebarDepositCta, #mobileDepositCta').forEach(el => {
+      if (PAYPAL_975) { el.href = PAYPAL_975; } else { el.style.display = 'none'; }
+    });
+  }
+  if (JORDAN_PHONE) {
+    const phoneBtn = document.getElementById('phoneBtn');
+    phoneBtn.href = JORDAN_PHONE.startsWith('tel:') ? JORDAN_PHONE : 'tel:' + JORDAN_PHONE;
+    phoneBtn.style.display = 'inline-flex';
+  }
+
+  // ── scrollspy ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sb-nav a');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => spy.observe(s));
+
+  // ── reveal on scroll ──
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        reveal.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => reveal.observe(el));
+
+  // ── mobile sidebar ──
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('fab');
+  const overlay = document.getElementById('navOverlay');
+  function openMenu(){ sidebar.classList.add('mobile-open'); overlay.classList.add('visible'); fab.textContent='✕'; }
+  function closeMenu(){ sidebar.classList.remove('mobile-open'); overlay.classList.remove('visible'); fab.textContent='☰'; }
+  fab.addEventListener('click', () => sidebar.classList.contains('mobile-open') ? closeMenu() : openMenu());
+  overlay.addEventListener('click', closeMenu);
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

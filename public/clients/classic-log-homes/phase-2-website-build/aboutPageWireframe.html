@@ -1,0 +1,1269 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Classic Log Homes — About / Meet Jeff Wireframe | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Manrope:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #1e1e1e;
+				--primary-mid: #322f29;
+				--accent: #cfa240;
+				--accent-light: rgba(207, 162, 64, 0.08);
+				--light: #fff8e3;
+				--light-dark: #f3ecd2;
+				--mid: #7a7261;
+				--green: #5c7a52;
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Manrope', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(30, 30, 30, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(30, 30, 30, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Manrope', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Manrope', sans-serif;
+				font-size: 24px;
+				font-weight: 800;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Manrope', sans-serif;
+				font-size: 14px;
+				color: rgba(255, 248, 227, 0.4);
+				letter-spacing: 0.06em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(207, 162, 64, 0.15);
+				border: 1px solid rgba(207, 162, 64, 0.35);
+				border-radius: 5px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: var(--accent);
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Manrope', sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+
+			.status-pill.ready {
+				background: rgba(92, 122, 82, 0.15);
+				border: 1px solid rgba(92, 122, 82, 0.35);
+			}
+
+			.status-pill.ready .status-dot {
+				background: var(--green);
+				animation: none;
+			}
+
+			.status-pill.ready span {
+				color: var(--green);
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Manrope', sans-serif;
+				font-size: 12px;
+				font-weight: 700;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 10px 14px;
+				color: rgba(255, 248, 227, 0.45);
+				text-decoration: none;
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				font-weight: 500;
+				border-radius: 6px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(207, 162, 64, 0.12);
+				border-left-color: var(--accent);
+				font-weight: 700;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Manrope', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--primary);
+				border: none;
+				font-size: 30px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 45px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Manrope', sans-serif;
+				font-size: 48px;
+				font-weight: 800;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.15;
+				letter-spacing: 0.01em;
+			}
+
+			.doc-sub {
+				font-family: 'Manrope', sans-serif;
+				font-size: 20px;
+				color: rgba(30, 30, 30, 0.55);
+				font-weight: 400;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1.5px solid rgba(30, 30, 30, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(30, 30, 30, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(30, 30, 30, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Manrope', sans-serif;
+				font-size: 17px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SHAPE-ONLY CALLOUT ── */
+			.shape-only-banner {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 24px;
+				margin-bottom: 40px;
+				background: rgba(207, 162, 64, 0.05);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				line-height: 1.6;
+				color: var(--primary);
+			}
+			.shape-only-banner strong {
+				color: var(--accent);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 2px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(30, 30, 30, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 2px solid var(--primary);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Manrope', sans-serif;
+				font-weight: 800;
+				font-size: 20px;
+				color: var(--primary);
+				letter-spacing: 0.01em;
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				font-family: 'Manrope', sans-serif;
+				font-size: 16px;
+				font-weight: 500;
+				color: rgba(30, 30, 30, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 700;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: var(--primary);
+				line-height: 1.5;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(30, 30, 30, 0.04);
+				border-left: 4px solid rgba(30, 30, 30, 0.2);
+				border-radius: 0 6px 6px 0;
+			}
+
+			/* ── DECISION BOX ── */
+			.decision-box {
+				border: 2px dashed var(--accent);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin: 20px 0;
+				background: rgba(207, 162, 64, 0.04);
+			}
+
+			.decision-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 11px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.decision-label::before {
+				content: '⚑';
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 2px dashed rgba(30, 30, 30, 0.15);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(255, 248, 227, 0.4);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 11px;
+			}
+
+			.wf-block-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--mid);
+				border: 1px solid var(--mid);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			.tag-row {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Manrope', sans-serif;
+				font-size: 36px;
+				font-weight: 800;
+				color: var(--primary);
+				margin-bottom: 8px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-md {
+				font-family: 'Manrope', sans-serif;
+				font-size: 25px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Manrope', sans-serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+				letter-spacing: 0.01em;
+			}
+
+			.wf-subtext {
+				font-family: 'Manrope', sans-serif;
+				font-size: 20px;
+				color: rgba(30, 30, 30, 0.5);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(30, 30, 30, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--primary);
+			}
+			.wf-cta.outline {
+				background: transparent;
+				border: 1.5px solid var(--light-dark);
+				color: var(--light);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 2px solid var(--primary);
+				padding: 20px 31px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.wf-footer span {
+				font-family: 'Manrope', sans-serif;
+				font-size: 15px;
+				color: rgba(255, 248, 227, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(30, 30, 30, 0.07);
+				border: 2px dashed rgba(30, 30, 30, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 17px;
+				color: rgba(30, 30, 30, 0.4);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── CONTENT PLACEHOLDER (shape only, no real copy) ── */
+			.content-placeholder {
+				background: rgba(30, 30, 30, 0.03);
+				border: 2px dashed rgba(30, 30, 30, 0.18);
+				border-radius: 8px;
+				padding: 22px 24px;
+				display: flex;
+				align-items: center;
+				min-height: 90px;
+			}
+
+			.content-placeholder.tall {
+				min-height: 150px;
+			}
+
+			.content-placeholder .cp-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16px;
+				color: rgba(30, 30, 30, 0.5);
+				line-height: 1.6;
+			}
+
+			.content-placeholder .cp-label strong {
+				color: var(--primary);
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Manrope', sans-serif;
+				font-size: 15px;
+				font-weight: 700;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 130px;
+				letter-spacing: 0.01em;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(30, 30, 30, 0.1);
+				color: var(--primary);
+				border: 1.5px dashed var(--primary);
+			}
+
+			.sitemap-box.new {
+				background: rgba(207, 162, 64, 0.15);
+				color: var(--primary);
+				border: 1.5px dashed var(--accent);
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25px;
+				color: rgba(30, 30, 30, 0.3);
+				padding: 0 11px;
+				align-self: center;
+				margin-top: -20px;
+			}
+
+			.sitemap-note {
+				font-family: 'Manrope', sans-serif;
+				font-size: 14px;
+				color: rgba(30, 30, 30, 0.45);
+				text-align: center;
+				margin-top: 4px;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1px dashed rgba(30, 30, 30, 0.12);
+				font-family: 'Manrope', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+				line-height: 1.5;
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 45px 34px 112px;
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 28px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(30, 30, 30, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 15px;
+					gap: 10px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Classic Log Homes</div>
+				<div class="sidebar-doctype">Site Wireframes — Phase 2: About</div>
+				<div class="status-pill ready">
+					<div class="status-dot"></div>
+					<span>Client Ready</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Page</div>
+				<a href="#about" class="nav-link"><span class="nav-icon">👤</span> About / Meet Jeff</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Classic Log Homes</div>
+				<div class="doc-sub">
+					Phase 2 &nbsp;·&nbsp; About / Meet Jeff — Structural Draft, Content Pending
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value ok">Client Ready</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Page Type</span>
+						<span class="meta-value">Static · single page</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Jeff Glaza</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Content</span>
+						<span class="meta-value warn">Not yet gathered</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 20px; font-size: 18px; padding: 17px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs to exist on each section and how it should behave, not how it should be designed. Layout, hierarchy, and visual treatment are in the designer's hands.
+			</div>
+
+			<!-- SHAPE ONLY BANNER -->
+			<div class="shape-only-banner">
+				📝 <strong>This wireframe is shape-only.</strong> Content for this page hasn't been gathered from Jeff yet. Every block below shows a purpose label describing what needs to go there instead of real copy — nothing here is written to be used as-is. The goal is for Jeff to see how the page flows and feels before he writes his own notes for each section.
+			</div>
+
+			<div class="shape-only-banner" style="border-color: rgba(30,30,30,0.25); background: rgba(30,30,30,0.03)">
+				🔀 <strong>The six sections themselves can change.</strong> The page is locked at six sections stacked vertically, but what each one covers is not — labels like "Section 2 (e.g. Jeff's Story)" below are examples, not requirements. Jeff can swap a section's topic, reorder them, combine two into one, or rename any of them once he decides what he actually wants to say.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 28px">
+							<div class="wf-heading-sm" style="margin-bottom: 6px">Classic Log Homes — Phase 2 Addition</div>
+							<div class="wf-subtext" style="margin-bottom: 0">
+								One new static page, expanding the "You talk to Jeff" trust block from the home page into its own destination.
+							</div>
+						</div>
+
+						<div class="sitemap" style="gap: 8px; align-items: flex-start">
+							<div class="sitemap-node">
+								<div class="sitemap-box secondary">
+									Home<br /><span style="font-size: 12px; font-weight: 400; opacity: 0.7">/</span>
+								</div>
+								<div class="sitemap-note">existing</div>
+							</div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node">
+								<div class="sitemap-box new">
+									About / Meet Jeff<br /><span style="font-size: 12px; font-weight: 400; opacity: 0.7">/about</span>
+								</div>
+								<div class="sitemap-note">new · Phase 2</div>
+							</div>
+						</div>
+
+						<div class="annotation" style="margin-top: 24px">
+							Single page — no dynamic routing, no sub-routes. One URL, six sections stacked vertically. Content is CMS-editable, same as the rest of the site — this is one page document, not a collection generating multiple URLs like Floor Plans or Gallery. Route shown as /about as a placeholder; final slug and nav label are open questions (see Discussion Checklist).
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE: ABOUT / MEET JEFF ── -->
+			<section class="wf-section" id="about">
+				<div class="section-label">
+					<span class="section-num">1</span> About / Meet Jeff &mdash; /about
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Classic Log Homes</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Floor Plans</span>
+							<span>Gallery</span>
+							<span class="active">About</span>
+							<span>Reviews</span>
+							<span>Support</span>
+							<span>Contact</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- 1.1 Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.1 — Section 1 (e.g. Hero)</div>
+								<div class="tag-row">
+									<span class="cms-tag">CMS managed</span>
+									<span class="wf-block-tag">Shape only</span>
+								</div>
+							</div>
+							<div class="img-placeholder" style="height: 200px">
+								<div class="img-icon">👤</div>
+								<div class="img-label">Photo of Jeff — real, candid or professional. Needs sourcing.</div>
+							</div>
+							<div class="content-placeholder" style="margin-top: 16px">
+								<span class="cp-label"><strong>Short personal headline</strong> — one line introducing Jeff, written once the photo is chosen. Client to write.</span>
+							</div>
+							<div class="annotation">
+								First thing a visitor sees — puts a face and a name behind "you talk to Jeff" before they read a single word of the story below.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.2 His Story -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.2 — Section 2 (e.g. Jeff's Story)</div>
+								<div class="tag-row">
+									<span class="cms-tag">CMS managed</span>
+									<span class="wf-block-tag">Shape only</span>
+								</div>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap">
+								<div style="flex: 1; min-width: 220px">
+									<div class="content-placeholder tall">
+										<span class="cp-label"><strong>His story</strong> — client to provide rough timeline / key moments: how he got into log homes, what started the business, the 22-year arc to today.</span>
+									</div>
+								</div>
+								<div style="flex: 1; min-width: 220px">
+									<div class="img-placeholder" style="height: 150px">
+										<div class="img-icon">📷</div>
+										<div class="img-label">Optional supporting photo — early days or historical, if Jeff has one</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Chronological narrative — structure only, no real copy yet. Jeff fills in the actual timeline and milestones in his own words.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.3 Why You Talk To Me Directly -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.3 — Section 3 (e.g. Why You Talk to Me Directly)</div>
+								<div class="tag-row">
+									<span class="cms-tag">CMS managed</span>
+									<span class="wf-block-tag">Shape only</span>
+								</div>
+							</div>
+							<div class="content-placeholder tall">
+								<span class="cp-label"><strong>Philosophy on direct customer relationships</strong> — why the team stays small by choice, and what that means for the person on the other end of the call. Client's own words, not marketing copy.</span>
+							</div>
+							<div class="annotation">
+								Expands the "You talk to Jeff" home page trust block into its full argument — the reasoning behind staying small and hands-on, not just the fact of it.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.4 The Network -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.4 — Section 4 (e.g. The Network)</div>
+								<div class="tag-row">
+									<span class="cms-tag">CMS managed</span>
+									<span class="wf-block-tag">Shape only</span>
+								</div>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap">
+								<div style="flex: 1; min-width: 220px">
+									<div class="img-placeholder" style="height: 150px">
+										<div class="img-icon">🏭</div>
+										<div class="img-label">Sawmill / craftsman photos — same imagery need flagged on the home page's "How We're Built" section</div>
+									</div>
+								</div>
+								<div style="flex: 1; min-width: 220px">
+									<div class="content-placeholder tall">
+										<span class="cp-label"><strong>Mill and craftsman partnerships, in depth</strong> — more detail than the home page's icon strip. Who these partners are and what makes the relationship different, as much as Jeff's comfortable sharing.</span>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Home page treats this as a quick icon strip; this page is where it gets room to breathe.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.5 The Showroom -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">1.5 — Section 5 (e.g. The Showroom)</div>
+								<div class="tag-row">
+									<span class="cms-tag">CMS managed</span>
+									<span class="wf-block-tag">Shape only</span>
+								</div>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap">
+								<div style="flex: 1; min-width: 220px">
+									<div class="img-placeholder" style="height: 150px">
+										<div class="img-icon">🏠</div>
+										<div class="img-label">Showroom photos — Pittsville location, exterior and/or interior</div>
+									</div>
+								</div>
+								<div style="flex: 1; min-width: 220px">
+									<div class="content-placeholder tall">
+										<span class="cp-label"><strong>Invitation to visit in person</strong> — Pittsville address, what a visitor can expect to see and touch, appointment info. Reuse whatever's already confirmed elsewhere on the site.</span>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Gives the showroom real presence instead of a single line in the footer. Address and hours should stay consistent with whatever's confirmed on the Contact section.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- 1.6 CTA -->
+						<div class="wf-block" style="background: var(--primary); border-color: var(--primary)">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm" style="color: var(--light)">1.6 — Section 6 (e.g. Ready to Get Started?)</div>
+								<span class="wf-block-tag" style="color: var(--light); border-color: rgba(255,248,227,0.4)">Reused component</span>
+							</div>
+							<div style="text-align: center; padding: 10px 0">
+								<div class="wf-cta accent">Call Jeff</div>
+								<div class="wf-cta outline" style="margin-left: 10px">Send a Message</div>
+							</div>
+							<div class="annotation" style="background: rgba(255,248,227,0.06); border-left-color: rgba(255,248,227,0.3); color: var(--light)">
+								Same contact component and styling reused from the rest of the site — Home, Floor Plan Detail. Not a new design, just placed at the bottom of this page too.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Classic Log Homes, Inc. · Privacy Policy</span>
+						<span>Website by Latz Web Design</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Six Sections, One Page</strong> — Stacked vertically at a single URL. No dynamic routing, no sub-routes — this isn't a collection like Floor Plans or Gallery.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>CMS-Editable</strong> — Like the rest of the site, Jeff edits this page's text and images himself once it's populated, no need to call Jordan for routine updates.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Section Topics Are Swappable</strong> — The six-section structure is locked in, but what each section covers isn't. The labels shown (Hero, Jeff's Story, etc.) are examples, not requirements.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Content Not Yet Gathered</strong> — This wireframe shows structure and shape only. Purpose labels stand in for real copy until Jeff provides it.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Expands the Phase 1 Trust Block</strong> — This page is the full destination version of the "You talk to Jeff" block from the home page's why-us section.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Reused Contact Component</strong> — Bottom CTA reuses the same contact block and styling used elsewhere on the site.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">✅</span>
+								<div>
+									<strong>Network Section Gets More Depth</strong> — Same subject as the home page's "How We're Built" icon strip, expanded with real detail here.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Page Title &amp; Nav Label</strong> — "About" vs "Meet Jeff" vs something else. Affects both the nav link text and the URL slug (shown here as /about, placeholder only).
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Nav Placement</strong> — Where does this land in the main nav alongside Home, Floor Plans, Gallery, Reviews, Support, and Contact?
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Sawmill / Craftsman Imagery</strong> — Same open item as the home page's "How We're Built" section — still needs real photos from Jeff.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Showroom Photos &amp; Address</strong> — Need real showroom photos, and confirmation the Pittsville address and hours shown here match what's live elsewhere on the site.
+								</div>
+							</li>
+							<li class="check-item">
+								<span class="check-icon">⚑</span>
+								<div>
+									<strong>Content Gathering</strong> — Jeff to write or provide rough notes for all six sections. This wireframe exists to help him picture the shape before he starts writing.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
