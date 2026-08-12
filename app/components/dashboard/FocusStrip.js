@@ -22,7 +22,9 @@ import { buildFocusSections } from '@/app/utils/focusSignals';
 function SectionHeader({ label, count, tone = 'text-white/40' }) {
 	return (
 		<div className='flex items-center gap-2 mb-2.5'>
-			<span className={`font-mono text-[11px] tracking-widest uppercase ${tone}`}>
+			<span
+				className={`font-mono text-[11px] tracking-widest uppercase ${tone}`}
+			>
 				{label}
 			</span>
 			<span className='font-mono text-[11px] text-white/25'>{count}</span>
@@ -58,7 +60,11 @@ function StatBar({ overdue, dueSoon, later, waiting, attention, nudges }) {
 // no chip, no overlay badge — this is the version that actually landed.
 
 function MilestoneIcon({ isDesigner, isPast }) {
-	const tone = isPast ? 'text-danger' : isDesigner ? 'text-purple' : 'text-teal';
+	const tone = isPast
+		? 'text-danger'
+		: isDesigner
+			? 'text-purple'
+			: 'text-teal';
 
 	if (!isDesigner) {
 		return <TbStarFilled className={`text-base shrink-0 ${tone}`} />;
@@ -66,7 +72,9 @@ function MilestoneIcon({ isDesigner, isPast }) {
 
 	return (
 		<span className='relative inline-flex items-center justify-center shrink-0'>
-			<TbBrush className={`absolute -bottom-1 -right-1.5 text-[10px] ${tone}`} />
+			<TbBrush
+				className={`absolute -bottom-1 -right-1.5 text-[10px] ${tone}`}
+			/>
 			<TbStarFilled className={`relative text-base ${tone}`} />
 		</span>
 	);
@@ -86,13 +94,31 @@ function DayCount({ daysUntil, isToday, isPast, isDesigner }) {
 		);
 	}
 	const n = Math.abs(daysUntil);
-	const numberTone = isPast ? 'text-danger' : isDesigner ? 'text-purple' : 'text-teal';
-	const labelTone = isPast ? 'text-danger/60' : isDesigner ? 'text-purple' : 'text-white/30';
+	const numberTone = isPast
+		? 'text-danger'
+		: isDesigner
+			? 'text-purple'
+			: 'text-teal';
+	const labelTone = isPast
+		? 'text-danger/60'
+		: isDesigner
+			? 'text-purple'
+			: 'text-white/30';
 	return (
 		<div className='text-right shrink-0'>
-			<p className={` text-xl lg:text-3xl font-semibld leading-none tabular-nums ${numberTone}`}>{n}</p>
+			<p
+				className={` text-xl lg:text-3xl font-semibld leading-none tabular-nums ${numberTone}`}
+			>
+				{n}
+			</p>
 			<p className={`font-mono text-[11px] mt-1 ${labelTone}`}>
-				{isPast ? (n === 1 ? 'day overdue' : 'days overdue') : n === 1 ? 'day' : 'days'}
+				{isPast
+					? n === 1
+						? 'day overdue'
+						: 'days overdue'
+					: n === 1
+						? 'day'
+						: 'days'}
 			</p>
 		</div>
 	);
@@ -134,7 +160,9 @@ function DatedRow({ item }) {
 				{item.kind === 'milestone' ? (
 					<MilestoneIcon isDesigner={item.isDesigner} isPast={item.isPast} />
 				) : (
-					<span className={`w-1.25 h-1.25 lg:w-2 lg:h-2  rounded-full shrink-0 ${dot}`} />
+					<span
+						className={`w-1.25 h-1.25 lg:w-2 lg:h-2  rounded-full shrink-0 ${dot}`}
+					/>
 				)}
 				<div className='flex flex-col min-w-0 gap-0.5'>
 					<span className='font-mono text-xs text-white/35 truncate'>
@@ -186,10 +214,14 @@ function LaterRow({ item }) {
 						<span className='text-white/15'> · </span>
 						{item.projectName}
 					</span>
-					<span className='text-base text-white/70 leading-tight truncate'>{item.title}</span>
+					<span className='text-base text-white/70 leading-tight truncate'>
+						{item.title}
+					</span>
 				</div>
 			</div>
-			<span className={`font-mono text-xs shrink-0 whitespace-nowrap ${dateTone}`}>
+			<span
+				className={`font-mono text-xs shrink-0 whitespace-nowrap ${dateTone}`}
+			>
 				{formatDate(item.date)}
 			</span>
 		</Link>
@@ -313,7 +345,9 @@ function NudgeRow({ item }) {
 					<span className='text-white/15'> · </span>
 					{item.projectName}
 				</span>
-				<span className='text-base text-white/60 leading-tight truncate'>{item.title}</span>
+				<span className='text-base text-white/60 leading-tight truncate'>
+					{item.title}
+				</span>
 			</div>
 		</Link>
 	);
@@ -332,7 +366,8 @@ function NudgesSection({ items }) {
 				<div className='flex items-center gap-3'>
 					<TbCalendarOff className='text-base text-white/30' />
 					<span className='text-base text-white/50'>
-						{items.length} milestone{items.length === 1 ? '' : 's'} missing a target date
+						{items.length} milestone{items.length === 1 ? '' : 's'} missing a
+						target date
 					</span>
 				</div>
 				<TbChevronDown
@@ -353,7 +388,13 @@ function NudgesSection({ items }) {
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-export default function FocusStrip({ clients, notes = [], onArchive, onSent, onPinToggle }) {
+export default function FocusStrip({
+	clients,
+	notes = [],
+	onArchive,
+	onSent,
+	onPinToggle,
+}) {
 	const { overdue, dueSoon, later, waiting, pinned, needsAttention, nudges } =
 		buildFocusSections(clients, notes);
 
@@ -384,7 +425,11 @@ export default function FocusStrip({ clients, notes = [], onArchive, onSent, onP
 
 			{overdue.length > 0 && (
 				<div className='mb-8 lg:mb-12'>
-					<SectionHeader label='Overdue' count={overdue.length} tone='text-danger/70' />
+					<SectionHeader
+						label='Overdue'
+						count={overdue.length}
+						tone='text-danger/70'
+					/>
 					<div className='flex flex-col gap-2 font-mono'>
 						{overdue.map((item) => (
 							<DatedRow key={item.id} item={item} />
@@ -395,7 +440,11 @@ export default function FocusStrip({ clients, notes = [], onArchive, onSent, onP
 
 			{dueSoon.length > 0 && (
 				<div className='mb-8 lg:mb-12'>
-					<SectionHeader label='Due This Week' count={dueSoon.length} tone='text-teal/70' />
+					<SectionHeader
+						label='Due This Week'
+						count={dueSoon.length}
+						tone='text-teal/70'
+					/>
 					<div className='flex flex-col gap-2 font-mono'>
 						{dueSoon.map((item) => (
 							<DatedRow key={item.id} item={item} />
@@ -406,20 +455,14 @@ export default function FocusStrip({ clients, notes = [], onArchive, onSent, onP
 
 			<LaterSection items={later} />
 
-			{waiting.length > 0 && (
-				<div className='mb-8 lg:mb-12'>
-					<SectionHeader label='Waiting' count={waiting.length} tone='text-white/50' />
-					<div className='flex flex-col gap-2 font-mono'>
-						{waiting.map((item) => (
-							<WaitingRow key={item.id} item={item} />
-						))}
-					</div>
-				</div>
-			)}
-
+			
 			{pinned.length > 0 && (
 				<div className='mb-8 lg:mb-12'>
-					<SectionHeader label='Pinned' count={pinned.length} tone='text-warning/70' />
+					<SectionHeader
+						label='Pinned'
+						count={pinned.length}
+						tone='text-warning/70'
+					/>
 					<div className='grid sm:grid-cols-2 gap-3 '>
 						{pinned.map(({ id, note }) => (
 							<NoteCard
@@ -449,6 +492,21 @@ export default function FocusStrip({ clients, notes = [], onArchive, onSent, onP
 				</div>
 			)}
 
+
+			{waiting.length > 0 && (
+				<div className='mb-8 lg:mb-12'>
+					<SectionHeader
+						label='Waiting'
+						count={waiting.length}
+						tone='text-white/50'
+					/>
+					<div className='flex flex-col gap-2 font-mono'>
+						{waiting.map((item) => (
+							<WaitingRow key={item.id} item={item} />
+						))}
+					</div>
+				</div>
+			)}
 			<NudgesSection items={nudges} />
 		</div>
 	);

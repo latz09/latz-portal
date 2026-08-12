@@ -78,7 +78,7 @@ function sortByPaymentUrgency(projects) {
 function NextDueCell({ project, variant }) {
 	// Designer: pool her design milestones + one-off deadlines, soonest wins,
 	// TBD fallback for the next undated milestone.
-if (variant === 'designer') {
+	if (variant === 'designer') {
 		const next = nextDesignerDue(project);
 
 		// No upcoming due — say what state the project is in instead of "—".
@@ -100,14 +100,18 @@ if (variant === 'designer') {
 				label = 'In progress · being built';
 			}
 
-			return <span className='font-mono text-xs'><span className={tone}>{label}</span></span>;
+			return (
+				<span className='font-mono text-xs'>
+					<span className={tone}>{label}</span>
+				</span>
+			);
 		}
 
 		if (next.tbd) {
 			return (
 				<div className='flex flex-col'>
-					<span className='font-mono text-xs text-white/30'>TBD</span>
-					<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
+					<span className='font-mono text-base text-white/30'>TBD</span>
+					<span className='text-base text-white/40 truncate max-w-[160px] flex items-center gap-1'>
 						<TbStarFilled className='text-warning/60 text-[9px] shrink-0' />
 						{next.title}
 					</span>
@@ -115,23 +119,27 @@ if (variant === 'designer') {
 			);
 		}
 
-return (
+		return (
 			<div className='flex flex-col'>
 				{next.waiting ? (
-					<span className='font-mono text-[11px] lg:text-sm text-warning/85'>
+					<span className='font-mono text-[11px] lg:text-base text-warning/85'>
 						Waiting{next.waitingOn ? ` on ${next.waitingOn}` : ''}
 					</span>
 				) : (
 					<span
-						className={`font-mono text-xs ${
-							next.computed.isPast ? 'text-danger font-semibold' : 'text-white/70'
+						className={`font-mono text-base ${
+							next.computed.isPast
+								? 'text-danger font-semibold'
+								: 'text-white/70'
 						}`}
 					>
 						{formatDate(next.computed.date)}
 					</span>
 				)}
 				<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
-					{next.isMilestone && <TbStarFilled className='text-warning text-[9px] shrink-0' />}
+					{next.isMilestone && (
+						<TbStarFilled className='text-warning text-[9px] shrink-0' />
+					)}
 					{next.title}
 				</span>
 			</div>
@@ -152,7 +160,9 @@ return (
 				{formatDate(next.computed.date)}
 			</span>
 			<span className='text-xs text-white/40 truncate max-w-[160px] flex items-center gap-1'>
-				{next.isMilestone && <TbStarFilled className='text-warning text-[9px] shrink-0' />}
+				{next.isMilestone && (
+					<TbStarFilled className='text-warning text-[9px] shrink-0' />
+				)}
 				{next.title}
 			</span>
 		</div>
@@ -251,19 +261,23 @@ function DesignerLedgerRow({ p, hrefFor }) {
 	return (
 		<Link
 			href={hrefFor(p)}
-			className='flex items-center justify-between gap-3 py-3 border-b border-white/[0.06] active:bg-white/[0.03] transition-colors'
+			className='flex items-center justify-between gap-3 py-8 border-b border-white/[0.06] active:bg-white/[0.03] transition-colors'
 		>
-			<div className='flex items-start gap-2.5 min-w-0'>
-				<span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${dotColor}`} />
+			<div className='flex items-start gap-3 min-w-0'>
+				<span
+					className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${dotColor}`}
+				/>
 				<div className='flex flex-col min-w-0'>
-					<span className='font-mono text-xs text-white/50 truncate'>
+					<span className='font-mono text-sm text-white/50 truncate mb-1'>
 						{p.clientName}
 					</span>
-					<span className='font-mono text-sm text-white/90 truncate leading-tight'>
+					<span className='font-mono text-base text-white/90 truncate leading-tight mb-2'>
 						{p.name}
 					</span>
 					{dueLine && (
-						<span className={`font-mono text-[11px] truncate mt-0.5 ${dueTone}`}>
+						<span
+							className={`font-mono text-[11px] truncate mt-0.5 ${dueTone}`}
+						>
 							{dueLine}
 						</span>
 					)}
@@ -288,7 +302,7 @@ function DesignerLedgerRow({ p, hrefFor }) {
 	);
 }
 
-function MobileProjectCard({ p, isInternal, hrefFor, variant  }) {
+function MobileProjectCard({ p, isInternal, hrefFor, variant }) {
 	return (
 		<Link
 			href={hrefFor(p)}
@@ -474,7 +488,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 				</div>
 			)}
 
-		{/* Mobile */}
+			{/* Mobile */}
 			{isInternal ? (
 				<div className='flex flex-col gap-3 lg:hidden'>
 					{filtered.map((p) => (
@@ -487,7 +501,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 						/>
 					))}
 					{filtered.length === 0 && (
-						<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
+						<p className='px-4 py-5 text-center text-white/30 font-mono text-sm'>
 							No projects match this filter.
 						</p>
 					)}
@@ -498,7 +512,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 						<DesignerLedgerRow key={p._id} p={p} hrefFor={hrefFor} />
 					))}
 					{filtered.length === 0 && (
-						<p className='px-4 py-8 text-center text-white/30 font-mono text-sm'>
+						<p className='px-4 py-5 text-center text-white/30 font-mono text-sm'>
 							Nothing here.
 						</p>
 					)}
@@ -506,30 +520,30 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 			)}
 
 			{/* Desktop */}
-			<div className='hidden lg:block overflow-x-auto border border-white/10 rounded-xl'>
-				<table className='w-full text-left border-collapse'>
+			<div className='hidden lg:block overflow-x-auto border border-white/30 rounded-xl'>
+				<table className='w-full text-left border-collapse '>
 					<thead>
 						<tr className='border-b border-white/10 bg-white/5'>
-							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 								Client
 							</th>
-							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 								Project
 							</th>
 							{isInternal && !isMoneyView && (
-								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
+								<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 									Status
 								</th>
 							)}
-							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 								Next Due
 							</th>
 							{isInternal && !isMoneyView && (
-								<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
+								<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 									Client $
 								</th>
 							)}
-							<th className='font-mono text-xs text-white/40 uppercase tracking-widest px-4 py-3'>
+							<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 								{isInternal ? 'Designer $' : 'Design Budget'}
 							</th>
 						</tr>
@@ -538,37 +552,37 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 						{filtered.map((p) => (
 							<tr
 								key={p._id}
-								className='border-b border-white/5 hover:bg-white/5 transition-colors'
+								className='border-b border-white/5 hover:bg-white/5 transition-colors '
 							>
-								<td className='px-4 py-3 text-sm text-white/80 whitespace-nowrap'>
+								<td className='px-4 py-5 text-sm text-white/80 font-mono whitespace-nowrap'>
 									{p.clientName}
 								</td>
-								<td className='px-4 py-3 text-sm'>
+								<td className='px-4 py-5 text-sm'>
 									<Link
 										href={hrefFor(p)}
-										className='text-teal hover:text-white transition-colors'
+										className='text-teal text-base hover:text-white transition-colors'
 									>
 										{p.name}
 									</Link>
 								</td>
 								{isInternal && !isMoneyView && (
 									<td
-										className={`px-4 py-3 font-mono text-xs uppercase ${
+										className={`px-4 py-5 font-mono text-base uppercase ${
 											STATUS_COLORS[p.status] || 'text-white/40'
 										}`}
 									>
 										{STATUS_LABELS[p.status] || p.status}
 									</td>
 								)}
-								<td className='px-4 py-3'>
+								<td className='px-4 py-5'>
 									<NextDueCell project={p} variant={variant} />
 								</td>
 								{isInternal && !isMoneyView && (
-									<td className='px-4 py-3'>
+									<td className='px-4 py-5'>
 										<ClientPaymentCell clientPayment={p.clientPayment} />
 									</td>
 								)}
-								<td className='px-4 py-3'>
+								<td className='px-4 py-5'>
 									<DesignerPaymentCell designerPayment={p.designerPayment} />
 								</td>
 							</tr>
@@ -577,7 +591,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 							<tr>
 								<td
 									colSpan={colCount}
-									className='px-4 py-8 text-center text-white/30 font-mono text-sm'
+									className='px-4 py-5 text-center text-white/30 font-mono text-sm'
 								>
 									{isMoneyView
 										? 'Nothing here.'
