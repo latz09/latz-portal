@@ -1,0 +1,2971 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Redevelopment Resources — Site Wireframes with Copy | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Playfair+Display:wght@400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #0d151e;
+				--primary-mid: #1c2b3d;
+				--accent: #8e4c40;
+				--accent-light: rgba(142, 76, 64, 0.08);
+				--light: #e8dfc8;
+				--light-dark: #ded2b0;
+				--mid: #8c8570;
+				--green: #4c6b4f;
+				--green-light: rgba(76, 107, 79, 0.1);
+				--white: #ffffff;
+				--sidebar-w: 336px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Source Sans 3', sans-serif;
+				background: var(--light);
+				background-image:
+					linear-gradient(rgba(13, 21, 30, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(13, 21, 30, 0.05) 1px, transparent 1px);
+				background-size: 39px 39px;
+				color: var(--primary);
+			}
+
+			/* ── OVERLAY ── */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 199;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: var(--sidebar-w);
+				height: 100vh;
+				background: var(--primary);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				border-right: 3px solid var(--primary-mid);
+				transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.sidebar-brand {
+				padding: 34px 28px 28px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-lwd {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.3);
+				margin-bottom: 11px;
+			}
+
+			.sidebar-client {
+				font-family: 'Playfair Display', serif;
+				font-size: 24px;
+				font-weight: 700;
+				color: var(--light);
+				line-height: 1.2;
+				margin-bottom: 6px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(232, 223, 200, 0.4);
+				letter-spacing: 0.08em;
+				margin-bottom: 17px;
+			}
+
+			.status-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(142, 76, 64, 0.2);
+				border: 1px solid rgba(142, 76, 64, 0.4);
+				border-radius: 6px;
+				padding: 6px 14px;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				background: #e08060;
+				border-radius: 50%;
+				animation: pulse 2.5s infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.3; }
+			}
+
+			.status-pill span {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: #e08060;
+			}
+
+			.sidebar-nav {
+				padding: 17px 11px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.2);
+				padding: 17px 14px 7px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 10px 14px;
+				color: rgba(232, 223, 200, 0.45);
+				text-decoration: none;
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 18px;
+				font-weight: 400;
+				border-radius: 7px;
+				transition: all 0.12s;
+				border-left: 2px solid transparent;
+				margin-bottom: 2px;
+			}
+
+			.nav-link:hover {
+				color: var(--light);
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.nav-link.active {
+				color: var(--light);
+				background: rgba(142, 76, 64, 0.18);
+				border-left-color: var(--accent);
+				font-weight: 500;
+			}
+
+			.nav-link.sub {
+				padding-left: 30px;
+				font-size: 16px;
+			}
+
+			.nav-icon {
+				font-size: 17px;
+				width: 22px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 20px 28px;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.05em;
+				line-height: 2;
+			}
+
+			/* ── MOBILE FAB ── */
+			.mobile-fab {
+				display: none;
+				position: fixed;
+				bottom: 34px;
+				right: 34px;
+				width: 73px;
+				height: 73px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--light);
+				border: none;
+				font-size: 31px;
+				z-index: 300;
+				box-shadow: 0 6px 22px rgba(0, 0, 0, 0.25);
+				cursor: pointer;
+				align-items: center;
+				justify-content: center;
+			}
+			.mobile-fab:active {
+				transform: scale(0.92);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: var(--sidebar-w);
+				min-height: 100vh;
+				padding: 67px 62px 140px;
+			}
+
+			/* ── PAGE HEADER ── */
+			.doc-header {
+				margin-bottom: 73px;
+			}
+
+			.doc-overline {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 11px;
+			}
+
+			.doc-title {
+				font-family: 'Playfair Display', serif;
+				font-size: 48px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+				line-height: 1.15;
+			}
+
+			.doc-sub {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 20px;
+				color: rgba(13, 21, 30, 0.55);
+				font-weight: 300;
+			}
+
+			.doc-meta-strip {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 2px solid rgba(13, 21, 30, 0.15);
+				border-radius: 8px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.meta-item {
+				padding: 14px 28px;
+				border-right: 1px solid rgba(13, 21, 30, 0.1);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: rgba(13, 21, 30, 0.4);
+			}
+
+			.meta-value {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 17px;
+				font-weight: 500;
+				color: var(--primary);
+			}
+
+			.meta-value.warn {
+				color: var(--accent);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* ── SECTION WRAPPER ── */
+			.wf-section {
+				margin-bottom: 90px;
+				scroll-margin-top: 45px;
+			}
+
+			.section-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: var(--primary);
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.section-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--primary);
+				opacity: 0.15;
+			}
+
+			.section-num {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			.section-sub {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: rgba(13, 21, 30, 0.45);
+				margin: -10px 0 20px 48px;
+			}
+
+			/* ── WIREFRAME CARD ── */
+			.wireframe-card {
+				background: rgba(255, 255, 255, 0.7);
+				border: 3px solid var(--primary);
+				border-radius: 8px;
+				box-shadow: 7px 7px 0 rgba(13, 21, 30, 0.1);
+				overflow: hidden;
+			}
+
+			/* ── NAV BAR IN WIREFRAME ── */
+			.wf-nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 31px;
+				border-bottom: 3px solid var(--primary);
+				background: var(--white);
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.wf-nav-logo {
+				font-family: 'Playfair Display', serif;
+				font-weight: 700;
+				font-size: 21px;
+				color: var(--primary);
+			}
+
+			.wf-nav-links {
+				display: flex;
+				gap: 22px;
+				align-items: center;
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 16px;
+				color: rgba(13, 21, 30, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.wf-nav-links span.active {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+
+			/* ── WIREFRAME BODY ── */
+			.wf-body {
+				padding: 39px 39px 50px;
+			}
+
+			/* ── ANNOTATION ── */
+			.annotation {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16px;
+				color: var(--primary);
+				line-height: 1.55;
+				margin-top: 14px;
+				padding: 11px 20px;
+				background: rgba(13, 21, 30, 0.04);
+				border-left: 4px solid rgba(13, 21, 30, 0.2);
+				border-radius: 0 6px 6px 0;
+			}
+
+			.annotation.flag {
+				background: rgba(142, 76, 64, 0.05);
+				border-left-color: rgba(142, 76, 64, 0.4);
+			}
+
+			/* ── CMS TAG ── */
+			.cms-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--green);
+				border: 1.5px solid var(--green);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── TEMPLATE TAG ── */
+			.template-tag {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 14px;
+				color: var(--accent);
+				border: 1.5px solid var(--accent);
+				border-radius: 4px;
+				padding: 3px 11px;
+				display: inline-block;
+				white-space: nowrap;
+			}
+
+			/* ── SECTION BLOCK ── */
+			.wf-block {
+				border: 3px dashed rgba(13, 21, 30, 0.15);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 22px;
+				background: rgba(232, 223, 200, 0.35);
+			}
+
+			.wf-block-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			/* ── TYPOGRAPHY ── */
+			.wf-heading-lg {
+				font-family: 'Playfair Display', serif;
+				font-size: 36px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-md {
+				font-family: 'Playfair Display', serif;
+				font-size: 25px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.wf-heading-sm {
+				font-family: 'Playfair Display', serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 6px;
+			}
+
+			.wf-subtext {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 20px;
+				color: rgba(13, 21, 30, 0.55);
+				font-style: italic;
+				margin-bottom: 20px;
+				line-height: 1.5;
+			}
+
+			.wf-body-text {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 18px;
+				color: rgba(13, 21, 30, 0.65);
+				line-height: 1.6;
+				margin-bottom: 14px;
+			}
+
+			.section-divider {
+				border: none;
+				border-top: 1px dashed rgba(13, 21, 30, 0.15);
+				margin: 28px 0;
+			}
+
+			/* ── CTA BUTTON ── */
+			.wf-cta {
+				display: inline-block;
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				padding: 13px 31px;
+				border-radius: 6px;
+				margin-top: 11px;
+			}
+			.wf-cta.accent {
+				background: var(--accent);
+				color: var(--light);
+			}
+			.wf-cta.outline {
+				background: transparent;
+				border: 1.5px solid var(--light);
+			}
+
+			/* ── FOOTER ── */
+			.wf-footer {
+				border-top: 3px solid var(--primary);
+				padding: 20px 31px;
+				background: var(--primary);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 6px;
+			}
+
+			.wf-footer span {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: rgba(232, 223, 200, 0.4);
+			}
+
+			/* ── IMAGE PLACEHOLDER ── */
+			.img-placeholder {
+				background: rgba(13, 21, 30, 0.07);
+				border: 3px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 11px;
+				padding: 28px;
+			}
+
+			.img-placeholder .img-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 39px;
+				opacity: 0.3;
+				color: var(--primary);
+			}
+
+			.img-placeholder .img-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 16px;
+				color: rgba(13, 21, 30, 0.45);
+				text-align: center;
+				line-height: 1.6;
+			}
+
+			/* ── DOCUMENT / LIST ROWS ── */
+			.doc-list {
+				display: flex;
+				flex-direction: column;
+				gap: 11px;
+				margin-top: 14px;
+			}
+
+			.doc-row {
+				display: flex;
+				align-items: center;
+				gap: 17px;
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+				flex-wrap: wrap;
+			}
+
+			.doc-icon {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				background: rgba(13, 21, 30, 0.08);
+				color: var(--primary);
+				border-radius: 4px;
+				padding: 6px 11px;
+				font-weight: 700;
+				white-space: nowrap;
+			}
+
+			.doc-info {
+				flex: 1;
+				min-width: 200px;
+			}
+
+			.doc-name {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 18px;
+				font-weight: 600;
+				color: var(--primary);
+			}
+
+			.doc-date {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: rgba(13, 21, 30, 0.5);
+			}
+
+			.doc-action {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: var(--primary);
+				border: 1.5px solid var(--primary);
+				border-radius: 4px;
+				padding: 4px 14px;
+				font-weight: 600;
+				white-space: nowrap;
+			}
+
+			/* ── FILTER / CHIP ROW ── */
+			.filter-row {
+				display: flex;
+				gap: 11px;
+				align-items: center;
+				margin-bottom: 20px;
+				flex-wrap: wrap;
+			}
+
+			.filter-label {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 15px;
+				color: rgba(13, 21, 30, 0.45);
+			}
+
+			.filter-pill {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 17px;
+				border: 2px solid rgba(13, 21, 30, 0.2);
+				border-radius: 28px;
+				padding: 4px 17px;
+				color: rgba(13, 21, 30, 0.55);
+			}
+
+			.filter-pill.active {
+				border-color: var(--primary);
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			/* ── PRODUCT / SERVICE / CASE CARDS ── */
+			.product-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 17px;
+				margin-top: 17px;
+			}
+
+			.product-card {
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 7px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.6);
+				text-align: center;
+			}
+
+			.product-name {
+				font-family: 'Playfair Display', serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.product-price {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: rgba(13, 21, 30, 0.5);
+				margin-bottom: 6px;
+			}
+
+			.product-action {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* ── CASE STUDY CARDS ── */
+			.case-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 17px;
+				margin-top: 17px;
+			}
+
+			.case-card {
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 7px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.case-name {
+				font-family: 'Playfair Display', serif;
+				font-size: 19px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 4px;
+			}
+
+			.case-location {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 21, 30, 0.5);
+				margin-bottom: 8px;
+			}
+
+			.case-result {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: var(--primary);
+				font-weight: 500;
+				margin-bottom: 8px;
+				line-height: 1.4;
+			}
+
+			.case-action {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* ── TESTIMONIAL CARDS ── */
+			.testimonial-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin-top: 17px;
+			}
+
+			.testimonial-card {
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 7px;
+				padding: 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.testimonial-card.empty {
+				opacity: 0.55;
+				text-align: center;
+			}
+
+			.testimonial-name {
+				font-family: 'Playfair Display', serif;
+				font-size: 18px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 2px;
+			}
+
+			.testimonial-title {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 13px;
+				color: rgba(13, 21, 30, 0.5);
+				margin-bottom: 8px;
+			}
+
+			.testimonial-quote {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 16px;
+				color: rgba(13, 21, 30, 0.65);
+				font-style: italic;
+				line-height: 1.5;
+			}
+
+			/* ── FORM FIELDS ── */
+			.form-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+				margin-top: 14px;
+			}
+
+			.form-field {
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 7px;
+				padding: 14px 20px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.form-field.full {
+				grid-column: 1 / -1;
+			}
+
+			.field-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: rgba(13, 21, 30, 0.45);
+				margin-bottom: 6px;
+			}
+
+			.field-placeholder {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 18px;
+				color: rgba(13, 21, 30, 0.35);
+			}
+
+			/* ── QUICK LINKS GRID ── */
+			.quick-links {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 14px;
+				margin: 20px 0;
+			}
+
+			.quick-link-card {
+				border: 3px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 8px;
+				padding: 20px 17px;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.quick-link-icon {
+				font-size: 28px;
+				margin-bottom: 8px;
+			}
+
+			.quick-link-label {
+				font-family: 'Playfair Display', serif;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--primary);
+			}
+
+			.quick-link-desc {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 21, 30, 0.55);
+				line-height: 1.5;
+				margin-top: 6px;
+			}
+
+			/* ── STAT STRIP ── */
+			.stat-strip {
+				display: flex;
+				gap: 14px;
+				flex-wrap: wrap;
+				margin-top: 6px;
+			}
+
+			.stat-item {
+				flex: 1;
+				min-width: 140px;
+				text-align: center;
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 7px;
+				padding: 20px 14px;
+				background: rgba(255, 255, 255, 0.6);
+			}
+
+			.stat-number {
+				font-family: 'Playfair Display', serif;
+				font-size: 39px;
+				font-weight: 700;
+				color: var(--primary);
+				line-height: 1.1;
+			}
+
+			.stat-label {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 21, 30, 0.5);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				margin-top: 6px;
+			}
+
+			/* ── FACT STRIP (case study quick facts) ── */
+			.fact-strip {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 11px;
+				margin: 14px 0;
+			}
+
+			.fact-pill {
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 28px;
+				padding: 8px 20px;
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: var(--primary);
+				background: rgba(255, 255, 255, 0.6);
+				font-weight: 500;
+			}
+
+			/* ── AUDIENCE CARDS (Who We Serve) ── */
+			.audience-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px;
+				margin-top: 14px;
+			}
+
+			.audience-card {
+				border: 2px dashed rgba(13, 21, 30, 0.2);
+				border-radius: 8px;
+				padding: 22px;
+				background: rgba(255, 255, 255, 0.55);
+			}
+
+			.audience-sector {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 13px;
+				color: var(--accent);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin-bottom: 8px;
+			}
+
+			.audience-name {
+				font-family: 'Playfair Display', serif;
+				font-size: 22px;
+				font-weight: 700;
+				color: var(--primary);
+				margin-bottom: 8px;
+			}
+
+			.audience-copy {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 16px;
+				color: rgba(13, 21, 30, 0.6);
+				line-height: 1.6;
+				margin-bottom: 11px;
+			}
+
+			.audience-match {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 15px;
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			/* ── CONDENSED TEMPLATE PAGE CARDS ── */
+			.condensed-page {
+				border: 3px dashed rgba(142, 76, 64, 0.35);
+				border-radius: 8px;
+				padding: 25px 22px;
+				margin-bottom: 20px;
+				background: rgba(142, 76, 64, 0.035);
+			}
+
+			.condensed-page-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+				flex-wrap: wrap;
+				gap: 10px;
+				margin-bottom: 12px;
+			}
+
+			.condensed-page-name {
+				font-family: 'Playfair Display', serif;
+				font-size: 24px;
+				font-weight: 700;
+				color: var(--primary);
+			}
+
+			.condensed-page-url {
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 14px;
+				color: rgba(13, 21, 30, 0.45);
+				margin-left: 10px;
+			}
+
+			/* ── SITEMAP ── */
+			.sitemap {
+				display: flex;
+				align-items: flex-start;
+				gap: 0;
+				justify-content: center;
+				margin: 28px 0;
+				flex-wrap: wrap;
+			}
+
+			.sitemap-node {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sitemap-box {
+				background: var(--primary);
+				color: var(--light);
+				font-family: 'Playfair Display', serif;
+				font-size: 15px;
+				font-weight: 700;
+				padding: 11px 20px;
+				border-radius: 6px;
+				text-align: center;
+				min-width: 150px;
+			}
+
+			.sitemap-box.secondary {
+				background: rgba(13, 21, 30, 0.1);
+				color: var(--primary);
+				border: 2px dashed var(--primary);
+			}
+
+			.sitemap-box.tertiary {
+				background: rgba(142, 76, 64, 0.1);
+				color: var(--primary);
+				border: 2px dashed var(--accent);
+				font-size: 13px;
+				min-width: 105px;
+				padding: 8px 12px;
+			}
+
+			.sitemap-arrow {
+				font-family: 'Architects Daughter', cursive;
+				font-size: 25px;
+				color: rgba(13, 21, 30, 0.3);
+				padding: 0 10px;
+				align-self: center;
+				margin-top: -20px;
+			}
+
+			.sitemap-children {
+				display: flex;
+				gap: 8px;
+				margin-top: 8px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			.sitemap-slug {
+				font-size: 11px;
+				font-family: 'Source Sans 3', sans-serif;
+				font-weight: 400;
+				opacity: 0.7;
+			}
+
+			/* ── CONFIRMED DECISIONS / DISCUSSION ── */
+			.checklist {
+				list-style: none;
+				padding: 0;
+			}
+
+			.check-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 17px;
+				padding: 14px 0;
+				border-bottom: 1.5px dashed rgba(13, 21, 30, 0.12);
+				font-family: 'Source Sans 3', sans-serif;
+				font-size: 18px;
+				color: var(--primary);
+			}
+
+			.check-item:last-child {
+				border-bottom: none;
+			}
+
+			.check-icon {
+				font-size: 20px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 960px) {
+				:root {
+					--sidebar-w: 280px;
+				}
+				.main {
+					padding: 40px 28px 90px;
+				}
+				.product-grid,
+				.case-grid,
+				.testimonial-grid,
+				.quick-links,
+				.audience-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 680px) {
+				.sidebar {
+					transform: translateX(-100%);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.mobile-fab {
+					display: flex;
+				}
+				.main {
+					margin-left: 0;
+					padding: 24px 16px 80px;
+				}
+				.doc-title {
+					font-size: 32px;
+				}
+				.doc-meta-strip {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(13, 21, 30, 0.1);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.wf-nav-links {
+					display: none;
+				}
+				.wf-nav {
+					padding: 10px 14px;
+				}
+				.wf-body {
+					padding: 20px 16px 28px;
+				}
+				.option-grid,
+				.form-grid,
+				.product-grid,
+				.case-grid,
+				.testimonial-grid,
+				.quick-links,
+				.audience-grid {
+					grid-template-columns: 1fr;
+				}
+				.sitemap {
+					flex-direction: column;
+					align-items: center;
+				}
+				.sitemap-arrow {
+					transform: rotate(90deg);
+					margin: 0;
+					padding: 4px 0;
+				}
+				.sitemap-children {
+					flex-direction: column;
+					align-items: center;
+				}
+				.wf-footer {
+					flex-direction: column;
+					text-align: center;
+					gap: 4px;
+				}
+				.check-item {
+					font-size: 15px;
+					gap: 10px;
+				}
+				.condensed-page-header {
+					flex-direction: column;
+					gap: 4px;
+				}
+				.condensed-page-url {
+					margin-left: 0;
+				}
+				.doc-row {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+				.doc-action {
+					margin-top: 4px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ── OVERLAY ── -->
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+		<!-- ── SIDEBAR ── -->
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-brand">
+				<div class="sidebar-lwd">Latz Web Design</div>
+				<div class="sidebar-client">Redevelopment Resources</div>
+				<div class="sidebar-doctype">Site Wireframes — Full Copy Draft</div>
+				<div class="status-pill">
+					<div class="status-dot"></div>
+					<span>Internal Review</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Overview</div>
+				<a href="#sitemap" class="nav-link active"><span class="nav-icon">🗺️</span> Site Map</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#home" class="nav-link"><span class="nav-icon">🏠</span> Home</a>
+				<a href="#who-we-serve" class="nav-link"><span class="nav-icon">🧭</span> Who We Serve</a>
+
+				<div class="nav-group-label">Services (5 URLs · 1 design)</div>
+				<a href="#analysis" class="nav-link"><span class="nav-icon">📊</span> Analysis</a>
+				<a href="#strategy" class="nav-link sub"><span class="nav-icon">•</span> Strategy</a>
+				<a href="#redevelopment" class="nav-link sub"><span class="nav-icon">•</span> Redevelopment</a>
+				<a href="#financing" class="nav-link sub"><span class="nav-icon">•</span> Financing</a>
+				<a href="#implementation" class="nav-link sub"><span class="nav-icon">•</span> Implementation</a>
+
+				<div class="nav-group-label">Our Projects (10 URLs · 1 design)</div>
+				<a href="#our-projects" class="nav-link"><span class="nav-icon">🏗️</span> Our Projects</a>
+				<a href="#irish-hospital" class="nav-link sub"><span class="nav-icon">•</span> Irish Hospital Apts.</a>
+				<a href="#elkhorn" class="nav-link sub"><span class="nav-icon">•</span> Elkhorn</a>
+				<a href="#fremont" class="nav-link sub"><span class="nav-icon">•</span> Fremont / CO Springs</a>
+				<a href="#west-bend" class="nav-link sub"><span class="nav-icon">•</span> West Bend</a>
+				<a href="#marshfield" class="nav-link sub"><span class="nav-icon">•</span> Marshfield</a>
+				<a href="#pulaski" class="nav-link sub"><span class="nav-icon">•</span> Pulaski</a>
+				<a href="#watertown" class="nav-link sub"><span class="nav-icon">•</span> Watertown</a>
+				<a href="#langlade" class="nav-link sub"><span class="nav-icon">•</span> Langlade County</a>
+				<a href="#asset-mapping" class="nav-link sub"><span class="nav-icon">•</span> Asset Mapping</a>
+				<a href="#phelps" class="nav-link sub"><span class="nav-icon">•</span> Phelps WI</a>
+
+				<div class="nav-group-label">Pages</div>
+				<a href="#who-we-are" class="nav-link"><span class="nav-icon">👥</span> Who We Are</a>
+				<a href="#contact-us" class="nav-link"><span class="nav-icon">📬</span> Contact Us</a>
+
+				<div class="nav-group-label">Decisions</div>
+				<a href="#decisions" class="nav-link"><span class="nav-icon">✅</span> Confirmed</a>
+				<a href="#discussion" class="nav-link"><span class="nav-icon">💬</span> Discussion</a>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<!-- ── MOBILE FAB ── -->
+		<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+		<!-- ── MAIN ── -->
+		<div class="main">
+			<!-- HEADER -->
+			<div class="doc-header">
+				<div class="doc-overline">Site Wireframes · Content &amp; Structure</div>
+				<div class="doc-title">Redevelopment Resources</div>
+				<div class="doc-sub">
+					20 Pages &nbsp;·&nbsp; 7 Unique Layouts (5 standalone + 2 reusable templates) &nbsp;·&nbsp; Full Copy Draft
+				</div>
+
+				<div class="doc-meta-strip">
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Internal Review</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">20 URLs / 7 designs</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Kristen Fish-Peterson</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Brand Assets</span>
+						<span class="meta-value warn">Provisional</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- ILLUSTRATIVE NOTE -->
+			<div class="annotation" style="margin-bottom: 30px; padding: 16px 22px">
+				✏️ Layouts shown are illustrative — they communicate what content needs
+				to exist on each page and how it should behave, not how it should be
+				designed. Layout, hierarchy, and visual treatment are in the designer's
+				hands.
+			</div>
+
+			<!-- COLOR/FONT FLAG -->
+			<div class="annotation flag" style="margin-bottom: 40px; padding: 16px 22px">
+				🎨 Colors and fonts below are provisional. Primary (<code>#0D151E</code>)
+				and accent (<code>#8E4C40</code>) are the values on hand; light, mid, and
+				CMS-tag green are carried over from the original brief's placeholder
+				guesses. Headings are set in Playfair Display and body copy in Source
+				Sans Pro — also placeholders. None of this is locked until Kristen
+				replies or the Brand Refresh decision is made. See Discussion Checklist.
+			</div>
+
+			<!-- COPY STATUS FLAG -->
+			<div class="annotation" style="margin-bottom: 40px; padding: 16px 22px">
+				📝 Every page below has real copy in it, not placeholder text — pulled
+				and tightened from the current live site where it was good, written
+				fresh where the current copy was thin, generic, or missing. None of
+				this is final; it's a working draft meant to be buildable now and
+				refined in the CMS afterward. Sub-service descriptions and project
+				tables show a representative sample per page rather than the full
+				list — the complete 48-project, 14-testimonial dataset lives in the
+				companion Content Inventory doc.
+			</div>
+
+			<!-- ── SITE MAP ── -->
+			<section class="wf-section" id="sitemap">
+				<div class="section-label">
+					<span class="section-num">0</span> Site Map
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<div style="text-align: center; margin-bottom: 24px">
+							<div class="wf-heading-sm" style="margin-bottom: 4px">Redevelopment Resources</div>
+							<div class="wf-subtext" style="margin-bottom: 0">20 pages · custom CMS for services, case studies, testimonials, and team content</div>
+						</div>
+						<div class="sitemap">
+							<div class="sitemap-node"><div class="sitemap-box">Home<br /><span class="sitemap-slug">/</span></div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Who We Serve<br /><span class="sitemap-slug">/who-we-serve</span></div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Services ▾<br /><span class="sitemap-slug">dropdown, 5 pages</span></div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Our Projects<br /><span class="sitemap-slug">10 case studies</span></div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Who We Are<br /><span class="sitemap-slug">/who-we-are</span></div></div>
+							<div class="sitemap-arrow">→</div>
+							<div class="sitemap-node"><div class="sitemap-box secondary">Contact Us<br /><span class="sitemap-slug">/contact-us</span></div></div>
+						</div>
+					<div class="annotation">
+						Nav correction: on the current live site, "Our Projects" just aliases
+						the 5 service pages. This rebuild fixes that — "Our Projects" becomes
+						an actual case-study destination, and Services moves to its own
+						dropdown holding the 5 service pages. All 20 pages live on the same
+						domain — no subdomains, no external platforms.
+					</div>
+					<div class="annotation">
+						<strong>Services dropdown</strong> holds all 5 service pages: Analysis,
+						Strategy, Redevelopment, Financing, Implementation. <strong>Our
+						Projects</strong> holds all 10 case studies — the 7 in the original
+						scope plus the 3 existing "legacy" pages (Langlade County, Asset
+						Mapping, Phelps WI), rebuilt on the same Case Study Template. No
+						separate "legacy" section — they're case studies like any other.
+					</div>
+					<div class="annotation">
+						<strong>Template Map — read this first:</strong> 20 total pages, but
+						only <strong>7 need actual design work</strong>. Home, Who We Serve,
+						Our Projects (landing), Who We Are, and Contact Us are fully unique.
+						The 5 Service pages share one design — Analysis is built in full below
+						as the reference, the other 4 are condensed. The 10 Our Projects case
+						study pages share a second design — Irish Hospital Apartments is built
+						in full as the reference, the other 9 are condensed. Both templates
+						double as the CMS content model — Kristen adds a new sub-service or a
+						new dedicated case study herself later using the same structure, no
+						developer needed.
+					</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 1: HOME ── -->
+			<section class="wf-section" id="home">
+				<div class="section-label">
+					<span class="section-num">1</span> Home &mdash; /
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span class="active">Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<!-- Hero -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero — Full Width</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 200px;">
+								<div class="img-icon">🏛️</div>
+								<div class="img-label">Hero image — redevelopment project, downtown streetscape, or team photo<br />Pull from a real project (e.g. Watertown riverfront) instead of a stock photo</div>
+							</div>
+							<div class="wf-heading-lg" style="margin-top: 18px;">Equipping you for growth</div>
+							<div class="wf-body-text">
+								Economic development consulting for municipalities, organizations,
+								and private developers across Wisconsin and the Midwest.
+							</div>
+							<div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:10px;">
+								<div class="wf-cta accent">See Our Services →</div>
+								<div class="wf-cta">View Our Work →</div>
+							</div>
+							<div class="annotation">
+								Headline and subhead are CMS-editable. Two primary CTAs point to
+								Services and Our Projects — the two things a first-time visitor
+								most needs to find. Current headline ("Equipping you for growth")
+								is strong and worth keeping; subhead is tightened from the current
+								site's version.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Work Approach -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Work Approach</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-heading-md">Every challenge deserves a unique solution</div>
+							<div class="wf-body-text">
+								No two communities face the same challenges, so we don't force
+								them into the same playbook. We start from your specific
+								circumstances — the local market, the stakeholders, the history of
+								what's already been tried — and build a plan that actually fits.
+								Stakeholder engagement isn't a checkbox for us; the people who live
+								and work in a place understand its real opportunities better than
+								any outside consultant, and we build that knowledge into every
+								project. Financing and market analysis are usually where
+								redevelopment projects stall, so that's where 165+ combined years
+								of hands-on experience matter most — turning uncertainty into a
+								clear, data-backed path forward.
+							</div>
+							<div class="annotation">
+								Rewritten from the current site's version — same philosophy, less
+								corporate padding, more concrete (leads with the 165+ years proof
+								point instead of burying it). This paragraph anchors the firm's
+								whole positioning, so it's worth a careful final pass with Kristen
+								even though the bones are solid here.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Services Overview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Services Overview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">📊</div>
+									<div class="quick-link-label">Analysis</div>
+									<div class="quick-link-desc">Objective, data-driven studies that tell your community's real story — and predict where it's headed.</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🧭</div>
+									<div class="quick-link-label">Strategy</div>
+									<div class="quick-link-desc">Organizational and planning strategies that turn a vision into a workable, fundable plan.</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🏚️</div>
+									<div class="quick-link-label">Redevelopment</div>
+									<div class="quick-link-desc">Hands-on redevelopment work — from blighted buildings to fully leased, tax-generating properties.</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">💰</div>
+									<div class="quick-link-label">Financing</div>
+									<div class="quick-link-desc">Structuring the capital stack — TIF, grants, loan funds — to actually get a project built.</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🛠️</div>
+									<div class="quick-link-label">Implementation</div>
+									<div class="quick-link-desc">Staff extension and execution support to carry a plan through to completion.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Five cards, one per service page — the corrected structure
+								replacing the current mislabeled "Our Projects" nav item. Each
+								card links directly to its service page. Descriptions tightened
+								from the current site's copy.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- By the Numbers -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">By the Numbers</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="stat-strip">
+								<div class="stat-item"><div class="stat-number">165+</div><div class="stat-label">Years Combined Experience</div></div>
+								<div class="stat-item"><div class="stat-number">48</div><div class="stat-label">Projects on Record</div></div>
+								<div class="stat-item"><div class="stat-number">80</div><div class="stat-label">Market &amp; Site Studies</div></div>
+								<div class="stat-item"><div class="stat-number">14</div><div class="stat-label">Client Partners</div></div>
+							</div>
+							<div class="annotation flag">
+								⚑ The current homepage shows 780 projects / 127 members / 324
+								customers / 24 awards — numbers that don't reconcile with the
+								bio's 165+ years / 80 studies / 100 analyses. The figures above use
+								the bio's numbers (defensible, sourced from real project counts in
+								this wireframe) plus a 14-partner count from the testimonial list.
+								Still needs Kristen's sign-off as the final, accurate set.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Who We Serve Teaser -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Who We Serve — Teaser</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="audience-grid">
+								<div class="audience-card">
+									<div class="audience-sector">Public Sector</div>
+									<div class="audience-name">Municipalities &amp; Organizations</div>
+									<div class="audience-copy">Navigating growth, blight, and planning decisions.</div>
+									<div class="audience-match">Learn more →</div>
+								</div>
+								<div class="audience-card">
+									<div class="audience-sector">Private Sector</div>
+									<div class="audience-name">Entrepreneurs &amp; Developers</div>
+									<div class="audience-copy">Bringing a project or property to life.</div>
+									<div class="audience-match">Learn more →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Short teaser linking to the full Who We Serve page. Copy is a
+								summary — full audience-specific detail lives on that page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Testimonial Preview -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Client Feedback — Preview</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-grid">
+								<div class="testimonial-card">
+									<div class="testimonial-name">Brian Olson</div>
+									<div class="testimonial-title">former Mayor, Elkhorn, WI</div>
+									<div class="testimonial-quote">"We are now better equipped to meet existing business needs and attract new business to our community."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Kraig Sadownikow</div>
+									<div class="testimonial-title">Mayor, West Bend, WI</div>
+									<div class="testimonial-quote">"Personal attention, impartial recommendations, targeted experience — the qualities we sought and found."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Cecilia Harry, CEcD</div>
+									<div class="testimonial-title">Colorado Springs Chamber &amp; EDC</div>
+									<div class="testimonial-quote">"I would work with them again without hesitation and recommend them to any peer organization."</div>
+								</div>
+							</div>
+							<div class="wf-cta" style="margin-top: 16px;">See All Client Stories →</div>
+							<div class="annotation">
+								Currently all 14 full testimonials sit in one unstructured wall on
+								the homepage. This section instead shows a curated preview of 3 and
+								links to the full Our Projects page, where all 14 live properly
+								organized. These 3 chosen for geographic and sector spread — swap
+								freely, it's a CMS field.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+						<div class="wf-cta accent">Start a Conversation →</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 2: WHO WE SERVE ── -->
+			<section class="wf-section" id="who-we-serve">
+				<div class="section-label">
+					<span class="section-num">2</span> Who We Serve &mdash; /who-we-serve
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span class="active">Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 24px">
+							<div class="wf-heading-lg">Who We Serve</div>
+							<div class="wf-subtext">
+								Public and private sector partners, working toward the same goal: communities that thrive.
+							</div>
+						</div>
+
+						<!-- Public Sector -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Public Sector</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="audience-grid">
+								<div class="audience-card">
+									<div class="audience-sector">Public Sector</div>
+									<div class="audience-name">Municipalities</div>
+									<div class="audience-copy">Cities, villages, and counties come to us when a plan needs to turn into action — organizational structure, funding strategy, and project implementation. We've served as an extension of municipal staff on redevelopment and grant administration, and led planning through execution for clients navigating everything from a single blighted block to a full downtown overhaul.</div>
+									<div class="audience-match">Matching project: Watertown Downtown &amp; Riverfront Redevelopment →</div>
+								</div>
+								<div class="audience-card">
+									<div class="audience-sector">Public Sector</div>
+									<div class="audience-name">Organizations</div>
+									<div class="audience-copy">Economic development corporations, chambers, and regional partnerships hire us to turn strategic priorities into a real plan — organizational structure, grant writing, business retention and recruitment. We build plans that are bold enough to matter and practical enough to actually implement.</div>
+									<div class="audience-match">Matching project: Marshfield Economic Development Action Plan →</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Private Sector -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Private Sector</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="audience-grid">
+								<div class="audience-card">
+									<div class="audience-sector">Private Sector</div>
+									<div class="audience-name">Entrepreneurs</div>
+									<div class="audience-copy">Business owners lean on us for growth planning, disaster recovery, and workforce strategy — the practical research that turns a growth idea into a hiring plan. We work with retail, manufacturing, service, and restaurant businesses planning an expansion or navigating a specific challenge.</div>
+									<div class="audience-match">Matching project: Marquis Yachts, Workforce Strategies →</div>
+								</div>
+								<div class="audience-card">
+									<div class="audience-sector">Private Sector</div>
+									<div class="audience-name">Private Developers</div>
+									<div class="audience-copy">Landowners and developers bring us in for market feasibility, incentive negotiation, and site selection — the work that determines whether a deal actually pencils. We've structured TIF incentives, negotiated development agreements, and represented private clients through complex municipal processes.</div>
+									<div class="audience-match">Matching project: Minocqua Housing Developer, TIF Incentive Structuring →</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="annotation">
+							Four audience sections, each paired with a real project instead of
+							a generic repeated card. Copy above is a full first draft — written
+							fresh, since the current live site reuses identical paragraphs and
+							identical project cards across all 4 separate audience pages this
+							hub replaces. Worth a review pass with Kristen for accuracy and
+							voice, but it's ready to build against as-is.
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 3: ANALYSIS (SERVICE TEMPLATE, FULL REFERENCE) ── -->
+			<section class="wf-section" id="analysis">
+				<div class="section-label">
+					<span class="section-num">3</span> Analysis &mdash; /services/analysis
+				</div>
+				<div class="section-sub">Service Template — full reference. Strategy, Redevelopment, Financing, and Implementation reuse this exact structure — see condensed entries below.</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span class="active">Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 24px">
+							<div class="wf-heading-lg">Analysis</div>
+							<div class="wf-subtext">Data-driven studies that ground every decision in real numbers.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Intro</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Data is everywhere. How a community uses it is where art meets
+								science. We pair secondary data with primary research —
+								stakeholder interviews, site visits, on-the-ground observation —
+								to tell your community's real story and predict where it's headed.
+								That combination helps clients expand the tax base, diversify the
+								local economy, and attract the right kind of investment.
+							</div>
+							<div class="annotation">
+								Tightened from the current site's version — same substance, cut
+								the SEO-stuffed inline links that were breaking up the reading
+								flow.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Sub-Services (6)</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card" style="text-align: left;">
+									<div class="quick-link-label" style="font-size: 16px;">Market, Economic &amp; Fiscal Impact Analysis</div>
+									<div class="quick-link-desc">Measuring the real return on public and private investment — direct, indirect, and induced impacts on the local economy.</div>
+								</div>
+								<div class="quick-link-card" style="text-align: left;">
+									<div class="quick-link-label" style="font-size: 16px;">Targeted Industry Analysis</div>
+									<div class="quick-link-desc">Understanding your market's competitive advantage — which sectors are strong, which are emerging, and where to deploy limited resources.</div>
+								</div>
+								<div class="quick-link-card" style="text-align: left;">
+									<div class="quick-link-label" style="font-size: 16px;">Housing Market Study</div>
+									<div class="quick-link-desc">A clear picture of existing housing conditions, future demand, and the funding tools available to close the gap — prioritized and budgeted.</div>
+								</div>
+								<div class="quick-link-card" style="text-align: left;">
+									<div class="quick-link-label" style="font-size: 16px;">Community Assessment</div>
+									<div class="quick-link-desc">Reviewing a community's plans, policies, and marketing efforts to find where they conflict, with a short- and long-term plan to align them.</div>
+								</div>
+								<div class="quick-link-card" style="text-align: left;">
+									<div class="quick-link-label" style="font-size: 16px;">Financial Feasibility Analysis</div>
+									<div class="quick-link-desc">Testing whether a project idea actually pencils — market comparisons, labor supply, capital costs, and a workable deal structure.</div>
+								</div>
+								<div class="quick-link-card" style="text-align: left;">
+									<div class="quick-link-label" style="font-size: 16px;">Development Site Analysis</div>
+									<div class="quick-link-desc">Determining the highest and best use for a property, backed by a financial analysis and a prospect list for future tenants.</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Six sub-services, each an individual CMS entry with name and
+								description. Kristen can add, remove, or reorder them without a
+								developer. This same content model powers all 5 service pages —
+								only the entries differ (see Template Map).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Work Example Table (10 rows, 5 shown)</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="doc-list">
+								<div class="doc-row">
+									<div class="doc-icon">PROJ</div>
+									<div class="doc-info">
+										<div class="doc-name">City of Appleton Housing Market Analysis</div>
+										<div class="doc-date">Appleton, WI — downtown Comprehensive Plan chapter, block-by-block business cluster recommendations</div>
+									</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PROJ</div>
+									<div class="doc-info">
+										<div class="doc-name">City of Elkhorn Commercial Market Analysis</div>
+										<div class="doc-date">Elkhorn, WI — identified downtown retail/commercial gaps and growth opportunities</div>
+									</div>
+									<div class="doc-action">View Full Story →</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PROJ</div>
+									<div class="doc-info">
+										<div class="doc-name">Village of Mukwonago</div>
+										<div class="doc-date">Mukwonago, WI — retail/commercial gap analysis with infill and redevelopment strategy</div>
+									</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PROJ</div>
+									<div class="doc-info">
+										<div class="doc-name">City of Merrill Housing and Commercial Property Assessment</div>
+										<div class="doc-date">Merrill, WI — east/west side blight assessment; 6-year implementation, on time and on budget</div>
+									</div>
+								</div>
+								<div class="doc-row">
+									<div class="doc-icon">PROJ</div>
+									<div class="doc-info">
+										<div class="doc-name">City of DePere Mixed-Use Development Market Analysis</div>
+										<div class="doc-date">DePere, WI — absorption and fiscal impact analysis for a proposed downtown project</div>
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								10 total work examples live in this table; 5 real rows shown here
+								for wireframe purposes (full 10 in the Content Inventory doc). Each
+								row is a CMS entry — client name, project detail, location, and an
+								optional link out to a dedicated case study page when one exists
+								(Elkhorn links to its full story under Our Projects).
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">CTA</div>
+							</div>
+							<div class="wf-cta accent">Start a Conversation →</div>
+							<div class="annotation">Closing CTA routes to Contact Us — same pattern on all 5 service pages.</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGES 4-7: SERVICE TEMPLATE, CONDENSED ── -->
+			<section class="wf-section" id="strategy">
+				<div class="section-label">
+					<span class="section-num">4&ndash;7</span> Service Template &mdash; Condensed Pages
+				</div>
+				<div class="section-sub">Same structure as Analysis above — intro, sub-services, work example table, CTA. Content differs; layout doesn't.</div>
+
+				<div class="condensed-page">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Strategy</span>
+							<span class="condensed-page-url">/services/strategy</span>
+						</div>
+						<span class="template-tag">Uses: Service Template</span>
+					</div>
+					<div class="wf-body-text">
+						Turning a community's priorities into a strategy that's realistic,
+						fundable, and actually gets implemented — through genuine
+						stakeholder engagement, not a plan that sits on a shelf.
+					</div>
+					<div class="wf-body-text">
+						<strong>Organizational Structure:</strong> a review of staffing,
+						roles, and reporting lines that matches an organization's structure
+						to its actual goals and funding sources.
+					</div>
+					<div class="wf-body-text">
+						<strong>Planning &amp; Real Estate Re/development:</strong> clear
+						benchmarks, stakeholder engagement, and a financially feasible path —
+						from a comprehensive plan to a redeveloped riverfront.
+					</div>
+					<div class="doc-list" style="margin-top: 10px;">
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Greater Fremont Development Corp Strategic Plan</div>
+								<div class="doc-date">Fremont, NE — led to a Costco facility, 1,000+ jobs</div>
+							</div>
+							<div class="doc-action">View Full Story →</div>
+						</div>
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">City of Watertown</div>
+								<div class="doc-date">Watertown, WI — Downtown &amp; Riverfront Redevelopment Plan</div>
+							</div>
+							<div class="doc-action">View Full Story →</div>
+						</div>
+					</div>
+					<div class="wf-body-text" style="margin-top: 10px;">
+						<strong>Work example table:</strong> 12 project rows total, 2 shown (full list in Content Inventory)
+					</div>
+				</div>
+
+				<div class="condensed-page" id="redevelopment">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Redevelopment</span>
+							<span class="condensed-page-url">/services/redevelopment</span>
+						</div>
+						<span class="template-tag">Uses: Service Template</span>
+					</div>
+					<div class="wf-body-text">
+						Redevelopment is some of our favorite work — turning blighted,
+						vacant properties into thriving, tax-generating ones. We've
+						structured incentives and gap financing, created loan funds for
+						commercial rehab, and undertaken adaptive reuse ourselves, from
+						both the developer's side of the table and the municipality's.
+					</div>
+					<div class="wf-body-text">
+						<strong>Redevelopment of Blighted Buildings:</strong> focused rehab,
+						incentive stacking, developer search and support, and tenant
+						recruitment — turning a wrecking-ball candidate into a contributing
+						property.
+					</div>
+					<div class="doc-list" style="margin-top: 10px;">
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Irish Hospital Apartments</div>
+								<div class="doc-date">Forest City, IA — nine-source capital stack, fully occupied since Nov 2022</div>
+							</div>
+							<div class="doc-action">View Full Story →</div>
+						</div>
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Downtown Watertown</div>
+								<div class="doc-date">Watertown, WI — revolving loan fund, city block redeveloped into a town square</div>
+							</div>
+							<div class="doc-action">View Full Story →</div>
+						</div>
+					</div>
+					<div class="wf-body-text" style="margin-top: 10px;">
+						<strong>Work example table:</strong> 6 project rows total, 2 shown (full list in Content Inventory)
+					</div>
+					<div class="annotation">
+						No extra block on this page — earlier drafts had a teaser here
+						linking to the Irish Hospital story, but that idea was dropped. All
+						5 service pages now share the exact same structure, no exceptions.
+					</div>
+				</div>
+
+				<div class="condensed-page" id="financing">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Financing</span>
+							<span class="condensed-page-url">/services/financing</span>
+						</div>
+						<span class="template-tag">Uses: Service Template</span>
+					</div>
+					<div class="wf-body-text">
+						Most redevelopment projects require stacking capital from multiple
+						sources to pencil out. We've created and administered TIF
+						districts, revolving loan funds, and grant programs that turn a
+						funding gap into a closed deal.
+					</div>
+					<div class="wf-body-text">
+						<strong>Tax Increment Financing:</strong> writing, amending, and
+						managing TIF plans and deal structures — including pay-as-you-go
+						and developer-financed approaches.
+					</div>
+					<div class="wf-body-text">
+						<strong>Grant Writing and Administration:</strong> full-service
+						grant research, writing, and administration across CDBG, EDA, DOT,
+						and state and federal housing programs.
+					</div>
+					<div class="wf-body-text">
+						<strong>Deal Structuring:</strong> structuring win-win deals on
+						both sides of the table — IRBs, Section 108 loans, tax credit
+						programs, and relocation benefits.
+					</div>
+					<div class="doc-list" style="margin-top: 10px;">
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Central Wisconsin Economic Development Fund (CWED)</div>
+								<div class="doc-date">Central Wisconsin — administration of a $13M gap/micro-loan fund, 10-county region</div>
+							</div>
+						</div>
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Housing Developer, TIF Incentive Structuring</div>
+								<div class="doc-date">Minocqua, WI</div>
+							</div>
+						</div>
+					</div>
+					<div class="wf-body-text" style="margin-top: 10px;">
+						<strong>Work example table:</strong> 11 project rows total, 2 shown (full list in Content Inventory)
+					</div>
+				</div>
+
+				<div class="condensed-page" id="implementation" style="margin-bottom: 0;">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Implementation</span>
+							<span class="condensed-page-url">/services/implementation</span>
+						</div>
+						<span class="template-tag">Uses: Service Template</span>
+					</div>
+					<div class="wf-body-text">
+						You've invested time and money into a plan — now it's time to
+						bring it to life. We join client teams as an external consultant
+						or as a direct extension of staff, and we stay through execution,
+						not just the planning phase.
+					</div>
+					<div class="wf-body-text">
+						<strong>Grant &amp; Loan Administration:</strong> taking on the
+						administrative burden of a grant award your team doesn't have
+						capacity for — CDBG, ongoing loan funds, and more.
+					</div>
+					<div class="wf-body-text">
+						<strong>Incentive Policy Writing:</strong> clear, performance-based
+						incentive policies that protect the community's investment and set
+						expectations for developers up front.
+					</div>
+					<div class="wf-body-text">
+						<strong>Real Estate Management:</strong> tenant representation,
+						leasing, and brokerage services through our affiliated full-service
+						real estate team.
+					</div>
+					<div class="doc-list" style="margin-top: 10px;">
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Village of Pulaski Consultant Services</div>
+								<div class="doc-date">Pulaski, WI — ED strategy, business recruitment, TIF district implementation</div>
+							</div>
+							<div class="doc-action">View Full Story →</div>
+						</div>
+						<div class="doc-row">
+							<div class="doc-icon">PROJ</div>
+							<div class="doc-info">
+								<div class="doc-name">Wisconsin Economic Development Association</div>
+								<div class="doc-date">Statewide — 3.5-year contract executive director, grew org to a full-time hire</div>
+							</div>
+						</div>
+					</div>
+					<div class="wf-body-text" style="margin-top: 10px;">
+						<strong>Work example table:</strong> 9 project rows total, 2 shown (full list in Content Inventory)
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 8: OUR PROJECTS LANDING ── -->
+			<section class="wf-section" id="our-projects">
+				<div class="section-label">
+					<span class="section-num">8</span> Our Projects &mdash; /our-projects
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span class="active">Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 24px">
+							<div class="wf-heading-lg">Our Projects</div>
+							<div class="wf-subtext">The real work behind the services — curated from 48 completed projects and 14 client partnerships.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Intro</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Real, named clients across Wisconsin, Iowa, Nebraska, Virginia,
+								North Dakota, New York, and Minnesota — municipalities, economic
+								development organizations, and private companies who put their
+								name behind the results. Below is a curated look at the strongest
+								stories; the full record lives on each service page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Flagship — Irish Hospital Apartments</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+								<div class="img-placeholder" style="height: 160px; flex: 1; min-width: 220px;">
+									<div class="img-icon">🏥</div>
+									<div class="img-label">Irish Hospital Apartments hero photo<br />Image needed — unfilled on current live site</div>
+								</div>
+								<div style="flex: 2; min-width: 240px;">
+									<div class="wf-heading-md">Irish Hospital Apartments</div>
+									<div class="wf-body-text">
+										A vacant county hospital in Forest City, IA became fully
+										occupied workforce housing — nine capital sources, two
+										years, occupied since November 2022.
+									</div>
+									<div class="wf-cta accent">Read the Full Story →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Large, distinct visual treatment separate from the grid below —
+								this is the firm's flagship story. Which project holds this slot
+								is a CMS field, so it can change without a rebuild.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Case Study Grid (9)</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="case-grid">
+								<div class="case-card">
+									<div class="case-name">Elkhorn</div>
+									<div class="case-location">Elkhorn, WI</div>
+									<div class="case-result">Commercial market analysis that reshaped downtown strategy</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Fremont / Colorado Springs</div>
+									<div class="case-location">Fremont, NE</div>
+									<div class="case-result">Strategic plan → Costco facility, 1,000+ jobs</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">West Bend</div>
+									<div class="case-location">West Bend, WI</div>
+									<div class="case-result">Organizational structure &amp; executive recruitment</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Marshfield</div>
+									<div class="case-location">Marshfield, WI</div>
+									<div class="case-result">Economic development action plan, built to be implementable</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Pulaski</div>
+									<div class="case-location">Pulaski, WI</div>
+									<div class="case-result">Marketing, mapping, and a redeveloped downtown building</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Watertown</div>
+									<div class="case-location">Watertown, WI</div>
+									<div class="case-result">7-year plan → world-class town square</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Langlade County</div>
+									<div class="case-location">Langlade County, WI</div>
+									<div class="case-result">County-wide market analysis and workforce strategy</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Asset Mapping</div>
+									<div class="case-location">&nbsp;</div>
+									<div class="case-result">Identifying a community's hidden assets and real needs</div>
+									<div class="case-action">View Story →</div>
+								</div>
+								<div class="case-card">
+									<div class="case-name">Phelps WI</div>
+									<div class="case-location">Phelps, WI</div>
+									<div class="case-result">A market analysis sized to a small Northwoods community</div>
+									<div class="case-action">View Story →</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Photo, name, location, one-line result per card. Clicking any
+								card goes to its dedicated page under the Case Study Template —
+								all 9 are treated the same way, including the 3 that used to be
+								separated out as "legacy."
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Client Stories — Remaining Testimonials</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="testimonial-grid">
+								<div class="testimonial-card">
+									<div class="testimonial-name">Kathy Unertl</div>
+									<div class="testimonial-title">Finance Director / RDA Secretary, Merrill</div>
+									<div class="testimonial-quote">"Redevelopment Resources has provided excellent assistance toward our urban renewal and revitalization efforts..."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Doug Prentice</div>
+									<div class="testimonial-title">Village Trustee, Pulaski</div>
+									<div class="testimonial-quote">"They've created marketing pieces for our business park and downtown, an interactive map of available properties..."</div>
+								</div>
+								<div class="testimonial-card">
+									<div class="testimonial-name">Paul Liss</div>
+									<div class="testimonial-title">VP of Operations, Marquis Yachts, Pulaski</div>
+									<div class="testimonial-quote">"They spent time listening to understand our needs and provided valuable research on skill sets and education levels..."</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Sample of the remaining testimonials shown as expandable/modal
+								cards — name, title, location, pull-quote — no separate URL. All
+								14 testimonials on file are CMS entries; which ones get a
+								dedicated page vs. stay modal-only is the "dedicated pages" list
+								above. See Discussion Checklist re: Merrill and the testimonial
+								count discrepancy.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+						<div class="wf-cta accent">Start a Conversation →</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 9: IRISH HOSPITAL APARTMENTS (CASE STUDY TEMPLATE, FULL REFERENCE) ── -->
+			<section class="wf-section" id="irish-hospital">
+				<div class="section-label">
+					<span class="section-num">9</span> Irish Hospital Apartments &mdash; /our-projects/irish-hospital-apartments
+				</div>
+				<div class="section-sub">Case Study Template — full reference. Elkhorn through Phelps WI reuse this exact structure — see condensed entries below.</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span class="active">Our Projects</span>
+							<span>Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Hero</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="img-placeholder" style="height: 180px">
+								<div class="img-icon">🏥</div>
+								<div class="img-label">Hero photo — currently unfilled on live site<br />Flag as image needed</div>
+							</div>
+							<div style="margin-top: 16px;">
+								<div class="wf-heading-lg" style="font-size: 30px;">Irish Hospital Apartments</div>
+								<div class="wf-subtext">Forest City, IA &nbsp;·&nbsp; Adaptive Reuse / Redevelopment</div>
+							</div>
+							<div class="annotation">
+								Project name, location, sector tag, and hero photo. This hero
+								photo slot is currently unfilled on the live site — needs a real
+								photo before launch.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Quick Facts Strip</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="fact-strip">
+								<div class="fact-pill">9 Capital Sources</div>
+								<div class="fact-pill">Fully Occupied Since Nov 2022</div>
+								<div class="fact-pill">Former Hospital → Law Enforcement Center → Vacant → Multifamily Housing</div>
+							</div>
+							<div class="annotation">
+								Each fact is its own CMS field — a scannable strip above the full
+								story for visitors who just want the headline numbers.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">The Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								The building started as a hospital in Forest City, Iowa, then spent
+								years as a law enforcement center before sitting vacant — owned by
+								the county, with no clear future. When Redevelopment Resources took
+								on the adaptive reuse, the real challenge wasn't construction, it
+								was capital. We assembled a nine-source stack: the county
+								contributed the building itself plus a grant, the city and state
+								added further grants, and two competitive state tax credit awards
+								closed the remaining gap.
+							</div>
+							<div class="wf-body-text">
+								Over two years, the building was reimagined as multifamily
+								workforce housing. It's been fully occupied since November
+								2022 — proof that a building everyone else had written off can
+								still work, with the right financing and the right patience. The
+								next project already underway uses the same adaptive-reuse
+								playbook: a former elementary school in Pleasantville, IA.
+							</div>
+							<div class="annotation">
+								Full narrative — county-owned building history, funding stack, and
+								the two-year timeline. This is the one canonical version of the
+								Irish Hospital story — it lives here only, not duplicated anywhere
+								else on the site.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Pull-Quote</div>
+								<span class="cms-tag">CMS optional</span>
+							</div>
+							<div class="testimonial-card empty">
+								<div class="wf-body-text" style="margin-bottom: 0;">No matching testimonial on file for this project. This block can be omitted entirely or left as an optional CMS field for whenever one comes in.</div>
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Related Services</div>
+							</div>
+							<div class="quick-links">
+								<div class="quick-link-card">
+									<div class="quick-link-icon">🏗️</div>
+									<div class="quick-link-label">Redevelopment</div>
+								</div>
+								<div class="quick-link-card">
+									<div class="quick-link-icon">💰</div>
+									<div class="quick-link-label">Financing</div>
+								</div>
+							</div>
+							<div class="annotation">Cross-links to the two service pages most relevant to this project.</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+							<div class="wf-cta accent">Start a Conversation →</div>
+							<span style="font-family: 'Source Sans 3', sans-serif; font-size: 16px; color: var(--primary); font-weight: 600;">← Back to Our Projects</span>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGES 10-18: CASE STUDY TEMPLATE, CONDENSED ── -->
+			<section class="wf-section" id="elkhorn">
+				<div class="section-label">
+					<span class="section-num">10&ndash;18</span> Case Study Template &mdash; Condensed Pages
+				</div>
+				<div class="section-sub">Same structure as Irish Hospital Apartments above — hero, quick facts, story, testimonial (if available), related services, CTA. Includes the 3 pages formerly treated as "legacy, unchanged" — they get the new template like everyone else.</div>
+
+				<div class="condensed-page">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Elkhorn</span>
+							<span class="condensed-page-url">/our-projects/elkhorn-commercial-market-analysis</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Commercial Market Analysis</div>
+					<div class="wf-body-text">
+						Elkhorn needed a clear-eyed look at its retail and commercial gaps —
+						what the downtown was missing, and where the real opportunity was.
+						The analysis identified the city's specific strengths and openings,
+						giving local leaders a concrete direction instead of a guess.
+					</div>
+					<div class="wf-body-text"><strong>Testimonial:</strong> "We are now better equipped to meet existing business needs and attract new business to our community." — Brian Olson, former Mayor</div>
+				</div>
+
+				<div class="condensed-page" id="fremont">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Fremont, NE / Colorado Springs</span>
+							<span class="condensed-page-url">/our-projects/greater-fremont-strategic-plan</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Greater Fremont Development Corp Strategic Plan</div>
+					<div class="wf-body-text"><strong>Key fact:</strong> Resulted in a Costco facility, 1,000+ jobs</div>
+					<div class="wf-body-text">
+						Fremont needed a full economic development strategic plan that
+						could hold up under real scrutiny. The plan became the foundation
+						for the city's next chapter — helping attract a multi-million
+						dollar Costco distribution investment that brought over 1,000 new
+						jobs to the area.
+					</div>
+					<div class="wf-body-text"><strong>Testimonial:</strong> "I would work with them again without hesitation and recommend them to any peer organization." — Cecilia Harry, CEcD, Colorado Springs Chamber &amp; EDC</div>
+				</div>
+
+				<div class="condensed-page" id="west-bend">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">West Bend</span>
+							<span class="condensed-page-url">/our-projects/west-bend-organizational-structure</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Organizational Structure &amp; Executive Recruitment</div>
+					<div class="wf-body-text">
+						West Bend's economic development office needed an honest look at
+						its staffing and structure. The review found too many resources
+						tied up in inspections and not enough in proactive development,
+						recruitment, and retention — a finding that reshaped how the City
+						invests its development staff time.
+					</div>
+					<div class="wf-body-text"><strong>Testimonial:</strong> "Personal attention, impartial recommendations, targeted experience — these qualities are ones the City of West Bend sought and ultimately found." — Kraig Sadownikow, Mayor</div>
+				</div>
+
+				<div class="condensed-page" id="marshfield">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Marshfield</span>
+							<span class="condensed-page-url">/our-projects/marshfield-economic-development-plan</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Economic Development Action Plan</div>
+					<div class="wf-body-text">
+						Marshfield wanted a plan that wouldn't just sit on a shelf. We
+						delivered a professional, customized Economic Development Action
+						Plan with organizational structure recommendations bold enough to
+						matter and practical enough to actually implement.
+					</div>
+					<div class="wf-body-text"><strong>Testimonial:</strong> "Their work went beyond our expectations." — Steve Barg, City Administrator</div>
+				</div>
+
+				<div class="condensed-page" id="pulaski">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Pulaski</span>
+							<span class="condensed-page-url">/our-projects/pulaski-economic-development-strategy</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Economic Development Strategy — marketing, mapping, downtown redevelopment</div>
+					<div class="wf-body-text">
+						Pulaski needed to market itself to businesses and developers — and
+						needed the tools to back it up. We built marketing pieces for the
+						business park and downtown, an interactive map of available
+						properties, and led a focused redevelopment effort on one of the
+						Village's iconic vacant downtown buildings.
+					</div>
+					<div class="wf-body-text"><strong>Testimonial:</strong> "They've also worked with one of our major employers to assist them in finding the workforce they need to grow and expand." — Doug Prentice, Village Trustee</div>
+				</div>
+
+				<div class="condensed-page" id="watertown">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Watertown</span>
+							<span class="condensed-page-url">/our-projects/watertown-downtown-riverfront-redevelopment</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Downtown &amp; Riverfront Redevelopment Plan → Implementation</div>
+					<div class="wf-body-text"><strong>Key fact:</strong> 7-year execution; revolving loan fund with 3 banks; city block redeveloped into a "world-class town square"</div>
+					<div class="wf-body-text">
+						Watertown's downtown and riverfront needed more than a plan — it
+						needed follow-through. We wrote the Downtown and Riverfront
+						Redevelopment Plan, then stayed on to implement it: creating a
+						revolving loan fund with three local banks and helping the RDA
+						acquire, demolish, and redevelop a full city block into what's now
+						a world-class town square, leveraging millions in private
+						investment.
+					</div>
+					<div class="wf-body-text"><strong>Testimonial:</strong> none on file</div>
+				</div>
+
+				<div class="condensed-page" id="langlade">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Langlade County</span>
+							<span class="condensed-page-url">/our-projects/langlade-county-targeted-industry-analysis-and-strategy</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Targeted Industry Analysis and Strategy</div>
+					<div class="wf-body-text">
+						Langlade County needed to understand its workforce alongside its
+						market. Pairing a county-wide market analysis with a review of
+						local skills and occupations led to a focused push supporting
+						living-wage industries — and flagged housing stock improvements
+						needed before a wave of retiring workers left gaps to fill.
+					</div>
+					<div class="wf-body-text">Existing content migrates into the new Case Study Template structure — previously a standalone dedicated page, now consistent with the other 9.</div>
+				</div>
+
+				<div class="condensed-page" id="asset-mapping">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Asset Mapping and Needs Analysis</span>
+							<span class="condensed-page-url">/our-projects/asset-mapping-and-needs-analysis</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Asset Mapping and Needs Analysis</div>
+					<div class="wf-body-text">
+						Every community has strengths it doesn't fully see — natural
+						sites, industry talent, underused buildings. This project mapped
+						those assets against the community's actual needs, building a
+						foundation for the priorities that followed.
+					</div>
+				</div>
+
+				<div class="condensed-page" id="phelps" style="margin-bottom: 0;">
+					<div class="condensed-page-header">
+						<div>
+							<span class="condensed-page-name">Phelps WI</span>
+							<span class="condensed-page-url">/our-projects/phelps-wi-market-analysis</span>
+						</div>
+						<span class="template-tag">Uses: Case Study Template</span>
+					</div>
+					<div class="wf-body-text"><strong>Project:</strong> Phelps, WI Market Analysis</div>
+					<div class="wf-body-text">
+						A small Northwoods community needed a market analysis sized to
+						its reality — not a generic template built for a city ten times
+						its size. The analysis gave Phelps a grounded read on what the
+						local market could actually support.
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 19: WHO WE ARE ── -->
+			<section class="wf-section" id="who-we-are">
+				<div class="section-label">
+					<span class="section-num">19</span> Who We Are &mdash; /who-we-are
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span class="active">Who We Are</span>
+							<span>Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 24px">
+							<div class="wf-heading-lg">Who We Are</div>
+							<div class="wf-subtext">Established 2009 — economic development and redevelopment expertise, concept to completion.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Our Story</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Established in 2009, Redevelopment Resources offers economic
+								development and redevelopment solutions and research services to
+								municipalities, businesses, and organizations. Our experience was
+								gained from active, successful careers in economic and community
+								development, planning, and marketing — the team transitioned into
+								consulting to share that experience with others.
+							</div>
+							<div class="wf-body-text">
+								We love the planning process, but implementation is where it's
+								at. Seeing a skyline change, bringing new life to a formerly
+								vibrant building or piece of land, and equipping our clients with
+								the tools to enact that change — that's what truly inspires us.
+							</div>
+							<div class="annotation">
+								Pulled directly from the current live site — real copy, no
+								rewrite needed. This is some of the strongest, least generic
+								writing on the whole current site; keep it close to verbatim.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Company Summary -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Company Summary</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								We serve communities and the private sector with the services
+								you need to make lasting and impactful change.
+							</div>
+							<ul style="font-family: 'Source Sans 3', sans-serif; font-size: 18px; color: rgba(13,21,30,0.65); line-height: 1.6; margin: 4px 0 0 22px; padding: 0;">
+								<li>Economic &amp; community re/development of downtowns, brownfields, and greenfields</li>
+								<li>Real estate site evaluation, project feasibility, deal structure, and market analysis</li>
+								<li>Organizational structure review and recommendations for municipalities and EDOs</li>
+								<li>Strategic and comprehensive planning</li>
+								<li>Group facilitation, public input, stakeholder engagement</li>
+								<li>Research and analysis of economic impacts, market development, target industry analysis, and project feasibility</li>
+							</ul>
+							<div class="annotation">
+								New section not in the earlier draft — this list was sitting on
+								the current live Who We Are page and does useful work the
+								Services Overview cards don't: a single scannable summary of
+								everything the firm does, in the client's own words. Reused
+								near-verbatim.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Experience by the Numbers</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="stat-strip">
+								<div class="stat-item"><div class="stat-number">165+</div><div class="stat-label">Years Combined</div></div>
+								<div class="stat-item"><div class="stat-number">80</div><div class="stat-label">Market Studies</div></div>
+								<div class="stat-item"><div class="stat-number">100</div><div class="stat-label">Site Analyses</div></div>
+							</div>
+							<div class="annotation flag">
+								⚑ These figures don't reconcile with the homepage's old "By the
+								Numbers" strip (780 projects / 127 members / 324 customers / 24
+								awards) — see Discussion Checklist. Also worth a sanity check
+								now that we have real tenure info: Kristen alone has 35+ years,
+								so "165+ combined" implies a lot of outside/prior-career
+								experience beyond the current 3-person core team — worth
+								confirming that framing still makes sense with Kristen.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Core Team -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Core Team</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="wf-body-text">
+								Our team has success-based experience in public and private
+								sector planning, analysis, research, and redevelopment — from
+								concept to completion.
+							</div>
+
+							<div class="audience-card" style="margin-top: 14px;">
+								<div class="audience-sector">Principal &amp; CEO</div>
+								<div class="audience-name">Kristen Fish-Peterson, CEcD</div>
+								<div class="audience-copy">
+									35+ years of direct experience in redevelopment, market
+									analysis, planning, implementation, grant writing, brokerage,
+									business development, media, manufacturing, and marketing.
+									Redeveloped a former hospital into a multifamily apartment
+									building and actively looks for opportunities to turn blighted
+									property into housing in new communities. Certified Economic
+									Developer (CEcD), MBA, licensed WI real estate broker.
+								</div>
+							</div>
+
+							<div class="audience-card" style="margin-top: 14px;">
+								<div class="audience-sector">Chief Data Geek</div>
+								<div class="audience-name">Dayna Sarver</div>
+								<div class="audience-copy">
+									M.S. in Urban and Regional Planning, University of
+									Wisconsin–Madison. 5+ years of public-sector experience in
+									economic development and real estate redevelopment.
+									Multi-disciplinary approach to developing a community's
+									natural, social, and fixed assets.
+								</div>
+							</div>
+
+							<div class="audience-card" style="margin-top: 14px;">
+								<div class="audience-sector">Director of Finance and Development Associate</div>
+								<div class="audience-name">Thomas Fish</div>
+								<div class="audience-copy">
+									B.S. in Economics with commercial loan underwriting
+									experience. Supports the Central Wisconsin Economic
+									Development Fund (CWED) through marketing, borrower outreach,
+									underwriting, and loan processing.
+								</div>
+							</div>
+
+							<div class="annotation">
+								Real current team, pulled directly from the live site — replaces
+								the earlier draft's outdated 2009 founding-team names (Deb
+								Ersland, Mike Morrissey, Lyn Falk, Tim Anderson), none of whom
+								appear on the current roster. "Chief Data Geek" is Dayna's real
+								title on the live site — worth keeping, it's a distinctive,
+								human touch on an otherwise fairly formal page.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<!-- Interns -->
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Interns</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div class="case-grid">
+								<div class="case-card" style="text-align: center;">
+									<div class="case-name">Noah Hippen</div>
+									<div class="case-location">Freshman, Dickinson State University</div>
+								</div>
+								<div class="case-card" style="text-align: center;">
+									<div class="case-name">Jack Lovas</div>
+									<div class="case-location">Junior, Virginia Tech</div>
+								</div>
+								<div class="case-card" style="text-align: center;">
+									<div class="case-name">Samantha Caches</div>
+									<div class="case-location">M.S. Urban &amp; Regional Planning, UW &mdash; Intern 2023&ndash;2026</div>
+								</div>
+								<div class="case-card" style="text-align: center;">
+									<div class="case-name">Emerson Sonoda</div>
+									<div class="case-location">B.A. Sociology, USC &mdash; M.S. Spatial Data Science in progress</div>
+								</div>
+							</div>
+							<div class="annotation">
+								A rotating intern program is itself worth surfacing — it signals
+								an active pipeline and academic credibility. Kept as a distinct
+								block from Core Team since the turnover cadence is different;
+								Kristen updates this list herself each cohort.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── PAGE 20: CONTACT US ── -->
+			<section class="wf-section" id="contact-us">
+				<div class="section-label">
+					<span class="section-num">20</span> Contact Us &mdash; /contact-us
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-nav">
+						<div class="wf-nav-logo">Redevelopment Resources</div>
+						<div class="wf-nav-links">
+							<span>Home</span>
+							<span>Who We Serve</span>
+							<span>Services ▾</span>
+							<span>Our Projects</span>
+							<span>Who We Are</span>
+							<span class="active">Contact Us</span>
+						</div>
+					</div>
+
+					<div class="wf-body">
+						<div style="margin-bottom: 24px">
+							<div class="wf-heading-lg">Contact Us</div>
+							<div class="wf-subtext">Tell us about your project — public or private sector.</div>
+						</div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Office Info</div>
+								<span class="cms-tag">CMS managed</span>
+							</div>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+								<div>
+									<div class="wf-body-text">
+										<strong>Address</strong><br />Madison, WI<br /><span style="font-size: 15px; color: rgba(13,21,30,0.45);">full street address TBD from Kristen</span>
+									</div>
+								</div>
+								<div>
+									<div class="wf-body-text">
+										<strong>Phone</strong><br />(715) 581-1452<br /><span style="font-size: 15px; color: rgba(13,21,30,0.45);">click-to-call on mobile</span>
+									</div>
+									<div class="wf-body-text" style="margin-top: 8px;">
+										<strong>Email</strong><br />info@redevelopment-resources.com
+									</div>
+								</div>
+							</div>
+							<div class="annotation">
+								Phone and domain-matched email reused from the current site's
+								footer, consistent across every page. Street address wasn't
+								published anywhere on the live site — confirm with Kristen.
+							</div>
+						</div>
+
+						<div class="section-divider"></div>
+
+						<div class="wf-block">
+							<div class="wf-block-header">
+								<div class="wf-heading-sm">Contact Form</div>
+							</div>
+							<div class="form-grid">
+								<div class="form-field">
+									<div class="field-label">Name *</div>
+									<div class="field-placeholder">Your name</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Email *</div>
+									<div class="field-placeholder">your@email.com</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Organization</div>
+									<div class="field-placeholder">Organization or municipality (optional)</div>
+								</div>
+								<div class="form-field">
+									<div class="field-label">Sector</div>
+									<div class="field-placeholder">Public / Private toggle</div>
+								</div>
+								<div class="form-field full">
+									<div class="field-label">Your Message</div>
+									<div class="field-placeholder" style="min-height: 60px;">Tell us about your project...</div>
+								</div>
+							</div>
+							<div style="margin-top: 16px;">
+								<div class="wf-cta accent">Send Message →</div>
+							</div>
+							<div class="annotation">
+								Name and Email required; Organization and Sector (Public/Private)
+								optional but useful for routing inquiries. Submissions go to
+								Kristen's email.
+							</div>
+						</div>
+					</div>
+
+					<div class="wf-footer">
+						<span>© 2026 Redevelopment Resources</span>
+						<span>Site by LatzWebDesign.com</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── CONFIRMED DECISIONS ── -->
+			<section class="wf-section" id="decisions">
+				<div class="section-label">
+					<span class="section-num">✓</span> Confirmed Decisions
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Full Restructure</strong> — this is a full rebuild, not a trim.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>"Our Projects" Nav Corrected</strong> — becomes a real case-study destination, no longer aliasing the Services dropdown.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Irish Hospital Apartments Is the Flagship</strong> — the flagship case study on Our Projects, now with a full written narrative.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Who We Serve Condensed to One Hub</strong> — not 4 separate pages, and now has real, differentiated copy for all 4 audiences instead of placeholder text.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Our Projects — Dedicated Pages + Modal Cards</strong> — dedicated pages for the flagship plus 9 strongest, testimonial-matched or well-documented stories (including the 3 former "legacy" pages); modal cards for the remaining testimonials.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Legacy Pages Merged Into the Case Study Template</strong> — Langlade County, Asset Mapping, and Phelps WI are rebuilt on the same template as the other 7, not carried over unchanged. Our Projects holds 10 case studies total, no separate "legacy" section.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>All 5 Service Pages Share One Template</strong> — no exceptions. Redevelopment follows the same structure as Strategy, Financing, and Implementation.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Full Copy Draft Complete</strong> — every page above has real, written copy: reused and tightened from the current live site where it was strong, written fresh where it was thin or missing (Home intro, all 4 Who We Serve audience sections, and full narrative stories for all 10 case studies). Not final, but buildable.</div></li>
+							<li class="check-item"><span class="check-icon">✅</span><div><strong>Who We Are — Real Current Team Confirmed</strong> — Core Team and Interns now reflect the actual current live site (Kristen Fish-Peterson, Dayna Sarver, Thomas Fish, plus 4 rotating interns), replacing an earlier draft that mistakenly used the outdated 2009 founding-team names.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DISCUSSION CHECKLIST ── -->
+			<section class="wf-section" id="discussion">
+				<div class="section-label">
+					<span class="section-num">?</span> Discussion Checklist
+				</div>
+
+				<div class="wireframe-card">
+					<div class="wf-body">
+						<ul class="checklist">
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Brand Colors &amp; Fonts Not Finalized</strong> — this wireframe uses primary <code>#0D151E</code> and accent <code>#8E4C40</code> as provided; light, mid, and CMS-tag green remain the earlier provisional guesses. Fonts (Playfair Display / Source Sans Pro) are also placeholders. Asset request sent to Kristen, awaiting reply.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Homepage &amp; Who We Are Stats Need Sign-Off</strong> — both pages now use the same reconciled figures (165+ years, 80 studies, 100 site analyses, 48 projects, 14 partners) instead of the old, inconsistent homepage numbers. Still needs Kristen's confirmation as the final, accurate set.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Testimonial Count Discrepancy</strong> — live site currently shows 14 named testimonials, not the 12 originally documented. Marshfield (Steve Barg) and a second Pulaski quote (Marquis Yachts, Paul Liss) weren't in the original count. Both are used in this draft.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Merrill — Dedicated Page?</strong> — has a testimonial (Kathy Unertl) plus two matching project rows (Analysis and Implementation). Currently modal-only in this draft; worth reconsidering for dedicated-page promotion given how much material exists.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Legacy Project URL Redirects</strong> — Langlade County, Asset Mapping, and Phelps WI currently live at <code>/our-project/</code> (singular) on the live site. Since they're being rebuilt on the new Case Study Template at <code>/our-projects/</code> (plural), set up 301 redirects from the old singular URLs so existing links and search rankings carry over.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Who We Serve Audience Copy — Review Pass</strong> — full copy is now written for all 4 audiences, but it's a first draft. Worth a review with Kristen for factual accuracy and voice before it's final.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>"165+ Years Combined" Framing</strong> — worth confirming with Kristen now that real current-team tenure is known (Kristen 35+ years, Dayna 5+ years, Thomas's tenure TBD) — the 165+ figure clearly draws on experience well beyond the current 3-person core team. Not wrong, just worth being able to explain if a prospect asks.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Office Address Missing</strong> — phone and email are confirmed from the current site footer, but no street address was ever published live. Need this from Kristen for Contact Us.</div></li>
+							<li class="check-item"><span class="check-icon">⚑</span><div><strong>Modal-Card Testimonial Set</strong> — Fitchburg, Sheboygan, Stevens Point, Thompson ND, Kewaunee, Erie County NY, Baraboo, and Marquis Yachts/Pulaski (Workforce) are currently slated as modal-only; confirm once the Marshfield/Merrill promotion question above is settled.</div></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /main -->
+
+		<script>
+			/* ── Scrollspy ── */
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-15% 0px -70% 0px' }
+			);
+
+			sections.forEach((s) => observer.observe(s));
+
+			/* ── Mobile sidebar ── */
+			const fab = document.getElementById('mobileFab');
+			const sidebar = document.getElementById('sidebar');
+			const sidebarOverlay = document.getElementById('sidebarOverlay');
+			let menuOpen = false;
+
+			function openMenu() {
+				menuOpen = true;
+				sidebar.classList.add('mobile-open');
+				sidebarOverlay.style.display = 'block';
+				requestAnimationFrame(() => sidebarOverlay.classList.add('visible'));
+				fab.textContent = '✕';
+			}
+
+			function closeMenu(callback) {
+				menuOpen = false;
+				sidebar.classList.remove('mobile-open');
+				sidebarOverlay.classList.remove('visible');
+				fab.textContent = '☰';
+				setTimeout(() => {
+					sidebarOverlay.style.display = 'none';
+					if (callback) callback();
+				}, 280);
+			}
+
+			fab.addEventListener('click', () => {
+				if (menuOpen) { closeMenu(); } else { openMenu(); }
+			});
+
+			sidebarOverlay.addEventListener('click', () => closeMenu());
+
+			document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 680 && menuOpen) {
+						e.preventDefault();
+						const target = link.getAttribute('href');
+						closeMenu(() => {
+							const el = document.querySelector(target);
+							if (el) el.scrollIntoView({ behavior: 'smooth' });
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
