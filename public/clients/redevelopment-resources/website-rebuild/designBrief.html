@@ -1,29 +1,2111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
-</head>
-<body>
-  <p>Coming Soon</p>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Redevelopment Resources — Designer Brief | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--sidebar-bg: #0a0a0a;
+				--sidebar-border: rgba(255, 255, 255, 0.06);
+				--header-bg: #ffffff;
+				--teal: #18a1ad;
+				--teal-dim: rgba(24, 161, 173, 0.1);
+				--teal-light: #e8f7f8;
+				--white: #ffffff;
+				--off-white: #f9fafb;
+				--gray-50: #f9fafb;
+				--gray-100: #f3f4f6;
+				--gray-200: #e5e7eb;
+				--gray-300: #d1d5db;
+				--gray-400: #9ca3af;
+				--gray-500: #6b7280;
+				--gray-600: #4b5563;
+				--gray-700: #374151;
+				--gray-800: #1f2937;
+				--gray-900: #111827;
+				--text: #111827;
+				--green: #16a34a;
+				--green-light: #f0fdf4;
+				--green-border: #bbf7d0;
+				--orange: #ea580c;
+				--orange-light: #fff7ed;
+				--orange-border: #fed7aa;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--off-white);
+				color: var(--text);
+				line-height: 1.6;
+				font-size: 14px;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* SIDEBAR */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 150;
+				opacity: 0;
+				transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+			}
+
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 228px;
+				height: 100vh;
+				background: var(--sidebar-bg);
+				border-right: 1px solid var(--sidebar-border);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				transform: translateX(0);
+			}
+
+			.sidebar-top {
+				padding: 22px 18px 18px;
+				border-bottom: 1px solid var(--sidebar-border);
+			}
+
+			.sidebar-wordmark {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+				margin-bottom: 18px;
+			}
+
+			.sidebar-wordmark .dot {
+				width: 6px;
+				height: 6px;
+				background: var(--teal);
+				border-radius: 50%;
+				flex-shrink: 0;
+			}
+
+			.lwd-text {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: rgba(255, 255, 255, 0.3);
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 15.5px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.92);
+				line-height: 1.2;
+				margin-bottom: 3px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: rgba(255, 255, 255, 0.22);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-status {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				margin-top: 11px;
+				background: rgba(24, 161, 173, 0.08);
+				border: 1px solid rgba(24, 161, 173, 0.18);
+				border-radius: 4px;
+				padding: 3px 9px;
+			}
+
+			.pulse {
+				width: 5px;
+				height: 5px;
+				background: var(--teal);
+				border-radius: 50%;
+				animation: pulse 2s infinite;
+				flex-shrink: 0;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.25;
+				}
+			}
+
+			.sidebar-status span {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--teal);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 500;
+			}
+
+			.sidebar-nav {
+				padding: 10px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.18);
+				padding: 10px 8px 4px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 6px 8px;
+				color: rgba(255, 255, 255, 0.38);
+				text-decoration: none;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: rgba(255, 255, 255, 0.8);
+				background: rgba(255, 255, 255, 0.04);
+			}
+
+			.nav-link.active {
+				color: var(--teal);
+				background: rgba(24, 161, 173, 0.07);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+				opacity: 0.6;
+			}
+			.nav-link.active .nav-icon {
+				opacity: 1;
+			}
+
+			.sidebar-footer {
+				padding: 14px 18px;
+				border-top: 1px solid var(--sidebar-border);
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.06em;
+				line-height: 2;
+			}
+
+			/* FAB */
+			.fab-menu {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 20px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--teal);
+				color: #fff;
+				border: none;
+				font-size: 20px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(24, 161, 173, 0.4);
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+			}
+
+			/* MAIN */
+			.main {
+				margin-left: 228px;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* HEADER */
+			.page-header {
+				background: var(--header-bg);
+				padding: 56px 60px 40px;
+				border-bottom: 1px solid var(--gray-200);
+				position: relative;
+				overflow: hidden;
+			}
+
+			.page-header::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(
+					ellipse at 72% 40%,
+					rgba(24, 161, 173, 0.07) 0%,
+					transparent 60%
+				);
+				pointer-events: none;
+			}
+
+			.header-overline {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--teal);
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				position: relative;
+			}
+
+			.header-overline::before {
+				content: '';
+				display: inline-block;
+				width: 18px;
+				height: 1px;
+				background: var(--teal);
+				opacity: 0.6;
+			}
+
+			.page-header h1 {
+				font-family: 'Fraunces', serif;
+				font-size: 40px;
+				font-weight: 600;
+				color: var(--gray-900);
+				line-height: 1.08;
+				margin-bottom: 8px;
+				letter-spacing: -0.6px;
+				position: relative;
+			}
+
+			.page-header .sub {
+				color: var(--gray-500);
+				font-size: 13px;
+				font-weight: 400;
+				letter-spacing: 0.01em;
+				position: relative;
+			}
+
+			.header-thesis {
+				font-family: 'Fraunces', serif;
+				font-style: italic;
+				font-weight: 300;
+				font-size: 18px;
+				color: var(--gray-700);
+				line-height: 1.5;
+				max-width: 600px;
+				margin-top: 18px;
+				position: relative;
+			}
+
+			.header-meta {
+				display: flex;
+				gap: 0;
+				margin-top: 30px;
+				border: 1px solid var(--gray-200);
+				border-radius: 7px;
+				overflow: hidden;
+				width: fit-content;
+				background: var(--white);
+				position: relative;
+			}
+
+			.meta-item {
+				padding: 13px 22px;
+				border-right: 1px solid var(--gray-200);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--gray-400);
+			}
+
+			.meta-value {
+				font-size: 12.5px;
+				font-weight: 500;
+				color: var(--gray-700);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+			.meta-value.warn {
+				color: var(--orange);
+			}
+
+			/* CONTENT */
+			.content {
+				padding: 48px 60px 96px;
+				flex: 1;
+			}
+
+			section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			/* SECTION HEADER */
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 10px;
+			}
+
+			.section-num {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: var(--teal);
+				background: var(--teal-dim);
+				border: 1px solid rgba(24, 161, 173, 0.18);
+				border-radius: 4px;
+				padding: 2px 7px;
+				font-weight: 500;
+				letter-spacing: 0.06em;
+			}
+
+			.section-header h2 {
+				font-family: 'Fraunces', serif;
+				font-size: 19px;
+				font-weight: 600;
+				color: var(--gray-900);
+				letter-spacing: -0.2px;
+			}
+
+			.section-subtext {
+				font-size: 12.5px;
+				color: var(--gray-500);
+				margin: -4px 0 18px 42px;
+				max-width: 620px;
+				line-height: 1.55;
+			}
+
+			.section-divider {
+				height: 1px;
+				background: var(--gray-200);
+				margin-bottom: 22px;
+			}
+
+			.group-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				font-weight: 500;
+				color: var(--gray-400);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin: 24px 0 10px;
+			}
+			.group-label:first-child {
+				margin-top: 0;
+			}
+
+			/* CARDS */
+			.card {
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin-bottom: 10px;
+			}
+
+			.card-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				font-weight: 500;
+				color: var(--gray-400);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin-bottom: 14px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+			}
+
+			/* DATA ROWS */
+			.data-row {
+				display: grid;
+				grid-template-columns: 144px 1fr;
+				gap: 14px;
+				align-items: start;
+				padding: 8px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.data-row:last-child {
+				border-bottom: none;
+			}
+
+			.data-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				letter-spacing: 0.04em;
+				padding-top: 1px;
+			}
+
+			.data-value {
+				font-size: 13px;
+				color: var(--gray-700);
+				font-weight: 400;
+				line-height: 1.5;
+			}
+
+			.data-value a {
+				color: var(--teal);
+				text-decoration: none;
+			}
+			.data-value a:hover {
+				text-decoration: underline;
+			}
+
+			/* CALLOUTS */
+			.callout {
+				border-radius: 7px;
+				padding: 13px 17px;
+				margin-bottom: 12px;
+				display: flex;
+				gap: 11px;
+				align-items: flex-start;
+				border: 1px solid transparent;
+			}
+
+			.callout-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.callout-body strong {
+				display: block;
+				font-size: 12px;
+				font-weight: 600;
+				margin-bottom: 3px;
+			}
+			.callout-body p,
+			.callout-body span {
+				font-size: 12px;
+				line-height: 1.55;
+			}
+
+			.callout.info {
+				background: var(--teal-light);
+				border-color: rgba(24, 161, 173, 0.2);
+				color: #0e7490;
+			}
+			.callout.warn {
+				background: var(--orange-light);
+				border-color: var(--orange-border);
+				color: var(--orange);
+			}
+			.callout.neutral {
+				background: var(--gray-50);
+				border-color: var(--gray-200);
+				color: var(--gray-600);
+			}
+
+			/* HIGHLIGHT BOX */
+			.highlight-box {
+				background: var(--teal-light);
+				border: 1px solid rgba(24, 161, 173, 0.15);
+				border-left: 3px solid var(--teal);
+				border-radius: 6px;
+				padding: 22px 26px;
+				margin-bottom: 14px;
+				position: relative;
+			}
+
+			.highlight-box strong {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: var(--teal);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				display: block;
+				margin-bottom: 8px;
+			}
+
+			.highlight-box p {
+				font-size: 15px;
+				color: var(--gray-700);
+				line-height: 1.65;
+				font-weight: 300;
+				font-family: 'Fraunces', serif;
+			}
+
+			/* STAT TRANSFORM (Template Map signature) */
+			.stat-transform {
+				display: flex;
+				align-items: center;
+				gap: 22px;
+				margin-bottom: 28px;
+				flex-wrap: wrap;
+			}
+			.stat-num {
+				font-family: 'Fraunces', serif;
+				line-height: 1;
+			}
+			.stat-num.old {
+				font-size: 46px;
+				font-weight: 300;
+				color: var(--gray-300);
+				text-decoration: line-through;
+				text-decoration-color: var(--gray-300);
+				text-decoration-thickness: 2px;
+			}
+			.stat-sep {
+				font-size: 22px;
+				color: var(--gray-300);
+			}
+			.stat-num.new {
+				font-size: 58px;
+				font-weight: 700;
+				color: var(--teal);
+				letter-spacing: -1px;
+			}
+			.stat-copy {
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+				max-width: 340px;
+			}
+			.stat-copy strong {
+				font-family: 'Fraunces', serif;
+				font-size: 15px;
+				font-weight: 600;
+				color: var(--gray-900);
+			}
+			.stat-copy span {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.5;
+			}
+
+			/* TEMPLATE CARDS */
+			.template-card {
+				position: relative;
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin-bottom: 10px;
+			}
+			.template-card.stacked-2,
+			.template-card.stacked-3 {
+				margin-bottom: 22px;
+			}
+			.template-card.stacked-2::before,
+			.template-card.stacked-3::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				transform: translate(6px, 6px);
+				z-index: -1;
+			}
+			.template-card.stacked-3::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: var(--gray-50);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				transform: translate(12px, 12px);
+				z-index: -2;
+			}
+
+			.template-card-top {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 12px;
+				margin-bottom: 14px;
+				flex-wrap: wrap;
+			}
+			.template-card-name {
+				font-family: 'Fraunces', serif;
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--gray-900);
+			}
+			.template-card-count {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				letter-spacing: 0.04em;
+			}
+
+			.template-ref-row {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				background: var(--teal-dim);
+				border: 1px solid rgba(24, 161, 173, 0.18);
+				border-radius: 6px;
+				padding: 9px 13px;
+				margin-bottom: 12px;
+			}
+			.template-ref-row .ref-tag {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				font-weight: 600;
+				color: var(--teal);
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				background: var(--white);
+				border: 1px solid rgba(24, 161, 173, 0.25);
+				border-radius: 4px;
+				padding: 2px 6px;
+				flex-shrink: 0;
+			}
+			.template-ref-row .ref-page-name {
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gray-900);
+			}
+
+			.reuse-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--gray-400);
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				margin-bottom: 8px;
+			}
+
+			.reuse-chips {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 6px;
+				margin-bottom: 14px;
+			}
+			.reuse-chip {
+				font-size: 11.5px;
+				color: var(--gray-600);
+				background: var(--gray-50);
+				border: 1px solid var(--gray-200);
+				border-radius: 4px;
+				padding: 4px 9px;
+			}
+
+			.template-note {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.55;
+				border-top: 1px solid var(--gray-100);
+				padding-top: 12px;
+			}
+			.template-note strong {
+				color: var(--gray-700);
+				font-weight: 600;
+			}
+
+			/* SWATCHES */
+			.swatch-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 10px;
+				margin-bottom: 14px;
+			}
+			.swatch-block {
+				border-radius: 7px;
+				overflow: hidden;
+				border: 1px solid var(--gray-200);
+			}
+			.swatch-color {
+				height: 54px;
+			}
+			.swatch-label {
+				padding: 7px 9px;
+				background: var(--white);
+			}
+			.swatch-name {
+				font-size: 11px;
+				font-weight: 600;
+				color: var(--gray-700);
+				display: block;
+			}
+			.swatch-hex {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--gray-400);
+			}
+			.swatch-excluded {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				font-size: 11.5px;
+				color: var(--gray-500);
+				background: var(--gray-50);
+				border: 1px dashed var(--gray-300);
+				border-radius: 6px;
+				padding: 8px 12px;
+			}
+			.swatch-excluded .dot {
+				width: 12px;
+				height: 12px;
+				border-radius: 3px;
+				flex-shrink: 0;
+			}
+
+			/* SEAL / MOCKUP LINK */
+			.mockup-ref {
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				background: var(--gray-50);
+				border: 1px solid var(--gray-200);
+				border-radius: 7px;
+				padding: 13px 15px;
+				text-decoration: none;
+				transition:
+					border-color 0.12s,
+					background 0.12s;
+				margin-bottom: 10px;
+			}
+
+			.mockup-ref:hover {
+				border-color: var(--teal);
+				background: var(--teal-light);
+			}
+			.mockup-ref .ref-icon {
+				font-size: 18px;
+				flex-shrink: 0;
+			}
+			.mockup-ref .ref-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--gray-400);
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				margin-bottom: 2px;
+			}
+			.mockup-ref .ref-name {
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gray-900);
+			}
+			.mockup-ref .ref-url {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--teal);
+				margin-top: 1px;
+			}
+
+			/* PAGE CARDS */
+			.page-card {
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				padding: 17px 18px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.page-card::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 2px;
+				background: var(--teal);
+			}
+
+			.page-card h4 {
+				font-family: 'Fraunces', serif;
+				font-size: 14.5px;
+				font-weight: 600;
+				color: var(--gray-900);
+				margin-bottom: 2px;
+			}
+
+			.page-card .page-url {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: var(--gray-400);
+				letter-spacing: 0.04em;
+				margin-bottom: 11px;
+			}
+
+			.page-card ul {
+				list-style: none;
+				padding: 0;
+			}
+
+			.page-card ul li {
+				font-size: 12px;
+				color: var(--gray-600);
+				padding: 3px 0 3px 13px;
+				position: relative;
+				line-height: 1.45;
+			}
+
+			.page-card ul li::before {
+				content: '—';
+				position: absolute;
+				left: 0;
+				color: var(--gray-300);
+				font-size: 9px;
+				top: 5px;
+			}
+
+			.page-badge {
+				display: inline-block;
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				font-weight: 500;
+				padding: 2px 7px;
+				border-radius: 4px;
+				margin-bottom: 7px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				border: 1px solid transparent;
+			}
+
+			.badge-unique {
+				background: var(--teal-dim);
+				color: var(--teal);
+				border-color: rgba(24, 161, 173, 0.18);
+			}
+			.badge-static {
+				background: var(--gray-100);
+				color: var(--gray-500);
+				border-color: var(--gray-200);
+			}
+
+			/* ASSET LIST */
+			.asset-list {
+				list-style: none;
+				padding: 0;
+			}
+
+			.asset-list li {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+				padding: 11px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.asset-list li:last-child {
+				border-bottom: none;
+			}
+
+			.asset-icon {
+				font-size: 13px;
+				flex-shrink: 0;
+				margin-top: 1px;
+				opacity: 0.7;
+			}
+			.asset-body {
+				flex: 1;
+			}
+			.asset-body strong {
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gray-800);
+				display: block;
+				margin-bottom: 2px;
+			}
+			.asset-body span {
+				font-size: 11.5px;
+				color: var(--gray-500);
+				line-height: 1.45;
+			}
+			.asset-status {
+				margin-left: auto;
+				flex-shrink: 0;
+				padding-top: 1px;
+			}
+
+			/* PILLS */
+			.pill {
+				display: inline-block;
+				font-size: 9px;
+				font-weight: 600;
+				padding: 2px 8px;
+				border-radius: 4px;
+				font-family: 'DM Mono', monospace;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				border: 1px solid transparent;
+				white-space: nowrap;
+			}
+
+			.pill-orange {
+				background: var(--orange-light);
+				color: var(--orange);
+				border-color: var(--orange-border);
+			}
+			.pill-gray {
+				background: var(--gray-100);
+				color: var(--gray-500);
+				border-color: var(--gray-200);
+			}
+			.pill-teal {
+				background: var(--teal-dim);
+				color: var(--teal);
+				border-color: rgba(24, 161, 173, 0.18);
+			}
+
+			/* QUESTIONS */
+			.question-item {
+				padding: 14px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+			.question-item:last-child {
+				border-bottom: none;
+			}
+			.question-text {
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gray-900);
+				margin-bottom: 4px;
+			}
+			.question-context {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.55;
+			}
+
+			/* ARROW LIST */
+			.arrow-list {
+				list-style: none;
+				padding: 0;
+				margin-top: 10px;
+			}
+
+			.arrow-list li {
+				font-size: 12px;
+				color: var(--gray-600);
+				padding: 4px 0 4px 15px;
+				position: relative;
+				line-height: 1.4;
+			}
+
+			.arrow-list li::before {
+				content: '→';
+				position: absolute;
+				left: 0;
+				color: var(--teal);
+				font-size: 10px;
+				top: 5px;
+			}
+
+			/* RESPONSIVE */
+			@media (max-width: 1024px) {
+				.sidebar {
+					width: 200px;
+				}
+				.main {
+					margin-left: 200px;
+				}
+				.page-header,
+				.content {
+					padding-left: 36px;
+					padding-right: 36px;
+				}
+				.swatch-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (max-width: 768px) {
+				.sidebar {
+					transform: translateX(-100%);
+					transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.main {
+					margin-left: 0;
+				}
+				.two-col {
+					grid-template-columns: 1fr;
+				}
+				.page-header,
+				.content {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+				.fab-menu {
+					display: flex;
+				}
+				.section-subtext {
+					margin-left: 0;
+				}
+				.stat-num.old {
+					font-size: 34px;
+				}
+				.stat-num.new {
+					font-size: 42px;
+				}
+			}
+
+			@media (max-width: 680px) {
+				.page-header {
+					padding: 32px 20px 28px;
+				}
+				.page-header h1 {
+					font-size: 26px;
+				}
+				.data-row {
+					grid-template-columns: 1fr;
+					gap: 2px;
+				}
+				.data-label {
+					font-size: 10px;
+				}
+				.header-meta {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: 1px solid var(--gray-200);
+					border-bottom: 1px solid var(--gray-200);
+				}
+				.meta-item:nth-child(even) {
+					border-right: none;
+				}
+				.callout {
+					flex-direction: column;
+					gap: 6px;
+				}
+				.template-card.stacked-2,
+				.template-card.stacked-3 {
+					margin-bottom: 10px;
+				}
+				.template-card.stacked-2::before,
+				.template-card.stacked-3::before,
+				.template-card.stacked-3::after {
+					display: none;
+				}
+				.swatch-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+				.stat-transform {
+					gap: 12px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-top">
+				<div class="sidebar-wordmark">
+					<div class="dot"></div>
+					<span class="lwd-text">Latz Web Design</span>
+				</div>
+				<div class="sidebar-client">Redevelopment Resources</div>
+				<div class="sidebar-doctype">Designer Brief</div>
+				<div class="sidebar-status">
+					<div class="pulse"></div>
+					<span>In Progress</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Brief</div>
+				<a href="#snapshot" class="nav-link active"
+					><span class="nav-icon">📋</span> Project Snapshot</a
+				>
+				<a href="#templates" class="nav-link"
+					><span class="nav-icon">🧩</span> Template Map</a
+				>
+				<a href="#client" class="nav-link"
+					><span class="nav-icon">🏛️</span> Client & Audience</a
+				>
+				<a href="#brand" class="nav-link"
+					><span class="nav-icon">🎨</span> Brand & Direction</a
+				>
+				<a href="#pages" class="nav-link"
+					><span class="nav-icon">📄</span> Pages & Content</a
+				>
+				<a href="#assets" class="nav-link"
+					><span class="nav-icon">📦</span> Assets & Status</a
+				>
+				<a href="#questions" class="nav-link"
+					><span class="nav-icon">💬</span> Let's Talk</a
+				>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<div class="main">
+			<div class="page-header">
+				<div class="header-overline">Designer Brief · For [Designer]</div>
+				<h1>Redevelopment Resources</h1>
+				<div class="sub">
+					20-Page Full Site Rebuild &nbsp;·&nbsp; 7 Designs Needed &nbsp;·&nbsp; Custom CMS
+				</div>
+				<div class="header-thesis">
+					She's leaving a slow, templated site behind — 9.3 seconds to load,
+					generic AI-flavored copy, stock photography — for something fast and
+					honest that finally shows 165+ years of real, named-client work.
+				</div>
+
+				<div class="header-meta">
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Kristen Fish-Peterson — Owner</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Pages</span>
+						<span class="meta-value">20 URLs · 7 designs</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Brand</span>
+						<span class="meta-value warn">Provisional — unconfirmed</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Content</span>
+						<span class="meta-value ok">48 projects · 14 testimonials</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Wireframe</span>
+						<span class="meta-value ok">✓ Attached — full copy draft</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="content">
+				<section id="snapshot">
+					<div class="section-header">
+						<span class="section-num">01</span>
+						<h2>Project Snapshot</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="highlight-box">
+						<strong>The job</strong>
+						<p>
+							Redevelopment Resources has done real, named-client work for
+							municipalities and developers across six states — and none of it
+							shows on their current site. It's a 9.3-second-loading,
+							plugin-heavy build from a vendor who's now upselling her weekly,
+							the nav mislabels their actual services, and 44 project
+							write-ups plus 14 named testimonials sit buried and unused. This
+							rebuild fixes the structure, surfaces the real work, and gives a
+							165+-year firm a site that finally looks like one.
+						</p>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<div class="card-title">The Build</div>
+							<div class="data-row">
+								<span class="data-label">Scope</span
+								><span class="data-value"
+									>Full rebuild — 20 URLs across 7 designs (5 unique pages +
+									2 reusable templates)</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">CMS</span
+								><span class="data-value"
+									>Custom-built — services, case studies, testimonials, and
+									team roster are all self-editable, no developer needed</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Stack</span
+								><span class="data-value"
+									>Next.js, React, Tailwind, Framer Motion, Vercel</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Timeline</span
+								><span class="data-value"
+									>TBD — pending final scope confirmation</span
+								>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-title">Not in Scope</div>
+							<div class="data-row">
+								<span class="data-label">Add-Ons</span
+								><span class="data-value"
+									>Brand Refresh, Interactive Project Map, RFP Packet,
+									Insights Blog — optional, not yet confirmed. Don't design
+									for them unless told otherwise.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Portfolio Sites</span
+								><span class="data-value"
+									>Irish Hospital Apartments and other properties — separate
+									projects, separate briefs</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Legacy Redirects</span
+								><span class="data-value"
+									>Old project-page URL migration is a dev/launch task, not
+									a design concern</span
+								>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section id="templates">
+					<div class="section-header">
+						<span class="section-num">02</span>
+						<h2>Template Map</h2>
+					</div>
+					<p class="section-subtext">
+						Read this before Pages & Content. It's the single most important
+						thing to understand about this project's scope.
+					</p>
+					<div class="section-divider"></div>
+
+					<div class="stat-transform">
+						<div class="stat-num old">20</div>
+						<div class="stat-sep">→</div>
+						<div class="stat-num new">7</div>
+						<div class="stat-copy">
+							<strong>pages, seven designs</strong>
+							<span
+								>Every one of the 20 URLs fits one of seven layouts. Design
+								those seven well and the other thirteen pages build
+								themselves.</span
+							>
+						</div>
+					</div>
+
+					<div class="group-label">Fully Custom — 5 Pages</div>
+					<div class="two-col" style="margin-bottom: 4px">
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Home</h4>
+							<div class="page-url">/</div>
+							<ul>
+								<li>The front door — sets tone for everything after it</li>
+							</ul>
+						</div>
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Who We Serve</h4>
+							<div class="page-url">/who-we-serve</div>
+							<ul>
+								<li>One hub, four audiences, confirmed structure</li>
+							</ul>
+						</div>
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Our Projects</h4>
+							<div class="page-url">/our-projects</div>
+							<ul>
+								<li>Landing page — flagship story + curated grid</li>
+							</ul>
+						</div>
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Who We Are</h4>
+							<div class="page-url">/who-we-are</div>
+							<ul>
+								<li>Team credibility — real bios, real tenure</li>
+							</ul>
+						</div>
+						<div class="page-card" style="grid-column: 1 / -1">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Contact Us</h4>
+							<div class="page-url">/contact-us</div>
+							<ul>
+								<li>Public/private routing form</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="group-label">Reused Templates — 15 Pages, 2 Designs</div>
+
+					<div class="template-card stacked-2">
+						<div class="template-card-top">
+							<span class="template-card-name">Service Template</span>
+							<span class="template-card-count">5 URLs · 1 design</span>
+						</div>
+						<div class="template-ref-row">
+							<span class="ref-tag">Reference</span>
+							<span class="ref-page-name">Analysis — /services/analysis</span>
+						</div>
+						<div class="reuse-label">Reused exactly by</div>
+						<div class="reuse-chips">
+							<span class="reuse-chip">Strategy</span>
+							<span class="reuse-chip">Redevelopment</span>
+							<span class="reuse-chip">Financing</span>
+							<span class="reuse-chip">Implementation</span>
+						</div>
+						<div class="template-note">
+							<strong>Design Analysis once, in full.</strong> The other four
+							inherit it exactly — same structure, new content. No
+							exceptions, confirmed — an earlier idea to give Redevelopment
+							an extra block was dropped.
+						</div>
+					</div>
+
+					<div class="template-card stacked-3">
+						<div class="template-card-top">
+							<span class="template-card-name">Case Study Template</span>
+							<span class="template-card-count">10 URLs · 1 design</span>
+						</div>
+						<div class="template-ref-row">
+							<span class="ref-tag">Reference · Flagship</span>
+							<span class="ref-page-name"
+								>Irish Hospital Apartments — /our-projects/irish-hospital-apartments</span
+							>
+						</div>
+						<div class="reuse-label">Reused exactly by</div>
+						<div class="reuse-chips">
+							<span class="reuse-chip">Elkhorn</span>
+							<span class="reuse-chip">Fremont / CO Springs</span>
+							<span class="reuse-chip">West Bend</span>
+							<span class="reuse-chip">Marshfield</span>
+							<span class="reuse-chip">Pulaski</span>
+							<span class="reuse-chip">Watertown</span>
+							<span class="reuse-chip">Langlade County</span>
+							<span class="reuse-chip">Asset Mapping</span>
+							<span class="reuse-chip">Phelps WI</span>
+						</div>
+						<div class="template-note">
+							<strong>Ten stories, one template</strong> — including three
+							former "legacy" pages getting rebuilt fresh, not carried over
+							unchanged. The flagship gets extra visual weight, but only on
+							the Our Projects landing page grid above — its own page here
+							follows this exact same structure as the other nine.
+						</div>
+					</div>
+				</section>
+
+				<section id="client">
+					<div class="section-header">
+						<span class="section-num">03</span>
+						<h2>Client & Audience</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="two-col" style="margin-bottom: 10px">
+						<div class="card">
+							<div class="card-title">The Client</div>
+							<div class="data-row">
+								<span class="data-label">Who They Are</span
+								><span class="data-value"
+									>Economic development & redevelopment consulting firm,
+									WI-based. Serves municipalities, EDCs, and private
+									developers across WI, NE, VA, ND, NY, and MN.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Our Contact</span
+								><span class="data-value"
+									>Kristen Fish-Peterson, CEcD, EDFP — Owner, Principal &
+									CEO. Sole decision-maker, no board approval needed.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Who Updates Site</span
+								><span class="data-value"
+									>Kristen and team, via CMS. New case studies and
+									testimonials get added over time — this is an ongoing
+									need, not a one-time setup.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Tone</span
+								><span class="data-value"
+									>Confident, credible, data-driven — but human. Not a stiff
+									consultancy, not government-cold.</span
+								>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-title">The Audience</div>
+							<div class="data-row">
+								<span class="data-label">Primary</span
+								><span class="data-value"
+									>Municipal officials, EDC leadership, and private
+									developers evaluating a consultant</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">What They Need</span
+								><span class="data-value"
+									>Proof this firm has done exactly this before, fast — case
+									studies and testimonials carry more weight than mission
+									statements</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Devices</span
+								><span class="data-value"
+									>Mixed desktop/mobile — public-sector decision-makers
+									often review during work hours, at a desk</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Key Insight</span
+								><span class="data-value"
+									>This audience is skeptical of consultants by default.
+									Every page should read like receipts, not marketing.</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">💡</span>
+						<div class="callout-body">
+							<strong>Vibe in one sentence</strong>
+							<span
+								>Confident and substantiated — a 165+ year track record that
+								doesn't need to shout, it just needs to finally be
+								visible.</span
+							>
+						</div>
+					</div>
+
+					<div class="callout neutral">
+						<span class="callout-icon">🗣️</span>
+						<div class="callout-body">
+							<strong>Working with Kristen</strong>
+							<span
+								>Detail-oriented and sharp — she caught her own CMS mistake
+								and clocked a bogus "ADA compliance audit" pitch as a scam
+								before anyone told her. Runs several projects and properties
+								at once, and emails in bursts, jumping topics inside one
+								message. She's been explicit about wanting directness —
+								steer clear of anything that reads padded or
+								template-generic. This whole rebuild exists because a
+								previous vendor's site was exactly that.</span
+							>
+						</div>
+					</div>
+				</section>
+
+				<section id="brand">
+					<div class="section-header">
+						<span class="section-num">04</span>
+						<h2>Brand & Visual Direction</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout warn">
+						<span class="callout-icon">🎨</span>
+						<div class="callout-body">
+							<strong>Provisional — and possibly about to change</strong>
+							<span
+								>Unlike a blank-slate client, there's an existing brand
+								here — but it's unconfirmed. The colors below come from the
+								firm's ~2019–2021 branding, still used on the current live
+								site. Kristen hasn't confirmed exact hex values or fonts, and
+								a Brand Refresh add-on is still on the table. Treat this as a
+								strong hint about direction, not a locked mandate.</span
+							>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Provisional Colors & Type</div>
+						<div class="swatch-grid">
+							<div class="swatch-block">
+								<div class="swatch-color" style="background: #0d151e"></div>
+								<div class="swatch-label">
+									<span class="swatch-name">Primary</span>
+									<span class="swatch-hex">#0D151E</span>
+								</div>
+							</div>
+							<div class="swatch-block">
+								<div class="swatch-color" style="background: #8e4c40"></div>
+								<div class="swatch-label">
+									<span class="swatch-name">Accent</span>
+									<span class="swatch-hex">#8E4C40</span>
+								</div>
+							</div>
+							<div class="swatch-block">
+								<div class="swatch-color" style="background: #e8dfc8"></div>
+								<div class="swatch-label">
+									<span class="swatch-name">Light</span>
+									<span class="swatch-hex">#E8DFC8</span>
+								</div>
+							</div>
+							<div class="swatch-block">
+								<div class="swatch-color" style="background: #8c8570"></div>
+								<div class="swatch-label">
+									<span class="swatch-name">Mid</span>
+									<span class="swatch-hex">#8C8570</span>
+								</div>
+							</div>
+						</div>
+						<div class="swatch-excluded">
+							<span class="dot" style="background: #4c6b4f"></span>
+							<span
+								><strong style="color: var(--gray-600)">#4C6B4F green</strong>
+								— this is a CMS-tag annotation color used in the wireframe,
+								not part of the brand palette. Don't carry it into the
+								design.</span
+							>
+						</div>
+						<div class="data-row" style="margin-top: 4px">
+							<span class="data-label">Heading Font</span
+							><span class="data-value"
+								>Playfair Display — placeholder, unconfirmed</span
+							>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Body Font</span
+							><span class="data-value"
+								>Source Sans Pro — placeholder, unconfirmed</span
+							>
+						</div>
+					</div>
+
+					<a
+						class="mockup-ref"
+						href="https://redevelopment-resources.com"
+						target="_blank"
+						rel="noopener"
+					>
+						<div class="ref-icon">🖥️</div>
+						<div>
+							<div class="ref-label">Current live site</div>
+							<div class="ref-name">redevelopment-resources.com</div>
+							<div class="ref-url">
+								What we're replacing, not a style guide — click to view ↗
+							</div>
+						</div>
+					</a>
+
+					<div class="two-col">
+						<div class="card">
+							<div class="card-title">What We Know About The Vibe</div>
+							<div class="data-row">
+								<span class="data-label">Feel</span
+								><span class="data-value"
+									>Confident, credible, data-backed — a firm you'd trust
+									with real money and real decisions</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Not This</span
+								><span class="data-value"
+									>Cold government-consultant beige. Generic
+									corporate-stock-photo energy. Anything that reads
+									AI-written.</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Positioning</span
+								><span class="data-value"
+									>165+ years of combined experience, currently invisible on
+									the one site meant to prove it</span
+								>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Audience Lens</span
+								><span class="data-value"
+									>Design for a skeptical municipal official who's already
+									fielded five consultant pitches this year</span
+								>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-title">Open Creative Questions</div>
+							<ul class="arrow-list">
+								<li>
+									What color story actually reads "165+ years of credible
+									work" without landing on generic government-adjacent
+									navy?
+								</li>
+								<li>
+									Keep the provisional navy/rust and evolve it, or start
+									clean — what's your gut read?
+								</li>
+								<li>
+									Photography is thin — several heroes (Irish Hospital
+									included) are unfilled on the live site today. What's the
+									mockup treatment until real photos land?
+								</li>
+								<li>
+									Ten case studies share one template. How do we keep that
+									from feeling like the same page ten times over?
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section id="pages">
+					<div class="section-header">
+						<span class="section-num">05</span>
+						<h2>Pages & Content</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout neutral">
+						<span class="callout-icon">📐</span>
+						<div class="callout-body">
+							<strong
+								>Wireframe covers layout, page by page — this covers
+								intent</strong
+							>
+							<span
+								>The attached wireframe has a full working copy draft for
+								every page — a real starting point, not placeholder text. But
+								it's a draft, not gospel. If you see a better way to say
+								something, say it that way. This section explains what each
+								of the seven designs needs to accomplish; the complete
+								48-project, 14-testimonial dataset lives in the companion
+								Content Inventory doc if you need to go deeper on any one
+								page.</span
+							>
+						</div>
+					</div>
+
+					<div class="group-label">The 5 Unique Pages</div>
+					<div class="two-col" style="margin-bottom: 10px">
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Home</h4>
+							<div class="page-url">/</div>
+							<ul>
+								<li>Hero with two CTAs — Services and Our Projects</li>
+								<li>Real project photo in the hero, not stock</li>
+								<li>
+									"By the Numbers" strip — reconciled figures, pending sign-off
+								</li>
+								<li>Five-card services overview — fixes the mislabeled nav</li>
+								<li>Who We Serve teaser, 3-testimonial preview</li>
+							</ul>
+						</div>
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Who We Serve</h4>
+							<div class="page-url">/who-we-serve</div>
+							<ul>
+								<li>
+									One hub, four audience sections — Municipalities,
+									Organizations, Entrepreneurs, Private Developers
+								</li>
+								<li>
+									Each audience pairs with one real matching project, not a
+									generic card
+								</li>
+								<li>Confirmed as a single page, not four separate ones</li>
+							</ul>
+						</div>
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Our Projects</h4>
+							<div class="page-url">/our-projects</div>
+							<ul>
+								<li>
+									Flagship case study (Irish Hospital) — large, distinct
+									treatment, separate from the grid below it
+								</li>
+								<li>9-card grid, one per remaining Case Study Template page</li>
+								<li>
+									Remaining testimonials as modal/expandable cards — no
+									separate URL
+								</li>
+								<li>
+									The most content-dense page on the site — 48 projects and
+									14 testimonials curated down to the strongest stories
+								</li>
+							</ul>
+						</div>
+						<div class="page-card">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Who We Are</h4>
+							<div class="page-url">/who-we-are</div>
+							<ul>
+								<li>
+									Firm story — real copy pulled from the live site, some of
+									the strongest writing on the whole current site
+								</li>
+								<li>Plain-language company summary list</li>
+								<li>Experience stats — 165+ years, 80 studies, 100 analyses</li>
+								<li>Core team (3, real bios) + rotating interns (4, separate block)</li>
+							</ul>
+						</div>
+						<div class="page-card" style="grid-column: 1 / -1">
+							<span class="page-badge badge-unique">Unique</span>
+							<h4>Contact Us</h4>
+							<div class="page-url">/contact-us</div>
+							<ul>
+								<li>
+									Office info — phone/email confirmed, street address still
+									TBD from Kristen
+								</li>
+								<li>
+									Form: Name + Email required, Organization + Sector
+									optional (routes the inquiry)
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="group-label">The 2 Reused Templates</div>
+
+					<div class="card">
+						<div class="card-title">Service Template — What All 5 Need</div>
+						<ul style="list-style: none; padding: 0">
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Intro paragraph — 3–4 sentences setting up why this service category matters
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Sub-service list — 2 to 6 short entries per page, name + one-line description each
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Work example table — 6 to 12 real project rows per page; show a representative few, full list lives in the CMS
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Closing CTA to Contact Us — identical pattern on all five pages
+							</li>
+						</ul>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Case Study Template — What All 10 Need</div>
+						<ul style="list-style: none; padding: 0">
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Hero photo + project name, location, sector tag — several of
+								these photos don't exist yet, see Assets & Status
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Quick facts strip — 2 to 3 scannable stats above the fold
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								The full story — one long-form narrative per project, written in full, not placeholder
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Optional pull-quote — only where a matching testimonial exists; not all ten have one
+							</li>
+							<li style="font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 15px; position: relative; line-height: 1.5">
+								<span style="position: absolute; left: 0; color: var(--gray-300); font-size: 9px; top: 8px">—</span>
+								Related services — cross-links to the 1–2 most relevant service pages, plus a back-link to Our Projects
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section id="assets">
+					<div class="section-header">
+						<span class="section-num">06</span>
+						<h2>Assets & Content Status</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="card">
+						<div class="card-title">What We Have / What's Coming</div>
+						<ul class="asset-list">
+							<li>
+								<span class="asset-icon">📝</span>
+								<div class="asset-body">
+									<strong>Copy Draft — Every Page</strong
+									><span
+										>Not placeholder text. Pulled and tightened from the
+										live site where it was strong, written fresh where it
+										was thin or missing — including the Home intro, all four
+										Who We Serve audiences, and all ten case study
+										narratives. It's a strong starting draft, not final —
+										rewrite anything you think should read better.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-teal">In Hand</span></span
+								>
+							</li>
+							<li>
+								<span class="asset-icon">📸</span>
+								<div class="asset-body">
+									<strong>Photography</strong
+									><span
+										>Thin. Several key spots — the Irish Hospital hero, most
+										case study heroes — have no photo at all on the live
+										site today. Home hero should pull from a real project,
+										not stock.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-orange">Needed</span></span
+								>
+							</li>
+							<li>
+								<span class="asset-icon">🎨</span>
+								<div class="asset-body">
+									<strong>Brand Colors & Fonts</strong
+									><span
+										>Provisional navy/rust on hand from the ~2019–2021
+										branding. Not confirmed, and a Brand Refresh add-on is
+										still in play — see Brand section.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-orange">Provisional</span></span
+								>
+							</li>
+							<li>
+								<span class="asset-icon">📊</span>
+								<div class="asset-body">
+									<strong>Stats & Figures</strong
+									><span
+										>Homepage and Who We Are numbers reconciled into one
+										working set — 165+ years, 48 projects, 80 studies, 14
+										partners. Still needs Kristen's sign-off as final.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-orange">Pending Sign-Off</span></span
+								>
+							</li>
+							<li>
+								<span class="asset-icon">👥</span>
+								<div class="asset-body">
+									<strong>Team & Bios</strong
+									><span
+										>Current team — Kristen, Dayna, Thomas — plus 4 rotating
+										interns, pulled directly from the live site.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-teal">In Hand</span></span
+								>
+							</li>
+							<li>
+								<span class="asset-icon">🗂️</span>
+								<div class="asset-body">
+									<strong>Testimonials & Project Records</strong
+									><span
+										>48 project rows and 14 named testimonials, fully
+										catalogued in the companion Content Inventory doc —
+										including which ones already have a matching story.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-teal">In Hand</span></span
+								>
+							</li>
+							<li>
+								<span class="asset-icon">🌐</span>
+								<div class="asset-body">
+									<strong>Domain</strong
+									><span
+										>redevelopment-resources.com — Jordan handles DNS at
+										launch.</span
+									>
+								</div>
+								<span class="asset-status"
+									><span class="pill pill-gray">Jordan Handles</span></span
+								>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section id="questions">
+					<div class="section-header">
+						<span class="section-num">07</span>
+						<h2>Let's Talk</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout info">
+						<span class="callout-icon">☕</span>
+						<div class="callout-body">
+							<strong>Bring your instincts — not just answers</strong>
+							<span
+								>These are things worth talking through before we're deep in
+								build mode. You know design better than I do — if you've got
+								a direction you want to run with, let's hear it. These are
+								conversation starters, not a checklist.</span
+							>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Open Design Questions</div>
+						<div class="question-item">
+							<div class="question-text">
+								What's the color direction, given brand is unconfirmed?
+							</div>
+							<div class="question-context">
+								Don't feel bound to the provisional navy/rust. I'd love to
+								see 2–3 directions to kick off the conversation — including
+								at least one that departs from what's there now.
+							</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">
+								Typography — credible without being stiff
+							</div>
+							<div class="question-context">
+								Playfair Display / Source Sans Pro are placeholders, not a
+								mandate. What pairing says "serious firm, real expertise"
+								without reading like a law office?
+							</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">
+								How do we handle the gaps in photography?
+							</div>
+							<div class="question-context">
+								The flagship story — arguably the best material on the whole
+								site — doesn't have a hero photo yet. Texture, illustration,
+								a strong color field, something else? Worth solving before
+								we're stuck mocking up with a placeholder gray box.
+							</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">
+								How do 10 case studies avoid feeling like the same page 10
+								times?
+							</div>
+							<div class="question-context">
+								One template, ten stories, real variation in what each one
+								has to say. Where does the design earn variety — a stat
+								layout, a quote treatment, an image ratio — without breaking
+								the template itself?
+							</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">
+								How prominent should the flagship story be on Our Projects?
+							</div>
+							<div class="question-context">
+								Confirmed it needs distinct treatment, separate from the
+								grid. Full-width hero-style entry, or just a visibly larger
+								grid card? Your call.
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<button class="fab-menu" id="fabMenu">☰</button>
+
+		<script>
+			const sidebar = document.getElementById('sidebar');
+			const overlay = document.getElementById('sidebarOverlay');
+			const fab = document.getElementById('fabMenu');
+
+			function openSidebar() {
+				sidebar.classList.add('mobile-open');
+				overlay.classList.add('visible');
+				fab.textContent = '✕';
+				document.body.style.overflow = 'hidden';
+			}
+			function closeSidebar() {
+				sidebar.classList.remove('mobile-open');
+				overlay.classList.remove('visible');
+				fab.textContent = '☰';
+				document.body.style.overflow = '';
+			}
+			fab.addEventListener('click', () => {
+				sidebar.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
+			});
+			overlay.addEventListener('click', closeSidebar);
+
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			navLinks.forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 768) {
+						e.preventDefault();
+						const targetId = link.getAttribute('href');
+						closeSidebar();
+						setTimeout(() => {
+							document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+						}, 280);
+					}
+				});
+			});
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' },
+			);
+
+			sections.forEach((s) => observer.observe(s));
+		</script>
+	</body>
 </html>
