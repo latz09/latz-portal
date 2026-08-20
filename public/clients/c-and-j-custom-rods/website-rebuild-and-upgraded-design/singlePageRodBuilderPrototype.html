@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C&J Custom Rods — Single-Page Builder Prototype</title>
+<style>
+  :root {
+    --bg: #eef7f0; --surface: #ffffff; --border: #d7e3da; --border-strong: #b7c9bd;
+    --text: #14251a; --text-secondary: #4c6154; --text-muted: #8a9c8f;
+    --accent: #1c6fe0; --accent-text: #ffffff; --radius: 8px; --radius-lg: 14px;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--text); }
+  .wrap { max-width: 1180px; margin:0 auto; padding: 24px 20px 60px; }
+  h1,h2,h3 { font-weight:700; margin:0; }
+  h1 { font-size:22px; }
+  h2 { font-size:24px; }
+  h3 { font-size:15px; }
+  p { margin:0; }
+  .muted { color:var(--text-secondary); }
+  .tiny { font-size:12px; color:var(--text-muted); }
+  .nav { display:flex; align-items:center; justify-content:space-between; padding-bottom:16px; margin-bottom:20px; border-bottom:1px solid var(--border); }
+  .logo { font-weight:700; font-size:15px; }
+  button { font-family:inherit; cursor:pointer; border:none; background:none; }
+  .btn { padding:10px 16px; border-radius:var(--radius); font-size:13px; font-weight:600; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); }
+  .btn:hover { background:#f4f9f5; }
+  .btn:disabled { opacity:0.4; cursor:not-allowed; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+  .btn-primary:hover { background:#1558b3; }
+  .btn-primary:disabled { background:var(--border-strong); border-color:var(--border-strong); color:#fff; opacity:0.6; }
+  .toggle-row { display:flex; gap:8px; margin-bottom:20px; max-width:400px; }
+  .toggle-btn { flex:1; padding:12px; border-radius:var(--radius); font-size:13px; font-weight:600; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); }
+  .toggle-btn.active { background:var(--text); color:#fff; border-color:var(--text); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; text-align:center; }
+  .card.disabled { opacity:0.5; }
+  .card-thumb { height:70px; border-radius:var(--radius); background:var(--bg); display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-size:11px; color:var(--text-muted); }
+  .badge { display:inline-block; font-size:10px; font-weight:700; background:#e6f0fd; color:var(--accent); border-radius:99px; padding:2px 8px; margin-left:6px; }
+  .badge-unavailable { display:inline-block; font-size:10px; font-weight:700; background:#f3ece7; color:#9c6b4a; border-radius:99px; padding:2px 8px; }
+
+  /* single-page builder layout */
+  .builder-layout { display:grid; grid-template-columns: 320px 1fr; gap: 32px; align-items:start; }
+  @media (max-width: 760px) { .builder-layout { grid-template-columns: 1fr; } }
+  .left-col { position: sticky; top: 20px; }
+  .rod-image-box { height: 260px; border-radius: var(--radius-lg); border:1px dashed var(--border-strong); background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text-muted); margin-bottom:16px; }
+  .summary-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; }
+  .summary-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); margin-bottom:10px; }
+  .summary-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--border); font-size:12.5px; }
+  .summary-row:last-of-type { border-bottom:none; }
+  .summary-row .label { color:var(--text-secondary); }
+  .summary-row .val { font-weight:600; text-align:right; }
+  .summary-row .val.unset { color:var(--text-muted); font-weight:400; }
+  .summary-total { display:flex; justify-content:space-between; padding-top:12px; margin-top:6px; border-top:1px solid var(--border-strong); font-size:14px; font-weight:700; }
+  .add-cart-btn { width:100%; margin-top:14px; }
+  .add-cart-hint { font-size:11px; color:var(--text-muted); margin-top:8px; text-align:center; }
+
+  .right-col { }
+  .right-head { margin-bottom: 22px; }
+  .option-group { margin-bottom: 26px; padding-bottom: 24px; border-bottom: 1px solid var(--border); transition: opacity 0.15s; }
+  .option-group:last-child { border-bottom: none; }
+  .option-group.locked { opacity: 0.35; pointer-events: none; }
+  .group-label { font-size:14px; font-weight:700; margin-bottom:10px; }
+  .locked-hint { display:none; font-size:11px; font-weight:500; color:var(--text-muted); margin-left:8px; text-transform:none; letter-spacing:normal; }
+  .option-group.locked .locked-hint { display:inline; }
+  .group-sublabel { font-size:12px; color:var(--text-muted); margin-bottom:12px; }
+
+  .swatch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:10px; }
+  .swatch-card { border:2px solid var(--border); border-radius:var(--radius); padding:8px; text-align:center; position:relative; background:var(--surface); }
+  .swatch-card.selected { border-color:var(--accent); background:#eef4fd; }
+  .swatch-box { height:38px; border-radius:6px; margin-bottom:6px; }
+  .swatch-empty { height:38px; border-radius:6px; margin-bottom:6px; border:1px dashed var(--border-strong); display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--text-muted); }
+  .swatch-label { font-size:11px; }
+  .check-dot { position:absolute; top:-6px; right:-6px; width:17px; height:17px; border-radius:50%; background:#1e9a5a; color:#fff; font-size:10px; display:flex; align-items:center; justify-content:center; }
+
+  .option-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .option-btn { padding:9px 15px; border-radius:var(--radius); font-size:12.5px; font-weight:600; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); }
+  .option-btn.selected { background:var(--text); color:#fff; border-color:var(--text); }
+
+  .app-card { background:var(--surface); border:2px solid var(--border); border-radius:var(--radius-lg); padding:12px 14px; margin-bottom:8px; cursor:pointer; }
+  .app-card.selected { border-color:var(--accent); background:#eef4fd; }
+  .app-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .app-spec-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:5px; }
+  .app-spec { font-size:11.5px; }
+  .app-spec b { display:block; font-size:12.5px; }
+  .upcharge { font-size:12px; font-weight:700; color:var(--accent); }
+
+  .toggle-optional { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .switch { width:38px; height:21px; border-radius:99px; background:var(--border-strong); position:relative; flex-shrink:0; }
+  .switch.on { background:var(--accent); }
+  .switch-dot { position:absolute; top:2px; left:2px; width:17px; height:17px; border-radius:50%; background:#fff; transition:left 0.15s; }
+  .switch.on .switch-dot { left:19px; }
+
+  .grip-finish-group { display:none; }
+  .grip-finish-group.active { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; margin-top:10px; }
+  .grip-image-box { height:64px; border-radius:var(--radius); border:1px dashed var(--border-strong); background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:10.5px; color:var(--text-muted); text-align:center; padding:6px; }
+
+  .sticker-input-wrap { display:none; margin-top:6px; }
+  .sticker-input-wrap.active { display:block; }
+  .sticker-input-wrap input { width:100%; max-width:320px; padding:10px 12px; border-radius:var(--radius); border:1px solid var(--border-strong); font-size:14px; font-family:inherit; }
+  .char-count-row { display:flex; justify-content:space-between; max-width:320px; margin-top:4px; }
+
+  .back-link { font-size:12px; color:var(--text-secondary); margin-bottom:14px; display:inline-flex; align-items:center; gap:4px; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const DATA = {"ice": [{"name": "Hole Hog", "price": 119.0, "available": true, "colors": ["Black", "Seafoam", "Chartreuse", "Glow"], "swatches": ["#111111", "#8fd9c4", "#c7d84a", "#d8f2a6"]}, {"name": "Hog Whip", "price": 119.0, "available": true, "colors": ["Black", "Pink", "Green", "Orange"], "swatches": ["#111111", "#e05a86", "#4caf50", "#e8792a"]}, {"name": "Carbon Crush", "price": 124.99, "available": true, "colors": ["Black", "Blue"], "swatches": ["#111111", "#3a6fd8"]}, {"name": "Eyece Commander", "price": 129.99, "available": true, "colors": ["Black", "Titanium Chrome"], "swatches": ["#111111", "#9aa0a6"]}, {"name": "Ice Reaper", "price": null, "available": true, "isNew": true, "colors": ["Black", "Pink", "Green", "Orange"], "swatches": ["#111111", "#e05a86", "#4caf50", "#e8792a"]}], "openWater": [{"name": "Bass Casting", "price": 254.99, "available": false, "colors": ["Black"], "swatches": ["#111111"], "applications": [{"length": "6'8\"", "power": "Medium-Heavy/Fast", "line": "12-20", "lure": "3/8-1", "upcharge": 0, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "6'8\"", "power": "Medium/Fast", "line": "10-17", "lure": "1/4-3/4", "upcharge": 0, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "6'8\"", "power": "Heavy/Fast", "line": "12-25", "lure": "3/7-1.25", "upcharge": 0, "usage": "Texas Rig, Tokyo Rig, Alabama Rig, Punching, Flipping, Frog in Cover, Jig and Plastic, Swim Jig"}, {"length": "6'8\"", "power": "Medium/Extra-Fast", "line": "8-14", "lure": "1/4-5/8", "upcharge": 0, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Jig and Plastic, Swim Jig, Jerk Bait"}, {"length": "6'8\"", "power": "Extra-Heavy/Fast", "line": "15-30", "lure": "3/8-1.5", "upcharge": 0, "usage": "Texas Rig, Tokyo Rig, Punching, Jig and Plastic, Swim Jig"}, {"length": "6'9\"", "power": "Medium/Moderate-Fast", "line": "10-17", "lure": "1/4-5/8", "upcharge": 0, "usage": "Squarebill Crankbaits, Spinnerbaits, Chatterbaits, Swim Jig"}, {"length": "7'2\"", "power": "Medium/Fast", "line": "10-17", "lure": "1/4-3/4", "upcharge": 20, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "7'2\"", "power": "Medium-Heavy/Fast", "line": "12-20", "lure": "3/8-1", "upcharge": 20, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "7'2\"", "power": "Heavy/Fast", "line": "12-25", "lure": "3/8-1.25", "upcharge": 20, "usage": "Texas Rig, Tokyo Rig, Alabama Rig, Punching, Flipping, Frog in Cover, Jig and Plastic, Swim Jig"}, {"length": "7'3\"", "power": "Medium-Heavy/Moderate-Fast", "line": "12-20", "lure": "3/8-1", "upcharge": 20, "usage": "Squarebill Crankbaits, Spinnerbaits, Chatterbaits, Swim Jig"}, {"length": "7'6\"", "power": "Medium/Fast", "line": "10-17", "lure": "1/4-3/4", "upcharge": 30, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "7'6\"", "power": "Heavy/Fast", "line": "12-25", "lure": "3/8-1.25", "upcharge": 30, "usage": "Texas Rig, Tokyo Rig, Alabama Rig, Punching, Flipping, Frog in Cover, Jig and Plastic, Swim Jig"}, {"length": "7'6\"", "power": "Medium-Heavy/Fast", "line": "12-20", "lure": "3/8-1", "upcharge": 30, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "7'10\"", "power": "Medium-Heavy/Fast", "line": "12-20", "lure": "3/8-1", "upcharge": 30, "usage": "Texas Rig, Tokyo Rig, Spinnerbait, Carolina Rig, Jig and Plastic, Open Water Frog, Swim Jig"}, {"length": "7'10\"", "power": "Heavy/Fast", "line": "12-25", "lure": "3/8-1.25", "upcharge": 30, "usage": "Texas Rig, Tokyo Rig, Alabama Rig, Punching, Flipping, Frog in Cover, Jig and Plastic, Swim Jig"}]}, {"name": "Bass Spinning", "price": 229.99, "available": true, "colors": ["Black"], "swatches": ["#111111"], "applications": [{"length": "6'2\"", "power": "Medium-Light/Fast", "line": "6-12", "lure": "1/8-3/8", "upcharge": 0, "usage": "Inline Spinners, Shakey Head,Split Shotting"}, {"length": "6'2\"", "power": "Medium/Fast", "line": "8-14", "lure": "1/4-5/8", "upcharge": 0, "usage": "Vertical Jigging, Dock Skipping, Small Jig/Worm"}, {"length": "6'8\"", "power": "Medium/Extra-Fast", "line": "6-14", "lure": "3/16-1/2", "upcharge": 5, "usage": "All Purpose Bass, Hair Jigs, Senko\u2019s, Tubes, 4\u201d Worms, #5-7 Shad Raps"}, {"length": "6'8\"", "power": "Medium-Light/Fast", "line": "6-12", "lure": "1/8-3/8", "upcharge": 5, "usage": "Spinners, Shakey Heads, Split Shotting, Ned Rigs"}, {"length": "6'8\"", "power": "Medium/Fast", "line": "8-14", "lure": "1/4-5/8", "upcharge": 5, "usage": "All Purpose Bass, Hair Jigs, Senko\u2019s, Tubes, 4\u201d Worms, #5-7 Shad Raps"}, {"length": "6'10\"", "power": "Medium/Extra-Fast", "line": "4-10", "lure": "1/8-3/8", "upcharge": 5, "usage": "Drop Shot, Spinners, Small Crankbaits, Jig/Live Bait"}, {"length": "7'2\"", "power": "Medium/Fast", "line": "8-14", "lure": "1/8-3/8", "upcharge": 10, "usage": "All Purpose Bass, Hair Jigs, Senko\u2019s, Tubes, 4\u201d Worms, #5-7 Shad Raps"}, {"length": "7'2\"", "power": "Medium-Light/Fast", "line": "8-14", "lure": "1/8-3/8", "upcharge": 10, "usage": "Ned Rig, Spinners, Shakey Head, Split Shotting"}, {"length": "7'6\"", "power": "Medium-Light/Fast", "line": "6-12", "lure": "1/8-3/8", "upcharge": 20, "usage": "Ned Rig, Spinners, Shakey Head, Split Shotting, Lindy Rig, Slip Bobber"}]}, {"name": "Musky Casting", "price": 399.99, "available": true, "colors": ["Black"], "swatches": ["#111111"], "applications": [{"length": "7'10\"", "power": "Extra-Heavy/Moderate-Fast", "line": "50-100", "lure": "6-12", "upcharge": 0, "usage": "Big Rubber Swimbaits, Big Jerkbaits, Large Topwater"}, {"length": "7'10\"", "power": "Heavy/Moderate-Fast", "line": "40-80", "lure": "3-8", "upcharge": 0, "usage": "Large Bucktails, Double Bladed Baits, Large Spinnerbaits, Topwater Musky"}, {"length": "7'10\"", "power": "Medium-Heavy/Fast", "line": "30-65", "lure": "3/4-3", "upcharge": 0, "usage": "Small Bucktails, Spinnerbaits, Twitch Baits, Small Jerkbaits"}]}, {"name": "Musky Spinning", "price": 399.99, "available": true, "colors": ["Black"], "swatches": ["#111111"], "applications": [{"length": "7'10\"", "power": "Extra-Heavy/Moderate-Fast", "line": "50-100", "lure": "6-12", "upcharge": 0, "usage": "Big Rubber Swimbaits, Big Jerkbaits, Large Topwater"}, {"length": "7'10\"", "power": "Heavy/Moderate-Fast", "line": "40-80", "lure": "3/4-3", "upcharge": 0, "usage": "Large Bucktails, Double Bladed Baits, Large Spinnerbaits, Topwater Musky"}, {"length": "7'10\"", "power": "Medium-Heavy/Fast", "line": "30-65", "lure": "3/4-3", "upcharge": 0, "usage": "Small Bucktails, Spinnerbaits, Twitch Baits, Small Jerkbaits"}]}, {"name": "Panfish Spinning", "price": 219.99, "available": true, "colors": ["Black"], "swatches": ["#111111"], "applications": [{"length": "5'4\"", "power": "Ultra-Light/Fast", "line": "2-6", "lure": "1/32-3/16", "upcharge": 0, "usage": "Panfish jigs, bobber/live bait"}, {"length": "6'2\"", "power": "Light/Fast", "line": "4-10", "lure": "1/16-1/4", "upcharge": 5, "usage": "Panfish jigs, bobber/live bait"}, {"length": "6'2\"", "power": "Ultra-Light/Fast", "line": "2-6", "lure": "1/32-3/16", "upcharge": 5, "usage": "Panfish jigs, bobber/live bait"}, {"length": "6'8\"", "power": "Ultra-Light/Fast", "line": "2-6", "lure": "1/32-3/16", "upcharge": 10, "usage": "Panfish jigs, bobber/live bait"}, {"length": "6'8\"", "power": "Light/Fast", "line": "4-10", "lure": "1/16-1/4", "upcharge": 10, "usage": "Panfish jigs, small crankbaits, inline spinners"}, {"length": "7'2\"", "power": "Ultra-Light/Fast", "line": "2-6", "lure": "1/32-3/16", "upcharge": 20, "usage": "Panfish jigs, bobber/live bait"}, {"length": "7'2\"", "power": "Light/Fast", "line": "4-10", "lure": "1/16-1/4", "upcharge": 20, "usage": "Panfish jigs, small crankbaits, inline spinners"}]}, {"name": "Walleye Spinning", "price": 234.99, "available": true, "colors": ["Black"], "swatches": ["#111111"], "applications": [{"length": "6'2\"", "power": "Medium/Extra-Fast", "line": "6-14", "lure": "3/16-5/8", "upcharge": 0, "usage": "Vertical Jigging, Shad Raps"}, {"length": "6'2\"", "power": "Light/Fast", "line": "4-10", "lure": "1/16-1/4", "upcharge": 0, "usage": "Vertical Jigging, #5 Shad Raps"}, {"length": "6'8\"", "power": "Medium/Extra-Fast", "line": "6-14", "lure": "3/16-1/2", "upcharge": 10, "usage": "Jigs, Snap Jigging, Shad Raps"}, {"length": "7'2\"", "power": "Medium-Light/Fast", "line": "6-12", "lure": "1/8-3/8", "upcharge": 20, "usage": "Jigs, Slip Bobbers, Lindy Rigging, Shad Raps"}, {"length": "7'6\"", "power": "Medium-Light/Fast", "line": "6-12", "lure": "1/8-3/8", "upcharge": 30, "usage": "Jigs, Slip Bobbers, Lindy Rigging, Shad Raps"}]}], "iceLengths": ["20\"", "22\"", "24\"", "26\"", "28\"", "30\"", "32\"", "34\"", "36\""], "threadColorsShown": [{"name": "Black", "hex": "#0E1416"}, {"name": "White", "hex": "#C8CACC"}, {"name": "Dark Green", "hex": "#024E2A"}, {"name": "Med Green", "hex": "#50713A"}, {"name": "Scarlet", "hex": "#72151D"}, {"name": "Maroon", "hex": "#46172D"}, {"name": "Garnet", "hex": "#40131C"}], "threadColorsTotal": 63, "threadColorsRemainingPlaceholders": 6, "gripPricing": {"ice": {"cork": {"split": 15, "straight": 10}, "eva": {"split": 5, "straight": 0}}, "openWater": {"cork": {"split": 40, "straight": 30}, "eva": {"split": 10, "straight": 0}}}, "gripFinishCounts": {"ice": {"cork": {"split": 4, "straight": 2}, "eva": {"split": 5, "straight": 2}}, "openWater": {"cork": {"split": 4, "straight": 4}, "eva": {"split": 4, "straight": 3}}}, "stickerPrice": 10, "accentThreadPrice": 10};
+
+let state = { category: "ice", view: "grid", seriesIndex: null, sel: {} };
+
+function resetSelections() {
+  state.sel = {
+    blankColor: null, length: null, applicationIndex: null,
+    primaryThread: null, accentOn: false, accentThread: null,
+    gripMaterial: null, gripStyle: null, gripFinishIndex: null,
+    stickerOn: false, stickerText: ""
+  };
+}
+
+function currentSeries() { return DATA[state.category][state.seriesIndex]; }
+
+function gripPrice() {
+  const sel = state.sel;
+  if (!sel.gripMaterial || !sel.gripStyle) return 0;
+  const table = DATA.gripPricing[state.category];
+  const mat = sel.gripMaterial === "Cork" ? "cork" : "eva";
+  return table[mat][sel.gripStyle.toLowerCase()];
+}
+
+function applicationUpcharge() {
+  const sel = state.sel;
+  if (state.category !== "openWater" || sel.applicationIndex === null) return 0;
+  return currentSeries().applications[sel.applicationIndex].upcharge || 0;
+}
+
+function runningTotal() {
+  const sel = state.sel;
+  const base = currentSeries().price || 0;
+  let total = base + applicationUpcharge() + gripPrice();
+  if (sel.accentOn) total += DATA.accentThreadPrice;
+  if (sel.stickerOn) total += DATA.stickerPrice;
+  return total;
+}
+
+function fmt(p) { return p == null ? "TBD" : "$" + p.toFixed(2); }
+
+function requiredComplete() {
+  const sel = state.sel;
+  if (!sel.blankColor) return false;
+  if (state.category === "ice" && !sel.length) return false;
+  if (state.category === "openWater" && sel.applicationIndex === null) return false;
+  if (!sel.primaryThread) return false;
+  if (sel.accentOn && !sel.accentThread) return false;
+  if (!(sel.gripMaterial && sel.gripStyle && sel.gripFinishIndex !== null)) return false;
+  if (sel.stickerOn && sel.stickerText.trim().length === 0) return false;
+  return true;
+}
+
+function render() {
+  const app = document.getElementById("app");
+  if (state.view === "grid") renderGrid(app);
+  else renderSingleBuilder(app);
+}
+
+function renderGrid(app) {
+  const list = DATA[state.category];
+  app.innerHTML = `
+    <div class="nav"><span class="logo">C &amp; J Custom Rods</span><span class="tiny">Single-page builder prototype</span></div>
+    <h2 style="margin-bottom:4px;">Build your custom rod</h2>
+    <p class="muted" style="margin-bottom:20px;">Choose a category, then a series to start building.</p>
+    <div class="toggle-row">
+      <button class="toggle-btn ${state.category==='ice'?'active':''}" id="tab-ice">Ice rods</button>
+      <button class="toggle-btn ${state.category==='openWater'?'active':''}" id="tab-ow">Open water rods</button>
+    </div>
+    <div class="grid">
+      ${list.map((s,i) => `
+        <div class="card ${s.available?'':'disabled'}">
+          <div class="card-thumb">series photo</div>
+          <h3>${s.name}${s.isNew?'<span class="badge">New</span>':''}</h3>
+          <p class="tiny" style="margin:4px 0 12px;">${s.price==null?'Price TBD':'Starting at '+fmt(s.price)}</p>
+          ${s.available
+            ? `<button class="btn btn-primary" style="width:100%;" data-idx="${i}">Start building</button>`
+            : `<span class="badge-unavailable">Currently unavailable</span>`}
+        </div>
+      `).join("")}
+    </div>
+  `;
+  document.getElementById("tab-ice").onclick = () => { state.category = "ice"; render(); };
+  document.getElementById("tab-ow").onclick = () => { state.category = "openWater"; render(); };
+  app.querySelectorAll("[data-idx]").forEach(btn => {
+    btn.onclick = () => {
+      state.seriesIndex = parseInt(btn.dataset.idx);
+      resetSelections();
+      state.view = "single";
+      render();
+    };
+  });
+}
+
+function threadSwatchesHtml(selKey) {
+  const shown = DATA.threadColorsShown;
+  let html = "";
+  shown.forEach(c => {
+    html += `
+      <div class="swatch-card" data-group="${selKey}" data-value="${c.name}" data-hex="${c.hex}">
+        <div class="swatch-box" style="background:${c.hex};"></div>
+        <div class="swatch-label">${c.name}</div>
+      </div>`;
+  });
+  for (let i = 0; i < DATA.threadColorsRemainingPlaceholders; i++) {
+    html += `<div class="swatch-card" style="opacity:0.5;"><div class="swatch-empty">&hellip;</div><div class="swatch-label tiny">&nbsp;</div></div>`;
+  }
+  html += `<div class="swatch-card" style="opacity:0.7;"><div class="swatch-empty" style="font-size:10px;">etc</div><div class="swatch-label tiny">${DATA.threadColorsTotal} total</div></div>`;
+  return html;
+}
+
+function gripFinishGroupsHtml() {
+  const counts = DATA.gripFinishCounts[state.category];
+  let html = "";
+  ["Cork|Split","Cork|Straight","EVA Foam|Split","EVA Foam|Straight"].forEach(key => {
+    const [mat, style] = key.split("|");
+    const matKey = mat === "Cork" ? "cork" : "eva";
+    const count = counts[matKey][style.toLowerCase()];
+    let boxes = "";
+    for (let i = 0; i < count; i++) {
+      boxes += `<div class="swatch-card" data-group="gripFinish" data-value="${i}" data-matstyle="${mat}|${style}"><div class="grip-image-box">${mat} ${style} grip &mdash; image</div></div>`;
+    }
+    html += `<div class="grip-finish-group" data-matstyle-group="${mat}|${style}">${boxes}</div>`;
+  });
+  return html;
+}
+
+function renderSingleBuilder(app) {
+  const s = currentSeries();
+  const sel = state.sel;
+  const price = DATA.gripPricing[state.category];
+
+  const blankColorHtml = `
+    <div class="option-group" data-step="blankColor">
+      <p class="group-label">Blank color <span class="locked-hint">Complete the previous step first</span></p>
+      <div class="swatch-grid">
+        ${s.colors.map((c,i) => `
+          <div class="swatch-card" data-group="blankColor" data-value="${c}">
+            <div class="swatch-box" style="background:${s.swatches[i]};"></div>
+            <div class="swatch-label">${c}</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  const lengthOrAppHtml = state.category === "ice" ? `
+    <div class="option-group" data-step="lengthOrApp">
+      <p class="group-label">Rod length <span class="locked-hint">Complete the previous step first</span></p>
+      <p class="group-sublabel">Same list across every ice series.</p>
+      <div class="option-row">
+        ${DATA.iceLengths.map((l,i) => `<button class="option-btn" data-group="length" data-value-idx="${i}">${l}</button>`).join("")}
+      </div>
+    </div>
+  ` : `
+    <div class="option-group" data-step="lengthOrApp">
+      <p class="group-label">Select application (${s.applications.length} options) <span class="locked-hint">Complete the previous step first</span></p>
+      ${s.applications.map((a,i) => `
+        <div class="app-card" data-group="applicationIndex" data-value="${i}">
+          <div class="app-top">
+            <b>${a.length}</b>
+            <span class="upcharge">${a.upcharge ? '+$'+a.upcharge.toFixed(2) : 'Included'}</span>
+          </div>
+          <div class="app-spec-row">
+            <div class="app-spec"><b>${a.power}</b>Power/action</div>
+            <div class="app-spec"><b>${a.line} lb</b>Line weight</div>
+            <div class="app-spec"><b>${a.lure} oz</b>Lure weight</div>
+          </div>
+          <p class="tiny">${a.usage}</p>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  // ice: blank color first, then length. open water: application first, then blank color (matches the confirmed live flow).
+  let rightHtml = state.category === "ice" ? (blankColorHtml + lengthOrAppHtml) : (lengthOrAppHtml + blankColorHtml);
+
+  // primary thread
+  rightHtml += `
+    <div class="option-group" data-step="primaryThread">
+      <p class="group-label">Primary thread color <span class="locked-hint">Complete the previous step first</span></p>
+      <div class="swatch-grid">${threadSwatchesHtml("primaryThread")}</div>
+    </div>
+  `;
+
+  // accent thread
+  rightHtml += `
+    <div class="option-group" data-step="accentThread">
+      <div class="toggle-optional">
+        <div><p style="font-weight:700;font-size:14px;">Accent thread color <span class="locked-hint">Complete the previous step first</span></p><p class="tiny">Optional &middot; +${fmt(DATA.accentThreadPrice)}</p></div>
+        <div class="switch" id="accent-switch"><div class="switch-dot"></div></div>
+      </div>
+      <div class="swatch-grid" id="accent-swatches" style="display:none;">${threadSwatchesHtml("accentThread")}</div>
+    </div>
+  `;
+
+  // grip
+  rightHtml += `
+    <div class="option-group" data-step="grip">
+      <p class="group-label">Grip material <span class="locked-hint">Complete the previous step first</span></p>
+      <div class="option-row" style="margin-bottom:16px;">
+        <button class="option-btn" data-group="gripMaterial" data-value="Cork">Cork</button>
+        <button class="option-btn" data-group="gripMaterial" data-value="EVA Foam">EVA Foam</button>
+      </div>
+      <div id="grip-style-wrap" style="display:none;">
+        <p class="group-label">Grip style</p>
+        <div class="option-row">
+          <button class="option-btn" data-group="gripStyle" data-value="Split" id="style-split-btn">Split grip</button>
+          <button class="option-btn" data-group="gripStyle" data-value="Straight" id="style-straight-btn">Straight grip</button>
+        </div>
+      </div>
+      <p class="tiny" id="grip-finish-hint" style="margin-top:10px;">Choose a grip material to continue.</p>
+      ${gripFinishGroupsHtml()}
+    </div>
+  `;
+
+  // sticker
+  rightHtml += `
+    <div class="option-group" data-step="sticker">
+      <div class="toggle-optional">
+        <div><p style="font-weight:700;font-size:14px;">Personalized sticker <span class="locked-hint">Complete the previous step first</span></p><p class="tiny">Optional &middot; +${fmt(DATA.stickerPrice)}</p></div>
+        <div class="switch" id="sticker-switch"><div class="switch-dot"></div></div>
+      </div>
+      <div class="sticker-input-wrap" id="sticker-input-wrap">
+        <input type="text" id="sticker-text-input" maxlength="20" placeholder="e.g. Chris's Rod" value="">
+        <div class="char-count-row">
+          <span class="tiny" id="sticker-hint">Add text for your sticker to continue</span>
+          <span class="tiny" id="sticker-count">0/20</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  app.innerHTML = `
+    <div class="nav"><span class="logo">C &amp; J Custom Rods</span><span class="tiny">Single-page builder prototype</span></div>
+    <button class="back-link" id="back-to-grid">&larr; Back to ${state.category==='ice'?'ice rods':'open water rods'}</button>
+    <div class="builder-layout">
+      <div class="left-col">
+        <div class="rod-image-box">Rod image</div>
+        <div class="summary-card" id="summary-card"></div>
+      </div>
+      <div class="right-col">
+        <div class="right-head">
+          <h1>Custom ${s.name}</h1>
+          <p class="muted">${s.price==null?'Price TBD':'Starting at '+fmt(s.price)}</p>
+        </div>
+        ${rightHtml}
+      </div>
+    </div>
+  `;
+
+  document.getElementById("back-to-grid").onclick = () => { state.view = "grid"; render(); };
+
+  wireUpHandlers(app);
+  updateSummary();
+}
+
+function wireUpHandlers(app) {
+  const sel = state.sel;
+
+  // generic single-select groups (blankColor, primaryThread, accentThread, applicationIndex, gripMaterial, gripStyle)
+  app.querySelectorAll("[data-group]").forEach(el => {
+    if (el.dataset.group === "length" || el.dataset.group === "gripFinish") return; // handled separately
+    el.onclick = () => {
+      const group = el.dataset.group;
+      const value = el.dataset.value;
+      // deselect siblings in same group
+      app.querySelectorAll(`[data-group="${group}"]`).forEach(sib => sib.classList.remove("selected"));
+      el.classList.add("selected");
+
+      if (group === "blankColor") sel.blankColor = value;
+      else if (group === "primaryThread") sel.primaryThread = value;
+      else if (group === "accentThread") sel.accentThread = value;
+      else if (group === "applicationIndex") sel.applicationIndex = parseInt(value);
+      else if (group === "gripMaterial") {
+        sel.gripMaterial = value;
+        sel.gripFinishIndex = null;
+        document.getElementById("grip-style-wrap").style.display = "block";
+        app.querySelectorAll('[data-group="gripStyle"]').forEach(b => b.classList.remove("selected"));
+        sel.gripStyle = null;
+        updateGripStyleLabels();
+        showGripFinishGroup();
+      }
+      else if (group === "gripStyle") {
+        sel.gripStyle = value;
+        sel.gripFinishIndex = null;
+        showGripFinishGroup();
+      }
+      updateSummary();
+    };
+  });
+
+  // length (index-based to avoid quote-in-attribute issues)
+  app.querySelectorAll('[data-group="length"]').forEach(el => {
+    el.onclick = () => {
+      app.querySelectorAll('[data-group="length"]').forEach(sib => sib.classList.remove("selected"));
+      el.classList.add("selected");
+      sel.length = DATA.iceLengths[parseInt(el.dataset.valueIdx)];
+      updateSummary();
+    };
+  });
+
+  // grip finish (delegated per matstyle group, wired after group becomes active)
+  app.querySelectorAll('[data-group="gripFinish"]').forEach(el => {
+    el.onclick = () => {
+      const groupEl = el.closest(".grip-finish-group");
+      groupEl.querySelectorAll('[data-group="gripFinish"]').forEach(sib => sib.classList.remove("selected"));
+      el.classList.add("selected");
+      sel.gripFinishIndex = parseInt(el.dataset.value);
+      updateSummary();
+    };
+  });
+
+  // accent toggle
+  document.getElementById("accent-switch").onclick = () => {
+    sel.accentOn = !sel.accentOn;
+    const swEl = document.getElementById("accent-switch");
+    const swatches = document.getElementById("accent-swatches");
+    swEl.classList.toggle("on", sel.accentOn);
+    swatches.style.display = sel.accentOn ? "grid" : "none";
+    if (!sel.accentOn) {
+      sel.accentThread = null;
+      swatches.querySelectorAll(".selected").forEach(el => el.classList.remove("selected"));
+    }
+    updateSummary();
+  };
+
+  // sticker toggle
+  document.getElementById("sticker-switch").onclick = () => {
+    sel.stickerOn = !sel.stickerOn;
+    const swEl = document.getElementById("sticker-switch");
+    const wrap = document.getElementById("sticker-input-wrap");
+    swEl.classList.toggle("on", sel.stickerOn);
+    wrap.classList.toggle("active", sel.stickerOn);
+    if (!sel.stickerOn) {
+      sel.stickerText = "";
+      document.getElementById("sticker-text-input").value = "";
+    }
+    updateSummary();
+  };
+
+  const stickerInput = document.getElementById("sticker-text-input");
+  stickerInput.oninput = () => {
+    sel.stickerText = stickerInput.value.slice(0, 20);
+    document.getElementById("sticker-count").textContent = sel.stickerText.length + "/20";
+    document.getElementById("sticker-hint").textContent = sel.stickerText.length === 0 ? "Add text for your sticker to continue" : "";
+    updateSummary();
+  };
+}
+
+function updateGripStyleLabels() {
+  const sel = state.sel;
+  if (!sel.gripMaterial) return;
+  const matKey = sel.gripMaterial === "Cork" ? "cork" : "eva";
+  const price = DATA.gripPricing[state.category][matKey];
+  document.getElementById("style-split-btn").textContent = "Split grip" + (price.split ? " +$" + price.split : "");
+  document.getElementById("style-straight-btn").textContent = "Straight grip" + (price.straight ? " +$" + price.straight : "");
+}
+
+function showGripFinishGroup() {
+  const sel = state.sel;
+  document.querySelectorAll(".grip-finish-group").forEach(g => g.classList.remove("active"));
+  const hint = document.getElementById("grip-finish-hint");
+  if (sel.gripMaterial && sel.gripStyle) {
+    const key = sel.gripMaterial + "|" + sel.gripStyle;
+    const target = document.querySelector(`.grip-finish-group[data-matstyle-group="${key}"]`);
+    if (target) target.classList.add("active");
+    hint.style.display = "none";
+  } else if (sel.gripMaterial) {
+    hint.style.display = "block";
+    hint.textContent = "Choose a grip style to see finishes.";
+  } else {
+    hint.style.display = "block";
+    hint.textContent = "Choose a grip material to continue.";
+  }
+}
+
+function updateLockStates() {
+  const sel = state.sel;
+  const blankDone = !!sel.blankColor;
+  const lengthOrAppDone = state.category === "ice" ? !!sel.length : sel.applicationIndex !== null;
+  const primaryDone = !!sel.primaryThread;
+  const gripDone = !!(sel.gripMaterial && sel.gripStyle && sel.gripFinishIndex !== null);
+
+  let gates;
+  if (state.category === "ice") {
+    gates = { blankColor: true, lengthOrApp: blankDone, primaryThread: lengthOrAppDone, accentThread: primaryDone, grip: primaryDone, sticker: gripDone };
+  } else {
+    gates = { lengthOrApp: true, blankColor: lengthOrAppDone, primaryThread: blankDone, accentThread: primaryDone, grip: primaryDone, sticker: gripDone };
+  }
+
+  Object.keys(gates).forEach(step => {
+    const el = document.querySelector(`.option-group[data-step="${step}"]`);
+    if (el) el.classList.toggle("locked", !gates[step]);
+  });
+}
+
+function updateSummary() {
+  updateLockStates();
+  const s = currentSeries();
+  const sel = state.sel;
+  const card = document.getElementById("summary-card");
+  const rows = [];
+  rows.push(["Series", s.name, true]);
+  rows.push(["Blank color", sel.blankColor, !!sel.blankColor]);
+  if (state.category === "ice") {
+    rows.push(["Length", sel.length, !!sel.length]);
+  } else {
+    const appLabel = sel.applicationIndex !== null ? s.applications[sel.applicationIndex].length + " \u2014 " + s.applications[sel.applicationIndex].power : null;
+    rows.push(["Application", appLabel, sel.applicationIndex !== null]);
+  }
+  rows.push(["Primary thread", sel.primaryThread, !!sel.primaryThread]);
+  rows.push(["Accent thread", sel.accentOn ? (sel.accentThread || "\u2014") : "None", true]);
+  rows.push(["Grip", (sel.gripMaterial && sel.gripStyle) ? sel.gripMaterial + " \u2014 " + sel.gripStyle : null, !!(sel.gripMaterial && sel.gripStyle)]);
+  rows.push(["Sticker", sel.stickerOn ? ('"' + sel.stickerText + '"') : "None", true]);
+
+  let html = `<p class="summary-title">Your build</p>`;
+  rows.forEach(([label, val, isSet]) => {
+    html += `<div class="summary-row"><span class="label">${label}</span><span class="val ${isSet?'':'unset'}">${val || '\u2014'}</span></div>`;
+  });
+  html += `<div class="summary-total"><span>Total</span><span>${fmt(runningTotal())}</span></div>`;
+  html += `<button class="btn btn-primary add-cart-btn" id="add-cart-btn" ${requiredComplete()?'':'disabled'}>Add to cart</button>`;
+  if (!requiredComplete()) {
+    html += `<p class="add-cart-hint">Complete the required options to continue.</p>`;
+  }
+  card.innerHTML = html;
+
+  const btn = document.getElementById("add-cart-btn");
+  if (btn && requiredComplete()) {
+    btn.onclick = () => {
+      alert("Prototype only \u2014 this would create a Shopify draft order.");
+      state.category = "ice";
+      state.view = "grid";
+      state.seriesIndex = null;
+      resetSelections();
+      render();
+    };
+  }
+}
+
+render();
+</script>
+</body>
+</html>
