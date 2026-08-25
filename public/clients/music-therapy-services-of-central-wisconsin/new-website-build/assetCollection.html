@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Music Therapy Services of Central WI — Content Checklist | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				/* ── Client brand tokens — swap these three for any client ── */
+				--brand: #1c93d1; /* PLACEHOLDER — swap for real logo blue */
+				--brand-dark: #0f3854; /* PLACEHOLDER — deep tone derived from brand for sidebar */
+				--warm: #f5a623; /* friendly secondary accent — confirm w/ client */
+
+				--brand-light: #eaf6fc;
+				--brand-dim: rgba(28, 147, 209, 0.1);
+				--warm-light: #fff6e5;
+				--warm-dim: rgba(245, 166, 35, 0.14);
+
+				--white: #ffffff;
+				--off-white: #fafbfc;
+				--gray-50: #f9fafb;
+				--gray-100: #f3f4f6;
+				--gray-200: #e5e7eb;
+				--gray-300: #d1d5db;
+				--gray-400: #9ca3af;
+				--gray-500: #6b7280;
+				--gray-600: #4b5563;
+				--gray-700: #374151;
+				--gray-800: #1f2937;
+				--gray-900: #111827;
+
+				--green: #16a34a;
+				--green-light: #f0fdf4;
+				--green-border: #bbf7d0;
+				--amber: #ea580c;
+				--amber-light: #fff7ed;
+				--amber-border: #fed7aa;
+				--red: #dc2626;
+				--red-light: #fef2f2;
+				--red-border: #fecaca;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--off-white);
+				color: var(--gray-900);
+				line-height: 1.6;
+				font-size: 14px;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* SIDEBAR */
+			.sidebar-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+				z-index: 150;
+				opacity: 0;
+				transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.sidebar-overlay.visible {
+				opacity: 1;
+			}
+
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 228px;
+				height: 100vh;
+				background: var(--brand-dark);
+				border-right: 1px solid rgba(255, 255, 255, 0.08);
+				display: flex;
+				flex-direction: column;
+				z-index: 200;
+				overflow-y: auto;
+				transform: translateX(0);
+			}
+
+			.sidebar-top {
+				padding: 22px 18px 18px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.sidebar-wordmark {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+				margin-bottom: 18px;
+			}
+			.sidebar-wordmark .dot {
+				width: 6px;
+				height: 6px;
+				background: var(--warm);
+				border-radius: 50%;
+				flex-shrink: 0;
+			}
+			.lwd-text {
+				font-size: 9.5px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.32);
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-client {
+				font-family: 'Quicksand', sans-serif;
+				font-size: 16px;
+				font-weight: 700;
+				color: rgba(255, 255, 255, 0.95);
+				line-height: 1.25;
+				margin-bottom: 4px;
+			}
+			.sidebar-doctype {
+				font-size: 9.5px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.32);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-status {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				margin-top: 12px;
+				background: rgba(255, 255, 255, 0.08);
+				border: 1px solid rgba(255, 255, 255, 0.14);
+				border-radius: 20px;
+				padding: 4px 11px 4px 8px;
+			}
+			.pulse {
+				width: 5px;
+				height: 5px;
+				background: var(--warm);
+				border-radius: 50%;
+				animation: pulse 2s infinite;
+				flex-shrink: 0;
+			}
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.25;
+				}
+			}
+			.sidebar-status span {
+				font-size: 9.5px;
+				color: #fff;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				font-weight: 600;
+			}
+
+			.sidebar-nav {
+				padding: 10px 8px;
+				flex: 1;
+			}
+			.nav-group-label {
+				font-size: 9px;
+				font-weight: 600;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.22);
+				padding: 12px 8px 4px;
+			}
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 7px 9px;
+				color: rgba(255, 255, 255, 0.5);
+				text-decoration: none;
+				font-size: 12.5px;
+				font-weight: 500;
+				border-radius: 7px;
+				transition: all 0.12s;
+				margin-bottom: 1px;
+			}
+			.nav-link:hover {
+				color: rgba(255, 255, 255, 0.85);
+				background: rgba(255, 255, 255, 0.06);
+			}
+			.nav-link.active {
+				color: #fff;
+				background: rgba(255, 255, 255, 0.12);
+				font-weight: 600;
+			}
+			.nav-icon {
+				font-size: 13px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.sidebar-footer {
+				padding: 14px 18px;
+				border-top: 1px solid rgba(255, 255, 255, 0.08);
+				font-size: 9.5px;
+				color: rgba(255, 255, 255, 0.28);
+				letter-spacing: 0.02em;
+				line-height: 2;
+			}
+
+			.fab-menu {
+				display: none;
+				position: fixed;
+				bottom: 24px;
+				right: 20px;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background: var(--brand);
+				color: #fff;
+				border: none;
+				font-size: 20px;
+				z-index: 300;
+				box-shadow: 0 4px 16px rgba(28, 147, 209, 0.4);
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+			}
+
+			/* MAIN */
+			.main {
+				margin-left: 228px;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* DRIVE BANNER */
+			.drive-banner {
+				background: linear-gradient(120deg, var(--brand), #1479ac);
+				padding: 14px 44px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+			.drive-banner-text {
+				color: #fff;
+				font-size: 13px;
+				font-weight: 500;
+			}
+			.drive-banner-text strong {
+				font-weight: 700;
+			}
+			.drive-btn {
+				background: #fff;
+				color: var(--brand);
+				font-weight: 700;
+				font-size: 12.5px;
+				padding: 9px 18px;
+				border-radius: 8px;
+				text-decoration: none;
+				white-space: nowrap;
+				transition: transform 0.12s;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.drive-btn:hover {
+				transform: translateY(-1px);
+			}
+
+			/* HEADER */
+			.page-header {
+				background: var(--white);
+				padding: 44px 60px 34px;
+				border-bottom: 1px solid var(--gray-200);
+				position: relative;
+				overflow: hidden;
+			}
+			.page-header::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(
+					ellipse at 75% 30%,
+					rgba(28, 147, 209, 0.07) 0%,
+					transparent 60%
+				);
+				pointer-events: none;
+			}
+
+			.header-overline {
+				font-size: 10px;
+				font-weight: 600;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: var(--brand);
+				margin-bottom: 12px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				position: relative;
+			}
+			.header-overline::before {
+				content: '';
+				display: inline-block;
+				width: 18px;
+				height: 1px;
+				background: var(--brand);
+				opacity: 0.6;
+			}
+
+			.page-header h1 {
+				font-family: 'Quicksand', sans-serif;
+				font-size: 34px;
+				font-weight: 700;
+				color: var(--gray-900);
+				line-height: 1.15;
+				margin-bottom: 6px;
+				letter-spacing: -0.3px;
+				position: relative;
+			}
+			.page-header .sub {
+				color: var(--gray-500);
+				font-size: 13px;
+				position: relative;
+			}
+
+			.header-meta {
+				display: flex;
+				gap: 0;
+				margin-top: 26px;
+				border: 1px solid var(--gray-200);
+				border-radius: 10px;
+				overflow: hidden;
+				width: fit-content;
+				background: var(--white);
+				position: relative;
+			}
+			.meta-item {
+				padding: 12px 20px;
+				border-right: 1px solid var(--gray-200);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+			.meta-item:last-child {
+				border-right: none;
+			}
+			.meta-label {
+				font-size: 9px;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--gray-400);
+			}
+			.meta-value {
+				font-size: 12.5px;
+				font-weight: 600;
+				color: var(--gray-700);
+			}
+			.meta-value.ok {
+				color: var(--green);
+			}
+
+			/* PROGRESS */
+			.progress-wrap {
+				margin-top: 20px;
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 10px;
+				padding: 16px 20px;
+				max-width: 420px;
+				position: relative;
+			}
+			.progress-top {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 9px;
+			}
+			.progress-label {
+				font-weight: 600;
+				font-size: 12.5px;
+				color: var(--gray-700);
+			}
+			.progress-count {
+				font-family: 'Quicksand', sans-serif;
+				font-weight: 700;
+				font-size: 13px;
+				color: var(--brand);
+			}
+			.progress-track {
+				height: 8px;
+				background: var(--gray-100);
+				border-radius: 99px;
+				overflow: hidden;
+			}
+			.progress-fill {
+				height: 100%;
+				width: 0%;
+				background: linear-gradient(90deg, var(--brand), var(--warm));
+				border-radius: 99px;
+				transition: width 350ms ease;
+			}
+			.progress-message {
+				font-size: 11.5px;
+				color: var(--gray-500);
+				margin-top: 7px;
+			}
+
+			/* CONTENT */
+			.content {
+				padding: 44px 60px 96px;
+				flex: 1;
+			}
+			section {
+				margin-bottom: 56px;
+				scroll-margin-top: 32px;
+			}
+
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 10px;
+			}
+			.section-num {
+				font-size: 10px;
+				font-weight: 700;
+				color: var(--brand);
+				background: var(--brand-dim);
+				border: 1px solid rgba(28, 147, 209, 0.2);
+				border-radius: 6px;
+				padding: 3px 8px;
+				letter-spacing: 0.04em;
+			}
+			.section-header h2 {
+				font-family: 'Quicksand', sans-serif;
+				font-size: 19px;
+				font-weight: 700;
+				color: var(--gray-900);
+			}
+			.section-subtext {
+				font-size: 12.5px;
+				color: var(--gray-500);
+				margin: -4px 0 18px 44px;
+				max-width: 600px;
+				line-height: 1.55;
+			}
+			.section-divider {
+				height: 1px;
+				background: var(--gray-200);
+				margin-bottom: 20px;
+			}
+
+			/* CARDS */
+			.card {
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 12px;
+				padding: 22px 24px;
+				margin-bottom: 10px;
+			}
+			.card-title {
+				font-family: 'Quicksand', sans-serif;
+				font-size: 13px;
+				font-weight: 700;
+				color: var(--gray-800);
+				margin-bottom: 4px;
+			}
+			.card-title-sub {
+				font-size: 11.5px;
+				color: var(--gray-400);
+				margin-bottom: 14px;
+				padding-bottom: 12px;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px;
+			}
+
+			/* CALLOUTS */
+			.callout {
+				border-radius: 10px;
+				padding: 14px 18px;
+				margin-bottom: 12px;
+				display: flex;
+				gap: 12px;
+				align-items: flex-start;
+				border: 1px solid transparent;
+			}
+			.callout-icon {
+				font-size: 16px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.callout-body strong {
+				display: block;
+				font-size: 12.5px;
+				font-weight: 700;
+				margin-bottom: 3px;
+			}
+			.callout-body p,
+			.callout-body span {
+				font-size: 12.5px;
+				line-height: 1.55;
+			}
+			.callout.info {
+				background: var(--brand-light);
+				border-color: rgba(28, 147, 209, 0.2);
+				color: #0f5f88;
+			}
+			.callout.warn {
+				background: var(--amber-light);
+				border-color: var(--amber-border);
+				color: var(--amber);
+			}
+			.callout.important {
+				background: var(--red-light);
+				border-color: var(--red-border);
+				color: var(--red);
+			}
+			.callout.success {
+				background: var(--green-light);
+				border-color: var(--green-border);
+				color: var(--green);
+			}
+
+			/* INTRO HIGHLIGHT */
+			.highlight-box {
+				background: var(--brand-light);
+				border: 1px solid rgba(28, 147, 209, 0.16);
+				border-left: 4px solid var(--brand);
+				border-radius: 10px;
+				padding: 22px 26px;
+				margin-bottom: 14px;
+			}
+			.highlight-box strong {
+				font-size: 10px;
+				color: var(--brand);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				font-weight: 700;
+				display: block;
+				margin-bottom: 9px;
+			}
+			.highlight-box p {
+				font-size: 14.5px;
+				color: var(--gray-700);
+				line-height: 1.65;
+				font-weight: 400;
+			}
+
+			/* CHECKBOX (shared) */
+			.check-box {
+				width: 21px;
+				height: 21px;
+				border-radius: 7px;
+				border: 2px solid var(--gray-300);
+				flex-shrink: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: all 0.15s;
+				margin-top: 1px;
+				background: var(--white);
+			}
+			.check-box svg {
+				opacity: 0;
+				transition: opacity 0.1s;
+				width: 12px;
+				height: 12px;
+			}
+			.trackable.done .check-box {
+				background: var(--green);
+				border-color: var(--green);
+			}
+			.trackable.done .check-box svg {
+				opacity: 1;
+			}
+			.trackable {
+				cursor: pointer;
+				user-select: none;
+			}
+
+			/* ASSET LIST */
+			.asset-list {
+				list-style: none;
+				padding: 0;
+			}
+			.asset-list li {
+				display: flex;
+				align-items: flex-start;
+				gap: 13px;
+				padding: 14px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+			.asset-list li:last-child {
+				border-bottom: none;
+			}
+			.asset-icon {
+				font-size: 15px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.asset-body {
+				flex: 1;
+			}
+			.asset-body-top {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				margin-bottom: 2px;
+			}
+			.asset-body strong {
+				font-size: 13.5px;
+				font-weight: 700;
+				color: var(--gray-800);
+			}
+			.optional-tag {
+				font-size: 8.5px;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--gray-400);
+				background: var(--gray-100);
+				border: 1px solid var(--gray-200);
+				border-radius: 4px;
+				padding: 1.5px 6px;
+			}
+			.asset-body p {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.5;
+				margin-bottom: 6px;
+			}
+			.asset-meta {
+				display: flex;
+				gap: 14px;
+				flex-wrap: wrap;
+			}
+			.asset-meta span {
+				font-size: 10.5px;
+				color: var(--gray-400);
+				font-weight: 500;
+			}
+			.trackable.done .asset-body strong {
+				text-decoration: line-through;
+				color: var(--gray-400);
+			}
+			.trackable.done .asset-body p,
+			.trackable.done .asset-meta {
+				opacity: 0.55;
+			}
+
+			/* QUICK ANSWERS */
+			.qa-list {
+				list-style: none;
+				padding: 0;
+			}
+			.qa-list li {
+				display: flex;
+				align-items: flex-start;
+				gap: 13px;
+				padding: 13px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+			.qa-list li:last-child {
+				border-bottom: none;
+			}
+			.qa-body strong {
+				font-size: 13px;
+				font-weight: 700;
+				color: var(--gray-800);
+				display: block;
+				margin-bottom: 2px;
+			}
+			.qa-body span {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.5;
+			}
+			.trackable.done .qa-body strong {
+				text-decoration: line-through;
+				color: var(--gray-400);
+			}
+			.trackable.done .qa-body span {
+				opacity: 0.55;
+			}
+
+			/* INFO LIST (We Handle — non-interactive) */
+			.info-list {
+				list-style: none;
+				padding: 0;
+			}
+			.info-list li {
+				display: flex;
+				align-items: flex-start;
+				gap: 13px;
+				padding: 12px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+			.info-list li:last-child {
+				border-bottom: none;
+			}
+			.info-list .asset-icon {
+				opacity: 0.8;
+			}
+			.info-list strong {
+				font-size: 13px;
+				font-weight: 700;
+				color: var(--gray-800);
+				display: block;
+				margin-bottom: 2px;
+			}
+			.info-list span {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.5;
+			}
+
+			/* PHOTO TIPS */
+			.tip-card {
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 12px;
+				padding: 18px 20px;
+			}
+			.tip-card h4 {
+				font-family: 'Quicksand', sans-serif;
+				font-size: 13.5px;
+				font-weight: 700;
+				margin-bottom: 12px;
+				display: flex;
+				align-items: center;
+				gap: 7px;
+			}
+			.tip-card.good h4 {
+				color: var(--green);
+			}
+			.tip-card.bad h4 {
+				color: var(--red);
+			}
+			.tip-card ul {
+				list-style: none;
+				padding: 0;
+			}
+			.tip-card li {
+				font-size: 12.5px;
+				color: var(--gray-600);
+				padding: 4px 0 4px 18px;
+				position: relative;
+				line-height: 1.5;
+			}
+			.tip-card.good li::before {
+				content: '✓';
+				position: absolute;
+				left: 0;
+				color: var(--green);
+				font-weight: 700;
+			}
+			.tip-card.bad li::before {
+				content: '✕';
+				position: absolute;
+				left: 0;
+				color: var(--red);
+				font-weight: 700;
+			}
+
+			/* CELEBRATION */
+			.celebrate {
+				display: none;
+				background: linear-gradient(120deg, var(--green), #15803d);
+				color: #fff;
+				border-radius: 10px;
+				padding: 14px 20px;
+				font-size: 13px;
+				font-weight: 600;
+				margin-top: 10px;
+				align-items: center;
+				gap: 10px;
+			}
+			.celebrate.show {
+				display: flex;
+			}
+
+			/* RESPONSIVE */
+			@media (max-width: 1024px) {
+				.sidebar {
+					width: 200px;
+				}
+				.main {
+					margin-left: 200px;
+				}
+				.page-header,
+				.content,
+				.drive-banner {
+					padding-left: 36px;
+					padding-right: 36px;
+				}
+			}
+
+			@media (max-width: 768px) {
+				.sidebar {
+					transform: translateX(-100%);
+					transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+				}
+				.sidebar.mobile-open {
+					transform: translateX(0);
+				}
+				.sidebar-overlay {
+					display: block;
+				}
+				.main {
+					margin-left: 0;
+				}
+				.two-col {
+					grid-template-columns: 1fr;
+				}
+				.page-header,
+				.content,
+				.drive-banner {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+				.fab-menu {
+					display: flex;
+				}
+				.section-subtext {
+					margin-left: 0;
+				}
+				.drive-banner {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+				.progress-wrap {
+					max-width: 100%;
+				}
+			}
+
+			@media (max-width: 680px) {
+				.page-header {
+					padding: 30px 20px 26px;
+				}
+				.page-header h1 {
+					font-size: 26px;
+				}
+				.header-meta {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: 1px solid var(--gray-200);
+					border-bottom: 1px solid var(--gray-200);
+				}
+				.meta-item:nth-child(even) {
+					border-right: none;
+				}
+				.callout {
+					flex-direction: column;
+					gap: 6px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="sidebar-overlay" id="sidebarOverlay"></div>
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-top">
+				<div class="sidebar-wordmark">
+					<div class="dot"></div>
+					<span class="lwd-text">Latz Web Design</span>
+				</div>
+				<div class="sidebar-client">Music Therapy Services of Central WI</div>
+				<div class="sidebar-doctype">Content Checklist</div>
+				<div class="sidebar-status">
+					<div class="pulse"></div>
+					<span>Design In Progress</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Checklist</div>
+				<a href="#needed" class="nav-link active"
+					><span class="nav-icon">📦</span> What We Need</a
+				>
+				<a href="#photos" class="nav-link"
+					><span class="nav-icon">📸</span> Photo Tips</a
+				>
+				<a href="#quick" class="nav-link"
+					><span class="nav-icon">💬</span> Quick Answers</a
+				>
+				<a href="#domain" class="nav-link"
+					><span class="nav-icon">🌐</span> Domain Info</a
+				>
+				<a href="#handle" class="nav-link"
+					><span class="nav-icon">✅</span> We've Got This</a
+				>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<div class="main">
+			<div class="drive-banner">
+				<div class="drive-banner-text">
+					📁 <strong>Your Google Drive folder is ready</strong> — drop files in
+					anytime, no need to wait until you have everything.
+				</div>
+				<a class="drive-btn" href="https://drive.google.com/drive/folders/1aUjxcemImYdM438V6v6jf-z99NR5kMEJ?usp=drive_link" target="_blank" rel="noopener">
+					Open Google Drive →
+				</a>
+			</div>
+
+			<div class="page-header">
+				<div class="header-overline">Content Checklist · Music Therapy Services of Central WI</div>
+				<h1>Here's What We Need From You</h1>
+				<div class="sub">6-Page Website Rebuild · mtscw.com</div>
+
+				<div class="header-meta">
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Elizabeth</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Project</span>
+						<span class="meta-value">6 Pages · Custom CMS</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Deposit</span>
+						<span class="meta-value ok">✓ Received</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Design</span>
+						<span class="meta-value ok">In Progress</span>
+					</div>
+				</div>
+
+				<div class="progress-wrap">
+					<div class="progress-top">
+						<span class="progress-label">Your progress</span>
+						<span class="progress-count"><span id="doneCount">0</span> of <span id="totalCount">0</span></span>
+					</div>
+					<div class="progress-track">
+						<div class="progress-fill" id="progressFill"></div>
+					</div>
+					<div class="progress-message" id="progressMessage">Nothing checked off yet — no rush, whenever you get to it.</div>
+				</div>
+			</div>
+
+			<div class="content">
+				<div class="highlight-box">
+					<strong>Where things stand</strong>
+					<p>
+						Design's underway on your new site! To keep things moving without
+						any hiccups, here's everything we'll still need from you — your
+						logo, a handful of photos, a little content, and a couple of
+						quick answers. Nothing needs to be polished, and there's no need
+						to rush — rough notes and whatever you've got on hand is a great
+						start. And if there's anything you don't get to, no worries —
+						we'll pull what we can from your current site to fill the gap, so
+						nothing holds up the build. Check things off below as you send
+						things over.
+					</p>
+				</div>
+
+				<section id="needed">
+					<div class="section-header">
+						<span class="section-num">01</span>
+						<h2>What We Need From You</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="card">
+						<ul class="asset-list">
+							<li class="trackable" data-key="logo">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">🎨</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Logo Files</strong></div>
+									<p>
+										Every version and format you've got — don't just send
+										one PNG. If you have JPG, PNG, SVG, EPS, AI, whatever
+										exists, send all of it. The more formats and sizes we
+										have, the more flexibility we've got to work with. Even
+										a photo of a printed version works as a starting point
+										if that's genuinely all you have. This is what we'll use
+										to brighten the blue.
+									</p>
+									<div class="asset-meta">
+										<span>Every format you have — JPG, PNG, SVG, EPS, AI</span>
+										<span>📁 Brand/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="brand-graphics">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">✨</span>
+								<div class="asset-body">
+									<div class="asset-body-top">
+										<strong>Any Other Branding Graphics</strong>
+										<span class="optional-tag">Optional</span>
+									</div>
+									<p>
+										Icons, patterns, textures, or any other visual elements
+										you use alongside your logo. If nothing else exists
+										beyond the logo itself, skip this one — no problem
+										either way. Same as the logo — every format and version
+										you've got, not just one file.
+									</p>
+									<div class="asset-meta">
+										<span>Every format you have</span>
+										<span>📁 Brand/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="badges">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">🎖️</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Certification & Affiliation Badges</strong></div>
+									<p>
+										We noticed a few badges on your current site — board
+										certification, Wisconsin registration, Neurologic Music
+										Therapy Academy, that kind of thing. If you have the
+										original files for these (not just what's showing on the
+										old site), send those over so they carry through cleanly.
+										Same rule — every format and version you've got.
+									</p>
+									<div class="asset-meta">
+										<span>Every format you have</span>
+										<span>📁 Brand/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="photos">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">📸</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Photos</strong></div>
+									<p>
+										A warm session photo for the homepage (a therapist working
+										with a child), headshots for each team member, and a
+										team/culture photo for the Careers page — something that
+										shows the fun side of working here.
+									</p>
+									<div class="asset-meta">
+										<span>JPG or PNG, originals</span>
+										<span>Horizontal preferred for the homepage</span>
+										<span>📁 Photos/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="bios">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">👥</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Team Bios</strong></div>
+									<p>
+										Name, credentials (MT-BC, etc.), and a few sentences per
+										therapist for the Who We Are page. Short and simple is
+										fine — we can help polish the wording.
+									</p>
+									<div class="asset-meta">
+										<span>Doc or plain text</span>
+										<span>📁 Content/Team Bios/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="services">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">📝</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Current Service List</strong></div>
+									<p>
+										Which services you're currently offering, and anything
+										that's changed since the old site went up (a couple of
+										listed services aren't offered anymore). This is the one
+										that unblocks the Services page, so it's worth sending
+										early if you can.
+									</p>
+									<div class="asset-meta">
+										<span>A quick list is fine — reply to the email works</span>
+										<span>📁 Content/Services/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="careers">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">💼</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Careers Content</strong></div>
+									<p>
+										Details on the current open position (title, full or
+										part-time), plus a few sentences on what makes MTSCW a
+										good place to work — supervision, growth, your internship
+										program, whatever you'd want a therapist to know.
+									</p>
+									<div class="asset-meta">
+										<span>Bullet points are fine</span>
+										<span>📁 Content/Careers/</span>
+									</div>
+								</div>
+							</li>
+
+							<li class="trackable" data-key="testimonials">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">🗣️</span>
+								<div class="asset-body">
+									<div class="asset-body-top">
+										<strong>Family Testimonials</strong>
+										<span class="optional-tag">Optional</span>
+									</div>
+									<p>
+										If there are quotes from families you have permission to
+										share, send them along. Totally fine to skip this one for
+										now and add them later once you've gathered a few.
+									</p>
+									<div class="asset-meta">
+										<span>Name + quote, plain text</span>
+										<span>📁 Content/Testimonials/</span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section id="photos">
+					<div class="section-header">
+						<span class="section-num">02</span>
+						<h2>Photo Guidance</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout important">
+						<span class="callout-icon">🛡️</span>
+						<div class="callout-body">
+							<strong>Any photo with a child needs a signed release first</strong>
+							<span>
+								Before any session photo, team photo, or homepage image
+								featuring a child can go live on the site, we'll need a signed
+								photo release from that child's parent or guardian on file.
+								If you already collect these, great — just make sure the
+								ones covering any photos you send us are in hand. If you're
+								not sure what you have, we're happy to help you put a simple
+								release together.
+							</span>
+						</div>
+					</div>
+
+					<div class="two-col">
+						<div class="tip-card good">
+							<h4>👍 Great Shots</h4>
+							<ul>
+								<li>Original files, not screenshots</li>
+								<li>Horizontal orientation for anything used as a hero</li>
+								<li>Natural light — near a window works great</li>
+								<li>Candid moments over posed, stiff shots</li>
+								<li>Wide enough that we can crop if needed</li>
+							</ul>
+						</div>
+						<div class="tip-card bad">
+							<h4>👎 Try to Avoid</h4>
+							<ul>
+								<li>Facebook or Instagram screenshots</li>
+								<li>Anything blurry or heavily filtered</li>
+								<li>Very dark or backlit shots</li>
+								<li>Vertical-only photos for hero spots</li>
+								<li>Stock photos — real photos build more trust</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section id="quick">
+					<div class="section-header">
+						<span class="section-num">03</span>
+						<h2>Quick Answers</h2>
+					</div>
+					<p class="section-subtext">
+						No files needed for these — just reply to the email with the answers whenever you get a chance.
+					</p>
+					<div class="section-divider"></div>
+
+					<div class="card">
+						<ul class="qa-list">
+							<li class="trackable" data-key="qa-referral">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<div class="qa-body">
+									<strong>Where should referral form submissions go?</strong>
+									<span>An inbox like scheduling@mtscw.com works — just confirm which one so nothing gets missed.</span>
+								</div>
+							</li>
+							<li class="trackable" data-key="qa-contact">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<div class="qa-body">
+									<strong>Where should general contact-form messages go?</strong>
+									<span>Can be the same inbox as referrals, or a different one — your call.</span>
+								</div>
+							</li>
+							<li class="trackable" data-key="qa-turbify">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<div class="qa-body">
+									<strong>What are you currently paying for your Turbify site?</strong>
+									<span>And is it month-to-month or under a contract? This helps us time the switch so nothing overlaps.</span>
+								</div>
+							</li>
+							<li class="trackable" data-key="qa-news">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<div class="qa-body">
+									<strong>Do you have a link to your local news feature?</strong>
+									<span>We'd love to feature it on Who We Are — just the link is all we need.</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section id="domain">
+					<div class="section-header">
+						<span class="section-num">04</span>
+						<h2>Domain Info</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout warn">
+						<span class="callout-icon">🌐</span>
+						<div class="callout-body">
+							<strong>We'll need domain access when it's time to move</strong>
+							<span>
+								mtscw.com is currently on Turbify, alongside your hosting — so
+								they may well be bundled under one login. We'll walk you
+								through the switch when we're ready; nothing to do right now
+								except get familiar with where things live.
+							</span>
+						</div>
+					</div>
+
+					<div class="card">
+						<ul class="asset-list">
+							<li class="trackable" data-key="registrar">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">🔍</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Confirm where your domain lives</strong></div>
+									<p>
+										Check your inbox for a renewal or billing email from
+										Turbify, or search "whois mtscw.com" / visit who.is —
+										either will tell you where it's registered.
+									</p>
+								</div>
+							</li>
+							<li class="trackable" data-key="credentials">
+								<div class="check-box">
+									<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								</div>
+								<span class="asset-icon">🔑</span>
+								<div class="asset-body">
+									<div class="asset-body-top"><strong>Locate your login</strong></div>
+									<p>
+										Find your Turbify (or registrar) login and keep it handy.
+										We'll reach out when it's time and figure out the
+										quickest path together — the domain stays yours, nothing
+										gets transferred out of your name.
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section id="handle">
+					<div class="section-header">
+						<span class="section-num">05</span>
+						<h2>We've Got This</h2>
+					</div>
+					<p class="section-subtext">Just so you know what's already covered — nothing needed from you here.</p>
+					<div class="section-divider"></div>
+
+					<div class="callout success">
+						<span class="callout-icon">✅</span>
+						<div class="callout-body">
+							<strong>Covered, no action needed</strong>
+							<span>These are ours to handle. Just here so you have the full picture of who's doing what.</span>
+						</div>
+					</div>
+
+					<div class="card">
+						<ul class="info-list">
+							<li>
+								<span class="asset-icon">✍️</span>
+								<div>
+									<strong>Copywriting</strong>
+									<span>We're reusing and tightening your existing site copy — no need to write anything from scratch. We'll flag anything we genuinely need your input on.</span>
+								</div>
+							</li>
+							<li>
+								<span class="asset-icon">🌐</span>
+								<div>
+									<strong>Domain & Hosting Setup</strong>
+									<span>We'll move mtscw.com off Turbify and onto your new host at launch — you won't need to touch any settings yourself.</span>
+								</div>
+							</li>
+							<li>
+								<span class="asset-icon">🎨</span>
+								<div>
+									<strong>Design & Development</strong>
+									<span>You review and give feedback along the way — building the site itself is on us.</span>
+								</div>
+							</li>
+							<li>
+								<span class="asset-icon">⚙️</span>
+								<div>
+									<strong>Custom CMS Setup</strong>
+									<span>We build and configure your dashboard — you'll get a full walkthrough once it's ready, so updating services, team, and job posts is simple.</span>
+								</div>
+							</li>
+							<li>
+								<span class="asset-icon">📱</span>
+								<div>
+									<strong>Mobile & Accessibility</strong>
+									<span>Pinch-zoom, contrast, and WCAG-minded structure — baked in from the start, no extra work on your end.</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<button class="fab-menu" id="fabMenu">☰</button>
+
+		<script>
+			const sidebar = document.getElementById('sidebar');
+			const overlay = document.getElementById('sidebarOverlay');
+			const fab = document.getElementById('fabMenu');
+
+			function openSidebar() {
+				sidebar.classList.add('mobile-open');
+				overlay.classList.add('visible');
+				fab.textContent = '✕';
+				document.body.style.overflow = 'hidden';
+			}
+			function closeSidebar() {
+				sidebar.classList.remove('mobile-open');
+				overlay.classList.remove('visible');
+				fab.textContent = '☰';
+				document.body.style.overflow = '';
+			}
+			fab.addEventListener('click', () => {
+				sidebar.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
+			});
+			overlay.addEventListener('click', closeSidebar);
+
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+			navLinks.forEach((link) => {
+				link.addEventListener('click', (e) => {
+					if (window.innerWidth <= 768) {
+						e.preventDefault();
+						const targetId = link.getAttribute('href');
+						closeSidebar();
+						setTimeout(() => {
+							document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+						}, 280);
+					}
+				});
+			});
+			const navObserver = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.remove('active');
+								if (link.getAttribute('href') === '#' + entry.target.id) {
+									link.classList.add('active');
+								}
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -70% 0px' },
+			);
+			sections.forEach((s) => navObserver.observe(s));
+
+			/* ── Progress tracking — safe storage wrapper degrades gracefully
+			     if localStorage is unavailable (e.g. a sandboxed preview).
+			     Works normally once this file is hosted on its real domain. ── */
+			function getSafeStorage() {
+				try {
+					const k = '__lwd_test__';
+					window.localStorage.setItem(k, '1');
+					window.localStorage.removeItem(k);
+					return window.localStorage;
+				} catch (e) {
+					const mem = {};
+					return {
+						getItem: (k) => (k in mem ? mem[k] : null),
+						setItem: (k, v) => {
+							mem[k] = v;
+						},
+					};
+				}
+			}
+			const storage = getSafeStorage();
+			const STORAGE_KEY = 'mtscw-checklist-progress';
+
+			function loadState() {
+				try {
+					return JSON.parse(storage.getItem(STORAGE_KEY) || '{}');
+				} catch (e) {
+					return {};
+				}
+			}
+			function saveState(state) {
+				storage.setItem(STORAGE_KEY, JSON.stringify(state));
+			}
+
+			const trackables = Array.from(document.querySelectorAll('.trackable'));
+			const requiredTrackables = trackables.filter((el) => !el.querySelector('.optional-tag'));
+			const state = loadState();
+
+			function updateProgress() {
+				const total = requiredTrackables.length;
+				const done = requiredTrackables.filter((el) => el.classList.contains('done')).length;
+				document.getElementById('doneCount').textContent = done;
+				document.getElementById('totalCount').textContent = total;
+				const pct = total ? Math.round((done / total) * 100) : 0;
+				document.getElementById('progressFill').style.width = pct + '%';
+
+				const msg = document.getElementById('progressMessage');
+				if (done === 0) {
+					msg.textContent = 'Nothing checked off yet — no rush, whenever you get to it.';
+				} else if (done < total) {
+					msg.textContent = `${done} of ${total} done — nice start!`;
+				} else {
+					msg.textContent = "You're all caught up! 🎉";
+				}
+			}
+
+			trackables.forEach((el) => {
+				const key = el.dataset.key;
+				if (state[key]) el.classList.add('done');
+				el.addEventListener('click', () => {
+					el.classList.toggle('done');
+					state[key] = el.classList.contains('done');
+					saveState(state);
+					updateProgress();
+				});
+			});
+
+			updateProgress();
+		</script>
+	</body>
+</html>
