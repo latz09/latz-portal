@@ -73,6 +73,20 @@
   .swatch-label { font-size:11px; }
   .check-dot { position:absolute; top:-6px; right:-6px; width:17px; height:17px; border-radius:50%; background:#1e9a5a; color:#fff; font-size:10px; display:flex; align-items:center; justify-content:center; }
 
+  .thread-picker { display:flex; flex-direction:column; gap:8px; max-width:460px; }
+  .thread-cat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
+  .thread-cat-trigger { width:100%; display:flex; align-items:center; gap:10px; padding:12px 14px; background:transparent; border:none; cursor:pointer; text-align:left; }
+  .thread-dot { width:18px; height:18px; border-radius:50%; flex-shrink:0; border:1px solid var(--border-strong); }
+  .thread-dot.small { width:15px; height:15px; }
+  .thread-cat-label { flex:1; font-size:13.5px; }
+  .thread-cat-count { color:var(--text-muted); font-size:12px; }
+  .chevron { font-size:12px; color:var(--text-secondary); transition:transform 0.15s; display:inline-block; }
+  .chevron.open { transform:rotate(180deg); }
+  .thread-cat-panel { border-top:1px solid var(--border); padding:12px 14px; display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:6px; }
+  .thread-swatch-item { display:flex; align-items:center; gap:8px; padding:6px 8px; background:transparent; border:1px solid transparent; border-radius:var(--radius); cursor:pointer; text-align:left; font-size:12.5px; color:var(--text); }
+  .thread-swatch-item.selected { background:#eef4fd; border-color:var(--accent); }
+  .thread-swatch-item:hover { background:var(--bg); }
+
   .option-row { display:flex; gap:8px; flex-wrap:wrap; }
   .option-btn { padding:9px 15px; border-radius:var(--radius); font-size:12.5px; font-weight:600; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); }
   .option-btn.selected { background:var(--text); color:#fff; border-color:var(--text); }
@@ -199,21 +213,90 @@ function renderGrid(app) {
   });
 }
 
-function threadSwatchesHtml(selKey) {
-  const shown = DATA.threadColorsShown;
-  let html = "";
-  shown.forEach(c => {
-    html += `
-      <div class="swatch-card" data-group="${selKey}" data-value="${c.name}" data-hex="${c.hex}">
-        <div class="swatch-box" style="background:${c.hex};"></div>
-        <div class="swatch-label">${c.name}</div>
-      </div>`;
-  });
-  for (let i = 0; i < DATA.threadColorsRemainingPlaceholders; i++) {
-    html += `<div class="swatch-card" style="opacity:0.5;"><div class="swatch-empty">&hellip;</div><div class="swatch-label tiny">&nbsp;</div></div>`;
+const THREAD_CATEGORIES = {
+  warm: { label: "Warm colors", colors: [
+    ["Cork","#D9CD6A"],["Cheddar","#F0AB1E"],["Haybale","#B08A4E"],["Desert Tan","#C9A86A"],
+    ["Taxi Cab Yellow","#F4E014"],["Golden Rod","#C79A2E"],["Yellow","#C9C24E"],["Old Yeller","#C77A2E"],
+    ["Tactical Tan","#A6905C"],["Beige","#C4A98A"],["DK's Fire Coral","#F0553B"],["Neon Orange","#F0501A"],
+    ["Orange","#C1621E"],["Garnet","#4A1013"],["Candy Apple Red","#8B1620"],["Scarlet","#9A1B24"],
+    ["Cabernet","#6B2015"],["Maroon","#3B0F24"],["Chestnut","#34140F"],["Secret Squirrel","#6B4A26"],
+    ["Moss Brown","#5C5230"],["Flat Dark Earth","#3B3A1E"],["Dark Brown","#3B2419"],["Neon Pink","#E8115B"],
+    ["Bubblegum Pink","#E8A0C4"],["Hot Pink","#C05073"],["Diet Peach","#CB9280"],["Purple","#5C1F6B"],
+    ["Olive Green","#5C6B2E"],["Neon Lime","#A8D63F"],["Shamrock","#3FAE5E"],["Med Green","#4C7A2E"],
+    ["Spring Green","#8CC63F"],["Moss Green","#6B6B2E"],["Neon Green","#A8C93F"]
+  ]},
+  cool: { label: "Cool colors", colors: [
+    ["Dark Blue","#1B3A66"],["Cobalt Blue","#2A2B8C"],["Midnight Blue","#26333F"],["Midnight","#0F1B3C"],
+    ["Navy","#0C2233"],["Bracket Blue","#4E86C4"],["Royal Blue","#305A80"],["Cerulean Blue","#0E7C93"],
+    ["Sea Breeze","#3E7C8C"],["Light Blue","#7A8A9C"],["Rain Cloud","#4E5560"],["Blue Dunn","#46545C"],
+    ["Teal","#4E8C78"],["Maui Wowie","#0F506B"],["Aquamarine","#14495C"],["OG Green","#0D4A32"],
+    ["Dark Green","#0C4A26"],["Run Forest","#146B44"],["Purple Haze","#2E1F5E"],["Blurple","#3E2E8C"],
+    ["Lavender","#7A5C82"],["Periwinkle","#8580B0"],["Swamp Purple","#5C2E70"]
+  ]},
+  neutral: { label: "No color", colors: [
+    ["White","#FFFFFF"],["Light Grey","#C7C7C7"],["Concrete","#A6ABB0"],["CC/BC","#3B3A38"],["Black","#0A0A0A"]
+  ]}
+};
+
+const threadPickerOpen = {};
+
+function findThreadCategoryForColor(name) {
+  for (const key of Object.keys(THREAD_CATEGORIES)) {
+    if (THREAD_CATEGORIES[key].colors.some(([n]) => n === name)) return key;
   }
-  html += `<div class="swatch-card" style="opacity:0.7;"><div class="swatch-empty" style="font-size:10px;">etc</div><div class="swatch-label tiny">${DATA.threadColorsTotal} total</div></div>`;
-  return html;
+  return null;
+}
+
+function renderThreadPicker(containerId, selKey) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const selectedName = state.sel[selKey];
+  const selectedCatKey = selectedName ? findThreadCategoryForColor(selectedName) : null;
+  const openKey = threadPickerOpen[containerId] || null;
+
+  let html = "";
+  Object.keys(THREAD_CATEGORIES).forEach(catKey => {
+    const cat = THREAD_CATEGORIES[catKey];
+    const isSelectedCat = catKey === selectedCatKey;
+    const selectedHex = isSelectedCat ? cat.colors.find(([n]) => n === selectedName)[1] : null;
+    const isOpen = openKey === catKey;
+    html += `
+      <div class="thread-cat">
+        <button class="thread-cat-trigger" data-thread-cat="${catKey}">
+          <span class="thread-dot" style="background:${selectedHex || 'transparent'};"></span>
+          <span class="thread-cat-label">${cat.label} <span class="thread-cat-count">(${cat.colors.length})</span>${isSelectedCat ? ' &mdash; ' + selectedName : ''}</span>
+          <span class="chevron ${isOpen?'open':''}">&#9662;</span>
+        </button>
+        ${isOpen ? `
+          <div class="thread-cat-panel">
+            ${cat.colors.map(([name,hex]) => `
+              <button class="thread-swatch-item ${name===selectedName?'selected':''}" data-thread-color="${name}">
+                <span class="thread-dot small" style="background:${hex};"></span>
+                <span>${name}</span>
+              </button>
+            `).join("")}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+
+  container.querySelectorAll("[data-thread-cat]").forEach(btn => {
+    btn.onclick = () => {
+      const key = btn.dataset.threadCat;
+      threadPickerOpen[containerId] = (threadPickerOpen[containerId] === key) ? null : key;
+      renderThreadPicker(containerId, selKey);
+    };
+  });
+  container.querySelectorAll("[data-thread-color]").forEach(btn => {
+    btn.onclick = () => {
+      state.sel[selKey] = btn.dataset.threadColor;
+      threadPickerOpen[containerId] = null;
+      renderThreadPicker(containerId, selKey);
+      updateSummary();
+    };
+  });
 }
 
 function gripFinishGroupsHtml() {
@@ -286,7 +369,7 @@ function renderSingleBuilder(app) {
   rightHtml += `
     <div class="option-group" data-step="primaryThread">
       <p class="group-label">Primary thread color <span class="locked-hint">Complete the previous step first</span></p>
-      <div class="swatch-grid">${threadSwatchesHtml("primaryThread")}</div>
+      <div class="thread-picker" id="primary-thread-picker"></div>
     </div>
   `;
 
@@ -297,7 +380,7 @@ function renderSingleBuilder(app) {
         <div><p style="font-weight:700;font-size:14px;">Accent thread color <span class="locked-hint">Complete the previous step first</span></p><p class="tiny">Optional &middot; +${fmt(DATA.accentThreadPrice)}</p></div>
         <div class="switch" id="accent-switch"><div class="switch-dot"></div></div>
       </div>
-      <div class="swatch-grid" id="accent-swatches" style="display:none;">${threadSwatchesHtml("accentThread")}</div>
+      <div class="thread-picker" id="accent-thread-picker" style="display:none;"></div>
     </div>
   `;
 
@@ -358,6 +441,9 @@ function renderSingleBuilder(app) {
 
   document.getElementById("back-to-grid").onclick = () => { state.view = "grid"; render(); };
 
+  renderThreadPicker("primary-thread-picker", "primaryThread");
+  renderThreadPicker("accent-thread-picker", "accentThread");
+
   wireUpHandlers(app);
   updateSummary();
 }
@@ -376,8 +462,6 @@ function wireUpHandlers(app) {
       el.classList.add("selected");
 
       if (group === "blankColor") sel.blankColor = value;
-      else if (group === "primaryThread") sel.primaryThread = value;
-      else if (group === "accentThread") sel.accentThread = value;
       else if (group === "applicationIndex") sel.applicationIndex = parseInt(value);
       else if (group === "gripMaterial") {
         sel.gripMaterial = value;
@@ -422,13 +506,10 @@ function wireUpHandlers(app) {
   document.getElementById("accent-switch").onclick = () => {
     sel.accentOn = !sel.accentOn;
     const swEl = document.getElementById("accent-switch");
-    const swatches = document.getElementById("accent-swatches");
+    const picker = document.getElementById("accent-thread-picker");
     swEl.classList.toggle("on", sel.accentOn);
-    swatches.style.display = sel.accentOn ? "grid" : "none";
-    if (!sel.accentOn) {
-      sel.accentThread = null;
-      swatches.querySelectorAll(".selected").forEach(el => el.classList.remove("selected"));
-    }
+    picker.style.display = sel.accentOn ? "block" : "none";
+    if (!sel.accentOn) sel.accentThread = null;
     updateSummary();
   };
 
