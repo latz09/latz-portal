@@ -12,6 +12,7 @@ import JourneyPreview from '@/app/components/portal/JourneyPreview';
 import StudioLink from '@/app/components/portal/StudioLink';
 import ProjectMilestones from '@/app/components/portal/ProjectMilestones';
 import LostBanner from '@/app/components/portal/LostBanner';
+import ProjectAssets from '@/app/components/portal/ProjectAssets';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -72,15 +73,14 @@ export default async function ProjectPage({ params }) {
 				</div>
 			)}
 
-			<DocumentList
+			<ProjectAssets
 				variant='internal'
 				docs={project.docs}
+				resources={project.resources}
+				inspiration={project.inspiration}
 				clientSlug={clientSlug}
 				projectSlug={projectSlug}
-				inspiration={project.inspiration}
 			/>
-
-			<ResourceList variant='internal' resources={project.resources} />
 			<DeadlineList
 				deadlines={project.deadlines}
 				journeySteps={project.journeySteps}

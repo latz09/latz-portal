@@ -14,6 +14,7 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
       docs[] {
         label,
         filename,
+        category,
         audience
       },
       deadlines[] | order(date asc) {
@@ -25,7 +26,7 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
         completed,
         completedAt
       },
-"journeyMilestones": journeySteps[
+      "journeyMilestones": journeySteps[
         (defined(dueDate) || status == "waiting") &&
         generators[0]->isMilestone == true &&
         generators[0]->phase in ["c-kickoff", "d-design"]
@@ -46,6 +47,7 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
         label,
         url,
         type,
+        category,
         audience
       }
     }

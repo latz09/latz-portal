@@ -23,6 +23,7 @@ export const FETCH_PROJECT_QUERY = `
       docs[] {
         label,
         filename,
+        category,
         audience
       },
       deadlines[] | order(date asc) {
@@ -39,13 +40,14 @@ export const FETCH_PROJECT_QUERY = `
         caption,
         category
       },
-   resources[] {
+      resources[] {
         label,
         url,
         type,
+        category,
         audience
       },
-     journeySteps[] {
+      journeySteps[] {
         _key,
         status,
         waitingOn,

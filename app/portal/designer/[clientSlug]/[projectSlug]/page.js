@@ -4,10 +4,9 @@ import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_DESIGNER_PORTAL_QUERY as Q } from '@/app/data/queries/pages/FETCH_DESIGNER_PORTAL_QUERY';
 import ProjectHeader from '@/app/components/portal/ProjectHeader';
 import ProjectLinks from '@/app/components/portal/ProjectLinks';
-import DocumentList from '@/app/components/portal/DocumentList';
+import ProjectAssets, { DESIGNER_GROUPS } from '@/app/components/portal/ProjectAssets';
 import DeadlineList from '@/app/components/portal/DeadlineList';
 import PortalFooter from '@/app/components/portal/PortalFooter';
-import ResourceList from '@/app/components/portal/ResourceList';
 import DesignerBudgetLine from '@/app/components/portal/DesignerBudgetLine';
 import DesignerMilestones from '@/app/components/portal/DesignerMilestones';
 
@@ -41,15 +40,15 @@ export default async function DesignerPortal({ params }) {
 				previewUrl={project.previewUrl}
 				figmaUrl={project.figmaUrl}
 			/>
-			<DocumentList
+			<ProjectAssets
 				variant='designer'
 				docs={designerDocs}
+				resources={designerResources}
+				inspiration={project.inspiration}
 				clientSlug={clientSlug}
 				projectSlug={projectSlug}
-				inspiration={project.inspiration}
+				groups={DESIGNER_GROUPS}
 			/>
-
-			<ResourceList variant='designer' resources={designerResources} />
 			<DeadlineList deadlines={designerDeadlines} variant='designer' />
 			<PortalFooter />
 		</main>
