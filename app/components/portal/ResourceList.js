@@ -4,6 +4,7 @@ import {
 	TbBrandPinterest,
 	TbVideo,
 	TbLink,
+	TbBrandFigma,
 } from 'react-icons/tb';
 
 const variantStyles = {
