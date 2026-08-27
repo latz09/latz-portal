@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Classic Log Homes — Call Prep | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0F14; --surface:#141A2B; --surface-2:#141A2B;
+    --border:rgba(255,255,255,0.08); --border-soft:rgba(255,255,255,0.06); --border-strong:rgba(255,255,255,0.18);
+    --ink:rgba(255,255,255,0.95); --ink-2:rgba(255,255,255,0.70); --ink-3:rgba(255,255,255,0.46); --ink-4:rgba(255,255,255,0.30);
+    --teal:#1E8A94; --teal-dim:rgba(30,138,148,0.16); --teal-line:rgba(30,138,148,0.45);
+    --purple:#8B7FCF; --purple-dim:rgba(139,127,207,0.16); --purple-line:rgba(139,127,207,0.42);
+    --warning:#C9A227; --warning-dim:rgba(201,162,39,0.14); --warning-line:rgba(201,162,39,0.42);
+    --danger:#B3524A; --danger-dim:rgba(179,82,74,0.14); --danger-line:rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink-2);
+    line-height:1.55; padding-bottom:100px; -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'DM Mono',monospace;}
+  .wrap{max-width:1800px; margin:0 auto; padding:0 32px;}
+  :focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important;} }
+
+  /* HEADER */
+  header.top{
+    background:var(--bg); padding:56px 0 30px; margin-bottom:0;
+    border-bottom:1px solid var(--border); position:relative; overflow:hidden;
+  }
+  header.top::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 900px 500px at 78% 0%, rgba(30,138,148,0.20) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  header.top .wrap{position:relative; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px;}
+  .top-label{
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--teal);
+    margin-bottom:16px; display:flex; align-items:center; gap:10px;
+  }
+  .top-label::before{content:''; display:inline-block; width:20px; height:1px; background:var(--teal); opacity:0.7;}
+  .top-title{font-family:'DM Sans',sans-serif; font-weight:700; font-size:33px; color:var(--ink); letter-spacing:-0.02em; line-height:1.15; text-wrap:balance;}
+  .top-sub{color:var(--ink-3); font-size:13.5px; margin-top:10px; font-weight:300;}
+  .call-badge{
+    font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+    background:var(--teal-dim); border:1px solid var(--teal-line); color:var(--teal);
+    padding:9px 16px; border-radius:7px; white-space:nowrap; font-weight:500;
+  }
+  .meta-strip{position:relative; display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--border); border-radius:9px; overflow:hidden; margin-top:26px; background:rgba(255,255,255,0.015);}
+  .meta-item{flex:1; min-width:160px; padding:14px 18px; border-right:1px solid var(--border-soft);}
+  .meta-item:last-child{border-right:none;}
+  .meta-label{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); margin-bottom:6px;}
+  .meta-value{font-size:13.5px; color:var(--ink); font-weight:500; line-height:1.4;}
+  .meta-value.warn{color:var(--warning);}
+  .meta-value.ok{color:var(--teal);}
+
+  /* FOCUS BAR */
+  .focus-wrap{background:rgba(255,255,255,0.02); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);}
+  .focus-bar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:14px 0;}
+  .focus-bar .fb-label{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-4);}
+  .focus-btn{font-family:'DM Sans',sans-serif; font-weight:600; font-size:13px; padding:8px 18px; border-radius:20px; border:1px solid var(--border); background:var(--surface); color:var(--ink-3); cursor:pointer; transition:background .15s,border-color .15s,color .15s;}
+  .focus-btn:hover{border-color:var(--border-strong); color:var(--ink-2);}
+  .focus-btn.active{background:var(--teal); color:#fff; border-color:var(--teal);}
+
+  /* SECTION HEADER */
+  .sec-head{display:flex; align-items:center; gap:13px; margin:88px 0 22px;}
+  .sec-head.tight{margin-top:52px;}
+  .sec-num{font-family:'DM Mono',monospace; font-size:11px; background:var(--teal-dim); color:var(--teal); border:1px solid var(--teal-line); border-radius:5px; padding:4px 10px; font-weight:500;}
+  .sec-title{font-family:'DM Sans',sans-serif; font-size:20px; font-weight:700; color:var(--ink); letter-spacing:-0.01em; text-wrap:balance;}
+  .sec-divider{border-top:1px solid var(--border); margin-top:16px;}
+  .sec-note{font-size:13px; color:var(--ink-3); margin:12px 0 18px; max-width:68ch;}
+
+  /* BOTTOM LINE */
+  .bottomline{
+    background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:26px 28px; position:relative;
+    border-left:3px solid var(--teal); margin-top:36px;
+  }
+  .bottomline .lbl{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin-bottom:10px;}
+  .bottomline p{font-size:18px; font-weight:300; line-height:1.55; color:var(--ink-2);}
+  .bottomline b{font-weight:600; color:var(--ink);}
+
+  /* GRID */
+  .grid{display:grid; grid-template-columns:1fr; gap:16px;}
+  @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1200px){.grid.cols-3{grid-template-columns:1fr 1fr 1fr;}}
+
+  /* CARD */
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 22px; box-shadow:var(--shadow);}
+  .card-title{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); border-bottom:1px solid var(--border-soft); padding-bottom:10px; margin-bottom:14px;}
+  .row{display:grid; grid-template-columns:110px 1fr; gap:8px; font-size:14px; padding:6px 0;}
+  .row .l{font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-4);}
+  .row .v{color:var(--ink-2); font-weight:500;}
+  ul.bullets{list-style:none; padding:0;}
+  ul.bullets li{font-size:14px; padding:4px 0 4px 16px; position:relative; color:var(--ink-2);}
+  ul.bullets li:before{content:"–"; position:absolute; left:0; color:var(--ink-4);}
+
+  /* ALERT CARD (danger) */
+  .card.alert{background:var(--danger-dim); border-color:var(--danger-line);}
+  .card.alert .card-title{color:var(--danger); border-bottom-color:var(--danger-line);}
+  .card.alert p{font-size:14px; color:rgba(255,255,255,0.78);}
+  .card.alert b{color:#e0a9a4;}
+
+  /* PROPOSAL BLOCKS */
+  .proposal-block + .proposal-block{margin-top:40px;}
+  .proposal-label{font-family:'DM Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-2); padding-bottom:10px; margin-bottom:16px; border-bottom:1px solid var(--border-soft); display:flex; align-items:center; gap:10px;}
+  .proposal-label .pdot{width:7px; height:7px; border-radius:50%; background:var(--teal); flex-shrink:0;}
+
+  /* PRICING LADDER */
+  .ladder{display:flex; flex-direction:column; gap:10px;}
+  .ladder .step{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;}
+  .ladder .step .name{font-weight:600; color:var(--ink); font-size:15px;}
+  .ladder .step .desc{font-size:13px; color:var(--ink-3); margin-top:4px; line-height:1.5; max-width:60ch;}
+  .ladder .step .amt{font-family:'DM Mono',monospace; font-size:14px; color:var(--ink-2); white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .ladder .step.base{border-left:3px solid var(--teal); background:linear-gradient(90deg, var(--teal-dim), var(--surface) 40%);}
+  .ladder .step.base .amt{color:var(--teal); font-weight:600; font-size:16px;}
+  .ladder .step.lever{border-left:3px solid var(--purple);}
+  .ladder .step.lever .amt{color:var(--purple); font-weight:600; font-size:16px;}
+  .ladder .step.stopgap{border-left:3px solid var(--border-strong); opacity:0.9;}
+  .ladder .step.stopgap .amt{color:var(--ink-2);}
+
+  /* PILLS */
+  .pill{display:inline-block; font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.05em; border-radius:4px; padding:3px 8px; border:1px solid; margin-left:8px;}
+  .pill.purple{color:var(--purple); border-color:var(--purple-line); background:var(--purple-dim);}
+  .pill.teal{color:var(--teal); border-color:var(--teal-line); background:var(--teal-dim);}
+  .pill.gray{color:var(--ink-3); border-color:var(--border); background:var(--surface-2);}
+
+  /* BUNDLE PRICING */
+  .bundle-card{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:22px 24px; box-shadow:var(--shadow);}
+  .bundle-card.featured{border-left:3px solid var(--teal); background:linear-gradient(120deg, var(--teal-dim), var(--surface) 45%);}
+  .bundle-card .combo-name{font-weight:700; color:var(--ink); font-size:15.5px;}
+  .bundle-card .combo-items{font-family:'DM Mono',monospace; font-size:11.5px; color:var(--ink-3); margin-top:5px; margin-bottom:16px;}
+  .bundle-card .base-total{margin-bottom:14px;}
+  .bundle-card .base-total .lbl{display:block; font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); margin-bottom:4px;}
+  .bundle-card .base-total .amt{font-family:'DM Mono',monospace; font-size:24px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .discount-row{display:flex; justify-content:space-between; align-items:baseline; padding:9px 0; border-top:1px solid var(--border-soft); font-size:13.5px;}
+  .discount-row .pct{font-family:'DM Mono',monospace; color:var(--purple); font-weight:600; min-width:38px;}
+  .discount-row .price{font-family:'DM Mono',monospace; color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums;}
+  .discount-row .save{color:var(--ink-4); font-size:11px; margin-left:8px;}
+  .bundle-note{font-size:12.5px; color:var(--ink-3); margin-top:14px; padding-top:14px; border-top:1px dashed var(--border-soft); line-height:1.6;}
+
+  /* FILTER BARS (category, section 04) */
+  .filter-bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
+  .filter-btn{font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:8px 16px; border-radius:7px; border:1px solid var(--border); background:var(--surface); color:var(--ink-3); cursor:pointer; transition:all .15s;}
+  .filter-btn:hover{border-color:var(--border-strong); color:var(--ink-2);}
+  .filter-btn.active{background:var(--teal); color:#ffffff; border-color:var(--teal); font-weight:500;}
+
+  /* SCENARIO CARDS */
+  .scenario{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px 20px; cursor:pointer; transition:box-shadow .15s, transform .1s, border-color .15s; position:relative;}
+  .scenario:hover{box-shadow:0 8px 28px rgba(0,0,0,0.5); transform:translateY(-2px); border-color:var(--border-strong);}
+  .scenario .tagrow{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+  .scenario .cat-tag{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.06em; display:inline-block; padding:3px 9px; border-radius:4px; border:1px solid;}
+  .scenario .cat-tag.pricing{background:var(--warning-dim); color:var(--warning); border-color:var(--warning-line);}
+  .scenario .cat-tag.scope{background:var(--teal-dim); color:var(--teal); border-color:var(--teal-line);}
+  .scenario .cat-tag.process{background:rgba(255,255,255,0.05); color:var(--ink-3); border-color:var(--border-strong);}
+  .scenario .cat-tag.technical{background:var(--purple-dim); color:var(--purple); border-color:var(--purple-line);}
+  .scenario .prop-tag{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.06em; display:inline-block; padding:3px 9px; border-radius:4px; border:1px solid var(--border-strong); color:var(--ink-3); background:rgba(255,255,255,0.03);}
+  .scenario .trigger{font-family:'DM Sans',sans-serif; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:10px; padding-right:24px; line-height:1.35; letter-spacing:-0.01em;}
+  .scenario .click-icon{position:absolute; top:18px; right:18px; color:var(--ink-4); font-size:13px;}
+  .scenario ul.bullets li{font-size:14px;}
+  .scenario[hidden]{display:none;}
+
+  /* SEED PLANTS */
+  .seed{background:var(--teal-dim); border:1px solid var(--teal-line); border-radius:8px; padding:13px 17px; font-size:14px; color:var(--ink-2); display:flex; gap:10px; align-items:flex-start;}
+  .seed .ic{flex-shrink:0;}
+  .seed b{color:var(--ink);}
+  .seed-group + .seed-group{margin-top:28px;}
+  .seed-group .proposal-label{margin-bottom:12px;}
+
+  /* CHECKLIST */
+  .checklist{display:flex; flex-direction:column; gap:0;}
+  .chk-item{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--border-soft);}
+  .chk-item:last-child{border-bottom:none;}
+  .chk-box{width:18px; height:18px; border:2px solid var(--ink-4); border-radius:4px; flex-shrink:0; margin-top:2px;}
+  .chk-text b{color:var(--ink); font-weight:600;}
+  .chk-text{font-size:14px; color:var(--ink-2);}
+
+  /* SCRIPTS (collapsible) */
+  details.script-block{background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+  details.script-block + details.script-block{margin-top:12px;}
+  details.script-block summary{
+    list-style:none; cursor:pointer; padding:18px 20px; display:flex; align-items:center;
+    justify-content:space-between; gap:12px; font-weight:600; color:var(--ink); font-size:15px;
+  }
+  details.script-block summary:hover{background:rgba(255,255,255,0.02);}
+  details.script-block summary::-webkit-details-marker{display:none;}
+  details.script-block summary .tag{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; padding:4px 10px; border-radius:5px; margin-right:12px; border:1px solid;}
+  details.script-block summary .tag.answer{background:var(--teal-dim); color:var(--teal); border-color:var(--teal-line);}
+  details.script-block summary .tag.voicemail{background:var(--warning-dim); color:var(--warning); border-color:var(--warning-line);}
+  details.script-block summary .chev{color:var(--ink-4); font-size:13px; transition:transform .15s; flex-shrink:0;}
+  details.script-block[open] summary .chev{transform:rotate(90deg); color:var(--teal);}
+  details.script-block .script-body{padding:0 20px 22px; font-size:16px; line-height:1.75; color:var(--ink-2); white-space:pre-line; border-top:1px solid var(--border-soft); padding-top:18px;}
+  details.script-block .script-body b{color:var(--ink);}
+
+  /* MODAL */
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); backdrop-filter:blur(3px); z-index:100; align-items:center; justify-content:center; padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--surface-2); border:1px solid var(--border-strong); border-radius:14px; max-width:640px; width:100%; max-height:82vh; overflow-y:auto; padding:34px; position:relative; box-shadow:0 24px 70px rgba(0,0,0,0.65);}
+  .modal-close{position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--border); font-size:16px; color:var(--ink-3); cursor:pointer;}
+  .modal-close:hover{background:rgba(255,255,255,0.1); color:var(--ink);}
+  .modal-cat{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); margin-bottom:12px;}
+  .modal-trigger{font-family:'DM Sans',sans-serif; font-size:21px; font-weight:700; color:var(--ink); margin-bottom:20px; padding-right:30px; line-height:1.35; letter-spacing:-0.01em;}
+  .modal-script{font-size:17px; line-height:1.75; color:var(--ink-2); white-space:pre-line;}
+  .modal-script b{color:var(--ink);}
+
+  @media(max-width:640px){
+    .top-title{font-size:24px;}
+    .wrap{padding:0 18px;}
+    .row{grid-template-columns:90px 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div>
+      <div class="top-label">Call Prep · Multi-Proposal Review</div>
+      <div class="top-title">Classic Log Homes, Inc.</div>
+      <div class="top-sub">Contact: Jeff Glaza (Owner/Operator) · Sole Decision-Maker · Text First, Phone Second</div>
+    </div>
+    <div class="call-badge">3 Proposals On The Table</div>
+  </div>
+  <div class="wrap">
+    <div class="meta-strip">
+      <div class="meta-item">
+        <div class="meta-label">Proposals Sent</div>
+        <div class="meta-value">Aug 11 (Gallery, About) · Aug 27 (Calculator)</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value ok">Booked call — reviewing all three</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Combined If All 3</div>
+        <div class="meta-value">$3,775 – $4,575</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Terms</div>
+        <div class="meta-value">50% start / 50% launch — each</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Floor</div>
+        <div class="meta-value warn">No per-item floor — bundle flex only (5–15%)</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="focus-wrap">
+  <div class="wrap focus-bar">
+    <span class="fb-label">Focus:</span>
+    <button class="focus-btn active" data-focus="all">All Three</button>
+    <button class="focus-btn" data-focus="calculator">Calculator</button>
+    <button class="focus-btn" data-focus="gallery">Gallery</button>
+    <button class="focus-btn" data-focus="about">About Page</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- BOTTOM LINE -->
+  <div class="bottomline">
+    <div class="lbl">Bottom Line</div>
+    <p>This is a <b>straightforward, booked review</b> — not a rescue call. Jeff already knows what's on the table; the job today is walking him through all three clearly enough that he can say yes to whatever fits his budget, in whatever order he wants. Use the <b>Focus</b> bar above to jump to one proposal at a time as you talk through it. <b>Don't lead with the bundle discount</b> — if he's stacking more than one, let that be his idea first.</p>
+  </div>
+
+  <!-- 01 WHERE THINGS STAND -->
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Where Things Stand</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="grid cols-3" style="margin-top:20px;">
+    <div class="card">
+      <div class="card-title">What He's Seen</div>
+      <div class="row"><span class="l">May 20</span><span class="v">Referral came in</span></div>
+      <div class="row"><span class="l">May 27</span><span class="v">Phase 1 deposit paid ($1,750)</span></div>
+      <div class="row"><span class="l">Early Aug</span><span class="v">Phase 1 launched — live at classicloghomes.biz</span></div>
+      <div class="row"><span class="l">Mid-Aug</span><span class="v">Jeff attempts calculator rebuild himself (~30–40 hrs), gives up</span></div>
+      <div class="row"><span class="l">Aug 11</span><span class="v">Gallery + About Page proposals sent</span></div>
+      <div class="row"><span class="l">Aug 27</span><span class="v">Calculator proposal sent — all three now in front of him</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Who You're Talking To</div>
+      <p style="font-size:14px; margin-bottom:8px;">Jeff Glaza — <b style="color:var(--ink);">owner and sole decision-maker</b>. Nobody else to loop in or wait on.</p>
+      <ul class="bullets">
+        <li>22+ years in log homes, 43+ in construction — respects real expertise</li>
+        <li>Runs CLH Trucking alongside this — busy/traveling, not disinterested</li>
+        <li>Talks in full stories before landing on business — let him get there</li>
+        <li>Prefers text first, phone second, if he doesn't pick up</li>
+      </ul>
+    </div>
+    <div class="card alert">
+      <div class="card-title">⚠ Not Yet Resolved</div>
+      <p style="margin-bottom:8px;"><b>Contact form email bug:</b> submissions save to Sanity fine, but the confirmation email didn't fire in Jeff's test. Cause unclear — possibly a typo/config issue after he edited something in the CMS himself. He said he'd check right after the call — confirm status before treating Phase 1 as fully closed.</p>
+      <p><b>Phase 1 final balance:</b> $1,750 invoiced — confirm it's actually been paid before this call. Also: he doesn't offer Zelle, PayPal/card only (fee applies) — minor friction if it comes up on any new invoice.</p>
+    </div>
+  </div>
+
+  <!-- 02 PRICE & FLEX POINTS -->
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Price &amp; Flex Points</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Three independent proposals, not one build with add-ons — he can approve any combination. Filter with the Focus bar above to talk through one at a time.</p>
+
+  <div class="proposal-block" data-proposal="calculator">
+    <div class="proposal-label"><span class="pdot"></span>Calculator Rebuild</div>
+    <div class="ladder">
+      <div class="step lever">
+        <div>
+          <div class="name">Option A — Full Custom Admin <span class="pill teal">most control</span></div>
+          <div class="desc">Custom dashboard built right into the existing CMS. Jeff changes any price himself, live instantly, no spreadsheet, no calling Jordan.</div>
+        </div>
+        <div class="amt">$3,000</div>
+      </div>
+      <div class="step lever">
+        <div>
+          <div class="name">Option B — Spreadsheet-Synced <span class="pill purple">lower cost</span></div>
+          <div class="desc">Same calculator on the front end, but prices update through a Google Sheet that auto-syncs. One more step for him, $800 cheaper.</div>
+        </div>
+        <div class="amt">$2,200</div>
+      </div>
+      <div class="step stopgap">
+        <div>
+          <div class="name">Stopgap — Subdomain Hosting <span class="pill gray">short-term only</span></div>
+          <div class="desc">Gets the existing calculator running again fast while he decides on the rebuild. Credited toward whichever option he picks later.</div>
+        </div>
+        <div class="amt">$500</div>
+      </div>
+    </div>
+    <div class="seed" style="margin-top:14px;">
+      <span class="ic">💡</span>
+      <span><b>If he tries to talk down from $2,200:</b> the stopgap is your real lever, not a discount on the rebuild itself. It buys him time without you eating margin on the actual fix — and it's already priced to credit forward.</span>
+    </div>
+  </div>
+
+  <div class="proposal-block" data-proposal="gallery">
+    <div class="proposal-label"><span class="pdot"></span>Photo / Gallery Page</div>
+    <div class="ladder">
+      <div class="step base">
+        <div>
+          <div class="name">Gallery System — Full Build</div>
+          <div class="desc">Gallery index, reusable album template with SEO-indexable URLs, lazy-loaded photo grid built for hundreds of photos, self-managed CMS, reused lightbox.</div>
+        </div>
+        <div class="amt">$975</div>
+      </div>
+    </div>
+    <div class="seed" style="margin-top:14px;">
+      <span class="ic">💡</span>
+      <span><b>If he hesitates:</b> $975 is already lean for what it replaces — an entire Facebook-hosted photo library with zero SEO value moving onto his own domain. The Facebook-vs-Google angle does more work here than a discount would.</span>
+    </div>
+  </div>
+
+  <div class="proposal-block" data-proposal="about">
+    <div class="proposal-label"><span class="pdot"></span>About / Meet Jeff Page</div>
+    <div class="ladder">
+      <div class="step base">
+        <div>
+          <div class="name">Six-Section About Page</div>
+          <div class="desc">Hero, his story, why he stays direct/hands-on, the mill &amp; craftsman network, the Pittsville showroom, reused contact block. Jeff supplies rough bullet points; Jordan handles the copy.</div>
+        </div>
+        <div class="amt">$600</div>
+      </div>
+    </div>
+    <div class="seed" style="margin-top:14px;">
+      <span class="ic">💡</span>
+      <span><b>Don't negotiate this one down:</b> it's already the cheapest of the three and the lowest lift on him — bullet points, nothing more. Frame it as the easy yes, not a candidate for a lower number.</span>
+    </div>
+  </div>
+
+  <!-- BUNDLE PRICING -->
+  <div class="sec-head tight">
+    <span class="sec-num">02b</span>
+    <span class="sec-title">Bundle Pricing — If He Combines</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Your one real lever — a discount for taking on more than one at once. All figures below use the Spreadsheet-Synced calculator option ($2,200). Swap in Full Custom Admin ($3,000) and add $800 to every base total before reading the discount rows.</p>
+
+  <div class="bundle-card featured" style="margin-bottom:16px;">
+    <div class="combo-name">All Three</div>
+    <div class="combo-items">Calculator ($2,200) + Gallery ($975) + About ($600)</div>
+    <div class="base-total"><span class="lbl">Base Total</span><span class="amt">$3,775.00</span></div>
+    <div class="discount-row"><span class="pct">5%</span><span class="price">$3,586.25</span><span class="save">save $188.75</span></div>
+    <div class="discount-row"><span class="pct">10%</span><span class="price">$3,397.50</span><span class="save">save $377.50</span></div>
+    <div class="discount-row"><span class="pct">15%</span><span class="price">$3,208.75</span><span class="save">save $566.25</span></div>
+  </div>
+
+  <div class="grid cols-3">
+    <div class="bundle-card">
+      <div class="combo-name">Calculator + Gallery</div>
+      <div class="combo-items">$2,200 + $975</div>
+      <div class="base-total"><span class="lbl">Base Total</span><span class="amt">$3,175.00</span></div>
+      <div class="discount-row"><span class="pct">5%</span><span class="price">$3,016.25</span><span class="save">save $158.75</span></div>
+      <div class="discount-row"><span class="pct">10%</span><span class="price">$2,857.50</span><span class="save">save $317.50</span></div>
+      <div class="discount-row"><span class="pct">15%</span><span class="price">$2,698.75</span><span class="save">save $476.25</span></div>
+    </div>
+    <div class="bundle-card">
+      <div class="combo-name">Gallery + About</div>
+      <div class="combo-items">$975 + $600</div>
+      <div class="base-total"><span class="lbl">Base Total</span><span class="amt">$1,575.00</span></div>
+      <div class="discount-row"><span class="pct">5%</span><span class="price">$1,496.25</span><span class="save">save $78.75</span></div>
+      <div class="discount-row"><span class="pct">10%</span><span class="price">$1,417.50</span><span class="save">save $157.50</span></div>
+      <div class="discount-row"><span class="pct">15%</span><span class="price">$1,338.75</span><span class="save">save $236.25</span></div>
+    </div>
+    <div class="bundle-card">
+      <div class="combo-name">About + Calculator</div>
+      <div class="combo-items">$600 + $2,200</div>
+      <div class="base-total"><span class="lbl">Base Total</span><span class="amt">$2,800.00</span></div>
+      <div class="discount-row"><span class="pct">5%</span><span class="price">$2,660.00</span><span class="save">save $140.00</span></div>
+      <div class="discount-row"><span class="pct">10%</span><span class="price">$2,520.00</span><span class="save">save $280.00</span></div>
+      <div class="discount-row"><span class="pct">15%</span><span class="price">$2,380.00</span><span class="save">save $420.00</span></div>
+    </div>
+  </div>
+
+  <div class="seed" style="margin-top:16px;">
+    <span class="ic">💡</span>
+    <span><b>Don't lead with this.</b> If he's on the fence about doing more than one, let him raise combining them first — then you already have the math ready. If he brings it up, 10% is a natural, generous-but-not-desperate landing spot. Save 15% for if he's genuinely hesitating on all three at once.</span>
+  </div>
+
+  <!-- 03 SCRIPTS TO OPEN THE CALL -->
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Scripts to Open the Call</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Click to expand. Read as a starting point, not word-for-word — get into your own voice fast.</p>
+
+  <details class="script-block">
+    <summary>
+      <span><span class="tag answer">If He Answers</span>Opening Script</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="script-body">"Hey Jeff, it's Jordan — how's the trucking business treating you this week?"
+
+<b>[Let him tell the story — don't rush this part. He'll get to business on his own time.]</b>
+
+"So I've got all three of those Phase 2 pieces priced out for you — the calculator, the gallery page, and the About page. Since the calculator's the big one for you, want to start there, or is there one you want to jump into first?"
+
+<b>[Walk through whichever he picks first, using the Focus bar to pull up that proposal's pricing and details. After each one, close it out before moving on:]</b>
+
+"Does that one make sense? Want me to go ahead and get the deposit invoice over for this one, or do you want to look at the others first?"
+
+<b>[If he starts talking about doing more than one →]</b> that's your opening for the bundle math — pull it up, don't offer it before he asks.</div>
+  </details>
+
+  <details class="script-block">
+    <summary>
+      <span><span class="tag voicemail">If No Answer</span>Voicemail Script</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="script-body">"Hey Jeff, it's Jordan. Just calling about the three Phase 2 pieces — the calculator, the gallery, and the About page. Got 'em all priced out and ready whenever you want to go through them. Text or call whenever's easiest on your end, no rush. Talk soon."
+
+<b>Keep it under 20 seconds.</b> No price numbers, no urgency. He prefers text first — follow up with a short text same day if you don't hear back.</div>
+  </details>
+
+  <!-- 04 ANTICIPATED QUESTIONS -->
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <span class="sec-title">If They Ask You</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Click any card for the full script. Use Focus above to narrow to one proposal, and the category filter below to narrow further.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="pricing">Pricing</button>
+    <button class="filter-btn" data-filter="scope">Scope</button>
+    <button class="filter-btn" data-filter="process">Timeline &amp; Process</button>
+    <button class="filter-btn" data-filter="technical">Technical</button>
+  </div>
+
+  <div class="grid cols-3" id="scenario-grid">
+
+    <div class="scenario" data-proposal="calculator" data-cat="pricing" data-modal="cal1">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag pricing">Pricing</span><span class="prop-tag">Calculator</span></div>
+      <div class="trigger">"What's actually different between the two options?"</div>
+      <ul class="bullets">
+        <li>Full Admin ($3,000): dashboard in the CMS, instant changes</li>
+        <li>Spreadsheet-Synced ($2,200): edit a Google Sheet, auto-syncs</li>
+        <li>Both fully his — no plugin or license risk either way</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="calculator" data-cat="pricing" data-modal="cal2">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag pricing">Pricing</span><span class="prop-tag">Calculator</span></div>
+      <div class="trigger">"Can we just do the $500 stopgap for now?"</div>
+      <ul class="bullets">
+        <li>Gets the old calculator running again fast, same fields</li>
+        <li>Buys him time to decide on the full rebuild</li>
+        <li>Credits toward whichever option he picks later</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="calculator" data-cat="scope" data-modal="cal3">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag scope">Scope</span><span class="prop-tag">Calculator</span></div>
+      <div class="trigger">"Will this match what the old calculator quoted?"</div>
+      <ul class="bullets">
+        <li>All ~15 pricing categories ported directly from the original</li>
+        <li>Verified against real test cases before calling it done</li>
+        <li>Same logs, corners, rafters, stairs — same math</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="calculator" data-cat="technical" data-modal="cal4">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag technical">Technical</span><span class="prop-tag">Calculator</span></div>
+      <div class="trigger">"What about the 30–40 hours I put in myself?"</div>
+      <ul class="bullets">
+        <li>Stopping was the right call, not a wasted attempt</li>
+        <li>AI editing live-domain code can get genuinely risky fast</li>
+        <li>Professional rebuild = done once, tested, no risk to the live site</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="calculator" data-cat="process" data-modal="cal5">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag process">Process</span><span class="prop-tag">Calculator</span></div>
+      <div class="trigger">"How fast can this go live — it's been down a while"</div>
+      <ul class="bullets">
+        <li>3–4 weeks realistic once kicked off</li>
+        <li>Old files get pulled and pricing logic mapped day one</li>
+        <li>Not sitting on this given how long it's been down</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="gallery" data-cat="pricing" data-modal="gal1">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag pricing">Pricing</span><span class="prop-tag">Gallery</span></div>
+      <div class="trigger">"$975 — what's actually in that?"</div>
+      <ul class="bullets">
+        <li>Full gallery hub + reusable album template, not one photo page</li>
+        <li>Self-managed CMS — upload a new album, done</li>
+        <li>Real indexable URLs instead of a Facebook link-out</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="gallery" data-cat="scope" data-modal="gal2">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag scope">Scope</span><span class="prop-tag">Gallery</span></div>
+      <div class="trigger">"Can some albums just stay on Facebook?"</div>
+      <ul class="bullets">
+        <li>Nothing forces moving everything at once</li>
+        <li>But Facebook content isn't helping his search rankings</li>
+        <li>Easy to add more albums later once it's live</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="gallery" data-cat="technical" data-modal="gal3">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag technical">Technical</span><span class="prop-tag">Gallery</span></div>
+      <div class="trigger">"Will hundreds of photos slow the site down?"</div>
+      <ul class="bullets">
+        <li>Built for 100+ photos per album from day one</li>
+        <li>Photos load in batches, not all at once</li>
+        <li>Same fast experience at 20 photos or 200</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="gallery" data-cat="process" data-modal="gal4">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag process">Process</span><span class="prop-tag">Gallery</span></div>
+      <div class="trigger">"How long — same as the calculator?"</div>
+      <ul class="bullets">
+        <li>2–3 weeks once kicked off, a bit faster than the calculator</li>
+        <li>More straightforward build: pages, CMS, move photos over</li>
+        <li>Realistic estimate, not a rushed one</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="about" data-cat="pricing" data-modal="abt1">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag pricing">Pricing</span><span class="prop-tag">About Page</span></div>
+      <div class="trigger">"$600 for one page seems like a lot"</div>
+      <ul class="bullets">
+        <li>Full 6-section build — story, philosophy, network, showroom, contact</li>
+        <li>Real estate for the "22 years, direct relationships" story</li>
+        <li>Cheapest of the three, lowest lift on him</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="about" data-cat="scope" data-modal="abt2">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag scope">Scope</span><span class="prop-tag">About Page</span></div>
+      <div class="trigger">"What do I actually need to send you?"</div>
+      <ul class="bullets">
+        <li>Just rough bullet points per section — half-sentences are fine</li>
+        <li>Copywriting and polish are on Jordan</li>
+        <li>Placeholder Facebook photos used until he sends finals</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="about" data-cat="scope" data-modal="abt3">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag scope">Scope</span><span class="prop-tag">About Page</span></div>
+      <div class="trigger">"Can we leave the showroom address off this?"</div>
+      <ul class="bullets">
+        <li>Yes — city-level (Wisconsin Rapids) only, no full address</li>
+        <li>"By appointment only" framing throughout</li>
+        <li>Good for trust and search, no drop-in risk</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="about" data-cat="technical" data-modal="abt4">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag technical">Technical</span><span class="prop-tag">About Page</span></div>
+      <div class="trigger">"Does this use the same contact form that had the bug?"</div>
+      <ul class="bullets">
+        <li>Yes — same reused contact component as the rest of the site</li>
+        <li>Whatever gets fixed on that bug fixes it here too</li>
+        <li>Confirmed sending clean before this page launches</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-proposal="about" data-cat="process" data-modal="abt5">
+      <span class="click-icon">↗</span>
+      <div class="tagrow"><span class="cat-tag process">Process</span><span class="prop-tag">About Page</span></div>
+      <div class="trigger">"Why 3–4 weeks for something this small?"</div>
+      <ul class="bullets">
+        <li>Most of that time is waiting on his content, not build time</li>
+        <li>Page comes together fast once bullet points are in hand</li>
+        <li>CMS, SEO, contact block already proven from Phase 1</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- 05 SEED PLANTS -->
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Seed Plants</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Always-visible talking points — drop these naturally if a proposal stalls or he seems hesitant.</p>
+
+  <div class="seed-group" data-proposal="calculator">
+    <div class="proposal-label"><span class="pdot"></span>Calculator</div>
+    <div class="grid cols-2">
+      <div class="seed"><span class="ic">⚡</span><span>This replaces something that's actively broken — every day it's down could be a lost quote, not just an inconvenience.</span></div>
+      <div class="seed"><span class="ic">🔒</span><span>No plugin, no license to expire again — this one's fully his, same as the rest of the site.</span></div>
+      <div class="seed"><span class="ic">🛠️</span><span>He already tried this himself and hit a wall — professional expertise is exactly what closes the loop he opened.</span></div>
+    </div>
+  </div>
+
+  <div class="seed-group" data-proposal="gallery">
+    <div class="proposal-label"><span class="pdot"></span>Gallery</div>
+    <div class="grid cols-2">
+      <div class="seed"><span class="ic">📈</span><span>Everything sitting on Facebook right now is invisible to Google — moving it onto his own domain is pure SEO upside, not just a nicer photo page.</span></div>
+      <div class="seed"><span class="ic">🏆</span><span>He's proud of these builds — a fast, real gallery is a bragging tool for sales calls, not just a website feature.</span></div>
+      <div class="seed"><span class="ic">🧩</span><span>Sets up the floor plan landing pages he's excited about later (barndominiums especially) — same SEO logic, next phase.</span></div>
+    </div>
+  </div>
+
+  <div class="seed-group" data-proposal="about">
+    <div class="proposal-label"><span class="pdot"></span>About Page</div>
+    <div class="grid cols-2">
+      <div class="seed"><span class="ic">🪵</span><span>22 years and staying hands-on instead of scaling up IS his edge over big-box log kit sellers — this page just gives that story room to breathe.</span></div>
+      <div class="seed"><span class="ic">💰</span><span>Cheapest of the three, and the lowest lift on him — just bullet points, Jordan handles the rest.</span></div>
+      <div class="seed"><span class="ic">🤝</span><span>Rounds out the trust story the homepage already started — people read this right before they decide to text him.</span></div>
+    </div>
+  </div>
+
+  <div class="seed-group">
+    <div class="proposal-label"><span class="pdot" style="background:var(--ink-4);"></span>General</div>
+    <div class="grid cols-2">
+      <div class="seed"><span class="ic">✅</span><span>Phase 1 landed clean and on time — that track record is already doing a lot of the selling for Phase 2.</span></div>
+      <div class="seed"><span class="ic">📍</span><span>Bundling is a lever, not an opener — let him raise doing more than one before you offer a number.</span></div>
+    </div>
+  </div>
+
+  <!-- 06 READING THE CALL -->
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Reading the Call &amp; What's Next</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="grid cols-2" style="margin-top:20px;">
+    <div class="card">
+      <div class="card-title">Real Hesitation vs. Normal Stall</div>
+      <p style="font-size:13px; color:var(--ink-3); margin-bottom:12px;">Jeff is genuinely budget-conscious and genuinely a storyteller — quiet or a tangent isn't automatically bad news. Listen for which one this actually is.</p>
+      <div class="row" style="grid-template-columns:1fr;"><span class="l" style="color:var(--warning); margin-bottom:4px;">Likely genuine budget/scope issue</span></div>
+      <ul class="bullets">
+        <li>Names a specific number below any of the three prices</li>
+        <li>Brings up trying to do more of it himself again</li>
+        <li>Only wants the calculator stopgap, not the rebuild</li>
+      </ul>
+      <div class="row" style="grid-template-columns:1fr; margin-top:10px;"><span class="l" style="color:var(--teal); margin-bottom:4px;">Likely just needs time — normal for Jeff</span></div>
+      <ul class="bullets">
+        <li>Tangent into trucking or personal stuff before circling back</li>
+        <li>Wants to "sit with it" or "run the numbers" — not dodging</li>
+        <li>Asks logistics questions (timeline, what he needs to send)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Branch From Here</div>
+      <div class="row"><span class="l">Approves all 3</span><span class="v">Mention the bundle discount if he hasn't already, confirm which calculator option, send invoices, get a start date for his About content.</span></div>
+      <div class="row"><span class="l">Approves 1–2</span><span class="v">Invoice those now — don't shelve the rest. Get a specific day to follow up on what's left.</span></div>
+      <div class="row"><span class="l">Wants time</span><span class="v">Normal for him. No pressure — get a specific day or week to check back, don't chase.</span></div>
+      <div class="row"><span class="l">Every outcome</span><span class="v">Confirm contact form bug status and Phase 1 final invoice before hanging up.</span></div>
+    </div>
+  </div>
+
+  <!-- 07 CHECKLIST -->
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Pre-Call Checklist</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="checklist">
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Pull up all three proposals</b> (and the Gallery and About wireframes) in tabs in case he wants to walk through anything live.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Confirm the Phase 1 final invoice ($1,750)</b> has actually cleared, and check on the contact form email bug status before the call.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Know the Calculator options cold</b> — Full Admin ($3,000) vs. Spreadsheet-Synced ($2,200) vs. Stopgap ($500) — be ready to explain the difference fast.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Decide your bundle stance in advance</b> — 5/10/15% tiers are ready above; don't improvise higher live on the call.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Have the deposit invoice process ready</b> — separate invoices per proposal unless he bundles, in which case one combined invoice at the agreed discount.</div></div>
+      <div class="chk-item"><div class="chk-box"></div><div class="chk-text"><b>Pace the call to how Jeff talks</b> — let him tell the story, don't rush him to the point. Text him after if he doesn't answer.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-cat" id="modal-cat"></div>
+    <div class="modal-trigger" id="modal-trigger"></div>
+    <div class="modal-script" id="modal-script"></div>
+  </div>
+</div>
+
+<script>
+  const scripts = {
+    cal1: {cat:"Pricing · Calculator", trigger:"“What's actually different between the two options?”",
+      body:"“Two ways to run it going forward. Full Custom Admin's $3,000 — you get a dashboard right in the site's CMS where you change any price yourself and it's live instantly, no spreadsheet, no me. Spreadsheet-Synced is $2,200 — same calculator on the front end, but you update prices in a Google Sheet and it syncs over automatically. Slightly more steps for you, but a grand cheaper. Neither one has a plugin or license that can expire on you again — that's fixed either way.”"},
+    cal2: {cat:"Pricing · Calculator", trigger:"“Can we just do the $500 stopgap for now?”",
+      body:"“Yeah, that's actually built for exactly this. $500 gets the calculator you already have running again on a subdomain — same math, same fields, back online fast. And if you decide to move forward with the full rebuild later, that $500 comes off the price. It's not wasted money, it's just buying you time if you want to think on the bigger decision.”"},
+    cal3: {cat:"Scope · Calculator", trigger:"“Will this match what the old calculator quoted, pricing-wise?”",
+      body:"“That's the whole point of the rebuild — I'm porting all fifteen of your existing pricing categories over and checking every one against real test quotes from the old calculator before calling it done. Same logs, same wall sizes, same corners, rafters, stairs, everything — it should spit out the same number a customer got before, just running on something that won't break when a license expires.”"},
+    cal4: {cat:"Technical · Calculator", trigger:"“What about the 30–40 hours I put in myself?”",
+      body:"“Don't think twice about that — you did exactly the right thing stopping when you did. AI tools can get you deep into changes on a live domain that are genuinely risky to unwind, and getting stuck in loops with something tied to your actual site is a real problem, not just frustrating. Professional build from here means it's done once, tested, and yours — no risk to the live site while it's happening.”"},
+    cal5: {cat:"Timeline & Process · Calculator", trigger:"“How fast can this go live — it's been down a while”",
+      body:"“Once we kick off, 3 to 4 weeks realistic. I know it's been down a while so I'm not going to sit on this — soon as the deposit's in, I'm pulling Richard's old files and getting the pricing logic mapped out day one.”"},
+    gal1: {cat:"Pricing · Gallery", trigger:"“$975 — what's actually in that?”",
+      body:"“$975 covers the whole gallery system — not just a photo page. That's the gallery hub, a reusable template for every album that gets its own real, indexable URL, a photo grid built to handle hundreds of photos without slowing down, and it's all something you manage yourself afterward — new album, upload photos, done, no calling me. Plus it's actually helping your SEO instead of sitting on Facebook where Google can't do much with it.”"},
+    gal2: {cat:"Scope · Gallery", trigger:"“Can some albums just stay on Facebook?”",
+      body:"“Sure, nothing forces you to move everything at once. But I'd think about it this way — every photo that's still stuck on Facebook is one Google can't find and index for you. The whole reason to do this is getting that content working for your search rankings instead of just sitting in someone's feed. Move over what you've got, and it's just as easy to add more later.”"},
+    gal3: {cat:"Technical · Gallery", trigger:"“Will hundreds of photos slow the site down?”",
+      body:"“No — that's actually built into it from day one. The photo grid loads a handful of photos at a time and pulls in more as someone scrolls or clicks 'load more,' so it doesn't matter if an album's got 20 photos or 200, the page loads fast either way.”"},
+    gal4: {cat:"Timeline & Process · Gallery", trigger:"“How long — same as the calculator?”",
+      body:"“2 to 3 weeks once we kick off — a bit faster than the calculator since it's more straightforward: build the gallery pages, wire up the CMS, move your photos over, done.”"},
+    abt1: {cat:"Pricing · About Page", trigger:"“$600 for one page seems like a lot”",
+      body:"“It's $600 for the full page — hero, your story, why you work direct with people, the mill and craftsman partnerships, the showroom, and a contact block at the bottom. But honestly the real value isn't the page count, it's what it does: right now your homepage can only say so much about you before it gets cluttered. This gives your story — 22 years, why you stayed hands-on instead of scaling up — its own real space, which is exactly what sets you apart from someone just shipping a kit.”"},
+    abt2: {cat:"Scope · About Page", trigger:"“What do I actually need to send you?”",
+      body:"“Barely anything, honestly — just rough bullet points for each section. Your story, why you like working directly with people instead of through layers, what the mill and craftsman relationships look like, a bit about the showroom. Half-sentences are fine, I'll turn it into actual copy. I'll even use placeholder photos from your Facebook until you send me finals.”"},
+    abt3: {cat:"Scope · About Page", trigger:"“Can we leave the showroom address off this?”",
+      body:"“Absolutely — city-level, Wisconsin Rapids, and 'by appointment only' language is exactly the plan. No full address goes up anywhere on this page. Keeps it good for trust and search without inviting anyone to just show up.”"},
+    abt4: {cat:"Technical · About Page", trigger:"“Does this use the same contact form that had the bug?”",
+      body:"“It reuses the same contact component from the rest of the site, so yes — but that's actually good news, because whatever we find and fix on that notification bug fixes it everywhere it's used, this page included. I'll confirm it's sending clean before this page goes live either way.”"},
+    abt5: {cat:"Timeline & Process · About Page", trigger:"“Why 3–4 weeks for something this small?”",
+      body:"“3 to 4 weeks sounds long for one page, but most of that time is waiting on your content and getting the story right, not build time. Once I've got your bullet points, the actual page goes together fast — a lot of the technical groundwork (CMS, SEO setup, the contact block) is already proven from Phase 1.”"}
+  };
+
+  function openModal(id){
+    const s = scripts[id];
+    if(!s) return;
+    document.getElementById('modal-cat').textContent = s.cat;
+    document.getElementById('modal-trigger').textContent = s.trigger;
+    document.getElementById('modal-script').textContent = s.body;
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+  document.getElementById('modal-overlay').addEventListener('click', function(e){
+    if(e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeModal();
+  });
+
+  document.querySelectorAll('.scenario').forEach(function(card){
+    card.addEventListener('click', function(){
+      openModal(this.getAttribute('data-modal'));
+    });
+  });
+
+  let currentFocus = 'all';
+  let currentCat = 'all';
+
+  function applyFilters(){
+    document.querySelectorAll('[data-proposal]').forEach(function(el){
+      const p = el.getAttribute('data-proposal');
+      const matchesFocus = (currentFocus === 'all' || p === currentFocus);
+      const cat = el.getAttribute('data-cat');
+      const matchesCat = (!cat || currentCat === 'all' || cat === currentCat);
+      if(matchesFocus && matchesCat){
+        el.removeAttribute('hidden');
+        el.style.display = '';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  }
+
+  document.querySelectorAll('.focus-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.focus-btn').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      currentFocus = this.getAttribute('data-focus');
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      currentCat = this.getAttribute('data-filter');
+      applyFilters();
+    });
+  });
+</script>
+
+</body>
+</html>
