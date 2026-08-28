@@ -3,283 +3,838 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Logo Phase Brief — Latz Web Design</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex">
+<title>Latz Web Design — Logo Phase Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
+    --sidebar-bg: #0a0a0a;
+    --sidebar-border: rgba(255,255,255,0.06);
+    --header-bg: #ffffff;
     --teal: #18a1ad;
+    --teal-dim: rgba(24,161,173,0.10);
     --teal-light: #e8f7f8;
-    --teal-border: rgba(24,161,173,0.18);
-    --gray-900: #14181c;
-    --gray-700: #3d454d;
-    --gray-600: #5b6570;
-    --gray-500: #7c8792;
-    --gray-400: #a3adb6;
-    --gray-200: #e6e9eb;
-    --cream: #fdfdfb;
+    --white: #ffffff;
+    --off-white: #f9fafb;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --text: #111827;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
   }
 
-  * { box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    margin: 0;
-    background: var(--cream);
-    color: var(--gray-700);
     font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    line-height: 1.65;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
   }
 
-  .page {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 72px 24px 96px;
+  /* SIDEBAR */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-overlay.visible { opacity: 1; }
+
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 246px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
   }
 
-  header {
-    margin-bottom: 56px;
+  .sidebar-top {
+    padding: 22px 18px 18px;
+    border-bottom: 1px solid var(--sidebar-border);
   }
 
-  .eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--teal);
+  .sidebar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 7px;
     margin-bottom: 18px;
   }
 
-  .eyebrow::before {
-    content: "— ";
-    color: var(--teal);
+  .sidebar-wordmark .dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 1.15;
-    color: var(--gray-900);
-    margin: 0 0 22px;
-  }
-
-  .intro {
-    font-family: 'Fraunces', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 19px;
-    line-height: 1.55;
-    color: var(--gray-700);
-    max-width: 60ch;
-  }
-
-  .divider {
-    height: 1px;
-    background: var(--gray-200);
-    margin: 48px 0;
-    border: none;
-  }
-
-  section {
-    margin-bottom: 48px;
-  }
-
-  h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 22px;
-    color: var(--gray-900);
-    margin: 0 0 16px;
-  }
-
-  p { margin: 0 0 14px; font-size: 15.5px; color: var(--gray-700); }
-  p:last-child { margin-bottom: 0; }
-
-  .block {
-    margin-bottom: 20px;
-  }
-  .block:last-child { margin-bottom: 0; }
-
-  .label {
+  .lwd-text {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-client {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .sidebar-doctype {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.22);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 11px;
+    background: rgba(24,161,173,0.08);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 3px 9px;
+  }
+
+  .pulse {
+    width: 5px; height: 5px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .sidebar-status span {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .sidebar-nav { padding: 10px 8px; flex: 1; }
+
+  .nav-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    padding: 10px 8px 4px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 8px;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 400;
+    border-radius: 5px;
+    transition: all 0.12s;
+    margin-bottom: 1px;
+  }
+
+  .nav-link:hover {
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: rgba(24,161,173,0.07);
+    font-weight: 500;
+  }
+
+  .nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; opacity: 0.6; }
+  .nav-link.active .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--sidebar-border);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.06em;
+    line-height: 2;
+  }
+
+  /* MAIN */
+  .main { margin-left: 246px; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER — light, per current standard */
+  .page-header {
+    background: var(--header-bg);
+    padding: 52px 60px 40px;
+    border-bottom: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 72% 50%, rgba(24,161,173,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .header-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--teal);
-    margin-bottom: 6px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  .values-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px 28px;
-    margin-top: 4px;
+  .header-overline::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--teal);
+    opacity: 0.6;
   }
 
-  .value-name {
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 44px;
     font-weight: 600;
     color: var(--gray-900);
+    line-height: 1.08;
+    margin-bottom: 7px;
+    letter-spacing: -0.6px;
   }
 
-  .quote-line {
+  .page-header .sub {
+    color: var(--gray-500);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  .header-thesis {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 300;
+    font-size: 20px;
     color: var(--gray-700);
-  }
-
-  .pullquote {
-    font-family: 'Fraunces', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 21px;
     line-height: 1.5;
-    color: var(--gray-900);
-    border-left: 3px solid var(--teal);
-    padding-left: 22px;
-    margin: 8px 0;
+    margin-top: 18px;
+    max-width: 680px;
   }
 
+  .header-meta {
+    display: flex;
+    gap: 0;
+    margin-top: 30px;
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    overflow: hidden;
+    width: fit-content;
+    background: rgba(24,161,173,0.02);
+  }
+
+  .meta-item {
+    padding: 13px 22px;
+    border-right: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .meta-value { font-size: 14.5px; font-weight: 500; color: var(--gray-700); }
+  .meta-value.ok { color: var(--green); }
+  .meta-value.warn { color: var(--orange); }
+
+  /* CONTENT */
+  .content { padding: 48px 60px 96px; flex: 1; }
+
+  section { margin-bottom: 64px; scroll-margin-top: 32px; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(24,161,173,0.18);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.2px;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin-bottom: 22px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* DATA ROWS */
+  .data-row {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11.5px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    padding-top: 1px;
+  }
+
+  .data-value {
+    font-size: 15px;
+    color: var(--gray-700);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .data-value a { color: var(--teal); text-decoration: none; }
+  .data-value a:hover { text-decoration: underline; }
+
+  /* CALLOUTS */
   .callout {
+    border-radius: 7px;
+    padding: 13px 17px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+  }
+
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .callout-body p, .callout-body span { font-size: 14px; line-height: 1.55; }
+
+  .callout.info { background: var(--teal-light); border-color: rgba(24,161,173,0.2); color: #0e7490; }
+  .callout.warn { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+  .callout.neutral { background: var(--gray-50); border-color: var(--gray-200); color: var(--gray-600); }
+
+  /* HIGHLIGHT BOX — light, teal-tinted, per current standard */
+  .highlight-box {
     background: var(--teal-light);
-    border: 1px solid var(--teal-border);
+    border: 1px solid rgba(24,161,173,0.15);
     border-left: 3px solid var(--teal);
     border-radius: 6px;
-    padding: 22px 24px;
-  }
-  .callout p { color: var(--gray-700); }
-
-  .note {
-    font-size: 13.5px;
-    color: var(--gray-500);
-    font-style: italic;
-    margin-top: 12px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
   }
 
-  .sign-off {
-    text-align: center;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 17px;
-    color: var(--gray-600);
-    margin-top: 56px;
-  }
-
-  footer {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid var(--gray-200);
+  .highlight-box strong {
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--gray-400);
-    text-align: center;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
   }
 
-  @media (max-width: 640px) {
-    .page { padding: 48px 20px 72px; }
-    h1 { font-size: 30px; }
-    .intro { font-size: 17px; }
-    .values-grid { grid-template-columns: 1fr; }
-    .pullquote { font-size: 19px; }
+  .highlight-box p {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--gray-700);
+    line-height: 1.65;
+  }
+
+  /* MOCKUP-STYLE REFERENCE (unused here but kept for consistency if needed) */
+  .mockup-ref {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 7px;
+    padding: 13px 15px;
+    text-decoration: none;
+    transition: border-color 0.12s, background 0.12s;
+    margin-bottom: 10px;
+  }
+
+  .mockup-ref:hover { border-color: var(--teal); background: var(--teal-light); }
+  .mockup-ref .ref-icon { font-size: 20px; flex-shrink: 0; }
+  .mockup-ref .ref-label { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .mockup-ref .ref-name { font-size: 15px; font-weight: 600; color: var(--gray-900); }
+  .mockup-ref .ref-url { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--teal); margin-top: 1px; }
+
+  /* PILLS */
+  .pill {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .pill-orange { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-500); border-color: var(--gray-200); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: rgba(24,161,173,0.18); }
+
+  /* QUESTIONS */
+  .question-item { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .question-item:last-child { border-bottom: none; }
+  .question-text { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .question-context { font-size: 14px; color: var(--gray-500); line-height: 1.55; }
+
+  /* ARROW LIST */
+  .arrow-list { list-style: none; padding: 0; margin-top: 10px; }
+
+  .arrow-list li {
+    font-size: 14px;
+    color: var(--gray-600);
+    padding: 5px 0 5px 17px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .arrow-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+    top: 6px;
+  }
+
+  /* FAB — mobile menu toggle */
+  .fab-menu {
+    display: none;
+    position: fixed;
+    bottom: 24px; right: 20px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    box-shadow: 0 4px 16px rgba(24,161,173,0.4);
+    cursor: pointer;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sidebar { width: 216px; }
+    .main { margin-left: 216px; }
+    .page-header, .content { padding-left: 36px; padding-right: 36px; }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .two-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 20px; padding-right: 20px; }
+    .sidebar-overlay { display: block; }
+    .fab-menu { display: flex; }
+  }
+
+  @media (max-width: 680px) {
+    .data-row { grid-template-columns: 1fr; gap: 4px; }
+    .data-label { font-size: 11.5px; }
+    .header-meta { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .meta-item { border-right: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+    .meta-item:nth-child(2n) { border-right: none; }
+    .callout { flex-direction: column; }
+    .page-header h1 { font-size: 30px; }
+    .page-header { padding: 32px 20px 28px; }
   }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <header>
-    <div class="eyebrow">For Alyssa · Latz Web Design</div>
-    <h1>Logo Phase Brief</h1>
-    <p class="intro">Hey Alyssa — you asked for it today, so here it is. I've been saying "I know, I know, I will" about this rebrand for way too long now, but you pushed and here we are. Logo brief, as promised.</p>
-  </header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <section>
-    <h2>Where This Fits</h2>
-    <p>This is phase 1. Logo first, then the new site not long after, then the rest of the identity — guidelines, business cards, social, all of it — once the logo direction's locked. So whatever you land on here becomes the foundation for everything that follows. No pressure, but worth knowing the bigger picture.</p>
-  </section>
-
-  <hr class="divider">
-
-  <section>
-    <h2>Who Latz Web Design Is Right Now</h2>
-    <p class="note" style="margin-top:0; margin-bottom:18px;">Quick heads up before you read this: the phrasing below is a work in progress — I'm actively finalizing it right now. It's directionally accurate, just not locked word-for-word. When we get to messaging — taglines, actual copy, that stuff — let's sit down and go through it together instead of me handing you a finished version.</p>
-    <p>Here's the fuller picture, since this logo's going to carry a lot of what's below even though the rest of the identity comes later.</p>
-
-    <div class="block">
-      <div class="label">Short Version</div>
-      <p>Custom-built websites and brands for small businesses — no templates, no monthly fees, clients own everything outright.</p>
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-wordmark">
+      <div class="dot"></div>
+      <span class="lwd-text">Latz Web Design</span>
     </div>
-
-    <div class="block">
-      <div class="label">What We Do</div>
-      <p>Website builds (Next.js, Tailwind, Sanity, Vercel), branding &amp; identity work — that's you — and headless commerce (Shopify as the backend, still fully custom-built). Three real service lines now, not just websites.</p>
+    <div class="sidebar-client">Latz Web Design</div>
+    <div class="sidebar-doctype">Logo Phase Brief</div>
+    <div class="sidebar-status">
+      <div class="pulse"></div>
+      <span>In Progress</span>
     </div>
+  </div>
 
-    <div class="block">
-      <div class="label">Who We Serve</div>
-      <p>Mostly Wisconsin/Midwest small businesses — established businesses stuck on an outdated WordPress or Wix site, service providers who live on inbound leads (contractors, CPAs, healthcare, coaches, consultants), businesses that outgrew DIY builders, and new businesses starting from scratch who need both a brand and a site.</p>
-    </div>
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Brief</div>
+    <a href="#snapshot" class="nav-link active"><span class="nav-icon">📋</span> Project Snapshot</a>
+    <a href="#business" class="nav-link"><span class="nav-icon">🏢</span> About & Audience</a>
+    <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand & Direction</a>
+    <a href="#questions" class="nav-link"><span class="nav-icon">💬</span> Let's Talk</a>
+  </div>
 
-    <div class="block">
-      <div class="label">What Makes Us Different</div>
-      <p>WordPress agencies leave clients stuck with plugins, updates, and retainers, with no real brand strategy behind any of it. Wix/GoDaddy sell "easy" sites that are generic and don't scale. We build custom, client-owned brands and websites — no lock-in, no monthly fees, built to convert.</p>
-    </div>
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
 
-    <div class="block">
-      <div class="label">Core Values</div>
-      <div class="values-grid">
-        <p><span class="value-name">Transparency</span> — upfront pricing, no hidden fees</p>
-        <p><span class="value-name">Ownership</span> — client owns everything outright</p>
-        <p><span class="value-name">Simplicity</span> — clean process, no bloat</p>
-        <p><span class="value-name">Performance</span> — fast, mobile-first, built to convert</p>
-        <p><span class="value-name">Integrity</span> — no templates, no shortcuts, no reselling designs</p>
-        <p><span class="value-name">Direct Access</span> — one point of contact, no ticket system, no chatbot</p>
+<div class="main">
+
+  <div class="page-header">
+    <div class="header-overline">Designer Brief · For Alyssa</div>
+    <h1>Latz Web Design</h1>
+    <div class="sub">Logo Phase &nbsp;·&nbsp; Phase 1 of 3 — Identity Rebuild</div>
+    <p class="header-thesis">Three real service lines, a real client list, and still the original Looka logo from the side-project days — this is the piece everything else the rebrand gets built on top of.</p>
+
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Contact</span>
+        <span class="meta-value">Jordan Latz — Founder</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Phase</span>
+        <span class="meta-value">1 of 3 — Logo</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value">Logo only</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value ok">No rush — open</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Brand</span>
+        <span class="meta-value">Voice locked, mark open</span>
       </div>
     </div>
+  </div>
 
-    <div class="block">
-      <div class="label">Voice</div>
-      <p>Direct, confident, no fluff, no jargon. Short and punchy over polished-corporate. Client-centered, not "we"-centered. Ownership is a big one — <span class="quote-line">"YOU OWN IT. FOREVER."</span> is a real line we use. A couple more in that spirit: <span class="quote-line">"No fluff. Just results."</span> <span class="quote-line">"No templates. No shortcuts."</span></p>
-    </div>
+  <div class="content">
 
-    <div class="block">
-      <div class="label">Quick Example of That Last Point</div>
-      <p>"We build custom websites for small businesses" (we-centered) vs. "You get a website you actually own" (client-centered) — same info, opposite focus. Matters most for taglines or any copy that ends up near the mark, not the mark itself.</p>
-    </div>
+    <section id="snapshot">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Snapshot</h2>
+      </div>
+      <div class="section-divider"></div>
 
-    <div class="block">
-      <div class="label">The One-Liner</div>
-      <p class="pullquote">Custom brands and websites that are fast, stable, and fully owned by the client — built to convert visitors into customers.</p>
-    </div>
-  </section>
+      <div class="highlight-box">
+        <strong>The job</strong>
+        <p>This one's for us, not a client. Latz Web Design has grown past the side project it started as — three real service lines now, a real voice, real positioning — but the logo is still the original Looka mark from day one. Before the new site and the full identity system come together, the mark needs to catch up to everything else that's already true about this business. Whatever direction lands here becomes the foundation the rest of the rebrand builds on.</p>
+      </div>
 
-  <hr class="divider">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">The Build</div>
+          <div class="data-row"><span class="data-label">Scope</span><span class="data-value">Logo only — no color or font mandate attached</span></div>
+          <div class="data-row"><span class="data-label">Direction</span><span class="data-value">One strong direction, or a couple to react to — whatever gets there fastest</span></div>
+          <div class="data-row"><span class="data-label">Foundation For</span><span class="data-value">New site next (Next.js, Tailwind, Sanity, Vercel), then the full identity rollout</span></div>
+          <div class="data-row"><span class="data-label">Timeline</span><span class="data-value">No rush — whenever there's something to riff on</span></div>
+        </div>
 
-  <section>
-    <h2>This Phase</h2>
-    <p>Just the logo. No mandate from me on colors, fonts, or references — I want your read on it based on the above, not me steering you toward something I've already half-decided. Bring me some ideas — a few different directions rather than just one, so I've got something to actually compare instead of just reacting to a single option.</p>
-  </section>
+        <div class="card">
+          <div class="card-title">Not in Scope (Yet)</div>
+          <div class="data-row"><span class="data-label">New Website</span><span class="data-value">Separate phase — comes after the logo direction locks</span></div>
+          <div class="data-row"><span class="data-label">Full Identity System</span><span class="data-value">Guidelines, business cards, social — a later phase</span></div>
+          <div class="data-row"><span class="data-label">Fixed Palette/Type</span><span class="data-value">Intentionally left open for this round</span></div>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <h2>Current Logo, For Context</h2>
-    <div class="callout">
-      <p>It's the original Looka logo from when this started as a side project. I know it's nothing special, and I figure once I see some real direction ideas from you, I'll forget about it pretty fast. That said — if there's some small element in there worth pulling forward as a bit of an homage to where this started, I'd be curious to see it. Not a requirement, just an idea if something jumps out at you. Totally fine to ignore it entirely and start fresh too.</p>
-    </div>
-  </section>
+    <section id="business">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Latz Web Design & Audience</h2>
+      </div>
+      <div class="section-divider"></div>
 
-  <section>
-    <h2>What's Next After This</h2>
-    <p>New website once the logo's set, then the rest of the identity — business cards, social templates, and everything else that comes with it.</p>
-  </section>
+      <div class="two-col" style="margin-bottom:10px;">
+        <div class="card">
+          <div class="card-title">About Latz Web Design</div>
+          <div class="data-row"><span class="data-label">What We Do</span><span class="data-value">Website builds (Next.js, Tailwind, Sanity, Vercel), branding & identity, and headless commerce (Shopify backend, fully custom) — three service lines now</span></div>
+          <div class="data-row"><span class="data-label">Founder</span><span class="data-value">Jordan Latz — direct, single point of contact, no bots or ticket queue</span></div>
+          <div class="data-row"><span class="data-label">Core Values</span><span class="data-value">Transparency, ownership, simplicity, performance, integrity, direct access</span></div>
+          <div class="data-row"><span class="data-label">Voice</span><span class="data-value">Direct, confident, no fluff, no jargon. Short and punchy over polished-corporate.</span></div>
+        </div>
 
-  <p class="sign-off">No rush on this — whenever you've got something, let me know. Thanks.</p>
+        <div class="card">
+          <div class="card-title">Who Latz Web Design Serves</div>
+          <div class="data-row"><span class="data-label">Primary</span><span class="data-value">Wisconsin/Midwest small businesses — contractors, CPAs, healthcare, coaches, consultants</span></div>
+          <div class="data-row"><span class="data-label">Situation</span><span class="data-value">Stuck on outdated WordPress/Wix, outgrew a DIY builder, or starting from scratch and need both a brand and a site</span></div>
+          <div class="data-row"><span class="data-label">What They Need</span><span class="data-value">A site and brand they actually own — no lock-in, no monthly fees, no plugin treadmill</span></div>
+          <div class="data-row"><span class="data-label">Against</span><span class="data-value">WordPress agencies (retainers, no real strategy) and Wix/GoDaddy (generic, doesn't scale)</span></div>
+        </div>
+      </div>
 
-  <footer>jordan@latzwebdesign.com</footer>
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>The one-liner</strong>
+          <span>Custom brands and websites that are fast, stable, and fully owned by the client — built to convert visitors into customers.</span>
+        </div>
+      </div>
+    </section>
 
+    <section id="brand">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Brand & Visual Direction</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>The brand's real — the mark's what's open</strong>
+          <span>Voice, values, positioning, and audience are all locked — pulled straight from the phase brief. What's actually open in this round is the visual mark itself. This isn't a blank-slate client with nothing to work from; it's a real business that just hasn't had a logo that matches it yet.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">Voice & Position</div>
+        <div class="data-row"><span class="data-label">One-Liner</span><span class="data-value">Custom brands and websites that are fast, stable, and fully owned by the client — built to convert visitors into customers.</span></div>
+        <div class="data-row"><span class="data-label">Voice</span><span class="data-value">Direct, confident, no fluff, no jargon. Short and punchy over polished-corporate.</span></div>
+        <div class="data-row"><span class="data-label">Core Lines</span><span class="data-value">"No fluff. Just results." · "No templates. No shortcuts." · "YOU OWN IT. FOREVER."</span></div>
+        <div class="data-row"><span class="data-label">Differentiator</span><span class="data-value">Custom, client-owned, no lock-in — against WordPress retainers and generic DIY builders</span></div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-title">Current Logo — For Context Only</div>
+        <div class="data-row"><span class="data-label">Origin</span><span class="data-value">The original Looka logo from when this was a side project</span></div>
+        <div class="data-row"><span class="data-label">File</span><span class="data-value">Nothing to link here — no file's been attached, described only</span></div>
+        <div class="data-row"><span class="data-label">Jordan's Read</span><span class="data-value">"Nothing special" — expects to forget it fast once real direction exists</span></div>
+        <div class="data-row"><span class="data-label">Optional Homage</span><span class="data-value">If any small element feels worth carrying forward, he's curious — not a requirement, totally fine to start fresh</span></div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">What We Know About the Direction</div>
+          <div class="data-row"><span class="data-label">Mandate</span><span class="data-value">None — no colors, fonts, or references dictated on purpose</span></div>
+          <div class="data-row"><span class="data-label">Reach</span><span class="data-value">Needs to read to Wisconsin/Midwest small-business owners deciding whether to trust this company</span></div>
+          <div class="data-row"><span class="data-label">Not This</span><span class="data-value">Generic Looka-template feel, or anything that reads like every other small-business logo mill</span></div>
+          <div class="data-row"><span class="data-label">Weight</span><span class="data-value">Phase 1 of 3 — whatever lands here needs to hold up under a full site and identity system built on top of it</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Open Creative Questions</div>
+          <ul class="arrow-list">
+            <li>One strong direction, or a couple of directions to react to?</li>
+            <li>Does anything in the current Looka mark deserve a nod, or is a clean break the move?</li>
+            <li>Wordmark-driven, icon-driven, or both?</li>
+            <li>What actually signals "no templates, you own it" visually, without being on-the-nose?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Let's Talk</h2>
+      </div>
+      <div class="section-divider"></div>
+
+      <div class="callout info">
+        <span class="callout-icon">☕</span>
+        <div class="callout-body">
+          <strong>Nothing here is locked in</strong>
+          <span>Here's what I know so far — let's figure out the rest together. Whatever you land on, I want your read on it, not mine.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Open Design Questions</div>
+        <div class="question-item">
+          <div class="question-text">Where do you want to start?</div>
+          <div class="question-context">One strong direction, or a couple to riff on — whatever actually gets you there fastest works for me.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Any pull toward the current mark?</div>
+          <div class="question-context">The Looka logo isn't required reading. If some small piece is worth an homage, I'm curious — but totally fine to ignore it and start clean.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">How much weight does this mark need to carry?</div>
+          <div class="question-context">This becomes the foundation for the new site and then the full identity rollout, so it needs to hold up as more gets built on top of it — not just work as a one-off.</div>
+        </div>
+        <div class="question-item">
+          <div class="question-text">Timeline — is there one?</div>
+          <div class="question-context">No rush on this. Whenever you've got something, let's just riff on it.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </div>
+
+<button class="fab-menu" id="fabMenu">☰</button>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const fab = document.getElementById('fabMenu');
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    fab.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('visible');
+    fab.textContent = '☰';
+    document.body.style.overflow = '';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeSidebar();
+        setTimeout(() => {
+          document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
 </body>
 </html>
