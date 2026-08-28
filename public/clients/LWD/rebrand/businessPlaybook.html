@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latz Web Design — Business Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#122033;
+    --ink-soft:#1D3149;
+    --paper:#F5F6F8;
+    --surface:#FFFFFF;
+    --border:#E2E5EA;
+    --border-soft:#EBEDF1;
+    --text:#1A2331;
+    --text-muted:#5B6472;
+    --text-faint:#8992A0;
+    --accent:#0E5C8C;
+    --accent-deep:#0A3E60;
+    --accent-soft:#E9F3F9;
+    --brass:#A9832E;
+    --brass-soft:#F6EFDD;
+    --radius-s:6px;
+    --radius-m:10px;
+    --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(18,32,51,.04), 0 8px 24px rgba(18,32,51,.06);
+    --sidebar-w:288px;
+    --font-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--text);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    font-size:16.5px;
+    line-height:1.65;
+  }
+  h1,h2,h3,h4{font-family:var(--font-display); margin:0; color:var(--ink); font-weight:600;}
+  p{margin:0 0 1em; color:var(--text);}
+  ul,ol{margin:0 0 1em; padding-left:1.3em;}
+  li{margin-bottom:.5em;}
+  li:last-child{margin-bottom:0;}
+  a{color:var(--accent);}
+  strong{color:var(--ink); font-weight:700;}
+  em{font-style:italic;}
+
+  /* ---------- Reading progress ---------- */
+  .progress{position:fixed; top:0; left:0; height:3px; background:var(--brass); width:0%; z-index:200; transition:width .1s linear;}
+
+  /* ---------- Top bar (mobile) ---------- */
+  .topbar{
+    display:none;
+    position:sticky; top:0; z-index:150;
+    align-items:center; gap:.65rem;
+    height:56px; padding:0 1rem;
+    background:var(--ink); color:#fff;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .topbar__menu{
+    appearance:none; border:none; background:transparent; color:#fff;
+    width:36px; height:36px; border-radius:var(--radius-s);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  }
+  .topbar__menu:hover{background:rgba(255,255,255,.08);}
+  .topbar__title{font-family:var(--font-mono); font-size:.74rem; letter-spacing:.05em; text-transform:uppercase; opacity:.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .topbar__crumb{font-family:var(--font-mono); font-size:.68rem; color:var(--brass); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; margin-top:1px;}
+  .topbar__titles{min-width:0; overflow:hidden;}
+  .topbar__spacer{flex:1;}
+
+  /* ---------- Document mark (seal / monogram) ---------- */
+  .mark{
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border:1.5px solid var(--brass); border-radius:2px;
+    font-family:var(--font-mono); font-weight:600; font-size:.62rem; letter-spacing:.02em;
+    color:var(--brass); background:rgba(169,131,46,.08);
+  }
+  .mark--lg{width:64px; height:64px; font-size:1.1rem; border-width:2px;}
+
+  /* ---------- Desktop document bar ---------- */
+  .docbar{
+    display:none;
+    position:sticky; top:0; z-index:100;
+    align-items:center; justify-content:space-between; gap:1rem;
+    height:46px; padding:0 4rem;
+    background:rgba(245,246,248,.9); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+  }
+  .docbar__left{display:flex; align-items:center; gap:.6rem; min-width:0;}
+  .docbar__id{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.05em; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .docbar__right{display:flex; align-items:center; gap:.9rem; flex-shrink:0;}
+  .docbar__crumb{font-family:var(--font-mono); font-size:.72rem; color:var(--ink); font-weight:500;}
+  .docbar__tag{
+    font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--brass); border:1px solid var(--brass); border-radius:2px; padding:.15rem .45rem;
+  }
+  @media (min-width:1024px){ .docbar{display:flex;} }
+
+  /* ---------- Corner-bracket frame (signature motif) ---------- */
+  .bracket-frame{position:relative;}
+  .corner{position:absolute; width:18px; height:18px; pointer-events:none;}
+  .corner--tl{top:-1px; left:-1px; border-top:2px solid var(--brass); border-left:2px solid var(--brass);}
+  .corner--tr{top:-1px; right:-1px; border-top:2px solid var(--brass); border-right:2px solid var(--brass);}
+  .corner--bl{bottom:-1px; left:-1px; border-bottom:2px solid var(--brass); border-left:2px solid var(--brass);}
+  .corner--br{bottom:-1px; right:-1px; border-bottom:2px solid var(--brass); border-right:2px solid var(--brass);}
+
+  /* ---------- Stamp (cover) ---------- */
+  .stamp{
+    position:absolute; top:1.8rem; right:2.2rem;
+    width:118px; padding:.7rem .5rem; text-align:center;
+    border:1.5px solid var(--ink); border-radius:2px;
+    transform:rotate(-4deg); background:rgba(255,255,255,.5);
+  }
+  .stamp__inner{border:1px solid var(--brass); padding:.55rem .3rem;}
+  .stamp__top{display:block; font-family:var(--font-mono); font-size:.52rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted);}
+  .stamp__mono{display:block; font-family:var(--font-display); font-weight:700; font-size:1.3rem; color:var(--ink); margin:.2rem 0;}
+  .stamp__bottom{display:block; font-family:var(--font-mono); font-size:.5rem; letter-spacing:.06em; text-transform:uppercase; color:var(--brass);}
+
+  /* ---------- Double rule ---------- */
+  .rule-double{width:64px; margin:1.1rem 0 1.5rem;}
+  .rule-double__a{height:2px; background:var(--ink); margin-bottom:3px;}
+  .rule-double__b{height:1px; background:var(--brass); width:70%;}
+
+  /* ---------- Document control block ---------- */
+  .doc-control{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:0;
+    margin:0; border:1px solid var(--border); border-radius:var(--radius-s); overflow:hidden;
+  }
+  .doc-control > div{padding:.75rem 1.1rem; border-left:1px solid var(--border); background:var(--surface);}
+  .doc-control > div:first-child{border-left:none;}
+  .doc-control dt{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin:0 0 .3rem;}
+  .doc-control dd{font-family:var(--font-mono); font-size:.82rem; color:var(--ink); margin:0; font-weight:500;}
+
+  /* ---------- Formal index list (TOC) ---------- */
+  .index-list{border-top:1px solid var(--border);}
+  .index-row{
+    display:block; text-decoration:none; color:inherit;
+    padding:1.05rem 0; border-bottom:1px solid var(--border-soft);
+    transition:background .15s ease;
+  }
+  .index-row:hover{background:rgba(14,92,140,.03);}
+  .index-row:hover .index-row__title{color:var(--accent);}
+  .index-row__top{display:flex; align-items:baseline; gap:.6rem;}
+  .index-row__num{font-family:var(--font-display); font-weight:700; color:var(--brass); font-size:1.05rem; flex-shrink:0;}
+  .index-row__title{font-size:1.05rem; color:var(--ink); font-weight:600; transition:color .15s ease; flex-shrink:0;}
+  .index-row__leader{flex:1; border-bottom:1px dotted var(--border); transform:translateY(-5px); margin:0 .3rem;}
+  .index-row__range{font-family:var(--font-mono); font-size:.74rem; color:var(--text-faint); flex-shrink:0;}
+  .index-row__desc{font-size:.86rem; color:var(--text-muted); margin:.3rem 0 0 1.75rem;}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    position:fixed; top:0; left:0; bottom:0; width:var(--sidebar-w);
+    background:var(--ink); color:#EDEFF3;
+    display:flex; flex-direction:column;
+    z-index:120;
+    border-right:1px solid rgba(255,255,255,.06);
+  }
+  .sidebar__brand{
+    padding:1.6rem 1.5rem 1.2rem;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .sidebar__brand-eyebrow{
+    display:block; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--brass); margin-bottom:.5rem;
+  }
+  .sidebar__brand-name{font-family:var(--font-display); font-size:1.28rem; font-weight:700; color:#fff; line-height:1.2;}
+  .sidebar__brand-sub{font-size:.78rem; color:#A9B2C2; margin-top:.3rem;}
+
+  .sidebar__nav{flex:1; overflow-y:auto; padding:1rem 0 1.25rem;}
+  .sidebar__nav::-webkit-scrollbar{width:6px;}
+  .sidebar__nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15); border-radius:3px;}
+
+  .navgroup{margin:0 0 .35rem;}
+  .navgroup__title{
+    display:block; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.12em;
+    text-transform:uppercase; color:#7C8AA0; padding:.85rem 1.5rem .4rem;
+  }
+  .navlist{list-style:none; margin:0; padding:0;}
+  .navlink{
+    display:flex; align-items:baseline; gap:.55rem;
+    padding:.42rem 1.5rem; font-size:.88rem; color:#C7CEDA;
+    text-decoration:none; border-left:2px solid transparent;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .navlink:hover{background:rgba(255,255,255,.05); color:#fff;}
+  .navlink__num{font-family:var(--font-mono); font-size:.72rem; color:#7C8AA0; min-width:1.5em;}
+  .navlink.is-active{color:#fff; border-left-color:var(--brass); background:rgba(169,131,46,.12);}
+  .navlink.is-active .navlink__num{color:var(--brass);}
+  .navlink.is-pending{color:#8A93A4; opacity:.55; cursor:default; font-style:italic;}
+  .navlink.is-pending:hover{background:transparent; color:#8A93A4;}
+
+  .sidebar__meta{
+    padding:1rem 1.5rem 1.4rem; border-top:1px solid rgba(255,255,255,.08);
+    font-family:var(--font-mono); font-size:.7rem; color:#7C8AA0; line-height:1.8;
+  }
+  .sidebar__meta strong{color:#C7CEDA; font-family:var(--font-mono); font-weight:500;}
+
+  .backdrop{display:none; position:fixed; inset:0; background:rgba(10,16,26,.5); z-index:110;}
+  .backdrop.is-visible{display:block;}
+
+  /* ---------- Main ---------- */
+  .main{margin-left:var(--sidebar-w); min-height:100vh;}
+
+  .cover{
+    padding:5rem 4rem 4rem; max-width:920px;
+    border-bottom:1px solid var(--border);
+  }
+  .cover__panel{position:relative; border:1px solid var(--border); border-radius:var(--radius-m); padding:2.6rem 2.8rem 2.4rem; background:var(--surface);}
+  .cover__eyebrow{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--brass); background:var(--brass-soft); border:1px solid rgba(169,131,46,.35);
+    padding:.3rem .7rem; border-radius:2px; margin-bottom:1.5rem;
+  }
+  .cover__title{font-size:clamp(2.2rem, 4vw, 3.1rem); line-height:1.08; margin-bottom:.4rem; max-width:70%;}
+  .cover__tagline{font-family:var(--font-mono); font-size:.85rem; letter-spacing:.03em; color:var(--text-muted);}
+  .cover__desc{font-size:1.08rem; color:var(--text-muted); max-width:600px; margin:1.6rem 0 2rem;}
+
+  .toc{padding:3rem 4rem 4.5rem; max-width:1080px;}
+  .toc__label{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); margin-bottom:1.1rem;}
+  .toc-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem;}
+  .toc-card{
+    display:block; text-decoration:none; background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-m); padding:1.4rem 1.5rem; transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .toc-card:hover{border-color:var(--accent); transform:translateY(-2px); box-shadow:var(--shadow-card);}
+  .toc-card__top{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:.5rem;}
+  .toc-card__numeral{font-family:var(--font-display); font-size:1.6rem; color:var(--brass); font-weight:700;}
+  .toc-card__range{font-family:var(--font-mono); font-size:.7rem; color:var(--text-faint);}
+  .toc-card__title{font-size:1.12rem; margin-bottom:.35rem; color:var(--ink);}
+  .toc-card__desc{font-size:.88rem; color:var(--text-muted); margin:0;}
+
+  /* ---------- Part divider ---------- */
+  .part{
+    position:relative; overflow:hidden;
+    background:var(--ink); color:#fff;
+    padding:3.6rem 4rem; scroll-margin-top:1rem;
+    display:flex; align-items:center; gap:2.4rem;
+  }
+  .part__numeral{
+    font-family:var(--font-display); font-weight:700; font-size:5.2rem; line-height:1;
+    color:var(--brass); flex-shrink:0; opacity:.95;
+  }
+  .part__numeral-ghost{
+    position:absolute; right:2rem; top:50%; transform:translateY(-50%);
+    font-family:var(--font-display); font-weight:700; font-size:13rem; line-height:1;
+    color:rgba(255,255,255,.045); pointer-events:none; user-select:none;
+  }
+  .part__eyebrow{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#9FB0C7; display:block; margin-bottom:.5rem;}
+  .part__title{color:#fff; font-size:clamp(1.6rem, 2.6vw, 2.2rem); margin-bottom:.5rem;}
+  .part__desc{color:#B9C3D3; font-size:1rem; margin:0; max-width:520px;}
+
+  /* ---------- Section ---------- */
+  .section{padding:3.2rem 4rem; max-width:920px; scroll-margin-top:1.2rem; border-bottom:1px solid var(--border-soft);}
+  .section__head{display:flex; align-items:baseline; gap:.9rem; margin-bottom:1.6rem; flex-wrap:wrap;}
+  .section__eyebrow{font-family:var(--font-mono); font-size:.82rem; color:var(--brass); font-weight:600; letter-spacing:.03em;}
+  .section__title{font-size:1.75rem;}
+  .badge{
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+    padding:.22rem .6rem; border-radius:2px; border:1px solid var(--border);
+    color:var(--text-muted); background:var(--surface);
+  }
+  .badge--pending{color:var(--brass); border-color:var(--brass); background:var(--brass-soft);}
+
+  .subhead{font-size:1.02rem; color:var(--ink); margin:1.6rem 0 .6rem; font-weight:600;}
+  .subhead:first-child{margin-top:0;}
+  .lede{font-size:1.06rem; color:var(--text-muted); margin-bottom:1.4rem;}
+
+  .pullquote{
+    font-family:var(--font-display); font-size:1.3rem; line-height:1.5; color:var(--ink);
+    border-left:3px solid var(--brass); padding:.2rem 0 .2rem 1.4rem; margin:1.6rem 0;
+  }
+
+  /* ---------- Callouts ---------- */
+  .callout{border-radius:var(--radius-m); padding:1.2rem 1.4rem; margin:1.4rem 0; border:1px solid var(--border);}
+  .callout__label{
+    display:block; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+    margin-bottom:.55rem; font-weight:600;
+  }
+  .callout p:last-child{margin-bottom:0;}
+  .callout--client{background:var(--accent-soft); border-color:#CFE3EF;}
+  .callout--client .callout__label{color:var(--accent-deep);}
+  .callout--client p{font-family:var(--font-display); font-style:italic; font-size:1.06rem; color:var(--ink); line-height:1.6;}
+  .callout--note{background:#F4F4F1; border-color:var(--border);}
+  .callout--note .callout__label{color:var(--brass);}
+  .callout--note p{font-size:.92rem; color:var(--text-muted);}
+
+  /* ---------- Stat row ---------- */
+  .stat-row{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin:1.4rem 0 1.6rem;}
+  .stat{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:1.1rem 1.2rem;}
+  .stat__num{font-family:var(--font-display); font-size:1.9rem; font-weight:700; color:var(--accent-deep); line-height:1;}
+  .stat__label{font-size:.8rem; color:var(--text-muted); margin-top:.4rem; line-height:1.4;}
+
+  /* ---------- Numbered list (meaningful order) ---------- */
+  .num-list{list-style:none; margin:0 0 1.4rem; padding:0; display:flex; flex-direction:column; gap:1rem;}
+  .num-list__item{display:flex; gap:1rem;}
+  .num-list__num{
+    font-family:var(--font-mono); font-weight:600; font-size:.85rem; color:var(--brass);
+    flex-shrink:0; width:2rem; padding-top:.15rem;
+  }
+  .num-list__body b{display:block; color:var(--ink); margin-bottom:.15rem;}
+  .num-list__body p{margin:0; color:var(--text-muted); font-size:.95rem;}
+
+  /* ---------- Value / audience cards ---------- */
+  .card-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem; margin:1.2rem 0 1.6rem;}
+  .value-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:1.2rem 1.3rem;}
+  .value-card h4{font-size:1rem; margin-bottom:.4rem; color:var(--ink);}
+  .value-card p{font-size:.9rem; color:var(--text-muted); margin:0;}
+
+  .audience{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:1.3rem 1.4rem; margin-bottom:1rem;}
+  .audience__head{display:flex; align-items:baseline; gap:.7rem; margin-bottom:.5rem;}
+  .audience__num{font-family:var(--font-mono); color:var(--brass); font-weight:600; font-size:.85rem;}
+  .audience__title{font-size:1.02rem; color:var(--ink); font-weight:700;}
+  .audience ul{margin:0; padding-left:1.2em; font-size:.92rem; color:var(--text-muted);}
+
+  /* ---------- Compare grid ---------- */
+  .compare-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin:1.2rem 0 1.6rem;}
+  .compare-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:1.2rem 1.3rem;}
+  .compare-card h4{font-size:.92rem; margin-bottom:.5rem; color:var(--text-muted); font-weight:600;}
+  .compare-card p{font-size:.88rem; color:var(--text-muted); margin:0;}
+  .compare-card--us{background:var(--accent-soft); border-color:var(--accent); position:relative;}
+  .compare-card--us h4{color:var(--accent-deep);}
+  .compare-card--us p{color:var(--ink);}
+  .compare-card--us::after{
+    content:'US'; position:absolute; top:.9rem; right:.9rem; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.08em; color:#fff; background:var(--accent); padding:.15rem .4rem; border-radius:4px;
+  }
+
+  /* ---------- Tier cards ---------- */
+  .tier-row{display:flex; align-items:stretch; gap:0; margin:1.4rem 0 1.6rem; flex-wrap:wrap;}
+  .tier-card{
+    flex:1 1 260px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m);
+    padding:1.4rem 1.4rem 1.3rem; display:flex; flex-direction:column;
+  }
+  .tier-connector{display:flex; align-items:center; justify-content:center; width:2.6rem; flex-shrink:0; color:var(--brass); font-family:var(--font-mono); font-weight:600;}
+  .tier-card__name{font-size:1.08rem; color:var(--ink); margin-bottom:.3rem;}
+  .tier-card__for{font-size:.85rem; color:var(--text-muted); margin-bottom:.9rem; font-style:italic;}
+  .tier-card ul{font-size:.87rem; color:var(--text-muted); margin:0 0 .9rem; padding-left:1.1em;}
+  .tier-card__not{font-size:.8rem; color:var(--text-faint); border-top:1px dashed var(--border); padding-top:.7rem; margin-top:auto;}
+
+  /* ---------- Timeline ---------- */
+  .timeline{position:relative; margin:1.6rem 0 1rem; padding-left:2.6rem;}
+  .timeline::before{content:''; position:absolute; left:.9rem; top:.3rem; bottom:.3rem; width:2px; background:var(--border);}
+  .timeline__item{position:relative; padding-bottom:1.8rem;}
+  .timeline__item:last-child{padding-bottom:0;}
+  .timeline__node{
+    position:absolute; left:-2.6rem; top:0; width:1.9rem; height:1.9rem; border-radius:50%;
+    background:var(--ink); color:var(--brass); font-family:var(--font-mono); font-weight:600; font-size:.82rem;
+    display:flex; align-items:center; justify-content:center; border:2px solid var(--brass);
+  }
+  .timeline__title{font-size:1.02rem; color:var(--ink); font-weight:700; margin-bottom:.15rem;}
+  .timeline__sub{font-size:.78rem; color:var(--text-faint); font-style:italic; margin-bottom:.5rem;}
+  .timeline__item ul{font-size:.92rem; color:var(--text-muted); margin:0; padding-left:1.15em;}
+
+  /* ---------- QA pairs ---------- */
+  .qa{margin:1rem 0 1.6rem; display:flex; flex-direction:column; gap:1.1rem;}
+  .qa__item{border-left:2px solid var(--border); padding-left:1rem;}
+  .qa__q{font-family:var(--font-display); font-style:italic; color:var(--ink); font-size:1rem; margin-bottom:.35rem;}
+  .qa__a{font-size:.92rem; color:var(--text-muted); margin:0;}
+
+  /* ---------- Script flow (budget conversation) ---------- */
+  .flow{margin:1rem 0 1.6rem; display:flex; flex-direction:column; gap:.9rem;}
+  .flow__item{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:.9rem 1.1rem;}
+  .flow__label{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--brass); display:block; margin-bottom:.35rem;}
+  .flow__text{font-family:var(--font-display); font-style:italic; color:var(--ink); font-size:.98rem; margin:0;}
+
+  /* ---------- Partner card ---------- */
+  .partner-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:1.3rem 1.4rem; margin:1rem 0 1.6rem;}
+  .partner-card__name{font-size:1.05rem; color:var(--ink); font-weight:700; margin-bottom:.15rem;}
+  .partner-card__role{font-family:var(--font-mono); font-size:.72rem; color:var(--brass); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.6rem; display:block;}
+  .partner-card p{font-size:.92rem; color:var(--text-muted); margin:0;}
+
+  /* ---------- Phase cards (growth) ---------- */
+  .phase-row{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin:1.2rem 0 1.6rem;}
+  .phase-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:1.2rem 1.3rem;}
+  .phase-card__eyebrow{font-family:var(--font-mono); font-size:.7rem; color:var(--brass); letter-spacing:.06em; text-transform:uppercase; margin-bottom:.3rem; display:block;}
+  .phase-card__title{font-size:1rem; color:var(--ink); margin-bottom:.4rem;}
+  .phase-card__focus{font-size:.82rem; font-style:italic; color:var(--text-faint); margin-bottom:.7rem;}
+  .phase-card ul{font-size:.87rem; color:var(--text-muted); margin:0; padding-left:1.1em;}
+
+  .roadmap-block{margin-bottom:1.6rem;}
+  .roadmap-block h4{font-size:.98rem; color:var(--ink); margin-bottom:.3rem;}
+  .roadmap-block .roadmap-sub{font-size:.8rem; font-style:italic; color:var(--text-faint); margin-bottom:.5rem;}
+  .roadmap-block ul{font-size:.92rem; color:var(--text-muted); margin:0;}
+
+  /* ---------- Closing ---------- */
+  .closing{padding:3.2rem 4rem 5rem; max-width:920px;}
+  .closing__box{background:var(--ink); color:#fff; border-radius:var(--radius-l); padding:2.2rem 2.4rem;}
+  .closing__box h3{color:#fff; font-size:1.2rem; margin-bottom:.6rem;}
+  .closing__box p{color:#B9C3D3; margin:0; font-size:.95rem;}
+
+  /* ---------- Back to top ---------- */
+  .backtotop{
+    position:fixed; right:1.6rem; bottom:1.6rem; z-index:130;
+    width:2.6rem; height:2.6rem; border-radius:50%; border:1px solid var(--border);
+    background:var(--surface); box-shadow:var(--shadow-card); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; color:var(--ink);
+    opacity:0; pointer-events:none; transform:translateY(8px);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .backtotop.is-visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+
+  /* ---------- Reveal on scroll ---------- */
+  .section, .part{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease;}
+  .section.is-visible, .part.is-visible{opacity:1; transform:translateY(0);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1023px){
+    .topbar{display:flex;}
+    .sidebar{transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.3);}
+    .sidebar.is-open{transform:translateX(0);}
+    .main{margin-left:0;}
+    .cover{padding:2.6rem 1.4rem 2.4rem;}
+    .cover__panel{padding:1.8rem 1.4rem 1.6rem;}
+    .cover__title{max-width:100%;}
+    .stamp{position:static; display:inline-block; margin:0 0 1.2rem; transform:rotate(-2deg); width:132px;}
+    .doc-control{grid-template-columns:repeat(2, 1fr);}
+    .doc-control > div:nth-child(2n+1){border-left:none;}
+    .doc-control > div:nth-child(n+3){border-top:1px solid var(--border);}
+    .toc{padding:2rem 1.4rem 3rem;}
+    .index-row__top{flex-wrap:wrap; row-gap:.3rem;}
+    .index-row__leader{display:none;}
+    .index-row__range{margin-left:auto;}
+    .index-row__desc{margin-left:0;}
+    .part{padding:2.4rem 1.4rem; flex-direction:column; align-items:flex-start; gap:1rem;}
+    .part__numeral{font-size:3.2rem;}
+    .part__numeral-ghost{display:none;}
+    .section{padding:2.2rem 1.4rem;}
+    .card-grid{grid-template-columns:1fr;}
+    .compare-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:1fr;}
+    .tier-row{flex-direction:column;}
+    .tier-connector{width:auto; padding:.4rem 0; align-self:center;}
+    .phase-row{grid-template-columns:1fr;}
+    .closing{padding:2.2rem 1.4rem 3.5rem;}
+  }
+  @media (min-width:1024px){
+    .backdrop{display:none !important;}
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    .sidebar, .topbar, .progress, .backtotop, .backdrop{display:none !important;}
+    .main{margin-left:0;}
+    .section, .part{opacity:1 !important; transform:none !important;}
+    .part{background:#fff !important; color:#000 !important;}
+    .part__title, .part__desc, .part__eyebrow{color:#000 !important;}
+    .part__numeral-ghost{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <button class="topbar__menu" id="menuBtn" aria-label="Open navigation">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+  <div class="topbar__titles">
+    <span class="topbar__title">Latz Web Design — Playbook</span>
+    <span class="topbar__crumb" id="topbarCrumb">Overview</span>
+  </div>
+  <span class="topbar__spacer"></span>
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar__brand">
+    <span class="sidebar__brand-eyebrow">Internal · Business Playbook</span>
+    <div style="display:flex; align-items:center; gap:.65rem;">
+      <span class="mark">LWD</span>
+      <div>
+        <div class="sidebar__brand-name">Latz Web Design</div>
+        <div class="sidebar__brand-sub">Support Local. Build Better.</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav" id="sidebarNav">
+    <div class="navgroup">
+      <ul class="navlist">
+        <li><a class="navlink" href="#cover" data-nav><span class="navlink__num">—</span>Overview</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">Part I · Foundation</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#s01" data-nav><span class="navlink__num">01</span>Vision &amp; Mission</a></li>
+        <li><a class="navlink" href="#s02" data-nav><span class="navlink__num">02</span>Core Values</a></li>
+        <li><a class="navlink" href="#s03" data-nav><span class="navlink__num">03</span>Positioning Statement</a></li>
+        <li><a class="navlink" href="#s04" data-nav><span class="navlink__num">04</span>Target Audiences</a></li>
+        <li><a class="navlink" href="#s05" data-nav><span class="navlink__num">05</span>Differentiators</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">Part II · What You Sell</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#s06" data-nav><span class="navlink__num">06</span>Website Services</a></li>
+        <li><a class="navlink" href="#s07" data-nav><span class="navlink__num">07</span>Branding &amp; Design</a></li>
+        <li><a class="navlink" href="#s08" data-nav><span class="navlink__num">08</span>Headless Commerce</a></li>
+        <li><a class="navlink" href="#s09" data-nav><span class="navlink__num">09</span>SEO Foundations</a></li>
+        <li><a class="navlink is-pending" href="#pricing-pending" data-nav><span class="navlink__num">—</span>Pricing Philosophy</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">Part III · How You Work</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#s10" data-nav><span class="navlink__num">10</span>Client Journey</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">Part IV · How You Sell</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#s11" data-nav><span class="navlink__num">11</span>Sales Playbook</a></li>
+        <li><a class="navlink" href="#s12" data-nav><span class="navlink__num">12</span>Messaging Framework</a></li>
+        <li><a class="navlink" href="#s13" data-nav><span class="navlink__num">13</span>Brand Voice &amp; Style</a></li>
+        <li><a class="navlink" href="#s14" data-nav><span class="navlink__num">14</span>Marketing &amp; Outreach</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">Part V · Proof</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#s15" data-nav><span class="navlink__num">15</span>Case Studies &amp; Proof</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">Part VI · Growth</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#s16" data-nav><span class="navlink__num">16</span>Growth &amp; Scaling</a></li>
+        <li><a class="navlink" href="#s17" data-nav><span class="navlink__num">17</span>Hiring Roadmap</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="sidebar__meta">
+    <div><strong>Status</strong> — Living document</div>
+    <div><strong>Parts</strong> — 6 · <strong>Sections</strong> — 17</div>
+    <div><strong>Owner</strong> — Jordan</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <div class="docbar">
+    <div class="docbar__left">
+      <span class="mark">LWD</span>
+      <span class="docbar__id">Latz Web Design — Business Playbook · 2026</span>
+    </div>
+    <div class="docbar__right">
+      <span class="docbar__crumb" id="docbarCrumb">Overview</span>
+      <span class="docbar__tag">Internal</span>
+    </div>
+  </div>
+
+  <!-- COVER -->
+  <section class="cover" id="cover">
+    <div class="cover__panel bracket-frame">
+      <span class="corner corner--tl"></span><span class="corner corner--tr"></span>
+      <span class="corner corner--bl"></span><span class="corner corner--br"></span>
+
+      <div class="stamp" aria-hidden="true">
+        <div class="stamp__inner">
+          <span class="stamp__top">Latz Web Design</span>
+          <span class="stamp__mono">LWD</span>
+          <span class="stamp__bottom">Internal Record</span>
+        </div>
+      </div>
+
+      <span class="cover__eyebrow">Internal — Business Playbook</span>
+      <h1 class="cover__title">Latz Web Design</h1>
+      <div class="cover__tagline">Support Local. Build Better.</div>
+      <div class="rule-double"><div class="rule-double__a"></div><div class="rule-double__b"></div></div>
+      <p class="cover__desc">The single source of truth for how Latz Web Design operates — what gets sold, how projects run, how the business talks about itself, and where it's headed. One document, six parts, no scattered notes.</p>
+
+      <dl class="doc-control">
+        <div><dt>Owner</dt><dd>Jordan</dd></div>
+        <div><dt>Design Partner</dt><dd>Alyssa</dd></div>
+        <div><dt>Edition</dt><dd>2026</dd></div>
+        <div><dt>Status</dt><dd>Living Doc.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="toc">
+    <div class="toc__label">Contents</div>
+    <div class="index-list">
+      <a class="index-row" href="#part-1">
+        <div class="index-row__top">
+          <span class="index-row__num">I.</span>
+          <span class="index-row__title">Foundation</span>
+          <span class="index-row__leader"></span>
+          <span class="index-row__range">§01–§05</span>
+        </div>
+        <p class="index-row__desc">Why the business exists, who it's for, and what sets it apart.</p>
+      </a>
+      <a class="index-row" href="#part-2">
+        <div class="index-row__top">
+          <span class="index-row__num">II.</span>
+          <span class="index-row__title">What You Sell</span>
+          <span class="index-row__leader"></span>
+          <span class="index-row__range">§06–§09</span>
+        </div>
+        <p class="index-row__desc">The services and systems on offer — websites, branding, commerce, SEO.</p>
+      </a>
+      <a class="index-row" href="#part-3">
+        <div class="index-row__top">
+          <span class="index-row__num">III.</span>
+          <span class="index-row__title">How You Work</span>
+          <span class="index-row__leader"></span>
+          <span class="index-row__range">§10</span>
+        </div>
+        <p class="index-row__desc">The client journey, from first conversation to post-launch.</p>
+      </a>
+      <a class="index-row" href="#part-4">
+        <div class="index-row__top">
+          <span class="index-row__num">IV.</span>
+          <span class="index-row__title">How You Sell &amp; Talk About It</span>
+          <span class="index-row__leader"></span>
+          <span class="index-row__range">§11–§14</span>
+        </div>
+        <p class="index-row__desc">Scripts, messaging, voice, and outreach — how the story gets told.</p>
+      </a>
+      <a class="index-row" href="#part-5">
+        <div class="index-row__top">
+          <span class="index-row__num">V.</span>
+          <span class="index-row__title">Proof</span>
+          <span class="index-row__leader"></span>
+          <span class="index-row__range">§15</span>
+        </div>
+        <p class="index-row__desc">How results get documented and shown once they exist.</p>
+      </a>
+      <a class="index-row" href="#part-6">
+        <div class="index-row__top">
+          <span class="index-row__num">VI.</span>
+          <span class="index-row__title">Growth</span>
+          <span class="index-row__leader"></span>
+          <span class="index-row__range">§16–§17</span>
+        </div>
+        <p class="index-row__desc">Where the business goes next, and who joins along the way.</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= PART I ================= -->
+  <div class="part" id="part-1">
+    <div class="part__numeral">I</div>
+    <div class="part__body">
+      <span class="part__eyebrow">Part I · §01–§05</span>
+      <h2 class="part__title">Foundation</h2>
+      <p class="part__desc">Why the business exists, who it's for, and what sets it apart.</p>
+    </div>
+    <div class="part__numeral-ghost">I</div>
+  </div>
+
+  <section class="section" id="s01">
+    <div class="section__head"><span class="section__eyebrow">§01</span><h2 class="section__title">Vision &amp; Mission</h2></div>
+
+    <h3 class="subhead">Vision</h3>
+    <p>To empower growing businesses with brands and websites they truly own — custom-built, conversion-focused, and designed to grow their business without hidden costs or unnecessary complexity. A website isn't just a brochure. It's the first handshake with a customer and should work 24/7 to earn trust and generate leads.</p>
+
+    <h3 class="subhead">Mission</h3>
+    <p>At Latz Web Design, we build custom brands and websites that are fast, stable, and simple to manage. Every project is designed to look great, work flawlessly on any device, rank well in search engines, and remain reliable without monthly maintenance fees or plugin headaches.</p>
+    <p>But we don't stop at design. We offer brand strategy that ensures every visual and messaging decision is intentional, and content management systems clients can actually use.</p>
+    <p>More than just delivering a website, our goal is to give each business a powerful growth engine they fully own.</p>
+  </section>
+
+  <section class="section" id="s02">
+    <div class="section__head"><span class="section__eyebrow">§02</span><h2 class="section__title">Core Values</h2></div>
+    <div class="card-grid">
+      <div class="value-card"><h4>Transparency</h4><p>Clear communication and upfront pricing. No hidden fees, no surprise retainers, no fine print.</p></div>
+      <div class="value-card"><h4>Ownership</h4><p>Clients own their site, hosting, brand assets, and content outright. We hand everything over — nothing is held hostage.</p></div>
+      <div class="value-card"><h4>Simplicity</h4><p>A clean process, straightforward tools, and an editing experience that isn't bloated with clutter. Websites should be easy to manage, not a technical burden.</p></div>
+      <div class="value-card"><h4>Performance</h4><p>Every site is built fast, mobile-first, and SEO-ready — because speed and usability directly affect customer trust and conversions.</p></div>
+      <div class="value-card"><h4>Integrity</h4><p>No shortcuts, no templates, no reselling the same design. Each project reflects the unique identity of the client's business.</p></div>
+      <div class="value-card"><h4>Direct Access</h4><p>You talk to me directly — not a ticket system, not a chatbot, not whoever picked up today. One point of contact, from the first conversation to years down the road.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="s03">
+    <div class="section__head"><span class="section__eyebrow">§03</span><h2 class="section__title">Positioning Statement</h2></div>
+
+    <h3 class="subhead">Primary One-Liner</h3>
+    <p class="pullquote">"Latz Web Design builds custom brands and websites that are fast, stable, and fully owned by the client — designed to convert visitors into customers and show you exactly what's working."</p>
+
+    <h3 class="subhead">Alternate Variations (By Context)</h3>
+    <div class="qa">
+      <div class="qa__item">
+        <div class="qa__q">Networking / Elevator Pitch (30 seconds)</div>
+        <p class="qa__a">"Most businesses get stuck with WordPress or Wix — sites that are slow, cookie-cutter, and come with hidden fees. We build modern, custom websites from the ground up. If you need branding, we handle that too — logo, colors, messaging, the whole system. You own it all, with no lock-in."</p>
+      </div>
+      <div class="qa__item">
+        <div class="qa__q">Website Hero Tagline</div>
+        <p class="qa__a">"Custom Brands &amp; Websites Built for Performance, Ownership, and Growth."</p>
+      </div>
+      <div class="qa__item">
+        <div class="qa__q">Proposal Intro</div>
+        <p class="qa__a">"Unlike WordPress agencies that rely on templates and monthly retainers, Latz Web Design delivers custom brands and websites you fully own — built to convert visitors into customers from day one."</p>
+      </div>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>Always anchor messaging around: custom + fast + stable + owned by the client. Branding is part of the core offering, not an afterthought. "Not WordPress" is part of the frame, but focus on your positive differentiators.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s04">
+    <div class="section__head"><span class="section__eyebrow">§04</span><h2 class="section__title">Target Audiences</h2></div>
+    <h3 class="subhead">Who You Serve Best</h3>
+
+    <div class="audience">
+      <div class="audience__head"><span class="audience__num">01</span><span class="audience__title">Established Small Businesses</span></div>
+      <ul>
+        <li>Already have a site (often WordPress or Wix) but it's outdated, slow, or hard to manage</li>
+        <li>They want credibility online and are ready to invest in something stable and modern</li>
+        <li><strong>Pain point:</strong> Site doesn't reflect their brand, no way to track what's working, missing leads</li>
+        <li><strong>Example:</strong> Local law firms, construction companies, boutique shops, family-owned businesses</li>
+      </ul>
+    </div>
+
+    <div class="audience">
+      <div class="audience__head"><span class="audience__num">02</span><span class="audience__title">Professional Service Providers</span></div>
+      <ul>
+        <li>Contractors, CPAs, healthcare providers, coaches, and consultants</li>
+        <li>They depend on inbound leads and need a site that builds trust and ranks well on Google</li>
+        <li><strong>Pain point:</strong> Inconsistent branding, no visibility into which marketing actually works</li>
+        <li>They care less about "fancy templates" and more about performance, clarity, and ROI</li>
+      </ul>
+    </div>
+
+    <div class="audience">
+      <div class="audience__head"><span class="audience__num">03</span><span class="audience__title">Growing Businesses Looking to Level Up</span></div>
+      <ul>
+        <li>DIY owners currently on Wix, GoDaddy, or Squarespace</li>
+        <li>They've outgrown their drag-and-drop site and need something custom that reflects their brand</li>
+        <li><strong>Pain point:</strong> Generic look, slow performance, inconsistent brand across touchpoints</li>
+        <li>They often come frustrated with "easy" platforms that ended up being limiting</li>
+      </ul>
+    </div>
+
+    <div class="audience">
+      <div class="audience__head"><span class="audience__num">04</span><span class="audience__title">New Businesses Starting From Scratch</span></div>
+      <ul>
+        <li>Launching a business and need both brand identity and a website</li>
+        <li>Don't have a logo, colors, messaging, or web presence yet</li>
+        <li><strong>Pain point:</strong> Overwhelmed by options, don't know where to start</li>
+        <li>Want everything cohesive from day one instead of piecing it together later</li>
+      </ul>
+    </div>
+
+    <div class="audience">
+      <div class="audience__head"><span class="audience__num">05</span><span class="audience__title">Businesses Selling Online</span></div>
+      <ul>
+        <li>Need to sell products but don't want a generic themed Shopify store slowing them down</li>
+        <li>Custom Next.js storefront with Shopify running as the backend — same speed, ownership, and design standards as every other build</li>
+        <li><strong>Pain point:</strong> Off-the-shelf Shopify themes look like everyone else's and are clunky to customize</li>
+        <li><strong>Example:</strong> Retailers and product-based businesses ready to move off a templated storefront</li>
+      </ul>
+    </div>
+
+    <h3 class="subhead">Who You Don't Serve (Not Ideal Fit)</h3>
+    <ul>
+      <li>Businesses looking for the cheapest option possible (happy to live with cookie-cutter templates)</li>
+      <li>Companies that want bundled marketing retainers (your model is project-first)</li>
+    </ul>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>Networking: if someone asks "Who do you usually work with?" — reply with one of the five profiles above. Proposals: tailor examples to their category. Audience 04 (new businesses) maps directly to the Brand Identity and Brand Strategy tiers. Audience 05 (Businesses Selling Online) maps to the Headless Commerce service line. Marketing: create posts that speak directly to each segment.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s05">
+    <div class="section__head"><span class="section__eyebrow">§05</span><h2 class="section__title">Differentiators</h2></div>
+
+    <h3 class="subhead">The Short Version</h3>
+    <div class="compare-grid">
+      <div class="compare-card"><h4>WordPress Agencies</h4><p>Leave clients stuck with plugins, updates, and retainers. No cohesive brand strategy.</p></div>
+      <div class="compare-card"><h4>Wix / GoDaddy</h4><p>Sell "easy sites" that look generic and don't scale. No brand foundation.</p></div>
+      <div class="compare-card compare-card--us"><h4>Latz Web Design</h4><p>Custom brands, websites, and online stores clients fully own — built on strategy, designed to convert, no lock-in.</p></div>
+    </div>
+
+    <h3 class="subhead">Why Choose Latz Web Design</h3>
+    <ol class="num-list">
+      <li class="num-list__item"><span class="num-list__num">01</span><div class="num-list__body"><b>Custom Builds, No Templates.</b><p>Every project — website, storefront, or brand system — is designed around the client's business, not a cookie-cutter theme that looks like everyone else's.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">02</span><div class="num-list__body"><b>Brand Strategy That Drives Design.</b><p>When branding and the website are built together, every visual and messaging decision supports a business goal. No guessing.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">03</span><div class="num-list__body"><b>SEO-Ready from Day One.</b><p>Metadata, structured data, and search fundamentals are wired into the CMS itself — not bolted on with a plugin. Every site is personally registered with Google and confirmed indexed after launch — nothing goes live and gets forgotten. Clients don't need to "pay extra" for visibility.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">04</span><div class="num-list__body"><b>True Ownership, No Lock-In.</b><p>Hosting, code, brand assets, and accounts are set up in the client's name. They own it all — no hidden contracts, no hostage situations.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">05</span><div class="num-list__body"><b>Stable &amp; Long-Lasting.</b><p>No plugins breaking after updates, no monthly patching. Sites are built to be reliable for years, not months.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">06</span><div class="num-list__body"><b>Performance That Drives ROI.</b><p>Fast, mobile-first websites keep visitors engaged, build trust, and convert better.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">07</span><div class="num-list__body"><b>Simple Content Management.</b><p>A clean editing dashboard clients can learn in 5 minutes. Update text, images, services, and blog posts without touching code.</p></div></li>
+    </ol>
+
+    <h3 class="subhead">The Market Backs This Up</h3>
+    <div class="stat-row">
+      <div class="stat"><div class="stat__num">43%</div><div class="stat__label">of all websites globally still run on WordPress — the default most prospects compare you to</div></div>
+      <div class="stat"><div class="stat__num">60.8%</div><div class="stat__label">WordPress's share of the CMS market, down from 62.7% over the past year</div></div>
+      <div class="stat"><div class="stat__num">20%+</div><div class="stat__label">projected annual growth for headless platforms over the next decade</div></div>
+    </div>
+    <p>WordPress still runs roughly 43% of all websites and remains the default most prospects will compare you to — but its share of the CMS market has been slipping over the past year, while modern approaches gain ground. Headless platforms are the growth story, with North America leading adoption. Next.js — the framework Latz Web Design builds on — leads developer usage among modern frameworks, which speaks to a healthy, growing ecosystem behind every build, not a niche bet.</p>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>Sales calls: present the 7-point list after hearing pain points — match differentiators to what the client actually complained about. Proposals: make this a "Why Choose Us" page or sidebar. Website: use as a checklist graphic — simple, scannable, benefit-driven. Market stats: use to counter "is this niche?" objections, especially around headless/Next.js — lead with the differentiators, keep the stats as backup, not the pitch.</p>
+    </div>
+  </section>
+
+  <!-- ================= PART II ================= -->
+  <div class="part" id="part-2">
+    <div class="part__numeral">II</div>
+    <div class="part__body">
+      <span class="part__eyebrow">Part II · §06–§09</span>
+      <h2 class="part__title">What You Sell</h2>
+      <p class="part__desc">The services and systems on offer — websites, branding, commerce, SEO.</p>
+    </div>
+    <div class="part__numeral-ghost">II</div>
+  </div>
+
+  <section class="section" id="s06">
+    <div class="section__head"><span class="section__eyebrow">§06</span><h2 class="section__title">Website Services</h2></div>
+    <h3 class="subhead">Every Website Project Includes</h3>
+    <ol class="num-list">
+      <li class="num-list__item"><span class="num-list__num">01</span><div class="num-list__body"><b>Custom Website Design &amp; Build</b><p>Fully tailored, no templates. Built for speed, stability, and mobile-first usability.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">02</span><div class="num-list__body"><b>Brand-Aligned Copywriting</b><p>Clear, persuasive copy written to match the client's voice — connects with their customers and supports search visibility. Clients aren't just getting a site, they're getting words that sell.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">03</span><div class="num-list__body"><b>Simple Content Management</b><p>A clean, intuitive editing dashboard built specifically for the client's site. Update text, images, services, or blog posts in minutes — no developer needed. No plugin clutter, no risk of breaking the design, takes about 5 minutes to learn.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">04</span><div class="num-list__body"><b>SEO Foundations</b><p>Built into every project from day one — not bolted on after launch. Full breakdown in §09.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">05</span><div class="num-list__body"><b>Hosting Setup &amp; Ownership</b><p>Set up under the client's own account from day one. They own it outright — no forced retainers, no third-party lock-in.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="section" id="s07">
+    <div class="section__head"><span class="section__eyebrow">§07</span><h2 class="section__title">Branding &amp; Design Services</h2></div>
+    <p class="lede">Branding is a core pillar, not an add-on. It shows up in three shapes, depending on what a client needs.</p>
+
+    <h3 class="subhead">Shape 1 — Branding-Only <span class="badge badge--pending">Directional — pricing TBD</span></h3>
+    <div class="callout callout--note">
+      <span class="callout__label">Status</span>
+      <p>Alyssa is currently reworking the actual package structure and pricing for this ladder. The tiers below reflect the current documented state — treat as directional, not final, until that rework lands.</p>
+    </div>
+
+    <div class="tier-row">
+      <div class="tier-card">
+        <div class="tier-card__name">Brand Essentials</div>
+        <div class="tier-card__for">Best for clients who already have a rough logo or brand idea and need it cleaned up and made consistent — startups on a budget, or anyone who just needs the basics to look professional.</div>
+        <ul>
+          <li>Discovery conversation (brand goals, audience, values, preferences)</li>
+          <li>Logo cleanup or refinement (not designed from scratch)</li>
+          <li>Color palette (primary, secondary, accent — with hex codes)</li>
+          <li>Font selection (heading + body, usage guidance)</li>
+          <li>Basic brand guidelines document</li>
+          <li>Logo file exports (PNG, SVG, light/dark/color variations)</li>
+        </ul>
+        <div class="tier-card__not">Not included: logo from scratch, business cards, letterhead, social templates, messaging framework, strategy, competitor research.</div>
+      </div>
+      <div class="tier-connector">+</div>
+      <div class="tier-card">
+        <div class="tier-card__name">Brand Identity</div>
+        <div class="tier-card__for">Best for clients launching a new business or rebranding — a complete, professional brand from scratch, including collateral.</div>
+        <ul>
+          <li>Everything in Brand Essentials, plus:</li>
+          <li>Logo designed from scratch (concepts, revisions, final)</li>
+          <li>Full brand guidelines document</li>
+          <li>Business card &amp; letterhead design</li>
+          <li>Slide deck template</li>
+          <li>Social media profile templates</li>
+          <li>Messaging framework &amp; brand voice guidelines</li>
+        </ul>
+        <div class="tier-card__not">Not included: competitor research, audience profiles, UX strategy, content strategy, SEO alignment, growth roadmap.</div>
+      </div>
+      <div class="tier-connector">+</div>
+      <div class="tier-card">
+        <div class="tier-card__name">Brand Strategy</div>
+        <div class="tier-card__for">Best for clients who want a strategic foundation, not just a pretty brand — the right fit when branding and website planning need to work together.</div>
+        <ul>
+          <li>Everything in Brand Identity, plus:</li>
+          <li>Competitor &amp; market audit, audience profiles</li>
+          <li>Brand positioning &amp; value proposition</li>
+          <li>UX strategy — information architecture &amp; user journeys</li>
+          <li>Content strategy &amp; SEO keyword alignment</li>
+          <li>Conversion strategy &amp; content roadmap (3–6 months)</li>
+          <li>Growth roadmap &amp; brand + web strategy playbook</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subhead">Shape 2 — Full Package (Website + Branding, Built Together)</h3>
+    <p>Branding and the website designed as one system from day one, not bolted together after the fact. The brand tier (Essentials, Identity, or Strategy) is chosen alongside the website scope, and every visual and messaging decision on the site traces back to the brand work — colors, layout, calls to action, all of it backed by the same strategy instead of guessed at independently.</p>
+
+    <h3 class="subhead">Shape 3 — Website + Branding Touch (Add-On, Not a Tier)</h3>
+    <p>For clients who already have branding but need it extended — not a full tier, a scoped custom-graphics/icons deliverable that complements what they already have (think: custom iconography, supporting graphics) as part of a website project. The client owns the files outright, usable anywhere — flyers, social, wherever.</p>
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>Pricing and designer-budget logic for this add-on is still unresolved — revisit alongside Pricing Philosophy.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s08">
+    <div class="section__head"><span class="section__eyebrow">§08</span><h2 class="section__title">Headless Commerce (Shopify)</h2></div>
+    <p class="lede">For clients who need to sell products online without settling for a themed Shopify store. Same custom-built, client-owns-it model as every other Latz Web Design project — Shopify just handles the commerce layer.</p>
+
+    <h3 class="subhead">How It Works</h3>
+    <ul>
+      <li>Custom Next.js frontend, built the same way as every other Latz Web Design site — no theme, no template</li>
+      <li>Shopify runs as the backend, handling what it's actually built for and battle-tested at: product catalog, inventory, secure checkout, and payment processing. A trusted, widely-used commerce engine — not a design system</li>
+      <li>The client gets a fully custom storefront with proven commerce infrastructure underneath — not a themed Shopify store customized on top</li>
+    </ul>
+
+    <h3 class="subhead">What This Solves</h3>
+    <p>Off-the-shelf Shopify themes look like everyone else's and are clunky to customize. A themed store is still Shopify's design system wearing the client's logo. This flips that — the frontend is built custom, to the same speed, ownership, and design standards as every other build, and Shopify is doing what it's good at in the background instead of dictating what the site looks like.</p>
+
+    <h3 class="subhead">Who It's For</h3>
+    <p>Retailers and product-based businesses ready to move off a templated storefront — see Target Audience 05 (Businesses Selling Online) in Part I.</p>
+  </section>
+
+  <section class="section" id="s09">
+    <div class="section__head"><span class="section__eyebrow">§09</span><h2 class="section__title">SEO Foundations</h2></div>
+
+    <h3 class="subhead">The Core Idea</h3>
+    <p>SEO isn't a checklist added at launch — it's wired into the CMS itself. Every project starts from the same template stack, and the SEO fields live in the CMS as content the client (or Jordan) can edit — title, description, business info, service areas — which automatically propagates to metadata, structured data, and social sharing across the entire site. Nothing is hardcoded per-page, and nothing goes stale because a plugin update broke it.</p>
+
+    <h3 class="subhead">What's Built Into Every Project</h3>
+    <ol class="num-list">
+      <li class="num-list__item"><span class="num-list__num">01</span><div class="num-list__body"><b>CMS-Driven SEO Settings</b><p>One set of site-wide SEO data drives everything downstream: site identity and URL, fallback title and description, default social sharing image, and business/schema data. Edit it once, and it's reflected everywhere the site pulls from it.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">02</span><div class="num-list__body"><b>Metadata That Follows the Content</b><p>Every page inherits consistent titles, descriptions, and branding automatically. Full Open Graph and Twitter Card data, plus the Google Search Console verification tag, are built into every project by default.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">03</span><div class="num-list__body"><b>Structured Data (Schema Markup)</b><p>Every site ships with structured data (schema.org markup) telling Google exactly what kind of business it is, along with address, service areas, contact info, and price range where applicable.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">04</span><div class="num-list__body"><b>Sitemap &amp; Robots.txt</b><p>Automatically generated for every project — not hand-maintained, not forgotten.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">05</span><div class="num-list__body"><b>Search Console — Confirmed, Not Assumed</b><p>The one manual step in the system, done personally by Jordan after every launch: register the site in Google Search Console, request indexing, and confirm it's actually being crawled and indexed correctly.</p></div></li>
+    </ol>
+
+    <h3 class="subhead">How This Is Different</h3>
+    <div class="compare-grid">
+      <div class="compare-card"><h4>WordPress</h4><p>SEO usually depends on a plugin (like Yoast) layered on top — another thing that can break, conflict with other plugins, or fall out of date.</p></div>
+      <div class="compare-card"><h4>Wix / Squarespace</h4><p>SEO controls are limited and templated — clients get a form field, not a system.</p></div>
+      <div class="compare-card compare-card--us"><h4>Latz Web Design</h4><p>SEO is infrastructure, built into the same CMS the client already uses to edit their site. Update the content, the SEO updates with it.</p></div>
+    </div>
+
+    <div class="callout callout--client">
+      <span class="callout__label">Client-Facing Copy</span>
+      <p>"SEO isn't something we bolt on before launch and hope holds up. It's built into the same system you use to edit your site — update your content, and your SEO updates with it. And when your site goes live, I personally register it with Google and confirm it's actually being found — nothing launches and gets forgotten."</p>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>This is bundled into every website build, not billed separately — it's infrastructure in the template stack itself, not incremental per-client labor. Clients don't need to "pay extra" for visibility (see §05). Content and keyword strategy — deciding what pages should exist, what keywords to target — is a separate discipline; it only shows up as a deliverable inside the Brand Strategy tier (§07). Ongoing SEO monitoring/reporting (rankings, traffic trends over time) is a real, distinct offering from this one-time foundation — a possible future add-on, not yet scoped. Revisit both alongside Pricing.</p>
+    </div>
+  </section>
+
+  <section class="section" id="pricing-pending">
+    <div class="section__head"><span class="section__eyebrow">§—</span><h2 class="section__title">Pricing Philosophy</h2><span class="badge badge--pending">Pending</span></div>
+    <div class="callout callout--note">
+      <span class="callout__label">Status</span>
+      <p>This section is intentionally not yet finalized — pricing across the branding tiers is currently being reworked and shouldn't be treated as settled. It will be drafted and folded in here once the numbers land.</p>
+    </div>
+  </section>
+
+  <!-- ================= PART III ================= -->
+  <div class="part" id="part-3">
+    <div class="part__numeral">III</div>
+    <div class="part__body">
+      <span class="part__eyebrow">Part III · §10</span>
+      <h2 class="part__title">How You Work</h2>
+      <p class="part__desc">The client journey, from first conversation to post-launch.</p>
+    </div>
+    <div class="part__numeral-ghost">III</div>
+  </div>
+
+  <section class="section" id="s10">
+    <div class="section__head"><span class="section__eyebrow">§10</span><h2 class="section__title">Client Journey</h2></div>
+    <p class="lede">Every project — website, branding, or both — moves through the same eight phases, from the first conversation to what happens after the site is live.</p>
+
+    <div class="timeline">
+      <div class="timeline__item">
+        <div class="timeline__node">1</div>
+        <div class="timeline__title">Discovery</div>
+        <ul>
+          <li>We start with a conversation about your business, goals, and what's not working</li>
+          <li>This phase uncovers your audience, brand voice, and what success looks like</li>
+          <li>We determine if you need branding, a website, or both — and which tier fits</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">2</div>
+        <div class="timeline__title">Proposal</div>
+        <ul>
+          <li>You receive a clear, upfront project scope with pricing — no hidden fees</li>
+          <li>Timeline, deliverables, and expectations are fully outlined before we start</li>
+          <li>You choose your path: website only, branding only, or bundled together</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">3</div>
+        <div class="timeline__title">Brand Foundation</div>
+        <div class="timeline__sub">if applicable</div>
+        <ul>
+          <li>If doing branding work, this phase comes before design and development</li>
+          <li>We define your brand identity: logo, colors, fonts, voice, messaging, and any strategic deliverables</li>
+          <li>This ensures the website design is built on a real brand — not guesses</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">4</div>
+        <div class="timeline__title">Design Directions</div>
+        <ul>
+          <li>Our designer creates 1–3 visual directions (number depends on project scope)</li>
+          <li>You review each direction, share what you like and don't like, or pick a direction to move forward with</li>
+          <li>This ensures the final design matches your vision before we build</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">5</div>
+        <div class="timeline__title">Build</div>
+        <div class="timeline__sub">with live link access</div>
+        <ul>
+          <li>Your site is built from scratch — design, development, and copywriting</li>
+          <li>You're given a live staging link so you can watch the site being built in real time</li>
+          <li>This lets you give feedback throughout, ensuring alignment and avoiding big surprises</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">6</div>
+        <div class="timeline__title">Review</div>
+        <ul>
+          <li>We walk through the site together and refine until it's perfect</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">7</div>
+        <div class="timeline__title">Handoff</div>
+        <ul>
+          <li>Hosting and accounts are transferred into your name — you own everything</li>
+          <li>You get a full walkthrough on how to update your site (takes about 5 minutes to learn)</li>
+          <li>All brand assets are delivered in final file formats</li>
+          <li>We remain available for questions, but you're never locked into ongoing fees</li>
+        </ul>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__node">8</div>
+        <div class="timeline__title">Post-Launch</div>
+        <ul>
+          <li>We personally confirm your site is registered with Google Search Console and actually getting indexed — not just assumed (full system in §09)</li>
+          <li>We ask for a review while the experience is still fresh</li>
+          <li>Analytics are already live — button-level tracking is set up in your own Vercel project from day one, so you can see what's actually getting used</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout--client">
+      <span class="callout__label">Client-Facing Copy — Build Phase</span>
+      <p>"With a live link to your project, you can watch your site being built in real time. Instead of waiting weeks for a surprise 'reveal,' you'll see progress, give feedback, and stay involved at every step. It's transparent, collaborative, and ensures the final site matches your vision perfectly."</p>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>This stays narrative-level — what a client or new hire understands, not the operational tool. The real system underneath it is a Sanity-based client portal with 39 steps across 8 phases, tracking deposits, designer vs. internal assignment, and milestone due dates. Packaging the analytics data into a recurring client-facing report is a real idea Jordan's floated, not a committed deliverable — flagged for Pricing later.</p>
+    </div>
+  </section>
+
+  <!-- ================= PART IV ================= -->
+  <div class="part" id="part-4">
+    <div class="part__numeral">IV</div>
+    <div class="part__body">
+      <span class="part__eyebrow">Part IV · §11–§14</span>
+      <h2 class="part__title">How You Sell &amp; Talk About It</h2>
+      <p class="part__desc">Scripts, messaging, voice, and outreach — how the story gets told.</p>
+    </div>
+    <div class="part__numeral-ghost">IV</div>
+  </div>
+
+  <section class="section" id="s11">
+    <div class="section__head"><span class="section__eyebrow">§11</span><h2 class="section__title">Sales Playbook</h2></div>
+
+    <h3 class="subhead">Discovery Questions</h3>
+    <p class="lede">Use early in a call to uncover frustrations and goals you can anchor the rest of the conversation to.</p>
+    <ol>
+      <li>"What do you like and dislike about your current website?"</li>
+      <li>"How do you update your site right now — and is that easy or frustrating?"</li>
+      <li>"Have you had issues with your site breaking, being slow, or costing more than you expected?"</li>
+      <li>"What role do you want your website to play — credibility, lead generation, sales tool?"</li>
+      <li>"Are you paying ongoing fees now for maintenance, hosting, or updates?"</li>
+      <li>"Do you have established branding — logo, colors, messaging — or is that something you need help with?"</li>
+      <li>"If we could fix one thing immediately, what would it be?"</li>
+    </ol>
+
+    <h3 class="subhead">Objection Handling — WordPress</h3>
+    <div class="qa">
+      <div class="qa__item"><div class="qa__q">"Why not just use WordPress?"</div><p class="qa__a">"WordPress is powerful but depends on plugins that often clash or break with updates. Most of our clients came to us after their WP sites kept slowing down or costing them in retainers. We build fast, stable sites that don't rely on that bloat — and you own it outright."</p></div>
+      <div class="qa__item"><div class="qa__q">"But plugins make WordPress flexible."</div><p class="qa__a">"Plugins can add features, but they also add risk. With our builds, you get the functionality you need custom-coded, so it's faster, safer, and longer-lasting."</p></div>
+    </div>
+
+    <h3 class="subhead">Objection Handling — Wix / GoDaddy</h3>
+    <div class="qa">
+      <div class="qa__item"><div class="qa__q">"Wix is easier and cheaper — why not that?"</div><p class="qa__a">"Wix and GoDaddy are great for getting online fast, but most businesses outgrow them. They're template-based, limited in SEO, and you don't really own the platform. We build custom sites designed for growth, not just for being online."</p></div>
+      <div class="qa__item"><div class="qa__q">"I already built on Wix — why should I change?"</div><p class="qa__a">"DIY builders work for a start, but if you want your site to bring in customers instead of just existing, you'll need something faster, more professional, and designed specifically around your business."</p></div>
+    </div>
+
+    <h3 class="subhead">Objection Handling — Branding</h3>
+    <div class="qa">
+      <div class="qa__item"><div class="qa__q">"I already have a logo — do I really need branding?"</div><p class="qa__a">"A logo is one piece of the puzzle. Without a color palette, fonts, voice, and guidelines around it, your brand will look different everywhere it shows up. That inconsistency makes people trust you less, not more. We build the whole system so everything looks and sounds like the same business."</p></div>
+      <div class="qa__item"><div class="qa__q">"Can't I just get a logo on Fiverr?"</div><p class="qa__a">"You can. And it'll look like it. We don't just design a logo — we build a brand system: colors, fonts, messaging, collateral, all designed to work together. Everything looks and sounds like the same business, everywhere it shows up."</p></div>
+      <div class="qa__item"><div class="qa__q">"I don't think I need branding — just a website."</div><p class="qa__a">"Totally fine. Every website build includes brand-aligned copywriting and design. But if you ever want to take it further — full brand identity, business cards, messaging framework — we can add that anytime."</p></div>
+    </div>
+
+    <h3 class="subhead">Budget Conversation Framework</h3>
+    <div class="flow">
+      <div class="flow__item"><span class="flow__label">Open the Door</span><p class="flow__text">"Budget's only awkward if we make it awkward. Do you have a ballpark in mind for what you'd like to invest in your website?"</p></div>
+      <div class="flow__item"><span class="flow__label">If They Don't Know</span><p class="flow__text">"No problem — usually we work backwards. If you give us a range you're comfortable with, we'll work to maximize what we can do within that."</p></div>
+      <div class="flow__item"><span class="flow__label">If They Give a Low Number</span><p class="flow__text">"You can absolutely find a website for a couple hundred dollars, but those are usually template-based sites that don't fix the problems you mentioned. If you want a site that actually works for your business, it makes sense to invest more."</p></div>
+      <div class="flow__item"><span class="flow__label">Reframe the Value</span><p class="flow__text">"We build your site as a one-time project. Once it's done, it's 100% yours — hosting, code, and content. No monthly charges for the website itself. If you need branding too, we bundle it together for a better result and a better price."</p></div>
+      <div class="flow__item"><span class="flow__label">Close the Loop</span><p class="flow__text">"Based on what you've told us, we can solve your problems and deliver a site that actually drives results — within that budget range."</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="s12">
+    <div class="section__head"><span class="section__eyebrow">§12</span><h2 class="section__title">Messaging Framework</h2></div>
+
+    <h3 class="subhead">Hero Statements <span style="font-weight:400; font-size:.78rem; color:var(--text-faint);">(website / ads / social banners)</span></h3>
+    <ul>
+      <li>"Websites That Work While You Sleep."</li>
+      <li>"Custom Brands &amp; Websites — No Templates, No Lock-In."</li>
+      <li>"Built to Convert. Designed to Last. Yours to Own."</li>
+      <li>"You Deserve a Website That Pulls Its Weight."</li>
+      <li>"Not WordPress. Not Wix. Just Better."</li>
+      <li>"Invest Once. Benefit for Years."</li>
+    </ul>
+
+    <h3 class="subhead">Elevator Pitch (30 Seconds)</h3>
+    <p class="pullquote">"Most businesses end up stuck with WordPress or Wix — sites that look like everyone else's, run slow, and come with hidden costs. We build modern, custom websites that are fast, stable, and fully owned by the client. If they need branding, we handle that too — logo, colors, messaging, the whole system — so everything is cohesive from day one. No templates, no plugins, no monthly fees for the website. Just a powerful business tool you own, built to convert visitors into customers."</p>
+
+    <h4 style="font-size:.85rem; color:var(--text-faint); font-style:italic; margin:0 0 .5rem;">Casual / One-on-One Version</h4>
+    <div class="callout callout--client">
+      <p>"I'm like your business's personal developer — you only pay when you actually need me."</p>
+    </div>
+
+    <h3 class="subhead">Proposal Lines (Drop-In Copy)</h3>
+    <div class="qa">
+      <div class="qa__item"><div class="qa__q">Opening Line</div><p class="qa__a">"Your website shouldn't cost you customers in speed, trust, or hidden fees. Latz Web Design builds custom brands and websites designed for long-term growth."</p></div>
+      <div class="qa__item"><div class="qa__q">Value Recap</div><p class="qa__a">"Unlike WordPress or Wix, where 'easy setup' often means cluttered dashboards and slow sites, our approach delivers lasting stability, strategic branding, and complete ownership."</p></div>
+      <div class="qa__item"><div class="qa__q">Closing Line</div><p class="qa__a">"No templates. No lock-in. Just a brand and website you own, built to last."</p></div>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>Hero statements go on the website homepage, ads, and social post graphics. The full elevator pitch is the go-to answer when someone asks what you do; the casual one-liner is for quick introductions where the full pitch is too long — it also doubles as a plain-language summary of the no-monthly-fees model. Proposal lines can be dropped into quotes, intro pages, or "Why Choose Us" slides.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s13">
+    <div class="section__head"><span class="section__eyebrow">§13</span><h2 class="section__title">Brand Voice &amp; Style</h2></div>
+
+    <h3 class="subhead">Core Voice Traits</h3>
+    <ol class="num-list">
+      <li class="num-list__item"><span class="num-list__num">01</span><div class="num-list__body"><b>Direct &amp; Confident</b><p>Short, punchy lines. Say things plainly — "No fluff. Just results." Always sound like an expert who knows the value of their work.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">02</span><div class="num-list__body"><b>Client-Centered</b><p>Focus on you (the client), not us (the team). Phrases like: "You deserve a site that works for your business — not the other way around."</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">03</span><div class="num-list__body"><b>Anti-BS / No Gimmicks</b><p>Call out the problems with WordPress/Wix directly. Lean into honesty: "No templates. No shortcuts. No ongoing fees."</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">04</span><div class="num-list__body"><b>Results-Oriented</b><p>Tie everything back to performance, leads, and ROI. Example: "Designed to convert. Built mobile-first, optimized for speed, and ready to rank."</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">05</span><div class="num-list__body"><b>Trust &amp; Ownership</b><p>Emphasize that the client owns everything — the site, the hosting, the brand assets, and the tools. Example: "YOU OWN IT. FOREVER."</p></div></li>
+    </ol>
+
+    <h3 class="subhead">Voice Rules</h3>
+    <ul>
+      <li><strong>Sentence length:</strong> keep it tight (5–12 words)</li>
+      <li><strong>Style:</strong> use fragments for punch ("No fluff. Just results.")</li>
+      <li><strong>Don't:</strong> use jargon ("bespoke," "synergy," "digital transformation")</li>
+      <li><strong>Do:</strong> use everyday business language ("fast," "convert," "yours to own")</li>
+    </ul>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>This voice governs every other client-facing section in this playbook — Sales Playbook scripts (§11), Messaging Framework lines (§12), proposals, and site copy. No jargon, no hedging, no corporate language creeping in anywhere client-facing.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s14">
+    <div class="section__head"><span class="section__eyebrow">§14</span><h2 class="section__title">Marketing &amp; Outreach</h2></div>
+
+    <div class="roadmap-block">
+      <h4>1. Local Networking</h4>
+      <ul>
+        <li>Attend Chamber of Commerce events, small business expos, and networking groups</li>
+        <li>Position yourself as "the modern alternative to WordPress/Wix — custom brands and websites you own"</li>
+        <li>Bring simple one-pagers or cards with a clear headline</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>2. SEO (Local &amp; Service-Based)</h4>
+      <ul>
+        <li>Optimize for terms like "Stevens Point web design," "Wisconsin custom websites," "small business branding Wisconsin"</li>
+        <li>Create service-area landing pages</li>
+        <li>Blog/educational posts targeting pain points: "The Hidden Costs of WordPress," "Why Wix Sites Don't Rank," "Why Your Brand Matters More Than Your Logo"</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>3. Educational Content</h4>
+      <ul>
+        <li>Blog posts, LinkedIn articles, short videos explaining problems clients face</li>
+        <li>Position yourself as an advisor, not just another freelancer</li>
+        <li>Topics: "5 Questions to Ask Before Paying for a Website," "What's Actually Included in a Professional Brand Identity," "Why Most Contractors' Websites Lose Them Leads"</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>4. Case Studies &amp; Proof</h4>
+      <ul>
+        <li>Share before/after comparisons: site speed, SEO improvements, lead generation, brand transformations</li>
+        <li>Use simple metrics (e.g., "Client went from 4s load time → 0.8s on new site")</li>
+        <li>Local proof sells — small-town business owners trust word of mouth</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>5. Facebook / Instagram Ads</h4>
+      <p style="font-size:.88rem; color:var(--text-faint); margin-bottom:.7rem;">Target: small business owners in Wisconsin/Midwest (age 35–60)</p>
+      <div class="qa">
+        <div class="qa__item"><div class="qa__q">The Template Problem</div><p class="qa__a">"Templates look cheap. You know it. Your customers know it. We build custom websites from scratch. You own it forever. No monthly fees."</p></div>
+        <div class="qa__item"><div class="qa__q">The Brand Gap</div><p class="qa__a">"Your logo was made on Canva. Your website is on Wix. Your business cards don't match either. That's not a brand — that's a patchwork. We build cohesive brands and websites that make your business look as good as it actually is."</p></div>
+        <div class="qa__item"><div class="qa__q">The Ownership Pitch</div><p class="qa__a">"You're paying $200/month for a website you don't even own. We build custom sites for a one-time investment. You own it forever. No lock-in."</p></div>
+      </div>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>6. Referral &amp; Partnerships</h4>
+      <ul>
+        <li>Partner with local marketing agencies, photographers, and videographers who don't offer web development or branding</li>
+        <li>Build reciprocal referrals (they send web/brand clients, you send media/ads clients)</li>
+        <li>Offer to integrate their services into your builds</li>
+      </ul>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>Channel 4 (Case Studies &amp; Proof) is the marketing use of proof — see Part V for the full case study structure and template this draws from.</p>
+    </div>
+  </section>
+
+  <!-- ================= PART V ================= -->
+  <div class="part" id="part-5">
+    <div class="part__numeral">V</div>
+    <div class="part__body">
+      <span class="part__eyebrow">Part V · §15</span>
+      <h2 class="part__title">Proof</h2>
+      <p class="part__desc">How results get documented and shown once they exist.</p>
+    </div>
+    <div class="part__numeral-ghost">V</div>
+  </div>
+
+  <section class="section" id="s15">
+    <div class="section__head"><span class="section__eyebrow">§15</span><h2 class="section__title">Case Studies &amp; Proof</h2></div>
+
+    <h3 class="subhead">What to Showcase</h3>
+    <ol class="num-list">
+      <li class="num-list__item"><span class="num-list__num">01</span><div class="num-list__body"><b>Before/After Performance</b><p>Page speed (old vs. new load time), Core Web Vitals (LCP, CLS, FID), mobile performance (clunky and slow vs. fast and mobile-first).</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">02</span><div class="num-list__body"><b>SEO Improvements</b><p>Ranking increases for local/target keywords, organic traffic growth month-over-month.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">03</span><div class="num-list__body"><b>Brand Transformations</b><p>Before/after of inconsistent branding → cohesive brand system. Show how the brand identity carries across website, cards, social, signage.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">04</span><div class="num-list__body"><b>Conversions / Leads</b><p>Increases in contact form submissions, calls, or bookings after launch. Track and report on conversion improvements over time.</p></div></li>
+      <li class="num-list__item"><span class="num-list__num">05</span><div class="num-list__body"><b>Client Testimonials</b><p>Short, authentic quotes highlighting ease of process, performance gains, ownership, and brand quality.</p></div></li>
+    </ol>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>These are the categories to pull from once real client data exists — not filled-in claims. Numbers only go in once there's an actual result behind them.</p>
+    </div>
+
+    <h3 class="subhead">Case Study Structure (Template)</h3>
+    <div class="phase-row">
+      <div class="phase-card"><span class="phase-card__eyebrow">1</span><div class="phase-card__title">The Problem</div><p style="font-size:.88rem; color:var(--text-muted); margin:0;">What the client was dealing with before: an outdated or broken site, inconsistent branding, no clear messaging, whatever pain point drove them to reach out.</p></div>
+      <div class="phase-card"><span class="phase-card__eyebrow">2</span><div class="phase-card__title">The Solution</div><p style="font-size:.88rem; color:var(--text-muted); margin:0;">What was actually built: the website, the brand system, or both — and how it addressed the specific problem.</p></div>
+      <div class="phase-card"><span class="phase-card__eyebrow">3</span><div class="phase-card__title">The Results</div><p style="font-size:.88rem; color:var(--text-muted); margin:0;">Concrete outcomes: speed improvements, SEO gains, conversion increases, brand consistency across touchpoints.</p></div>
+      <div class="phase-card"><span class="phase-card__eyebrow">4</span><div class="phase-card__title">The Client's Words</div><p style="font-size:.88rem; color:var(--text-muted); margin:0;">A 1–2 sentence testimonial in their own voice.</p></div>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>This is the fill-in-the-blank shape for every case study going forward — one problem, one solution, one set of results, one quote. Keeps them scannable and consistent whether they end up on the website, in a proposal, or in a pitch deck. No case study gets written until there's a real project to pull the numbers from.</p>
+    </div>
+
+    <h3 class="subhead">Client-Facing Copy — Proof Section Intro</h3>
+    <div class="callout callout--client">
+      <p>"Most agencies show you pretty designs. We show you results. Every project we launch comes with faster load times, better SEO, higher conversions, and a brand that looks professional everywhere. Real numbers. Real businesses. Real growth."</p>
+    </div>
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>This is the intro line for wherever case studies live on the site — a dedicated Proof/Results page, or a section on the homepage. It sets the frame before any actual case studies get dropped in.</p>
+    </div>
+  </section>
+
+  <!-- ================= PART VI ================= -->
+  <div class="part" id="part-6">
+    <div class="part__numeral">VI</div>
+    <div class="part__body">
+      <span class="part__eyebrow">Part VI · §16–§17</span>
+      <h2 class="part__title">Growth</h2>
+      <p class="part__desc">Where the business goes next, and who joins along the way.</p>
+    </div>
+    <div class="part__numeral-ghost">VI</div>
+  </div>
+
+  <section class="section" id="s16">
+    <div class="section__head"><span class="section__eyebrow">§16</span><h2 class="section__title">Growth &amp; Scaling Plan</h2></div>
+    <p class="lede">Latz Web Design was built as a lean operation, but the model is designed to scale without losing its identity.</p>
+
+    <div class="phase-row">
+      <div class="phase-card">
+        <span class="phase-card__eyebrow">Phase 2</span>
+        <div class="phase-card__title">Document &amp; Refine</div>
+        <div class="phase-card__focus">Focus: document processes and refine the playbook</div>
+        <ul>
+          <li>Formalize branding service tiers and bundling with website builds</li>
+          <li>Build repeatable processes for brand + web projects with Alyssa</li>
+          <li>Update website and all public-facing messaging to reflect expanded offerings</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <span class="phase-card__eyebrow">Phase 3</span>
+        <div class="phase-card__title">Increase Capacity</div>
+        <div class="phase-card__focus">Focus: increase client capacity while keeping quality high</div>
+        <ul>
+          <li>Part-time VA/Project Manager (scheduling, client follow-ups, admin)</li>
+          <li>Specialist partnerships: CRM/automation consultant, ads/marketing partner</li>
+          <li>Consider white-label branding/web services to other agencies</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <span class="phase-card__eyebrow">Phase 4</span>
+        <div class="phase-card__title">Build the Team</div>
+        <div class="phase-card__focus">Focus: build a small, consistent team</div>
+        <ul>
+          <li>Junior Developer (site builds under your system)</li>
+          <li>Dedicated Designer (full-time or contract)</li>
+          <li>Advanced SEO/content partnerships for clients needing campaigns</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="pullquote">WordPress agencies scale by pushing templates and retainers. Latz Web Design scales carefully — adding the right people at the right time and partnering selectively, so the promise remains the same: custom, strategic, modern, stable, no lock-in.</p>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>The "CRM/automation consultant" specialist partnership under Phase 3 is an external referral relationship — a specialist to bring in for clients who need it — distinct from an in-house CRM/dashboard product.</p>
+    </div>
+  </section>
+
+  <section class="section" id="s17">
+    <div class="section__head"><span class="section__eyebrow">§17</span><h2 class="section__title">Hiring Roadmap</h2></div>
+
+    <div class="roadmap-block">
+      <h4>Now: Document &amp; Systemize</h4>
+      <ul>
+        <li>Build out repeatable processes (this playbook is the foundation)</li>
+        <li>Templates for proposals, contracts, onboarding, project flow, and handoff</li>
+        <li>Document branding workflow with Alyssa</li>
+      </ul>
+    </div>
+
+    <div class="partner-card">
+      <div class="partner-card__name">Alyssa</div>
+      <span class="partner-card__role">Design Partner · Active</span>
+      <p>All branding and design work is done in partnership with Alyssa. Jordan handles discovery, strategy, client communication, copywriting, and development. Alyssa handles visual design, brand identity, and design deliverables. Everything is presented to clients under Latz Web Design — one point of contact for the client.</p>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>Early Hires (Per-Project Contractors)</h4>
+      <ul>
+        <li>Copywriter/SEO partner for deep content strategy and blog writing</li>
+        <li>Photographer/videographer coordination for client media needs</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>Steady Flow: Operations Support</h4>
+      <div class="roadmap-sub">VA or Project Manager, once juggling 4–6 active builds</div>
+      <ul>
+        <li>Client check-ins, scheduling, content chasing, admin work</li>
+        <li>Keeps you focused on high-value dev + sales work</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>Later Stage: Technical Support</h4>
+      <div class="roadmap-sub">Junior Developer</div>
+      <ul>
+        <li>Trained on your stack and playbook standards</li>
+        <li>Handles smaller builds, site updates, QA</li>
+      </ul>
+    </div>
+
+    <div class="roadmap-block">
+      <h4>Partnership Opportunities</h4>
+      <ul>
+        <li>Marketing Agencies — referrals both ways (you build, they run ads/marketing)</li>
+        <li>SEO Specialists — for bigger projects needing deep SEO campaigns</li>
+      </ul>
+    </div>
+
+    <div class="callout callout--note">
+      <span class="callout__label">Internal Note</span>
+      <p>On the Jordan/Alyssa workflow-split table: Alyssa is an active freelance design partner, not a new hire, so the table stays out of the playbook for now. It comes back once an actual new hire (VA, Junior Developer, etc.) joins and needs the division of labor spelled out from scratch.</p>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="closing__box">
+      <h3>End of Playbook</h3>
+      <p>This is a living document. Pricing Philosophy (§—) will be finalized and folded in as those decisions land — everything else here reflects the current state of the business.</p>
+    </div>
+  </div>
+
+</main>
+
+<button class="backtotop" id="backtotop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+(function(){
+  var sidebar = document.getElementById('sidebar');
+  var backdrop = document.getElementById('backdrop');
+  var menuBtn = document.getElementById('menuBtn');
+  var backtotop = document.getElementById('backtotop');
+  var progress = document.getElementById('progress');
+  var navlinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+
+  function openMenu(){ sidebar.classList.add('is-open'); backdrop.classList.add('is-visible'); }
+  function closeMenu(){ sidebar.classList.remove('is-open'); backdrop.classList.remove('is-visible'); }
+  menuBtn && menuBtn.addEventListener('click', function(){
+    sidebar.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  backdrop && backdrop.addEventListener('click', closeMenu);
+  navlinks.forEach(function(a){
+    a.addEventListener('click', function(){ if(window.innerWidth < 1024){ closeMenu(); } });
+  });
+
+  // Reading progress + back to top
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    var pct = height > 0 ? (scrolled / height) * 100 : 0;
+    progress.style.width = pct + '%';
+    if(scrolled > 600){ backtotop.classList.add('is-visible'); } else { backtotop.classList.remove('is-visible'); }
+  }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+  backtotop.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+
+  // Scrollspy
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section[id], .cover[id]'));
+  var linkMap = {};
+  navlinks.forEach(function(a){ linkMap[a.getAttribute('href').slice(1)] = a; });
+  var docbarCrumb = document.getElementById('docbarCrumb');
+  var topbarCrumb = document.getElementById('topbarCrumb');
+
+  function crumbFor(link){
+    if(link.getAttribute('href') === '#cover') return 'Overview';
+    var group = link.closest('.navgroup');
+    var label = group && group.querySelector('.navgroup__title');
+    return label ? label.textContent : '';
+  }
+
+  var spyObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = entry.target.id;
+      var link = linkMap[id];
+      if(!link) return;
+      if(entry.isIntersecting){
+        navlinks.forEach(function(l){ l.classList.remove('is-active'); });
+        link.classList.add('is-active');
+        var crumb = crumbFor(link);
+        if(docbarCrumb) docbarCrumb.textContent = crumb;
+        if(topbarCrumb) topbarCrumb.textContent = crumb;
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  sections.forEach(function(s){ spyObserver.observe(s); });
+
+  // Reveal on scroll
+  var revealTargets = Array.prototype.slice.call(document.querySelectorAll('.section, .part'));
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
+  revealTargets.forEach(function(t){ revealObserver.observe(t); });
+})();
+</script>
+
+</body>
+</html>
