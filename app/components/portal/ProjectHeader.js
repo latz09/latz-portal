@@ -6,6 +6,16 @@ const variantStyles = {
 	client: { back: 'text-teal', label: 'text-teal' },
 };
 
+const MONTHS = [
+	'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+	'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
+function formatMonth(month) {
+	const n = Number(month);
+	return Number.isInteger(n) && n >= 1 && n <= 12 ? MONTHS[n - 1] : month;
+}
+
 export default function ProjectHeader({
 	variant,
 	backHref,
@@ -16,14 +26,14 @@ export default function ProjectHeader({
 	year,
 	action,
 }) {
-	const s = variantStyles[variant];
+	const s = variantStyles[variant] || variantStyles.internal;
 
 	return (
 		<div className='mb-6'>
-			<div className='flex items-center justify-between gap-4 mb-3 lg:mb-6'>
+			<div className='flex items-center justify-between gap-4 mb-4 lg:mb-6'>
 				<Link
 					href={backHref}
-					className='font-mono text-xs text-warning tracking-widest uppercase hover:opacity-70 transition-opacity'
+					className={`font-mono text-xs tracking-widest uppercase hover:opacity-70 transition-opacity ${s.back}`}
 				>
 					← {backLabel}
 				</Link>
@@ -41,13 +51,15 @@ export default function ProjectHeader({
 				) : null}
 			</div>
 
-			<div className='grid gap-1 lg:gap-2 mt-2 lg:mt-4'>
-				<p className='text-base lg:text-xl text-white/80'>{projectName}</p>
-				<p className='text-xs lg:text-base text-white/80'>{clientName}</p>
-				
+			<div className='grid gap-1 lg:gap-2'>
+				<h1 className='text-lg lg:text-4xl 3xl:text-4xl text-white/95'>
+					{projectName}
+				</h1>
+				<p className='text-sm lg:text-base text-white/55'>{clientName}</p>
+
 				{month && year && (
-					<span className='font-mono text-xs text-white/70'>
-						Initial Contact: {month}/{year}
+					<span className='font-mono text-[11px] text-white/35 mt-1 '>
+						Initial contact — {formatMonth(month)} {year}
 					</span>
 				)}
 			</div>

@@ -15,45 +15,43 @@ export default function ProjectMoneySummary({ clientPayment, designerPayment }) 
 	if (!hasClient && !hasDesigner) return null;
 
 	return (
-		<div className='flex flex-col gap-1.5 mb-6'>
+		<>
 			{hasClient && (
-				<p className='font-mono text-xs lg:text-sm text-white/50'>
-					Client:{' '}
-					<span className='text-white'>
+				<div className='bg-white/[0.04] border border-white/[0.08] rounded-xl p-3.5 lg:p-4'>
+					<p className='font-mono text-[10px] tracking-wide uppercase text-white/40 mb-2'>
+						Client payment
+					</p>
+					<p className='text-base font-medium text-white/90 mb-1'>
 						{formatMoney(clientPayment.totalAmount)}
-					</span>
-					{' · '}
-					<span
-						className={
-							clientPayment.depositPaid ? 'text-teal' : 'text-white/40'
-						}
-					>
-						{clientPayment.depositPaid ? '✓ deposit paid' : 'deposit unpaid'}
-					</span>
-					{' · '}
-					<span
-						className={clientPayment.finalPaid ? 'text-teal' : 'text-white/40'}
-					>
-						{clientPayment.finalPaid ? '✓ final paid' : 'final unpaid'}
-					</span>
-				</p>
+					</p>
+					<p className='font-mono text-xs'>
+						<span className={clientPayment.depositPaid ? 'text-teal' : 'text-white/35'}>
+							{clientPayment.depositPaid ? '✓ deposit paid' : 'deposit unpaid'}
+						</span>
+						<span className='text-white/25'> · </span>
+						<span className={clientPayment.finalPaid ? 'text-teal' : 'text-white/35'}>
+							{clientPayment.finalPaid ? '✓ final paid' : 'final unpaid'}
+						</span>
+					</p>
+				</div>
 			)}
 			{hasDesigner && (
-				<p className='font-mono text-xs lg:text-sm text-white/50'>
-					Designer:{' '}
-					<span className='text-purple'>
+				<div className='bg-white/[0.04] border border-white/[0.08] rounded-xl p-3.5 lg:p-4'>
+					<p className='font-mono text-[10px] tracking-wide uppercase text-white/40 mb-2'>
+						Designer payment
+					</p>
+					<p className='text-base font-medium text-purple mb-1'>
 						{designerPayment.actualAmount
 							? formatMoney(designerPayment.actualAmount)
 							: designerPayment.quoteLow && designerPayment.quoteHigh
 								? `${formatMoney(designerPayment.quoteLow)}–${formatMoney(designerPayment.quoteHigh)} quoted`
-								: 'no quote set'}
-					</span>
-					{' · '}
-					<span className='text-white/60 capitalize'>
+								: 'No quote set'}
+					</p>
+					<p className='font-mono text-xs text-white/40 capitalize'>
 						{(designerPayment.status || 'not-started').replace('-', ' ')}
-					</span>
-				</p>
+					</p>
+				</div>
 			)}
-		</div>
+		</>
 	);
 }

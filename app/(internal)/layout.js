@@ -12,7 +12,7 @@ export default async function InternalLayout({ children }) {
 	return (
 		<>
 			<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
-				<div className='max-w-360 mx-auto px-3 lg:px-6 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
+				<div className='max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
 					{/* mobile: title + Clients + New Client on one row · desktop: title + Clients only */}
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
 						<Link href='/dashboard'>

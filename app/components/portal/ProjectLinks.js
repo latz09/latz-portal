@@ -22,7 +22,7 @@ export default function ProjectLinks({variant, previewUrl, figmaUrl, studioUrl, 
   if (!available.length) return null
 
   return (
-    <div className='flex flex-wrap gap-2 mb-10'>
+    <div className='flex flex-wrap gap-2 mt-10 mb-16'>
       {available.map((key) => {
         const {label, icon, accent} = config[key]
         return (

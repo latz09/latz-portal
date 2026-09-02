@@ -12,8 +12,8 @@
 import { ACCENTS } from "@/app/utils/variantColors"
 
 export default function Pill({href, onClick, icon: Icon, accent = 'white', children, external = true}) {
-  const colors = ACCENTS[accent] || ACCENTS.white
-  const className = `inline-flex items-center gap-2 font-mono text-xs px-4 py-2 rounded-full border transition-colors ${colors.text} ${colors.border} ${colors.hoverBg}`
+  const { bg, text, border, hoverBg } = (ACCENTS[accent] || ACCENTS.white).fill
+  const className = `inline-flex items-center gap-2 font-mono text-xs font-medium px-4 py-2 rounded-full border transition-colors ${bg} ${text} ${border} ${hoverBg}`
 
   const content = (
     <>

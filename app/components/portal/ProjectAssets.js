@@ -92,7 +92,7 @@ export default function ProjectAssets({
   if (allItems.length === 0 && !inspiration?.length) return null
 
   return (
-    <div className='mb-10'>
+    <div className='mb-16'>
       {groups.map(group => {
         const items = allItems.filter(item => group.match.includes(item.category))
         if (items.length === 0) return null

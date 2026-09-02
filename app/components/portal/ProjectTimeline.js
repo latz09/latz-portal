@@ -31,25 +31,31 @@ export default function ProjectTimeline({
 		endHigh.setDate(start.getDate() + estimateWeeksHigh * 7);
 
 		return (
-			<p className='font-mono text-xs lg:text-sm text-white/50 mb-6'>
-				Est. completion:{' '}
-				<span className='text-teal'>
+			<div className='bg-white/[0.04] border border-white/[0.08] rounded-xl p-3.5 lg:p-4'>
+				<p className='font-mono text-[10px] tracking-wide uppercase text-white/40 mb-2'>
+					Est. completion
+				</p>
+				<p className='text-base font-medium text-teal mb-1'>
 					{formatShortDate(endLow)} – {formatShortDate(endHigh)}
-				</span>{' '}
-				<span className='text-white/30'>
-					({estimateWeeksLow}–{estimateWeeksHigh} wks from deposit)
-				</span>
-			</p>
+				</p>
+				<p className='font-mono text-xs text-white/35'>
+					{estimateWeeksLow}–{estimateWeeksHigh} wks from deposit
+				</p>
+			</div>
 		);
 	}
 
 	return (
-		<p className='font-mono text-xs lg:text-sm text-white/50 mb-6'>
-			Est. timeline:{' '}
-			<span className='text-white/70'>
+		<div className='bg-white/[0.04] border border-white/[0.08] rounded-xl p-3.5 lg:p-4'>
+			<p className='font-mono text-[10px] tracking-wide uppercase text-white/40 mb-2'>
+				Est. timeline
+			</p>
+			<p className='text-base font-medium text-white/80 mb-1'>
 				{estimateWeeksLow}–{estimateWeeksHigh} weeks
-			</span>{' '}
-			<span className='text-white/30'>(starts once deposit is paid)</span>
-		</p>
+			</p>
+			<p className='font-mono text-xs text-white/35'>
+				starts once deposit is paid
+			</p>
+		</div>
 	);
 }

@@ -2,6 +2,27 @@ export const FETCH_PROJECT_QUERY = `
   *[_type == "project" && client->slug.current == $clientSlug && slug.current == $projectSlug][0] {
     "name": client->name,
     "slug": client->slug.current,
+    "notes": *[_type == "note" && client->slug.current == $clientSlug] | order(_createdAt desc) {
+      _id,
+      title,
+      type,
+      url,
+      pinned,
+      sentAt,
+      completed,
+      completedAt,
+      "clientName": client->name,
+      "clientSlug": client->slug.current,
+      "projectName": project->name,
+      "projectSlug": project->slug.current,
+      body[] {
+        ...,
+        _type == "image" => {
+          ...,
+          "url": asset->url
+        }
+      }
+    },
     "project": {
       "_key": _id,
       _id,
@@ -68,4 +89,4 @@ export const FETCH_PROJECT_QUERY = `
       }
     }
   }
-`
+`;
