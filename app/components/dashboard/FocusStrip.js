@@ -309,11 +309,11 @@ function WaitingRow({ item, isLast }) {
 			}`}
 		>
 			<ClientLabel clientName={item.clientName} tone={label} />
-			<div className='flex items-center justify-between gap-4'>
+			<div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4'>
 				<div className='flex items-center gap-3 min-w-0'>
 					<TbClock className={`text-base shrink-0 ${tone}`} />
 					<div className='flex flex-col min-w-0 gap-0.5'>
-						<span className='text-base md:text-lg font-[540] text-white leading-tight truncate'>
+						<span className='text-base md:text-lg font-[540] text-white leading-tight'>
 							{item.title}
 						</span>
 						<span className='font-mono text-xs text-white/30 truncate'>
@@ -321,7 +321,9 @@ function WaitingRow({ item, isLast }) {
 						</span>
 					</div>
 				</div>
-				<span className={`font-mono text-xs shrink-0 whitespace-nowrap ${tone}`}>
+				<span
+					className={`font-mono text-xs pl-7 sm:pl-0 sm:shrink-0 sm:whitespace-nowrap ${tone}`}
+				>
 					{item.detail}
 				</span>
 			</div>
