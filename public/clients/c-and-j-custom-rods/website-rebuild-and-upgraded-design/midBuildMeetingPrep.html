@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C&amp;J Meeting Prep — Sept 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #f6f4ee;
+    --panel: #fffefb;
+    --ink: #23261f;
+    --ink-soft: #55594d;
+    --line: #ddd8c8;
+    --pine: #23422f;
+    --pine-deep: #182f21;
+    --pine-tint: #eaf0e7;
+    --rust: #a15a24;
+    --rust-tint: #f8ece0;
+    --gold: #b6923f;
+    --shadow: 0 1px 2px rgba(24,32,20,0.04), 0 8px 24px -12px rgba(24,32,20,0.12);
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body{
+    padding: 56px 24px 96px;
+  }
+
+  .doc{
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    margin-bottom: 48px;
+  }
+
+  .eyebrow-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom: 18px;
+  }
+
+  .rod-mark{
+    width: 34px;
+    height: 34px;
+    flex-shrink:0;
+  }
+
+  .kicker{
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  h1{
+    font-family:'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 0 12px;
+    color: var(--pine-deep);
+  }
+
+  .subline{
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+
+  .subline strong{
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{
+    margin-bottom: 44px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid var(--line);
+  }
+
+  .section-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--rust);
+    flex-shrink:0;
+  }
+
+  h2{
+    font-family:'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 23px;
+    color: var(--pine-deep);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  h3{
+    font-family:'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    color: var(--pine);
+    margin: 26px 0 10px;
+  }
+
+  h3:first-of-type{
+    margin-top: 4px;
+  }
+
+  p{
+    font-size: 15.5px;
+    line-height: 1.62;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+
+  ul, ol{
+    margin: 0 0 12px;
+    padding-left: 22px;
+  }
+
+  li{
+    font-size: 15.5px;
+    line-height: 1.6;
+    margin-bottom: 7px;
+    color: var(--ink);
+  }
+
+  li::marker{
+    color: var(--rust);
+  }
+
+  code{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--pine-tint);
+    color: var(--pine-deep);
+    padding: 1.5px 6px;
+    border-radius: 4px;
+  }
+
+  strong{ font-weight: 600; }
+
+  /* ---------- Panels ---------- */
+  .panel{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+  }
+
+  .panel + .panel{
+    margin-top: 14px;
+  }
+
+  .callout{
+    background: var(--rust-tint);
+    border-left: 3px solid var(--rust);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #4a3016;
+  }
+
+  .callout strong{
+    color: var(--rust);
+  }
+
+  /* ---------- Talking points grid ---------- */
+  .stat-row{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 4px 0 18px;
+  }
+
+  .stat-chip{
+    background: var(--pine-tint);
+    color: var(--pine-deep);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 7px 13px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .stat-chip b{
+    font-weight: 700;
+  }
+
+  /* ---------- Checklist ---------- */
+  .check-group{
+    margin-bottom: 26px;
+  }
+
+  .check-group h3{
+    display:flex;
+    align-items:center;
+    gap: 9px;
+  }
+
+  .tag{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .tag.decide{ background:#e7ecdf; color: var(--pine); }
+  .tag.ask{ background: var(--rust-tint); color: var(--rust); }
+  .tag.check{ background:#efe6cf; color:#7a5e18; }
+  .tag.ready{ background:#e4e9ee; color:#33506b; }
+
+  .checklist{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .checklist li{
+    display:flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0;
+  }
+
+  .checklist li:last-child{
+    border-bottom: none;
+  }
+
+  .checklist li::marker{ content:''; }
+
+  .checklist input[type="checkbox"]{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 19px;
+    height: 19px;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 5px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    background: var(--panel);
+    transition: all 0.15s ease;
+  }
+
+  .checklist input[type="checkbox"]:checked{
+    background: var(--pine);
+    border-color: var(--pine);
+  }
+
+  .checklist input[type="checkbox"]:checked::after{
+    content:'';
+    position:absolute;
+    left: 5.5px;
+    top: 1.5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .checklist label{
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-top: 1px;
+    cursor: pointer;
+  }
+
+  .checklist input[type="checkbox"]:checked + label{
+    color: var(--ink-soft);
+    text-decoration: line-through;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 1.5px;
+  }
+
+  .checklist label span.note{
+    display:block;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 600px){
+    body{ padding: 36px 16px 72px; }
+    h1{ font-size: 32px; }
+    .panel{ padding: 18px 18px; }
+  }
+
+  @media print{
+    body{ background: white; padding: 0; }
+    .panel{ box-shadow:none; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header>
+    <div class="eyebrow-row">
+      <span class="kicker">Latz Web Design · Internal Prep</span>
+    </div>
+    <h1>C&amp;J Meeting Prep</h1>
+    <p class="subline">Wednesday, Sept 2 — Chris, Stevens Point Brewery. <strong>Showing:</strong> live preview site, rod builder prototype, Shopify admin. <strong>Deciding:</strong> product page structure.</p>
+  </header>
+
+  <!-- ============ SECTION 1 ============ -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>Where Things Stand</h2>
+    </div>
+
+    <div class="panel">
+      <p>Stack in one sentence: <strong>Sanity</strong> handles marketing copy and page content, <strong>Shopify</strong> handles every product/price/inventory fact, <strong>Next.js</strong> pulls both live. No product data ever lives in Sanity — it only stores the copy around products.</p>
+
+      <h3>Live on the preview site right now</h3>
+      <div class="stat-row">
+        <span class="stat-chip"><b>Apparel</b> — all 3 products, full variant picking</span>
+        <span class="stat-chip"><b>Rods</b> — 2 loaded (Hole Hog / Panfish Spinning)</span>
+        <span class="stat-chip"><b>Reels</b> — 2 loaded</span>
+      </div>
+      <p>Everything pulls real, live Shopify data — nothing faked, matches exactly what you told Chris in the email.</p>
+
+      <h3>Product pages — the main thing to walk through together</h3>
+      <p>Old site crammed everything into the title. New approach: short title, everything else split into two buckets —</p>
+      <ul>
+        <li><strong>Metafields</strong> — structured, become labeled spec rows: rod length, power, action, line weight, lure weight, grip description, blank color, thread color, accent thread color, series name, plus reel-specific fields (size, max drag, weight, gear ratio, bearings)</li>
+        <li><strong>Description field</strong> — free text, stays as marketing copy: feature language, drag system details, anything that's selling copy rather than a comparable spec</li>
+      </ul>
+      <p>This is the real decision to nail down tonight — once the split is agreed, loading the rest of the catalog is just data entry, not a structural question.</p>
+
+      <div class="callout">
+        <strong>Before you leave:</strong> pull up one live rod product page to confirm the exact current title text. Some of your source docs still show the old crammed-title format — you want to know precisely what's live before describing it to Chris in person.
+      </div>
+
+      <h3>Rod builder</h3>
+      <p>Prototype only — not built into the site yet. Single-page layout is the agreed direction with Alyssa (not the step-wizard). Thread color uses categorized Warm / Cool / No Color dropdowns, 63 real colors with real hex data already built in. Walk him through the prototype file directly, not the live site.</p>
+
+      <h3>What's not done — Chris already knows this from your email</h3>
+      <ul>
+        <li><strong>Cart / checkout</strong> — stubbed everywhere on purpose. Button exists, logs to console, does nothing yet. You didn't want to wire checkout before the product page structure is agreed on.</li>
+        <li><strong>Contact page</strong> — still needs the real business info wired in. You've already got it from Chris, just hasn't been entered yet — no ask needed tonight.</li>
+        <li><strong>Rod builder</strong> — prototype phase only.</li>
+      </ul>
+
+      <h3>Reviews</h3>
+      <p>Pulled per-series via a tag match in the CMS, with a fallback to a general review if no series-specific one exists. Five real reviews from Chris are already triaged: two are strong matches for Hole Hog, and none are a clean match yet for Panfish Spinning. Worth surfacing this gap tonight — it's exactly the open question your email raised.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2 ============ -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Shopify Rundown</h2>
+    </div>
+    <p style="margin-top:-8px; margin-bottom:20px; color:var(--ink-soft);">For you — since this is your first Shopify build, here's the fast version of everything worth being fluent on tonight.</p>
+
+    <div class="panel">
+      <h3>Store setup</h3>
+      <p><strong>Client transfer store</strong> (correctly chosen over Dev) — this is what lets you hand it to Chris later. Still in your org, so no real transactions are possible yet — that's expected, not a bug. Domain: <code>cj-custom-rods-vyc3hzbx.myshopify.com</code>. The storefront password page can't be removed pre-transfer, so the raw Shopify URL will hit a password wall — normal.</p>
+
+      <h3>How products get organized</h3>
+      <p>Good to have crisp if Chris asks why there's no dedicated "Ice Rods" tab in Shopify admin:</p>
+      <ul>
+        <li><strong>3 real Shopify Collections</strong> — In-Stock Rods, Reels, Apparel. These are the only structural buckets in admin.</li>
+        <li><strong>Series and Ice/Open Water are tags, not collections</strong> — every rod carries a water-type tag and a series tag; the frontend queries by tag combination. Deliberate simplification after an earlier over-complicated pass — don't second-guess it.</li>
+        <li><strong>Products must be individually published to your storefront channel</strong> — "Active" in Shopify doesn't make a product visible to your headless storefront automatically. Collections need their own separate publish toggle too. You've hit both bugs before and know the fix — first thing to check if something's missing tonight.</li>
+      </ul>
+
+      <h3>Metafields</h3>
+      <p>Shopify's structured custom-data system (namespace + key, e.g. <code>custom.rod_length</code>) — this is the mechanism behind the whole product-page discussion above.</p>
+      <ul>
+        <li><strong>Off by default, per field</strong> — each metafield definition has its own Storefront API access toggle, no account-wide switch. A blank spec on a live page is almost always this.</li>
+        <li>Category metafields (Shopify's built-in taxonomy dropdowns) were rejected in favor of all-custom metafields — one system, Chris types free text instead of picking from Shopify's fixed vocabulary.</li>
+        <li><strong>Unconfirmed:</strong> reel metafield toggles (Bearings, Gear Ratio, Weight, Max Drag) — values are filled in Shopify but the Storefront toggle hasn't been double-checked. If reel specs look empty tonight, check this first — 30-second fix, can even do it live.</li>
+      </ul>
+
+      <h3>Cart / checkout</h3>
+      <p>Good to have crisp if Chris asks when it'll actually work:</p>
+      <ul>
+        <li>Old Shopify Checkout API is dead (shut down April 2025) — you're correctly targeting the current <strong>Cart API</strong>. Confirms your plan is current, nothing to explain away.</li>
+        <li>Once wired: Add to Cart → builds a cart → redirects to Shopify's own hosted checkout.</li>
+        <li>You'll test pre-launch with <strong>Bogus Gateway</strong>, Shopify's fake payment processor. Standard cart checkout tests fine on your current store type.</li>
+      </ul>
+
+      <h3>Rod builder's future checkout mechanism</h3>
+      <p>If it comes up: a builder with length + blank + color + thread + grip is 6+ option categories, and Shopify caps every product at <strong>3 options max</strong>, regardless of variant count. (Common outdated assumption is a "100 variant" ceiling — that was raised to 2,048 in 2025, but the 3-option cap never moved.) So the plan is <strong>Admin API draft orders</strong> instead: price calculated server-side, a draft order created, customer pays through its <code>invoiceUrl</code>. Only fully testable once the store is transferred/on a paid plan.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 ============ -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Meeting Checklist</h2>
+    </div>
+
+    <div class="panel">
+      <div class="check-group">
+        <h3><span class="tag decide">Decide tonight</span></h3>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="c1">
+            <label for="c1">Product page metafield / description split — walk through one rod page live, confirm it works for Chris or hear what he'd change</label>
+          </li>
+          <li>
+            <input type="checkbox" id="c2">
+            <label for="c2">Reviews: series-specific vs. general across the board — his call</label>
+          </li>
+          <li>
+            <input type="checkbox" id="c3">
+            <label for="c3">Rod builder direction — show the single-page prototype, confirm he's good with the shape before you keep building it out</label>
+          </li>
+        </ul>
+      </div>
+
+      <div class="check-group">
+        <h3><span class="tag ask">Ask Chris</span></h3>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="a1">
+            <label for="a1">Seafoam and Titanium Chrome photos — new blank colors, no assets yet
+              <span class="note">Not urgent, just flag it's still open</span>
+            </label>
+          </li>
+          <li>
+            <input type="checkbox" id="a2">
+            <label for="a2">Confirm his casual color names ("Pink," "Green," "Orange," "Blue") map to the catalog names (Hot Pink, Neon Green, Neon Orange, Metallic Blue) — or are they distinct new shades?</label>
+          </li>
+          <li>
+            <input type="checkbox" id="a3">
+            <label for="a3">Reviews: does he want reviews tied to specific series (ice vs. open water), or is it fine to run general reviews if there's no series match?
+              <span class="note">If no series-specific review exists, it still shows — just not tied to that series</span>
+            </label>
+          </li>
+          <li>
+            <input type="checkbox" id="a4">
+            <label for="a4">Does he have any more customer reviews beyond the 5 you already have?</label>
+          </li>
+        </ul>
+      </div>
+
+      <div class="check-group">
+        <h3><span class="tag check">Quick gut-check</span></h3>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="g1">
+            <label for="g1">Should the 3 disabled open-water series (Bass Casting, Musky Casting, Musky Spinning) come back, or stay sunset for good?</label>
+          </li>
+        </ul>
+      </div>
+
+      <div class="check-group" style="margin-bottom:0;">
+        <h3><span class="tag ready">Have ready</span></h3>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="r1">
+            <label for="r1">Live preview site — one rod page pulled up to confirm current title/spec formatting</label>
+          </li>
+          <li>
+            <input type="checkbox" id="r2">
+            <label for="r2">Rod builder single-page prototype file</label>
+          </li>
+          <li>
+            <input type="checkbox" id="r3">
+            <label for="r3">Shopify admin — logged in, ready to show product/metafield/collection structure live</label>
+          </li>
+          <li>
+            <input type="checkbox" id="r4">
+            <label for="r4">Mental note: if a spec looks blank live, check (1) product/collection published to the Headless channel, (2) that metafield's Storefront API toggle</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
