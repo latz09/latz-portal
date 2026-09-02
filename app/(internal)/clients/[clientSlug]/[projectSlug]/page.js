@@ -95,7 +95,7 @@ export default async function ProjectPage({ params }) {
 								projectSlug={projectSlug}
 							/>
 						</div>
-						<div className='lg:col-span-3'>
+						<div className='lg:col-span-3 min-w-0'>
 							<JourneyPreview
 								journeySteps={project.journeySteps}
 								clientPayment={project.clientPayment}

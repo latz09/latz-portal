@@ -7,21 +7,21 @@ import { PHASE_LABELS } from '@/app/utils/journeyHelpers';
 function PhaseNode({ allDone, isCurrent }) {
   if (allDone) {
     return (
-      <div className='w-7 h-7 rounded-full bg-teal flex items-center justify-center shrink-0 relative z-10'>
-        <TbCheck className='text-black text-sm' />
+      <div className='w-3 h-3 lg:w-7 lg:h-7 rounded-full bg-teal flex items-center justify-center shrink-0 relative z-10'>
+        <TbCheck className='text-black text-xs lg:text-sm' />
       </div>
     );
   }
   if (isCurrent) {
     return (
-      <div className='w-7 h-7 rounded-full border-2 border-teal bg-dark flex items-center justify-center shrink-0 relative z-10'>
-        <div className='w-2 h-2 rounded-full bg-teal animate-pulse' />
+      <div className='w-3 h-3 lg:w-7 lg:h-7 rounded-full border-2 border-teal bg-dark flex items-center justify-center shrink-0 relative z-10'>
+        <div className='w-1.5 h-1.5 rounded-full bg-teal animate-pulse' />
       </div>
     );
   }
   return (
-    <div className='w-7 h-7 rounded-full border-2 border-white/15 bg-dark flex items-center justify-center shrink-0 relative z-10'>
-      <div className='w-1.5 h-1.5 rounded-full bg-white/20' />
+    <div className='w-3 h-3 lg:w-7 lg:h-7 rounded-full border-2 border-white/15 bg-dark flex items-center justify-center shrink-0 relative z-10'>
+      <div className='w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-white/20' />
     </div>
   );
 }
@@ -40,7 +40,7 @@ export default function CollapsibleJourney({ phases }) {
       <div className='flex justify-end mb-4'>
         <button
           onClick={() => setAll(!allExpanded)}
-          className='font-mono text-sm tracking-widest uppercase text-white/40 hover:text-teal transition-colors'
+          className='font-mono text-xs lg:text-sm tracking-widest uppercase text-white/40 hover:text-teal transition-colors'
         >
           {allExpanded ? 'Collapse all' : 'Expand all'}
         </button>
@@ -53,7 +53,7 @@ export default function CollapsibleJourney({ phases }) {
           const pct = p.total ? (p.doneCount / p.total) * 100 : 0;
 
           return (
-            <div key={p.phase} className='relative grid grid-cols-[28px_1fr] gap-4'>
+            <div key={p.phase} className='relative grid grid-cols-[20px_1fr] lg:grid-cols-[28px_1fr] gap-2 lg:gap-4'>
               {/* rail column: node + connector line */}
               <div className='relative flex flex-col items-center'>
                 <PhaseNode allDone={p.allDone} isCurrent={p.isCurrent} />
@@ -71,28 +71,28 @@ export default function CollapsibleJourney({ phases }) {
                 {/* phase header */}
                 <button
                   onClick={() => toggle(p.phase)}
-                  className='flex items-center gap-3 w-full group text-left pt-0.5'
+                  className='flex items-center gap-2 lg:gap-3 w-full group text-left pt-0.5'
                 >
                   <span
-                    className={`font-mono text-xs tracking-widest uppercase shrink-0 ${
+                    className={`font-mono text-[11px] lg:text-xs tracking-widest uppercase shrink-0 ${
                       p.isCurrent ? 'text-teal' : p.allDone ? 'text-white/40' : 'text-white/30'
                     }`}
                   >
                     {PHASE_LABELS[p.phase] || p.phase}
                   </span>
 
-                  <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden min-w-8 max-w-48'>
+                  <span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden min-w-6 lg:min-w-8 max-w-20 lg:max-w-48'>
                     <span
                       className='block h-full bg-teal/70 rounded-full'
                       style={{ width: `${pct}%` }}
                     />
                   </span>
 
-                  <span className='font-mono text-xs text-white/30 tabular-nums shrink-0'>
+                  <span className='font-mono text-[11px] lg:text-xs text-white/30 tabular-nums shrink-0'>
                     {p.doneCount}/{p.total}
                   </span>
                   <TbChevronDown
-                    className={`text-white/25 group-hover:text-white/60 transition-all shrink-0 ${
+                    className={`text-white/25 group-hover:text-white/60 transition-all shrink-0 text-sm lg:text-base ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
