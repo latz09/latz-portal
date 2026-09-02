@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { TbChevronDown, TbChartBar } from 'react-icons/tb';
 import { buildWeeklyLoad } from '@/app/utils/capacityUtils';
@@ -32,8 +32,10 @@ function WeekBar({ week, maxCount, isSelected, onClick }) {
 		<button
 			onClick={onClick}
 			disabled={total === 0}
-			className={`flex flex-col items-center gap-2.5 min-w-[76px] px-1.5 py-1.5 rounded-lg transition-colors ${
-				isSelected ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'
+			className={`flex flex-col items-center gap-2.5 min-w-[76px] px-1.5 py-1.5 rounded-lg border transition-colors ${
+				isSelected
+					? 'bg-teal/10 border-teal/30'
+					: 'border-transparent hover:bg-white/[0.04]'
 			}`}
 		>
 			<div className='flex flex-col-reverse h-24 w-10 justify-start'>
@@ -52,7 +54,7 @@ function WeekBar({ week, maxCount, isSelected, onClick }) {
 				{total === 0 && <div className='w-full h-1.5 bg-white/10 rounded-full' />}
 			</div>
 			<span
-				className={`font-mono text-sm font-semibold ${total > 0 ? 'text-white/80' : 'text-white/20'}`}
+				className={`font-mono text-sm font-semibold tabular-nums ${total > 0 ? 'text-white/85' : 'text-white/20'}`}
 			>
 				{total}
 			</span>
@@ -65,15 +67,15 @@ function WeekBar({ week, maxCount, isSelected, onClick }) {
 
 function WeekDetail({ week }) {
 	return (
-		<div className='flex flex-col gap-2 mt-4 border-t border-white/[0.06] pt-4'>
-			<span className='font-mono text-xs text-white/40'>
+		<div className='flex flex-col gap-2 mt-4 border-t border-white/[0.08] pt-4'>
+			<span className='font-mono text-[10px] tracking-widest uppercase text-white/40'>
 				{week.rangeLabel} · {week.items.length} item{week.items.length === 1 ? '' : 's'}
 			</span>
 			{week.items.map((item, i) => (
 				<Link
 					key={i}
 					href={item.href}
-					className='group flex items-center justify-between gap-4 border border-white/[0.06] rounded-xl px-4 py-2.5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors'
+					className='group flex items-center justify-between gap-4 border border-white/[0.08] rounded-xl px-4 py-2.5 bg-white/[0.03] hover:bg-white/[0.06] transition-colors'
 				>
 					<div className='flex items-center gap-3 min-w-0'>
 						<span
@@ -90,7 +92,7 @@ function WeekDetail({ week }) {
 							</span>
 						</div>
 					</div>
-					<span className='font-mono text-xs text-white/50 shrink-0'>
+					<span className='font-mono text-xs text-white/50 shrink-0 tabular-nums'>
 						{item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
 					</span>
 				</Link>
@@ -103,33 +105,53 @@ export default function UpcomingLoad({ clients }) {
 	const [expanded, setExpanded] = useState(false);
 	const [openWeek, setOpenWeek] = useState(null);
 
+	// lg and up: start expanded. This only runs once on mount — it sets the
+	// initial state for whatever size the page loads at, it doesn't keep
+	// watching for live resizes. The toggle button still works normally
+	// afterward at any screen size.
+	useEffect(() => {
+		if (window.matchMedia('(min-width: 1024px)').matches) {
+			setExpanded(true);
+		}
+	}, []);
+
 	const weeks = buildWeeklyLoad(clients);
 	if (!weeks.length) return null;
 
 	const maxCount = Math.max(...weeks.map((w) => w.internalCount + w.designerCount));
+	const totalItems = weeks.reduce((sum, w) => sum + w.items.length, 0);
 
 	return (
 		<div className='mb-6'>
 			<button
 				onClick={() => setExpanded(!expanded)}
-				className='group flex items-center justify-between w-full gap-4 border border-white/[0.06] rounded-xl px-4 py-3 bg-white/[0.02] hover:bg-white/[0.05] transition-colors'
+				className='group flex items-center justify-between w-full gap-4 border border-white/[0.08] rounded-xl px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.06] transition-colors'
 			>
 				<div className='flex items-center gap-3'>
-					<TbChartBar className='text-base text-white/50' />
-					<span className='text-base text-white/50'>Capacity</span>
+					<TbChartBar className='text-base text-white/40' />
+					<span className='font-mono text-[10px] tracking-widest uppercase text-white/40'>
+						Capacity
+					</span>
 				</div>
-				<TbChevronDown
-					className={`text-base text-white/25 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
-				/>
+				<div className='flex items-center gap-3'>
+					{!expanded && totalItems > 0 && (
+						<span className='font-mono text-xs text-white/30 tabular-nums'>
+							{totalItems} upcoming
+						</span>
+					)}
+					<TbChevronDown
+						className={`text-base text-white/25 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+					/>
+				</div>
 			</button>
 
 			{expanded && (
-				<div className='border border-white/[0.06] rounded-xl px-6 py-6 mt-2 bg-white/[0.02]'>
+				<div className='border border-white/[0.08] rounded-xl px-6 py-6 mt-2'>
 					<div className='flex items-center gap-5 mb-6'>
-						<span className='flex items-center gap-2 font-mono text-xs text-white/40'>
+						<span className='flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-white/35'>
 							<span className='w-2.5 h-2.5 rounded-full bg-teal' /> internal
 						</span>
-						<span className='flex items-center gap-2 font-mono text-xs text-white/40'>
+						<span className='flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-white/35'>
 							<span className='w-2.5 h-2.5 rounded-full bg-purple' /> designer
 						</span>
 					</div>

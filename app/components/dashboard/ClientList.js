@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { TbChevronDown } from 'react-icons/tb';
-import Card from '../ui/Card';
 import { getDeadlineStatus } from '../portal/deadlineUtils';
 import { getClientHref } from '@/app/utils/clientLinks';
 
@@ -47,14 +47,20 @@ function sortByNextMilestone(clients) {
 	});
 }
 
-function ClientCard({ client }) {
+function ClientRow({ client, isLast }) {
 	return (
-		<Card href={getClientHref(client)} className='flex flex-col gap-1'>
-			<h3 className='lg:font-medium lg:text-lg text-white'>{client.name}</h3>
-			<span className='font-mono text-xs mt-0.5 lg:text-sm text-teal'>
-				{client.activeProjects} active · {client.totalProjects} total
+		<Link
+			href={getClientHref(client)}
+			className={`flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] transition-colors ${
+				!isLast ? 'border-b border-white/[0.06]' : ''
+			}`}
+		>
+			<span className='font-medium text-white truncate'>{client.name}</span>
+			<span className='font-mono text-xs text-teal shrink-0'>
+				{client.activeProjects}
+				<span className='text-teal/40'> / {client.totalProjects}</span>
 			</span>
-		</Card>
+		</Link>
 	);
 }
 
@@ -65,10 +71,10 @@ function ViewDropdown({ groups, current, onSelect }) {
 		<div className='relative mb-4'>
 			<button
 				onClick={() => setOpen((o) => !o)}
-				className='flex items-center justify-between w-1/2  md:w-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-5 py-3 group transition-colors'
+				className='flex items-center justify-between w-1/2 md:w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-3.5 group transition-colors'
 			>
 				<span className='flex items-center gap-2'>
-					<span className='font-mono text-xs text-white/70 tracking-widest uppercase group-hover:text-white/90 transition-colors'>
+					<span className='font-mono text-xs tracking-widest uppercase text-white group-hover:text-white/90 transition-colors'>
 						{current.label}
 					</span>
 					<span className='font-mono text-xs text-white/30'>
@@ -166,9 +172,13 @@ export default function ClientList({ clients }) {
 		<div className='flex flex-col'>
 			<ViewDropdown groups={groups} current={current} onSelect={setView} />
 
-			<div className='flex flex-col gap-3'>
-				{current.clients.map((client) => (
-					<ClientCard key={client.slug} client={client} />
+			<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+				{current.clients.map((client, i) => (
+					<ClientRow
+						key={client.slug}
+						client={client}
+						isLast={i === current.clients.length - 1}
+					/>
 				))}
 			</div>
 		</div>

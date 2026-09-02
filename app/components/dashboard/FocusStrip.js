@@ -13,7 +13,7 @@ import {
 	TbCalendarOff,
 	TbCalendar,
 } from 'react-icons/tb';
-import NoteCard from './NoteCard';
+import PinnedNotes from '@/app/components/portal/PinnedNotes';
 import { formatDate } from '@/app/components/portal/deadlineUtils';
 import { buildFocusSections } from '@/app/utils/focusSignals';
 
@@ -52,6 +52,20 @@ function StatBar({ overdue, dueSoon, later, waiting, attention, nudges }) {
 				</span>
 			))}
 		</div>
+	);
+}
+
+// ─── Client label — sits top-left of the row like an eyebrow, colored to
+// match the row's context (danger/purple/teal/warning). Project name lives
+// under the title instead, since the client is the thing you scan for first.
+
+function ClientLabel({ clientName, tone }) {
+	return (
+		<span
+			className={`font-mono text-[11px] font-semibold tracking-widest uppercase ${tone}`}
+		>
+			{clientName}
+		</span>
 	);
 }
 
@@ -100,10 +114,10 @@ function DayCount({ daysUntil, isToday, isPast, isDesigner }) {
 			? 'text-purple'
 			: 'text-teal';
 	const labelTone = isPast
-		? 'text-danger/60'
+		? 'text-danger/70'
 		: isDesigner
 			? 'text-purple'
-			: 'text-white/30';
+			: 'text-white/40';
 	return (
 		<div className='text-right shrink-0'>
 			<p
@@ -124,64 +138,79 @@ function DayCount({ daysUntil, isToday, isPast, isDesigner }) {
 	);
 }
 
-// bg carries the same priority order as border/dot: overdue red beats
-// design purple beats internal teal. Slightly higher opacity than a plain
-// white overlay would need — a color tint reads much fainter than white
-// does against this near-black background at the same alpha.
+// bg carries the same priority order as the dot: overdue red beats
+// design purple beats internal teal. Rows sit inside one shared bordered
+// container — no per-row border, just a bottom divider between rows
+// (handled by the container map, not here) and a tinted background.
+// label = the ClientLabel's text tone, kept a notch brighter than the
+// bg tint so it reads clearly as its own element.
 function datedRowTone(item) {
 	if (item.isPast)
 		return {
-			border: 'border-danger/25',
 			dot: 'bg-danger',
-			bg: 'bg-danger/10 hover:bg-danger/[0.10]',
+			bg: 'bg-danger/[0.08] hover:bg-danger/[0.16]',
+			label: 'text-danger',
 		};
 	if (item.isDesigner)
 		return {
-			border: 'border-purple/0',
 			dot: 'bg-purple',
-			bg: 'bg-purple/15 hover:bg-purple/25',
+			bg: 'bg-purple/[0.165] hover:bg-purple/[0.26]',
+			label: 'text-purple',
 		};
 	return {
-		border: 'border-teal/20 hover:border-teal/0',
 		dot: 'bg-teal',
-		bg: 'bg-teal/15 hover:bg-teal/25 shadow ',
+		bg: 'bg-teal/[0.158] hover:bg-teal/[0.26]',
+		label: 'text-teal',
 	};
 }
 
-function DatedRow({ item }) {
-	const { border, dot, bg } = datedRowTone(item);
+function DatedRow({ item, isLast }) {
+	const { dot, bg, label } = datedRowTone(item);
 
 	return (
 		<Link
 			href={item.href}
-			className={`group flex items-center justify-between gap-4 border rounded-xl px-4 py-3 transition-colors ${bg} ${border}`}
+			className={`group flex flex-col gap-2.5 px-5 py-5 2xl:py-6 transition-colors ${bg} ${
+				!isLast ? 'border-b border-white/[0.06]' : ''
+			}`}
 		>
-			<div className='flex items-center gap-3 min-w-0'>
-				{item.kind === 'milestone' ? (
-					<MilestoneIcon isDesigner={item.isDesigner} isPast={item.isPast} />
-				) : (
-					<span
-						className={`w-1.25 h-1.25 lg:w-2 lg:h-2  rounded-full shrink-0 ${dot}`}
-					/>
-				)}
-				<div className='flex flex-col min-w-0 gap-0.5'>
-					<span className='font-mono text-xs text-white/35 truncate'>
-						{item.clientName}
-						<span className='text-white/20'> · </span>
-						{item.projectName}
-					</span>
-					<span className='text-sm md:text-base font-[540] text-white leading-tight truncate'>
-						{item.title}
-					</span>
+			<ClientLabel clientName={item.clientName} tone={label} />
+			<div className='flex items-center justify-between gap-4'>
+				<div className='flex items-center gap-3 min-w-0'>
+					{item.kind === 'milestone' ? (
+						<MilestoneIcon isDesigner={item.isDesigner} isPast={item.isPast} />
+					) : (
+						<span
+							className={`w-1.25 h-1.25 lg:w-2 lg:h-2  rounded-full shrink-0 ${dot}`}
+						/>
+					)}
+					<div className='flex flex-col min-w-0 gap-0.5'>
+						<span className='text-base md:text-lg font-[540] text-white leading-tight truncate'>
+							{item.title}
+						</span>
+						<span className='font-mono text-xs text-white/30 truncate'>
+							{item.projectName}
+						</span>
+					</div>
 				</div>
+				<DayCount
+					daysUntil={item.daysUntil}
+					isToday={item.isToday}
+					isPast={item.isPast}
+					isDesigner={item.isDesigner}
+				/>
 			</div>
-			<DayCount
-				daysUntil={item.daysUntil}
-				isToday={item.isToday}
-				isPast={item.isPast}
-				isDesigner={item.isDesigner}
-			/>
 		</Link>
+	);
+}
+
+function DatedList({ items }) {
+	return (
+		<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+			{items.map((item, i) => (
+				<DatedRow key={item.id} item={item} isLast={i === items.length - 1} />
+			))}
+		</div>
 	);
 }
 
@@ -260,37 +289,83 @@ function LaterSection({ items }) {
 	);
 }
 
-// ─── Waiting — ball's out of your hands, this is visibility not urgency ────
+// ─── Waiting — flat list + collapsed toggle, same shape as DatedList/Later.
+// Ball's out of your hands here, so this stays out of the way until opened
+// rather than sitting expanded and competing with Overdue/Due This Week.
 
-function WaitingRow({ item }) {
+function WaitingRow({ item, isLast }) {
 	const isDesigner = item.waitingOn === 'designer';
 	const tone = isDesigner ? 'text-purple' : 'text-warning';
-	const border = isDesigner ? 'border-purple/20' : 'border-warning/20';
+	const bg = isDesigner
+		? 'bg-purple/[0.08] hover:bg-purple/[0.16]'
+		: 'bg-warning/[0.08] hover:bg-warning/[0.16]';
+	const label = isDesigner ? 'text-purple' : 'text-warning';
 
 	return (
 		<Link
 			href={item.href}
-			className={`group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-4 border rounded-xl px-4 py-3 bg-white/[0.03] hover:bg-white/[0.06] transition-colors ${border}`}
+			className={`group flex flex-col gap-2.5 px-5 py-5 transition-colors ${bg} ${
+				!isLast ? 'border-b border-white/[0.06]' : ''
+			}`}
 		>
-			<div className='flex items-center gap-3 min-w-0'>
-				<TbClock className={`text-base shrink-0 ${tone}`} />
-				<div className='flex flex-col min-w-0 gap-0.5'>
-					<span className='font-mono text-xs text-white/35 truncate'>
-						{item.clientName}
-						<span className='text-white/20'> · </span>
-						{item.projectName}
-					</span>
-					<span className='text-base font-medium text-white leading-tight truncate'>
-						{item.title}
+			<ClientLabel clientName={item.clientName} tone={label} />
+			<div className='flex items-center justify-between gap-4'>
+				<div className='flex items-center gap-3 min-w-0'>
+					<TbClock className={`text-base shrink-0 ${tone}`} />
+					<div className='flex flex-col min-w-0 gap-0.5'>
+						<span className='text-base md:text-lg font-[540] text-white leading-tight truncate'>
+							{item.title}
+						</span>
+						<span className='font-mono text-xs text-white/30 truncate'>
+							{item.projectName}
+						</span>
+					</div>
+				</div>
+				<span className={`font-mono text-xs shrink-0 whitespace-nowrap ${tone}`}>
+					{item.detail}
+				</span>
+			</div>
+		</Link>
+	);
+}
+
+function WaitingList({ items }) {
+	return (
+		<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+			{items.map((item, i) => (
+				<WaitingRow key={item.id} item={item} isLast={i === items.length - 1} />
+			))}
+		</div>
+	);
+}
+
+function WaitingSection({ items }) {
+	const [open, setOpen] = useState(false);
+	if (!items.length) return null;
+
+	return (
+		<div className='mb-8 lg:mb-12'>
+			<button
+				onClick={() => setOpen(!open)}
+				className='group flex items-center justify-between w-full gap-4 border border-white/[0.06] rounded-xl px-4 py-3 bg-white/[0.02] hover:bg-white/[0.05] transition-colors'
+			>
+				<div className='flex items-center gap-3'>
+					<TbClock className='text-base text-white/30' />
+					<span className='text-base text-white/50'>
+						{items.length} waiting on someone else
 					</span>
 				</div>
-			</div>
-			<span
-				className={`font-mono text-xs pl-7 sm:pl-0 sm:shrink-0 sm:whitespace-nowrap sm:text-right ${tone}`}
-			>
-				{item.detail}
-			</span>
-		</Link>
+				<TbChevronDown
+					className={`text-base text-white/25 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+				/>
+			</button>
+
+			{open && (
+				<div className='mt-2'>
+					<WaitingList items={items} />
+				</div>
+			)}
+		</div>
 	);
 }
 
@@ -388,22 +463,16 @@ function NudgesSection({ items }) {
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-export default function FocusStrip({
-	clients,
-	notes = [],
-	onArchive,
-	onSent,
-	onPinToggle,
-}) {
-	const { overdue, dueSoon, later, waiting, pinned, needsAttention, nudges } =
-		buildFocusSections(clients, notes);
+export default function FocusStrip({ clients, pinnedNotes = [] }) {
+	const { overdue, dueSoon, later, waiting, needsAttention, nudges } =
+		buildFocusSections(clients);
 
 	const total =
 		overdue.length +
 		dueSoon.length +
 		later.length +
 		waiting.length +
-		pinned.length +
+		pinnedNotes.length +
 		needsAttention.length +
 		nudges.length;
 	if (!total) return null;
@@ -428,13 +497,9 @@ export default function FocusStrip({
 					<SectionHeader
 						label='Overdue'
 						count={overdue.length}
-						tone='text-danger/70'
+						tone='text-danger/80'
 					/>
-					<div className='flex flex-col gap-2 font-mono'>
-						{overdue.map((item) => (
-							<DatedRow key={item.id} item={item} />
-						))}
-					</div>
+					<DatedList items={overdue} />
 				</div>
 			)}
 
@@ -443,39 +508,19 @@ export default function FocusStrip({
 					<SectionHeader
 						label='Due This Week'
 						count={dueSoon.length}
-						tone='text-teal/70'
+						tone='text-teal/80'
 					/>
-					<div className='flex flex-col gap-2 font-mono'>
-						{dueSoon.map((item) => (
-							<DatedRow key={item.id} item={item} />
-						))}
-					</div>
+					<DatedList items={dueSoon} />
 				</div>
 			)}
 
 			<LaterSection items={later} />
 
-			
-			{pinned.length > 0 && (
-				<div className='mb-8 lg:mb-12'>
-					<SectionHeader
-						label='Pinned'
-						count={pinned.length}
-						tone='text-warning/70'
-					/>
-					<div className='grid sm:grid-cols-2 gap-3 '>
-						{pinned.map(({ id, note }) => (
-							<NoteCard
-								key={id}
-								note={note}
-								onArchive={onArchive}
-								onSent={onSent}
-								onPinToggle={onPinToggle}
-							/>
-						))}
-					</div>
-				</div>
-			)}
+			{/* lg+ gets pinned notes in the sidebar instead — this instance is
+			    mobile/tablet only, kept at its original spot in the flow */}
+			<div className='lg:hidden'>
+				<PinnedNotes notes={pinnedNotes} defaultOpen />
+			</div>
 
 			{needsAttention.length > 0 && (
 				<div className='mb-8 lg:mb-12'>
@@ -492,21 +537,8 @@ export default function FocusStrip({
 				</div>
 			)}
 
+			<WaitingSection items={waiting} />
 
-			{waiting.length > 0 && (
-				<div className='mb-8 lg:mb-12'>
-					<SectionHeader
-						label='Waiting'
-						count={waiting.length}
-						tone='text-white/50'
-					/>
-					<div className='flex flex-col gap-2 font-mono'>
-						{waiting.map((item) => (
-							<WaitingRow key={item.id} item={item} />
-						))}
-					</div>
-				</div>
-			)}
 			<NudgesSection items={nudges} />
 		</div>
 	);

@@ -38,6 +38,9 @@ function keyOf(client, project) {
 // isDesigner: milestones read the catalog's assignedTo field; deadlines
 // (which have no catalog link) read the existing audience tag instead —
 // same signal capacityUtils.js already uses for Upcoming Load.
+//
+// All items link to the project page now — the journey map lives there,
+// expandable inline, so there's no separate destination to route to.
 
 function buildItemSignals(client, project) {
 	const overdue = [];
@@ -50,7 +53,6 @@ function buildItemSignals(client, project) {
 		projectSlug: project.slug,
 	};
 	const projectHref = `/clients/${client.slug}/${project.slug}`;
-	const journeyHref = `${projectHref}/journey`;
 
 	const dated = [
 		...(project.deadlines || [])
@@ -71,7 +73,6 @@ function buildItemSignals(client, project) {
 
 	dated.forEach((d) => {
 		const status = getDeadlineStatus(d.date);
-		const href = d.isMilestone ? journeyHref : projectHref;
 		const item = {
 			id: `${d.isMilestone ? 'milestone' : 'deadline'}-${keyOf(client, project)}-${d._key}`,
 			kind: d.isMilestone ? 'milestone' : 'deadline',
@@ -81,7 +82,7 @@ function buildItemSignals(client, project) {
 			isToday: status.isToday,
 			isPast: status.isPast,
 			isDesigner: d.isDesigner,
-			href,
+			href: projectHref,
 			...base,
 		};
 
@@ -106,7 +107,7 @@ function buildWaitingSignals(client, project) {
 		projectName: project.name,
 		projectSlug: project.slug,
 	};
-	const journeyHref = `/clients/${client.slug}/${project.slug}/journey`;
+	const projectHref = `/clients/${client.slug}/${project.slug}`;
 
 	return (project.journeyMilestonesAll || [])
 		.filter((m) => m.status === 'waiting')
@@ -118,7 +119,7 @@ function buildWaitingSignals(client, project) {
 				waitingOn: m.waitingOn || null,
 				date: sinceDateStr ? parseLocalDate(sinceDateStr) : null,
 				detail: dateLabel('waiting', sinceDateStr, false, m.waitingOn),
-				href: journeyHref,
+				href: projectHref,
 				...base,
 			};
 		});
@@ -135,7 +136,6 @@ function buildProjectSignal(client, project) {
 	};
 	const key = keyOf(client, project);
 	const projectHref = `/clients/${client.slug}/${project.slug}`;
-	const journeyHref = `${projectHref}/journey`;
 	const milestones = project.journeyMilestonesAll || [];
 	const depositPaid = !!project.clientPayment?.depositPaid;
 	const finalPaid = !!project.clientPayment?.finalPaid;
@@ -195,7 +195,7 @@ function buildProjectSignal(client, project) {
 				kind: 'no-date-nudge',
 				title: `${next.title} — no date set`,
 				detail: 'Next milestone has no target date',
-				href: journeyHref,
+				href: projectHref,
 				...base,
 			};
 		}

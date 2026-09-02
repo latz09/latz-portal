@@ -1,7 +1,7 @@
 // DASHBOARD DEADLINES + JOURNEY MILESTONES
 
 import Link from 'next/link';
-import { TbArrowRight, TbStarFilled } from 'react-icons/tb';
+import { TbArrowRight, TbStarFilled, TbFlag3 } from 'react-icons/tb';
 import { getDeadlineStatus, formatDate } from './deadlineUtils';
 import { PHASE_LABELS } from '@/app/utils/journeyHelpers';
 
@@ -72,13 +72,24 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 
 	if (!items.length) return null;
 
+	const overdueCount = items.filter((d) => d.isPast).length;
+
 	return (
 		<div className='mt-12 pt-8 border-t border-white/[0.08] w-full'>
-			<p className='font-mono text-[10px] lg:text-xs tracking-widest uppercase text-white/40 mb-4'>
-				{variant === 'designer'
-					? 'Upcoming design milestones'
-					: 'All upcoming milestones'}
-			</p>
+			<div className='flex items-center justify-between gap-4 mb-4'>
+				<span className='flex items-center gap-2 font-mono text-[10px] lg:text-xs tracking-widest uppercase text-white/40'>
+					<TbFlag3 className='text-sm text-white/30' />
+					{variant === 'designer'
+						? 'Upcoming design milestones'
+						: 'All upcoming milestones'}
+				</span>
+				<span className='font-mono text-[11px] text-white/30 tabular-nums shrink-0'>
+					{items.length}
+					{overdueCount > 0 && (
+						<span className='text-danger/70'> · {overdueCount} overdue</span>
+					)}
+				</span>
+			</div>
 
 			<div className='flex flex-col gap-3'>
 		{items.map((d, i) => {
@@ -86,10 +97,10 @@ export default function UpcomingDeadlines({ clients, variant = 'designer' }) {
 						variant === 'designer' || d.audience?.includes('designer');
 
 					const surface = d.isMilestone
-						? 'bg-white/[0.03] border-warning/25 hover:bg-white/[0.06]'
+						? 'bg-white/[0.04] border-warning/25 hover:bg-white/[0.07]'
 						: d.isPast
-							? 'bg-white/[0.03] border-danger/20 hover:bg-white/[0.06]'
-							: 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06]';
+							? 'bg-white/[0.04] border-danger/20 hover:bg-white/[0.07]'
+							: 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.07]';
 
 					const href =
 						variant === 'internal'
