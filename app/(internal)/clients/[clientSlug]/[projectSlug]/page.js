@@ -105,8 +105,7 @@ export default async function ProjectPage({ params }) {
 						</div>
 					</div>
 				)}
-
-				<PinnedNotes notes={pinnedNotes} />
+				<PinnedNotes notes={pinnedNotes} pulseOnLoad />{' '}
 				<div className=' py-4 lg:py-10'>
 					<ProjectAssets
 						variant='internal'

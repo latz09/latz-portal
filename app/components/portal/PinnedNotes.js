@@ -4,8 +4,14 @@ import { useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb';
 import NoteCard from '@/app/components/dashboard/NoteCard';
 
-export default function PinnedNotes({ notes = [], compact = false, defaultOpen = false }) {
+export default function PinnedNotes({
+	notes = [],
+	compact = false,
+	defaultOpen = false,
+	pulseOnLoad = false,
+}) {
 	const [open, setOpen] = useState(defaultOpen);
+	const [interacted, setInteracted] = useState(false);
 
 	if (!notes.length) return null;
 
@@ -15,14 +21,19 @@ export default function PinnedNotes({ notes = [], compact = false, defaultOpen =
 	return (
 		<div className='mb-6'>
 			<button
-				onClick={() => setOpen(!open)}
-				className='flex items-center gap-2 group'
+				onClick={() => {
+					setOpen(!open);
+					setInteracted(true);
+				}}
+				className={`flex items-center gap-2 group bg-warning px-2 py-1 rounded ${
+					pulseOnLoad && !interacted ? 'animate-attention-pulse' : ''
+				}`}
 			>
-				<span className='font-mono text-[10px] lg:text-xs tracking-widest uppercase text-white/40 group-hover:text-white/60 transition-colors'>
+				<span className='font-mono font-semibold text-[10px] lg:text-xs tracking-widest uppercase text-dark group-hover:text-white/60 transition-colors'>
 					{label}
 				</span>
 				<TbChevronDown
-					className={`text-white/25 group-hover:text-white/50 transition-all duration-200 ${open ? 'rotate-180' : ''}`}
+					className={`text-dark group-hover:text-dark transition-all duration-200 ${open ? 'rotate-180' : ''}`}
 				/>
 			</button>
 
