@@ -21,7 +21,7 @@ export const ACCENTS = {
 		hoverBg: 'hover:bg-teal/10',
 		ring: 'border-teal/60 bg-teal/10',
 		fill: {
-			bg: 'bg-teal/20',
+			bg: 'bg-teal/60',
 			text: 'text-white/90',
 			border: 'border-teal/30',
 			hoverBg: 'hover:bg-teal/30',
@@ -33,7 +33,7 @@ export const ACCENTS = {
 		hoverBg: 'hover:bg-purple/10',
 		ring: 'border-purple/60 bg-purple/10',
 		fill: {
-			bg: 'bg-purple/20',
+			bg: 'bg-purple/60',
 			text: 'text-white/90',
 			border: 'border-purple/30',
 			hoverBg: 'hover:bg-purple/30',
@@ -53,14 +53,14 @@ export const ACCENTS = {
 	},
 	danger: {
 		text: 'text-danger',
-		border: 'border-danger/30',
+		border: 'border-danger/20',
 		hoverBg: 'hover:bg-danger/10',
 		ring: 'border-danger/60 bg-danger/10',
 		fill: {
-			bg: 'bg-danger',
-			text: 'text-dark',
+			bg: 'bg-danger/20',
+			text: 'text-light',
 			border: 'border-danger',
-			hoverBg: 'hover:bg-danger/90',
+			hoverBg: 'hover:bg-dark/90',
 		},
 	},
 	white: {

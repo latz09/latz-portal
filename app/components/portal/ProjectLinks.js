@@ -1,9 +1,13 @@
-import {TbExternalLink, TbBrandFigma, TbDatabase, TbBrandVercel} from 'react-icons/tb'
+import {TbExternalLink, TbBrandFigma, TbDatabase, TbBrandVercel, TbTool} from 'react-icons/tb'
 import {BsClaude} from 'react-icons/bs'
 import Pill from '@/app/components/ui/Pill'
 
+// Same link every project — not project-specific, so it isn't in Sanity.
+// Update the URL here if the Build Companion ever moves.
+const BUILD_COMPANION_URL = 'https://claude.ai/project/01a05e56-0098-7153-a932-838649e42136'
+
 const links = {
-  internal: ['preview', 'figma', 'studio', 'vercel', 'ai'],
+  internal: ['ai', 'preview', 'figma', 'studio', 'vercel', 'buildCompanion'],
   designer: ['preview', 'figma'],
   client: ['preview'],
 }
@@ -13,11 +17,19 @@ const config = {
   figma: {label: 'Figma', icon: TbBrandFigma, accent: 'purple'},
   studio: {label: 'Sanity Studio', icon: TbDatabase, accent: 'white'},
   vercel: {label: 'Vercel', icon: TbBrandVercel, accent: 'white'},
-  ai: {label: 'AI', icon: BsClaude, accent: 'white'},
+  buildCompanion: {label: 'Build Assistant', icon: TbTool, accent: 'danger'},
+   ai: {label: 'Client Intel', icon: BsClaude, accent: 'warning'},
 }
 
 export default function ProjectLinks({variant, previewUrl, figmaUrl, studioUrl, vercelUrl, aiProjectLink}) {
-  const urls = {preview: previewUrl, figma: figmaUrl, studio: studioUrl, vercel: vercelUrl, ai: aiProjectLink}
+  const urls = {
+    preview: previewUrl,
+    figma: figmaUrl,
+    studio: studioUrl,
+    vercel: vercelUrl,
+    buildCompanion: BUILD_COMPANION_URL,
+    ai: aiProjectLink,
+  }
   const available = links[variant].filter((key) => urls[key])
   if (!available.length) return null
 
