@@ -226,11 +226,13 @@ export default function ClientSwitcher({ clients }) {
 						<button
 							key={client.slug}
 							onClick={() => goTo(client.slug)}
-							className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] focus:bg-white/[0.07] focus:outline-none transition-colors text-left ${
+							className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] focus:bg-teal/70 focus:outline-none transition-colors text-left ${
 								i !== sorted.length - 1 ? 'border-b border-white/[0.06]' : ''
 							}`}
 						>
-							<span className='font-medium text-white truncate'>{client.name}</span>
+							<span className='font-medium text-white truncate'>
+								{client.name}
+							</span>
 							<span className='font-mono text-xs text-teal shrink-0'>
 								{client.activeProjects}
 								<span className='text-teal/40'> / {client.totalProjects}</span>
