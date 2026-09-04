@@ -22,8 +22,10 @@ export default function ClientSwitcher({ clients }) {
 
 	useEffect(() => setMounted(true), []);
 
-	// Detect touch/mobile once on mount — used to suppress the native
-	// focus-on-tap behavior that pops the OS keyboard open immediately.
+	// Detect touch/mobile once on mount — on touch devices, the closed bar
+	// renders as a plain button (no <input> in the DOM at all) instead of
+	// a focusable field, so there's nothing for the OS to auto-focus and
+	// no keyboard pop on the first tap.
 	useEffect(() => {
 		setIsTouch(window.matchMedia('(pointer: coarse)').matches);
 	}, []);
@@ -62,19 +64,6 @@ export default function ClientSwitcher({ clients }) {
 		window.addEventListener('keydown', handler);
 		return () => window.removeEventListener('keydown', handler);
 	}, []);
-
-	// On touch devices, the first tap on the bar should just open the panel
-	// to browse — not yank the keyboard up immediately. preventDefault in
-	// both touchstart and mousedown blocks the native focus that would
-	// otherwise fire (iOS needs touchstart specifically; mousedown covers
-	// Android/others). Once the panel is already open, a second tap on the
-	// input behaves normally — focuses it, keyboard shows — so typing to
-	// search is still possible when actually wanted.
-	function handlePointerDown(e) {
-		if (!isTouch || open) return;
-		e.preventDefault();
-		setOpen(true);
-	}
 
 	// ArrowUp/ArrowDown move real DOM focus between whichever items are
 	// currently visible (browse cards or search results). Works whether
@@ -184,6 +173,12 @@ export default function ClientSwitcher({ clients }) {
 		if (e.target.closest('a')) setLeaving(true);
 	}
 
+	// On touch devices while closed: a plain button, visually identical to
+	// the input, that just opens the panel — no <input> exists yet, so
+	// there's nothing to auto-focus. Once open, the real <input> takes over
+	// and behaves normally (tap it again to type and bring up the keyboard).
+	const showButtonBar = isTouch && !open;
+
 	const widget = (
 		<div ref={widgetRef}>
 			{/* backdrop — only when open, tap to close */}
@@ -250,26 +245,34 @@ export default function ClientSwitcher({ clients }) {
 			<div className='fixed bottom-3 md:bottom-4 right-6 z-[100] w-[calc(100vw-3rem)] sm:w-[420px]'>
 				<div className='flex items-center gap-3 px-4 py-3 rounded-full border border-white/10 bg-[#0d0f14] shadow-lg'>
 					<TbSearch className='text-white/30 text-lg shrink-0' />
-					<input
-						ref={inputRef}
-						type='text'
-						placeholder='Search clients... (⌘K)'
-						value={query}
-						onTouchStart={handlePointerDown}
-						onMouseDown={handlePointerDown}
-						onFocus={() => setOpen(true)}
-						onChange={(e) => {
-							setQuery(e.target.value);
-							setOpen(true);
-						}}
-						onKeyDown={(e) => {
-							if (e.key === 'Escape') {
-								close();
-								inputRef.current?.blur();
-							}
-						}}
-						className='flex-1 bg-transparent text-white  placeholder-white/20 font-mono text-sm outline-none min-w-0'
-					/>
+					{showButtonBar ? (
+						<button
+							type='button'
+							onClick={() => setOpen(true)}
+							className='flex-1 text-left bg-transparent text-white/20 font-mono text-sm outline-none min-w-0'
+						>
+							Search clients...
+						</button>
+					) : (
+						<input
+							ref={inputRef}
+							type='text'
+							placeholder='Search clients... (⌘K)'
+							value={query}
+							onFocus={() => setOpen(true)}
+							onChange={(e) => {
+								setQuery(e.target.value);
+								setOpen(true);
+							}}
+							onKeyDown={(e) => {
+								if (e.key === 'Escape') {
+									close();
+									inputRef.current?.blur();
+								}
+							}}
+							className='flex-1 bg-transparent text-white  placeholder-white/20 font-mono text-sm outline-none min-w-0'
+						/>
+					)}
 					{open && (
 						<button
 							onClick={() => {
