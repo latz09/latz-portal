@@ -25,7 +25,9 @@ export default function ClientSwitcher({ clients }) {
 	// Detect touch/mobile once on mount — on touch devices, the closed bar
 	// renders as a plain button (no <input> in the DOM at all) instead of
 	// a focusable field, so there's nothing for the OS to auto-focus and
-	// no keyboard pop on the first tap.
+	// no keyboard pop on the first tap. Also used to bottom-anchor the
+	// results panel instead of centering it, since a centered panel gets
+	// squeezed awkwardly once the keyboard eats half the screen.
 	useEffect(() => {
 		setIsTouch(window.matchMedia('(pointer: coarse)').matches);
 	}, []);
@@ -189,21 +191,22 @@ export default function ClientSwitcher({ clients }) {
 				onClick={close}
 			/>
 
-			{/* results panel — its own centered overlay, no longer anchored
-			    to the bar below. Outer wrapper spans the viewport just to
-			    center its child; pointer-events-none there so clicks pass
-			    through to the backdrop, pointer-events-auto on the actual
-			    panel so it stays interactive. */}
-			<div className='fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4 pointer-events-none'>
+			{/* results panel — bottom-anchored on mobile so it sits right
+			    above the keyboard instead of centering over a squeezed
+			    screen; centered overlay from sm: up, same as before.
+			    max-h uses dvh (dynamic viewport height) instead of vh —
+			    dvh tracks the actual visible area and shrinks correctly
+			    when the mobile keyboard opens, vh does not. */}
+			<div className='fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none'>
 				<div
 					onClick={handlePanelClick}
-					className={`pointer-events-auto w-full sm:w-[720px] max-h-[90vh] flex flex-col rounded-2xl border  border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-300 ease-out ${
+					className={`pointer-events-auto w-full sm:w-[720px] max-h-[65dvh] sm:max-h-[90vh] flex flex-col rounded-t-2xl sm:rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-300 ease-out ${
 						open
 							? 'translate-y-0 scale-100 opacity-100'
 							: 'translate-y-4 scale-95 opacity-0 invisible pointer-events-none'
 					} ${leaving ? 'drawer-leaving-bottom' : ''}`}
 				>
-										<div ref={listContainerRef} className='flex-1 overflow-y-auto p-5'>
+					<div ref={listContainerRef} className='flex-1 overflow-y-auto p-5'>
 						{isSearching ? (
 							<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
 								{sorted.length === 0 && (
