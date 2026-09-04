@@ -246,7 +246,7 @@ export default function ClientSwitcher({ clients }) {
 								inputRef.current?.blur();
 							}
 						}}
-						className='flex-1 bg-transparent text-white placeholder-white/20 font-mono text-sm outline-none min-w-0'
+						className='flex-1 bg-transparent text-white  placeholder-white/20 font-mono text-sm outline-none min-w-0'
 					/>
 					{open && (
 						<button
