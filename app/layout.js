@@ -1,5 +1,7 @@
 import { DM_Sans, DM_Mono } from 'next/font/google'
 import './globals.css'
+import { auth } from '@/auth'
+import GlobalSearch from './components/utils/GlobalSearch'
 
 const dmSans = DM_Sans({
   variable: '--font-dm-sans',
@@ -20,7 +22,10 @@ export const metadata = {
   robots: 'noindex, nofollow',
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth()
+  const isInternal = session?.user?.role === 'internal'
+
   return (
     <html
       lang='en'
@@ -28,6 +33,7 @@ export default function RootLayout({ children }) {
     >
       <body className='min-h-full flex flex-col bg-dark'>
         {children}
+        {/* {isInternal && <GlobalSearch />} */}
         <script
           dangerouslySetInnerHTML={{
             __html: `if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')`,
