@@ -309,7 +309,7 @@ export default function ClientSwitcher({ clients }) {
 						<div
 							onClick={handlePanelClick}
 							style={{ marginBottom: keyboardInset + 76 }}
-							className={`pointer-events-auto w-full max-h-[55vh] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-200 ease-out ${
+							className={`pointer-events-auto w-full max-h-[80vh] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-200 ease-out ${
 								open
 									? 'translate-y-0 opacity-100'
 									: 'translate-y-4 opacity-0 invisible pointer-events-none'
