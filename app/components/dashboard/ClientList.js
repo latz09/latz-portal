@@ -51,7 +51,7 @@ function ClientRow({ client, isLast }) {
 	return (
 		<Link
 			href={getClientHref(client)}
-			className={`flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] transition-colors ${
+			className={`flex items-center justify-between gap-3 px-4 py-3.5 bg-teal/5 hover:bg-teal/40 focus:bg-teal/40 focus:outline-none transition-colors ${
 				!isLast ? 'border-b border-white/[0.06]' : ''
 			}`}
 		>

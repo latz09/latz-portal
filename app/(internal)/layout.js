@@ -13,18 +13,14 @@ export default async function InternalLayout({ children }) {
 		<>
 			<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
 				<div className='max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
-					{/* mobile: title + Clients + New Client on one row · desktop: title + Clients only */}
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
 						<Link href='/dashboard'>
 							<p className='text-white/60 text-xs lg:text-sm tracking-wider font-semibold'>
 								Latz Web Development
 							</p>
 						</Link>
-						<div className='flex items-center gap-2'>
-							<div className='flex items-center gap-2 lg:hidden'>
-								<StudioLink type='project' />
-							</div>
-							<ClientSwitcher clients={clients} />
+						<div className='flex items-center gap-2 lg:hidden'>
+							<StudioLink type='project' />
 						</div>
 					</div>
 
@@ -49,6 +45,8 @@ export default async function InternalLayout({ children }) {
 					</div>
 				</div>
 			</div>
+
+			<ClientSwitcher clients={clients} />
 
 			{children}
 		</>

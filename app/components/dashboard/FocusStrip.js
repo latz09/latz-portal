@@ -144,28 +144,43 @@ function DayCount({ daysUntil, isToday, isPast, isDesigner }) {
 // (handled by the container map, not here) and a tinted background.
 // label = the ClientLabel's text tone, kept a notch brighter than the
 // bg tint so it reads clearly as its own element.
-function datedRowTone(item) {
+// bg carries the same priority order as the dot: overdue red beats
+// design purple beats internal teal. Rows sit inside one shared bordered
+// container — no per-row border, just a bottom divider between rows
+// (handled by the container map, not here) and a tinted background.
+// alt: every other row within a tone drops to a lighter opacity tier so
+// a run of same-tone rows (e.g. five teal "due this week" items) doesn't
+// blur into one solid block.
+// label = the ClientLabel's text tone, kept a notch brighter than the
+// bg tint so it reads clearly as its own element.
+function datedRowTone(item, alt) {
 	if (item.isPast)
 		return {
 			dot: 'bg-danger',
-			bg: 'bg-danger/[0.08] hover:bg-danger/[0.16]',
+			bg: alt
+				? 'bg-danger/[0.04] hover:bg-danger/[0.10]'
+				: 'bg-danger/[0.08] hover:bg-danger/[0.16]',
 			label: 'text-danger',
 		};
 	if (item.isDesigner)
 		return {
 			dot: 'bg-purple',
-			bg: 'bg-purple/[0.165] hover:bg-purple/[0.26]',
+			bg: alt
+				? 'bg-purple/[0.08] hover:bg-purple/[0.16]'
+				: 'bg-purple/[0.165] hover:bg-purple/[0.26]',
 			label: 'text-purple',
 		};
 	return {
 		dot: 'bg-teal',
-		bg: 'bg-teal/[0.158] hover:bg-teal/[0.26]',
+		bg: alt
+			? 'bg-teal/[0.08] hover:bg-teal/[0.16]'
+			: 'bg-teal/[0.158] hover:bg-teal/[0.26]',
 		label: 'text-teal',
 	};
 }
 
-function DatedRow({ item, isLast }) {
-	const { dot, bg, label } = datedRowTone(item);
+function DatedRow({ item, isLast, isAlt }) {
+	const { dot, bg, label } = datedRowTone(item, isAlt);
 
 	return (
 		<Link
@@ -208,11 +223,20 @@ function DatedList({ items }) {
 	return (
 		<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
 			{items.map((item, i) => (
-				<DatedRow key={item.id} item={item} isLast={i === items.length - 1} />
+				<DatedRow
+					key={item.id}
+					item={item}
+					isLast={i === items.length - 1}
+					isAlt={i % 2 === 1}
+				/>
 			))}
 		</div>
 	);
 }
+
+
+
+
 
 // ─── Later — collapsed, calendar date instead of a day-count ──────────────
 // Same purple/teal split, tuned a touch quieter than DatedRow to match
