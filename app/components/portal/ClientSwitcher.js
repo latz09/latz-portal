@@ -14,12 +14,19 @@ export default function ClientSwitcher({ clients }) {
 	const [leaving, setLeaving] = useState(false);
 	const [mounted, setMounted] = useState(false);
 	const [query, setQuery] = useState('');
+	const [isTouch, setIsTouch] = useState(false);
 	const navigating = useRef(false);
 	const listContainerRef = useRef(null);
 	const inputRef = useRef(null);
 	const widgetRef = useRef(null);
 
 	useEffect(() => setMounted(true), []);
+
+	// Detect touch/mobile once on mount — used to suppress the native
+	// focus-on-tap behavior that pops the OS keyboard open immediately.
+	useEffect(() => {
+		setIsTouch(window.matchMedia('(pointer: coarse)').matches);
+	}, []);
 
 	// Close on navigation — panel fades/scales back out while the new route
 	// loads instead of sitting open on a stale page.
@@ -55,6 +62,19 @@ export default function ClientSwitcher({ clients }) {
 		window.addEventListener('keydown', handler);
 		return () => window.removeEventListener('keydown', handler);
 	}, []);
+
+	// On touch devices, the first tap on the bar should just open the panel
+	// to browse — not yank the keyboard up immediately. preventDefault in
+	// both touchstart and mousedown blocks the native focus that would
+	// otherwise fire (iOS needs touchstart specifically; mousedown covers
+	// Android/others). Once the panel is already open, a second tap on the
+	// input behaves normally — focuses it, keyboard shows — so typing to
+	// search is still possible when actually wanted.
+	function handlePointerDown(e) {
+		if (!isTouch || open) return;
+		e.preventDefault();
+		setOpen(true);
+	}
 
 	// ArrowUp/ArrowDown move real DOM focus between whichever items are
 	// currently visible (browse cards or search results). Works whether
@@ -235,6 +255,8 @@ export default function ClientSwitcher({ clients }) {
 						type='text'
 						placeholder='Search clients... (⌘K)'
 						value={query}
+						onTouchStart={handlePointerDown}
+						onMouseDown={handlePointerDown}
 						onFocus={() => setOpen(true)}
 						onChange={(e) => {
 							setQuery(e.target.value);
