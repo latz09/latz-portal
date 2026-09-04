@@ -15,6 +15,8 @@ export default function ClientSwitcher({ clients }) {
 	const [mounted, setMounted] = useState(false);
 	const [query, setQuery] = useState('');
 	const [isTouch, setIsTouch] = useState(false);
+	const [keyboardOpen, setKeyboardOpen] = useState(false);
+	const [viewport, setViewport] = useState(null);
 	const navigating = useRef(false);
 	const listContainerRef = useRef(null);
 	const inputRef = useRef(null);
@@ -22,15 +24,38 @@ export default function ClientSwitcher({ clients }) {
 
 	useEffect(() => setMounted(true), []);
 
-	// Detect touch/mobile once on mount — on touch devices, the closed bar
-	// renders as a plain button (no <input> in the DOM at all) instead of
-	// a focusable field, so there's nothing for the OS to auto-focus and
-	// no keyboard pop on the first tap. Also used to bottom-anchor the
-	// results panel instead of centering it, since a centered panel gets
-	// squeezed awkwardly once the keyboard eats half the screen.
+	// Detect touch/mobile once on mount — used both to suppress the
+	// native focus-on-tap keyboard pop, and to gate the visualViewport
+	// keyboard-tracking below (desktop never needs it).
 	useEffect(() => {
 		setIsTouch(window.matchMedia('(pointer: coarse)').matches);
 	}, []);
+
+	// Track the real visible viewport via the browser's own visualViewport
+	// API instead of trusting CSS units (dvh/svh) to get this right — iOS
+	// Safari in particular has long-standing inconsistencies with fixed
+	// positioning once the on-screen keyboard opens. A >150px gap between
+	// window.innerHeight and the visualViewport's height means the keyboard
+	// is covering that much of the screen; below that threshold we treat
+	// it as browser-chrome noise (address bar show/hide), not a keyboard.
+	useEffect(() => {
+		if (!isTouch) return;
+		const vv = window.visualViewport;
+		if (!vv) return;
+
+		function update() {
+			const heightDiff = window.innerHeight - vv.height;
+			setKeyboardOpen(heightDiff > 150);
+			setViewport({ top: vv.offsetTop, height: vv.height });
+		}
+		update();
+		vv.addEventListener('resize', update);
+		vv.addEventListener('scroll', update);
+		return () => {
+			vv.removeEventListener('resize', update);
+			vv.removeEventListener('scroll', update);
+		};
+	}, [isTouch]);
 
 	// Close on navigation — panel fades/scales back out while the new route
 	// loads instead of sitting open on a stale page.
@@ -180,6 +205,87 @@ export default function ClientSwitcher({ clients }) {
 	// there's nothing to auto-focus. Once open, the real <input> takes over
 	// and behaves normally (tap it again to type and bring up the keyboard).
 	const showButtonBar = isTouch && !open;
+	const useKeyboardLayout = isTouch && keyboardOpen && viewport;
+
+	// Shared list content — identical in both layout modes below, factored
+	// out so the two modes can't accidentally drift out of sync.
+	const listContent = (
+		<div ref={listContainerRef} className='flex-1 overflow-y-auto p-5'>
+			{isSearching ? (
+				<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+					{sorted.length === 0 && (
+						<p className='font-mono text-xs text-white/20 px-4 py-6 text-center'>
+							No clients found
+						</p>
+					)}
+					{sorted.map((client, i) => (
+						<button
+							key={client.slug}
+							onClick={() => goTo(client.slug)}
+							className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] focus:bg-white/[0.07] focus:outline-none transition-colors text-left ${
+								i !== sorted.length - 1 ? 'border-b border-white/[0.06]' : ''
+							}`}
+						>
+							<span className='font-medium text-white truncate'>{client.name}</span>
+							<span className='font-mono text-xs text-teal shrink-0'>
+								{client.activeProjects}
+								<span className='text-teal/40'> / {client.totalProjects}</span>
+							</span>
+						</button>
+					))}
+				</div>
+			) : (
+				<ClientList clients={clients} />
+			)}
+		</div>
+	);
+
+	// Shared bar content — same reuse reasoning as listContent above.
+	const barContent = (
+		<div className='flex items-center gap-3 px-4 py-3 rounded-full border border-white/10 bg-[#0d0f14] shadow-lg'>
+			<TbSearch className='text-white/30 text-lg shrink-0' />
+			{showButtonBar ? (
+				<button
+					type='button'
+					onClick={() => setOpen(true)}
+					className='flex-1 text-left bg-transparent text-white/20 font-mono text-sm outline-none min-w-0'
+				>
+					Search clients...
+				</button>
+			) : (
+				<input
+					ref={inputRef}
+					type='text'
+					placeholder='Search clients... (⌘K)'
+					value={query}
+					onFocus={() => setOpen(true)}
+					onChange={(e) => {
+						setQuery(e.target.value);
+						setOpen(true);
+					}}
+					onKeyDown={(e) => {
+						if (e.key === 'Escape') {
+							close();
+							inputRef.current?.blur();
+						}
+					}}
+					className='flex-1 bg-transparent text-white placeholder-white/20 font-mono text-sm outline-none min-w-0'
+				/>
+			)}
+			{open && (
+				<button
+					onClick={() => {
+						close();
+						inputRef.current?.blur();
+					}}
+					aria-label='Close'
+					className='text-white/20 hover:text-white transition-colors shrink-0'
+				>
+					<TbX className='text-lg' />
+				</button>
+			)}
+		</div>
+	);
 
 	const widget = (
 		<div ref={widgetRef}>
@@ -191,105 +297,64 @@ export default function ClientSwitcher({ clients }) {
 				onClick={close}
 			/>
 
-			{/* results panel — bottom-anchored on mobile so it sits right
-			    above the keyboard instead of centering over a squeezed
-			    screen; centered overlay from sm: up, same as before.
-			    max-h uses dvh (dynamic viewport height) instead of vh —
-			    dvh tracks the actual visible area and shrinks correctly
-			    when the mobile keyboard opens, vh does not. */}
-			<div className='fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none'>
+			{useKeyboardLayout ? (
+				/* Keyboard-open mode: bar + panel both live inside a container
+				   sized to the browser's real, JS-measured visible area — not
+				   `fixed` positioning, which iOS Safari can miscalculate once
+				   the keyboard is up. This sidesteps that inconsistency
+				   entirely instead of fighting it with CSS. */
 				<div
-					onClick={handlePanelClick}
-					className={`pointer-events-auto w-full sm:w-[720px] max-h-[65dvh] sm:max-h-[90vh] flex flex-col rounded-t-2xl sm:rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-300 ease-out ${
-						open
-							? 'translate-y-0 scale-100 opacity-100'
-							: 'translate-y-4 scale-95 opacity-0 invisible pointer-events-none'
-					} ${leaving ? 'drawer-leaving-bottom' : ''}`}
+					style={{
+						position: 'fixed',
+						left: 0,
+						width: '100%',
+						top: viewport.top,
+						height: viewport.height,
+					}}
+					className='z-[100] pointer-events-none'
 				>
-					<div ref={listContainerRef} className='flex-1 overflow-y-auto p-5'>
-						{isSearching ? (
-							<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
-								{sorted.length === 0 && (
-									<p className='font-mono text-xs text-white/20 px-4 py-6 text-center'>
-										No clients found
-									</p>
-								)}
-								{sorted.map((client, i) => (
-									<button
-										key={client.slug}
-										onClick={() => goTo(client.slug)}
-										className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] focus:bg-white/[0.07] focus:outline-none transition-colors text-left ${
-											i !== sorted.length - 1 ? 'border-b border-white/[0.06]' : ''
-										}`}
-									>
-										<span className='font-medium text-white truncate'>{client.name}</span>
-										<span className='font-mono text-xs text-teal shrink-0'>
-											{client.activeProjects}
-											<span className='text-teal/40'> / {client.totalProjects}</span>
-										</span>
-									</button>
-								))}
+					<div
+						onClick={handlePanelClick}
+						className={`pointer-events-auto absolute left-2 right-2 bottom-[68px] max-h-[55%] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-200 ease-out ${
+							open
+								? 'translate-y-0 opacity-100'
+								: 'translate-y-4 opacity-0 invisible pointer-events-none'
+						} ${leaving ? 'drawer-leaving-bottom' : ''}`}
+					>
+						{listContent}
+					</div>
+
+					<div className='pointer-events-auto absolute left-2 right-2 bottom-2'>
+						{barContent}
+					</div>
+				</div>
+			) : (
+				/* Default mode: desktop, or mobile with the keyboard closed —
+				   the original centered-modal + fixed-bottom-bar layout. */
+				<>
+					<div className='fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4 pointer-events-none'>
+						<div
+							onClick={handlePanelClick}
+							className={`pointer-events-auto w-full sm:w-[720px] max-h-[90vh] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-300 ease-out ${
+								open
+									? 'translate-y-0 scale-100 opacity-100'
+									: 'translate-y-4 scale-95 opacity-0 invisible pointer-events-none'
+							} ${leaving ? 'drawer-leaving-bottom' : ''}`}
+						>
+							{listContent}
+							<div className='hidden lg:block px-4 py-3 border-t border-white/10 shrink-0'>
+								<p className='font-mono text-[12px] text-center text-warning/60'>
+									↑↓ browse · Enter to go · Esc to close · ⌘K to search
+								</p>
 							</div>
-						) : (
-							<ClientList clients={clients} />
-						)}
+						</div>
 					</div>
 
-					<div className='hidden lg:block px-4 py-3 border-t border-white/10 shrink-0'>
-						<p className='font-mono text-[12px] text-center text-warning/60'>
-							↑↓ browse · Enter to go · Esc to close · ⌘K to search
-						</p>
+					<div className='fixed bottom-3 md:bottom-4 right-6 z-[100] w-[calc(100vw-3rem)] sm:w-[420px]'>
+						{barContent}
 					</div>
-				</div>
-			</div>
-
-			{/* persistent bar — always mounted, doubles as the trigger and
-			    the search input; unchanged from before, still bottom-right */}
-			<div className='fixed bottom-3 md:bottom-4 right-6 z-[100] w-[calc(100vw-3rem)] sm:w-[420px]'>
-				<div className='flex items-center gap-3 px-4 py-3 rounded-full border border-white/10 bg-[#0d0f14] shadow-lg'>
-					<TbSearch className='text-white/30 text-lg shrink-0' />
-					{showButtonBar ? (
-						<button
-							type='button'
-							onClick={() => setOpen(true)}
-							className='flex-1 text-left bg-transparent text-white/20 font-mono text-sm outline-none min-w-0'
-						>
-							Search clients...
-						</button>
-					) : (
-						<input
-							ref={inputRef}
-							type='text'
-							placeholder='Search clients... (⌘K)'
-							value={query}
-							onFocus={() => setOpen(true)}
-							onChange={(e) => {
-								setQuery(e.target.value);
-								setOpen(true);
-							}}
-							onKeyDown={(e) => {
-								if (e.key === 'Escape') {
-									close();
-									inputRef.current?.blur();
-								}
-							}}
-							className='flex-1 bg-transparent text-white  placeholder-white/20 font-mono text-sm outline-none min-w-0'
-						/>
-					)}
-					{open && (
-						<button
-							onClick={() => {
-								close();
-								inputRef.current?.blur();
-							}}
-							aria-label='Close'
-							className='text-white/20 hover:text-white transition-colors shrink-0'
-						>
-							<TbX className='text-lg' />
-						</button>
-					)}
-				</div>
-			</div>
+				</>
+			)}
 		</div>
 	);
 
