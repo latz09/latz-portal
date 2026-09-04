@@ -15,8 +15,7 @@ export default function ClientSwitcher({ clients }) {
 	const [mounted, setMounted] = useState(false);
 	const [query, setQuery] = useState('');
 	const [isTouch, setIsTouch] = useState(false);
-	const [keyboardOpen, setKeyboardOpen] = useState(false);
-	const [viewport, setViewport] = useState(null);
+	const [keyboardInset, setKeyboardInset] = useState(0);
 	const navigating = useRef(false);
 	const listContainerRef = useRef(null);
 	const inputRef = useRef(null);
@@ -24,29 +23,28 @@ export default function ClientSwitcher({ clients }) {
 
 	useEffect(() => setMounted(true), []);
 
-	// Detect touch/mobile once on mount — used both to suppress the
-	// native focus-on-tap keyboard pop, and to gate the visualViewport
-	// keyboard-tracking below (desktop never needs it).
+	// Detect touch/mobile once on mount — used to suppress the native
+	// focus-on-tap keyboard pop, and to gate the visualViewport tracking
+	// below (desktop never needs it, and this flag never flips mid-session
+	// so desktop's render branch is stable — no remount risk there).
 	useEffect(() => {
 		setIsTouch(window.matchMedia('(pointer: coarse)').matches);
 	}, []);
 
-	// Track the real visible viewport via the browser's own visualViewport
-	// API instead of trusting CSS units (dvh/svh) to get this right — iOS
-	// Safari in particular has long-standing inconsistencies with fixed
-	// positioning once the on-screen keyboard opens. A >150px gap between
-	// window.innerHeight and the visualViewport's height means the keyboard
-	// is covering that much of the screen; below that threshold we treat
-	// it as browser-chrome noise (address bar show/hide), not a keyboard.
+	// Track how much of the screen the on-screen keyboard is currently
+	// covering, via the browser's own visualViewport API — CSS units
+	// (dvh/svh) aren't reliable for this on iOS Safari. keyboardInset is
+	// just a number (px) that positioning below reads from; it does NOT
+	// change which elements render, only where they sit — so the input
+	// itself never remounts when the keyboard opens or closes.
 	useEffect(() => {
 		if (!isTouch) return;
 		const vv = window.visualViewport;
 		if (!vv) return;
 
 		function update() {
-			const heightDiff = window.innerHeight - vv.height;
-			setKeyboardOpen(heightDiff > 150);
-			setViewport({ top: vv.offsetTop, height: vv.height });
+			const inset = window.innerHeight - (vv.offsetTop + vv.height);
+			setKeyboardInset(Math.max(0, inset));
 		}
 		update();
 		vv.addEventListener('resize', update);
@@ -78,6 +76,19 @@ export default function ClientSwitcher({ clients }) {
 		setLeaving(false);
 	};
 
+	// First tap on mobile: open the panel to browse only — no keyboard.
+	// The defensive blur-next-frame guards against a WebKit quirk where
+	// touch focus can carry over to a newly-inserted focusable element
+	// sitting at the same screen position as whatever was just tapped.
+	function openBrowseOnly() {
+		setOpen(true);
+		requestAnimationFrame(() => {
+			if (document.activeElement instanceof HTMLElement) {
+				document.activeElement.blur();
+			}
+		});
+	}
+
 	// ⌘K / Ctrl+K opens and focuses the persistent bar input
 	useEffect(() => {
 		const handler = (e) => {
@@ -93,9 +104,7 @@ export default function ClientSwitcher({ clients }) {
 	}, []);
 
 	// ArrowUp/ArrowDown move real DOM focus between whichever items are
-	// currently visible (browse cards or search results). Works whether
-	// focus starts in the bar input (currentIndex -1 → lands on the first
-	// item) or already inside the list.
+	// currently visible (browse cards or search results).
 	useEffect(() => {
 		if (!open) return;
 		const handler = (e) => {
@@ -121,10 +130,7 @@ export default function ClientSwitcher({ clients }) {
 	}, [open]);
 
 	// Focus trap: while open, Tab/Shift+Tab cycle through the widget's own
-	// focusable elements (bar input, close button, whichever list is
-	// visible) instead of escaping into the rest of the page or browser
-	// chrome. offsetParent !== null filters out anything currently hidden
-	// by CSS (e.g. the panel's contents when it's visually closed).
+	// focusable elements instead of escaping into the rest of the page.
 	useEffect(() => {
 		if (!open) return;
 		const handler = (e) => {
@@ -192,23 +198,21 @@ export default function ClientSwitcher({ clients }) {
 		router.push(`/clients/${slug}`);
 	}
 
-	// Any click bubbling up from a <Link> (an <a> tag) inside browse mode
-	// (a ClientList card) is a navigation — trigger the leave animation.
-	// The group dropdown inside ClientList is a <button>, not a link, so
-	// switching Active/On Hold/etc falls through untouched.
+	// Any click bubbling up from a <Link> (a client card) is a navigation —
+	// trigger the leave animation. The group dropdown is a <button>, not
+	// a link, so switching Active/On Hold/etc falls through untouched.
 	function handlePanelClick(e) {
 		if (e.target.closest('a')) setLeaving(true);
 	}
 
 	// On touch devices while closed: a plain button, visually identical to
 	// the input, that just opens the panel — no <input> exists yet, so
-	// there's nothing to auto-focus. Once open, the real <input> takes over
-	// and behaves normally (tap it again to type and bring up the keyboard).
+	// there's nothing to auto-focus. Once open, the real <input> takes
+	// over. This is the ONLY intentional swap in the tree — everything
+	// about keyboard-open vs keyboard-closed positioning below is handled
+	// with inline styles on that same persistent input, never a remount.
 	const showButtonBar = isTouch && !open;
-	const useKeyboardLayout = isTouch && keyboardOpen && viewport;
 
-	// Shared list content — identical in both layout modes below, factored
-	// out so the two modes can't accidentally drift out of sync.
 	const listContent = (
 		<div ref={listContainerRef} className='flex-1 overflow-y-auto p-5'>
 			{isSearching ? (
@@ -240,14 +244,13 @@ export default function ClientSwitcher({ clients }) {
 		</div>
 	);
 
-	// Shared bar content — same reuse reasoning as listContent above.
 	const barContent = (
 		<div className='flex items-center gap-3 px-4 py-3 rounded-full border border-white/10 bg-[#0d0f14] shadow-lg'>
 			<TbSearch className='text-white/30 text-lg shrink-0' />
 			{showButtonBar ? (
 				<button
 					type='button'
-					onClick={() => setOpen(true)}
+					onClick={openBrowseOnly}
 					className='flex-1 text-left bg-transparent text-white/20 font-mono text-sm outline-none min-w-0'
 				>
 					Search clients...
@@ -289,7 +292,6 @@ export default function ClientSwitcher({ clients }) {
 
 	const widget = (
 		<div ref={widgetRef}>
-			{/* backdrop — only when open, tap to close */}
 			<div
 				className={`fixed inset-0 z-[90] bg-black/70 backdrop-blur-md transition-opacity duration-200 ${
 					open ? 'opacity-100' : 'opacity-0 invisible pointer-events-none'
@@ -297,40 +299,35 @@ export default function ClientSwitcher({ clients }) {
 				onClick={close}
 			/>
 
-			{useKeyboardLayout ? (
-				/* Keyboard-open mode: bar + panel both live inside a container
-				   sized to the browser's real, JS-measured visible area — not
-				   `fixed` positioning, which iOS Safari can miscalculate once
-				   the keyboard is up. This sidesteps that inconsistency
-				   entirely instead of fighting it with CSS. */
-				<div
-					style={{
-						position: 'fixed',
-						left: 0,
-						width: '100%',
-						top: viewport.top,
-						height: viewport.height,
-					}}
-					className='z-[100] pointer-events-none'
-				>
-					<div
-						onClick={handlePanelClick}
-						className={`pointer-events-auto absolute left-2 right-2 bottom-[68px] max-h-[55%] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-200 ease-out ${
-							open
-								? 'translate-y-0 opacity-100'
-								: 'translate-y-4 opacity-0 invisible pointer-events-none'
-						} ${leaving ? 'drawer-leaving-bottom' : ''}`}
-					>
-						{listContent}
+			{isTouch ? (
+				/* Mobile: ONE persistent subtree, always. Positioning shifts
+				   via inline style (keyboardInset) as the keyboard opens or
+				   closes — the input itself never unmounts, so focus is
+				   never lost mid-interaction. */
+				<>
+					<div className='fixed inset-0 z-[100] flex items-end justify-center p-2 pointer-events-none'>
+						<div
+							onClick={handlePanelClick}
+							style={{ marginBottom: keyboardInset + 76 }}
+							className={`pointer-events-auto w-full max-h-[55vh] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-200 ease-out ${
+								open
+									? 'translate-y-0 opacity-100'
+									: 'translate-y-4 opacity-0 invisible pointer-events-none'
+							} ${leaving ? 'drawer-leaving-bottom' : ''}`}
+						>
+							{listContent}
+						</div>
 					</div>
 
-					<div className='pointer-events-auto absolute left-2 right-2 bottom-2'>
+					<div
+						style={{ bottom: keyboardInset + 12 }}
+						className='fixed left-3 right-3 z-[100]'
+					>
 						{barContent}
 					</div>
-				</div>
+				</>
 			) : (
-				/* Default mode: desktop, or mobile with the keyboard closed —
-				   the original centered-modal + fixed-bottom-bar layout. */
+				/* Desktop: unchanged centered modal + fixed bottom-right bar. */
 				<>
 					<div className='fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4 pointer-events-none'>
 						<div
