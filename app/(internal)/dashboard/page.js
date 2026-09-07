@@ -1,3 +1,5 @@
+// dashboard
+
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_CLIENTS_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENTS_QUERY';
 import { FETCH_NOTES_QUERY as NQ } from '@/app/data/queries/pages/FETCH_NOTES_QUERY';
