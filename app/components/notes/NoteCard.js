@@ -540,7 +540,7 @@ export default function NoteCard({
 					projectName={note.projectName}
 					projectSlug={note.projectSlug}
 				/>
-				<span className='text-base lg:text-lg font-[540] text-white leading-tight'>
+				<span className='text-base lg:text-lg font-[400] tracking-wider text-white leading-tight'>
 					{note.title}
 				</span>
 				<NoteBody body={note.body} open={open} />
