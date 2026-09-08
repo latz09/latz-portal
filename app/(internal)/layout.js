@@ -5,12 +5,14 @@ import ClientSwitcher from '@/app/components/portal/ClientSwitcher';
 import Link from 'next/link';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_CLIENTS_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENTS_QUERY';
+import { NoteDraftProvider } from '@/app/components/notes/NoteDraftProvider';
+import GlobalNoteWidget from '@/app/components/notes/GlobalNoteWidget';
 
 export default async function InternalLayout({ children }) {
 	const clients = await f(Q);
 
 	return (
-		<>
+		<NoteDraftProvider clients={clients}>
 			<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
 				<div className='max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
@@ -26,7 +28,6 @@ export default async function InternalLayout({ children }) {
 
 					<InternalNav />
 
-					{/* desktop-only: New Client + Sign Out */}
 					<div className='hidden lg:flex items-center gap-2 lg:ml-auto'>
 						<StudioLink type='project' />
 						<form
@@ -49,6 +50,8 @@ export default async function InternalLayout({ children }) {
 			<ClientSwitcher clients={clients} />
 
 			{children}
-		</>
+
+			<GlobalNoteWidget />
+		</NoteDraftProvider>
 	);
 }

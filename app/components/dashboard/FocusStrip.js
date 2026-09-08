@@ -17,8 +17,6 @@ import PinnedNotes from '@/app/components/notes/PinnedNotes';
 import { formatDate } from '@/app/components/portal/deadlineUtils';
 import { buildFocusSections } from '@/app/utils/focusSignals';
 
-// ─── Small shared bits ───────────────────────────────────────────────────────
-
 function SectionHeader({ label, count, tone = 'text-white/40' }) {
 	return (
 		<div className='flex items-center gap-2 mb-2.5'>
@@ -55,10 +53,6 @@ function StatBar({ overdue, dueSoon, later, waiting, attention, nudges }) {
 	);
 }
 
-// ─── Client label — sits top-left of the row like an eyebrow, colored to
-// match the row's context (danger/purple/teal/warning). Project name lives
-// under the title instead, since the client is the thing you scan for first.
-
 function ClientLabel({ clientName, tone }) {
 	return (
 		<span
@@ -68,10 +62,6 @@ function ClientLabel({ clientName, tone }) {
 		</span>
 	);
 }
-
-// ─── Milestone icon — plain star for internal work; a small brush peeking
-// out from the star's bottom-right corner for design work. Full size star,
-// no chip, no overlay badge — this is the version that actually landed.
 
 function MilestoneIcon({ isDesigner, isPast }) {
 	const tone = isPast
@@ -93,11 +83,6 @@ function MilestoneIcon({ isDesigner, isPast }) {
 		</span>
 	);
 }
-
-// ─── Overdue / Due This Week — big day-count on the right ──────────────────
-// Overdue always reads danger (red), regardless of who owns the work —
-// urgency outranks ownership. Otherwise: purple if it's Alyssa's, teal if
-// it's yours. Both at full strength — no opacity on the number or label.
 
 function DayCount({ daysUntil, isToday, isPast, isDesigner }) {
 	if (isToday) {
@@ -138,21 +123,6 @@ function DayCount({ daysUntil, isToday, isPast, isDesigner }) {
 	);
 }
 
-// bg carries the same priority order as the dot: overdue red beats
-// design purple beats internal teal. Rows sit inside one shared bordered
-// container — no per-row border, just a bottom divider between rows
-// (handled by the container map, not here) and a tinted background.
-// label = the ClientLabel's text tone, kept a notch brighter than the
-// bg tint so it reads clearly as its own element.
-// bg carries the same priority order as the dot: overdue red beats
-// design purple beats internal teal. Rows sit inside one shared bordered
-// container — no per-row border, just a bottom divider between rows
-// (handled by the container map, not here) and a tinted background.
-// alt: every other row within a tone drops to a lighter opacity tier so
-// a run of same-tone rows (e.g. five teal "due this week" items) doesn't
-// blur into one solid block.
-// label = the ClientLabel's text tone, kept a notch brighter than the
-// bg tint so it reads clearly as its own element.
 function datedRowTone(item, alt) {
 	if (item.isPast)
 		return {
@@ -234,15 +204,6 @@ function DatedList({ items }) {
 	);
 }
 
-
-
-
-
-// ─── Later — collapsed, calendar date instead of a day-count ──────────────
-// Same purple/teal split, tuned a touch quieter than DatedRow to match
-// this section's overall lower-key styling. Border stays neutral white —
-// only asked to tint backgrounds, not restyle the whole row.
-
 function LaterRow({ item }) {
 	const dotTone = item.isDesigner ? 'bg-purple' : 'bg-white/20';
 	const dateTone = item.isDesigner ? 'text-purple' : 'text-white/40';
@@ -312,10 +273,6 @@ function LaterSection({ items }) {
 		</div>
 	);
 }
-
-// ─── Waiting — flat list + collapsed toggle, same shape as DatedList/Later.
-// Ball's out of your hands here, so this stays out of the way until opened
-// rather than sitting expanded and competing with Overdue/Due This Week.
 
 function WaitingRow({ item, isLast }) {
 	const isDesigner = item.waitingOn === 'designer';
@@ -395,8 +352,6 @@ function WaitingSection({ items }) {
 	);
 }
 
-// ─── Needs Attention — icon per signal type, amber ─────────────────────────
-
 const ATTENTION_ICON = {
 	'proposal-followup': TbMail,
 	'deposit-unpaid': TbCoin,
@@ -430,8 +385,6 @@ function AttentionRow({ item }) {
 		</Link>
 	);
 }
-
-// ─── Nudges — collapsed to one line by default ─────────────────────────────
 
 function NudgeRow({ item }) {
 	return (
@@ -487,9 +440,13 @@ function NudgesSection({ items }) {
 	);
 }
 
-// ─── Main Component ──────────────────────────────────────────────────────────
-
-export default function FocusStrip({ clients, pinnedNotes = [] }) {
+export default function FocusStrip({
+	clients,
+	pinnedNotes = [],
+	onArchive,
+	onPinToggle,
+	onBackBurnerToggle,
+}) {
 	const { overdue, dueSoon, later, waiting, needsAttention, nudges } =
 		buildFocusSections(clients);
 
@@ -542,10 +499,14 @@ export default function FocusStrip({ clients, pinnedNotes = [] }) {
 
 			<LaterSection items={later} />
 
-			{/* lg+ gets pinned notes in the sidebar instead — this instance is
-			    mobile/tablet only, kept at its original spot in the flow */}
 			<div className='lg:hidden'>
-				<PinnedNotes notes={pinnedNotes} defaultOpen />
+				<PinnedNotes
+					notes={pinnedNotes}
+					defaultOpen
+					onArchive={onArchive}
+					onPinToggle={onPinToggle}
+					onBackBurnerToggle={onBackBurnerToggle}
+				/>
 			</div>
 
 			{needsAttention.length > 0 && (

@@ -2,7 +2,7 @@
 
 import { TbPlus } from 'react-icons/tb';
 
-export default function AddNoteButton({ onClick }) {
+export default function AddNoteButton({ onClick, hasDraft }) {
 	return (
 		<button
 			onClick={onClick}
@@ -10,6 +10,12 @@ export default function AddNoteButton({ onClick }) {
 		>
 			<TbPlus className='text-lg sm:text-base' />
 			<span className='hidden sm:inline'>Add Note</span>
+			{hasDraft && (
+				<span
+					title='Note in progress'
+					className='absolute -top-1 -right-1 w-3 h-3 rounded-full bg-teal border-2 border-dark'
+				/>
+			)}
 		</button>
 	);
 }

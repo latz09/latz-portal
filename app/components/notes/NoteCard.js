@@ -12,6 +12,8 @@ import {
 	TbMail,
 	TbPinFilled,
 	TbPin,
+	TbHourglass,
+	TbHourglassEmpty,
 	TbNote,
 	TbBulb,
 	TbListCheck,
@@ -20,19 +22,26 @@ import {
 } from 'react-icons/tb';
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
+import { useNoteDraft } from './NoteDraftProvider';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-// Icon per type. Color is held back to white/30 for the label itself —
-// only the glyph carries a tint, so six note types don't turn the board
-// into a color chart.
+// accent maps into PILL_STYLES below — same teal/purple/white/warning bucket
+// convention as Pill.jsx's ACCENTS.fill, applied here to note type badges.
 const TYPE_CONFIG = {
-	general: { icon: TbNote, color: 'text-white/30' },
-	idea: { icon: TbBulb, color: 'text-purple/70' },
-	task: { icon: TbListCheck, color: 'text-teal/70' },
-	link: { icon: TbLink, color: 'text-warning/70' },
-	asset: { icon: TbPaperclip, color: 'text-white/40' },
-	email: { icon: TbMail, color: 'text-teal/70' },
+	general: { icon: TbNote, accent: 'white' },
+	idea: { icon: TbBulb, accent: 'purple' },
+	task: { icon: TbListCheck, accent: 'teal' },
+	link: { icon: TbLink, accent: 'warning' },
+	asset: { icon: TbPaperclip, accent: 'white' },
+	email: { icon: TbMail, accent: 'teal' },
+};
+
+const PILL_STYLES = {
+	teal: 'bg-teal/45 border-teal/30 text-white/90',
+	purple: 'bg-purple/45 border-purple/30 text-white/90',
+	white: 'bg-white/30 border-white/30 text-white/90',
+	warning: 'bg-warning border-warning text-dark',
 };
 
 const URL_TEST = /^https?:\/\/[^\s]+$/;
@@ -49,8 +58,6 @@ function shortenUrl(url) {
 	}
 }
 
-// Turns any plain-typed URL inside note body text into a clean clickable
-// link, without needing the Sanity editor to manually apply a link mark.
 function linkifyChildren(children) {
 	return Children.map(children, (child) => {
 		if (typeof child !== 'string') return child;
@@ -62,7 +69,7 @@ function linkifyChildren(children) {
 					target='_blank'
 					rel='noopener noreferrer'
 					onClick={(e) => e.stopPropagation()}
-					className='text-teal underline hover:text-white transition-colors break-all'
+					className='text-teal lg:text-lg underline font-mono tracking-wider  hover:text-white transition-colors break-all'
 				>
 					{shortenUrl(part)}
 				</a>
@@ -158,9 +165,9 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 				if (e.target === e.currentTarget) onCancel();
 			}}
 		>
-			<div className='w-full max-w-sm bg-[#12151c] border border-white/15 rounded-xl shadow-2xl shadow-black/60 flex flex-col'>
+			<div className='w-full max-w-lg bg-[#12151c] border border-warning/40 rounded-xl shadow-2xl shadow-black/60 flex flex-col'>
 				<div className='flex items-center justify-between px-5 py-4 border-b border-white/10'>
-					<p className='font-mono text-[10px] tracking-widest uppercase text-white/40'>
+					<p className='font-mono text-[10px] lg:text-[12px] tracking-widest uppercase text-warning'>
 						Archive Note
 					</p>
 					<button
@@ -171,9 +178,9 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 					</button>
 				</div>
 				<div className='px-5 py-6 flex flex-col gap-6'>
-					<p className='text-sm text-white/60'>
+					<p className='text-sm lg:text-base text-white/60'>
 						Archive{' '}
-						<span className='text-white font-medium'>{`"${noteTitle}"`}</span>?
+						<span className='text-warning font-medium'>{`"${noteTitle}"`}</span>?
 						It will be moved to archived notes in Sanity.
 					</p>
 					<div className='flex justify-end gap-2'>
@@ -186,7 +193,7 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 						<button
 							onClick={onConfirm}
 							disabled={archiving}
-							className='font-mono text-xs bg-teal/15 hover:bg-teal/25 disabled:opacity-40 disabled:cursor-not-allowed text-teal border border-teal/30 rounded-lg px-4 py-1.5 transition-colors'
+							className='font-mono text-xs bg-warning hover:bg-teal/25 disabled:opacity-40 disabled:cursor-not-allowed text-dark font-semibold border border-teal/30 rounded-lg px-4 py-1.5 transition-colors'
 						>
 							{archiving ? 'Archiving…' : 'Archive'}
 						</button>
@@ -197,30 +204,74 @@ function ArchiveConfirm({ noteTitle, onConfirm, onCancel, archiving }) {
 	);
 }
 
-function NoteHeader({ note, pinned, onPinToggle, pinning }) {
-	const { icon: TypeIcon, color } =
-		TYPE_CONFIG[note.type] || TYPE_CONFIG.general;
-
+function TypeBadge({ type }) {
+	const { icon: Icon, accent } = TYPE_CONFIG[type] || TYPE_CONFIG.general;
 	return (
-		<div className='flex items-start justify-between gap-2'>
-			<div className='flex flex-col min-w-0 gap-1'>
-				<span className='inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-white/30'>
-					<TypeIcon className={`text-xs ${color}`} />
-					{note.type}
-				</span>
-				<span className='mt-3 text-sm lg:text-base font-mono font-medium text-white '>
-					{note.title}
-				</span>
+		<span
+			className={`inline-flex items-center gap-1.5 lg:gap-3 font-mono text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full border ${PILL_STYLES[accent]}`}
+		>
+			<Icon className='text-xs lg:text-base' />
+			{type}
+		</span>
+	);
+}
+
+function BackBurnerBadge() {
+	return (
+		<span className='inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full border bg-teal/10 border-teal/25 text-teal'>
+			<TbHourglass className='text-xs' />
+			Back Burner
+		</span>
+	);
+}
+
+// Badges left, actions right — title/client context now live below this row.
+function NoteHeader({
+	type,
+	backBurner,
+	pinned,
+	onPinToggle,
+	pinning,
+	onBackBurnerToggle,
+	settingBackBurner,
+	onEdit,
+}) {
+	return (
+		<div className='flex items-start justify-between gap-2 mb-2 lg:mb-4'>
+			<div className='flex items-center gap-1.5 flex-wrap'>
+				<TypeBadge type={type} />
+				{backBurner && <BackBurnerBadge />}
 			</div>
 			<div className='flex items-center shrink-0 -mr-1.5 -mt-1'>
-				<a
-					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
-					target='_blank'
-					onClick={(e) => e.stopPropagation()}
+				<button
+					type='button'
+					onClick={(e) => {
+						e.stopPropagation();
+						onEdit();
+					}}
 					className='hidden sm:block text-white/70 hover:text-warning transition-colors p-2'
 				>
 					<TbEdit className='text-base' />
-				</a>
+				</button>
+				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						onBackBurnerToggle();
+					}}
+					disabled={settingBackBurner}
+					className={`transition-colors p-2 ${
+						backBurner
+							? 'text-teal hover:text-teal/60'
+							: 'text-white/15 hover:text-teal/70'
+					} ${settingBackBurner ? 'opacity-40' : ''}`}
+					title={backBurner ? 'Remove from back burner' : 'Send to back burner'}
+				>
+					{backBurner ? (
+						<TbHourglass className='text-base' />
+					) : (
+						<TbHourglassEmpty className='text-base' />
+					)}
+				</button>
 				<button
 					onClick={(e) => {
 						e.stopPropagation();
@@ -245,34 +296,44 @@ function NoteHeader({ note, pinned, onPinToggle, pinning }) {
 	);
 }
 
-function NoteContextLink({ clientName, clientSlug, projectName, projectSlug }) {
+// Client as a bold eyebrow, project demoted to a quiet subtitle underneath —
+// same identity pattern FocusStrip's ClientLabel already established.
+function NoteContext({ clientName, clientSlug, projectName, projectSlug }) {
 	if (!clientName) return null;
-
-	const cls =
-		'font-mono text-[11px] text-white/40 hover:text-teal transition-colors w-fit';
 
 	if (projectName && clientSlug && projectSlug) {
 		return (
 			<Link
 				href={`/clients/${clientSlug}/${projectSlug}`}
 				onClick={(e) => e.stopPropagation()}
-				className={cls}
+				className='group flex flex-col gap-0.5 w-fit hover:translate-x-2 transition duration-300'
 			>
-				{clientName} · {projectName} →
+				<span className='font-mono text-[11px] lg:text-[14px] font-semibold tracking-widest uppercase text-teal group-hover:text-teal/70 transition-colors'>
+					{clientName}
+				</span>
+				<span className='font-mono text-[11px] text-white/35 group-hover:text-white/60 transition-colors'>
+					{projectName}
+				</span>
 			</Link>
 		);
 	}
 
-	return clientSlug ? (
-		<Link
-			href={`/clients/${clientSlug}`}
-			onClick={(e) => e.stopPropagation()}
-			className={cls}
-		>
-			{clientName} →
-		</Link>
-	) : (
-		<span className='font-mono text-[11px] text-white/25'>{clientName}</span>
+	if (clientSlug) {
+		return (
+			<Link
+				href={`/clients/${clientSlug}`}
+				onClick={(e) => e.stopPropagation()}
+				className='font-mono text-[11px] font-semibold tracking-widest uppercase text-teal hover:text-white transition-colors w-fit'
+			>
+				{clientName}
+			</Link>
+		);
+	}
+
+	return (
+		<span className='font-mono text-[11px] font-semibold tracking-widest uppercase text-teal/60'>
+			{clientName}
+		</span>
 	);
 }
 
@@ -280,7 +341,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm lg:text-base  text-white/75 max-w-none wrap-break-word ${
+			className={`text-base lg:text-lg mt-2   text-white/75 max-w-none wrap-break-word ${
 				open ? '' : 'line-clamp-2'
 			}`}
 		>
@@ -289,7 +350,7 @@ function NoteBody({ body, open }) {
 	);
 }
 
-function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
+function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue, onEdit }) {
 	const isEmail = note.type === 'email';
 	const isSent = !!note.sentAt;
 
@@ -298,15 +359,14 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 			className='flex items-center justify-between gap-3 pt-2.5 border-t border-white/[0.06] mt-auto'
 			onClick={(e) => e.stopPropagation()}
 		>
-			{/* Edit + sent state — left side */}
 			<div className='flex items-center gap-2 min-w-0'>
-				<a
-					href={`https://latz-portal.sanity.studio/structure/note;${note._id}`}
-					target='_blank'
+				<button
+					type='button'
+					onClick={onEdit}
 					className='sm:hidden text-white/20 hover:text-warning transition-colors py-1.5 pr-1'
 				>
 					<TbEdit className='text-base' />
-				</a>
+				</button>
 				{isEmail && isSent && (
 					<span
 						className={`flex items-center gap-1.5 font-mono text-[11px] truncate ${
@@ -324,7 +384,6 @@ function NoteFooter({ note, onArchiveClick, onSendClick, sending, overdue }) {
 				)}
 			</div>
 
-			{/* Actions — right side */}
 			<div className='flex items-center gap-1 shrink-0'>
 				{isEmail && !isSent && (
 					<button
@@ -355,6 +414,7 @@ export default function NoteCard({
 	onArchive,
 	onSent,
 	onPinToggle,
+	onBackBurnerToggle,
 	overdue,
 }) {
 	const [open, setOpen] = useState(note.pinned ?? false);
@@ -364,8 +424,15 @@ export default function NoteCard({
 	const [sentAt, setSentAt] = useState(note.sentAt ?? null);
 	const [pinned, setPinned] = useState(note.pinned ?? false);
 	const [pinning, setPinning] = useState(false);
+	const [backBurner, setBackBurner] = useState(note.backBurner ?? false);
+	const [settingBackBurner, setSettingBackBurner] = useState(false);
+	const { openEditNote } = useNoteDraft();
 
 	const hydratedNote = { ...note, sentAt };
+
+	function handleEdit() {
+		openEditNote(hydratedNote);
+	}
 
 	async function handleConfirm() {
 		setArchiving(true);
@@ -416,14 +483,32 @@ export default function NoteCard({
 		}
 	}
 
-	// Surface, not flood. Overdue and pinned change the border and lift —
-	// the state signal itself lives in the footer, so seven overdue cards
-	// don't turn the section into a wall of red.
+	async function handleBackBurnerToggle() {
+		setSettingBackBurner(true);
+		const prev = backBurner;
+		setBackBurner(!prev); // optimistic
+		try {
+			const res = await fetch(`/api/notes/${note._id}/backburner`, {
+				method: 'POST',
+			});
+			if (!res.ok) throw new Error('Failed');
+			onBackBurnerToggle?.(note._id, !prev);
+		} catch {
+			setBackBurner(prev); // rollback
+		} finally {
+			setSettingBackBurner(false);
+		}
+	}
+
+	// Brought in line with the app-wide container recipe
+	// (bg-white/[0.04] border-white/[0.08] rounded-xl) — pinned/overdue keep
+	// their own accent, just lightened to match that same visual weight
+	// instead of the old heavier border-white/40 default.
 	const surface = pinned
-		? 'bg-warning/5 border-warning/75 shadow-lg shadow-black/30'
+		? 'bg-warning/5 border-warning/50 shadow-lg shadow-black/30'
 		: overdue
-			? 'bg-danger/10 border-danger'
-			: 'bg-white/[0.0] border-white/40';
+			? 'bg-danger/10 border-danger/60'
+			: 'bg-white/[0.04] border-white/[0.08]';
 
 	return (
 		<>
@@ -436,21 +521,28 @@ export default function NoteCard({
 				/>
 			)}
 			<div
-				className={`flex flex-col min-w-0 h-full border rounded-sm px-3 lg:px-6 py-7 lg:py-10 gap-2.5 cursor-pointer transition-colors hover:bg-white/[0.07] ${surface}`}
+				className={`flex flex-col min-w-0 h-full border rounded-xl px-3 lg:px-6 py-7 lg:py-10 gap-2.5 cursor-pointer transition-colors hover:bg-white/[0.07] ${surface}`}
 				onClick={() => setOpen(!open)}
 			>
 				<NoteHeader
-					note={hydratedNote}
+					type={hydratedNote.type}
+					backBurner={backBurner}
 					pinned={pinned}
 					onPinToggle={handlePinToggle}
 					pinning={pinning}
+					onBackBurnerToggle={handleBackBurnerToggle}
+					settingBackBurner={settingBackBurner}
+					onEdit={handleEdit}
 				/>
-				<NoteContextLink
+				<NoteContext
 					clientName={note.clientName}
 					clientSlug={note.clientSlug}
 					projectName={note.projectName}
 					projectSlug={note.projectSlug}
 				/>
+				<span className='text-base lg:text-lg font-[540] text-white leading-tight'>
+					{note.title}
+				</span>
 				<NoteBody body={note.body} open={open} />
 				<NoteFooter
 					note={hydratedNote}
@@ -458,6 +550,7 @@ export default function NoteCard({
 					onSendClick={handleSend}
 					sending={sending}
 					overdue={overdue}
+					onEdit={handleEdit}
 				/>
 			</div>
 		</>

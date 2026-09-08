@@ -1,22 +1,28 @@
-// components/notes/DashboardNotesArea.jsx
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import NoteList from './NoteList';
 import NoteForm from './NoteForm';
 import AddNoteButton from './AddNoteButton';
 
-export default function DashboardNotesArea({ notes, clients }) {
-	const noteListRef = useRef(null);
+export default function DashboardNotesArea({
+	notes,
+	clients,
+	onCreated,
+	onArchive,
+	onSent,
+	onPinToggle,
+}) {
 	const [showForm, setShowForm] = useState(false);
-
-	function handleCreated(note) {
-		noteListRef.current?.addNote(note);
-	}
 
 	return (
 		<>
-			<NoteList ref={noteListRef} notes={notes} />
+			<NoteList
+				notes={notes}
+				onArchive={onArchive}
+				onSent={onSent}
+				onPinToggle={onPinToggle}
+			/>
 
 			{!showForm && <AddNoteButton onClick={() => setShowForm(true)} />}
 
@@ -24,7 +30,7 @@ export default function DashboardNotesArea({ notes, clients }) {
 				open={showForm}
 				clients={clients}
 				onClose={() => setShowForm(false)}
-				onCreated={handleCreated}
+				onCreated={onCreated}
 			/>
 		</>
 	);

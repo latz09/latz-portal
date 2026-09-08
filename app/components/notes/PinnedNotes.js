@@ -9,6 +9,9 @@ export default function PinnedNotes({
 	compact = false,
 	defaultOpen = false,
 	pulseOnLoad = false,
+	onArchive,
+	onPinToggle,
+	onBackBurnerToggle,
 }) {
 	const [open, setOpen] = useState(defaultOpen);
 	const [interacted, setInteracted] = useState(false);
@@ -42,7 +45,13 @@ export default function PinnedNotes({
 					className={`mt-4 ${compact ? 'flex flex-col gap-3' : 'grid sm:grid-cols-2 gap-3 lg:gap-5'}`}
 				>
 					{notes.map((note) => (
-						<NoteCard key={note._id} note={note} />
+						<NoteCard
+							key={note._id}
+							note={note}
+							onArchive={onArchive}
+							onPinToggle={onPinToggle}
+							onBackBurnerToggle={onBackBurnerToggle}
+						/>
 					))}
 				</div>
 			)}

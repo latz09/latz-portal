@@ -10,9 +10,10 @@ const TABS = [
 	{ href: '/dashboard', label: 'Dashboard' },
 	{ href: '/clients', label: 'Books' },
 	{ href: '/dashboard/journey', label: 'Pipeline' },
+	{ href: '/notes', label: 'Triage' },
 ];
 
-const DESIGNER = { href: '/portal/designer', label: 'Designer View →' };
+const DESIGNER = { href: '/portal/designer', label: 'DV →' };
 
 export default function InternalNav() {
 	const pathname = usePathname();
@@ -48,6 +49,8 @@ export default function InternalNav() {
 		return pathname === href || pathname.startsWith(href + '/');
 	};
 
+	// Falls back to Dashboard only when nothing else actually matches —
+	// unchanged behavior, just now correct with a fourth tab in the mix.
 	const current = TABS.find((t) => isActive(t.href)) || TABS[0];
 
 	// Always mounted (just hidden when closed) so Next can prefetch the
@@ -140,10 +143,10 @@ export default function InternalNav() {
 						<Link
 							key={t.href}
 							href={t.href}
-							className={`inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full border transition-colors ${
+							className={`inline-flex items-center justify-center gap-1 font-mono text-xs px-4 py-2 rounded-full border transition duration-300 ${
 								active
-									? 'bg-teal/15 border-teal/40 text-teal'
-									: 'border-white/10 text-white/40 hover:text-white/70 hover:border-white/20'
+									? 'bg-dark border-teal text-teal font-semibold uppercase shadow-2xl tracking-widest'
+									: 'border-white/10 text-white/40 hover:text-white hover:border-teal scale-90 hover:scale-105 transition duration-300'
 							}`}
 						>
 							{t.label}

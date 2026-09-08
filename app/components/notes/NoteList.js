@@ -1,18 +1,14 @@
 'use client';
 
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb';
 import NoteCard from './NoteCard';
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function getOldestDays(notes) {
 	if (!notes.length) return 0;
 	const oldest = Math.min(...notes.map((n) => new Date(n.sentAt).getTime()));
 	return Math.floor((Date.now() - oldest) / 86_400_000);
 }
-
-// ─── Subcomponents ───────────────────────────────────────────────────────────
 
 function EmptyState() {
 	return (
@@ -63,7 +59,7 @@ function ExpandToggle({ expanded, count, onToggle }) {
 	);
 }
 
-function AwaitingReplies({ notes, onArchive, onPinToggle }) {
+function AwaitingReplies({ notes, onArchive, onPinToggle, onBackBurnerToggle }) {
 	const [open, setOpen] = useState(false);
 	const [sorted, setSorted] = useState([]);
 	if (!notes.length) return null;
@@ -119,6 +115,7 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 							note={note}
 							onArchive={onArchive}
 							onPinToggle={onPinToggle}
+							onBackBurnerToggle={onBackBurnerToggle}
 							overdue={note.overdue}
 						/>
 					))}
@@ -128,39 +125,9 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 	);
 }
 
-// ─── Main Component ──────────────────────────────────────────────────────────
-
-const NoteList = forwardRef(function NoteList({ notes: initialNotes = [] }, ref) {
-	const [notes, setNotes] = useState(initialNotes);
+export default function NoteList({ notes = [], onArchive, onSent, onPinToggle, onBackBurnerToggle }) {
 	const [expanded, setExpanded] = useState(false);
 
-	// Exposed so a page-level trigger (outside this component) can push a
-	// newly created note in without this component owning the form itself.
-	useImperativeHandle(ref, () => ({
-		addNote(note) {
-			setNotes((prev) => [note, ...prev]);
-		},
-	}));
-
-	function handleArchive(id) {
-		setNotes((prev) => prev.filter((n) => n._id !== id));
-	}
-
-	function handleSent(id) {
-		setNotes((prev) =>
-			prev.map((n) =>
-				n._id === id ? { ...n, sentAt: new Date().toISOString() } : n,
-			),
-		);
-	}
-
-	function handlePinToggle(id, newPinned) {
-		setNotes((prev) =>
-			prev.map((n) => (n._id === id ? { ...n, pinned: newPinned } : n)),
-		);
-	}
-
-	// Pinned notes now live in the Focus Strip — this list is everything else.
 	const active = notes.filter(
 		(n) => !n.pinned && !(n.type === 'email' && n.sentAt),
 	);
@@ -185,9 +152,10 @@ const NoteList = forwardRef(function NoteList({ notes: initialNotes = [] }, ref)
 								<NoteCard
 									key={note._id}
 									note={note}
-									onArchive={handleArchive}
-									onSent={handleSent}
-									onPinToggle={handlePinToggle}
+									onArchive={onArchive}
+									onSent={onSent}
+									onPinToggle={onPinToggle}
+									onBackBurnerToggle={onBackBurnerToggle}
 								/>
 							))}
 							{expanded &&
@@ -195,9 +163,10 @@ const NoteList = forwardRef(function NoteList({ notes: initialNotes = [] }, ref)
 									<NoteCard
 										key={note._id}
 										note={note}
-										onArchive={handleArchive}
-										onSent={handleSent}
-										onPinToggle={handlePinToggle}
+										onArchive={onArchive}
+										onSent={onSent}
+										onPinToggle={onPinToggle}
+										onBackBurnerToggle={onBackBurnerToggle}
 									/>
 								))}
 							{rest.length > 0 && (
@@ -214,13 +183,12 @@ const NoteList = forwardRef(function NoteList({ notes: initialNotes = [] }, ref)
 
 					<AwaitingReplies
 						notes={awaiting}
-						onArchive={handleArchive}
-						onPinToggle={handlePinToggle}
+						onArchive={onArchive}
+						onPinToggle={onPinToggle}
+						onBackBurnerToggle={onBackBurnerToggle}
 					/>
 				</>
 			)}
 		</div>
 	);
-});
-
-export default NoteList;
+}
