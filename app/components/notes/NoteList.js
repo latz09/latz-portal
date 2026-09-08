@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { TbChevronDown, TbPlus } from 'react-icons/tb';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { TbChevronDown } from 'react-icons/tb';
 import NoteCard from './NoteCard';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -14,23 +14,10 @@ function getOldestDays(notes) {
 
 // ─── Subcomponents ───────────────────────────────────────────────────────────
 
-function AddNoteButton({ onClick }) {
-	return (
-		<button
-			onClick={onClick}
-			className='inline-flex items-center gap-1.5 font-mono text-[11px] tracking-wide uppercase px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/50 hover:text-warning hover:border-warning/30 transition-colors'
-		>
-			<TbPlus className='text-sm' />
-			Add
-		</button>
-	);
-}
-
-function EmptyState({ onAdd }) {
+function EmptyState() {
 	return (
 		<div className='flex flex-col items-center gap-3 py-10 border border-white/[0.08] rounded-xl bg-white/[0.02]'>
 			<p className='font-mono text-[11px] text-white/25'>No notes right now.</p>
-			<AddNoteButton onClick={onAdd} />
 		</div>
 	);
 }
@@ -54,11 +41,10 @@ function CountPill({ children }) {
 	);
 }
 
-function NoteListHeader({ onAdd }) {
+function NoteListHeader() {
 	return (
 		<div className='flex items-center justify-between mb-5'>
 			<SectionLabel>Notes &amp; Todos</SectionLabel>
-			<AddNoteButton onClick={onAdd} />
 		</div>
 	);
 }
@@ -144,13 +130,17 @@ function AwaitingReplies({ notes, onArchive, onPinToggle }) {
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-export default function NoteList({ notes: initialNotes = [] }) {
+const NoteList = forwardRef(function NoteList({ notes: initialNotes = [] }, ref) {
 	const [notes, setNotes] = useState(initialNotes);
 	const [expanded, setExpanded] = useState(false);
 
-	function handleAddNote() {
-		window.open('https://latz-portal.sanity.studio/structure/note', '_blank');
-	}
+	// Exposed so a page-level trigger (outside this component) can push a
+	// newly created note in without this component owning the form itself.
+	useImperativeHandle(ref, () => ({
+		addNote(note) {
+			setNotes((prev) => [note, ...prev]);
+		},
+	}));
 
 	function handleArchive(id) {
 		setNotes((prev) => prev.filter((n) => n._id !== id));
@@ -181,57 +171,56 @@ export default function NoteList({ notes: initialNotes = [] }) {
 	const visible = active.slice(0, 2);
 	const rest = active.slice(2);
 
-	if (notes.length === 0) {
-		return (
-			<div className='mb-12'>
-				<NoteListHeader onAdd={handleAddNote} />
-				<EmptyState onAdd={handleAddNote} />
-			</div>
-		);
-	}
-
 	return (
 		<div className='mb-12 max-w-7xl mx-auto'>
-			<NoteListHeader onAdd={handleAddNote} />
+			<NoteListHeader />
 
-			{active.length > 0 && (
-				<div className='grid sm:grid-cols-2 gap-3 lg:gap-5'>
-					{visible.map((note) => (
-						<NoteCard
-							key={note._id}
-							note={note}
-							onArchive={handleArchive}
-							onSent={handleSent}
-							onPinToggle={handlePinToggle}
-						/>
-					))}
-					{expanded &&
-						rest.map((note) => (
-							<NoteCard
-								key={note._id}
-								note={note}
-								onArchive={handleArchive}
-								onSent={handleSent}
-								onPinToggle={handlePinToggle}
-							/>
-						))}
-					{rest.length > 0 && (
-						<div className='sm:col-span-2'>
-							<ExpandToggle
-								expanded={expanded}
-								count={rest.length}
-								onToggle={() => setExpanded(!expanded)}
-							/>
+			{notes.length === 0 ? (
+				<EmptyState />
+			) : (
+				<>
+					{active.length > 0 && (
+						<div className='grid sm:grid-cols-2 gap-3 lg:gap-5'>
+							{visible.map((note) => (
+								<NoteCard
+									key={note._id}
+									note={note}
+									onArchive={handleArchive}
+									onSent={handleSent}
+									onPinToggle={handlePinToggle}
+								/>
+							))}
+							{expanded &&
+								rest.map((note) => (
+									<NoteCard
+										key={note._id}
+										note={note}
+										onArchive={handleArchive}
+										onSent={handleSent}
+										onPinToggle={handlePinToggle}
+									/>
+								))}
+							{rest.length > 0 && (
+								<div className='sm:col-span-2'>
+									<ExpandToggle
+										expanded={expanded}
+										count={rest.length}
+										onToggle={() => setExpanded(!expanded)}
+									/>
+								</div>
+							)}
 						</div>
 					)}
-				</div>
-			)}
 
-			<AwaitingReplies
-				notes={awaiting}
-				onArchive={handleArchive}
-				onPinToggle={handlePinToggle}
-			/>
+					<AwaitingReplies
+						notes={awaiting}
+						onArchive={handleArchive}
+						onPinToggle={handlePinToggle}
+					/>
+				</>
+			)}
 		</div>
 	);
-}
+});
+
+export default NoteList;

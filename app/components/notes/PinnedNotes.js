@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb';
-import NoteCard from '@/app/components/dashboard/NoteCard';
+import NoteCard from '@/app/components/notes/NoteCard';
 
 export default function PinnedNotes({
 	notes = [],

@@ -10,6 +10,7 @@ export const FETCH_CLIENTS_QUERY = `
     "completeProjects": count(*[_type == "project" && client._ref == ^._id && status == "complete"]),
     "totalProjects": count(*[_type == "project" && client._ref == ^._id]),
     "projects": *[_type == "project" && client._ref == ^._id] {
+      _id,
       name,
       "slug": slug.current,
       status,

@@ -13,7 +13,7 @@ import {
 	TbCalendarOff,
 	TbCalendar,
 } from 'react-icons/tb';
-import PinnedNotes from '@/app/components/portal/PinnedNotes';
+import PinnedNotes from '@/app/components/notes/PinnedNotes';
 import { formatDate } from '@/app/components/portal/deadlineUtils';
 import { buildFocusSections } from '@/app/utils/focusSignals';
 

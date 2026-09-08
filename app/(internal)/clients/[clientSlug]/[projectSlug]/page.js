@@ -13,9 +13,9 @@ import StudioLink from '@/app/components/portal/StudioLink';
 import ProjectMilestones from '@/app/components/portal/ProjectMilestones';
 import LostBanner from '@/app/components/portal/LostBanner';
 import ProjectAssets from '@/app/components/portal/ProjectAssets';
-import NoteList from '@/app/components/dashboard/NoteList';
-import NoteCard from '@/app/components/dashboard/NoteCard';
-import PinnedNotes from '@/app/components/portal/PinnedNotes';
+import NoteList from '@/app/components/notes/NoteList';
+import NoteCard from '@/app/components/notes/NoteCard';
+import PinnedNotes from '@/app/components/notes/PinnedNotes';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;

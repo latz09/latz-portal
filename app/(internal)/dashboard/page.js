@@ -6,10 +6,11 @@ import { FETCH_NOTES_QUERY as NQ } from '@/app/data/queries/pages/FETCH_NOTES_QU
 import UpcomingDeadlines from '@/app/components/portal/UpcomingDeadlines';
 import PortalFooter from '@/app/components/portal/PortalFooter';
 import ClientList from '@/app/components/dashboard/ClientList';
-import NoteList from '@/app/components/dashboard/NoteList';
+import NoteList from '@/app/components/notes/NoteList';
 import FocusStrip from '@/app/components/dashboard/FocusStrip';
 import UpcomingLoad from '@/app/components/dashboard/UpcomingLoad';
-import PinnedNotes from '@/app/components/portal/PinnedNotes';
+import PinnedNotes from '@/app/components/notes/PinnedNotes';
+import DashboardNotesArea from '@/app/components/notes/DashboardNotesArea';
 
 export default async function Home() {
 	const [clients, notes] = await Promise.all([f(Q), f(NQ)]);
@@ -21,7 +22,7 @@ export default async function Home() {
 				<div className='dash-col-2'>
 					<UpcomingLoad clients={clients} />
 					<FocusStrip clients={clients} pinnedNotes={pinnedNotes} />
-					<NoteList notes={notes} />
+					<DashboardNotesArea notes={notes} clients={clients} />
 					<UpcomingDeadlines clients={clients} variant='internal' />
 				</div>
 				<div className='hidden lg:block lg:h-[calc(100vh-88px)] lg:overflow-y-auto lg:sticky lg:top-[88px] lg:pl-2'>
