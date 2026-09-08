@@ -113,7 +113,7 @@ const PORTABLE_TEXT_COMPONENTS = {
 			<ul
 				style={{
 					listStyleType: 'disc',
-					paddingLeft: '1.1rem',
+					paddingLeft: '1.5rem',
 					marginBottom: '0.4rem',
 				}}
 			>
@@ -124,7 +124,7 @@ const PORTABLE_TEXT_COMPONENTS = {
 			<ol
 				style={{
 					listStyleType: 'decimal',
-					paddingLeft: '1.1rem',
+					paddingLeft: '1.5rem',
 					marginBottom: '0.4rem',
 				}}
 			>
@@ -311,7 +311,7 @@ function NoteContext({ clientName, clientSlug, projectName, projectSlug }) {
 				<span className='font-mono text-[11px] lg:text-[14px] font-semibold tracking-widest uppercase text-teal group-hover:text-teal/70 transition-colors'>
 					{clientName}
 				</span>
-				<span className='font-mono text-[11px] text-white/35 group-hover:text-white/60 transition-colors'>
+				<span className='font-mono text-[11px] text-white/50 group-hover:text-white/60 transition-colors'>
 					{projectName}
 				</span>
 			</Link>
@@ -341,7 +341,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-base lg:text-lg mt-2   text-white/75 max-w-none wrap-break-word ${
+			className={`text-sm md:text-base lg:text-lg mt-2   text-white/75 max-w-none wrap-break-word ${
 				open ? '' : 'line-clamp-2'
 			}`}
 		>
