@@ -341,7 +341,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm md:text-base lg:text-lg mt-2   text-white/75 max-w-none wrap-break-word ${
+			className={`text-sm md:text-base 2xl:text-lg mt-2   text-white/75 max-w-none wrap-break-word ${
 				open ? '' : 'line-clamp-2'
 			}`}
 		>
