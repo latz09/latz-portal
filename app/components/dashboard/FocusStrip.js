@@ -77,9 +77,9 @@ function MilestoneIcon({ isDesigner, isPast }) {
 	return (
 		<span className='relative inline-flex items-center justify-center shrink-0'>
 			<TbBrush
-				className={`absolute -bottom-1 -right-1.5 text-[10px] ${tone}`}
+				className={`absolute -bottom-1 -right-1.5 text-[8px] md:text-[12px] ${tone}`}
 			/>
-			<TbStarFilled className={`relative text-base ${tone}`} />
+			<TbStarFilled className={`relative text-sm md:text-base ${tone}`} />
 		</span>
 	);
 }
@@ -170,7 +170,7 @@ function DatedRow({ item, isLast, isAlt }) {
 						/>
 					)}
 					<div className='flex flex-col min-w-0 gap-0.5'>
-						<span className='text-base md:text-lg font-[540] text-white leading-tight truncate'>
+						<span className='text-base md:text-lg font-[450] text-white tracking-wide font-mono truncate'>
 							{item.title}
 						</span>
 						<span className='font-mono text-xs text-white/30 truncate'>
@@ -191,7 +191,7 @@ function DatedRow({ item, isLast, isAlt }) {
 
 function DatedList({ items }) {
 	return (
-		<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+		<div className='border border-white/[0.08] rounded-lg overflow-hidden'>
 			{items.map((item, i) => (
 				<DatedRow
 					key={item.id}
