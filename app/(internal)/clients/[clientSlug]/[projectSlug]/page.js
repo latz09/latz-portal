@@ -8,7 +8,7 @@ import PortalLinks from '@/app/components/portal/PortalLinks';
 import ResourceList from '@/app/components/portal/ResourceList';
 import ProjectMoneySummary from '@/app/components/portal/ProjectMoneySummary';
 import ProjectTimeline from '@/app/components/portal/ProjectTimeline';
-import JourneyPreview from '@/app/components/portal/JourneyPreview';
+import JourneyPreview from '@/app/components/clientJourney/JourneyPreview';
 import StudioLink from '@/app/components/portal/StudioLink';
 import ProjectMilestones from '@/app/components/portal/ProjectMilestones';
 import LostBanner from '@/app/components/portal/LostBanner';
@@ -107,6 +107,7 @@ export default async function ProjectPage({ params }) {
 									clientPayment={project.clientPayment}
 									clientSlug={clientSlug}
 									projectSlug={projectSlug}
+									projectId={project._id}
 								/>
 							</div>
 						</div>

@@ -1,6 +1,6 @@
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_ALL_JOURNEYS_QUERY as Q } from '@/app/data/queries/pages/FETCH_ALL_JOURNEYS_QUERY';
-import JourneyRollup from '@/app/components/portal/JourneyRollup';
+import JourneyRollup from '@/app/components/clientJourney/JourneyRollup';
 
 export default async function JourneyRollupPage() {
 	const projects = await f(Q);

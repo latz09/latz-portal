@@ -15,11 +15,17 @@ export const FETCH_ALL_JOURNEYS_QUERY = `
       waitingOn,
       enteredWaitingAt,
       completedAt,
+      dueDate,
       generators[]-> {
         _id,
         title,
+        "slug": slug.current,
+        link,
+        icon,
         derivedFrom,
-        phase
+        deprecated,
+        phase,
+        isMilestone
       }
     }
   }

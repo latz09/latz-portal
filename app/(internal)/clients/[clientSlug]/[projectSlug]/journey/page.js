@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { TbArrowLeft } from 'react-icons/tb';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_PROJECT_QUERY as Q } from '@/app/data/queries/pages/FETCH_PROJECT_QUERY';
-import JourneyMap from '@/app/components/portal/JourneyMap';
+import JourneyMap from '@/app/components/clientJourney/JourneyMap';
 import { summarizeJourney } from '@/app/utils/journeyHelpers';
-import StudioLink from '@/app/components/portal/StudioLink'; 
+import StudioLink from '@/app/components/portal/StudioLink';
 
 export default async function JourneyPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -67,6 +67,7 @@ export default async function JourneyPage({ params }) {
 			<JourneyMap
 				journeySteps={project.journeySteps}
 				clientPayment={project.clientPayment}
+				projectId={project._id}
 			/>
 		</main>
 	);

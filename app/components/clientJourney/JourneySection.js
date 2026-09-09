@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import ProjectMilestones from '@/app/components/portal/ProjectMilestones';
 import ProjectAssets from '@/app/components/portal/ProjectAssets';
-import JourneyPreview from '@/app/components/portal/JourneyPreview';
+import JourneyPreview from '@/app/components/clientJourney/JourneyPreview';
 
 export default function JourneySection({
 	journeySteps,
