@@ -3,6 +3,7 @@ import InternalNav from '@/app/components/portal/InternalNav';
 import StudioLink from '@/app/components/portal/StudioLink';
 import ClientSwitcher from '@/app/components/portal/ClientSwitcher';
 import Link from 'next/link';
+import { TbPlus } from 'react-icons/tb';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_CLIENTS_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENTS_QUERY';
 import { NoteDraftProvider } from '@/app/components/notes/NoteDraftProvider';
@@ -22,14 +23,26 @@ export default async function InternalLayout({ children }) {
 							</p>
 						</Link>
 						<div className='flex items-center gap-2 lg:hidden'>
-							<StudioLink type='project' />
+							<Link
+								href='/clients/new'
+								className='inline-flex items-center gap-2 bg-dark font-mono text-xs px-4 py-2 rounded-full border border-teal/40 text-teal hover:bg-teal/10 transition-colors'
+							>
+								<TbPlus className='text-sm' />
+								New
+							</Link>
 						</div>
 					</div>
 
 					<InternalNav />
 
 					<div className='hidden lg:flex items-center gap-2 lg:ml-auto'>
-						<StudioLink type='project' />
+						<Link
+							href='/clients/new'
+							className='inline-flex items-center gap-2 bg-dark font-mono text-xs px-4 py-2 rounded-full border border-teal/40 text-teal hover:bg-teal/10 transition-colors'
+						>
+							<TbPlus className='text-sm' />
+							New Lead
+						</Link>
 						<form
 							action={async () => {
 								'use server';

@@ -17,6 +17,7 @@ import ProjectAssets from '@/app/components/portal/ProjectAssets';
 import { ProjectNotesProvider } from '@/app/components/notes/ProjectNotesProvider';
 import ProjectPinnedNotes from '@/app/components/notes/ProjectPinnedNotes';
 import ProjectNoteList from '@/app/components/notes/ProjectNoteList';
+import Link from 'next/link';
 
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
@@ -52,11 +53,19 @@ export default async function ProjectPage({ params }) {
 							month={project.month}
 							year={project.year}
 							action={
-								<StudioLink
-									type='project'
-									id={project._id}
-									label='Edit project'
-								/>
+								<div className='flex items-center gap-2'>
+									<Link
+										href={`/clients/${clientSlug}/${projectSlug}/edit`}
+										className='inline-flex items-center gap-2 bg-dark font-mono text-xs px-4 py-2 rounded-full border border-white/10 text-white/80 hover:bg-white/5 transition-colors'
+									>
+										Edit Details
+									</Link>
+									<StudioLink
+										type='project'
+										id={project._id}
+										label='Edit project'
+									/>
+								</div>
 							}
 						/>
 

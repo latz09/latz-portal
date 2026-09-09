@@ -1,10 +1,8 @@
-import { fetchContent as f } from '@/app/utils/cms/fetchContent'
-import { FETCH_CLIENTS_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENTS_QUERY'
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { writeClient } from '@/app/utils/cms/writeClient'
 import crypto from 'crypto'
-import { slugify, isClientSlugAvailable } from '@/app/utils/cms/slugHelpers'
+import { slugify, isProjectSlugAvailable } from '@/app/utils/cms/slugHelpers'
 import {
 	PROJECT_STATUSES,
 	sanitizeClientPayment,
@@ -17,21 +15,15 @@ import {
 	isValidTemplateKey,
 } from '@/app/utils/journeyTemplateBuilder'
 
-export async function GET() {
-	const clients = await f(Q)
-	return Response.json(clients)
-}
-
-export async function POST(request) {
+export async function POST(request, { params }) {
 	const session = await auth()
 	if (session?.user?.role !== 'internal') {
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 	}
 
+	const { id: clientId } = await params
 	const body = await request.json()
 	const {
-		clientName,
-		clientSlug: clientSlugInput,
 		projectName,
 		projectSlug: projectSlugInput,
 		status,
@@ -45,45 +37,35 @@ export async function POST(request) {
 		templateKey,
 	} = body
 
-	if (!clientName?.trim()) {
-		return NextResponse.json({ error: 'Client name is required' }, { status: 400 })
-	}
-
 	const overviewErrors = validateOverviewFields({ name: projectName, status, month, year })
 	if (overviewErrors.length) {
 		return NextResponse.json({ error: overviewErrors[0] }, { status: 400 })
-	}
-
-	const clientSlug = slugify(clientSlugInput || clientName)
-	if (!clientSlug) {
-		return NextResponse.json({ error: 'Client slug is required' }, { status: 400 })
-	}
-	if (!(await isClientSlugAvailable(clientSlug))) {
-		return NextResponse.json(
-			{ error: `Slug "${clientSlug}" is already in use by another client` },
-			{ status: 409 }
-		)
 	}
 
 	const projectSlug = slugify(projectSlugInput || projectName)
 	if (!projectSlug) {
 		return NextResponse.json({ error: 'Project slug is required' }, { status: 400 })
 	}
-	// clientId below is brand new — nothing could already exist under it, so
-	// no scoped uniqueness check is needed for the project slug here.
 
 	const resolvedTemplateKey = templateKey && isValidTemplateKey(templateKey) ? templateKey : 'blank'
 
 	try {
-		const clientId = crypto.randomUUID()
-		const projectId = crypto.randomUUID()
-
-		const clientDoc = {
-			_id: clientId,
-			_type: 'client',
-			name: clientName.trim(),
-			slug: { _type: 'slug', current: clientSlug },
+		const client = await writeClient.fetch(
+			`*[_type == "client" && _id == $clientId][0]{ _id, "slug": slug.current }`,
+			{ clientId }
+		)
+		if (!client) {
+			return NextResponse.json({ error: 'Client not found' }, { status: 404 })
 		}
+
+		if (!(await isProjectSlugAvailable(projectSlug, clientId))) {
+			return NextResponse.json(
+				{ error: `Slug "${projectSlug}" is already used by another project for this client` },
+				{ status: 409 }
+			)
+		}
+
+		const projectId = crypto.randomUUID()
 
 		const projectDoc = {
 			_id: projectId,
@@ -103,15 +85,15 @@ export async function POST(request) {
 			journeySteps: buildJourneyStepsFromTemplate(resolvedTemplateKey),
 		}
 
-		await writeClient.transaction().create(clientDoc).create(projectDoc).commit()
+		await writeClient.create(projectDoc)
 
 		return NextResponse.json({
 			success: true,
-			client: { _id: clientId, slug: clientSlug },
+			client: { _id: client._id, slug: client.slug },
 			project: { _id: projectId, slug: projectSlug },
 		})
 	} catch (err) {
-		console.error('Failed to create client + project:', err)
-		return NextResponse.json({ error: 'Failed to create client' }, { status: 500 })
+		console.error('Failed to add project to client:', err)
+		return NextResponse.json({ error: 'Failed to add project' }, { status: 500 })
 	}
 }

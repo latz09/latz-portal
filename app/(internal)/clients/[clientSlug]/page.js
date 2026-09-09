@@ -1,7 +1,8 @@
+import { notFound } from 'next/navigation';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_CLIENT_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENT_QUERY';
 import Link from 'next/link';
-import { TbArrowLeft } from 'react-icons/tb';
+import { TbArrowLeft, TbPlus } from 'react-icons/tb';
 import NoteList from '@/app/components/notes/NoteList';
 import ProjectList from '@/app/components/portal/ProjectList';
 import StudioLink from '@/app/components/portal/StudioLink';
@@ -9,6 +10,7 @@ import StudioLink from '@/app/components/portal/StudioLink';
 export default async function ClientPage({ params }) {
 	const { clientSlug } = await params;
 	const data = await f(Q, { clientSlug });
+	if (!data) notFound();
 	const { name, slug, projects, notes } = data;
 
 	return (
@@ -23,7 +25,16 @@ export default async function ClientPage({ params }) {
 
 				<div className='flex items-center justify-between gap-4'>
 					<h1 className='text-lg lg:text-xl font-medium opacity-90'>{name}</h1>
-					<StudioLink id={data._id} label='Edit client' />
+					<div className='flex items-center gap-2'>
+						<Link
+							href={`/clients/${slug}/new`}
+							className='inline-flex items-center gap-2 bg-dark font-mono text-xs px-4 py-2 rounded-full border border-teal/40 text-teal hover:bg-teal/10 transition-colors'
+						>
+							<TbPlus className='text-sm' />
+							New Project
+						</Link>
+						<StudioLink id={data._id} label='Edit client' />
+					</div>
 				</div>
 			</div>
 
