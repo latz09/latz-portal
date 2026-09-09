@@ -198,7 +198,7 @@ export default function AllNotesContent() {
 			) : (
 				<div
 					key={filterKey}
-					className='grid sm:grid-cols-2 2xl:grid-cols-3 gap-3 lg:gap-5'
+					className='grid sm:grid-cols-2 2xl:grid-cols-3 gap-3 xl:gap-x-8 gap-y-8 2xl:gap-x-12 xl:gap-y-12 pt-4 pb-32 '
 				>
 					{filtered.map((note, i) => (
 						<div

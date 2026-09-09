@@ -72,7 +72,7 @@ export default function DashboardContent({ clients, initialNotes }) {
 				<UpcomingDeadlines clients={clients} variant='internal' />
 			</div>
 			<div className='hidden lg:block lg:h-[calc(100vh-88px)] lg:overflow-y-auto lg:sticky lg:top-[88px] lg:pl-2'>
-				<div className='dash-col-1 flex flex-col gap-6 lg:gap-8 2xl:gap-12'>
+				<div className='dash-col-1 flex flex-col gap-6 lg:gap-8 2xl:gap-12 pb-20'>
 					<ClientList clients={clients} />
 					<PinnedNotes
 						notes={pinnedNotes}

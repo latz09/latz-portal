@@ -306,7 +306,7 @@ function NoteContext({ clientName, clientSlug, projectName, projectSlug }) {
 			<Link
 				href={`/clients/${clientSlug}/${projectSlug}`}
 				onClick={(e) => e.stopPropagation()}
-				className='group flex flex-col gap-0.5 w-fit hover:translate-x-2 transition duration-300'
+				className='group flex flex-col gap-0.5 w-fit hover:translate-x-2 transition duration-300 px-2 lg:px-4'
 			>
 				<span className='font-mono text-[11px] lg:text-[14px] font-semibold tracking-widest uppercase text-teal group-hover:text-teal/70 transition-colors'>
 					{clientName}
@@ -341,7 +341,7 @@ function NoteBody({ body, open }) {
 	if (!body) return null;
 	return (
 		<div
-			className={`text-sm md:text-base 2xl:text-lg mt-2   text-white/75 max-w-none wrap-break-word ${
+			className={`text-sm md:text-base 2xl:text-lg mt-2 px-2 lg:px-4 pb-8   text-white/75 max-w-none wrap-break-word ${
 				open ? '' : 'line-clamp-2'
 			}`}
 		>
@@ -540,7 +540,7 @@ export default function NoteCard({
 					projectName={note.projectName}
 					projectSlug={note.projectSlug}
 				/>
-				<span className='text-base lg:text-[17px] uppercase 2xl:text-lg font-[400] border-l lg:border-l-2 2xl:border-l-3 border-warning pl-1 lg:pl-2  tracking-wider text-white mt-1'>
+				<span className='text-base uppercase  font-[400] border-l lg:border-l-2 2xl:border-l-3 border-warning pl-1 lg:pl-2  tracking-wider text-white mt-1'>
 					{note.title}
 				</span>
 				<NoteBody body={note.body} open={open} />
