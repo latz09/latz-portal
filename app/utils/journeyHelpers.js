@@ -20,7 +20,8 @@ export const PHASE_LABELS = {
 	'h-postlaunch': 'H · Post-Launch',
 };
 
-// Phase order — used to find a project's current phase.
+// Phase order — used to find a project's current phase, and to place a
+// newly-added step at the right position (see findInsertionIndex below).
 export const PHASE_ORDER = [
 	'a-outreach',
 	'b-close',
@@ -37,6 +38,25 @@ export const WAITING_ON_LABELS = {
 	designer: 'designer',
 	other: 'other',
 };
+
+// Given the CURRENT journeySteps (each needs at least { generators: [{ phase }] }
+// or an already-flattened { phase }) and a new step's phase, find the array
+// index to insert at so the array stays in canonical phase order — regardless
+// of what order steps actually get added in. This is what lets
+// CollapsibleJourney's contiguous-phase-block grouping stay correct even when
+// steps are added out of sequence.
+export function findInsertionIndex(journeySteps, newPhase) {
+	const newRank = PHASE_ORDER.indexOf(newPhase);
+	if (newRank === -1) return journeySteps.length; // unknown phase — just append
+
+	for (let i = 0; i < journeySteps.length; i++) {
+		const stepPhase =
+			journeySteps[i].phase ?? journeySteps[i].generators?.[0]?.phase;
+		const stepRank = PHASE_ORDER.indexOf(stepPhase);
+		if (stepRank > newRank) return i;
+	}
+	return journeySteps.length;
+}
 
 // Resolve one step's effective status. Money steps ignore their stored status
 // and read clientPayment; everything else uses its own status + hidden date.

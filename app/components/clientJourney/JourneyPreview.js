@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { TbArrowRight, TbChevronDown } from 'react-icons/tb';
+import { TbArrowRight, TbChevronDown, TbPlus } from 'react-icons/tb';
 import {
 	JOURNEY_STATUS_LABELS,
 	statusPillClass,
@@ -14,6 +15,7 @@ import {
 	stepTitle,
 } from '@/app/utils/journeyHelpers';
 import JourneyMap from '@/app/components/clientJourney/JourneyMap';
+import AddStepForm from '@/app/components/clientJourney/AddStepForm';
 
 export default function JourneyPreview({
 	journeySteps,
@@ -22,13 +24,20 @@ export default function JourneyPreview({
 	projectSlug,
 	projectId,
 }) {
+	const router = useRouter();
 	const [open, setOpen] = useState(false);
+	const [addStepOpen, setAddStepOpen] = useState(false);
 	const summary = summarizeJourney(journeySteps, clientPayment);
 	if (!summary) return null;
 
 	const { doneCount, total, currentPhase, active, nextUp, allDone } = summary;
 	const pct = total ? Math.round((doneCount / total) * 100) : 0;
 	const href = `/clients/${clientSlug}/${projectSlug}/journey`;
+
+	const handleStepAdded = () => {
+		setAddStepOpen(false);
+		router.refresh();
+	};
 
 	return (
 		<div className='min-w-0'>
@@ -131,15 +140,28 @@ export default function JourneyPreview({
 
 			{open && (
 				<div className='mt-4 border border-white/[0.08] rounded-xl p-5 overflow-x-auto'>
-					<div className='flex items-center justify-between mb-6 min-w-[280px]'>
+					<div className='flex items-center justify-between mb-6 min-w-[280px] gap-3'>
 						<span className='font-mono text-xs tracking-widest uppercase text-white/40'>
 							Overall progress
 						</span>
-						<span className='font-mono text-xs text-white/60 tabular-nums'>
-							{doneCount}
-							<span className='text-white/30'>/{total}</span>
-							<span className='text-teal ml-2'>{pct}%</span>
-						</span>
+						<div className='flex items-center gap-3'>
+							<span className='font-mono text-xs text-white/60 tabular-nums'>
+								{doneCount}
+								<span className='text-white/30'>/{total}</span>
+								<span className='text-teal ml-2'>{pct}%</span>
+							</span>
+							<button
+								type='button'
+								onClick={(e) => {
+									e.stopPropagation();
+									setAddStepOpen(true);
+								}}
+								className='flex items-center gap-1 font-mono text-[11px] px-2.5 py-1 rounded-full border border-teal/40 text-teal hover:bg-teal/10 transition-colors shrink-0'
+							>
+								<TbPlus size={12} />
+								Add Step
+							</button>
+						</div>
 					</div>
 					<JourneyMap
 						journeySteps={journeySteps}
@@ -147,6 +169,14 @@ export default function JourneyPreview({
 						projectId={projectId}
 					/>
 				</div>
+			)}
+
+			{addStepOpen && (
+				<AddStepForm
+					projectId={projectId}
+					onClose={() => setAddStepOpen(false)}
+					onAdded={handleStepAdded}
+				/>
 			)}
 		</div>
 	);
