@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_PROJECT_QUERY as Q } from '@/app/data/queries/pages/FETCH_PROJECT_QUERY';
 import ProjectHeader from '@/app/components/portal/ProjectHeader';
@@ -20,6 +21,7 @@ import ProjectNoteList from '@/app/components/notes/ProjectNoteList';
 export default async function ProjectPage({ params }) {
 	const { clientSlug, projectSlug } = await params;
 	const data = await f(Q, { clientSlug, projectSlug });
+	if (!data) notFound();
 	const { clientId, name: clientName, project, notes = [] } = data;
 
 	return (
@@ -76,6 +78,7 @@ export default async function ProjectPage({ params }) {
 
 						<ProjectLinks
 							variant='internal'
+							projectId={project._id}
 							previewUrl={project.previewUrl}
 							figmaUrl={project.figmaUrl}
 							studioUrl={project.studioUrl}
@@ -121,6 +124,7 @@ export default async function ProjectPage({ params }) {
 							inspiration={project.inspiration}
 							clientSlug={clientSlug}
 							projectSlug={projectSlug}
+							projectId={project._id}
 						/>
 
 						<ProjectNoteList />

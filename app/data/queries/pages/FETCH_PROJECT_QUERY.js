@@ -46,6 +46,7 @@ export const FETCH_PROJECT_QUERY = `
       clientPayment,
       designerPayment,
       docs[] {
+        _key,
         label,
         filename,
         category,
@@ -65,13 +66,14 @@ export const FETCH_PROJECT_QUERY = `
         caption,
         category
       },
-      resources[] {
-        label,
-        url,
-        type,
-        category,
-        audience
-      },
+     resources[] {
+      _key,
+      label,
+      url,
+      type,
+      category,
+      audience
+    },
       journeySteps[] {
         _key,
         status,
