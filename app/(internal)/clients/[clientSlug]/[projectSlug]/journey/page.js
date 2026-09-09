@@ -5,6 +5,7 @@ import { TbArrowLeft } from 'react-icons/tb';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_PROJECT_QUERY as Q } from '@/app/data/queries/pages/FETCH_PROJECT_QUERY';
 import JourneyMap from '@/app/components/clientJourney/JourneyMap';
+import AddStepTrigger from '@/app/components/clientJourney/AddStepTrigger';
 import { summarizeJourney } from '@/app/utils/journeyHelpers';
 import StudioLink from '@/app/components/portal/StudioLink';
 
@@ -36,12 +37,14 @@ export default async function JourneyPage({ params }) {
 					</span>
 				</Link>
 
-				<StudioLink
-					type='project'
-					id={project._id}
-					label='Edit journey'
-					className='self-center lg:self-start shrink-0'
-				/>
+				<div className='flex items-center gap-2 self-center lg:self-start shrink-0'>
+					<AddStepTrigger projectId={project._id} />
+					<StudioLink
+						type='project'
+						id={project._id}
+						label='Edit journey'
+					/>
+				</div>
 			</div>
 
 			{/* overall progress bar */}

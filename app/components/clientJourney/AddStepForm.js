@@ -14,6 +14,20 @@ const pillClass = (active) =>
 			: 'border-white/[0.08] bg-dark text-white/40 hover:text-dark hover:border-teal/40 hover:bg-teal/60 hover:scale-95'
 	}`
 
+// Compact labels for the filter row — the full PHASE_LABELS strings
+// ("A · Initial Outreach") are correct everywhere else but too long for a
+// row of pills you're scanning quickly.
+const PHASE_SHORT_LABELS = {
+	'a-outreach': 'Outreach',
+	'b-close': 'Close',
+	'c-kickoff': 'Kickoff',
+	'd-design': 'Design',
+	'e-build': 'Build',
+	'f-prelaunch': 'Prelaunch',
+	'g-launch': 'Launch',
+	'h-postlaunch': 'Post-Launch',
+}
+
 function FieldLabel({ children }) {
 	return (
 		<label className='block font-mono text-[10px] tracking-widest uppercase text-white/40 mb-1.5'>
@@ -28,6 +42,7 @@ export default function AddStepForm({ projectId, onClose, onAdded }) {
 	const [catalog, setCatalog] = useState(null)
 	const [catalogError, setCatalogError] = useState('')
 	const [search, setSearch] = useState('')
+	const [phaseFilter, setPhaseFilter] = useState('all')
 	const [selectedId, setSelectedId] = useState(null)
 
 	const [title, setTitle] = useState('')
@@ -51,9 +66,12 @@ export default function AddStepForm({ projectId, onClose, onAdded }) {
 	const filteredCatalog = useMemo(() => {
 		if (!catalog) return []
 		const q = search.trim().toLowerCase()
-		if (!q) return catalog
-		return catalog.filter((g) => g.title.toLowerCase().includes(q))
-	}, [catalog, search])
+		return catalog.filter((g) => {
+			const matchesSearch = !q || g.title.toLowerCase().includes(q)
+			const matchesPhase = phaseFilter === 'all' || g.phase === phaseFilter
+			return matchesSearch && matchesPhase
+		})
+	}, [catalog, search, phaseFilter])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -121,10 +139,32 @@ export default function AddStepForm({ projectId, onClose, onAdded }) {
 				<div className='px-5 py-5 flex flex-col gap-4'>
 					{tab === 'reuse' ? (
 						<>
+							<div>
+								<FieldLabel>Phase</FieldLabel>
+								<div className='flex flex-wrap gap-1.5'>
+									<button
+										type='button'
+										onClick={() => setPhaseFilter('all')}
+										className={pillClass(phaseFilter === 'all')}
+									>
+										All
+									</button>
+									{PHASE_ORDER.map((p) => (
+										<button
+											key={p}
+											type='button'
+											onClick={() => setPhaseFilter(p)}
+											className={pillClass(phaseFilter === p)}
+										>
+											{PHASE_SHORT_LABELS[p]}
+										</button>
+									))}
+								</div>
+							</div>
+
 							<div className='relative'>
 								<TbSearch className='absolute left-3 top-1/2 -translate-y-1/2 text-white/30 text-sm' />
 								<input
-									autoFocus
 									value={search}
 									onChange={(e) => setSearch(e.target.value)}
 									placeholder='Search steps…'
@@ -136,7 +176,7 @@ export default function AddStepForm({ projectId, onClose, onAdded }) {
 							{!catalog && !catalogError && <p className='text-xs text-white/30'>Loading catalog…</p>}
 
 							{catalog && (
-								<div className='flex flex-col gap-1 max-h-64 overflow-y-auto border border-white/[0.06] rounded-lg'>
+								<div className='flex flex-col gap-1 max-h-[28rem] overflow-y-auto border border-white/[0.06] rounded-lg'>
 									{filteredCatalog.length === 0 && (
 										<p className='text-xs text-white/30 px-3 py-3'>No matching steps</p>
 									)}
