@@ -1,29 +1,953 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>WDAC Member Portal — Site Wireframes | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  :root{
+    --ink:#1D272E;          /* WDAC's own text-dark, reads near-navy */
+    --ink-soft:#2B3740;
+    --paper:#F5F6F8;
+    --surface:#FFFFFF;
+    --border:#E1E5EC;
+    --border-soft:#EBEEF3;
+    --text:#1D272E;
+    --text-muted:#5B6472;
+    --text-faint:#8992A0;
+
+    --accent:#00A7AF;       /* WDAC primary brand accent */
+    --accent-deep:#00767C;
+    --accent-soft:#E1F5F6;
+
+    --gold:#BC412B;         /* WDAC secondary brand accent, used as the editorial accent */
+    --gold-soft:#FBEAE6;
+
+    --green:#16A34A;        /* reserved — confirmed/done state only */
+    --green-soft:#F0FDF4;
+
+    --radius-s:6px; --radius-m:10px; --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(20,32,56,.05), 0 8px 24px rgba(20,32,56,.06);
+    --sidebar-w:288px;
+
+    --font-serif:'Source Serif 4', serif;
+    --font-sans:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--font-sans);
+    background:var(--paper);
+    color:var(--text);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  ul{ list-style:none; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  /* ============ PROGRESS BAR ============ */
+  .progress-bar{ position:fixed; top:0; left:0; height:3px; width:0%; background:var(--gold); z-index:400; transition:width .1s linear; }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar{
+    position:fixed; top:0; left:0; width:var(--sidebar-w); height:100vh;
+    background:var(--ink); color:#fff; display:flex; flex-direction:column;
+    z-index:200; overflow-y:auto; transition:transform .25s ease;
+  }
+  .sb-top{ padding:28px 26px 20px; border-bottom:1px solid rgba(255,255,255,.09); }
+  .sb-eyebrow{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+  .sb-identity{ display:flex; align-items:flex-start; gap:12px; }
+  .sb-mark{
+    flex-shrink:0; width:38px; height:38px; border:1.5px solid var(--gold); border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--gold); letter-spacing:.02em;
+  }
+  .sb-client{ font-family:var(--font-serif); font-size:19px; font-weight:600; color:rgba(255,255,255,.95); line-height:1.25; }
+  .sb-sub{ font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,.4); margin-top:4px; }
+
+  .sb-nav{ padding:10px 14px; flex:1; }
+  .nav-group-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.3); padding:16px 12px 6px; }
+  .nav-link{
+    display:flex; align-items:center; gap:11px; padding:8px 13px; color:rgba(255,255,255,.62);
+    text-decoration:none; font-size:15px; border-radius:6px; border-left:2px solid transparent;
+    transition:all .12s; margin-bottom:1px;
+  }
+  .nav-link:hover{ color:rgba(255,255,255,.92); background:rgba(255,255,255,.05); }
+  .nav-link.active{ color:#fff; background:rgba(0,167,175,.16); border-left-color:var(--accent); font-weight:600; }
+  .nav-num{ font-family:var(--font-mono); font-size:12.5px; color:var(--accent); width:18px; flex-shrink:0; }
+
+  .sb-meta{ padding:16px 26px; border-top:1px solid rgba(255,255,255,.09); font-family:var(--font-mono); font-size:12.5px; color:rgba(255,255,255,.5); line-height:2.1; }
+  .sb-meta b{ color:rgba(255,255,255,.85); font-weight:500; }
+  .sb-footer{ padding:18px 26px 24px; font-family:var(--font-sans); font-size:13px; color:rgba(255,255,255,.4); line-height:1.8; }
+  .sb-footer strong{ color:var(--gold); font-weight:600; }
+
+  /* ============ MOBILE TOPBAR / BACKDROP ============ */
+  .topbar{ display:none; }
+  .backdrop{ display:none; }
+
+  @media (max-width:1023px){
+    .sidebar{ transform:translateX(-100%); width:280px; }
+    .sidebar.is-open{ transform:translateX(0); }
+    .backdrop{
+      display:block; position:fixed; inset:0; background:rgba(13,20,28,.5);
+      opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:199;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .backdrop.is-visible{ opacity:1; pointer-events:auto; }
+    .topbar{
+      display:flex; align-items:center; gap:14px; position:sticky; top:0; z-index:150;
+      background:var(--ink); color:#fff; padding:14px 18px;
     }
-  </style>
+    .topbar-burger{
+      background:none; border:1.5px solid rgba(255,255,255,.25); border-radius:6px; color:#fff;
+      width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px;
+    }
+    .topbar-titles{ min-width:0; }
+    .topbar-doc{ font-family:var(--font-serif); font-size:15px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .topbar-crumb{ font-family:var(--font-mono); font-size:11px; color:var(--accent); margin-top:1px; }
+  }
+
+  /* ============ DOCBAR (desktop breadcrumb) ============ */
+  .docbar{ display:none; }
+  @media (min-width:1024px){
+    .docbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      position:sticky; top:0; z-index:120; background:rgba(245,246,248,.92); backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--border-soft); padding:11px 48px; font-family:var(--font-mono); font-size:12px; color:var(--text-muted);
+    }
+    .docbar .crumb-current{ color:var(--ink); font-weight:600; }
+  }
+
+  /* ============ MAIN ============ */
+  .main{ margin-left:var(--sidebar-w); min-height:100vh; }
+  @media (max-width:1023px){ .main{ margin-left:0; } }
+
+  .content{ max-width:920px; margin:0 auto; padding:52px 48px 120px; }
+  @media (max-width:1023px){ .content{ padding:36px 28px 100px; } }
+  @media (max-width:480px){ .content{ padding:28px 18px 90px; } }
+
+  /* ============ COVER ============ */
+  .cover-panel{
+    position:relative; border:1px solid var(--border); border-radius:var(--radius-m);
+    background:var(--surface); padding:3rem 3rem 2.4rem; overflow:hidden; margin-bottom:1.6rem;
+  }
+  @media (max-width:680px){ .cover-panel{ padding:2.2rem 1.5rem 2rem; } }
+  .bracket{ position:absolute; width:18px; height:18px; }
+  .bracket--tl{ top:14px; left:14px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+  .bracket--tr{ top:14px; right:14px; border-top:2px solid var(--gold); border-right:2px solid var(--gold); }
+  .bracket--bl{ bottom:14px; left:14px; border-bottom:2px solid var(--gold); border-left:2px solid var(--gold); }
+  .bracket--br{ bottom:14px; right:14px; border-bottom:2px solid var(--gold); border-right:2px solid var(--gold); }
+
+  .stamp{ position:absolute; top:1.8rem; right:2.2rem; width:150px; text-align:center; z-index:2; }
+  .stamp__box{ border:1.5px solid var(--border); border-radius:6px; padding:.7rem .5rem .5rem; transform:rotate(-4deg); background:var(--surface); }
+  .stamp__box img{ display:block; width:100%; height:auto; opacity:.24; }
+  .stamp__caption{ font-family:var(--font-mono); font-size:10px; color:var(--text-faint); margin-top:.5rem; }
+  @media (max-width:1023px){ .stamp{ width:100px; top:1.1rem; right:1.1rem; } .stamp__box{ padding:.5rem .35rem .3rem; } }
+  @media (max-width:480px){ .stamp{ width:64px; top:.6rem; right:.6rem; } .stamp__caption{ display:none; } }
+
+  /* Reserved space so the eyebrow/title/tagline can never sit under the stamp,
+     regardless of how the title wraps — matches the .stamp breakpoints above
+     with a little extra gap, rather than relying on font-metric guesswork. */
+  .cover-heading{ padding-right:210px; }
+  @media (max-width:1023px){ .cover-heading{ padding-right:140px; } }
+  @media (max-width:480px){ .cover-heading{ padding-right:88px; } }
+
+  .eyebrow-pill{
+    display:inline-block; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-deep); background:var(--accent-soft); border:1px solid rgba(0,167,175,.3);
+    border-radius:20px; padding:4px 13px; margin-bottom:18px;
+  }
+  .cover-title{ font-family:var(--font-serif); font-weight:700; font-size:2.5rem; line-height:1.12; color:var(--ink); margin-bottom:10px; }
+  @media (max-width:680px){ .cover-title{ font-size:1.85rem; } }
+  .cover-tagline{ font-size:1.05rem; color:var(--text-muted); max-width:640px; margin-bottom:20px; }
+  .cover-rule{ margin:20px 0; }
+  .cover-rule div:first-child{ height:2px; background:var(--ink); width:64px; }
+  .cover-rule div:last-child{ height:1px; background:var(--gold); width:64px; margin-top:3px; }
+  .cover-desc{ color:var(--text); max-width:680px; margin-bottom:28px; font-size:.98rem; }
+  .cover-desc strong{ color:var(--ink); font-weight:600; }
+
+  .doc-grid{ display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--border); border-radius:var(--radius-s); overflow:hidden; }
+  @media (max-width:680px){ .doc-grid{ grid-template-columns:1fr 1fr; } }
+  .doc-cell{ padding:13px 18px; border-right:1px solid var(--border); border-bottom:0; }
+  .doc-cell:nth-child(4){ border-right:none; }
+  @media (max-width:680px){ .doc-cell:nth-child(2n){ border-right:none; } .doc-cell{ border-bottom:1px solid var(--border); } .doc-cell:nth-last-child(-n+2){ border-bottom:none; } }
+  .doc-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin-bottom:4px; }
+  .doc-value{ font-size:.95rem; font-weight:600; color:var(--ink); }
+  .doc-value.ok{ color:var(--green); }
+  .doc-value.warn{ color:var(--gold); }
+
+  /* ============ ILLUSTRATIVE NOTE ============ */
+  .note{
+    display:flex; gap:12px; align-items:flex-start; background:var(--accent-soft); border:1px solid rgba(0,167,175,.28);
+    border-radius:var(--radius-s); padding:15px 20px; margin-bottom:3rem; font-size:.94rem; color:var(--accent-deep); line-height:1.55;
+  }
+  .note b{ color:var(--ink); }
+
+  /* ============ SECTION LABEL ============ */
+  .wf-section{ margin-bottom:3.4rem; scroll-margin-top:26px; }
+  .sec-label{ display:flex; align-items:center; gap:13px; margin-bottom:16px; }
+  .sec-num{ display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:var(--ink); color:#fff; border-radius:50%; font-family:var(--font-mono); font-size:13px; flex-shrink:0; }
+  .sec-title{ font-family:var(--font-serif); font-weight:600; font-size:1.4rem; color:var(--ink); flex-shrink:0; }
+  .sec-slug{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); }
+  .sec-rule{ flex:1; height:1px; background:var(--border); }
+  .sec-badge{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; padding:2px 9px; border-radius:4px; flex-shrink:0; }
+  .sec-badge.ready{ background:var(--green-soft); color:var(--green); border:1px solid rgba(22,163,74,.3); }
+
+  /* ============ WF EMBED CARD ============ */
+  .wf-embed{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); box-shadow:var(--shadow-card); overflow:hidden; }
+  .wf-banner{ background:var(--ink); color:rgba(255,255,255,.75); font-family:var(--font-mono); font-size:11px; letter-spacing:.03em; padding:8px 24px; }
+  .wf-nav{ display:flex; justify-content:space-between; align-items:center; padding:13px 26px; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:8px; }
+  .wf-logo{ font-family:var(--font-serif); font-weight:700; font-size:17px; color:var(--ink); }
+  .wf-logo span{ color:var(--accent); }
+  .wf-nav-links{ display:flex; gap:20px; flex-wrap:wrap; }
+  .wf-nav-link{ font-size:13.5px; color:var(--text-faint); font-weight:500; }
+  .wf-nav-link.active{ color:var(--ink); font-weight:700; text-decoration:underline; text-underline-offset:4px; text-decoration-color:var(--accent); }
+  .wf-nav-link.disabled{ opacity:.4; pointer-events:none; }
+  .wf-nav-cta{ font-family:var(--font-mono); font-size:12.5px; font-weight:600; color:var(--surface); background:var(--accent); border-radius:5px; padding:6px 13px; }
+  .wf-body{ padding:24px 26px 28px; }
+  @media (max-width:680px){ .wf-nav{ padding:12px 16px; } .wf-body{ padding:18px 16px 22px; } .wf-nav-links{ display:none; } }
+
+  /* ============ BLOCK ============ */
+  .block{ border:1px solid var(--border); border-radius:var(--radius-s); background:var(--paper); padding:20px 22px; margin-bottom:18px; }
+  .block:last-child{ margin-bottom:0; }
+  .block-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .block-title{ font-family:var(--font-serif); font-weight:600; font-size:1.08rem; color:var(--ink); }
+
+  .tag{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; border-radius:4px; padding:3px 10px; white-space:nowrap; border:1px solid transparent; }
+  .tag--cms{ color:var(--accent-deep); background:var(--accent-soft); border-color:rgba(0,167,175,.3); }
+  .tag--form{ color:var(--gold); background:var(--gold-soft); border-color:rgba(188,65,43,.3); }
+  .tag--ext{ color:var(--text-muted); background:var(--border-soft); border-color:var(--border); }
+
+  .ph-head{ font-family:var(--font-serif); font-weight:600; font-size:1.5rem; color:var(--ink); line-height:1.25; margin-bottom:8px; }
+  .ph-line{ height:10px; border-radius:5px; background:var(--border); margin-bottom:8px; }
+  .ph-line.w90{ width:90%; } .ph-line.w75{ width:75%; } .ph-line.w60{ width:60%; } .ph-line.w45{ width:45%; }
+
+  .pill-btn{ display:inline-block; font-size:14.5px; font-weight:600; color:#fff; background:var(--accent); border-radius:6px; padding:9px 18px; margin-top:6px; margin-right:8px; }
+  .pill-btn.ghost{ color:var(--ink); background:transparent; border:1.5px solid var(--ink); }
+
+  .annotation{ font-size:.92rem; color:var(--text-muted); padding:10px 16px; background:var(--surface); border-left:3px solid var(--accent); border-radius:0 5px 5px 0; margin-top:12px; line-height:1.55; }
+  .annotation strong{ color:var(--ink); font-weight:600; }
+
+  .img-ph{ background:var(--border-soft); border:1.5px dashed var(--border); border-radius:var(--radius-s); min-height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:16px; text-align:center; }
+  .img-ph .lbl{ font-size:13.5px; color:var(--text-muted); line-height:1.4; }
+
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media (max-width:680px){ .form-grid{ grid-template-columns:1fr; } }
+  .form-field{ background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:10px 13px; font-size:14px; color:var(--text-muted); }
+  .form-field.full{ grid-column:1/-1; }
+  .form-field.area{ grid-column:1/-1; min-height:64px; }
+
+  .list-row{ display:flex; align-items:center; gap:13px; border:1px solid var(--border); border-radius:6px; padding:11px 14px; background:var(--surface); margin-bottom:8px; }
+  .list-row:last-child{ margin-bottom:0; }
+  .list-badge{ font-family:var(--font-mono); font-size:11px; color:#fff; background:var(--ink); border-radius:4px; padding:3px 9px; flex-shrink:0; }
+  .list-badge.accent{ background:var(--accent); }
+  .list-main{ flex:1; min-width:0; }
+  .list-main .t{ font-weight:600; font-size:14.5px; color:var(--ink); }
+  .list-main .d{ font-size:12.5px; color:var(--text-faint); }
+  .list-act{ font-family:var(--font-mono); font-size:12.5px; color:var(--accent-deep); flex-shrink:0; }
+
+  .card-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  @media (max-width:680px){ .card-grid{ grid-template-columns:1fr; } }
+  .mini-card{ border:1px solid var(--border); border-radius:8px; background:var(--surface); padding:14px 15px; }
+  .mini-card .mc-tag{ font-family:var(--font-mono); font-size:10px; color:var(--accent-deep); text-transform:uppercase; letter-spacing:.05em; }
+  .mini-card .mc-title{ font-family:var(--font-serif); font-weight:600; font-size:1rem; color:var(--ink); margin:4px 0 3px; }
+  .mini-card .mc-sub{ font-size:12.5px; color:var(--text-faint); }
+
+  .status-chip{ display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; padding:4px 11px; border-radius:20px; }
+  .status-chip.active{ background:var(--green-soft); color:var(--green); border:1px solid rgba(22,163,74,.3); }
+  .status-chip.pending{ background:var(--gold-soft); color:var(--gold); border:1px solid rgba(188,65,43,.3); }
+
+  /* ============ DECISION BOX ============ */
+  .decision{ border:1.5px dashed var(--gold); border-radius:var(--radius-s); background:var(--gold-soft); padding:16px 18px; margin-top:14px; }
+  .decision-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:9px; }
+  .decision-opt{ font-size:.92rem; margin-bottom:6px; color:var(--text); }
+  .decision-opt:last-child{ margin-bottom:0; }
+  .decision-opt b{ font-family:var(--font-serif); color:var(--ink); }
+
+  .status-note{
+    display:flex; gap:12px; align-items:flex-start; background:var(--gold-soft); border:1.5px dashed var(--gold);
+    border-radius:var(--radius-s); padding:14px 19px; margin-bottom:22px; font-size:.93rem; color:var(--text); line-height:1.55;
+  }
+  .status-note b{ color:var(--gold); }
+
+  /* ============ FORK PLACEHOLDER ============ */
+  .fork{
+    border:1.5px dashed var(--text-faint); border-radius:var(--radius-s);
+    background:repeating-linear-gradient(135deg, rgba(29,39,46,.035) 0 9px, transparent 9px 18px);
+    padding:20px 21px;
+  }
+  .fork-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); margin-bottom:12px; }
+  .fork-chips{ display:flex; gap:9px; flex-wrap:wrap; margin-bottom:4px; }
+  .fork-chip{ font-family:var(--font-mono); font-size:11.5px; border:1px dashed var(--border); border-radius:4px; padding:5px 11px; color:var(--text-muted); background:var(--surface); }
+
+  /* ============ OPTION MOCKUPS (side-by-side fork options) ============ */
+  .option-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:760px){ .option-grid{ grid-template-columns:1fr; } }
+  .option-card{ border:1.5px dashed var(--gold); border-radius:8px; background:var(--surface); padding:16px 16px 18px; }
+  .option-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:13px; }
+  .mock-page{ border:1px solid var(--border); border-radius:6px; background:var(--paper); padding:16px 16px 18px; }
+  .crumb-tag{ display:inline-flex; align-items:center; gap:5px; font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--accent-deep); background:var(--accent-soft); border:1px solid rgba(0,167,175,.3); border-radius:4px; padding:3px 9px; margin-bottom:13px; }
+  .meta-line{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin:5px 0 15px; }
+  .back-link{ margin-top:14px; font-family:var(--font-mono); font-size:11.5px; color:var(--accent-deep); }
+
+  /* ============ CTA BAR ============ */
+  .cta-bar{ background:var(--ink); border-radius:8px; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-top:4px; }
+  .cta-bar .cta-txt{ font-family:var(--font-serif); font-weight:600; font-size:1.05rem; color:#fff; }
+
+  .wf-footer{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; border-top:1px solid var(--border); margin-top:22px; padding-top:15px; }
+  .wf-footer .fnav{ font-size:12px; color:var(--text-faint); display:flex; gap:13px; flex-wrap:wrap; }
+  .wf-footer .fnav .cur{ color:var(--accent-deep); font-weight:600; }
+  .wf-footer .fnav .disabled{ opacity:.4; }
+  @media (max-width:680px){ .wf-footer{ flex-direction:column; text-align:center; } }
+
+  /* ============ SITE MAP TREE ============ */
+  .tree-wrap{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); box-shadow:var(--shadow-card); padding:28px 30px; }
+  @media (max-width:680px){ .tree-wrap{ padding:20px 16px; } }
+  .tree{ }
+  .tree-node{ }
+  .tree-row{
+    display:flex; align-items:center; gap:10px; border:1px solid var(--border); border-radius:7px;
+    background:var(--paper); padding:10px 14px; cursor:pointer; user-select:none;
+  }
+  .tree-row:hover{ border-color:var(--accent); }
+  .tree-row.is-root{ background:var(--ink); border-color:var(--ink); }
+  .tree-row.is-root .tn-name, .tree-row.is-root .tn-slug{ color:#fff; }
+  .tree-row.is-ext{ border-style:dashed; background:var(--surface); }
+  .tree-toggle{ width:18px; height:18px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:none; border:none; color:var(--text-faint); font-size:11px; transition:transform .15s ease; }
+  .tree-toggle.spacer{ visibility:hidden; }
+  .tn-body{ flex:1; min-width:0; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .tn-name{ font-family:var(--font-serif); font-weight:600; font-size:14.5px; color:var(--ink); }
+  .tn-slug{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); }
+  .tn-badge{ font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.05em; padding:2px 8px; border-radius:4px; background:var(--gold-soft); color:var(--gold); border:1px solid rgba(188,65,43,.3); }
+  .tn-badge.new{ background:var(--accent-soft); color:var(--accent-deep); border-color:rgba(0,167,175,.3); }
+  .tree-children{ margin-left:26px; padding-left:16px; border-left:1.5px solid var(--border); margin-top:8px; display:flex; flex-direction:column; gap:8px; }
+  .tree-node.is-collapsed > .tree-children{ display:none; }
+  .tree-node.is-collapsed > .tree-row .tree-toggle{ transform:rotate(-90deg); }
+  .tree-node{ display:flex; flex-direction:column; }
+
+  .migration-note{ margin-top:22px; padding-top:18px; border-top:1px solid var(--border-soft); font-size:.92rem; color:var(--text-muted); line-height:1.6; }
+  .migration-note strong{ color:var(--ink); }
+
+  /* ============ CHECK LIST ============ */
+  .check-list{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); box-shadow:var(--shadow-card); padding:6px 26px; }
+  @media (max-width:680px){ .check-list{ padding:4px 16px; } }
+  .check-item{ display:flex; align-items:flex-start; gap:13px; padding:15px 0; border-bottom:1px solid var(--border-soft); }
+  .check-item:last-child{ border-bottom:none; }
+  .check-icon{ width:20px; height:20px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; margin-top:2px; }
+  .check-icon.done{ background:var(--green-soft); color:var(--green); border:1.5px solid rgba(22,163,74,.35); }
+  .check-icon.open{ background:var(--gold-soft); color:var(--gold); border:1.5px solid rgba(188,65,43,.35); }
+  .check-body strong{ font-family:var(--font-serif); font-size:1rem; font-weight:600; color:var(--ink); display:block; margin-bottom:2px; }
+  .check-body span{ font-size:.92rem; color:var(--text-muted); line-height:1.55; }
+
+  /* ============ BACK TO TOP ============ */
+  .to-top{
+    position:fixed; bottom:24px; right:24px; width:44px; height:44px; border-radius:50%; background:var(--ink);
+    color:#fff; border:none; display:flex; align-items:center; justify-content:center; font-size:17px; z-index:250;
+    box-shadow:0 4px 16px rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .2s ease;
+  }
+  .to-top.is-visible{ opacity:1; pointer-events:auto; }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="backdrop" id="backdrop"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <div class="sb-eyebrow">For Kristen · Site Wireframes</div>
+    <div class="sb-identity">
+      <div class="sb-mark">W</div>
+      <div>
+        <div class="sb-client">Wisconsin Downtown Action Council</div>
+        <div class="sb-sub">Member Portal — Wireframes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-nav">
+    <a href="#cover" class="nav-link">Overview</a>
+
+    <div class="nav-group-label">Overview</div>
+    <a href="#sitemap" class="nav-link"><span class="nav-num">0</span> Site Map</a>
+
+    <div class="nav-group-label">Pages</div>
+    <a href="#landing" class="nav-link"><span class="nav-num">1</span> Portal Landing</a>
+    <a href="#login" class="nav-link"><span class="nav-num">2</span> Login</a>
+    <a href="#dashboard" class="nav-link"><span class="nav-num">3</span> Dashboard</a>
+    <a href="#library" class="nav-link"><span class="nav-num">4</span> Resource Library</a>
+    <a href="#account" class="nav-link"><span class="nav-num">5</span> Org Account</a>
+    <a href="#add-resource" class="nav-link"><span class="nav-num">6</span> Add a Resource</a>
+
+    <div class="nav-group-label">Decisions</div>
+    <a href="#decided" class="nav-link"><span class="nav-num">✓</span> Current Status</a>
+    <a href="#discuss" class="nav-link"><span class="nav-num">?</span> To Finalize</a>
+  </div>
+
+  <div class="sb-meta">
+    Pages drafted: <b>6</b><br/>
+    Status: <b>Client Ready</b><br/>
+    Contact: <b>Kristen Fish-Peterson</b>
+  </div>
+
+  <div class="sb-footer">
+    jordan@latzwebdesign.com<br/>
+    <strong>No fluff. Just results.</strong>
+  </div>
+</nav>
+
+<div class="topbar" id="topbar">
+  <button class="topbar-burger" id="burgerBtn" aria-label="Toggle navigation">☰</button>
+  <div class="topbar-titles">
+    <div class="topbar-doc">WDAC Member Portal</div>
+    <div class="topbar-crumb" id="topbarCrumb">Overview</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="docbar">
+    <span>Latz Web Design · Site Wireframes</span>
+    <span class="crumb-current" id="docbarCrumb">Overview</span>
+  </div>
+
+  <div class="content">
+
+    <!-- COVER -->
+    <section class="wf-section" id="cover">
+      <div class="cover-panel">
+        <span class="bracket bracket--tl"></span>
+        <span class="bracket bracket--tr"></span>
+        <span class="bracket bracket--bl"></span>
+        <span class="bracket bracket--br"></span>
+
+        <div class="stamp">
+          <div class="stamp__box">
+            <img src="data:image/png;base64,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" alt="Latz Web Design, LLC" />
+          </div>
+          <div class="stamp__caption">Site Wireframes</div>
+        </div>
+
+        <div class="cover-heading">
+          <div class="eyebrow-pill">Member Portal · Wireframes</div>
+          <h1 class="cover-title">Wisconsin Downtown Action Council — Member Portal</h1>
+          <p class="cover-tagline">A new members-only space for your resource library — content &amp; structure for board review, ahead of the Sept 17 meeting.</p>
+        </div>
+
+        <div class="cover-rule"><div></div><div></div></div>
+
+        <p class="cover-desc">
+          One login per member organization gives access to a searchable library of best practices, legislative updates, and other resources, with board members adding new content as it's ready. <strong>Linked right from your main site</strong> — your current pages stay exactly as they are.
+        </p>
+
+        <div class="doc-grid">
+          <div class="doc-cell"><div class="doc-label">Status</div><div class="doc-value ok">Client Ready</div></div>
+          <div class="doc-cell"><div class="doc-label">Pages</div><div class="doc-value">6 new</div></div>
+          <div class="doc-cell"><div class="doc-label">Contact</div><div class="doc-value">Kristen</div></div>
+          <div class="doc-cell"><div class="doc-label">Deposit</div><div class="doc-value warn">Pending</div></div>
+        </div>
+      </div>
+
+      <div class="note">
+        <span>✏️</span>
+        <span><b>Please Note</b> — These layouts are illustrative — they show what content lives on each page and how it behaves, not the final visual design. Colors here are pulled from your brand; fonts and finer visual details are a starting point we'll refine together.</span>
+      </div>
+    </section>
+
+    <!-- 0 — SITE MAP -->
+    <section class="wf-section" id="sitemap">
+      <div class="sec-label">
+        <span class="sec-num">0</span><span class="sec-title">Site Map</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="tree-wrap">
+        <div class="tree-row is-ext" style="margin-bottom:8px;">
+          <button class="tree-toggle spacer">▾</button>
+          <div class="tn-body">
+            <span class="tn-name">Your Main Site</span>
+            <span class="tn-slug">unchanged — adds one link out to the portal</span>
+          </div>
+        </div>
+        <div class="sm-connector" style="text-align:center; color:var(--text-faint); font-size:13px; margin:2px 0 8px;">↓ links to</div>
+
+        <ul class="tree">
+          <li class="tree-node" data-node>
+            <div class="tree-row is-root" data-toggle>
+              <button class="tree-toggle" aria-label="Toggle">▾</button>
+              <div class="tn-body">
+                <span class="tn-name">Member Portal</span>
+                <span class="tn-slug">its own space</span>
+                <span class="tn-badge new">New</span>
+              </div>
+            </div>
+            <ul class="tree-children">
+              <li class="tree-node">
+                <div class="tree-row">
+                  <button class="tree-toggle spacer">▾</button>
+                  <div class="tn-body"><span class="tn-name">Login</span><span class="tn-slug">/member-portal/login</span></div>
+                </div>
+              </li>
+              <li class="tree-node" data-node>
+                <div class="tree-row" data-toggle>
+                  <button class="tree-toggle" aria-label="Toggle">▾</button>
+                  <div class="tn-body"><span class="tn-name">Dashboard</span><span class="tn-slug">/member-portal/dashboard</span></div>
+                </div>
+                <ul class="tree-children">
+                  <li class="tree-node">
+                    <div class="tree-row">
+                      <button class="tree-toggle spacer">▾</button>
+                      <div class="tn-body"><span class="tn-name">Resource Library</span><span class="tn-slug">/member-portal/resources</span></div>
+                    </div>
+                  </li>
+                  <li class="tree-node">
+                    <div class="tree-row">
+                      <button class="tree-toggle spacer">▾</button>
+                      <div class="tn-body"><span class="tn-name">Org Account</span><span class="tn-slug">/member-portal/account</span></div>
+                    </div>
+                  </li>
+                  <li class="tree-node">
+                    <div class="tree-row">
+                      <button class="tree-toggle spacer">▾</button>
+                      <div class="tn-body"><span class="tn-name">Add a Resource</span><span class="tn-slug">/member-portal/resources/add</span><span class="tn-badge">WDAC admin only</span></div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="migration-note">
+          <strong>Structure notes.</strong> The Member Portal is its own space, linked from your main site — your main site adds one link out to it, and everything else there stays exactly as it is. No content migrates in: WDAC's last membership list was bundled with annual conference registration and turned over yearly, so the portal launches with a clean slate — no legacy roster to import or sync.
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 — PORTAL LANDING -->
+    <section class="wf-section" id="landing">
+      <div class="sec-label">
+        <span class="sec-num">1</span><span class="sec-title">Portal Landing</span><span class="sec-slug">/member-portal</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Portal Landing · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">WDAC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link disabled">Portal Home</span>
+            <span class="wf-nav-link disabled">Resource Library</span>
+            <span class="wf-nav-link disabled">Org Account</span>
+          </div>
+          <span class="wf-nav-cta">Log In →</span>
+        </div>
+        <div class="wf-body">
+          <div class="annotation" style="margin-bottom:20px;">This page lives on the portal's own subdomain — not your current WordPress site. Your main site carries just one link out to it (see the Site Map); everything past that click uses this portal nav, shown here. The three links above are dimmed because they're not reachable until an organization logs in.</div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">Hero</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="ph-head">Everything your downtown organization needs, in one place.</div>
+            <div class="ph-line w75"></div>
+            <div class="ph-line w60"></div>
+            <span class="pill-btn">Log In to the Portal →</span>
+            <div class="annotation">This is a public page — anyone can read it, no login required. It explains what the portal offers and gets a member organization to the login screen. Nothing behind the login is visible here.</div>
+          </div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">What's Inside</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="card-grid">
+              <div class="mini-card"><div class="mc-tag">Category</div><div class="mc-title">Best Practices</div><div class="mc-sub">Downtown org operations</div></div>
+              <div class="mini-card"><div class="mc-tag">Category</div><div class="mc-title">Legislative Updates</div><div class="mc-sub">Policy &amp; advocacy</div></div>
+              <div class="mini-card"><div class="mc-tag">Category</div><div class="mc-title">Other Resources</div><div class="mc-sub">Templates, guides &amp; more</div></div>
+            </div>
+            <div class="annotation">A preview of the three resource categories — a teaser of the value, not the actual library. The real thing lives behind login on the Dashboard and Resource Library pages.</div>
+          </div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">Not a Member Yet?</span><span class="tag tag--ext">Link</span></div>
+            <div class="ph-line w60"></div>
+            <span class="pill-btn ghost">Learn About Membership</span>
+            <div class="annotation">Links back over to your main site's existing Membership page — this portal page doesn't duplicate that content, just points to it.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">WDAC</div>
+            <div class="fnav"><span class="disabled">Portal Home</span><span class="disabled">Resource Library</span><span class="disabled">Org Account</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — LOGIN -->
+    <section class="wf-section" id="login">
+      <div class="sec-label">
+        <span class="sec-num">2</span><span class="sec-title">Login</span><span class="sec-slug">/member-portal/login</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Login · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">WDAC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link disabled">Portal Home</span>
+            <span class="wf-nav-link disabled">Resource Library</span>
+            <span class="wf-nav-link disabled">Org Account</span>
+          </div>
+        </div>
+        <div class="wf-body">
+          <div class="block">
+            <div class="block-head"><span class="block-title">Organization Login</span><span class="tag tag--ext">Session-based</span></div>
+            <div class="form-grid">
+              <div class="form-field full">Organization email</div>
+              <div class="form-field full">Password</div>
+            </div>
+            <span class="pill-btn" style="margin-top:14px;">Log In</span>
+            <span class="pill-btn ghost">Forgot Password?</span>
+            <div class="annotation">One login per <strong>member organization</strong>, not per individual person. When staff turn over at a member org — which happens a lot — the login doesn't have to move with them; it stays with the organization.</div>
+            <div class="decision">
+              <div class="decision-label">⚑ A choice to make — Account provisioning</div>
+              <div class="decision-opt"><b>Option 1:</b> WDAC staff/board create and issue each org's login manually.</div>
+              <div class="decision-opt"><b>Option 2:</b> Organizations request access through a short form, and WDAC approves before the login goes live.</div>
+              <div class="decision-opt" style="color:var(--text-muted); margin-top:8px;">The org-level login itself is settled — this is just about who kicks off a new account.</div>
+            </div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">WDAC</div>
+            <div class="fnav"><span class="disabled">Portal Home</span><span class="disabled">Resource Library</span><span class="disabled">Org Account</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 — DASHBOARD -->
+    <section class="wf-section" id="dashboard">
+      <div class="sec-label">
+        <span class="sec-num">3</span><span class="sec-title">Dashboard</span><span class="sec-slug">/member-portal/dashboard</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Dashboard · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">WDAC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link active">Portal Home</span>
+            <span class="wf-nav-link">Resource Library</span>
+            <span class="wf-nav-link">Org Account</span>
+          </div>
+          <span class="wf-nav-cta">Log Out</span>
+        </div>
+        <div class="wf-body">
+          <div class="annotation" style="margin-bottom:16px;">This is the logged-in home base for a member organization — quick access to the resource categories and a look at what's new, without having to search first.</div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">Browse by Category</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="card-grid">
+              <div class="mini-card"><div class="mc-tag">→ Library</div><div class="mc-title">Best Practices</div><div class="mc-sub">12 resources</div></div>
+              <div class="mini-card"><div class="mc-tag">→ Library</div><div class="mc-title">Legislative Updates</div><div class="mc-sub">4 resources</div></div>
+              <div class="mini-card"><div class="mc-tag">→ Library</div><div class="mc-title">Other Resources</div><div class="mc-sub">7 resources</div></div>
+            </div>
+            <div class="annotation">Each card links into the Resource Library, pre-filtered to that category. Counts update automatically as board members add content — nothing to maintain by hand.</div>
+          </div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">Recently Added</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="list-row"><span class="list-badge accent">New</span><div class="list-main"><div class="t">2026 Legislative Session Summary</div><div class="d">Legislative Updates · PDF</div></div><span class="list-act">Download →</span></div>
+            <div class="list-row"><span class="list-badge accent">New</span><div class="list-main"><div class="t">Streetscape Grant Checklist</div><div class="d">Best Practices · PDF</div></div><span class="list-act">Download →</span></div>
+            <div class="annotation">The three most recently added resources, newest first — pulled automatically, so there's nothing to update here when a board member publishes something new.</div>
+          </div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">Add a Resource</span><span class="tag tag--ext">WDAC admin only</span></div>
+            <div class="ph-line w45"></div>
+            <span class="pill-btn ghost">Add a Resource →</span>
+            <div class="annotation">Only visible when a <strong>WDAC board/staff</strong> account is logged in — member organizations never see this link. Goes to the Add a Resource page (Section 6).</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">WDAC</div>
+            <div class="fnav"><span class="cur">Portal Home</span><span>Resource Library</span><span>Org Account</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 — RESOURCE LIBRARY -->
+    <section class="wf-section" id="library">
+      <div class="sec-label">
+        <span class="sec-num">4</span><span class="sec-title">Resource Library</span><span class="sec-slug">/member-portal/resources</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Resource Library · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">WDAC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link">Portal Home</span>
+            <span class="wf-nav-link active">Resource Library</span>
+            <span class="wf-nav-link">Org Account</span>
+          </div>
+          <span class="wf-nav-cta">Log Out</span>
+        </div>
+        <div class="wf-body">
+          <div class="block">
+            <div class="block-head"><span class="block-title">Search &amp; Filter</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="form-grid">
+              <div class="form-field full">Search resources…</div>
+              <div class="form-field full">Category: All / Best Practices / Legislative Updates / Other Resources</div>
+            </div>
+            <div class="annotation">Search by keyword, filter by category, or both together. Results update as board members add resources — no separate step to "publish" them into search.</div>
+          </div>
+
+          <div class="block">
+            <div class="block-head"><span class="block-title">Resource Listing</span><span class="tag tag--ext">Shape not locked</span></div>
+            <div class="fork-label">⚑ Two ways this could work — shown below, not yet decided</div>
+
+            <div class="option-grid">
+              <div class="option-card">
+                <div class="option-label">Option A — Inline Rows</div>
+                <div class="list-row"><span class="list-badge accent">PDF</span><div class="list-main"><div class="t">Streetscape Grant Checklist</div><div class="d">Best Practices</div></div><span class="list-act">Download PDF ↓</span></div>
+                <div class="list-row"><span class="list-badge accent">PDF</span><div class="list-main"><div class="t">2026 Legislative Session Summary</div><div class="d">Legislative Updates</div></div><span class="list-act">Download PDF ↓</span></div>
+                <div class="list-row"><span class="list-badge">Link</span><div class="list-main"><div class="t">Downtown Grant Programs — WEDC</div><div class="d">Other Resources · external site</div></div><span class="list-act">Visit Link ↗</span></div>
+                <div class="annotation">One flat list — title, category, and a direct action. Clicking "Download PDF" opens the file itself, no page in between. An external link (like the WEDC example) opens in a new tab instead.</div>
+              </div>
+
+              <div class="option-card">
+                <div class="option-label">Option B — Dedicated Detail Page</div>
+                <div class="mock-page">
+                  <div class="crumb-tag">← Best Practices</div>
+                  <div class="ph-head">Streetscape Grant Checklist</div>
+                  <div class="ph-line w75"></div>
+                  <div class="meta-line">Added Aug 12, 2026 · Updated Sept 2, 2026</div>
+                  <div class="ph-line w90"></div>
+                  <div class="ph-line w90"></div>
+                  <div class="ph-line w60"></div>
+                  <div class="img-ph" style="margin:16px 0;"><span class="lbl">optional video</span></div>
+                  <span class="pill-btn">Download PDF</span>
+                  <div class="form-field full" style="margin-top:12px;">External link (optional)</div>
+                  <div class="back-link">← Back to Library</div>
+                </div>
+                <div class="annotation">Each resource gets its own page and URL. The category tag up top doubles as a breadcrumb back to the filtered library. The video block only appears when a board member adds one — otherwise it's skipped, not shown empty.</div>
+              </div>
+            </div>
+
+            <div class="annotation" style="margin-top:16px;">Leaning toward <strong>Option A</strong> for launch — simpler, faster to build. <strong>Option B</strong> is the stronger long-term play if you want individual resources to show up in search results on their own. Worth deciding before build so we don't design one and switch mid-project.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">WDAC</div>
+            <div class="fnav"><span>Portal Home</span><span class="cur">Resource Library</span><span>Org Account</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 — ORG ACCOUNT -->
+    <section class="wf-section" id="account">
+      <div class="sec-label">
+        <span class="sec-num">5</span><span class="sec-title">Org Account</span><span class="sec-slug">/member-portal/account</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Org Account · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">WDAC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link">Portal Home</span>
+            <span class="wf-nav-link">Resource Library</span>
+            <span class="wf-nav-link active">Org Account</span>
+          </div>
+          <span class="wf-nav-cta">Log Out</span>
+        </div>
+        <div class="wf-body">
+          <div class="block">
+            <div class="block-head"><span class="block-title">Organization Details</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="list-row"><span class="list-badge">🏢</span><div class="list-main"><div class="t">Organization name</div><div class="d">Editable by the org</div></div></div>
+            <div class="list-row"><span class="list-badge">✉️</span><div class="list-main"><div class="t">Contact email</div><div class="d">Editable by the org</div></div></div>
+            <div class="list-row"><span class="list-badge">🔑</span><div class="list-main"><div class="t">Login credentials</div><div class="d">Change password from here</div></div></div>
+            <div class="list-row"><span class="list-badge">📋</span><div class="list-main"><div class="t">Membership status</div></div><span class="status-chip active">Active</span></div>
+            <div class="annotation">The org keeps its own name, contact email, and password current here. <strong>Membership status</strong> is set on WDAC's side, not self-editable — it reflects whatever your renewal process ends up being.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">WDAC</div>
+            <div class="fnav"><span>Portal Home</span><span>Resource Library</span><span class="cur">Org Account</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 — ADD A RESOURCE -->
+    <section class="wf-section" id="add-resource">
+      <div class="sec-label">
+        <span class="sec-num">6</span><span class="sec-title">Add a Resource</span><span class="sec-slug">/member-portal/resources/add</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Add a Resource · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">WDAC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link">Portal Home</span>
+            <span class="wf-nav-link">Resource Library</span>
+            <span class="wf-nav-link active">Add a Resource</span>
+          </div>
+          <span class="wf-nav-cta">Log Out</span>
+        </div>
+        <div class="wf-body">
+          <div class="block">
+            <div class="block-head"><span class="block-title">New Resource</span><span class="tag tag--ext">Shape not locked</span></div>
+            <div class="fork-label">⚑ Matches whichever Resource Library option gets picked</div>
+            <div class="annotation" style="margin-bottom:16px;">This is where <strong>WDAC board members</strong> — and possibly part-time staff down the road — add content directly. Not Latz-managed, not Kristen personally. A published resource shows up immediately in the library and on the Dashboard's "Recently Added."</div>
+
+            <div class="option-grid">
+              <div class="option-card">
+                <div class="option-label">Option A — Matches Inline Rows</div>
+                <div class="form-grid">
+                  <div class="form-field full">Resource title</div>
+                  <div class="form-field full">Category: Best Practices / Legislative Updates / Other Resources</div>
+                  <div class="form-field full">Upload PDF</div>
+                  <div class="form-field full">External link (optional — article or video elsewhere)</div>
+                  <div class="form-field area">Short description</div>
+                </div>
+                <span class="pill-btn" style="margin-top:14px;">Publish Resource</span>
+                <div class="annotation">A quick upload — title, category, the PDF itself, and a couple lines of description. No video hosting in this option.</div>
+              </div>
+
+              <div class="option-card">
+                <div class="option-label">Option B — Matches Detail Page</div>
+                <div class="form-grid">
+                  <div class="form-field full">Resource title</div>
+                  <div class="form-field full">Subheading / deck (one line)</div>
+                  <div class="form-field full">Category: Best Practices / Legislative Updates / Other Resources</div>
+                  <div class="form-field area" style="min-height:96px;">Body / full write-up</div>
+                  <div class="form-field full">Video link (optional — paste a YouTube or Vimeo URL, no file hosting)</div>
+                  <div class="form-field full">Upload PDF (optional — supplementary, not the core content)</div>
+                  <div class="form-field full">External link (optional)</div>
+                </div>
+                <span class="pill-btn" style="margin-top:14px;">Publish Resource</span>
+                <div class="annotation">The "Added / Updated" dates shown on the detail page are automatic — pulled from when the resource is published or edited, not something the board member fills in.</div>
+                <div class="annotation">This is a real step up in effort from Option A — actually writing a page, headline and all, not just uploading a PDF that's already on hand. Worth weighing alongside the design trade-off when deciding between A and B.</div>
+              </div>
+            </div>
+
+            <div class="annotation" style="margin-top:16px;">This form follows whichever shape the Resource Library section lands on — if that changes, this page changes with it.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">WDAC</div>
+            <div class="fnav"><span>Portal Home</span><span>Resource Library</span><span class="cur">Add a Resource</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIRMED -->
+    <section class="wf-section" id="decided">
+      <div class="sec-label">
+        <span class="sec-num">✓</span><span class="sec-title">Where Things Stand</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="status-note">
+        <span>🛠️</span>
+        <span><b>Working concept, not locked in.</b> Everything below reflects where things stand today, based on our conversations so far — it's still a working concept, and anything can change as we get feedback from you and the board.</span>
+      </div>
+
+      <div class="check-list">
+        <div class="check-item"><span class="check-icon done">✓</span><div class="check-body"><strong>A separate members' space</strong><span>The portal is its own space, linked right from your main site. Your main site itself doesn't change — this isn't a rebuild of anything you already have.</span></div></div>
+        <div class="check-item"><span class="check-icon done">✓</span><div class="check-body"><strong>Org-level login</strong><span>One login per member organization, not per individual — built specifically around staff turnover at member orgs.</span></div></div>
+        <div class="check-item"><span class="check-icon done">✓</span><div class="check-body"><strong>Clean slate — nothing to migrate</strong><span>No existing membership list. Membership used to turn over yearly with conference registration, so the portal launches fresh.</span></div></div>
+        <div class="check-item"><span class="check-icon done">✓</span><div class="check-body"><strong>PDFs plus optional links</strong><span>Downloadable PDFs are the primary format we're planning around, with optional links out to other articles or videos. No video hosting in scope.</span></div></div>
+        <div class="check-item"><span class="check-icon done">✓</span><div class="check-body"><strong>Three fixed categories</strong><span>Best Practices, Legislative Updates, and Other Resources — every resource sorts into one of these three.</span></div></div>
+        <div class="check-item"><span class="check-icon done">✓</span><div class="check-body"><strong>Board members manage content</strong><span>WDAC board members add resources, with possible part-time staff help later. Not Latz-managed, not Kristen personally.</span></div></div>
+      </div>
+    </section>
+
+    <!-- TO FINALIZE -->
+    <section class="wf-section" id="discuss">
+      <div class="sec-label">
+        <span class="sec-num">?</span><span class="sec-title">What We'll Finalize Together</span><span class="sec-rule"></span>
+      </div>
+
+      <div class="check-list">
+        <div class="check-item"><span class="check-icon open">○</span><div class="check-body"><strong>Resource Library shape</strong><span>Inline download rows (current lean) or a dedicated page per resource — see the Resource Library section.</span></div></div>
+        <div class="check-item"><span class="check-icon open">○</span><div class="check-body"><strong>Account provisioning</strong><span>WDAC manually creates each org's login, or orgs request access and WDAC approves — see the Login section.</span></div></div>
+        <div class="check-item"><span class="check-icon open">○</span><div class="check-body"><strong>Existing nav placement</strong><span>Where exactly "Member Portal" lands in your current site's nav — we'll confirm against your live site once we're building.</span></div></div>
+        <div class="check-item"><span class="check-icon open">○</span><div class="check-body"><strong>Launch content</strong><span>No resources are ready yet and the PDF templates are still in concept — the portal can launch with just a few, or wait for a fuller set.</span></div></div>
+        <div class="check-item"><span class="check-icon open">○</span><div class="check-body"><strong>Subdomain name</strong><span>The portal lives on its own subdomain, linked from your main site — we'll just need to confirm the exact subdomain (e.g. portal.wdac.org vs. members.wdac.org) once we're in build.</span></div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('.wf-section[id]');
+  const navLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
+  const topbarCrumb = document.getElementById('topbarCrumb');
+  const docbarCrumb = document.getElementById('docbarCrumb');
+
+  const titleMap = {};
+  sections.forEach(s => {
+    const t = s.querySelector('.sec-title, .cover-title');
+    titleMap[s.id] = t ? t.textContent.trim() : s.id;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + id));
+        const label = titleMap[id] || id;
+        if (topbarCrumb) topbarCrumb.textContent = label;
+        if (docbarCrumb) docbarCrumb.textContent = label;
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('backdrop');
+  const burger = document.getElementById('burgerBtn');
+  let open = false;
+  function openMenu(){ open = true; sidebar.classList.add('is-open'); backdrop.classList.add('is-visible'); }
+  function closeMenu(){ open = false; sidebar.classList.remove('is-open'); backdrop.classList.remove('is-visible'); }
+  if (burger) burger.addEventListener('click', () => open ? closeMenu() : openMenu());
+  if (backdrop) backdrop.addEventListener('click', closeMenu);
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', () => { if (window.innerWidth <= 1023) closeMenu(); });
+  });
+
+  // Site map tree toggle
+  document.querySelectorAll('.tree-row[data-toggle]').forEach(row => {
+    row.addEventListener('click', () => {
+      const node = row.closest('.tree-node');
+      node.classList.toggle('is-collapsed');
+    });
+  });
+
+  // Progress bar + back to top
+  const progressBar = document.getElementById('progressBar');
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    if (progressBar) progressBar.style.width = scrolled + '%';
+    if (toTop) toTop.classList.toggle('is-visible', h.scrollTop > 600);
+  });
+  if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 </body>
 </html>
