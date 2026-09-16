@@ -1,29 +1,1560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>WDAC — Member Portal Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0F14;
+    --surface: #141A2B;
+    --surface-2: #141A2B;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.18);
+    --ink: rgba(255,255,255,0.95);
+    --ink-2: rgba(255,255,255,0.70);
+    --ink-3: rgba(255,255,255,0.46);
+    --ink-4: rgba(255,255,255,0.30);
+    --teal: #1E8A94;
+    --teal-dim: rgba(30,138,148,0.16);
+    --teal-line: rgba(30,138,148,0.42);
+    --purple: #8B7FCF;
+    --purple-dim: rgba(139,127,207,0.16);
+    --purple-line: rgba(139,127,207,0.42);
+    --warning: #C9A227;
+    --warning-dim: rgba(201,162,39,0.14);
+    --warning-line: rgba(201,162,39,0.42);
+    --danger: #B3524A;
+    --danger-dim: rgba(179,82,74,0.14);
+    --danger-line: rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink-2);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 248px;
+    height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 36px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 26px 26px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    color: var(--warning);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--warning);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 10px 26px 5px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 26px;
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.03);
+    border-left-color: var(--teal-line);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: var(--teal-dim);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 22px 26px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+
+  /* ── MOBILE NAV CONTROLS ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 248px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 900px 500px at 80% 0%, rgba(30,138,148,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: 'PORTAL';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 130px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-header .overline::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+
+  .page-header h1 {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    position: relative;
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    position: relative;
+    display: flex;
+    gap: 0;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-soft);
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .header-meta-item:last-child { border-right: none; }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.green { color: var(--teal); }
+  .header-meta-item .value.orange { color: var(--warning); }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 56px 64px 100px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .section-icon {
+    width: 34px; height: 34px;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal-line);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 26px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    border: 1px solid;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  .callout.info { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.warn { background: var(--warning-dim); border-color: var(--warning-line); }
+  .callout.success { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.alert { background: var(--danger-dim); border-color: var(--danger-line); }
+  .callout.yellow { background: var(--warning-dim); border-color: var(--warning-line); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--warning);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+
+  .highlight-box strong { font-weight: 700; color: var(--ink); }
+  .highlight-box p { font-size: 14px; margin-top: 9px; color: var(--ink-2); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border-strong);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+  .timeline-item.pending::before { background: var(--ink-4); box-shadow: 0 0 0 2px var(--ink-4); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-line); animation: pulse 2s infinite; }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .budget-table th {
+    background: var(--surface);
+    color: var(--ink-3);
+    padding: 12px 18px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .budget-table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--ink-2);
+    background: var(--bg);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+  .budget-table .total-row td {
+    background: var(--teal-dim) !important;
+    color: var(--ink);
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--teal-dim) !important;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--warning-dim) !important;
+    color: var(--warning);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    border-top: 2px solid var(--teal);
+    box-shadow: var(--shadow);
+  }
+
+  .page-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .badge-static { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-new { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .badge-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-priority { background: var(--teal); color: #ffffff; border-color: var(--teal); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .pill-green { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-orange { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .pill-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-red { background: var(--danger-dim); color: var(--danger); border-color: var(--danger-line); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: var(--surface);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 22px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--purple); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 9px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--ink-3); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 22px;
+    align-items: start;
+    box-shadow: var(--shadow);
+  }
+
+  .phase-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--ink-4);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 14px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--warning);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay { display: block; }
+
+    .page-header { padding: 40px 20px 32px; }
+    .content { padding: 40px 20px 90px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header::after { font-size: 80px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
     }
-  </style>
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Wisconsin Downtown Action Council</div>
+    <div class="status-pill">Consult — Pending Board Decision</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏛️</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials & Pricing</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client Journey</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Needed from Client</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Project Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>WDAC — Member Portal</h1>
+    <div class="sub">Prospective build — gated resource library for Wisconsin Downtown Action Council member organizations</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">Kristen Fish-Peterson, CEcD — President</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value orange">TBD — $8K–$12K quoted, repricing upward pending board</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Received</span>
+        <span class="value orange">None — nothing invoiced, price not locked</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Board Decision</span>
+        <span class="value orange">Thu, Sept 17, 2026 — 11:00 AM</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Portal Subdomain</span>
+        <span class="value">TBD — off wdac.org, e.g. portal/members.wdac.org</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phone</span>
+        <span class="value"><a href="tel:7155811452">(715) 581-1452</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏛️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Kristen Fish-Peterson, CEcD</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">President, Wisconsin Downtown Action Council — brings pricing/scope to the board, doesn't unilaterally approve</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Also</span>
+            <span class="data-value">Principal &amp; CEO, Redevelopment Resources (Community Impact Consulting) — see [[redevelopment-resources]]</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value"><a href="tel:7155811452">(715) 581-1452</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value">Not confirmed for WDAC specifically — pull from existing CWED / Redevelopment Resources / Irish Hospital Apartments threads before sending anything formal</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Bandwidth Note</span>
+            <span class="data-value">Juggling multiple organizations and deadlines (tax credit applications came up as the reason for an 11-day reply gap). Don't read delays as disinterest — but it does mean nothing moves without a direct nudge.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Org</span>
+            <span class="data-value">Wisconsin Downtown Action Council (WDAC)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">What They Are</span>
+            <span class="data-value">Statewide membership association supporting downtown revitalization organizations across Wisconsin</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Audience</span>
+            <span class="data-value">Member <em>organizations</em> (downtown/business-improvement orgs), not individual consumers — logins are org-level by design</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Existing Site</span>
+            <span class="data-value">WordPress (jQuery, Cloudflare CDN/DNS, GoDaddy email, Formidable Pro Form, CleanTalk) — Latz did not build this and isn't rebuilding it</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Process</span>
+            <span class="data-value">Kristen carries this to the full board — nothing gets approved without their sign-off. This is a new organization relationship for Latz, not a repeat engagement under an existing project, even though Kristen is a known contact.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Repeat contact, new client relationship</strong>
+          <span>Kristen has approved ~$12,600 for CWED's site build, ~$5,500 base for Redevelopment Resources' rebuild, and $1,800 for Irish Hospital Apartments' landing page over the past year — all as an existing, trusted client. WDAC is a different organization she represents; treat pricing, scope, and approval as a fresh conversation, not an extension of goodwill from the other engagements.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Nothing is approved yet — the board decides Thursday, Sept 17 at 11am.</strong>
+        <p>A wireframe and an informal proposal have been sent ahead of that meeting. The original $8,000–$9,000 low end feels too low once weighed against what the mockup actually shows: org-level accounts/login, a searchable and filterable resource library, and a self-serve "add a resource" form for board members. That's closer to a small custom app than a gated content page, and the price needs to move up accordingly — worth surfacing directly with Kristen rather than letting it come as a surprise after the board meeting.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They're Building This</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Received a "ridiculously high bid" from a previous vendor for this exact concept — soured on it, then came back wanting a real number</li>
+            <li><span class="check-icon">🔴</span> No members-only content system exists today — best practices, legislative updates, and resources have no home</li>
+            <li><span class="check-icon">🔴</span> Past "membership" was just conference registration, turning over every year — no durable member list or access system</li>
+            <li><span class="check-icon">🔴</span> No way for board members to publish new resources themselves without going through a developer each time</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Each member org logs in once (shared org credential) and gets straight to a categorized, searchable library</li>
+            <li><span class="check-icon">✅</span> WDAC board members add and publish new resources themselves — no developer involvement for routine content</li>
+            <li><span class="check-icon">✅</span> The portal lives cleanly alongside the existing WordPress site with one outbound link — no disruption to what already works</li>
+            <li><span class="check-icon">✅</span> Kristen walks into the board meeting with a real, defensible number instead of a guess</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly not in scope</strong>
+          <span>No rebuild of WDAC's existing WordPress site — the portal is a separate subdomain app with one link out from the main site, which stays exactly as it is. No individual/per-person logins (org-level only, by design, for staff-turnover reasons). No native video hosting — only optional external links to articles or videos. No content or membership-list migration — WDAC has no existing roster to import, so this launches on a clean slate.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Five open decisions — see "Needed from Client"</strong>
+          <span>Resource Library page format, account provisioning method, nav placement on the existing site, launch content volume, and the exact subdomain name are all still open. None of these block pricing, but all of them block build.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS & PRICING -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials & Pricing</h2>
+      </div>
+
+      <div class="card">
+        <h3>Pricing History (none approved)</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Notes</th>
+              <th class="amount">Figure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Initial Ballpark</strong></td>
+              <td>Sent same-day, Sept 4 — explicitly framed as contingent on membership verification, login structure, content complexity, and launch content volume</td>
+              <td class="amount">$8,000–$12,000</td>
+            </tr>
+            <tr class="pending-row">
+              <td>⏳ Repricing — In Progress</td>
+              <td>Wireframe scope (org auth + searchable/filterable library + self-serve publishing) reads closer to a small custom app than the original low end assumed</td>
+              <td class="amount">TBD — trending above $12K</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn" style="margin-top:16px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Pricing philosophy for this one</strong>
+          <span>Kristen explicitly cited a "ridiculously high bid" from a previous vendor as her reason for shopping this out — she's price-sensitive on principle, not just budget. The repricing conversation should explain <em>why</em> the number moved (real scope, not padding) rather than just presenting a bigger figure after the fact.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🏦</span>
+        <div class="callout-body">
+          <strong>Ongoing costs — not yet discussed</strong>
+          <span>Hosting (Vercel, per standard stack) and any recurring costs haven't been raised with Kristen yet. Fold this into the formal proposal once pricing is locked.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT JOURNEY -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Cold inbound → same-day reply → 11-day gap → board meeting confirmed</strong>
+          <span>Kristen reached out unprompted on Sept 4 already knowing what she wanted; the thread went quiet for over a week while she handled a tax-credit application deadline, then picked back up with full answers the same day the follow-up landed.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Sept 4 — 2:40 PM</div>
+          <div class="timeline-title">Kristen's Initial Ask</div>
+          <div class="timeline-desc">Cold email as WDAC president: wants a members-only portal, mentions a "ridiculously high bid" received in the past, describes a best-practices/legislative-updates/resources library. Board meeting "in a few weeks" — wants pricing to bring to them.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Sept 4 — 8:48 PM</div>
+          <div class="timeline-title">Same-Day Ballpark Reply</div>
+          <div class="timeline-desc">$8,000–$12,000 range, explicitly contingent on five factors: how membership access works, individual vs. shared logins, content format, content ready at launch, and who adds new content long-term. Asked directly whether the range sounded off.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Sept 5–14 (11 days)</div>
+          <div class="timeline-title">Quiet Stretch</div>
+          <div class="timeline-desc">No reply — Kristen was heads-down on an unrelated tax-credit application deadline and away for a weekend, on top of her usual multi-org workload.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Sept 15 — 2:26 PM</div>
+          <div class="timeline-title">Follow-Up Sent</div>
+          <div class="timeline-desc">Checked in, asked when the board meeting was, offered to put together a formal one-pager/proposal to make it easier to present than a raw email thread, and re-asked the five scoping questions.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Sept 15 — 2:37 PM</div>
+          <div class="timeline-title">Full Answers Land</div>
+          <div class="timeline-desc">Board meeting confirmed for Thu, Sept 17 at 11am. Kristen answers all five questions: no existing member list (clean slate — past "membership" was bundled with annual conference registration); org-level login preferred over individual, for turnover reasons; content will be a templated downloadable PDF with possible links to articles/video, still in concept; zero content ready right now; WDAC board members will add content long-term, possibly part-time staff later.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Current</div>
+          <div class="timeline-title">Wireframe &amp; Proposal Sent</div>
+          <div class="timeline-desc">Six-page wireframe (Portal Landing, Login, Dashboard, Resource Library, Org Account, Add a Resource) and an informal proposal delivered ahead of the board meeting. Proposal is running in consult mode — price intentionally not locked pending the scope decisions below.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Thu, Sept 17 — 11:00 AM</div>
+          <div class="timeline-title">WDAC Board Meeting</div>
+          <div class="timeline-desc">Board reviews and decides on budget and next steps. Everything past this point in the document is contingent on the outcome.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🗺️</span>
+        <div class="callout-body">
+          <strong>Six pages, all new — the existing WDAC site is untouched</strong>
+          <span>The portal is its own space at a subdomain, linked from one new nav item on the current site. Nothing on wdac.org itself changes.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Public</span>
+          <h4>Portal Landing — /member-portal</h4>
+          <ul>
+            <li>Public teaser: three resource-category cards (Best Practices, Legislative Updates, Other Resources) shown as a preview, not the real library</li>
+            <li>Login CTA — the actual content lives behind the login on Dashboard and Resource Library</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <span class="page-badge badge-static">Auth</span>
+          <h4>Login — /member-portal/login</h4>
+          <ul>
+            <li>Org-level credential — one login per member organization, not per person</li>
+            <li>Provisioning method still open (see Needed from Client)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS</span>
+          <h4>Dashboard — /member-portal/dashboard</h4>
+          <ul>
+            <li>Post-login home — category cards link into the pre-filtered library, counts update automatically as resources are added</li>
+            <li>"Recently Added" surfaces new resources as board members publish them</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <span class="page-badge badge-new">Shape Not Locked</span>
+          <h4>Resource Library — /member-portal/resources</h4>
+          <ul>
+            <li>Search + category filter (Best Practices / Legislative Updates / Other Resources), CMS-editable</li>
+            <li><strong>Option A</strong> — flat inline rows: title, category, direct download/visit action. Current lean — simpler, faster to build.</li>
+            <li><strong>Option B</strong> — dedicated detail page per resource with its own URL: headline, body, optional embedded video, downloadable PDF. Stronger long-term SEO/search play.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card">
+          <span class="page-badge badge-cms">Self-Serve</span>
+          <h4>Org Account — /member-portal/account</h4>
+          <ul>
+            <li>Org name, contact email, and password are self-editable by the member org</li>
+            <li>Membership status is set on WDAC's side only — not self-editable, reflects whatever renewal process WDAC lands on</li>
+          </ul>
+        </div>
+        <div class="page-card" style="border-top-color: var(--warning);">
+          <span class="page-badge badge-new">WDAC Admin Only</span>
+          <h4>Add a Resource — /member-portal/resources/add</h4>
+          <ul>
+            <li>Where WDAC board members (and possibly part-time staff later) publish content directly — not Latz-managed, not Kristen personally</li>
+            <li>Form shape mirrors whichever Resource Library option is chosen: Option A is a quick PDF upload + short description; Option B is a full write-up with subheading, body, optional video link, and optional supplementary PDF</li>
+            <li>Published resources appear immediately in the library and on the Dashboard's "Recently Added" — no separate publish step</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px; opacity:.75;">
+        <h3>Not In Scope</h3>
+        <div class="data-row">
+          <span class="data-label">Main Site Rebuild</span>
+          <span class="data-value">WDAC's existing WordPress site is untouched — gets one outbound nav link, nothing else changes</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Individual Logins</span>
+          <span class="data-value">Org-level only, deliberately, due to staff turnover at member orgs</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Video Hosting</span>
+          <span class="data-value">Optional external links only (e.g. YouTube/Vimeo) — no native video upload/hosting</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Content Migration</span>
+          <span class="data-value">No existing member list or resource library to import — WDAC starts from a clean slate</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEEDED FROM CLIENT -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Five decisions block build, none block pricing</strong>
+          <span>The board meeting decides budget. These five items can be resolved after that, but nothing gets built until they are.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">📚</span>
+            <div>
+              <strong>Resource Library Format Decision</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Option A (inline download rows, current lean) vs. Option B (dedicated detail page per resource) — this also determines the shape of the Add a Resource form</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔑</span>
+            <div>
+              <strong>Account Provisioning Method</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">WDAC manually creates each org's login vs. orgs self-request and WDAC approves</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🧭</span>
+            <div>
+              <strong>Nav Placement on Existing Site</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Where exactly "Member Portal" lands in wdac.org's current WordPress nav — confirm against the live site once building</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Confirm at Build</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>Launch Content</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Zero resources ready today, PDF template still in concept — can launch thin or wait for a fuller set. Real risk to a hard launch date either way.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-red">Not Yet Started</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Subdomain Name</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">E.g. portal.wdac.org vs. members.wdac.org — needs DNS coordination with WDAC's existing GoDaddy/Cloudflare setup</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏦</span>
+            <div>
+              <strong>Board-Approved Budget</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">The Sept 17 meeting outcome — everything else in this document is contingent on it</span>
+            </div>
+            <span class="check-status"><span class="pill pill-red">Awaiting Sept 17</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Planned Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js — App Router</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom-built — board members publish resources directly through the Add a Resource admin flow</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel (standard) — recurring cost not yet raised with client</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Auth</span>
+            <span class="data-value">Org-level shared credential, not per-person — provisioning method still open</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Existing Site & Domain</h3>
+          <div class="data-row">
+            <span class="data-label">Current Site</span>
+            <span class="data-value">wdac.org — WordPress, not built by Latz</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Existing Infra</span>
+            <span class="data-value">jQuery, Cloudflare CDN/DNS, GoDaddy email, Formidable Pro Form, CleanTalk</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Integration Point</span>
+            <span class="data-value">One new outbound nav link from wdac.org to the portal subdomain — exact placement TBD</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Subdomain</span>
+            <span class="data-value">TBD (e.g. portal.wdac.org / members.wdac.org) — will need DNS coordination with WDAC's Cloudflare/GoDaddy setup</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🔌</span>
+        <div class="callout-body">
+          <strong>No third-party integrations identified</strong>
+          <span>WDAC has no existing dues/roster system to sync membership status against — it's manually set by WDAC on the Org Account page for now. Worth flagging as a future upsell if their renewal process formalizes.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>No build timeline yet — everything is downstream of the board decision</strong>
+          <span>Phases below are sequenced but not dated until Sept 17 passes.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Now — pre-board</div>
+          <h4>Wireframe &amp; Informal Proposal</h4>
+          <ul>
+            <li>Six-page wireframe delivered for board review</li>
+            <li>Consult-mode proposal sent — price intentionally not locked</li>
+            <li>Kristen presents to the WDAC board Thu, Sept 17 at 11am</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Upon board approval</div>
+          <h4>Lock Scope &amp; Price</h4>
+          <ul>
+            <li>Resolve the five open decisions (library format, provisioning, nav placement, launch content plan, subdomain)</li>
+            <li>Issue formal proposal with locked price, reflecting actual scope</li>
+            <li>Deposit collected before build starts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Build</div>
+          <h4>Core Build</h4>
+          <ul>
+            <li>Org-level auth, Dashboard, Resource Library (per chosen format), Org Account, Add a Resource admin flow</li>
+            <li>Subdomain DNS setup coordinated with WDAC's existing Cloudflare/GoDaddy configuration</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Launch</div>
+          <h4>Go Live</h4>
+          <ul>
+            <li>Nav link added to wdac.org pointing at the portal</li>
+            <li>Initial member orgs onboarded with their org-level login</li>
+            <li>Whatever launch content is ready gets loaded — likely thin at first given zero content in hand today</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>None of these are discussed with Kristen yet — pitch after launch, once real usage exists</strong>
+          <span>Each ties directly to a gap already visible in the current scope, not a generic add-on.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>💳 Dues / Roster Integration</h4>
+          <div class="price">TBD</div>
+          <p>Membership status is manually set by WDAC today. If they formalize a renewal or dues process, sync it to Org Account automatically instead of hand-managing status per org.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎥 Native Video Hosting</h4>
+          <div class="price">TBD</div>
+          <p>Content is PDF-plus-links at launch. If the library matures, native video upload/hosting is a natural next tier beyond linking out to YouTube/Vimeo.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🔓 Self-Request Accounts</h4>
+          <div class="price">TBD</div>
+          <p>If manual account creation becomes a bottleneck as member orgs grow, add a self-request-and-approve flow instead of WDAC creating every login by hand.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📊 Library Usage Analytics</h4>
+          <div class="price">TBD</div>
+          <p>Which resources get downloaded most — useful for Kristen to justify the portal's value to the board on renewal, and to guide what content to prioritize next.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>👥 Sub-Logins per Org</h4>
+          <div class="price">TBD</div>
+          <p>If a member org wants staff-level accounts under their org login later, layer individual sub-accounts on top of the org-level credential without abandoning the turnover-proof design.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Repricing — Say It Out Loud, Don't Let It Land as a Surprise</div>
+        <p>The original $8,000–$9,000 low end was set before the actual shape of the build was clear. The wireframe shows org-level auth, a searchable/filterable library, and self-serve publishing — that's a small custom app, not a gated content page. Kristen should hear the "why" behind the higher number directly, ideally before or during the board conversation, not as a line-item surprise in a follow-up invoice.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">The "Ridiculously High Bid" Comment</div>
+        <p>Kristen led with this in her very first email. She's not price-shopping casually — she's been burned once already and is watching for it again. Frame pricing around what drives the number (real scope) rather than either lowballing to win the deal or getting defensive about the increase.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Zero Launch Content Is a Real Risk</div>
+        <p>Even once budget is approved and the five open decisions are locked, WDAC has no resources ready and the PDF template itself is still conceptual. A hard launch date could stall on content alone — worth proposing a soft-launch-with-minimal-content path so the build doesn't sit finished and unused.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Response Pattern</div>
+        <p>Kristen goes quiet for well over a week when something urgent (tax credits, other client work) takes over, then replies fully and promptly once she resurfaces. Follow-ups work — her Sept 15 reply came the same day as the nudge. Don't assume silence means the deal is cooling.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Sept 17 Board Meeting Is the Hinge Point</div>
+        <p>Nothing past pricing conversations moves until the board decides. Everything in Scope & Pages, Needed from Client, and Project Timeline above is written as the current working plan, not a committed build.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav FAB
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openNav() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('open');
+    fab.textContent = '✕';
+  }
+
+  function closeNav() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeNav();
+    else openNav();
+  });
+
+  overlay.addEventListener('click', closeNav);
+
+  // Nav link tap on mobile: close, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeNav();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
