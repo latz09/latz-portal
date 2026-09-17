@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<title>Annie — Discovery Prep | Latz Web Design</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--sidebar-bg: #0a0a0a;
+				--sidebar-border: rgba(255, 255, 255, 0.06);
+				--header-bg: #0f0f0f;
+				--teal: #18a1ad;
+				--teal-dim: rgba(24, 161, 173, 0.1);
+				--teal-light: #e8f7f8;
+				--white: #ffffff;
+				--off-white: #f9fafb;
+				--gray-50: #f9fafb;
+				--gray-100: #f3f4f6;
+				--gray-200: #e5e7eb;
+				--gray-300: #d1d5db;
+				--gray-400: #9ca3af;
+				--gray-500: #6b7280;
+				--gray-600: #4b5563;
+				--gray-700: #374151;
+				--gray-800: #1f2937;
+				--gray-900: #111827;
+				--text: #111827;
+				--green: #16a34a;
+				--green-light: #f0fdf4;
+				--green-border: #bbf7d0;
+				--orange: #ea580c;
+				--orange-light: #fff7ed;
+				--orange-border: #fed7aa;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'DM Sans', sans-serif;
+				background: var(--off-white);
+				color: var(--text);
+				line-height: 1.6;
+				font-size: 14px;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* SIDEBAR */
+			.sidebar {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 228px;
+				height: 100vh;
+				background: var(--sidebar-bg);
+				border-right: 1px solid var(--sidebar-border);
+				display: flex;
+				flex-direction: column;
+				z-index: 100;
+				overflow-y: auto;
+			}
+
+			.sidebar-top {
+				padding: 22px 18px 18px;
+				border-bottom: 1px solid var(--sidebar-border);
+			}
+
+			.sidebar-wordmark {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+				margin-bottom: 18px;
+			}
+
+			.sidebar-wordmark .dot {
+				width: 6px;
+				height: 6px;
+				background: var(--teal);
+				border-radius: 50%;
+				flex-shrink: 0;
+			}
+
+			.lwd-text {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: rgba(255, 255, 255, 0.3);
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-client {
+				font-family: 'Fraunces', serif;
+				font-size: 15.5px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.92);
+				line-height: 1.2;
+				margin-bottom: 3px;
+			}
+
+			.sidebar-doctype {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: rgba(255, 255, 255, 0.22);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+			}
+
+			.sidebar-status {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				margin-top: 11px;
+				background: rgba(24, 161, 173, 0.08);
+				border: 1px solid rgba(24, 161, 173, 0.18);
+				border-radius: 4px;
+				padding: 3px 9px;
+			}
+
+			.pulse {
+				width: 5px;
+				height: 5px;
+				background: var(--teal);
+				border-radius: 50%;
+				animation: pulse 2s infinite;
+				flex-shrink: 0;
+			}
+
+			@keyframes pulse {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.25;
+				}
+			}
+
+			.sidebar-status span {
+				font-family: 'DM Mono', monospace;
+				font-size: 9px;
+				color: var(--teal);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 500;
+			}
+
+			.sidebar-nav {
+				padding: 10px 8px;
+				flex: 1;
+			}
+
+			.nav-group-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.18);
+				padding: 10px 8px 4px;
+			}
+
+			.nav-link {
+				display: flex;
+				align-items: center;
+				gap: 9px;
+				padding: 6px 8px;
+				color: rgba(255, 255, 255, 0.38);
+				text-decoration: none;
+				font-size: 12.5px;
+				font-weight: 400;
+				border-radius: 5px;
+				transition: all 0.12s;
+				margin-bottom: 1px;
+			}
+
+			.nav-link:hover {
+				color: rgba(255, 255, 255, 0.8);
+				background: rgba(255, 255, 255, 0.04);
+			}
+
+			.nav-link.active {
+				color: var(--teal);
+				background: rgba(24, 161, 173, 0.07);
+				font-weight: 500;
+			}
+
+			.nav-icon {
+				font-size: 12px;
+				width: 16px;
+				text-align: center;
+				flex-shrink: 0;
+				opacity: 0.6;
+			}
+			.nav-link.active .nav-icon {
+				opacity: 1;
+			}
+
+			.sidebar-footer {
+				padding: 14px 18px;
+				border-top: 1px solid var(--sidebar-border);
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				color: rgba(255, 255, 255, 0.18);
+				letter-spacing: 0.06em;
+				line-height: 2;
+			}
+
+			/* MAIN */
+			.main {
+				margin-left: 228px;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* HEADER */
+			.page-header {
+				background: var(--header-bg);
+				padding: 52px 60px 44px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+				position: relative;
+				overflow: hidden;
+			}
+
+			.page-header::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(
+					ellipse at 72% 50%,
+					rgba(24, 161, 173, 0.07) 0%,
+					transparent 60%
+				);
+				pointer-events: none;
+			}
+
+			.header-overline {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--teal);
+				margin-bottom: 14px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.header-overline::before {
+				content: '';
+				display: inline-block;
+				width: 18px;
+				height: 1px;
+				background: var(--teal);
+				opacity: 0.5;
+			}
+
+			.page-header h1 {
+				font-family: 'Fraunces', serif;
+				font-size: 40px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.94);
+				line-height: 1.08;
+				margin-bottom: 7px;
+				letter-spacing: -0.6px;
+			}
+
+			.page-header .sub {
+				color: rgba(255, 255, 255, 0.3);
+				font-size: 13px;
+				font-weight: 300;
+				letter-spacing: 0.02em;
+			}
+
+			.header-meta {
+				display: flex;
+				gap: 0;
+				margin-top: 34px;
+				border: 1px solid rgba(255, 255, 255, 0.07);
+				border-radius: 7px;
+				overflow: hidden;
+				width: fit-content;
+				background: rgba(255, 255, 255, 0.02);
+			}
+
+			.meta-item {
+				padding: 13px 22px;
+				border-right: 1px solid rgba(255, 255, 255, 0.07);
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+			}
+
+			.meta-item:last-child {
+				border-right: none;
+			}
+
+			.meta-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 8.5px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.22);
+			}
+
+			.meta-value {
+				font-size: 12.5px;
+				font-weight: 500;
+				color: rgba(255, 255, 255, 0.75);
+			}
+			.meta-value.ok {
+				color: #4ade80;
+			}
+			.meta-value.warn {
+				color: #fbbf24;
+			}
+
+			/* CONTENT */
+			.content {
+				padding: 48px 60px 96px;
+				flex: 1;
+			}
+
+			section {
+				margin-bottom: 64px;
+				scroll-margin-top: 32px;
+			}
+
+			/* SECTION HEADER */
+			.section-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 10px;
+			}
+
+			.section-num {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: var(--teal);
+				background: var(--teal-dim);
+				border: 1px solid rgba(24, 161, 173, 0.18);
+				border-radius: 4px;
+				padding: 2px 7px;
+				font-weight: 500;
+				letter-spacing: 0.06em;
+			}
+
+			.section-header h2 {
+				font-family: 'Fraunces', serif;
+				font-size: 19px;
+				font-weight: 600;
+				color: var(--gray-900);
+				letter-spacing: -0.2px;
+			}
+
+			.section-divider {
+				height: 1px;
+				background: var(--gray-200);
+				margin-bottom: 22px;
+			}
+
+			/* CARDS */
+			.card {
+				background: var(--white);
+				border: 1px solid var(--gray-200);
+				border-radius: 8px;
+				padding: 20px 22px;
+				margin-bottom: 10px;
+			}
+
+			.card-title {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				font-weight: 500;
+				color: var(--gray-400);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin-bottom: 14px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+			}
+
+			/* DATA ROWS */
+			.data-row {
+				display: grid;
+				grid-template-columns: 144px 1fr;
+				gap: 14px;
+				align-items: start;
+				padding: 8px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+
+			.data-row:last-child {
+				border-bottom: none;
+			}
+
+			.data-label {
+				font-family: 'DM Mono', monospace;
+				font-size: 10px;
+				color: var(--gray-400);
+				letter-spacing: 0.04em;
+				padding-top: 1px;
+			}
+
+			.data-value {
+				font-size: 13px;
+				color: var(--gray-700);
+				font-weight: 400;
+				line-height: 1.5;
+			}
+
+			.data-value a {
+				color: var(--teal);
+				text-decoration: none;
+			}
+			.data-value a:hover {
+				text-decoration: underline;
+			}
+
+			/* CALLOUTS */
+			.callout {
+				border-radius: 7px;
+				padding: 13px 17px;
+				margin-bottom: 12px;
+				display: flex;
+				gap: 11px;
+				align-items: flex-start;
+				border: 1px solid transparent;
+			}
+
+			.callout-icon {
+				font-size: 14px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.callout-body strong {
+				display: block;
+				font-size: 12px;
+				font-weight: 600;
+				margin-bottom: 3px;
+			}
+			.callout-body p,
+			.callout-body span {
+				font-size: 12px;
+				line-height: 1.55;
+			}
+
+			.callout.info {
+				background: var(--teal-light);
+				border-color: rgba(24, 161, 173, 0.2);
+				color: #0e7490;
+			}
+			.callout.warn {
+				background: var(--orange-light);
+				border-color: var(--orange-border);
+				color: var(--orange);
+			}
+			.callout.success {
+				background: var(--green-light);
+				border-color: var(--green-border);
+				color: var(--green);
+			}
+			.callout.neutral {
+				background: var(--gray-50);
+				border-color: var(--gray-200);
+				color: var(--gray-600);
+			}
+
+			/* HIGHLIGHT BOX */
+			.highlight-box {
+				background: #0f0f0f;
+				border: 1px solid rgba(255, 255, 255, 0.07);
+				border-radius: 8px;
+				padding: 22px 26px;
+				margin-bottom: 14px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.highlight-box::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				width: 3px;
+				background: var(--teal);
+				border-radius: 8px 0 0 8px;
+			}
+
+			.highlight-box strong {
+				font-family: 'DM Mono', monospace;
+				font-size: 9.5px;
+				color: var(--teal);
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				display: block;
+				margin-bottom: 8px;
+			}
+
+			.highlight-box p {
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.65);
+				line-height: 1.65;
+				font-weight: 300;
+			}
+
+			/* QUESTION ITEMS */
+			.question-item {
+				padding: 14px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+			.question-item:last-child {
+				border-bottom: none;
+			}
+			.question-text {
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gray-900);
+				margin-bottom: 4px;
+			}
+			.question-context {
+				font-size: 12px;
+				color: var(--gray-500);
+				line-height: 1.55;
+			}
+
+			/* PILLS */
+			.pill {
+				display: inline-block;
+				font-size: 9px;
+				font-weight: 600;
+				padding: 2px 8px;
+				border-radius: 4px;
+				font-family: 'DM Mono', monospace;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				border: 1px solid transparent;
+			}
+
+			.pill-orange {
+				background: var(--orange-light);
+				color: var(--orange);
+				border-color: var(--orange-border);
+			}
+			.pill-gray {
+				background: var(--gray-100);
+				color: var(--gray-500);
+				border-color: var(--gray-200);
+			}
+			.pill-teal {
+				background: var(--teal-dim);
+				color: var(--teal);
+				border-color: rgba(24, 161, 173, 0.18);
+			}
+			.pill-green {
+				background: var(--green-light);
+				color: var(--green);
+				border-color: var(--green-border);
+			}
+
+			/* EMAIL BLOCK */
+			.email-block {
+				background: var(--gray-50);
+				border: 1px solid var(--gray-200);
+				border-radius: 6px;
+				padding: 18px 20px;
+				font-family: 'DM Sans', sans-serif;
+				font-size: 13px;
+				color: var(--gray-700);
+				line-height: 1.7;
+				white-space: pre-wrap;
+				margin-top: 10px;
+			}
+
+			/* CHECKLIST */
+			.checklist-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--gray-100);
+			}
+			.checklist-item:last-child {
+				border-bottom: none;
+			}
+			.checklist-icon {
+				font-size: 13px;
+				flex-shrink: 0;
+				margin-top: 1px;
+			}
+			.checklist-body {
+				flex: 1;
+			}
+			.checklist-body strong {
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--gray-800);
+				display: block;
+				margin-bottom: 2px;
+			}
+			.checklist-body span {
+				font-size: 11.5px;
+				color: var(--gray-500);
+				line-height: 1.45;
+			}
+			.checklist-status {
+				margin-left: auto;
+				flex-shrink: 0;
+				padding-top: 1px;
+			}
+
+			/* RESPONSIVE */
+			@media (max-width: 1024px) {
+				.sidebar {
+					width: 200px;
+				}
+				.main {
+					margin-left: 200px;
+				}
+				.page-header,
+				.content {
+					padding-left: 36px;
+					padding-right: 36px;
+				}
+			}
+
+			@media (max-width: 768px) {
+				.sidebar {
+					display: none;
+				}
+				.main {
+					margin-left: 0;
+				}
+				.two-col {
+					grid-template-columns: 1fr;
+				}
+				.page-header,
+				.content {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+				.header-meta {
+					flex-direction: column;
+					width: 100%;
+				}
+				.meta-item {
+					border-right: none;
+					border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+				}
+				.meta-item:last-child {
+					border-bottom: none;
+				}
+				.data-row {
+					grid-template-columns: 1fr;
+					gap: 2px;
+				}
+				.data-label {
+					font-size: 9px;
+					padding-bottom: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="sidebar">
+			<div class="sidebar-top">
+				<div class="sidebar-wordmark">
+					<div class="dot"></div>
+					<span class="lwd-text">Latz Web Design</span>
+				</div>
+				<div class="sidebar-client">Annie</div>
+				<div class="sidebar-doctype">Discovery Prep</div>
+				<div class="sidebar-status">
+					<div class="pulse"></div>
+					<span>Pre-Discovery</span>
+				</div>
+			</div>
+
+			<div class="sidebar-nav">
+				<div class="nav-group-label">Prep</div>
+				<a href="#referral" class="nav-link active"
+					><span class="nav-icon">🤝</span> Referral Context</a
+				>
+				<a href="#known" class="nav-link"
+					><span class="nav-icon">📋</span> What We Know</a
+				>
+				<a href="#discovery" class="nav-link"
+					><span class="nav-icon">🎯</span> Discovery Questions</a
+				>
+				<a href="#email" class="nav-link"
+					><span class="nav-icon">✉️</span> Email Sent</a
+				>
+				<a href="#next" class="nav-link"
+					><span class="nav-icon">▶️</span> Next Steps</a
+				>
+			</div>
+
+			<div class="sidebar-footer">
+				Latz Web Design LLC<br />
+				Stevens Point, WI<br />
+				jordan@latzwebdesign.com<br /><br />
+				No fluff. Just results.
+			</div>
+		</nav>
+
+		<div class="main">
+			<div class="page-header">
+				<div class="header-overline">Discovery Prep · Website</div>
+				<h1>Annie</h1>
+				<div class="sub">
+					Simply Supper &nbsp;·&nbsp; Ready-to-Cook Meal Delivery (Website Build)
+				</div>
+
+				<div class="header-meta">
+					<div class="meta-item">
+						<span class="meta-label">Contact</span>
+						<span class="meta-value">Annie</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Project Type</span>
+						<span class="meta-value">Website</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Referred By</span>
+						<span class="meta-value">Kate Taylor (SBDC at UWSP)</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">Status</span>
+						<span class="meta-value warn">Pre-Discovery</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="content">
+				<!-- 01 — REFERRAL CONTEXT -->
+				<section id="referral">
+					<div class="section-header">
+						<span class="section-num">01</span>
+						<h2>Referral Context</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="highlight-box">
+						<strong>The Referral</strong>
+						<p>
+							Kate Taylor at the SBDC at UW-Stevens Point pointed Annie toward Latz Web Design for a quote on website development for Simply Supper, her ready-to-cook meal delivery concept. Annie came in cold through the website chatbot, name-dropping Kate right away.
+						</p>
+					</div>
+
+					<div class="two-col">
+						<div class="card">
+							<div class="card-title">The Introduction</div>
+							<div class="data-row">
+								<span class="data-label">Referring Contact</span>
+								<span class="data-value">Kate Taylor — Business Consultant, SBDC at UW-Stevens Point</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Relationship</span>
+								<span class="data-value">A known contact — Jordan sees Kate at networking events and talks with her regularly. Not a formal referral-fee partner like Tara; this is Kate sending a business owner his way in her advising capacity.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">How It Came In</span>
+								<span class="data-value">Annie reached out directly via the Latz Web Design website chatbot, then followed up same day with an email of her own. No direct contact from Kate on this one.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">What Was Said About Annie</span>
+								<span class="data-value">Nothing from Kate directly — everything below is self-reported by Annie in the chat and her follow-up email.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">What Was Said About the Project</span>
+								<span class="data-value">Annie is actively shopping for both a website and a separate custom software build (pan tracking, inventory, POS) — meeting with that developer the day after this chat.</span>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-title">Partnership Notes</div>
+							<div class="data-row">
+								<span class="data-label">Arrangement</span>
+								<span class="data-value">None formal. Kate isn't a revenue-share or workflow partner — this is an informal, goodwill referral out of an SBDC advising relationship.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Overlap Services</span>
+								<span class="data-value">None to manage. Kate isn't doing marketing, branding, or copy work on this project.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Worth Doing</span>
+								<span class="data-value">A quick note back to Kate once this lands somewhere (win or not) keeps the relationship warm for future referrals — no obligation, just good practice.</span>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 02 — WHAT WE KNOW -->
+				<section id="known">
+					<div class="section-header">
+						<span class="section-num">02</span>
+						<h2>What We Know</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="two-col" style="margin-bottom: 10px">
+						<div class="card">
+							<div class="card-title">The Client</div>
+							<div class="data-row">
+								<span class="data-label">Name</span>
+								<span class="data-value">Annie (last name not yet confirmed directly — she signed only "Annie")</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Phone</span>
+								<span class="data-value">715-572-6580</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Email</span>
+								<span class="data-value">annie@simplysupperllc.com</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Location</span>
+								<span class="data-value">Assumed central Wisconsin / Stevens Point area — not confirmed by Annie directly yet.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Personality</span>
+								<span class="data-value">Already has a fully thought-out operational model and a clear, values-driven vision for the brand. Self-deprecating about being "old" (nearly 60) relative to how younger customers might split payments — comfortable being upfront about what she doesn't know.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Background</span>
+								<span class="data-value">Not stated. A LinkedIn profile surfaced during research for an "Annie Wetter — Blue Acorn Farm and Simply Supper," which would fit a local-sourcing angle, but this is unconfirmed — don't assume it's her without asking.</span>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-title">The Project</div>
+							<div class="data-row">
+								<span class="data-label">Project Type</span>
+								<span class="data-value">Website — with a third-party custom software integration wrinkle (see Discovery Questions)</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Business Name</span>
+								<span class="data-value">Simply Supper (Simply Supper LLC)</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Business Model</span>
+								<span class="data-value">Healthy, balanced, ready-to-cook meals for households (2/4/6 servings). CSA-style weekly membership — customers order the following week's meals, frozen/chilled meals delivered in an insulated tote on a set day, empty pans from the prior week picked up on the same run.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Differentiators</span>
+								<span class="data-value">Local ingredient sourcing where possible, solar-powered operations/delivery, reusable containers, zero single-use packaging.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Growth Plans</span>
+								<span class="data-value">Cooking classes down the road. Gift memberships (new baby, illness recovery, big life events) and parent-funded college-student memberships, potentially with split payment across multiple cards.</span>
+							</div>
+							<div class="data-row">
+								<span class="data-label">Brand Direction</span>
+								<span class="data-value">Logo received — red enamel dutch oven with steam, dark green Fraunces-style serif wordmark, orange sans-serif tagline "ready to cook meals." Friendly and homey, not slick or gourmet-looking. No Pinterest board or other visual references given yet.</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="callout info">
+						<span class="callout-icon">📌</span>
+						<div class="callout-body">
+							<strong>Unusually well-articulated positioning for a first contact</strong>
+							<span>Annie's follow-up email spelled out messaging pillars directly, almost ready to lift into copy: healthy food is for everyone, tastes great, and isn't fancy or complicated. She wants customers to feel empowered, hopeful, and healthy — and to know they're caring for themselves and loved ones, reducing their environmental impact (food waste, packaging, food miles, sustainable farming), and connecting to their local community. That's a strong starting point for site copy and tone before discovery even starts.</span>
+						</div>
+					</div>
+
+					<div class="callout warn">
+						<span class="callout-icon">⚠️</span>
+						<div class="callout-body">
+							<strong>Gaps to fill in discovery</strong>
+							<span>No last name confirmed. No visual references beyond the logo (no Pinterest board, no site she admires). Business location not confirmed — assumed Stevens Point/central WI. No budget discussed. Wisconsin's business entity search was down when checked, so LLC registration details aren't verified. Biggest open item: the third-party custom software (pan tracking, inventory, POS) — Annie hadn't chosen a developer as of the chat and was meeting one the next day. Whether that system or the website ends up owning customer accounts and payment is unresolved and materially changes scope.</span>
+						</div>
+					</div>
+				</section>
+
+				<!-- 03 — DISCOVERY QUESTIONS -->
+				<section id="discovery">
+					<div class="section-header">
+						<span class="section-num">03</span>
+						<h2>Discovery Questions</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="callout neutral">
+						<span class="callout-icon">🎯</span>
+						<div class="callout-body">
+							<strong>Notes to self — not a script</strong>
+							<span>Annie already told us the business model, the values, and the feature wishlist unprompted — don't re-ask any of that. Focus on the integration question first; it's the one thing that could swing this from a standard subscription site to something a lot more involved.</span>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Integration & Third-Party System — Start Here</div>
+						<div class="question-item">
+							<div class="question-text">Who ends up owning customer accounts and payment — the website, or the software the other developer is building?</div>
+							<div class="question-context">Already asked in the first email, but worth revisiting live. This decides whether the site is a full subscription/e-commerce platform (accounts, billing, order history) or a marketing front end that hands off to someone else's system.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">What is that developer building this in, and will it expose an API or webhook the website can talk to?</div>
+							<div class="question-context">If it's closed with no way in, real integration (auto-syncing orders, pan status, inventory) isn't realistic — it'd mean manual exports or a much looser relationship between the two systems. This is the detail that changes the level of effort the most.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Did she decide who she's going with, and how did that meeting go?</div>
+							<div class="question-context">That meeting was scheduled for the day after this chat — by the time discovery happens, this may already be settled.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Does she want a second opinion on that system's fit with the website, or is that track already locked in on her end?</div>
+							<div class="question-context">Since it directly shapes scope and price, worth knowing whether Jordan has any input there or if it's simply a constraint to design around.</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Business & Goals</div>
+						<div class="question-item">
+							<div class="question-text">What does success look like in year one — subscriber count, delivery radius?</div>
+							<div class="question-context">Helps size the site. A hyper-local pilot launch needs less than a "we're taking sign-ups region-wide" launch.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Is delivery starting Stevens Point/central WI only, or wider from day one?</div>
+							<div class="question-context">Determines whether a delivery-zone or zip-code checker needs to exist at launch.</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Content & Structure</div>
+						<div class="question-item">
+							<div class="question-text">What pages does she picture — menu previews, sign-up flow, gifting flow, an about/story page, a future cooking-classes page?</div>
+							<div class="question-context">Builds the sitemap. Gifting and college-membership flows are distinct enough from a normal sign-up that they probably need their own dedicated paths.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Is the messaging in her email meant as final copy direction, or just tone guidance?</div>
+							<div class="question-context">She gave strong, specific language (empowered/hopeful/healthy, caring for family, reducing environmental impact, local community) — confirm whether that's meant to show up close to verbatim or just inform the voice.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Does she have professional photos of the meals and packaging, or does that need to be arranged?</div>
+							<div class="question-context">Food photography carries a lot of the weight on a meal-delivery site. If none exist, that's a pre-launch dependency to flag early.</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Design & Brand</div>
+						<div class="question-item">
+							<div class="question-text">Is the current logo final, or is she open to revisiting it?</div>
+							<div class="question-context">The logo reads friendly and homey; her messaging is more mission-driven around sustainability and community. Worth gently asking whether the visual identity should evolve to carry that weight, or whether she's happy keeping it as-is.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Any color or material preferences beyond the logo — for the totes, packaging, or delivery materials?</div>
+							<div class="question-context">Ties the physical reusable-container experience to the digital brand.</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-title">Decisions, Updates & Practical</div>
+						<div class="question-item">
+							<div class="question-text">How comfortable is she updating the site herself — weekly menus will presumably change often?</div>
+							<div class="question-context">Determines whether she needs a CMS she can run herself, or wants Jordan handling ongoing content updates.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Is it just her deciding, or is anyone else involved in decisions?</div>
+							<div class="question-context">Standard, but worth confirming — no mention of a co-owner or partner so far.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Any timeline pressure — a launch season or target date?</div>
+							<div class="question-context">CSA-style businesses often launch around a season. Worth knowing if there's a date driving urgency.</div>
+						</div>
+						<div class="question-item">
+							<div class="question-text">Budget range in mind?</div>
+							<div class="question-context">Frame as scoping help, not a gotcha — especially important here since the integration question could swing the estimate meaningfully.</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 04 — EMAIL SENT -->
+				<section id="email">
+					<div class="section-header">
+						<span class="section-num">04</span>
+						<h2>Email Sent</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="card">
+						<div class="card-title">First Response</div>
+						<div class="data-row">
+							<span class="data-label">Subject</span>
+							<span class="data-value">Simply Supper — Website Development</span>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Date</span>
+							<span class="data-value">September 16, 2026</span>
+						</div>
+						<div class="data-row">
+							<span class="data-label">To</span>
+							<span class="data-value">Annie (annie@simplysupperllc.com)</span>
+						</div>
+						<div class="data-row">
+							<span class="data-label">CC</span>
+							<span class="data-value">—</span>
+						</div>
+						<div class="data-row">
+							<span class="data-label">Status</span>
+							<span class="data-value"><span class="pill pill-green">Sent</span></span>
+						</div>
+
+						<div class="email-block">Subject: Simply Supper — Website Development
+
+Hey Annie,
+
+Good to hear Kate Taylor pointed you my way — I know her from around town, always nice when she sends someone over.
+
+Sounds like you've already got a clear picture of this: the CSA-style weekly membership, meals delivered in insulated totes with the pans picked up and reused the next week — that's a nice closed loop, and it backs up the sustainability story you're building the whole business around (solar power, local sourcing, no single-use packaging). I like the gift membership idea too — for a new baby, recovery, whatever the occasion — and letting parents set their college kid up with their own membership.
+
+Got your logo as well — good sense of the direction you're going.
+
+One thing I want to get a read on before I put together scope: you mentioned meeting with someone about custom software for pan tracking, inventory, and POS. Do you know yet whether that system is going to handle orders and payments too, or if that's staying on the website side? Basically trying to figure out if the site is the front door — taking the subscription and payment, then handing order info to their system — or if their software does all of that and the site's more of a shell around it. No pressure to have this nailed down yet, but once you get a sense of what they're building it on and how they're planning to structure it, that'll help a lot — it's really the piece that decides how the two systems talk to each other and what it takes to make that happen.
+
+Also curious if you've got a rough timeline in mind for launch, or if it's more "whenever the pieces come together."
+
+I'm right here in Stevens Point too, so happy to hop on a call or just grab coffee and talk it through in person — whatever's easiest for you.
+
+Excited about this one — the sustainability angle is going to make for a great site.
+
+Jordan</div>
+					</div>
+				</section>
+
+				<!-- 05 — NEXT STEPS -->
+				<section id="next">
+					<div class="section-header">
+						<span class="section-num">05</span>
+						<h2>Next Steps</h2>
+					</div>
+					<div class="section-divider"></div>
+
+					<div class="card">
+						<div class="card-title">After Discovery</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">✓</span>
+							<div class="checklist-body">
+								<strong>Send email to Annie</strong>
+								<span>Sent as a new thread, plain text, from annie@simplysupperllc.com's inbox side.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-green">Done</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Nail down the integration ownership question</strong>
+								<span>Critical path — who owns accounts/payment, and what the other developer's system can expose. This is the single biggest swing factor on scope and price.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-orange">Pending</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Confirm last name, location, and LLC registration</strong>
+								<span>Basic identifying details still unconfirmed — good to nail down early for the overview doc and any contracts.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-orange">Pending</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Complete discovery conversation</strong>
+								<span>Call, meeting, or email exchange — use the questions above, integration section first.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-gray">Waiting</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Get food/packaging photography sorted</strong>
+								<span>Confirm whether professional photos exist or need to be arranged before launch — important for a food business site.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-gray">Waiting</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Run overview generator</strong>
+								<span>After discovery — create the client/project overview doc with everything gathered, including the resolved integration approach.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-gray">Waiting</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Create estimate</strong>
+								<span>Based on scope from discovery — will vary a lot depending on how the integration shakes out. Discuss with Alyssa if brand/logo work ends up in scope.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-gray">Waiting</span></span>
+						</div>
+						<div class="checklist-item">
+							<span class="checklist-icon">○</span>
+							<div class="checklist-body">
+								<strong>Run proposal generator</strong>
+								<span>Once estimate and scope are locked in.</span>
+							</div>
+							<span class="checklist-status"><span class="pill pill-gray">Waiting</span></span>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script>
+			// Scrollspy
+			const sections = document.querySelectorAll('section[id]');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							navLinks.forEach((link) => {
+								link.classList.toggle(
+									'active',
+									link.getAttribute('href') === '#' + entry.target.id
+								);
+							});
+						}
+					});
+				},
+				{ rootMargin: '-20% 0px -75% 0px' }
+			);
+
+			sections.forEach((section) => observer.observe(section));
+		</script>
+	</body>
+</html>
