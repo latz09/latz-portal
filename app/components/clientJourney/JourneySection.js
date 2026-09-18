@@ -17,7 +17,7 @@ export default function JourneySection({
 	const [open, setOpen] = useState(false);
 
 	return (
-		<div className='grid lg:grid-cols-5 gap-6 lg:gap-10 items-start mt-4 mb-6'>
+		<div className='grid lg:grid-cols-5 gap-6  lg:gap-10 items-start mt-4 mb-6'>
 			<div className='lg:col-span-2'>
 				{open ? (
 					<ProjectAssets
