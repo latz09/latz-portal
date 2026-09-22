@@ -142,13 +142,13 @@
     <li><strong>CMS:</strong> Sanity Studio (schema-driven, singleton + collection documents)</li>
     <li><strong>Frontend:</strong> Next.js (App Router), React, Tailwind CSS, Framer Motion</li>
     <li><strong>Hosting:</strong> Vercel</li>
-    <li><strong>Content fetch:</strong> <code>fetchContent(query, params)</code> → wraps <code>sanityClient.fetch</code>, draft-mode aware, 10s revalidate on published content</li>
+    <li><strong>Content fetch:</strong> <code>fetchContent(query, params)</code> → wraps <code>sanityClient.fetch</code>, draft-mode aware, 10s revalidate on published content. Not used inside <code>generateStaticParams</code> — see §5.</li>
   </ul>
 
   <h2>2. Site Map</h2>
   <table>
     <tr><th>Page</th><th>Route</th><th>Schema singleton</th><th>Query pattern</th></tr>
-    <tr><td>Home</td><td><code>/</code></td><td><code>homePage</code></td><td>Compound (page + siteSettings stats + featured testimonials)</td></tr>
+    <tr><td>Home</td><td><code>/</code></td><td><code>homePage</code></td><td>Compound (page + siteSettings stats &amp; global CTA + featured testimonials)</td></tr>
     <tr><td>Who We Serve</td><td><code>/who-we-serve</code></td><td><code>whoWeServePage</code></td><td>Singleton only</td></tr>
     <tr><td>Analysis</td><td><code>/services/analysis</code></td><td><code>analysisPage</code></td><td>Compound (page + workExample where category)</td></tr>
     <tr><td>Strategy</td><td><code>/services/strategy</code></td><td><code>strategyPage</code></td><td>Compound, same pattern</td></tr>
@@ -156,18 +156,19 @@
     <tr><td>Financing</td><td><code>/services/financing</code></td><td><code>financingPage</code></td><td>Compound, same pattern</td></tr>
     <tr><td>Implementation</td><td><code>/services/implementation</code></td><td><code>implementationPage</code></td><td>Compound, same pattern</td></tr>
     <tr><td>Our Projects</td><td><code>/our-projects</code></td><td><code>ourProjectsPage</code></td><td>Compound (page + all caseStudy + modal testimonials + featured testimonials)</td></tr>
-    <tr><td>Case Study</td><td><code>/our-projects/[slug]</code></td><td><code>caseStudy</code> (collection)</td><td>Parameterized (<code>$slug</code>) + separate slugs query for <code>generateStaticParams</code></td></tr>
+    <tr><td>Case Study</td><td><code>/our-projects/[slug]</code></td><td><code>caseStudy</code> (collection)</td><td>Parameterized (<code>$slug</code>) + separate slugs query for <code>generateStaticParams</code> (fetched via raw <code>sanityClient</code>, not <code>fetchContent</code> — see §5)</td></tr>
     <tr><td>Who We Are</td><td><code>/who-we-are</code></td><td><code>whoWeArePage</code></td><td>Compound (page + siteSettings stats)</td></tr>
     <tr><td>Contact</td><td><code>/contact</code></td><td><code>contactPage</code></td><td>Compound (page + seoSettings office info + featured testimonials)</td></tr>
   </table>
   <p class="lede">Navigation: <code>Who we serve → Services (dropdown: Analysis / Strategy / Redevelopment / Financing / Implementation) → Our projects → Who we are → Contact us (CTA button)</code>.</p>
+  <p class="lede">The site-wide bottom-of-page CTA ("Have a project in mind? Tell us about it") is <code>siteSettings.globalCta</code>, wired into Home so far — see §3 and §7 for what's still outstanding on rolling it out to the rest of the pages it appears on.</p>
 
   <h2>3. Content Model</h2>
 
   <h3>Global / shared singletons</h3>
   <div class="card">
-    <h4><code>siteSettings</code> <span class="pill">new</span></h4>
-    <p>Stats array (<code>value</code>/<code>label</code> — the "By the numbers" block, shared by Home and Who We Are so the figures never drift out of sync), <code>socialLinks</code> (Facebook, LinkedIn), <code>footerTagline</code>. Queried independently by any page that needs it, and by the Footer for the tagline/social links.</p>
+    <h4><code>siteSettings</code></h4>
+    <p>Stats array (<code>value</code>/<code>label</code> — the "By the numbers" block, shared by Home and Who We Are so the figures never drift out of sync), <code>statsImage</code>, <code>socialLinks</code> (Facebook, LinkedIn), <code>footerTagline</code>, and <code>globalCta</code> <span class="pill">new</span> — the site-wide bottom-of-page CTA (<code>sectionLabel</code>, <code>headingLine1</code>/<code>headingLine2</code>, <code>ctaLabel</code>, background <code>image</code>). Queried independently by any page that needs it, and by the Footer for the tagline/social links.</p>
   </div>
   <div class="card">
     <h4><code>seoSettings</code> <span class="pill">pre-existing, unchanged</span></h4>
@@ -199,11 +200,11 @@
   <h3>Page singletons</h3>
   <p class="lede">Every page schema groups its sections as numbered object fields (①②③…) plus a final SEO group — the frontend passes each group whole to its corresponding component. See the schema files themselves for exact field lists; summarized here is what each page is built from and its one or two non-obvious decisions.</p>
   <ul class="rel-list">
-    <li><code>homePage</code> — hero, approach, a fixed 6-card services grid (5 services + a "not sure where to start" CTA card, each independently editable — not pulled live from the service pages), a public/private-sector teaser.</li>
+    <li><code>homePage</code> — hero, approach, a fixed 6-card services grid (5 services + a "not sure where to start" CTA card, each independently editable — not pulled live from the service pages), a public/private-sector teaser, and a <code>testimonialSection</code> <span class="pill">new</span> group (<code>sectionLabel</code> + <code>heading</code> only — the quotes themselves are the top-level <code>testimonial</code> collection query, not stored on the page). Named <code>testimonialSection</code> rather than <code>testimonials</code> specifically to avoid confusion with the <code>testimonial</code> collection type — keep that naming distinction if this pattern is copied to Contact or Our Projects.</li>
     <li><code>whoWeServePage</code> — public/private sector sections, each with two subsections (Municipalities/Organizations, Entrepreneurs/Private Developers) whose CTA is a <em>reference</em> to a case study, not a hardcoded URL — the destination project can change without a schema edit.</li>
     <li><code>analysisPage</code> / <code>strategyPage</code> / <code>redevelopmentPage</code> / <code>financingPage</code> / <code>implementationPage</code> — identical shape: hero, overview, a variable-count offerings array (2–6 cards depending on the service), and a heading/intro for the workExample list pulled by category.</li>
     <li><code>ourProjectsPage</code> — hero, overview, and a flagship-project block that references the Irish Hospital Apartments case study specifically.</li>
-    <li><code>whoWeArePage</code> — story, company summary, stats section (image only — the numbers come from <code>siteSettings</code>), and two independently editable arrays: leadership team and interns, both add/edit/remove rather than fixed-count.</li>
+    <li><code>whoWeArePage</code> — hero, story (<code>body</code> is now a <strong>2-paragraph array</strong> <span class="pill">updated</span>, following the standing paragraph-array convention rather than a single blob), a new <code>purpose</code> group <span class="pill">new</span> ("Our Purpose" — sectionLabel, heading, body, a fixed-destination <code>cta</code> to <code>/contact</code>, and a <code>values</code> array of 4 core-value cards, each <code>{heading, body}</code>), stats section (image only — the numbers come from <code>siteSettings</code>), and two independently editable arrays: leadership team and interns, both add/edit/remove rather than fixed-count. The original <strong>Company Summary section is removed</strong> <span class="pill">removed</span> (commented out in the schema, not deleted outright — restore it there if it needs to come back).</li>
     <li><code>contactPage</code> — hero only. No CMS fields for office info (pulled from <code>seoSettings</code>) or the form itself (a submission handler, not CMS content).</li>
   </ul>
 
@@ -211,12 +212,27 @@
   <p>Three shapes are in use, all following the generator's SCREAMING_SNAKE_CASE naming with the export name matching the filename exactly:</p>
   <ol>
     <li><strong>Plain singleton</strong> — <code>*[_type == "x" && _id == "x"][0]{ ... }</code>. Used where the page has nothing else to pull in (Who We Serve).</li>
-    <li><strong>Compound</strong> — <code>{ "page": *[...][0]{...}, "otherThing": *[...]{...} }</code>. Used everywhere the page needs its own content plus a related collection (testimonials, work examples, case studies). <em>This is why page components read <code>data?.page?.title</code> instead of <code>data?.title</code> — and why <code>buildPageMetadata.js</code> needed a patch, see §6.</em></li>
+    <li><strong>Compound</strong> — <code>{ "page": *[...][0]{...}, "otherThing": *[...]{...} }</code>. Used everywhere the page needs its own content plus a related collection (testimonials, work examples, case studies). <code>FETCH_HOME_PAGE_QUERY</code> is the fullest example — three roots: <code>page</code> (the homePage singleton, including <code>testimonialSection</code>'s copy-only group), <code>siteSettings</code> (stats + <code>globalCta</code>), and <code>testimonials</code> (the top-level <code>*[_type == "testimonial" && featured == true]</code> array). <em>This is why page components read <code>data?.page?.title</code> instead of <code>data?.title</code> — and why <code>buildPageMetadata.js</code> needed a patch, see §5.</em></li>
     <li><strong>Parameterized</strong> — <code>*[_type == "caseStudy" && slug.current == $slug][0]{...}</code>, used only by the case study detail route, paired with a separate <code>FETCH_CASE_STUDY_SLUGS_QUERY</code> for <code>generateStaticParams</code>.</li>
   </ol>
 
   <h2>5. Known Integration Gotchas</h2>
   <p class="lede">These are properties of the shared Sanity/Next.js template this project (and every Latz Web Design project) is built on — not bugs in this content model. Documented here because they bit this build at least once each; the generator's own standing instructions carry the full detail and fix for each.</p>
+
+  <div class="flag warn">
+    <strong>generateStaticParams + draftMode <span class="pill">fix supplied, verify next deploy</span></strong>
+    Production build failed with <code>Error: draftMode was called outside a request scope</code> at the case study route's <code>generateStaticParams</code>. Root cause: <code>fetchContent</code> always calls <code>draftMode()</code>, but <code>generateStaticParams</code> runs at build time, before any request exists, so <code>draftMode()</code> has nothing to read. Fix: <code>generateStaticParams</code> now calls the raw <code>sanityClient.fetch(SLUGS_Q)</code> directly (imported from <code>utils/cms/sanityConnection</code>), bypassing <code>fetchContent</code> entirely — the page component and <code>generateMetadata</code> are unaffected and keep using <code>fetchContent</code> as before. Corrected <code>app/our-projects/[slug]/page.js</code> was handed back to Jordan; mark this <span class="pill">confirmed</span> once the next deploy succeeds.
+  </div>
+
+  <div class="flag warn">
+    <strong>Section-label leading dash <span class="pill">open, unresolved</span></strong>
+    Every schema's <code>sectionLabel</code> field ships its initialValue with a leading em dash baked in (e.g. <code>'— Contact'</code>, <code>'— Testimonials'</code>, <code>'— Core values'</code>), but the shared <code>SectionHeading</code> component also hardcodes <code>— {label}</code> when rendering it — so anywhere both are in play the label will double up ("— — Contact") unless one side drops its dash. Surfaced while wiring up <code>GlobalCTA</code>; hasn't been checked against the sections that are already live. Needs a single decision (component owns the dash, or the CMS value does) applied consistently across every <code>sectionLabel</code> field and every place <code>SectionHeading</code> is used — not a per-section patch.
+  </div>
+
+  <div class="flag ok">
+    <strong>SectionHeading — optional second heading line</strong>
+    <code>components/ui/SectionHeading.js</code> now accepts an optional <code>headingLine2</code> prop, rendered on its own line under <code>heading</code> via a <code>&lt;br /&gt;</code> — added for <code>GlobalCTA</code>'s two-line "Have a project in mind? / Tell us about it" heading, where the line break needs to hold regardless of how long the client's edited copy gets (so it's two explicit CMS fields, <code>headingLine1</code>/<code>headingLine2</code>, not a single field relying on width-based wrapping). Backward compatible — every other caller only passes <code>heading</code> and is unaffected.
+  </div>
 
   <div class="flag ok">
     <strong>buildPageMetadata.js <span class="pill">patch confirmed applied</span></strong>
@@ -243,6 +259,11 @@
     Every page wraps content in <code>&lt;Section&gt;</code> (<code>components/layout/Section.js</code>), not a bare <code>&lt;div&gt;</code>. Its <code>py</code> prop must be a full literal Tailwind class string (<code>'py-8'</code>) — Tailwind can't see a class built at runtime (<code>`py-${n}`</code>).
   </div>
 
+  <div class="flag ok">
+    <strong>Field/data naming — schema, query, and component must move together</strong>
+    Renaming <code>homePage.testimonials</code> → <code>testimonialSection</code> (to stop it colliding with the <code>testimonial</code> collection type) broke the page silently because the query's nested field name, the top-level featured-quotes <code>_type</code> filter, and the destructured prop in <code>app/page.js</code> all needed the same rename and didn't get it — the featured-quotes query in particular was left filtering on the non-existent type <code>testimonialSection</code>, returning an empty array with no error. Worth flagging any time a field that's also queried elsewhere gets renamed: schema, query, and page-file destructuring are three separate places the name has to match.
+  </div>
+
   <h2>6. File Map</h2>
   <div class="filetree">schemaTypes/
   homePage.js · whoWeServePage.js
@@ -250,7 +271,7 @@
   financingPage.js · implementationPage.js
   ourProjectsPage.js · whoWeArePage.js · contactPage.js
   caseStudy.js · testimonial.js · workExample.js       (collections)
-  siteSettings.js                                      (new singleton)
+  siteSettings.js                                      (globalCta field added)
   navigation.js                                        (modified)
   partials/seoField.js · seoSettings.js · contactForm.js   (untouched)
   index.js                                              (barrel export)
@@ -258,7 +279,7 @@ structure.js                                            (studio root)
 
 data/queries/
   navigation/FETCH_NAVIGATION_QUERY.js
-  pages/FETCH_HOME_PAGE_QUERY.js
+  pages/FETCH_HOME_PAGE_QUERY.js                        (testimonials + globalCta added)
   pages/FETCH_WHO_WE_SERVE_PAGE_QUERY.js
   pages/FETCH_ANALYSIS_PAGE_QUERY.js
   pages/FETCH_STRATEGY_PAGE_QUERY.js
@@ -266,7 +287,7 @@ data/queries/
   pages/FETCH_FINANCING_PAGE_QUERY.js
   pages/FETCH_IMPLEMENTATION_PAGE_QUERY.js
   pages/FETCH_OUR_PROJECTS_PAGE_QUERY.js
-  pages/FETCH_WHO_WE_ARE_PAGE_QUERY.js
+  pages/FETCH_WHO_WE_ARE_PAGE_QUERY.js                  (purpose added, summary removed)
   pages/FETCH_CONTACT_PAGE_QUERY.js
   caseStudy/FETCH_CASE_STUDY_QUERY.js
   caseStudy/FETCH_CASE_STUDY_SLUGS_QUERY.js
@@ -274,7 +295,7 @@ data/queries/
   seo/FETCH_SEO_SETTINGS_QUERY.js                       (untouched)
 
 app/
-  page.js                              (Home)
+  page.js                              (Home — testimonials + globalCta wired in)
   who-we-serve/page.js
   services/analysis/page.js
   services/strategy/page.js
@@ -282,12 +303,22 @@ app/
   services/financing/page.js
   services/implementation/page.js
   our-projects/page.js
-  our-projects/[slug]/page.js          (Case Study — dynamic)
+  our-projects/[slug]/page.js          (Case Study — dynamic, generateStaticParams fixed Sept 2026)
   who-we-are/page.js
-  contact/page.js</div>
+  contact/page.js
+
+components/sections/shared/
+  TestimonialSection.js                (new — counter animates independently of quote slide)
+  GlobalCta.js                         (new — home only so far, see §7)
+components/ui/
+  SectionHeading.js                    (updated — optional headingLine2 prop)</div>
 
   <h2>7. Open Items</h2>
   <ul>
+    <li><strong>Global CTA rollout</strong> — <code>siteSettings.globalCta</code> is built and wired into the Home page query/component. The design shows it on "a couple pages," but which other routes need it hasn't been confirmed — identify those pages and repeat the same query block + destructure + <code>&lt;GlobalCta /&gt;</code> pattern used on Home.</li>
+    <li><strong>Section-label leading dash</strong> — see §5; needs one decision applied everywhere <code>sectionLabel</code> + <code>SectionHeading</code> are used together, not per-section.</li>
+    <li><strong>generateStaticParams fix</strong> — confirm the corrected <code>app/our-projects/[slug]/page.js</code> (raw <code>sanityClient.fetch</code> for slugs, see §5) deploys clean.</li>
+    <li><strong><code>pages/api/submitContactForm.js</code> import error</strong> — separate deploy error (<code>'clientConfig' is not exported from '@/data/config/contact'</code>), unrelated to this generator's output (it doesn't touch the Pages Router API route or <code>data/config/contact.js</code>). Needs its own look at those two files.</li>
     <li><strong>Marquis Yachts / Minocqua housing</strong> — the Who We Serve page's Entrepreneurs and Private Developers CTAs reference these two projects by name, but neither appears in the confirmed 10-case-study list. Resolve once real case study content is populated — Jordan's plan is to populate case studies first and correct these references against the real set.</li>
     <li><strong>Service page offerings icons</strong> — schema stores a free-text <code>icon</code> key per card; the frontend's icon-key mapping (chart/building/house/etc.) needs to exist and stay in sync with whatever keys get entered in Studio.</li>
     <li><strong>Testimonial ↔ case study population</strong> — schema supports the full 14/9/5 split described in the wireframe, but no actual testimonial or case study content exists in Sanity yet; this is Jordan's next step once files are dropped in.</li>
