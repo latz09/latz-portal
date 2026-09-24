@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>WDAC Member Portal — Closing Prep | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0F14; --surface:#141A2B; --surface-2:#141A2B;
+    --border:rgba(255,255,255,0.08); --border-soft:rgba(255,255,255,0.06); --border-strong:rgba(255,255,255,0.18);
+    --ink:rgba(255,255,255,0.95); --ink-2:rgba(255,255,255,0.70); --ink-3:rgba(255,255,255,0.46); --ink-4:rgba(255,255,255,0.30);
+    --teal:#1E8A94; --teal-dim:rgba(30,138,148,0.16); --teal-line:rgba(30,138,148,0.45);
+    --purple:#8B7FCF; --purple-dim:rgba(139,127,207,0.16); --purple-line:rgba(139,127,207,0.42);
+    --warning:#C9A227; --warning-dim:rgba(201,162,39,0.14); --warning-line:rgba(201,162,39,0.42);
+    --danger:#B3524A; --danger-dim:rgba(179,82,74,0.14); --danger-line:rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink-2);
+    line-height:1.55; padding-bottom:100px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1800px; margin:0 auto; padding:0 32px;}
+
+  /* HEADER */
+  header.top{
+    background:var(--bg); padding:56px 0 30px; margin-bottom:36px;
+    border-bottom:1px solid var(--border); position:relative; overflow:hidden;
+  }
+  header.top::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 900px 500px at 78% 0%, rgba(30,138,148,0.20) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  header.top .wrap{position:relative; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px;}
+  .top-label{
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--teal);
+    margin-bottom:16px; display:flex; align-items:center; gap:10px;
+  }
+  .top-label::before{content:''; display:inline-block; width:20px; height:1px; background:var(--teal); opacity:0.7;}
+  .top-title{font-weight:700; font-size:33px; color:var(--ink); letter-spacing:-0.02em; line-height:1.15;}
+  .top-sub{color:var(--ink-3); font-size:13.5px; margin-top:10px; font-weight:300; max-width:900px;}
+  .call-badge{
+    font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+    background:var(--warning-dim); border:1px solid var(--warning-line); color:var(--warning);
+    padding:9px 16px; border-radius:7px; white-space:nowrap; font-weight:500;
+  }
+  .meta-strip{position:relative; display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--border); border-radius:9px; overflow:hidden; margin-top:26px; background:rgba(255,255,255,0.015); width:100%;}
+  .meta-item{flex:1; min-width:170px; padding:14px 18px; border-right:1px solid var(--border-soft);}
+  .meta-item:last-child{border-right:none;}
+  .meta-label{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); margin-bottom:6px;}
+  .meta-value{font-size:14px; color:var(--ink); font-weight:500;}
+  .meta-value.warn{color:var(--warning);}
+  .meta-value.ok{color:var(--teal);}
+
+  /* SECTION HEADER */
+  .sec-head{display:flex; align-items:center; gap:13px; margin:88px 0 22px;}
+  .sec-num{font-family:'DM Mono',monospace; font-size:11px; background:var(--teal-dim); color:var(--teal); border:1px solid var(--teal-line); border-radius:5px; padding:4px 10px; font-weight:500;}
+  .sec-title{font-size:20px; font-weight:700; color:var(--ink); letter-spacing:-0.01em;}
+  .sec-divider{border-top:1px solid var(--border); margin-top:16px;}
+  .sec-note{font-size:13px; color:var(--ink-3); margin:12px 0 16px;}
+
+  /* BOTTOM LINE */
+  .bottomline{
+    background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:26px 28px; position:relative;
+    border-left:3px solid var(--teal); margin-bottom:8px;
+  }
+  .bottomline .lbl{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin-bottom:10px;}
+  .bottomline p{font-size:18px; font-weight:300; line-height:1.55; color:var(--ink-2);}
+  .bottomline b{font-weight:600; color:var(--ink);}
+
+  /* GRID */
+  .grid{display:grid; grid-template-columns:1fr; gap:16px;}
+  @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1200px){.grid.cols-3{grid-template-columns:1fr 1fr 1fr;}}
+
+  /* CARD */
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 22px; box-shadow:var(--shadow);}
+  .card-title{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-4); border-bottom:1px solid var(--border-soft); padding-bottom:10px; margin-bottom:14px;}
+  .card p{font-size:14px;}
+  .card p b{color:var(--ink);}
+  .row{display:grid; grid-template-columns:96px 1fr; gap:8px; font-size:14px; padding:6px 0;}
+  .row .l{font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-4); padding-top:2px;}
+  .row .v{color:var(--ink-2); font-weight:500;}
+  .row.stack{grid-template-columns:1fr;}
+  ul.bullets{list-style:none; padding:0;}
+  ul.bullets li{font-size:14px; padding:4px 0 4px 16px; position:relative; color:var(--ink-2);}
+  ul.bullets li:before{content:"–"; position:absolute; left:0; color:var(--ink-4);}
+  ul.bullets li b{color:var(--ink);}
+  .sub-label{font-family:'DM Mono',monospace; font-size:11px; margin:12px 0 4px;}
+  .sub-label.first{margin-top:0;}
+  .sub-label.warn{color:var(--warning);}
+  .sub-label.ok{color:var(--teal);}
+
+  /* ATTENTION CARD (warning) + ALERT (danger, reserved) */
+  .card.attn{background:var(--warning-dim); border-color:var(--warning-line);}
+  .card.attn .card-title{color:var(--warning); border-bottom-color:var(--warning-line);}
+  .card.alert{background:var(--danger-dim); border-color:var(--danger-line);}
+  .card.alert .card-title{color:var(--danger); border-bottom-color:var(--danger-line);}
+
+  /* PRICING LADDER */
+  .ladder{display:flex; flex-direction:column; gap:10px;}
+  .ladder .step{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;}
+  .ladder .step .name{font-weight:600; color:var(--ink); font-size:15px;}
+  .ladder .step .desc{font-size:13px; color:var(--ink-3); margin-top:4px; line-height:1.5; max-width:1000px;}
+  .ladder .step .amt{font-family:'DM Mono',monospace; font-size:14px; color:var(--ink-2); white-space:nowrap;}
+  .ladder .step.base{border-left:3px solid var(--teal); background:linear-gradient(90deg, var(--teal-dim), var(--surface) 40%);}
+  .ladder .step.base .amt{color:var(--teal); font-weight:600; font-size:16px;}
+  .ladder .step.lever{border-left:3px solid var(--purple);}
+  .ladder .step.lever .amt{color:var(--purple);}
+  .ladder .step.info{border-left:3px solid var(--border-strong);}
+
+  /* PILLS */
+  .pill{display:inline-block; font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.05em; border-radius:4px; padding:3px 8px; border:1px solid; margin-left:8px; vertical-align:middle;}
+  .pill.purple{color:var(--purple); border-color:var(--purple-line); background:var(--purple-dim);}
+  .pill.gray{color:var(--ink-3); border-color:var(--border-strong); background:rgba(255,255,255,0.04);}
+
+  /* SCENARIO CARDS */
+  .filter-bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
+  .filter-btn{font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:8px 16px; border-radius:7px; border:1px solid var(--border); background:var(--surface); color:var(--ink-3); cursor:pointer; transition:all .15s;}
+  .filter-btn:hover{border-color:var(--border-strong); color:var(--ink-2);}
+  .filter-btn.active{background:var(--teal); color:#ffffff; border-color:var(--teal); font-weight:500;}
+  .scenario{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px 20px; cursor:pointer; transition:box-shadow .15s, transform .1s, border-color .15s; position:relative;}
+  .scenario:hover, .scenario:focus-visible{box-shadow:0 8px 28px rgba(0,0,0,0.5); transform:translateY(-2px); border-color:var(--border-strong); outline:none;}
+  .scenario .cat-tag{font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; display:inline-block; padding:3px 9px; border-radius:4px; border:1px solid;}
+  .scenario .cat-tag.pricing{background:var(--warning-dim); color:var(--warning); border-color:var(--warning-line);}
+  .scenario .cat-tag.scope{background:var(--teal-dim); color:var(--teal); border-color:var(--teal-line);}
+  .scenario .cat-tag.process{background:rgba(255,255,255,0.05); color:var(--ink-3); border-color:var(--border-strong);}
+  .scenario .cat-tag.technical{background:var(--purple-dim); color:var(--purple); border-color:var(--purple-line);}
+  .scenario .trigger{font-size:16px; font-weight:700; color:var(--ink); margin-bottom:10px; padding-right:24px; line-height:1.35; letter-spacing:-0.01em;}
+  .scenario .click-icon{position:absolute; top:18px; right:18px; color:var(--ink-4); font-size:13px;}
+
+  /* SEED PLANTS */
+  .seed{background:var(--teal-dim); border:1px solid var(--teal-line); border-radius:8px; padding:13px 17px; font-size:14px; color:var(--ink-2); display:flex; gap:10px; align-items:flex-start;}
+  .seed .ic{flex-shrink:0; font-family:'DM Mono',monospace; font-size:11px; color:var(--teal); padding-top:3px;}
+  .seed b{color:var(--ink);}
+
+  /* CHECKLIST */
+  .checklist{display:flex; flex-direction:column; gap:0;}
+  .chk-item{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--border-soft);}
+  .chk-item:last-child{border-bottom:none;}
+  .chk-box{width:18px; height:18px; border:2px solid var(--ink-4); border-radius:4px; flex-shrink:0; margin-top:2px; background:transparent; cursor:pointer; padding:0; position:relative;}
+  .chk-box[aria-checked="true"]{background:var(--teal); border-color:var(--teal);}
+  .chk-box[aria-checked="true"]::after{content:'✓'; position:absolute; inset:0; color:#fff; font-size:12px; line-height:14px; text-align:center;}
+  .chk-item.done .chk-text{opacity:0.5;}
+  .chk-text{font-size:14px; color:var(--ink-2);}
+  .chk-text b{color:var(--ink); font-weight:600;}
+
+  /* SCRIPTS (collapsible) */
+  details.script-block{background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+  details.script-block + details.script-block{margin-top:12px;}
+  details.script-block summary{
+    list-style:none; cursor:pointer; padding:18px 20px; display:flex; align-items:center;
+    justify-content:space-between; gap:12px; font-weight:600; color:var(--ink); font-size:15px;
+  }
+  details.script-block summary:hover{background:rgba(255,255,255,0.02);}
+  details.script-block summary::-webkit-details-marker{display:none;}
+  details.script-block summary .tag{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; padding:4px 10px; border-radius:5px; margin-right:12px; border:1px solid;}
+  details.script-block summary .tag.answer{background:var(--teal-dim); color:var(--teal); border-color:var(--teal-line);}
+  details.script-block summary .tag.voicemail{background:var(--warning-dim); color:var(--warning); border-color:var(--warning-line);}
+  details.script-block summary .chev{color:var(--ink-4); font-size:13px; transition:transform .15s; flex-shrink:0;}
+  details.script-block[open] summary .chev{transform:rotate(90deg); color:var(--teal);}
+  details.script-block .script-body{padding:18px 20px 22px; font-size:16px; line-height:1.75; color:var(--ink-2); white-space:pre-line; border-top:1px solid var(--border-soft);}
+  details.script-block .script-body b{color:var(--ink);}
+
+  /* MODAL */
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); backdrop-filter:blur(3px); z-index:100; align-items:center; justify-content:center; padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--surface-2); border:1px solid var(--border-strong); border-radius:14px; max-width:680px; width:100%; max-height:84vh; overflow-y:auto; padding:34px; position:relative; box-shadow:0 24px 70px rgba(0,0,0,0.65);}
+  .modal-close{position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--border); font-size:16px; color:var(--ink-3); cursor:pointer;}
+  .modal-close:hover{background:rgba(255,255,255,0.1); color:var(--ink);}
+  .modal-cat{font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); margin-bottom:12px;}
+  .modal-trigger{font-size:21px; font-weight:700; color:var(--ink); margin-bottom:20px; padding-right:30px; line-height:1.35; letter-spacing:-0.01em;}
+  .modal-script{font-size:17px; line-height:1.75; color:var(--ink-2); white-space:pre-line;}
+  .modal-note{margin-top:22px; padding-top:16px; border-top:1px solid var(--border-soft); font-size:13px; line-height:1.6; color:var(--ink-3);}
+  .modal-note:empty{display:none;}
+
+  .foot{margin-top:72px; font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-4); text-align:center; letter-spacing:0.04em;}
+
+  @media(max-width:640px){
+    .top-title{font-size:24px;}
+    .wrap{padding:0 18px;}
+    .row{grid-template-columns:78px 1fr;}
+    .modal-box{padding:26px 22px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div>
+      <div class="top-label">Closing Prep · Email + Call</div>
+      <div class="top-title">Wisconsin Downtown Action Council — Member Portal</div>
+      <div class="top-sub">Contact: Kristen Fish-Peterson, CEcD (WDAC President · Principal &amp; CEO, Redevelopment Resources) · Decision-maker: WDAC Board — Kristen brings pricing and scope to them, she doesn't approve alone</div>
+    </div>
+    <div class="call-badge">Board OK · Fundraising</div>
+  </div>
+  <div class="wrap">
+    <div class="meta-strip">
+      <div class="meta-item">
+        <div class="meta-label">Proposal Sent</div>
+        <div class="meta-value">Sep 16, 2026</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value warn">Board OK'd the idea — funding not raised yet</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Quoted</div>
+        <div class="meta-value">$8,000–$12,000</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Terms</div>
+        <div class="meta-value">50% to start / 50% at launch</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Floor</div>
+        <div class="meta-value ok">Range holds — flex is phasing, not a discount</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- BOTTOM LINE -->
+  <div class="bottomline">
+    <div class="lbl">Bottom Line</div>
+    <p>Nothing to close yet — the board said yes to the idea, the money isn't in. Your job is to <b>stay easy to reach, hold the $8K–$12K range steady, and make fundraising easier for Kristen</b> (a firm number, a phased option, something to show funders) instead of pushing a start date. If she calls or the funds land, be ready to lock the two open decisions and move fast.</p>
+  </div>
+
+  <!-- 01 WHERE THINGS STAND -->
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Where Things Stand</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="grid cols-2" style="margin-top:20px;">
+    <div class="card">
+      <div class="card-title">What They've Seen</div>
+      <div class="row"><span class="l">Sep 4</span><span class="v">Kristen inquires (burned by a "ridiculously high bid" before); you send the $8K–$12K ballpark + five scoping questions</span></div>
+      <div class="row"><span class="l">Sep 15</span><span class="v">You nudge; she answers all five: no member list, one login per org, PDFs, no content ready, board adds content</span></div>
+      <div class="row"><span class="l">Sep 16</span><span class="v">Wireframe (6 pages) + proposal sent ahead of the board</span></div>
+      <div class="row"><span class="l">Sep 17</span><span class="v">Board meeting: likes it, OK with the investment, but funds need raising first</span></div>
+      <div class="row"><span class="l">After</span><span class="v">Kristen: spoke at a conference, interest was high, more conversations coming. You replied asking her fundraising timeline (weeks / a month or two / 3–6 months). <b style="color:var(--warning);">No answer in the thread yet.</b></span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Who You're Talking To</div>
+      <p style="margin-bottom:8px;">Kristen is the <b>champion and messenger</b>; the board decides. She's also a repeat client across several of her organizations, so trust is already there — the price sensitivity is about the last vendor's bid, not about you.</p>
+      <ul class="bullets">
+        <li>Board members are the ones who'll add content — the build has to suit them, not just her</li>
+        <li><b>Silence pattern:</b> she goes quiet well over a week when something urgent hits, then replies fully and fast. Quiet isn't a no.</li>
+        <li>She'll pitch funders on whatever number she hears — give her one she can raise against</li>
+        <li>Phone: (715) 581-1452</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Open Decisions <span style="color:var(--ink-4);">— block the build, mostly not the price</span></div>
+      <ul class="bullets">
+        <li><b>Library format:</b> inline download rows (A, current lean) vs. a detail page per resource (B) <span class="pill purple">moves price</span></li>
+        <li><b>Account provisioning:</b> WDAC creates org logins by hand vs. orgs request access + WDAC approves <span class="pill purple">moves price</span></li>
+        <li><b>Nav placement</b> of the portal link on the existing WordPress site</li>
+        <li><b>Launch content:</b> go live empty vs. wait for a first batch of PDFs (zero ready, PDF template still a concept)</li>
+        <li><b>Subdomain name:</b> portal.wdac.org vs. members.wdac.org, etc.</li>
+      </ul>
+    </div>
+
+    <div class="card attn">
+      <div class="card-title">⚠ Open On Your Side</div>
+      <ul class="bullets">
+        <li><b>Phasing isn't scoped.</b> If she asks, you need time to break it into chunks. Have the holding line ready (see checklist) and don't quote chunk prices on the spot.</li>
+        <li><b>Define what the $8K end includes.</b> The proposal says the two open decisions finalize the price within the range, but not which choices sit at which end. Settle it before she pins you to $8K.</li>
+        <li><b>The proposal has no expiry date.</b> If fundraising runs months, re-confirm pricing when she comes back.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 02 PRICE & FLEX -->
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Price &amp; Flex Points</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="ladder" style="margin-top:20px;">
+    <div class="step base">
+      <div>
+        <div class="name">Phase One — Locked Scope</div>
+        <div class="desc">Six pages: Portal Landing, Login, Dashboard, Resource Library, Org Account, Add a Resource. One login per member org, custom CMS (board manages resources, categories, org accounts), searchable + filterable library, self-serve publishing for the board, mobile-first, SEO foundations, copywriting included. WDAC owns the portal, the code, and the domain.</div>
+      </div>
+      <div class="amt">$8,000–$12,000</div>
+    </div>
+    <div class="step info">
+      <div>
+        <div class="name">Running Costs <span class="pill gray">paid by WDAC direct</span></div>
+        <div class="desc">Vercel hosting $20/mo + login/database layer typically under $25/mo. That's roughly $45/mo at most (about $540/yr). No retainer, no monthly fee to you. Proposal frames it against agencies charging $100–$300/mo for hosting they control.</div>
+      </div>
+      <div class="amt">~$45/mo max</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Library Format <span class="pill purple">flex point</span></div>
+        <div class="desc">A: inline rows — faster to build, PDFs download directly, easy for board members to feed. B: detail page per resource — better long-term search visibility, optional video link, but more build and a full write-up per resource from the board. Direction of price follows effort; no separate amount is quoted.</div>
+      </div>
+      <div class="amt">Moves price in range</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Account Provisioning <span class="pill purple">flex point</span></div>
+        <div class="desc">WDAC creates and distributes org logins by hand, or orgs submit requests and WDAC approves before activation. The approval workflow is the bigger build.</div>
+      </div>
+      <div class="amt">Moves price in range</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Phasing <span class="pill purple">flex point</span></div>
+        <div class="desc">Your stated flex for a fundraising client. Not yet scoped or priced. See the working sketch below.</div>
+      </div>
+      <div class="amt">Scoped on request</div>
+    </div>
+    <div class="step lever">
+      <div>
+        <div class="name">Launch Content <span class="pill purple">flex point</span></div>
+        <div class="desc">Launch built-and-empty, or wait for a first batch of PDFs. Either way the build timeline doesn't change — this is a sequencing choice, not a price lever.</div>
+      </div>
+      <div class="amt">Timing, not price</div>
+    </div>
+  </div>
+
+  <div class="grid cols-2" style="margin-top:16px;">
+    <div class="seed">
+      <span class="ic">TIP</span>
+      <span><b>Don't discount blind.</b> If the number is too high for what she's raising, ask what the funding target is and when it lands, then phase the build to match. Don't shave the range and quietly cut scope.</span>
+    </div>
+    <div class="seed">
+      <span class="ic">TIP</span>
+      <span><b>Watch the anchor.</b> A fundraiser repeats the low number to funders. If board feedback adds scope, a goal set at $8K comes up short. Steer her toward the top of the range as the goal until the open decisions settle.</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">Working Sketch: Ways To Chunk It <span style="color:var(--ink-4);">— thinking only, not quoted, no dollar amounts</span></div>
+    <div class="grid cols-3">
+      <div>
+        <div class="sub-label first ok">Chunk 1 — The members' front door</div>
+        <ul class="bullets">
+          <li>Portal Landing, Login, Dashboard, Resource Library, CMS</li>
+          <li>Login + database backbone is likely most of the real work, so this won't be a small piece</li>
+          <li>Content goes in through the CMS at first (you or the board)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sub-label first ok">Chunk 2 — Self-service</div>
+        <ul class="bullets">
+          <li>Add a Resource form (board self-serve publishing)</li>
+          <li>Org Account page (orgs edit their own name, email, password)</li>
+          <li>Forgot-password on the login page covers resets meanwhile</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sub-label first warn">Check before you offer it</div>
+        <ul class="bullets">
+          <li>Does chunk 1 stand alone? Someone has to be able to publish resources in it.</li>
+          <li>Don't split evenly by page count; split by work</li>
+          <li>Ask what she expects in hand first, and when. That's where the cut goes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 SCRIPTS -->
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Scripts to Open the Call</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Click to expand. Starting points, not word-for-word. If this stays on email, use the same beats in writing, and paste from the answers in section 04.</p>
+
+  <details class="script-block">
+    <summary>
+      <span><span class="tag answer">If You Talk</span>Opening Script — She Calls or You Call</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="script-body">“Hi Kristen, it's Jordan with Latz Web Design. No agenda beyond checking in on the portal after the board meeting. I know fundraising is the main thing right now. How's it going?”
+
+<b>[Let her talk first.]</b> Listen for: an amount she's trying to raise, a timeframe, who she's talking to, and whether the board has asked for changes.
+
+<b>[If funds are in or close →]</b> “Great. Two decisions to make so I can give you one final number: how the resource library displays, and how organizations get their logins. Once those are settled I'll send the 50% deposit invoice and start within 24 hours of it clearing.”
+
+<b>[If still raising, no date yet →]</b> “That's fine, no rush on my end. What would help most right now: a single number you can put in front of funders, a way to raise it in stages, or a one-page summary to leave with people?”
+
+<b>[If she needs it cheaper or in pieces →]</b> “Let me think that through properly instead of guessing on the call. Give me a little time to break it into chunks that each make sense on their own, and I'll send you something you can take to the board. Roughly how much do you expect to have in hand first, and when?”</div>
+  </details>
+
+  <details class="script-block">
+    <summary>
+      <span><span class="tag voicemail">If No Answer</span>Voicemail Script</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="script-body">“Hi Kristen, it's Jordan with Latz Web Design. Just checking in on the member portal. No rush, no decision needed. If it helps with fundraising, I'm happy to break the build into stages or put together something you can show funders. Call, text, or email me whenever it's easy. Thanks!”
+
+<b>Under 20 seconds.</b> No price talk, no urgency, no "just checking if you're still interested." Her pattern is a long quiet stretch followed by a full reply, so one voicemail is plenty. Don't stack channels.</div>
+  </details>
+
+  <!-- 04 IF THEY ASK YOU -->
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <span class="sec-title">If They Ask You</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Click any card for the full answer. Written to work spoken on a call or pasted into an email.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="pricing">Pricing</button>
+    <button class="filter-btn" data-filter="scope">Scope</button>
+    <button class="filter-btn" data-filter="process">Timeline &amp; Process</button>
+    <button class="filter-btn" data-filter="technical">Technical</button>
+  </div>
+
+  <div class="grid cols-3" id="scenario-grid">
+
+    <div class="scenario" data-cat="pricing" data-modal="p1" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">“Can you give me one number to take to funders?”</div>
+      <ul class="bullets">
+        <li>Two open decisions set the number inside $8K–$12K</li>
+        <li>Offer a fast firm number once they decide</li>
+        <li>Until then, raise against the top of the range</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="pricing" data-modal="p2" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">“Can we phase it or start with part of it?”</div>
+      <ul class="bullets">
+        <li>Yes, and it's your offered flex</li>
+        <li>Ask for time to find the real break points</li>
+        <li>Ask what she'll have in hand first, and when</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="pricing" data-modal="p3" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">“Is $8,000 the real number? What's the lowest?”</div>
+      <ul class="bullets">
+        <li>Low end assumes the simpler options</li>
+        <li>No quiet scope cuts to hit a number</li>
+        <li>If it's too much, phase it instead</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="pricing" data-modal="p4" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">“What does it cost to run every month?”</div>
+      <ul class="bullets">
+        <li>Vercel $20/mo + login/database under $25/mo</li>
+        <li>Paid to the providers directly, not through you</li>
+        <li>No retainer, no monthly fee to Latz</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="pricing" data-modal="p5" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag pricing">Pricing</span>
+      <div class="trigger">“Will the price go up after the board weighs in?”</div>
+      <ul class="bullets">
+        <li>Only if scope moves beyond the six pages</li>
+        <li>Any change is priced in writing before it's built</li>
+        <li>Feedback on the open decisions just picks a spot in the range</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="s1" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">“Can each person get their own login?”</div>
+      <ul class="bullets">
+        <li>Not in scope, and her own turnover logic argues against it</li>
+        <li>One login per org survives staff changes</li>
+        <li>Per-person would be a re-scope with a price change</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="s2" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">“Download rows or a page for each resource?”</div>
+      <ul class="bullets">
+        <li>A: clean list, upload a PDF and publish. Launch lean.</li>
+        <li>B: page per resource. Stronger long-term, more work for everyone.</li>
+        <li>Decide before build, not mid-project</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="s3" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">“How do organizations get their accounts?”</div>
+      <ul class="bullets">
+        <li>Manual: WDAC creates each org's login</li>
+        <li>Request + approve: orgs ask, WDAC approves. Bigger build.</li>
+        <li>No members yet, so manual is the lean start</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="s4" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">“Can we host training videos?”</div>
+      <ul class="bullets">
+        <li>No native video hosting in this scope</li>
+        <li>YouTube/Vimeo links work, embedded on detail pages (B)</li>
+        <li>Bigger video plans become their own conversation</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="scope" data-modal="s5" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag scope">Scope</span>
+      <div class="trigger">“Can it check dues or membership automatically?”</div>
+      <ul class="bullets">
+        <li>Not in this version; status is set by WDAC by hand</li>
+        <li>No point connecting to a dues model that doesn't exist yet</li>
+        <li>Real added work, priced separately when they're ready</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="t1" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">“How long will this take? When could we launch?”</div>
+      <ul class="bullets">
+        <li>6–8 weeks from kickoff</li>
+        <li>Kickoff = deposit clears + scope locked; work starts within 24 hours</li>
+        <li>Ask her target launch date and work backward</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="t2" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">“What do you need from us before you start?”</div>
+      <ul class="bullets">
+        <li>Five decisions, none of them finished content</li>
+        <li>Two affect price; three don't</li>
+        <li>She can work on these while fundraising</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="t3" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">“What happens once the funds are there?”</div>
+      <ul class="bullets">
+        <li>Lock scope, confirm final number, 50% invoice</li>
+        <li>Kickoff within 24 hours of it clearing</li>
+        <li>Design directions, live build, review, launch + handoff</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="t4" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">“Do we need content ready before launch?”</div>
+      <ul class="bullets">
+        <li>No, it can launch built-and-empty</li>
+        <li>But an empty library undersells the launch</li>
+        <li>She can build the first PDFs now, without you</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="process" data-modal="t5" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag process">Process</span>
+      <div class="trigger">“Can I show this to funders or sponsors?”</div>
+      <ul class="bullets">
+        <li>Yes, that's what they're for</li>
+        <li>Wireframe is the blueprint, not the visual design</li>
+        <li>You already offered a one-pager on Sep 15</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="technical" data-modal="x1" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag technical">Technical</span>
+      <div class="trigger">“Does this touch our WordPress site?”</div>
+      <ul class="bullets">
+        <li>No, the portal is a separate subdomain</li>
+        <li>Only change is one nav link on the main site</li>
+        <li>Nothing on the current site can break</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="technical" data-modal="x2" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag technical">Technical</span>
+      <div class="trigger">“Who owns it? What if we want to move it?”</div>
+      <ul class="bullets">
+        <li>WDAC owns the portal, code, and domain</li>
+        <li>CMS, hosting, analytics access at handoff</li>
+        <li>No lock-in, no monthly fee to keep it running</li>
+      </ul>
+    </div>
+
+    <div class="scenario" data-cat="technical" data-modal="x3" tabindex="0" role="button">
+      <span class="click-icon">↗</span>
+      <span class="cat-tag technical">Technical</span>
+      <div class="trigger">“How hard is it for a board member to add a resource?”</div>
+      <ul class="bullets">
+        <li>Short form: title, category, PDF, description, publish</li>
+        <li>Live in the library and dashboard right away</li>
+        <li>Only board/staff accounts see the form</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- 05 SEED PLANTS -->
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Seed Plants</span>
+  </div>
+  <div class="sec-divider"></div>
+  <p class="sec-note">Drop these naturally if the conversation stalls or feels hesitant.</p>
+
+  <div class="grid cols-2">
+    <div class="seed"><span class="ic">01</span><span><b>The anti-"ridiculously high bid."</b> You gave her a range up front and asked if it sounded way off. Keep that: no surprises, no hidden line items.</span></div>
+    <div class="seed"><span class="ic">02</span><span><b>Running costs are a fraction of the norm.</b> About $45/mo at most, paid straight to the providers, vs. the $100–$300/mo agencies charge for hosting they control.</span></div>
+    <div class="seed"><span class="ic">03</span><span><b>They own it forever.</b> Portal, code, and domain. If funders ask what they're buying, it's an asset WDAC keeps, not a subscription.</span></div>
+    <div class="seed"><span class="ic">04</span><span><b>The wireframe is a fundraising tool.</b> Interest at the conference was high. Something concrete to show makes those conversations easier than an idea.</span></div>
+    <div class="seed"><span class="ic">05</span><span><b>The portal is the reason to join.</b> She's rethinking membership from a clean slate. A members-only library gives that new model something real to offer.</span></div>
+    <div class="seed"><span class="ic">06</span><span><b>Use the waiting time.</b> Building the PDF template and the first few resources doesn't need you or money. A portal that launches with content lands harder than an empty one.</span></div>
+  </div>
+
+  <!-- 06 READING THE SITUATION -->
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Reading the Situation &amp; What's Next</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="grid cols-2" style="margin-top:20px;">
+    <div class="card">
+      <div class="card-title">Real Progress vs. Polite Drift</div>
+      <p style="color:var(--ink-3); margin-bottom:12px;">Her quiet stretches are normal. Judge by what she says when she surfaces, not by how long she was gone.</p>
+      <div class="sub-label first ok">Likely real momentum</div>
+      <ul class="bullets">
+        <li>Gives you a date, an amount, or names of funders or sponsors</li>
+        <li>Asks about phasing or what a first chunk would cover</li>
+        <li>Asks for something to show funders</li>
+        <li>Board members weigh in on library format or account setup</li>
+      </ul>
+      <div class="sub-label warn">Likely drifting</div>
+      <ul class="bullets">
+        <li>"Still working on it" with no timeframe, twice in a row</li>
+        <li>Skips your specific questions and answers only in general terms</li>
+        <li>Conference interest never turns into named commitments</li>
+        <li>The target number keeps moving without the scope changing</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Branch From Here</div>
+      <div class="row"><span class="l">Timeline: weeks</span><span class="v">Get the two price-moving decisions made, give her one firm number, offer to chunk it.</span></div>
+      <div class="row"><span class="l">Timeline: months</span><span class="v">Park it. Put a check-in on your calendar, offer the funder one-pager, re-confirm pricing when she returns (no expiry on the proposal).</span></div>
+      <div class="row"><span class="l">Wants pieces</span><span class="v">Use the holding line, come back in a few days with chunks matched to what she expects to raise first.</span></div>
+      <div class="row"><span class="l">Board changes</span><span class="v">Get the asks in writing, then tell her what they do to scope and price before any work starts.</span></div>
+      <div class="row"><span class="l">Still silent</span><span class="v">About two weeks after your last message, send one light check-in that offers something useful (stages, one-pager). No "just checking in."</span></div>
+      <div class="row"><span class="l">Ready to go</span><span class="v">Lock scope decisions, confirm the number in writing, then send the 50% deposit invoice.</span></div>
+    </div>
+  </div>
+
+  <!-- 07 CHECKLIST -->
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Pre-Contact Checklist</span>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="checklist" id="checklist">
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Re-read her latest email and your reply</b> — check nothing has come in since. Know exactly what you last asked (fundraising timeline).</div></div>
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Open the proposal and wireframe in tabs</b> — proposal for the range, terms, and running costs; wireframe for library format and Add a Resource details.</div></div>
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Decide what the low end of the range includes</b> — which library format and which provisioning method sit at $8K, so you're not pinned to it while the scope drifts up.</div></div>
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Pick your recommendation on both open decisions</b> — so you can steer her instead of only listing options.</div></div>
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Have the phasing holding line ready</b> — “Let me break it into chunks properly and get back to you in a few days.” Then put a date on the follow-up.</div></div>
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Have the deposit invoice ready but only send after scope is locked</b> — the proposal invoices the 50% once scope is settled.</div></div>
+      <div class="chk-item"><button class="chk-box" role="checkbox" aria-checked="false" aria-label="Done"></button><div class="chk-text"><b>Write down anything you promise</b> — funder one-pager, chunk breakdown, a follow-up date. Then regenerate this dashboard.</div></div>
+    </div>
+  </div>
+
+  <div class="foot">LATZ WEB DESIGN · LIVING DOCUMENT · PREPARED SEP 23, 2026 · REGENERATE AFTER EVERY TOUCHPOINT</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-trigger">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    <div class="modal-cat" id="modal-cat"></div>
+    <div class="modal-trigger" id="modal-trigger"></div>
+    <div class="modal-script" id="modal-script"></div>
+    <div class="modal-note" id="modal-note"></div>
+  </div>
+</div>
+
+<script>
+  const scripts = {
+    p1: {cat:"Pricing", trigger:"“Can you give me one number to take to funders?”",
+      body:"“Yes, and I can get you to one number quickly. The range is $8,000 to $12,000 because two things aren't decided yet: whether the resource library is simple download rows or a full page for each resource, and whether you create each organization's login yourselves or organizations request access and you approve them.\n\nMake those two calls and I'll come back with one firm number. Until then, if you're raising money, I'd set the goal off the top of the range so you don't come up short if the board adds something. And if it helps to raise it in stages, I can break the build into chunks. I'd want a little time to do that properly.”",
+      note:"Don't name a single number until the two decisions are made. The range is what the proposal says."},
+    p2: {cat:"Pricing", trigger:"“Can we phase it or start with part of it?”",
+      body:"“Yes, that works, and I'd rather do that than have you stall on the whole number. Give me a little time to look at where the natural break points are. I want each piece to stand on its own, so you're never paying for something that can't be used yet. I'll come back with a breakdown you can take to the board.\n\nCan you tell me roughly how much you expect to have in hand first, and when? That tells me where to cut.”",
+      note:"Don't price chunks on the spot. See the working sketch in section 02 for where the natural cuts might fall."},
+    p3: {cat:"Pricing", trigger:"“Is $8,000 the real number? What's the lowest it could go?”",
+      body:"“The low end of the range assumes the simpler options: download rows in the library and you setting up each organization's login by hand. It goes up from there only if you choose the heavier ones, like a page per resource or an approval flow for access requests.\n\nWhat I won't do is knock the number down and quietly cut the build. If $8,000 is more than you can raise right now, the better move is to phase it so what you've raised goes toward the part that matters first. What are you aiming to raise?”",
+      note:"Confirm in the checklist that this matches how you actually see the low end before you say it."},
+    p4: {cat:"Pricing", trigger:"“What does it cost to run every month?”",
+      body:"“Two small line items, both paid straight to the providers, not through me. Hosting on Vercel is $20 a month. The login and database layer is typically under $25 a month, depending on the provider. So call it under $45 a month all in.\n\nNo retainer to me, no monthly fee, no ticket queue. I get paid when you ask me to do work. Most agencies charge $100 to $300 a month for hosting they control. Here, you control it.”",
+      note:"Source: proposal, hosting section."},
+    p5: {cat:"Pricing", trigger:"“Will the price go up after the board weighs in?”",
+      body:"“It only moves if the scope moves. The six pages in the proposal are the scope. If the board wants something on top of that, like individual logins or automatic dues checking, I'll tell you what it does to the price before anything gets built, in writing, and you decide. Nothing gets added quietly.\n\nIf their feedback is about the two open decisions, that just picks a spot inside the $8,000 to $12,000 range.”",
+      note:"Out of scope per the overview: no individual logins, no native video hosting, no membership-list or content migration, no rebuild of the WordPress site."},
+    s1: {cat:"Scope", trigger:"“Can each person get their own login?”",
+      body:"“That's not in this scope, and from what you told me, it shouldn't be. You said turnover is the issue. One login per organization survives that: when someone leaves, the org keeps its access. Individual logins means tracking every person at every organization, which is a bigger build and a bigger price.\n\nIf the board decides that's what they want, I'll re-scope it and tell you what it changes. But I'd start at the organization level and see if it holds up.”",
+      note:"She proposed org-level herself on Sep 15 because of turnover."},
+    s2: {cat:"Scope", trigger:"“Download rows or a page for each resource?”",
+      body:"“Option A is a clean list: title, category, and a download button. A board member uploads a PDF, adds a couple of lines, and hits publish. That's what I'd launch with. It's faster to build and much easier on the people adding content.\n\nOption B gives every resource its own page with a full write-up, an optional video link, and better search visibility. It's the stronger long-term play, but the board would be writing a full page for each resource instead of uploading a PDF, and it's more build on my end. Worth deciding before I start so we don't build one and switch halfway through.”",
+      note:"The wireframe says it's leaning toward Option A for launch. Option B is flagged as a real step up in effort for board members."},
+    s3: {cat:"Scope", trigger:"“How do organizations get their accounts?”",
+      body:"“Two ways. Manual: someone at WDAC creates each organization's login and sends it. Or organizations request access and WDAC approves before it activates.\n\nSince you're starting with no members and a clean slate, manual is the simplest way to get going and keeps the build lean. The request-and-approve flow is nicer at volume, but it's more to build, and you can move to it later once you know how many organizations you're dealing with. Which one fits how you'll actually run membership?”",
+      note:"The manual-first lean is a suggestion for you to confirm. The proposal only lists both as open."},
+    s4: {cat:"Scope", trigger:"“Can we host training videos?”",
+      body:"“Not natively. Video hosting isn't in this scope. What you can do is link out: paste a YouTube or Vimeo link, and with the detail-page option it shows up as an embedded video on that resource's page. That keeps hosting simple.\n\nIf video becomes a big part of the library later, we can look at it as its own piece.”",
+      note:"Locked decision: primary format is downloadable PDFs with optional external links."},
+    s5: {cat:"Scope", trigger:"“Can it check dues or membership automatically?”",
+      body:"“Not in this version. Right now membership status is a field WDAC sets by hand on each organization's account. Since you're still rethinking how membership works, I wouldn't build a connection to a dues system that doesn't exist yet.\n\nOnce you've landed on a model, we can look at connecting it as a next phase. It's real added work, so I'd price it separately when it's time.”",
+      note:"On Sep 4 you told her syncing to a dues or roster system would add work."},
+    t1: {cat:"Timeline & Process", trigger:"“How long will this take? When could we launch?”",
+      body:"“Six to eight weeks once we kick off. Kickoff is when the deposit clears and the scope is locked, and I start within 24 hours of that. So the real question is when you'll have the funds and the decisions in place.\n\nIf you tell me the date you're aiming to launch, I'll work backward to when I need to start.”",
+      note:"Source: proposal timeline."},
+    t2: {cat:"Timeline & Process", trigger:"“What do you need from us before you start?”",
+      body:"“Five decisions, and none of them are finished content. How the library displays. How organizations get their logins. Where the portal link goes in your current navigation. Whether to launch empty or with a first batch of resources. And the subdomain name, something like portal dot wdac dot org or members dot wdac dot org.\n\nThe first two affect the price. The other three don't. You don't need any PDFs finished for me to build.”",
+      note:"These are the five open decisions from the overview and wireframe."},
+    t3: {cat:"Timeline & Process", trigger:"“What happens once the funds are there?”",
+      body:"“We lock the scope: those open decisions get settled, and I confirm the final number in writing. Then I send the 50% deposit invoice, and within 24 hours of it clearing I'm starting.\n\nYou get one or two real design directions. Then I build the first page live and send you a working link, so you watch it come together and weigh in as we go. After that, a review round on copy, categories, and details, then launch and handoff, where you get access to the CMS, hosting, and analytics. The other 50% is due at launch.”",
+      note:"Source: proposal process steps and payment structure."},
+    t4: {cat:"Timeline & Process", trigger:"“Do we need content ready before launch?”",
+      body:"“No. The portal can launch built and empty, or wait until you have a first batch of PDFs. Either way, the build timeline is the same.\n\nI'd push you toward a starter batch though. If the first thing a member sees after all this effort is an empty library, it undersells the whole thing. The good news is you can work on that now, while you're fundraising. The PDF template and the first few resources don't need me.”",
+      note:"She said on Sep 15 that no content is ready and the PDF template is still a concept."},
+    t5: {cat:"Timeline & Process", trigger:"“Can I show this to funders or sponsors?”",
+      body:"“Please do. That's what they're for. Just tell them the wireframe is the blueprint, not the finished design: it shows how the portal is structured and how it behaves, not what it'll look like. That comes later, in design.\n\nIf it'd help, I can put together a one-page summary of what the portal is, what it does for member organizations, and what it costs to build and run. Something easy to leave with someone.”",
+      note:"You offered a one-pager on Sep 15. Only commit to it if you want to do it."},
+    x1: {cat:"Technical", trigger:"“Does this touch our WordPress site?”",
+      body:"“No. The portal is its own site on a subdomain, and your WordPress site stays exactly as it is. The only change to your main site is one new link in the navigation pointing to the portal. That's also why it's lower risk: nothing on the site you have now can break.”",
+      note:"Existing site is WordPress with Cloudflare and GoDaddy email. You didn't build it, so don't promise anything about its internals."},
+    x2: {cat:"Technical", trigger:"“Who owns it? What if we want to move it later?”",
+      body:"“You do. WDAC owns the portal, the code, and the domain, for good. At launch you get access to the CMS, hosting, and analytics. If you ever want another developer to take it over, they can, and you're not paying me a monthly fee to keep your own portal running.”",
+      note:"Source: proposal, 'WDAC owns the portal, the code, and the domain. Forever.'"},
+    x3: {cat:"Technical", trigger:"“How hard is it for a board member to add a resource?”",
+      body:"“About as hard as filling out a short form. Title, pick a category, upload the PDF, add a couple of lines of description, and hit publish. It shows up in the library and on the dashboard right away, with no approval step and no waiting on me.\n\nThat form is only visible to WDAC board and staff accounts, so member organizations can't see it. And because you'll have several board members doing this, it's a big reason I'd launch with the simple library format.”",
+      note:"Form fields shown are Option A. Option B needs a full write-up per resource."}
+  };
+
+  var lastFocus = null;
+  var overlay = document.getElementById('modal-overlay');
+
+  function openModal(id, trigger){
+    var s = scripts[id];
+    if(!s) return;
+    lastFocus = trigger || null;
+    document.getElementById('modal-cat').textContent = s.cat;
+    document.getElementById('modal-trigger').textContent = s.trigger;
+    document.getElementById('modal-script').textContent = s.body;
+    document.getElementById('modal-note').textContent = s.note || '';
+    overlay.classList.add('open');
+    document.getElementById('modal-close').focus();
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    if(lastFocus){ lastFocus.focus(); }
+  }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  document.querySelectorAll('.scenario').forEach(function(card){
+    card.addEventListener('click', function(){ openModal(this.getAttribute('data-modal'), this); });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openModal(this.getAttribute('data-modal'), this); }
+    });
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      var filter = this.getAttribute('data-filter');
+      document.querySelectorAll('.scenario').forEach(function(card){
+        card.style.display = (filter === 'all' || card.getAttribute('data-cat') === filter) ? '' : 'none';
+      });
+    });
+  });
+
+  document.querySelectorAll('.chk-box').forEach(function(box){
+    box.addEventListener('click', function(){
+      var on = this.getAttribute('aria-checked') === 'true';
+      this.setAttribute('aria-checked', on ? 'false' : 'true');
+      this.closest('.chk-item').classList.toggle('done', !on);
+    });
+  });
+</script>
+
+</body>
+</html>
