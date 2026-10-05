@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Hobs Service — Website Rebuild Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0F14;
+    --surface: #141A2B;
+    --surface-2: #141A2B;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.18);
+    --ink: rgba(255,255,255,0.95);
+    --ink-2: rgba(255,255,255,0.70);
+    --ink-3: rgba(255,255,255,0.46);
+    --ink-4: rgba(255,255,255,0.30);
+    --teal: #1E8A94;
+    --teal-dim: rgba(30,138,148,0.16);
+    --teal-line: rgba(30,138,148,0.42);
+    --purple: #8B7FCF;
+    --purple-dim: rgba(139,127,207,0.16);
+    --purple-line: rgba(139,127,207,0.42);
+    --warning: #C9A227;
+    --warning-dim: rgba(201,162,39,0.14);
+    --warning-line: rgba(201,162,39,0.42);
+    --danger: #B3524A;
+    --danger-dim: rgba(179,82,74,0.14);
+    --danger-line: rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink-2);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 248px;
+    height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 36px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 26px 26px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    color: var(--warning);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--warning);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 10px 26px 5px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 26px;
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.03);
+    border-left-color: var(--teal-line);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: var(--teal-dim);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 22px 26px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+
+  /* ── MOBILE NAV CONTROLS ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 248px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 900px 500px at 80% 0%, rgba(30,138,148,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: 'HOBS';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 130px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-header .overline::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+
+  .page-header h1 {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    position: relative;
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    position: relative;
+    display: flex;
+    gap: 0;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-soft);
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .header-meta-item:last-child { border-right: none; }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.green { color: var(--teal); }
+  .header-meta-item .value.orange { color: var(--warning); }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 56px 64px 100px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .section-icon {
+    width: 34px; height: 34px;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal-line);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 26px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    border: 1px solid;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  .callout.info { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.warn { background: var(--warning-dim); border-color: var(--warning-line); }
+  .callout.success { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.alert { background: var(--danger-dim); border-color: var(--danger-line); }
+  .callout.yellow { background: var(--warning-dim); border-color: var(--warning-line); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--warning);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+
+  .highlight-box strong { font-weight: 700; color: var(--ink); }
+  .highlight-box p { font-size: 14px; margin-top: 9px; color: var(--ink-2); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border-strong);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+  .timeline-item.pending::before { background: var(--ink-4); box-shadow: 0 0 0 2px var(--ink-4); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-line); animation: pulse 2s infinite; }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .budget-table th {
+    background: var(--surface);
+    color: var(--ink-3);
+    padding: 12px 18px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .budget-table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--ink-2);
+    background: var(--bg);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+  .budget-table .total-row td {
+    background: var(--teal-dim) !important;
+    color: var(--ink);
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--teal-dim) !important;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--warning-dim) !important;
+    color: var(--warning);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    border-top: 2px solid var(--teal);
+    box-shadow: var(--shadow);
+  }
+
+  .page-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .badge-static { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-new { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .badge-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-priority { background: var(--teal); color: #ffffff; border-color: var(--teal); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .pill-green { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-orange { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .pill-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-red { background: var(--danger-dim); color: var(--danger); border-color: var(--danger-line); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: var(--surface);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 22px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--purple); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 9px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--ink-3); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 22px;
+    align-items: start;
+    box-shadow: var(--shadow);
+  }
+
+  .phase-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--ink-4);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 14px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--warning);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay { display: block; }
+
+    .page-header { padding: 40px 20px 32px; }
+    .content { padding: 40px 20px 90px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header::after { font-size: 80px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Hobs Service</div>
+    <div class="status-pill">Proposal Sent — Awaiting Decision</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🛥️</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials & Pricing</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client Journey</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Needed from Client</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Roadmap</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Hob's Service Center</h1>
+    <div class="sub">Full custom rebuild of hobsservice.com — boat/ATV/UTV/dock service center, Tomahawk, WI</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">Terra Plaisance — Marketing Rep</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Proposal Value</span>
+        <span class="value orange">$3,000–$3,500 + optional add-ons</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Received</span>
+        <span class="value orange">None — nothing approved yet</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Status</span>
+        <span class="value orange">Proposal + wireframe sent Oct 5</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value">hobsservice.com</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phone</span>
+        <span class="value"><a href="tel:7154700866">(715) 470-0866</a> — Terra</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🛥️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Terra Plaisance</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Marketing professional, not a Hob's Service employee — acting as an intermediary/account manager on her own contract with the client. This is her first client.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:terraplaisance@gmail.com">terraplaisance@gmail.com</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value"><a href="tel:7154700866">(715) 470-0866</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Preferred Contact</span>
+            <span class="data-value">Strongly prefers meeting in person (Stevens Point/Plover area). Design is "her forte," she says — mostly past experience in Wix/WordPress-style builds, not code.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Referral</span>
+            <span class="data-value">Connected via Pookie (Pookie Rosa Marketing) — Terra and Jordan hadn't worked together before this</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Business</span>
+            <span class="data-value">Hob's Service Center LLC — Tomahawk, WI. Founded 2019, family-owned, Tomahawk Chamber member.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">What They Do</span>
+            <span class="data-value">Repairs and service, powersport vehicle sales, seasonal prep/storage, and dock/lift installation and removal — boats, ATVs, UTVs, and docks</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Credentials</span>
+            <span class="data-value">BRP Master Technician · Lakeview Dock Dealer Gold Status · 40+ years combined experience · carries Lakeview Docks and Lakeshore Product Boat Lifts</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Reputation</span>
+            <span class="data-value">4.9★ — 91 Google reviews</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Size Signal</span>
+            <span class="data-value">Public PPP loan ~$14.7k, 2 employees — small, lean shop</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Decision Process</span>
+            <span class="data-value">No direct contact with the actual business owner yet. Every detail so far has come through Terra, who holds her own contract with the client and is managing budget/comms on their behalf.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">✍️</span>
+        <div class="callout-body">
+          <strong>Her name is Terra, not Tara</strong>
+          <span>She signs every email "Terra Plaisance" and her address is terraplaisance@gmail.com, but every reply from Jordan in the thread so far opens "Hey Tara." Worth fixing before the next message — it's been wrong across five-plus emails already.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Nothing is approved yet — formal proposal and wireframe went out Oct 5, waiting on Terra and the client to decide.</strong>
+        <p>The old HIBU site is gone for good: the platform shows it as unpublished, it's proprietary, and nothing is portable even if HIBU brings it back. The domain itself is healthy and under Jordan's DNS control. This is a full rebuild from near-scratch — Wayback only yielded the Home page (5 screenshots), and even that copy is generic, snowmobile-centric HIBU boilerplate that needs rewriting to reflect the real service mix. The proposal offers two sizes (3-page at $3,000 or 4-page at $3,500) plus optional "Room to Grow" add-ons, priced together only once Terra/the client pick what they want.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They're Building This</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> Site is unpublished on HIBU's proprietary platform — not recoverable or migratable even if HIBU restores it</li>
+            <li><span class="check-icon">🔴</span> No content exists off-platform; only one page survives via Wayback Machine, and it's generic and snowmobile-heavy</li>
+            <li><span class="check-icon">🔴</span> Business has 40+ years of experience and 91 five-star reviews with nowhere online to show for it right now</li>
+            <li><span class="check-icon">🔴</span> Terra quoted the client $1,200 before she understood the real scope — now needs a defensible number she can bring back</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> hobsservice.com live again, owned outright, off a platform that can vanish without warning</li>
+            <li><span class="check-icon">✅</span> Real service mix (boats/ATVs/UTVs/docks) represented accurately — not snowmobile-first boilerplate</li>
+            <li><span class="check-icon">✅</span> Terra has a real, build-based proposal to bring to the client instead of a guessed number</li>
+            <li><span class="check-icon">✅</span> Client can self-edit the site (CMS) going forward with no developer dependency for routine updates</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Not in the base proposal — folded into "Room to Grow" instead</strong>
+          <span>Individual service pages, a blog/content hub, a brand/icon extension package, and from-scratch copywriting are all scoped as optional add-ons, priced together only if Terra/the client want them — not itemized individually, not assumed into the base $3,000–$3,500.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Still open</strong>
+          <span>3-page vs. 4-page build, which Room to Grow add-ons (if any), whether the client has any usable content at all, and whether there's interest in a logo/brand refresh (asked Sep 25, never answered).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS & PRICING -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials & Pricing</h2>
+      </div>
+
+      <div class="card">
+        <h3>Pricing History (nothing approved)</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Notes</th>
+              <th class="amount">Figure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Verbal Ballpark</strong></td>
+              <td>Sep 24–25 — Jordan's standard starting range for a custom build, held firm through negotiation</td>
+              <td class="amount">$4,000–$5,000</td>
+            </tr>
+            <tr>
+              <td><strong>Terra's Quoted Budget</strong></td>
+              <td>Revealed Sep 25 — what she quoted the client before understanding real scope; her first client, anxious about going back for more</td>
+              <td class="amount">$1,200</td>
+            </tr>
+            <tr class="pending-row">
+              <td>⏳ Formal Proposal — Sent Oct 5</td>
+              <td>3-page or 4-page build, consult mode (not locked), 50% to start / 50% at launch once scope is picked</td>
+              <td class="amount">$3,000–$3,500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Build Options (as proposed)</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Notes</th>
+              <th class="amount">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>3-Page Build</strong></td>
+              <td>Home, About Us, Contact — Services lives as a section on Home</td>
+              <td class="amount">$3,000</td>
+            </tr>
+            <tr>
+              <td><strong>4-Page Build</strong></td>
+              <td>Everything in the 3-page build, plus a dedicated Services page (better for search, better for a visitor who already knows what they need) — marked "Best Value" in the proposal</td>
+              <td class="amount">$3,500</td>
+            </tr>
+            <tr>
+              <td><strong>Room to Grow (optional, un-itemized)</strong></td>
+              <td>Individual service pages, blog/content hub, brand extension package, from-scratch copywriting — "folded into one number once we talk it through"</td>
+              <td class="amount">TBD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn" style="margin-top:16px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Pricing philosophy for this one</strong>
+          <span>Terra led with a $1,200 budget she'd already promised the client — she's not shopping casually, she's genuinely worried about going back for more on her first engagement. Jordan held the line on $4,000–5,000 verbally, then landed the formal proposal at $3,000–$3,500, with an explicit lever: if Terra packages content and handles client comms herself, the price trends toward the lower end.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🏦</span>
+        <div class="callout-body">
+          <strong>Hosting — already addressed in the proposal</strong>
+          <span>$20/month, paid directly to Vercel in the client's name, no markup. The proposal frames this explicitly against the $100–$300/month agencies typically charge for hosting they control, which keeps it from contradicting the "no ongoing fees" / "you own it forever" messaging.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT JOURNEY -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Two-week back-and-forth to pin down scope, then a proposal built from a single in-person meeting</strong>
+          <span>Terra re-opened the thread Sep 22 after a quiet stretch; design authority, budget, and page count all got negotiated over email before the Sep 28 meeting locked in what the proposal needed.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Sep 22 — 3:07 PM</div>
+          <div class="timeline-title">Terra Re-Opens the Thread</div>
+          <div class="timeline-desc">Asks whether Jordan has made progress, or whether the site needs a full redo. Offers to meet by phone or Teams.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Thu, Sep 24 — 9:03 AM</div>
+          <div class="timeline-title">Jordan Delivers the HIBU Diagnosis</div>
+          <div class="timeline-desc">Confirms the domain itself is fine but the site is dead on HIBU's end, not migratable. Wayback shows ~7 pages existed but only Home actually loads. Asks for business context, design intent, and real page count.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Thu, Sep 24 — 9:16 AM</div>
+          <div class="timeline-title">Terra's First Answers</div>
+          <div class="timeline-desc">Offers meeting availability, wants to try calling HIBU directly, flags the domain renewal through 2027 and asks about moving hosting later, narrows scope toward 4 pages, and says she wants to keep design herself per her own contract with the client to protect her budget.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Thu, Sep 24 — 10:29 AM</div>
+          <div class="timeline-title">Jordan Explains His Process &amp; Pricing</div>
+          <div class="timeline-desc">Lays out why design has to come before build in his process (unlike Wix/WordPress), what's built into every site (custom CMS, SEO, spam-filtered forms, copywriting, no ongoing fees), gives the $4,000–$5,000 starting range, and links three past builds as reference.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Sep 25 — 8:40 AM</div>
+          <div class="timeline-title">Terra Concedes Design, Reveals Real Budget</div>
+          <div class="timeline-desc">Agrees point-by-point to the included features, drops her request to keep design authority ("I don't think they care as much about the design, but more the content"), and admits her actual budget is $1,200 — quoted to the client before she understood scope. Offers in-person meeting times for the following week.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Sep 25 — 2:33 PM</div>
+          <div class="timeline-title">Jordan Holds the Range, Sets Up the Meeting</div>
+          <div class="timeline-desc">Agrees to build from the Wayback Home page and existing logo. Cites HIBU's own $449/mo published price as a comparison point, holds the $4,000–$5,000 range but flags that packaged content/client comms from Terra could land it lower. Asks about logo/brand refresh interest (unanswered since). Proposes Monday.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Sun, Sep 27</div>
+          <div class="timeline-title">Meeting Confirmed, Then Rescheduled</div>
+          <div class="timeline-desc">Terra confirms Monday 10 AM, leaves the venue to Jordan. That night, Jordan pushes to 11:30 AM and suggests Emy's Coffee Vault in Stevens Point.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Sep 28</div>
+          <div class="timeline-title">In-Person Meeting</div>
+          <div class="timeline-desc">Meeting happens as rescheduled. Jordan follows up same day at 12:30 PM requesting the four specifics still needed: final page count, per-page outline/copy, contact form requirements, and existing photos/logo.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Wed, Sep 30 — 9:22 AM</div>
+          <div class="timeline-title">Terra Delivers Final Scope Inputs</div>
+          <div class="timeline-desc">Confirms 5 pages (Home, Contact Us, Products/Services, Blog, About Us), standard contact form fields plus a message box, and that photos are thin (generic placeholders OK). Sends the logo file. Notes the client is busy and content may need to come from scratch if what was sent to HIBU can't be found.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Mon, Oct 5</div>
+          <div class="timeline-title">Proposal &amp; Wireframe Sent</div>
+          <div class="timeline-desc">Jordan delivers both: a six-section proposal (3-page/4-page pricing, Room to Grow add-ons, process, timeline) and a full wireframe. Consult mode — no price locked, no deposit link active. Awaiting Terra's and the client's decision.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">TBD</div>
+          <div class="timeline-title">Decision &amp; Deposit</div>
+          <div class="timeline-desc">Terra and the client review, pick 3-page vs. 4-page plus any Room to Grow items. Jordan invoices the 50% deposit once scope is locked.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Two build sizes proposed — Terra/client pick one, plus any optional add-ons</strong>
+          <span>Built from the Wayback Home page and existing logo as the starting design reference, with content either edited from what the client supplies or rewritten from scratch (Room to Grow item) if nothing survives.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card" style="border-top-color: var(--ink-4);">
+          <span class="page-badge badge-priority">Option A — $3,000</span>
+          <h4>3-Page Build</h4>
+          <ul>
+            <li>Home, About Us, Contact</li>
+            <li>Services covered as a prominent section on Home, not its own page</li>
+            <li>Custom CMS, spam-filtered contact form rebuilt to spec, mobile-first</li>
+            <li>Client owns the site, code, and domain outright</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--warning);">
+          <span class="page-badge badge-new">Option B — $3,500 · Best Value</span>
+          <h4>4-Page Build</h4>
+          <ul>
+            <li>Everything in the 3-page build, plus a dedicated Services page</li>
+            <li>All four services get real detail — repairs &amp; service, powersport sales, seasonal prep &amp; storage, installation &amp; removal</li>
+            <li>Better for search, and for a visitor who already knows what they need</li>
+            <li>Same CMS, form, and ownership terms as the 3-page option</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card" style="border-top-color: var(--purple);">
+          <span class="page-badge badge-gray">Room to Grow — Optional, Not Priced Individually</span>
+          <h4>Add-Ons, Finalized Together</h4>
+          <ul>
+            <li>Individual service pages — each service gets its own URL instead of sharing one Services page</li>
+            <li>Blog / content hub — can launch as structure only, or with real posts</li>
+            <li>Brand extension package — small custom icon/pattern set built from the existing logo, extendable to print</li>
+            <li>From-scratch copywriting — if the original HIBU content can't be recovered, full copy written for all pages instead of edited from client-supplied material</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--border-strong); opacity: 0.65;">
+          <span class="page-badge badge-gray">Dropped From Original 5-Page Ask</span>
+          <h4>Blog Moved Out of Base Scope</h4>
+          <ul>
+            <li>Terra's Sep 30 answer listed 5 pages including a standalone Blog</li>
+            <li>Proposal folds Blog into Room to Grow rather than the base 3/4-page builds</li>
+            <li>If it comes back into scope, still needs: who writes the posts, and whether it launches with content or just structure</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Current Content Status (context for the build)</h3>
+        <div class="data-row">
+          <span class="data-label">Copy</span>
+          <span class="data-value">Client-supplied content still pending — Terra is waiting on the client, who's been busy. If they can't locate what they originally sent HIBU, copy gets written from scratch (Room to Grow item).</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Old Copy Accuracy</span>
+          <span class="data-value">Wayback Home page is heavily snowmobile-focused ("Expert Snowmobile Services," etc.) — Terra describes the real service mix as boats, ATVs, UTVs, and docks. Confirm the actual mix before reusing or adapting any of the old copy.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Photos</span>
+          <span class="data-value">Client doesn't have many — generic placeholders acceptable for launch</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Logo</span>
+          <span class="data-value">File received, attached to Terra's Sep 30 email</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Brand/Icon Refresh</span>
+          <span class="data-value">Asked Sep 25 whether there's interest — no answer yet; ties into the Room to Grow brand extension package</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEEDED FROM CLIENT -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Decision on build size is the current bottleneck</strong>
+          <span>Everything else below is either in progress with Terra or sitting with the client's own availability.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🧮</span>
+            <div>
+              <strong>Build Size Decision</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">3-page ($3,000) vs. 4-page ($3,500, "Best Value") — unlocks the deposit invoice</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📈</span>
+            <div>
+              <strong>Room to Grow Add-Ons</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Individual service pages, blog, brand extension, from-scratch copywriting — any or none</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Client-Supplied Copy</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Terra waiting on the client; may not exist, in which case copywriting becomes a Room to Grow item</span>
+            </div>
+            <span class="check-status"><span class="pill pill-teal">In Progress</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔧</span>
+            <div>
+              <strong>Confirm Real Service Mix</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Old copy is snowmobile-heavy; verify boats/ATVs/UTVs/docks framing before writing or adapting any page content</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Needs Confirmation</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🖼️</span>
+            <div>
+              <strong>Photos</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Thin on hand — generic placeholders fine for launch</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">With Client</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Logo File</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Received Sep 30</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">In Hand</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🪪</span>
+            <div>
+              <strong>Logo/Brand Refresh Interest</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Asked Sep 25 — no response yet</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💵</span>
+            <div>
+              <strong>50% Deposit</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Invoiced once build size and add-ons are confirmed</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Awaiting Decision</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Planned Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js — App Router</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS + Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom-built around what the business actually manages — no plugin clutter, no license fee</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — ~$20/mo, paid directly by the client, no markup</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Contact Form</span>
+            <span class="data-value">Standard fields plus a message box, spam-filtered, notifications to both the client and Jordan</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain & DNS</h3>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">hobsservice.com — GoDaddy, registered 2021, renewed through Aug 31, 2027. WHOIS private, GoDaddy default nameservers. Jordan has DNS access.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Current Records</span>
+            <span class="data-value">Two A records on @ → parking IPs (199.180.140.11 / .12); www CNAME → live.websites.hibu.com; DMARC TXT present but no MX — no email currently runs on this domain</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Leave Alone</span>
+            <span class="data-value">GoDaddy payments, _domainconnect, NS, and SOA records</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">At Launch</span>
+            <span class="data-value">Repoint the @ A records and www CNAME to Vercel. Nothing needs to change before then — domain can stay at GoDaddy indefinitely.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🧯</span>
+        <div class="callout-body">
+          <strong>HIBU status</strong>
+          <span>Per the call, the client is no longer a HIBU customer, but HIBU is reportedly working with them on a fix on their end. Doesn't change the rebuild plan — worth trying, no harm, but the proposal and timeline don't depend on it.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🏦</span>
+        <div class="callout-body">
+          <strong>"No ongoing fees" messaging — already reconciled</strong>
+          <span>The proposal's standard "you own it forever" / no-monthly-fee language could read as contradicting the $20/mo Vercel hosting cost. The proposal handles this with a dedicated hosting callout that frames it against typical agency markups — keep that explicit framing in any future client-facing copy on this project.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Roadmap & Next Steps</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>No build timeline locked — estimate is 4–6 weeks once a build size is chosen and the deposit clears</strong>
+          <span>The Home page content is essentially already drafted from what was live before, which gives the first page a head start once a design direction is picked.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Complete</div>
+          <h4>Discovery & Diagnosis</h4>
+          <ul>
+            <li>Confirmed HIBU platform is dead-ended, not migratable</li>
+            <li>Pulled Wayback Machine capture — Home page only, 7 pages existed originally</li>
+            <li>Verified domain/DNS health on GoDaddy, confirmed Jordan has access</li>
+            <li>In-person meeting (Sep 28), logo file and scope specifics collected</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Current — Oct 5</div>
+          <h4>Proposal Delivered</h4>
+          <ul>
+            <li>Wireframe and formal proposal sent, consult mode, nothing locked</li>
+            <li>Two build sizes presented ($3,000 / $3,500) plus Room to Grow add-ons</li>
+            <li>Awaiting Terra's and the client's decision</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Upon decision</div>
+          <h4>Scope Lock & Deposit</h4>
+          <ul>
+            <li>Terra/client pick 3-page vs. 4-page plus any add-ons</li>
+            <li>50% deposit invoiced and collected</li>
+            <li>Real content gathering finalized (or copywriting add-on confirmed)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Build — est. 4–6 weeks from kickoff</div>
+          <h4>Design & Build</h4>
+          <ul>
+            <li>1–2 design directions proposed, built around the existing logo</li>
+            <li>Pages built and shared live as they're completed, not held until the end</li>
+            <li>Review and refinement pass before launch</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="weeks">Launch</div>
+          <h4>Go Live</h4>
+          <ul>
+            <li>DNS repointed from HIBU/parking IPs to Vercel</li>
+            <li>Search Console, sitemap, and SEO fully configured</li>
+            <li>CMS, hosting, and analytics handed to the client</li>
+            <li>Google Business Profile website link updated (91 reviews live there already)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Some of these are already on the table as Room to Grow add-ons — pitch the rest once the site's live and real usage exists</strong>
+          <span>Each ties to a gap already visible in this project, not a generic add-on.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📄 Individual Service Pages</h4>
+          <div class="price">Room to Grow — TBD</div>
+          <p>Each service gets its own URL instead of sharing one Services page — stronger local SEO than the consolidated option.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📝 Blog / Content Hub</h4>
+          <div class="price">Room to Grow — TBD</div>
+          <p>Dropped from the base 5-page ask into optional scope. Seasonal tips, service reminders — can launch as structure only or with real posts.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎨 Brand Extension Package</h4>
+          <div class="price">Room to Grow — TBD</div>
+          <p>Custom icon/pattern set built from the existing logo, woven through the site instead of stock icons — extendable to print later.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>✍️ Copywriting From Scratch</h4>
+          <div class="price">Room to Grow — TBD</div>
+          <p>If the original HIBU content can't be recovered, full site copy written for all pages instead of edited from client-supplied material.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📧 Domain Email Setup</h4>
+          <div class="price">TBD</div>
+          <p>No MX record currently exists on hobsservice.com — no email runs on the domain today. Separate scope if the client wants it.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📍 Google Business Profile Management</h4>
+          <div class="price">TBD</div>
+          <p>91 reviews already live there — website link update is part of launch, but ongoing GBP management/sync could be a standing add-on.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Fix the Name Before the Next Email</div>
+        <p>Every one of Jordan's emails so far opens "Hey Tara" — her actual name is Terra Plaisance, confirmed by her own sign-off and email address on every message. Small thing, but it's compounded across five-plus emails and is worth catching before anything more formal goes out.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">First-Client Budget Anxiety — Handle Gently</div>
+        <p>Terra's $1,200 figure was quoted to the client before she understood real scope, and she's explicitly worried about going back to ask for more on her first engagement. The repricing conversation (now formalized at $3,000–$3,500 in the proposal) should keep leaning on "this is the real shape of the build," not just present a bigger number and hope it lands.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">No Direct Line to the Actual Business</div>
+        <p>Every fact about Hob's Service Center — services, reviews, credentials, content, decisions — has come through Terra so far. Worth keeping in mind if anything ever needs direct confirmation from the client owner, since there's currently no contact info for them on file.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Old Copy Is Unreliable — Don't Reuse Without Checking</div>
+        <p>The Wayback Home page is snowmobile-first throughout (headline, intro section, service tiles), reads as generic HIBU boilerplate, and has at least one dangling reference ("these installations") that likely pointed to dock/lift content on a page that never loaded. Confirm the real service mix (boats/ATVs/UTVs/docks per Terra) before adapting any of it, and don't assume the hero photo is licensed for reuse — it looks like HIBU stock.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Response Pattern</div>
+        <p>Terra goes quiet for several days to over a week when she's busy (this happened early in the thread), then replies fully once she resurfaces. A direct follow-up has reliably gotten a response — don't read the gaps as disinterest.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Design Authority — Resolved</div>
+        <p>Terra initially wanted to keep design herself, per her own contract with the client, to protect her budget. She conceded once Jordan explained his design-first build process, and said the client likely cares more about content than design anyway. Build direction is the standard Wayback-Home-plus-logo starting point.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav FAB
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openNav() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('open');
+    fab.textContent = '✕';
+  }
+
+  function closeNav() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeNav();
+    else openNav();
+  });
+
+  overlay.addEventListener('click', closeNav);
+
+  // Nav link tap on mobile: close, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeNav();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
