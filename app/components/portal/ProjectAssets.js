@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation'
 import {
   TbLayoutDashboard, TbFileText, TbPencil, TbLayout, TbBook, TbCopy, TbCheck,
   TbBrandNotion, TbBrandGoogleDrive, TbBrandPinterest, TbVideo, TbLink, TbBrandFigma,
-  TbWorld, TbPlus,
+  TbWorld, TbPlus, TbExternalLink,
 } from 'react-icons/tb'
 import MoodBoard from './MoodBoard'
 import DocForm from './DocForm'
 import ResourceForm from './ResourceForm'
+import DocPreviewPanel from './DocPreviewPanel'
 
 const variantStyles = {
   internal: { icon: 'text-teal' },
@@ -72,6 +73,9 @@ export default function ProjectAssets({
   const [addResourceOpen, setAddResourceOpen] = useState(false)
   const [editingResource, setEditingResource] = useState(null)
 
+  const [previewDoc, setPreviewDoc] = useState(null)
+  const [panelExpanded, setPanelExpanded] = useState(false)
+
   useEffect(() => {
     setDocsState(docs || [])
   }, [docs])
@@ -87,6 +91,25 @@ export default function ProjectAssets({
     navigator.clipboard.writeText(url)
     setCopiedKey(filename)
     setTimeout(() => setCopiedKey((k) => (k === filename ? null : k)), 5000)
+  }
+
+  // Preview panel
+
+  const closePreview = () => setPreviewDoc(null)
+  const toggleExpand = () => setPanelExpanded((v) => !v)
+
+  const handleCardClick = (e, item, canPreview) => {
+    if (!canPreview) return
+    // let modifier/middle clicks fall through to the native <a> (open in new tab, etc.)
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return
+    e.preventDefault()
+    setPreviewDoc(item)
+  }
+
+  const handleOpenFullPage = (e, item) => {
+    e.preventDefault()
+    e.stopPropagation()
+    router.push(item.href)
   }
 
   // Docs
@@ -258,30 +281,37 @@ export default function ProjectAssets({
             <p className='font-mono text-[10px] lg:text-xs text-white/40 tracking-widest uppercase mb-4'>
               {group.label}
             </p>
-            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3'>
+            <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3'>
               {items.map(item => {
                 const Icon = item.icon
                 const isDoc = item.kind === 'doc'
                 const isCopied = copiedKey === item.filename
+                const canPreview = isDoc && (variant === 'internal' || variant === 'designer')
+                const isSelected = previewDoc?.key === item.key
                 return (
                   <a
                     key={item.key}
                     href={item.href}
                     target={isDoc ? undefined : '_blank'}
                     rel={isDoc ? undefined : 'noopener noreferrer'}
-                    className='group relative flex flex-col bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl p-4 min-h-40 lg:min-h-44 transition-colors'
+                    onClick={(e) => handleCardClick(e, item, canPreview)}
+                    className={`group relative flex flex-col bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl p-4 min-h-40 lg:min-h-44 transition-colors ${
+                      isSelected ? 'bg-white/[0.07] ring-1 ring-white/30' : ''
+                    }`}
                   >
-                    {variant === 'internal' && (
+                    {(variant === 'internal' || (variant === 'designer' && isDoc)) && (
                       <div className='absolute top-3 right-3 flex items-center gap-1'>
-                        <button
-                          type='button'
-                          onClick={(e) => (isDoc ? handleDocEditClick(e, item) : handleResourceEditClick(e, item))}
-                          title={isDoc ? 'Edit document' : 'Edit resource'}
-                          className='p-1.5 rounded-lg text-white/30 hover:text-teal hover:bg-white/[0.06] transition-all opacity-40 lg:opacity-0 lg:group-hover:opacity-100'
-                        >
-                          <TbPencil className='text-base' />
-                        </button>
-                        {isDoc && (
+                        {variant === 'internal' && (
+                          <button
+                            type='button'
+                            onClick={(e) => (isDoc ? handleDocEditClick(e, item) : handleResourceEditClick(e, item))}
+                            title={isDoc ? 'Edit document' : 'Edit resource'}
+                            className='p-1.5 rounded-lg text-white/30 hover:text-teal hover:bg-white/[0.06] transition-all opacity-40 lg:opacity-0 lg:group-hover:opacity-100'
+                          >
+                            <TbPencil className='text-base' />
+                          </button>
+                        )}
+                        {variant === 'internal' && isDoc && (
                           <button
                             type='button'
                             onClick={(e) => handleCopy(e, item.filename)}
@@ -293,11 +323,21 @@ export default function ProjectAssets({
                             {isCopied ? <TbCheck className='text-base text-warning' /> : <TbCopy className='text-base' />}
                           </button>
                         )}
+                        {canPreview && (
+                          <button
+                            type='button'
+                            onClick={(e) => handleOpenFullPage(e, item)}
+                            title='Open full page'
+                            className='p-1.5 rounded-lg text-white/30 hover:text-teal hover:bg-white/[0.06] transition-all opacity-40 lg:opacity-0 lg:group-hover:opacity-100'
+                          >
+                            <TbExternalLink className='text-base' />
+                          </button>
+                        )}
                       </div>
                     )}
                     <Icon className={`text-2xl ${s.icon} shrink-0 opacity-80 group-hover:opacity-100 transition-opacity`} />
                     <div className='flex flex-col justify-end flex-1 gap-2 mt-auto pt-4'>
-                      <span className='font-medium text-sm text-white leading-tight'>{item.label}</span>
+                      <span className=' text-sm 2xl:text-lg lg:text-base  text-white '>{item.label}</span>
                       {variant === 'internal' && (
                         <div className='flex flex-wrap gap-1.5'>
                           {item.audience?.map(a => (
@@ -360,6 +400,15 @@ export default function ProjectAssets({
           onDelete={editingResource ? handleDeleteResource : undefined}
         />
       )}
+
+      <DocPreviewPanel
+        doc={previewDoc}
+        clientSlug={clientSlug}
+        projectSlug={projectSlug}
+        expanded={panelExpanded}
+        onExpandToggle={toggleExpand}
+        onClose={closePreview}
+      />
     </div>
   )
 }
