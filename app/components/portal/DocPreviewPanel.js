@@ -28,7 +28,7 @@ export default function DocPreviewPanel({
   const src = `/clients/${clientSlug}/${projectSlug}/${doc.filename}`
 
   return createPortal(
-    <div className='fixed inset-0 z-50'>
+    <div className='fixed inset-0 z-[110]'>
       <div
         className='absolute inset-0 bg-dark/50 backdrop-blur-[6px]'
         onClick={onClose}
