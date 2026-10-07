@@ -6,22 +6,30 @@ import Link from 'next/link';
 import { TbPlus } from 'react-icons/tb';
 import { fetchContent as f } from '@/app/utils/cms/fetchContent';
 import { FETCH_CLIENTS_QUERY as Q } from '@/app/data/queries/pages/FETCH_CLIENTS_QUERY';
+import { FETCH_SETTINGS_QUERY as SETTINGS_Q } from '@/app/data/queries/pages/FETCH_SETTINGS_QUERY';
 import { NoteDraftProvider } from '@/app/components/notes/NoteDraftProvider';
 import GlobalNoteWidget from '@/app/components/notes/GlobalNoteWidget';
+import QuickLinksWidget from '@/app/components/portal/QuickLinksWidget';
 
 export default async function InternalLayout({ children }) {
-	const clients = await f(Q);
+	const [clients, settings] = await Promise.all([
+		f(Q),
+		f(SETTINGS_Q),
+	]);
 
 	return (
 		<NoteDraftProvider clients={clients}>
 			<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
 				<div className='max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-3 flex flex-col lg:flex-row lg:items-center gap-3'>
 					<div className='flex items-center justify-between gap-3 lg:justify-start lg:shrink-0 lg:mr-4'>
-						<Link href='/dashboard'>
-							<p className='text-white/60 text-xs lg:text-sm tracking-wider font-semibold'>
-								Latz Web Development
-							</p>
-						</Link>
+						<div className='flex items-center gap-1.5'>
+							<Link href='/dashboard'>
+								<p className='text-white/60 text-xs lg:text-sm tracking-wider font-semibold'>
+									Latz Web Development
+								</p>
+							</Link>
+							<QuickLinksWidget settingsLinks={settings?.quickLinks || []} />
+						</div>
 						<div className='flex items-center gap-2 lg:hidden'>
 							<Link
 								href='/clients/new'
