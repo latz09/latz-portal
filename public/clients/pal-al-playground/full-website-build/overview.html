@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Pal's Park — Website Build Overview | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0F14;
+    --surface: #141A2B;
+    --surface-2: #141A2B;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.18);
+    --ink: rgba(255,255,255,0.95);
+    --ink-2: rgba(255,255,255,0.70);
+    --ink-3: rgba(255,255,255,0.46);
+    --ink-4: rgba(255,255,255,0.30);
+    --teal: #1E8A94;
+    --teal-dim: rgba(30,138,148,0.16);
+    --teal-line: rgba(30,138,148,0.42);
+    --purple: #8B7FCF;
+    --purple-dim: rgba(139,127,207,0.16);
+    --purple-line: rgba(139,127,207,0.42);
+    --warning: #C9A227;
+    --warning-dim: rgba(201,162,39,0.14);
+    --warning-line: rgba(201,162,39,0.42);
+    --danger: #B3524A;
+    --danger-dim: rgba(179,82,74,0.14);
+    --danger-line: rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink-2);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 248px;
+    height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 36px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 26px 26px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .sidebar-brand .former-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-4);
+    margin-top: 3px;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    color: var(--warning);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--warning);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 10px 26px 5px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 26px;
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.03);
+    border-left-color: var(--teal-line);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: var(--teal-dim);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 22px 26px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+
+  /* ── MOBILE NAV CONTROLS ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 248px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 900px 500px at 80% 0%, rgba(30,138,148,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: 'COMING SOON';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 92px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .page-header .overline {
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-header .overline::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+
+  .page-header h1 {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    position: relative;
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    position: relative;
+    display: flex;
+    gap: 0;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-soft);
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .header-meta-item:last-child { border-right: none; }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.green { color: var(--teal); }
+  .header-meta-item .value.orange { color: var(--warning); }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 56px 64px 100px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .section-icon {
+    width: 34px; height: 34px;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal-line);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 26px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    border: 1px solid;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  .callout.info { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.warn { background: var(--warning-dim); border-color: var(--warning-line); }
+  .callout.success { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.alert { background: var(--danger-dim); border-color: var(--danger-line); }
+  .callout.yellow { background: var(--warning-dim); border-color: var(--warning-line); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--warning);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+
+  .highlight-box strong { font-weight: 700; color: var(--ink); }
+  .highlight-box p { font-size: 14px; margin-top: 9px; color: var(--ink-2); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border-strong);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+  .timeline-item.pending::before { background: var(--ink-4); box-shadow: 0 0 0 2px var(--ink-4); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-line); animation: pulse 2s infinite; }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .budget-table th {
+    background: var(--surface);
+    color: var(--ink-3);
+    padding: 12px 18px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .budget-table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--ink-2);
+    background: var(--bg);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+  .budget-table .total-row td {
+    background: var(--teal-dim) !important;
+    color: var(--ink);
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--teal-dim) !important;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--warning-dim) !important;
+    color: var(--warning);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    border-top: 2px solid var(--teal);
+    box-shadow: var(--shadow);
+  }
+
+  .page-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .badge-static { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-new { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .badge-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-priority { background: var(--teal); color: #ffffff; border-color: var(--teal); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .pill-green { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-orange { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .pill-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-red { background: var(--danger-dim); color: var(--danger); border-color: var(--danger-line); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: var(--surface);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 22px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--purple); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 9px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--ink-3); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 22px;
+    align-items: start;
+    box-shadow: var(--shadow);
+  }
+
+  .phase-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--ink-4);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 14px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--warning);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay { display: block; }
+
+    .page-header { padding: 40px 20px 32px; }
+    .content { padding: 40px 20px 90px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header::after { font-size: 56px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Pal's Park</div>
+    <div class="former-name">fka Hewett Indoor Playground</div>
+    <div class="status-pill" style="background: var(--teal-dim); border-color: var(--teal-line); color: var(--teal);"><span style="width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>Wireframe Review — Pre-Build</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🎪</span> Client Info</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client History</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Content Needed</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Pal's Park LLC</h1>
+    <div class="sub">Wisconsin Rapids, WI · 3-Page Build (About+FAQ / Offerings / Coming Soon) · formerly Hewett Indoor Playground</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Client</span>
+        <span class="value">Allison Brown Hewett</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value">$3,250</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Status</span>
+        <span class="value green">Confirmed — Paid ($1,625)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Launch Target</span>
+        <span class="value orange">First week of Nov (pending wireframe approval)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value">TBD — Namecheap (Pookie)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Platform</span>
+        <span class="value">Rhomb (rhomb.io)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🎪</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Allison Brown Hewett <span style="color:var(--ink-4);">(legal name: Mary Allison Brown)</span></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Co-Owner — primary day-to-day contact</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Origin</span>
+            <span class="data-value">Bridged over from the Honestly Cranberry engagement</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Household Note</span>
+            <span class="data-value">Young daughter, Emmy. Self-describes household as "visual learners" — plan content/copy accordingly.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Business Name</span>
+            <span class="data-value">Pal's Park LLC <span style="color:var(--warning);">(renamed — formerly "Hewett Indoor Playground")</span></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Address</span>
+            <span class="data-value">2111 8th St S, Suite 108, Wisconsin Rapids, WI 54494</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Facility</span>
+            <span class="data-value">~17,810 sqft, two private party rooms</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Business Type</span>
+            <span class="data-value">Unstaffed indoor playground — family entertainment / recreation</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Status</span>
+            <span class="data-value">Pre-launch startup — not yet operational</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Other Stakeholders</h3>
+        <div class="data-row">
+          <span class="data-label">Alex Hewett</span>
+          <span class="data-value">Co-owner, husband. Practicing attorney. Historically silent/CC-only — has never driven a decision — though slightly more present in recent threads.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Pookie Rosa</span>
+          <span class="data-value">Pookie Rosa Marketing — strategist. Now the <strong style="color:var(--ink);">primary content/copy gatekeeper for the entire project</strong>: all written copy flows through her first for editing/SEO before it reaches Jordan. Expect finalized copy only, not raw drafts. Also managing the Founders Club pre-sale program and domain registration.</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Decision Path</span>
+          <span class="data-value">Functionally Allison + Pookie drive most decisions. Alex is a background co-signer. Pookie now has real authority over structure <em>and</em> content, not just launch marketing.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💬</span>
+        <div class="callout-body">
+          <strong>Communication style</strong>
+          <span>Laid-back, slower cadence historically, casual tone, budget-conscious. Generally reasonable and willing to negotiate when shown clear reasoning — this played out in both the pricing and logo negotiations.</span>
+        </div>
+      </div>
+
+      <div class="callout alert">
+        <span class="callout-icon">🚧</span>
+        <div class="callout-body">
+          <strong>Firewall: Mary is NOT involved in this project</strong>
+          <span>Allison's mother / Honestly Cranberry matriarch. Different venture, different stakeholders. Keep threads, contracts, and proposals fully separate from Honestly Cranberry.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Coming Soon page is live. Main 2-page site is in wireframe review — build is gated on client approval, not missing content.</strong>
+        <p>The Founders Club mechanism blocker that held up the Coming Soon page is resolved, and that page shipped. Pookie has since delivered a full "Website Copy, Final" document, and a complete content wireframe for the Home and Offerings pages has been built from it — reconciled against the original Jul 10 content brief and the business plan doc, with a handful of discrepancies caught and flagged (see Client Journey Timeline). That wireframe went to Allison, Pookie, and Alex on Oct 6 for review and approval, along with a punch list of open items (see <strong style="color:var(--ink);">Open Questions Pending</strong> below). Build doesn't start until that review comes back. Pookie's floated first-week-of-November target is realistic <em>if</em> approval comes back promptly — a slower review pushes it to the second or third week instead. That's a separate question from the venue's February 2027 opening; no firm site-launch date has been committed to the client yet beyond the November window currently being discussed.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Why They Came to Us</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> No staffed front desk — the website has to carry 100% of the pre-visit info burden</li>
+            <li><span class="check-icon">🔴</span> Need a conversion funnel into Rhomb without duplicating what Rhomb already handles</li>
+            <li><span class="check-icon">🔴</span> Need a trustworthy brand-story presence for parents vetting an unstaffed venue</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Coming Soon page live, capturing Founders Club interest — done</li>
+            <li><span class="check-icon">✅</span> Clean, fast, mobile-first 2-page main site, built from Pookie's final copy</li>
+            <li><span class="check-icon">✅</span> Offerings page clearly explains memberships, day passes, parties</li>
+            <li><span class="check-icon">✅</span> Clean hand-off to Rhomb for every transaction</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Explicitly NOT in Scope (This Phase)</h3>
+        <ul class="checklist">
+          <li><span class="check-icon">🚫</span> Dedicated Memberships page</li>
+          <li><span class="check-icon">🚫</span> Dedicated Plan Your Visit page</li>
+          <li><span class="check-icon">🚫</span> Dedicated Birthday Parties page — client declined despite Jordan's SEO pitch (see Notes)</li>
+          <li><span class="check-icon">🚫</span> Dedicated About page (folded into Page 1 with FAQs)</li>
+          <li><span class="check-icon">🚫</span> Blog/news section — flagged as a year-one / phase 2 add</li>
+          <li><span class="check-icon">🚫</span> Embedded (Roller-style) booking — Rhomb is link-out only, confirmed</li>
+          <li><span class="check-icon">🚫</span> Party decoration rentals — bring-your-own-decor</li>
+          <li><span class="check-icon">🚫</span> Food/kitchen — vending only</li>
+        </ul>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open Questions Pending</strong>
+          <span>Rhomb product links needed for each "Buy Now" button (memberships, day passes, party booking); policy PDF URL to link from the FAQ once it's hosted on Rhomb; hero photo selection for the homepage; an age-range inconsistency inside the final copy itself (1–17 in one spot, 1–12 in another — needs a single confirmed answer from Pookie/Allison); missing fine print on the party room section (balloon fee amount, refund/reschedule terms); and sign-off on the Brand Pillars wording as currently drafted in the wireframe.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="card">
+        <h3>Website Contract</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Line Item</th>
+              <th>Notes</th>
+              <th class="amount">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>2-Page Site</strong></td>
+              <td>Page 1 (About/Why + FAQ) + Page 2 (Offerings) — confirmed Jul 4, 2026</td>
+              <td class="amount">$3,250</td>
+            </tr>
+            <tr>
+              <td>Added at no charge — FAQ</td>
+              <td>Condensed, parent-facing — folded into Page 1 (per Jul 21 email)</td>
+              <td class="amount">$0</td>
+            </tr>
+            <tr>
+              <td>Added at no charge — Coming Soon Page</td>
+              <td>Page 3 — shipped and live; Founders Club capture, mechanism resolved</td>
+              <td class="amount">$0</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Total Contract</strong></td>
+              <td></td>
+              <td class="amount">$3,250</td>
+            </tr>
+            <tr class="paid-row">
+              <td>✅ Deposit (50%)</td>
+              <td>Confirmed paid</td>
+              <td class="amount">$1,625</td>
+            </tr>
+            <tr class="pending-row">
+              <td>⏳ Balance Due at Launch</td>
+              <td>Second 50% — due at go-live of the main 2-page site</td>
+              <td class="amount">$1,625</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚖️</span>
+        <div class="callout-body">
+          <strong>Watch this: free scope came back in on a fixed price</strong>
+          <span>A standalone pre-launch landing page was cut from scope during negotiation (it was priced at ~$1,000 in an earlier draft). It's now back in as a free addition, alongside FAQ, and it shipped. Good relationship gesture, and reasonable given the multi-project history — but it was real build scope, added at no additional revenue. Worth having in mind if Pookie or Allison ask for more "small additions" on top of the main site before it's launched.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Logo — Related Project, Closed Out</h3>
+        <div class="data-row">
+          <span class="data-label">Total Spend</span>
+          <span class="data-value">$900 (client-facing)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Designer</span>
+          <span class="data-value">Alyssa — compensated $450 total across all rounds</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Status</span>
+          <span class="data-value"><span class="pill pill-green">Complete — Delivered & Paid</span></span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Deliverables</span>
+          <span class="data-value">Full color, black, and white versions; print (CMYK) and digital (RGB) formats; color reference sheet</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Ongoing / Separate Costs (client pays directly)</h3>
+        <div class="data-row">
+          <span class="data-label">Hosting</span>
+          <span class="data-value">~$20/month — Vercel, client's own account</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Rhomb Subscription</span>
+          <span class="data-value">~$199–$229/month, paid directly to Rhomb — not part of this contract</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Recurring Fees to Jordan</span>
+          <span class="data-value">None — client owns everything at launch</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT HISTORY -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey Timeline</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-body">
+          <strong>Coming Soon page shipped, final copy's in hand, and the main site is now a wireframe-approval question</strong>
+          <span>The Founders Club mechanism resolved, the Coming Soon page went live by its deadline, and Pookie followed up with a full final-copy document in September. A complete Home + Offerings wireframe has been built from it and sent out for review on Oct 6. The long pole now is how fast Allison, Pookie, and Alex turn around approval — not content, not mechanism decisions.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">~Jan 2026</div>
+          <div class="timeline-title">Playground Project Introduced</div>
+          <div class="timeline-desc">Allison brings the playground project to Jordan during the Honestly Cranberry engagement.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jun 11 – Jul 4, 2026</div>
+          <div class="timeline-title">Scope & Pricing Negotiation</div>
+          <div class="timeline-desc">Full $5,500 bundled proposal → budget pushback → revised 2-tier offer → client's own About+FAQ / Offerings split (advised by Pookie) → flat per-page pricing → final: 2 pages at $3,250. Landing page and Plan Your Visit dropped from scope during this process.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 4, 2026</div>
+          <div class="timeline-title">Deal Verbally Closed + Logo Received</div>
+          <div class="timeline-desc">2 pages, $3,250. Allison confirms "who we are and why" + "everything we offer." Logo sent same day.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 6, 2026</div>
+          <div class="timeline-title">Invoice Sent — Project Active</div>
+          <div class="timeline-desc">Get-started invoice sent. Deposit has since been confirmed paid.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 8–20, 2026</div>
+          <div class="timeline-title">Logo Iteration Rounds</div>
+          <div class="timeline-desc">Designer meeting kicked off review. What started as polish-only scope expanded into a full font/lockup exploration detour, before settling back on the originally-recommended direction (Option 1 alignment/color-bar treatment). Worth remembering: this client explores alternatives before circling back to the first good recommendation.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 10, 2026</div>
+          <div class="timeline-title">Full Website Content Brief Received</div>
+          <div class="timeline-desc">From Pookie — covers photos, copy ownership, FAQ approach, layout approval, full pricing, party policy, hours, party inquiry form direction, Rhomb promo codes, logo, policy doc handling, waiver handling, Founders Club, coming-soon timeline, domain/hosting.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 17, 2026</div>
+          <div class="timeline-title">Family Photo Shoot</div>
+          <div class="timeline-desc">At Alex & Allison's home, shot by Pookie — lifestyle/portrait of Alex, Allison, and Emmy for Page 1's family-owned positioning.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Jul 21, 2026</div>
+          <div class="timeline-title">FAQ + Coming Soon Page Confirmed at No Charge</div>
+          <div class="timeline-desc">Jordan's email to the client formalizes both additions to the original 2-page scope.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Late Jul 2026</div>
+          <div class="timeline-title">Business Renamed to Pal's Park LLC</div>
+          <div class="timeline-desc">Formerly "Hewett Indoor Playground" / informally "the playground." Logo finalized around the same window — full color/BW, CMYK/RGB, color reference sheet delivered, client has it in hand and paid.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Early Aug 2026</div>
+          <div class="timeline-title">Founders Club Mechanism Resolved</div>
+          <div class="timeline-desc">Pookie landed on a direction for how Founders Club money gets collected, clearing the single item blocking the Coming Soon page's core functional section.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Aug 18, 2026</div>
+          <div class="timeline-title">Coming Soon Page Shipped — Live</div>
+          <div class="timeline-desc">Page 3 shipped on schedule, hitting the client's non-negotiable deadline. Founders Club capture live and working.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Sep 2026</div>
+          <div class="timeline-title">Full Website Copy, Final — Received from Pookie</div>
+          <div class="timeline-desc">A complete, finalized copy document covering pricing, hours, FAQs, the founders' story, and all policies — the SEO-optimized text Pookie had been gatekeeping since July.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Sep 2026</div>
+          <div class="timeline-title">Home + Offerings Wireframe Built from Final Copy</div>
+          <div class="timeline-desc">Full content wireframe built for both pages using the final copy document, then reconciled line-by-line against the original Jul 10 content brief and the business plan doc. Caught and flagged a handful of discrepancies between the documents before they could make it into the live site: party room rate is $200, not $250; the party room cap is 10 adults; the Founders Wall recognition kicks in at 2 months, not another figure floated earlier. All resolved against the final copy as the authoritative source.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Oct 2, 2026</div>
+          <div class="timeline-title">Pookie Asks for a Status Update</div>
+          <div class="timeline-desc">Pookie checked in on progress, still referencing "next month" as the general go-live target rather than a firm date.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Oct 5, 2026</div>
+          <div class="timeline-title">Jordan Pushes for a Firm Date</div>
+          <div class="timeline-desc">Jordan asked for a real date instead of "next month." Pookie asked if the first week of November would work. Jordan said he'd confirm once he'd reviewed the Rhomb integration details and the final copy in full.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Oct 6, 2026</div>
+          <div class="timeline-title">Wireframe Sent for Client Review & Approval</div>
+          <div class="timeline-desc">Full Home + Offerings wireframe sent to Allison, Pookie, and Alex, along with a punch list of open items to resolve before build starts (see Open Questions Pending). This is the current blocker — build begins once review comes back.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <strong>Approved Scope: 3 Pages for $3,250 (2 paid + 1 free addition)</strong>
+          <span>Sequencing decision, approved by Pookie: full focus went to the Coming Soon page first — now shipped. The main 2-page site build was deliberately held until Pookie delivered finalized Founders story, About copy, and FAQ content; that content has since arrived, the wireframe is built, and the build itself now waits on client review/approval of that wireframe.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Page 1 — Who We Are & Why</h4>
+          <ul>
+            <li>Hero, founders' story (About), brand pillars</li>
+            <li>Condensed, parent-facing FAQ</li>
+            <li>"Sign Me Up" CTA near the bottom</li>
+            <li>General inquiry form (shared with Page 2)</li>
+            <li>Founders Club teaser/placeholder section</li>
+            <li>Founders story copy largely drafted already in the client's Content Brief ("We're the Hewetts," "Deep Roots," "Why An Indoor Playground?") — close to final voice, though Pookie officially owns final copy</li>
+          </ul>
+        </div>
+
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed</span>
+          <h4>Page 2 — Everything We Offer</h4>
+          <ul>
+            <li>Memberships, Day Passes, Birthday Parties</li>
+            <li>General inquiry form — same form as Page 1, not a separate party-specific form</li>
+            <li>Party bookings go through Rhomb only — no separate party booking form</li>
+            <li>Confirmed hybrid approach: Rhomb handles all transactions, one general inquiry form handles everything else</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS Managed — Live</span>
+          <h4>Page 3 — Pre-Launch "Coming Soon" Page</h4>
+          <ul>
+            <li>Shipped and live — Aug 18, 2026 deadline met</li>
+            <li>Primary purpose: Founders Club email capture — live and working</li>
+            <li>Kept deliberately minimal: hero, brief description, Founders Club/email capture section, footer</li>
+            <li>Founders Club payment mechanism resolved — no longer a conflict</li>
+          </ul>
+        </div>
+
+        <div class="page-card" style="border-top-color: var(--border-strong); opacity: 0.65;">
+          <span class="page-badge badge-gray">Not in Scope (This Round)</span>
+          <h4>Grayed Out</h4>
+          <ul>
+            <li>Dedicated Birthday Parties page — Jordan proposed for SEO, client declined ("not too concerned about SEO to start")</li>
+            <li>Dedicated Memberships page</li>
+            <li>Dedicated Plan Your Visit page</li>
+            <li>Dedicated About page (separate from Page 1)</li>
+            <li>Blog/News section</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Client's Own Stated Plan for Future Pages</h3>
+        <p style="font-size:14px;color:var(--ink-2);">"We'll plan to add more pages as we think we need them or after the initial year/startup phase for SEO goals." — Allison, Jul 4, 2026.</p>
+      </div>
+    </section>
+
+    <!-- CONTENT NEEDED -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Content Needed from Client</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Content is in hand — the gate now is wireframe approval, not missing content</strong>
+          <span>Pookie's full "Website Copy, Final" document arrived and has been fully incorporated into the Home + Offerings wireframe. What's outstanding is a short punch list of open items surfaced during that build (see Open Questions Pending) plus client sign-off on the wireframe itself.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">🎨</span>
+            <div>
+              <strong>Logo</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Full color/BW, CMYK/RGB, color reference sheet — delivered, client has it in hand, paid in full</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Complete</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📸</span>
+            <div>
+              <strong>Family Photos — Allison, Alex, Emmy</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Lifestyle/portrait shoot completed Jul 17 at their home, shot by Pookie</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Shot Complete</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏢</span>
+            <div>
+              <strong>Space/Facility Photos</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Coordinated separately once build-out progresses further — hero photo selection for the homepage is now a specific open item, see Open Questions Pending</span>
+            </div>
+            <span class="check-status"><span class="pill pill-gray">Pending — Timing TBD</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✍️</span>
+            <div>
+              <strong>Founders' Story / About Copy</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Finalized version arrived in the "Website Copy, Final" document from Pookie and is built into the Home wireframe</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">In Hand — Finalized</span></span>
+          </li>
+          <li>
+            <span class="check-icon">❓</span>
+            <div>
+              <strong>FAQ Content</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Finalized FAQ text arrived with the final copy document and is built into the wireframe; the downloadable policy PDF itself still needs a hosted URL on Rhomb — see Open Questions Pending</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">In Hand — Finalized</span></span>
+          </li>
+          <li>
+            <span class="check-icon">💳</span>
+            <div>
+              <strong>Membership / Day Pass Pricing & Policy</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Confirmed via the final copy document — reconciled against the Jul 10 Content Brief and business plan, no open discrepancies remaining</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">In Hand</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🎈</span>
+            <div>
+              <strong>Party Room Details, Pricing, Policy</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Rate, capacity, and cancellation policy reconciled and confirmed ($200 rate, 10-adult cap). Balloon fee amount and refund/reschedule fine print still missing — see Open Questions Pending</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Mostly In Hand — Fine Print Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🕐</span>
+            <div>
+              <strong>Hours of Operation</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Weekdays 8am–8pm, Weekends 8am–9pm, 365 days/year including holidays</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">In Hand</span></span>
+          </li>
+          <li>
+            <span class="check-icon">✅</span>
+            <div>
+              <strong>Founders Club Payment Mechanism Decision</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Resolved in early August. Coming Soon page shipped with the confirmed mechanism and is live</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Resolved</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🌐</span>
+            <div>
+              <strong>Domain Confirmation</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Pookie registering via Namecheap — mentioned a ".wi" TLD, non-standard, still needs clarifying with her</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔧</span>
+            <div>
+              <strong>Hosting/DNS Requirements — Action on Jordan</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Pookie asked Jordan to confirm hosting setup requirements and DNS pointing once the domain is registered — still not done, domain isn't registered yet</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Owed to Pookie</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js — App Router</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React + Tailwind CSS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom-built CMS</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel — ~$20/mo, client's own account</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain</h3>
+          <div class="data-row">
+            <span class="data-label">Registrar</span>
+            <span class="data-value">Namecheap — being registered by Pookie</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">TLD</span>
+            <span class="data-value">Pookie mentioned ".wi" — non-standard, double-check/clarify before it's locked in</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">DNS Action Owed</span>
+            <span class="data-value">Jordan owes Pookie hosting requirements + where to point DNS, once domain is registered</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Rhomb (rhomb.io) Integration</h3>
+        <div class="data-row">
+          <span class="data-label">Storefront</span>
+          <span class="data-value">White-labeled at {business}.rhombnow.com</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Integration Model</span>
+          <span class="data-value">Confirmed simple: "Buy Now"-style deep links from the site straight to Rhomb product pages — not embedded checkout. Memberships, day passes, and party booking each need their own product link pulled from Rhomb (open item — see Open Questions Pending)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Party Booking</span>
+          <span class="data-value">Deep link to Rhomb's real-time availability calendar — booking itself happens on Rhomb, not on-site</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Waivers</span>
+          <span class="data-value">Fully handled through Rhomb at time of purchase — no website content needed</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Email Automation</span>
+          <span class="data-value">Built into Rhomb — confirms no separate newsletter tool needed for post-launch</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Promo / Gift Cards</span>
+          <span class="data-value">Supported natively</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE / ROADMAP -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>No hard deadline right now — launch timing depends on how fast wireframe review comes back</strong>
+          <span>Pookie floated the first week of November; Jordan hasn't confirmed that date yet, pending the Rhomb integration review and a final pass on the copy. A slower client review pushes launch to the second or third week of November instead. This is unrelated to the venue's February 2027 opening — no firm site-launch date has been committed to the client.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">00</div>
+        <div>
+          <div class="weeks">Now — Oct 6</div>
+          <h4>Client Wireframe Review & Approval</h4>
+          <ul>
+            <li>Home + Offerings wireframe out to Allison, Pookie, and Alex</li>
+            <li>Punch list to clear: Rhomb product links, policy PDF URL, hero photo, age-range fix, party-room fine print, Brand Pillars sign-off</li>
+            <li>Build doesn't start until this comes back approved</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Pending Approval</div>
+          <h4>Main Site Build</h4>
+          <ul>
+            <li>Home + Offerings pages built from the approved wireframe and final copy</li>
+            <li>Rhomb "Buy Now" deep links wired in once product links are provided</li>
+            <li>Space/facility photos coordinated separately as build-out progresses</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Target: First Week of Nov (unconfirmed)</div>
+          <h4>Launch</h4>
+          <ul>
+            <li>Target date depends entirely on how quickly the wireframe review comes back — not yet committed to the client</li>
+            <li>Second 50% payment ($1,625) due at go-live</li>
+            <li>Separate from the venue's own Feb 2027 opening — two different dates</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells & Add-Ons</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Client already told us the plan — take them at their word</strong>
+          <span>Allison stated they'll add pages "after the initial year/startup phase for SEO goals." Revisit organically once they're open and have real numbers or search-traffic curiosity — don't force it early.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>📄 Policy Document PDF Design</h4>
+          <div class="price">TBD</div>
+          <p>On-brand PDF design for the full downloadable policy document linked from the FAQ. Raised twice by Pookie already — revisit once the condensed FAQ is ready.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>🎈 Dedicated Birthday Parties Page</h4>
+          <div class="price">~$500–$750</div>
+          <p>Client declined this round over SEO indifference, not price. Revisit after year one when they may care more about search traffic, per their own stated plan.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>💳 Dedicated Memberships Page</h4>
+          <div class="price">Pricing TBD</div>
+          <p>Pitch with a value-math angle ("pays for itself in X visits"). Best timed once they have real membership numbers to show.</p>
+        </div>
+      </div>
+
+      <div class="three-col" style="margin-top:18px;">
+        <div class="upsell-card">
+          <h4>🗓️ Plan Your Visit Page</h4>
+          <div class="price">Pricing TBD</div>
+          <p>Best pitched once hours and pricing are finalized and stable — they already are, so this could move sooner than the others.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📰 Blog / News Section</h4>
+          <div class="price">Pricing TBD</div>
+          <p>Client already flagged this as a "phase 2 / year one" idea themselves. Good candidate for a proactive re-pitch around month 6–9 post-launch.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📊 Annual Analytics / Optimization Check-In</h4>
+          <div class="price">Optional, no commitment</div>
+          <p>Paid review offered at the 6-month and 12-month marks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Business Rename — Update Everywhere</div>
+        <p>Now officially Pal's Park LLC, formerly "Hewett Indoor Playground" and informally "the playground." Make sure this is reflected consistently across contracts, collateral, and any future correspondence.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">No Firm Launch Date Was Ever Committed — Watch the November Framing</div>
+        <p>Before this week, no full-site launch date had actually been committed to the client. "February" was an internal planning assumption tied to the venue's own Feb 2027 opening — never promised to Allison or Pookie as the website's go-live date. The first-week-of-November ask came from Pookie on Oct 5, not from Jordan; the real answer is still pending wireframe approval. Be careful not to let Pookie's proposed date harden into a commitment before the review is actually back.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Pookie's Role Has Expanded</div>
+        <p>Originally a structural advisor and launch-marketing stakeholder. Now confirmed as the gatekeeper for all written copy on the site — delivered the finalized, SEO-optimized "Website Copy, Final" document in September. She's also running domain registration and the Founders Club pre-sale program, which makes her the practical bottleneck on several fronts at once.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Founders Club Conflict — Resolved</div>
+        <p>Pookie had given two conflicting answers on how Founders Club money gets collected. It was flagged without assigning blame, a decision was requested with a clear deadline, and Pookie landed on a direction in early August — the Coming Soon page shipped on time with the resolved mechanism.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Content Reconciliation Caught Real Discrepancies</div>
+        <p>Building the Home + Offerings wireframe against the final copy, Jul 10 content brief, and business plan doc surfaced a few mismatches that would otherwise have shipped wrong: party room rate ($200, not $250 as floated earlier), the 10-adult party room cap, and the 2-month threshold for Founders Wall recognition. All resolved in favor of the final copy document as the authoritative source — worth remembering that these documents don't always agree with each other.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Free Scope Additions — Track Capacity</div>
+        <p>The Coming Soon page and FAQ came back into scope at no charge after being cut during negotiation. Reasonable given the relationship, and it's now shipped — but don't let more "small additions" land on top of the main site build without a conversation about scope.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Logo Process Pattern — Useful for Future Rounds</div>
+        <p>The logo took extra rounds beyond the original polish-only scope — a full font/lockup exploration detour — before settling back on the originally-recommended direction. This client explores alternatives before trusting the first good recommendation. Worth factoring into how the wireframe review and any revision rounds are framed too.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Communication Cadence — Steady</div>
+        <p>Historically 6–12 day response gaps. Since closing, the pace has held up well — content brief, photo shoot, final copy, and the Oct 2/Oct 5 status exchanges all landed without much chasing. Keep pushing for a firm answer on the punch list rather than letting "next month" linger.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Alex — Still Largely Silent</div>
+        <p>Co-owner, attorney, husband. Has not driven any decision to date, though described as "slightly more present" in recent threads. Plan communication around Allison and Pookie; don't expect Alex to weigh in unprompted, even now that the wireframe is in his inbox too.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav FAB
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openNav() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('open');
+    fab.textContent = '✕';
+  }
+
+  function closeNav() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeNav();
+    else openNav();
+  });
+
+  overlay.addEventListener('click', closeNav);
+
+  // Nav link tap on mobile: close, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeNav();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
