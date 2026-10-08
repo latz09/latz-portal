@@ -284,34 +284,30 @@ function WaitingRow({ item, isLast }) {
 	const bg = isDesigner
 		? 'bg-purple/[0.08] hover:bg-purple/[0.16]'
 		: 'bg-warning/[0.08] hover:bg-warning/[0.16]';
-	const label = isDesigner ? 'text-purple' : 'text-warning';
 
 	return (
 		<Link
 			href={item.href}
-			className={`group flex flex-col gap-2.5 px-5 py-5 transition-colors ${bg} ${
+			className={`group flex items-center justify-between gap-4 px-4 py-3.5 transition-colors ${bg} ${
 				!isLast ? 'border-b border-white/[0.06]' : ''
 			}`}
 		>
-			<ClientLabel clientName={item.clientName} tone={label} />
-			<div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4'>
-				<div className='flex items-center gap-3 min-w-0'>
-					<TbClock className={`text-base shrink-0 ${tone}`} />
-					<div className='flex flex-col min-w-0 gap-0.5'>
-						<span className='text-base md:text-lg font-[540] text-white leading-tight'>
-							{item.title}
-						</span>
-						<span className='font-mono text-xs text-white/30 truncate'>
-							{item.projectName}
-						</span>
-					</div>
+			<div className='flex items-center gap-3 md:gap-6 min-w-0'>
+				<TbClock className={`text-base shrink-0 ${tone}`} />
+				<div className='flex flex-col min-w-0 gap-2 md:gap-0.5'>
+					<ClientProjectLabel
+						clientName={item.clientName}
+						projectName={item.projectName}
+						tone={tone}
+					/>
+					<span className='text-xs md:text-sm lg:text-base text-white md:ml-2 tracking-wide font-mono truncate'>
+						{item.title}
+					</span>
 				</div>
-				<span
-					className={`font-mono text-xs pl-7 sm:pl-0 sm:shrink-0 sm:whitespace-nowrap ${tone}`}
-				>
-					{item.detail}
-				</span>
 			</div>
+			<span className={`font-mono text-xs shrink-0 whitespace-nowrap ${tone}`}>
+				{item.detail}
+			</span>
 		</Link>
 	);
 }

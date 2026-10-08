@@ -29,14 +29,14 @@ export const FETCH_DESIGNER_PORTAL_QUERY = `
       "journeyMilestones": journeySteps[
         (defined(dueDate) || status == "waiting") &&
         generators[0]->isMilestone == true &&
-        generators[0]->phase in ["c-kickoff", "d-design"]
+        coalesce(phaseOverride, generators[0]->phase) in ["c-kickoff", "d-design"]
       ] {
         _key,
         "date": dueDate,
         status,
         waitingOn,
-        "title": generators[0]->title,
-        "phase": generators[0]->phase
+        "title": coalesce(titleOverride, generators[0]->title),
+        "phase": coalesce(phaseOverride, generators[0]->phase)
       },
       inspiration[] {
         "url": image.asset->url,

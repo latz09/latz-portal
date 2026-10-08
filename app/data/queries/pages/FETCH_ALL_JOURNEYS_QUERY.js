@@ -16,6 +16,8 @@ export const FETCH_ALL_JOURNEYS_QUERY = `
       enteredWaitingAt,
       completedAt,
       dueDate,
+      titleOverride,
+      phaseOverride,
       generators[]-> {
         _id,
         title,

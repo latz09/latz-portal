@@ -10,9 +10,8 @@ export const FETCH_DESIGNER_PORTAL_INDEX_QUERY = `
         count(deadlines[audience match "designer" && completed != true]) > 0 ||
         count(journeySteps[
           (defined(dueDate) || status == "waiting") &&
-          status != "done" &&
           generators[0]->isMilestone == true &&
-          generators[0]->phase in ["c-kickoff", "d-design"]
+          coalesce(phaseOverride, generators[0]->phase) in ["c-kickoff", "d-design"]
         ]) > 0
       )
     ] | order(year asc, month asc) {
@@ -35,14 +34,14 @@ export const FETCH_DESIGNER_PORTAL_INDEX_QUERY = `
         (defined(dueDate) || status == "waiting") &&
         status != "done" &&
         generators[0]->isMilestone == true &&
-        generators[0]->phase in ["c-kickoff", "d-design"]
+        coalesce(phaseOverride, generators[0]->phase) in ["c-kickoff", "d-design"]
       ] {
         _key,
         "date": dueDate,
         status,
         waitingOn,
-        "title": generators[0]->title,
-        "phase": generators[0]->phase
+        "title": coalesce(titleOverride, generators[0]->title),
+        "phase": coalesce(phaseOverride, generators[0]->phase)
       }
     }
   }[count(projects) > 0]

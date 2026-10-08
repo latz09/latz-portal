@@ -7,6 +7,7 @@ import FocusStrip from '@/app/components/dashboard/FocusStrip';
 import UpcomingLoad from '@/app/components/dashboard/UpcomingLoad';
 import PinnedNotes from '@/app/components/notes/PinnedNotes';
 import NoteList from '@/app/components/notes/NoteList';
+import Link from 'next/link';
 
 export default function DashboardContent({ clients, initialNotes }) {
 	const [notes, setNotes] = useState(initialNotes);
@@ -52,6 +53,7 @@ export default function DashboardContent({ clients, initialNotes }) {
 	);
 
 	return (
+		<div>
 		<div className='flex flex-col lg:grid lg:grid-cols-[1fr_420px] 2xl:grid-cols-[1fr_480px] lg:gap-12 lg:items-start'>
 			<div className='dash-col-2'>
 				<UpcomingLoad clients={clients} />
@@ -84,6 +86,14 @@ export default function DashboardContent({ clients, initialNotes }) {
 					/>
 				</div>
 			</div>
-		</div>
+			
+		</div><div className='mt-16 pb-8 text-center grid place-items-center '>
+				<Link
+					href='/dashboard/journey-templates'
+					className='font-mono text-[10px] tracking-widest uppercase text-white/30 hover:text-white/50'
+				>
+					Journey Templates
+				</Link>
+			</div></div>
 	);
 }

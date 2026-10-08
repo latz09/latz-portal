@@ -1,58 +1,57 @@
-import JourneyRow from './JourneyRow';
 import CollapsibleJourney from './CollapsibleJourney';
-import { resolveStep } from '@/app/utils/journeyHelpers';
+import { resolveStep, stepPhase, PHASE_ORDER } from '@/app/utils/journeyHelpers';
 
 export default function JourneyMap({ journeySteps, clientPayment, projectId }) {
-	if (!journeySteps?.length) return null;
+	const steps = journeySteps || [];
 
-	// group steps into contiguous phase blocks, preserving order + global index
-	const groups = [];
-	journeySteps.forEach((step, index) => {
-		const phase = step.generators?.[0]?.phase || 'unknown';
-		let g = groups[groups.length - 1];
-		if (!g || g.phase !== phase) {
-			g = { phase, items: [] };
-			groups.push(g);
-		}
-		g.items.push({ step, index });
+	const byPhase = Object.fromEntries(PHASE_ORDER.map((p) => [p, []]));
+	const unknown = [];
+	steps.forEach((step, index) => {
+		const phase = stepPhase(step);
+		if (phase && byPhase[phase]) byPhase[phase].push({ step, index });
+		else unknown.push({ step, index });
 	});
 
-	// find the current phase = the one holding the earliest not-done step
-	const firstNotDoneIndex = journeySteps.findIndex(
+	const firstNotDoneIndex = steps.findIndex(
 		(step) => resolveStep(step, clientPayment).status !== 'done',
 	);
-	let currentPhase = null;
-	if (firstNotDoneIndex !== -1) {
-		currentPhase =
-			journeySteps[firstNotDoneIndex].generators?.[0]?.phase || null;
-	}
+	const currentPhase =
+		firstNotDoneIndex !== -1 ? stepPhase(steps[firstNotDoneIndex]) : null;
 
-	const phases = groups.map((g) => {
-		const doneCount = g.items.filter(
+	const phases = PHASE_ORDER.map((phase) => {
+		const items = byPhase[phase];
+		const doneCount = items.filter(
 			({ step }) => resolveStep(step, clientPayment).status === 'done',
 		).length;
-		const total = g.items.length;
-		const allDone = doneCount === total;
-		const isCurrent = g.phase === currentPhase;
+		const total = items.length;
 		return {
-			phase: g.phase,
+			phase,
 			doneCount,
 			total,
-			allDone,
-			isCurrent,
-			defaultOpen: isCurrent, // only the current phase open by default
-		rows: g.items.map(({ step, index }, i) => (
-  <JourneyRow
-    key={step._key}
-    step={step}
-    index={index}
-    clientPayment={clientPayment}
-    projectId={projectId}
-    isLast={i === g.items.length - 1}
-  />
-)),
+			allDone: total > 0 && doneCount === total,
+			isCurrent: phase === currentPhase,
+			defaultOpen: phase === currentPhase,
+			items,
 		};
 	});
 
-	return <CollapsibleJourney phases={phases} />;
+	if (unknown.length) {
+		phases.push({
+			phase: 'unknown',
+			doneCount: unknown.filter(({ step }) => resolveStep(step, clientPayment).status === 'done').length,
+			total: unknown.length,
+			allDone: false,
+			isCurrent: false,
+			defaultOpen: true,
+			items: unknown,
+		});
+	}
+
+	return (
+		<CollapsibleJourney
+			phases={phases}
+			clientPayment={clientPayment}
+			projectId={projectId}
+		/>
+	);
 }

@@ -28,16 +28,53 @@ export default function JourneyPreview({
 	const [open, setOpen] = useState(false);
 	const [addStepOpen, setAddStepOpen] = useState(false);
 	const summary = summarizeJourney(journeySteps, clientPayment);
-	if (!summary) return null;
-
-	const { doneCount, total, currentPhase, active, nextUp, allDone } = summary;
-	const pct = total ? Math.round((doneCount / total) * 100) : 0;
 	const href = `/clients/${clientSlug}/${projectSlug}/journey`;
 
 	const handleStepAdded = () => {
 		setAddStepOpen(false);
 		router.refresh();
 	};
+
+	if (!summary) {
+		return (
+			<div className='min-w-0'>
+				<div className='flex items-center justify-between gap-3 mb-4'>
+					<p className='font-mono text-xs lg:text-base text-white/60 tracking-widest uppercase'>
+						Journey Map
+					</p>
+					<Link
+						href={href}
+						className='flex items-center gap-1 font-mono text-xs text-teal hover:text-white transition-colors shrink-0'
+					>
+						Open full page <TbArrowRight />
+					</Link>
+				</div>
+
+				<div className='flex flex-col items-center gap-3 text-center bg-white/[0.04] border border-white/[0.08] rounded-xl p-6'>
+					<p className='text-sm text-white/50'>No journey steps yet.</p>
+					<button
+						type='button'
+						onClick={() => setAddStepOpen(true)}
+						className='flex items-center gap-1 font-mono text-[11px] px-3 py-1.5 rounded-full border border-teal/40 text-teal hover:bg-teal/10 transition-colors'
+					>
+						<TbPlus size={12} />
+						Add Step
+					</button>
+				</div>
+
+				{addStepOpen && (
+					<AddStepForm
+						projectId={projectId}
+						onClose={() => setAddStepOpen(false)}
+						onAdded={handleStepAdded}
+					/>
+				)}
+			</div>
+		);
+	}
+
+	const { doneCount, total, currentPhase, active, nextUp, allDone } = summary;
+	const pct = total ? Math.round((doneCount / total) * 100) : 0;
 
 	return (
 		<div className='min-w-0'>

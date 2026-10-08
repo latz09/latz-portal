@@ -81,6 +81,8 @@ export const FETCH_PROJECT_QUERY = `
         enteredWaitingAt,
         completedAt,
         dueDate,
+        titleOverride,
+        phaseOverride,
         generators[]-> {
           _id,
           title,

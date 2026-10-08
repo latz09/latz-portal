@@ -12,7 +12,9 @@ import {
   JOURNEY_STATUS_ORDER,
   statusPillClass,
 } from '@/app/utils/journeyStatusConfig';
-import { resolveStep, dateLabel, stepTitle } from '@/app/utils/journeyHelpers';
+import {
+  resolveStep, dateLabel, stepTitle, PHASE_LABELS, PHASE_ORDER,
+} from '@/app/utils/journeyHelpers';
 
 const iconMap = {
   TbFileText, TbSparkles, TbLayout, TbPencil, TbBook, TbRocket, TbCurrencyDollar, TbCircleDot,
@@ -23,6 +25,8 @@ const WAITING_ON_OPTIONS = [
   { value: 'designer', label: 'Designer' },
   { value: 'other', label: 'Other' },
 ];
+
+const LAUNCH_ID = '145aec94-3211-49cf-80e8-06f884d7cc18';
 
 function pickIcon({ money, hasLink, iconKey }) {
   if (iconKey && iconMap[iconKey]) return iconMap[iconKey];
@@ -53,6 +57,14 @@ export default function JourneyRow({ step, index, clientPayment, projectId, isFi
   const [editingDate, setEditingDate] = useState(false);
   const [editingDueDate, setEditingDueDate] = useState(false);
   const [error, setError] = useState(false);
+
+  const [editingStep, setEditingStep] = useState(false);
+  const [editTitle, setEditTitle] = useState('');
+  const [editPhase, setEditPhase] = useState('');
+  const [editSaving, setEditSaving] = useState(false);
+  const [editError, setEditError] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const menuRef = useRef(null);
 
@@ -86,6 +98,8 @@ export default function JourneyRow({ step, index, clientPayment, projectId, isFi
   const isDone = displayStatus === 'done';
   const isMilestone = gens.some((g) => g?.isMilestone);
   const Icon = isDone ? TbCheck : pickIcon({ money, hasLink: links.length > 0, iconKey });
+  const isLaunch = gens.some((g) => g?._id === LAUNCH_ID);
+  const deleteBlocked = money || isLaunch;
 
   const pillLabel = money
     ? isDone ? '✓ Paid' : 'Unpaid'
@@ -155,8 +169,159 @@ export default function JourneyRow({ step, index, clientPayment, projectId, isFi
     save(isDone ? 'todo' : 'done', null);
   }
 
+  function openEdit() {
+    setEditTitle(step.titleOverride || title);
+    setEditPhase(step.phaseOverride || '');
+    setDeleteConfirm(false);
+    setEditError(false);
+    setEditingStep(true);
+  }
+
+  async function saveEdit() {
+    setEditSaving(true);
+    setEditError(false);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/journey/edit-step`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stepKey: step._key,
+          titleOverride: editTitle.trim() === title ? '' : editTitle.trim(),
+          phaseOverride: editPhase || null,
+        }),
+      });
+      if (!res.ok) throw new Error('save failed');
+      setEditingStep(false);
+      startTransition(() => router.refresh());
+    } catch (e) {
+      setEditError(true);
+    } finally {
+      setEditSaving(false);
+    }
+  }
+
+  async function deleteStep() {
+    setDeleting(true);
+    setEditError(false);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/journey/edit-step`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stepKey: step._key }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'delete failed');
+      }
+      startTransition(() => router.refresh());
+    } catch (e) {
+      setEditError(true);
+      setDeleting(false);
+      setDeleteConfirm(false);
+    }
+  }
+
   const showWaitingSubmenu = menuOpen && (displayStatus === 'waiting' || pendingWaiting);
   const canEditDate = displayStatus === 'waiting' || displayStatus === 'done';
+
+  if (editingStep) {
+    return (
+      <div className='mx-2 my-2 flex flex-col gap-2.5 px-3 py-3 border border-teal/40 bg-teal/[0.05] rounded-lg'>
+        <p className='font-mono text-[10px] tracking-widest uppercase text-teal/70'>Editing Step</p>
+
+        <input
+          autoFocus
+          value={editTitle}
+          onChange={(e) => setEditTitle(e.target.value)}
+          placeholder={title}
+          className='w-full bg-dark border border-white/[0.08] rounded-lg px-3 py-1.5 text-sm text-white/90 placeholder:text-white/30 outline-none focus:border-teal/80 transition-colors'
+        />
+
+        <div className='flex flex-wrap gap-1.5'>
+          <button
+            type='button'
+            onClick={() => setEditPhase('')}
+            className={`px-2 py-0.5 rounded-lg text-[11px] border transition-colors ${
+              !editPhase
+                ? 'bg-teal/80 border-teal/30 text-white/90'
+                : 'border-white/[0.08] text-white/40 hover:text-white/70'
+            }`}
+          >
+            Catalog default
+          </button>
+          {PHASE_ORDER.map((p) => (
+            <button
+              key={p}
+              type='button'
+              onClick={() => setEditPhase(p)}
+              className={`px-2 py-0.5 rounded-lg text-[11px] border transition-colors ${
+                editPhase === p
+                  ? 'bg-teal/80 border-teal/30 text-white/90'
+                  : 'border-white/[0.08] text-white/40 hover:text-white/70'
+              }`}
+            >
+              {PHASE_LABELS[p]}
+            </button>
+          ))}
+        </div>
+
+        {editError && <p className='text-[11px] text-danger'>Something went wrong</p>}
+
+        <div className='flex items-center justify-between gap-2 pt-1'>
+          {deleteBlocked ? (
+            <span className='text-[11px] text-white/25'>
+              {isLaunch ? "Launch step — can't delete here" : "Money step — can't delete here"}
+            </span>
+          ) : deleteConfirm ? (
+            <div className='flex items-center gap-2'>
+              <span className='text-[11px] text-danger'>Delete this step?</span>
+              <button
+                type='button'
+                onClick={() => setDeleteConfirm(false)}
+                className='text-[11px] text-white/40 hover:text-white/70'
+              >
+                Cancel
+              </button>
+              <button
+                type='button'
+                onClick={deleteStep}
+                disabled={deleting}
+                className='text-[11px] text-danger hover:text-danger/80 disabled:opacity-50'
+              >
+                {deleting ? 'Deleting…' : 'Confirm Delete'}
+              </button>
+            </div>
+          ) : (
+            <button
+              type='button'
+              onClick={() => setDeleteConfirm(true)}
+              className='text-[11px] text-danger/70 hover:text-danger transition-colors'
+            >
+              Delete step
+            </button>
+          )}
+
+          <div className='flex items-center gap-2'>
+            <button
+              type='button'
+              onClick={() => setEditingStep(false)}
+              className='font-mono text-[11px] px-2.5 py-1 rounded-full border border-white/15 text-white/50 hover:text-white hover:bg-white/[0.06] transition-colors'
+            >
+              Cancel
+            </button>
+            <button
+              type='button'
+              onClick={saveEdit}
+              disabled={editSaving}
+              className='font-mono text-[11px] px-2.5 py-1 rounded-full border border-teal/40 text-teal hover:bg-teal/10 transition-colors disabled:opacity-50'
+            >
+              {editSaving ? 'Saving…' : 'Save'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -166,7 +331,6 @@ export default function JourneyRow({ step, index, clientPayment, projectId, isFi
         isLast ? 'rounded-b-xl' : ''
       } ${error ? 'bg-danger/5' : ''}`}
     >
-      {/* content: index, star, icon, title + nested date/link lines — full width on mobile */}
       <div className='flex items-center gap-2.5 lg:gap-3 min-w-0'>
         <span className={`font-mono text-[11px] lg:text-xs tabular-nums shrink-0 ${isDone ? 'text-white/15' : 'text-white/25'}`}>
           {String(index + 1).padStart(2, '0')}
@@ -178,18 +342,24 @@ export default function JourneyRow({ step, index, clientPayment, projectId, isFi
         )}
         <Icon className={`shrink-0 ${isDone ? 'text-teal/40 text-xs lg:text-sm' : 'text-teal text-base lg:text-lg'}`} />
         <div className='flex flex-col min-w-0'>
-          <span
-            className={`leading-tight truncate ${
-              isDone ? 'text-sm font-normal text-white/40' : 'text-sm font-medium text-white'
-            }`}
+          <button
+            type='button'
+            onClick={openEdit}
+            className='group/title flex items-center gap-1.5 min-w-0 text-left'
           >
-            {title}
-            {deprecated && (
-              <span className='font-mono text-[10px] text-danger/70 ml-2 uppercase'>deprecated</span>
-            )}
-          </span>
+            <span
+              className={`leading-tight truncate ${
+                isDone ? 'text-sm font-normal text-white/40' : 'text-sm font-medium text-white'
+              }`}
+            >
+              {title}
+              {deprecated && (
+                <span className='font-mono text-[10px] text-danger/70 ml-2 uppercase'>deprecated</span>
+              )}
+            </span>
+            <TbPencil className='text-[11px] text-white/15 group-hover/title:text-white/60 transition-colors shrink-0' />
+          </button>
 
-          {/* mobile-only: links grouped with the item they belong to, not off in the actions row */}
           {!isDone && links.length > 0 && (
             <div className='flex items-center gap-3 mt-1 lg:hidden'>
               {links.map((g) => (
@@ -266,7 +436,6 @@ export default function JourneyRow({ step, index, clientPayment, projectId, isFi
         </div>
       </div>
 
-      {/* actions: status/money control only on mobile — links moved above; desktop keeps the original single-row layout */}
       <div className='flex items-center justify-end gap-3 shrink-0 relative'>
         {!isDone && links.length > 0 && (
           <div className='hidden lg:flex items-center gap-3'>

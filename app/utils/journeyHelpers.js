@@ -20,8 +20,6 @@ export const PHASE_LABELS = {
 	'h-postlaunch': 'H · Post-Launch',
 };
 
-// Phase order — used to find a project's current phase, and to place a
-// newly-added step at the right position (see findInsertionIndex below).
 export const PHASE_ORDER = [
 	'a-outreach',
 	'b-close',
@@ -39,27 +37,30 @@ export const WAITING_ON_LABELS = {
 	other: 'other',
 };
 
-// Given the CURRENT journeySteps (each needs at least { generators: [{ phase }] }
-// or an already-flattened { phase }) and a new step's phase, find the array
-// index to insert at so the array stays in canonical phase order — regardless
-// of what order steps actually get added in. This is what lets
-// CollapsibleJourney's contiguous-phase-block grouping stay correct even when
-// steps are added out of sequence.
+// Effective phase for a journeySteps entry: a per-project phaseOverride wins,
+// otherwise fall back to the generator's own phase. Accepts either a raw
+// entry ({ generators: [{phase}], phaseOverride }) or an already-flattened
+// shape ({ phase }) — same dual-shape support findInsertionIndex relied on
+// before this existed.
+export function stepPhase(step) {
+	return (
+		step.phaseOverride || step.phase || step.generators?.[0]?.phase || null
+	);
+}
+
+// Given the CURRENT journeySteps and a new step's phase, find the array
+// index to insert at so the array stays in canonical phase order.
 export function findInsertionIndex(journeySteps, newPhase) {
 	const newRank = PHASE_ORDER.indexOf(newPhase);
-	if (newRank === -1) return journeySteps.length; // unknown phase — just append
+	if (newRank === -1) return journeySteps.length;
 
 	for (let i = 0; i < journeySteps.length; i++) {
-		const stepPhase =
-			journeySteps[i].phase ?? journeySteps[i].generators?.[0]?.phase;
-		const stepRank = PHASE_ORDER.indexOf(stepPhase);
+		const stepRank = PHASE_ORDER.indexOf(stepPhase(journeySteps[i]));
 		if (stepRank > newRank) return i;
 	}
 	return journeySteps.length;
 }
 
-// Resolve one step's effective status. Money steps ignore their stored status
-// and read clientPayment; everything else uses its own status + hidden date.
 export function resolveStep(step, clientPayment) {
 	const derived = step.generators?.[0]?.derivedFrom;
 
@@ -91,7 +92,6 @@ export function resolveStep(step, clientPayment) {
 }
 
 export function dateLabel(status, date, money, waitingOn) {
-	// Waiting renders even with no date, so the state is never invisible.
 	if (status === 'waiting') {
 		const who = WAITING_ON_LABELS[waitingOn];
 		const on = who ? ` on ${who}` : '';
@@ -105,6 +105,7 @@ export function dateLabel(status, date, money, waitingOn) {
 }
 
 export function stepTitle(step) {
+	if (step.titleOverride) return step.titleOverride;
 	const gens = step.generators || [];
 	return (
 		gens
@@ -114,12 +115,6 @@ export function stepTitle(step) {
 	);
 }
 
-// Derives the preview summary from the full step list:
-//  - counts done vs total
-//  - current phase = earliest step that's neither done nor waiting
-//  - active = steps currently in-progress or waiting
-//  - blockers = steps currently waiting
-//  - nextUp = first to-do step
 export function summarizeJourney(journeySteps, clientPayment) {
 	if (!journeySteps?.length) return null;
 
@@ -131,16 +126,11 @@ export function summarizeJourney(journeySteps, clientPayment) {
 	const doneCount = resolved.filter((r) => r.status === 'done').length;
 	const total = resolved.length;
 
-	// Current phase = earliest step that's neither done NOR waiting.
-	// A Waiting step is out of your hands, so it shouldn't anchor the phase
-	// marker — otherwise one long block (domain access, designer turnaround)
-	// makes every project read as stuck in an early phase.
 	const firstActionable = resolved.find(
 		(r) => r.status !== 'done' && r.status !== 'waiting',
 	);
-	const fallback = resolved.find((r) => r.status !== 'done'); // all remaining are waiting
-	const currentPhase =
-		(firstActionable ?? fallback)?.step.generators?.[0]?.phase ?? null;
+	const fallback = resolved.find((r) => r.status !== 'done');
+	const currentPhase = stepPhase((firstActionable ?? fallback)?.step || {});
 
 	const active = resolved.filter(
 		(r) => r.status === 'in-progress' || r.status === 'waiting',
@@ -188,10 +178,7 @@ export function designerDueItems(project) {
 
 	return items;
 }
-// Soonest-wins for the table/card cell.
-//  - if anything is dated, return the soonest dated (starred if milestone)
-//  - if nothing is dated, return the earliest-in-sequence undated milestone
-//    as a TBD marker, so she still sees what's coming
+
 export function nextDesignerDue(project) {
 	const items = designerDueItems(project).filter((i) => !i.done);
 	if (!items.length) return null;
@@ -203,7 +190,6 @@ export function nextDesignerDue(project) {
 
 	if (dated.length) return { ...dated[0], tbd: false };
 
-	// nothing dated — surface the next milestone in sequence as TBD
 	const milestones = items.filter((i) => i.isMilestone);
 	if (!milestones.length) return null;
 

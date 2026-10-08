@@ -76,10 +76,11 @@ export default function ProjectMilestones({
 		.filter(({ s }) => s.generators?.[0]?.isMilestone)
 		.map(({ s, sequenceIndex }) => {
 			const g = s.generators[0];
+			const title = s.titleOverride || g.title;
 			const resolved = resolveStep(s, clientPayment);
 			return {
 				key: s._key,
-				title: g.title,
+				title,
 				// resolveStep only returns a date for money steps once they're
 				// PAID (the paid date) — never a manually-set target. Keep
 				// reading the raw dueDate here so a target date Jordan sets on
