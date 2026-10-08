@@ -4,7 +4,7 @@ import { writeClient } from '@/app/utils/cms/writeClient';
 import crypto from 'crypto';
 
 const ALLOWED_TYPES = ['google-drive', 'figma', 'notion', 'video', 'pinterest', 'link', 'other'];
-const ALLOWED_CATEGORIES = ['overview', 'design', 'handoff', 'technical', 'other'];
+const ALLOWED_CATEGORIES = ['outreach', 'proposal-close', 'kickoff', 'design', 'build', 'technical', 'handoff', 'other'];
 const ALLOWED_AUDIENCE = ['internal', 'designer', 'client'];
 const KEY_PATTERN = /^[a-zA-Z0-9_-]+$/;
 

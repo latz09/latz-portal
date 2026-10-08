@@ -22,11 +22,11 @@ export function buildJourneyStepsFromTemplate(templateKey) {
 }
 
 const STANDARD_DEFAULT_DOCS = [
-	{ label: 'Project Overview', filename: 'overview.html', category: 'overview', audience: ['internal'] },
-	{ label: 'Proposal', filename: 'proposal.html', category: 'overview', audience: ['internal'] },
+	{ label: 'Project Overview', filename: 'overview.html', category: 'outreach', audience: ['internal'] },
+	{ label: 'Proposal', filename: 'proposal.html', category: 'proposal-close', audience: ['internal'] },
 	{ label: 'Design Brief', filename: 'designBrief.html', category: 'design', audience: ['internal', 'designer'] },
 	{ label: 'Wireframe', filename: 'wireframe.html', category: 'design', audience: ['internal', 'designer', 'client'] },
-	{ label: 'Asset Collection', filename: 'assetCollection.html', category: 'overview', audience: ['internal', 'client'] },
+	{ label: 'Asset Collection', filename: 'assetCollection.html', category: 'kickoff', audience: ['internal', 'client'] },
 ]
 
 export function buildDefaultDocsFromTemplate(templateKey) {

@@ -24,10 +24,13 @@ const TYPE_OPTIONS = [
 ];
 
 const CATEGORY_OPTIONS = [
-	{ value: 'overview', label: 'Overview' },
+	{ value: 'outreach', label: 'Outreach' },
+	{ value: 'proposal-close', label: 'Proposal & Close' },
+	{ value: 'kickoff', label: 'Kickoff' },
 	{ value: 'design', label: 'Design' },
-	{ value: 'handoff', label: 'Handoff' },
+	{ value: 'build', label: 'Build' },
 	{ value: 'technical', label: 'Technical' },
+	{ value: 'handoff', label: 'Handoff' },
 	{ value: 'other', label: 'Other' },
 ];
 
@@ -68,8 +71,8 @@ export default function ResourceForm({
 	const [url, setUrl] = useState(initialResource?.url || '');
 	const [type, setType] = useState(initialResource?.type || 'other');
 	const [category, setCategory] = useState(
-		initialResource?.category || 'overview',
-	);
+	initialResource?.category || 'outreach',
+);
 	const [audience, setAudience] = useState(initialResource?.audience || []);
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState('');

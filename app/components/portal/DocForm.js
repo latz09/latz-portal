@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { TbX, TbTrash } from 'react-icons/tb'
 
 const CATEGORY_OPTIONS = [
-  { value: 'overview', label: 'Overview' },
+  { value: 'outreach', label: 'Outreach' },
+  { value: 'proposal-close', label: 'Proposal & Close' },
+  { value: 'kickoff', label: 'Kickoff' },
   { value: 'design', label: 'Design' },
-  { value: 'handoff', label: 'Handoff' },
+  { value: 'build', label: 'Build' },
   { value: 'technical', label: 'Technical' },
+  { value: 'handoff', label: 'Handoff' },
   { value: 'other', label: 'Other' },
 ]
 
@@ -40,7 +43,7 @@ export default function DocForm({ onClose, onSave, onDelete, initialDoc = null }
 
   const [label, setLabel] = useState(initialDoc?.label || '')
   const [filename, setFilename] = useState(initialDoc?.filename || '')
-  const [category, setCategory] = useState(initialDoc?.category || 'overview')
+ const [category, setCategory] = useState(initialDoc?.category || 'outreach')
   const [audience, setAudience] = useState(initialDoc?.audience || [])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')

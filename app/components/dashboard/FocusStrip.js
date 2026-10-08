@@ -53,12 +53,17 @@ function StatBar({ overdue, dueSoon, later, waiting, attention, nudges }) {
 	);
 }
 
-function ClientLabel({ clientName, tone }) {
+function ClientProjectLabel({ clientName, projectName, tone }) {
 	return (
-		<span
-			className={`font-mono text-[11px] font-semibold tracking-widest uppercase ${tone}`}
-		>
-			{clientName}
+		<span className='flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 min-w-0'>
+			<span
+				className={`font-mono text-sm md:text-base  tracking-wide uppercase truncate ${tone}`}
+			>
+				{clientName} -
+			</span>
+			<span className='font-mono ml- text-xs text-white/30 truncate'>
+				{projectName}
+			</span>
 		</span>
 	);
 }
@@ -155,36 +160,35 @@ function DatedRow({ item, isLast, isAlt }) {
 	return (
 		<Link
 			href={item.href}
-			className={`group flex flex-col gap-2.5 px-5 py-5 2xl:py-6 transition-colors ${bg} ${
+			className={`group flex items-center justify-between gap-4 px-4 py-3.5 transition-colors ${bg} ${
 				!isLast ? 'border-b border-white/[0.06]' : ''
 			}`}
 		>
-			<ClientLabel clientName={item.clientName} tone={label} />
-			<div className='flex items-center justify-between gap-4'>
-				<div className='flex items-center gap-3 min-w-0'>
-					{item.kind === 'milestone' ? (
-						<MilestoneIcon isDesigner={item.isDesigner} isPast={item.isPast} />
-					) : (
-						<span
-							className={`w-1.25 h-1.25 lg:w-2 lg:h-2  rounded-full shrink-0 ${dot}`}
-						/>
-					)}
-					<div className='flex flex-col min-w-0 gap-0.5'>
-						<span className='text-base md:text-lg font-[450] text-white tracking-wide font-mono truncate'>
-							{item.title}
-						</span>
-						<span className='font-mono text-xs text-white/30 truncate'>
-							{item.projectName}
-						</span>
-					</div>
+			<div className='flex items-center gap-3 md:gap-6 min-w-0'>
+				{item.kind === 'milestone' ? (
+					<MilestoneIcon isDesigner={item.isDesigner} isPast={item.isPast} />
+				) : (
+					<span
+						className={`size-0.5 md:size-1.25 lg:size-2  rounded-full shrink-0 ${dot}`}
+					/>
+				)}
+				<div className='flex flex-col min-w-0 gap-2 md:gap-0.5'>
+					<ClientProjectLabel
+						clientName={item.clientName}
+						projectName={item.projectName}
+						tone={label}
+					/>
+					<span className='text-xs md:text-sm lg:text-base  text-white md:ml-2  tracking-wide font-mono truncate'>
+						{item.title}
+					</span>
 				</div>
-				<DayCount
-					daysUntil={item.daysUntil}
-					isToday={item.isToday}
-					isPast={item.isPast}
-					isDesigner={item.isDesigner}
-				/>
 			</div>
+			<DayCount
+				daysUntil={item.daysUntil}
+				isToday={item.isToday}
+				isPast={item.isPast}
+				isDesigner={item.isDesigner}
+			/>
 		</Link>
 	);
 }
