@@ -57,7 +57,7 @@ function ClientProjectLabel({ clientName, projectName, tone }) {
 	return (
 		<span className='flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 min-w-0'>
 			<span
-				className={`font-mono text-sm md:text-base  tracking-wide uppercase truncate ${tone}`}
+				className={`font-display text-sm md:text-base  tracking-wide uppercase truncate ${tone}`}
 			>
 				{clientName} -
 			</span>
@@ -288,7 +288,7 @@ function WaitingRow({ item, isLast }) {
 	return (
 		<Link
 			href={item.href}
-			className={`group flex items-center justify-between gap-4 px-4 py-3.5 transition-colors ${bg} ${
+			className={`group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-4 px-4 py-3.5 transition-colors ${bg} ${
 				!isLast ? 'border-b border-white/[0.06]' : ''
 			}`}
 		>
@@ -305,7 +305,7 @@ function WaitingRow({ item, isLast }) {
 					</span>
 				</div>
 			</div>
-			<span className={`font-mono text-xs shrink-0 whitespace-nowrap ${tone}`}>
+			<span className={`font-mono text-xs pl-7 sm:pl-0 sm:shrink-0 sm:whitespace-nowrap sm:text-right ${tone}`}>
 				{item.detail}
 			</span>
 		</Link>
