@@ -51,11 +51,13 @@ function ClientRow({ client, isLast }) {
 	return (
 		<Link
 			href={getClientHref(client)}
-		className={`flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] focus:bg-teal/70 focus:outline-none transition-colors ${
-    !isLast ? 'border-b border-white/[0.06]' : ''
-}`}
+			className={`flex items-center justify-between gap-3 px-1 py-4 hover:bg-white/[0.03] focus:bg-teal/10 focus:outline-none transition-colors ${
+				!isLast ? 'border-b border-white/[0.06]' : ''
+			}`}
 		>
-			<span className='font-medium text-white truncate'>{client.name}</span>
+			<span className='font-display font-medium text-lg text-white/95 truncate'>
+				{client.name}
+			</span>
 			<span className='font-mono text-xs text-teal shrink-0'>
 				{client.activeProjects}
 				<span className='text-teal/40'> / {client.totalProjects}</span>
@@ -68,21 +70,19 @@ function ViewDropdown({ groups, current, onSelect }) {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<div className='relative mb-4'>
+		<div className='relative mb-2'>
 			<button
 				onClick={() => setOpen((o) => !o)}
-				className='flex items-center justify-between w-1/2 md:w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-3.5 group transition-colors'
+				className='flex items-center gap-2 group'
 			>
-				<span className='flex items-center gap-2'>
-					<span className='font-mono text-xs tracking-widest uppercase text-white group-hover:text-white/90 transition-colors'>
-						{current.label}
-					</span>
-					<span className='font-mono text-xs text-white/30'>
-						{current.clients.length}
-					</span>
+				<span className='font-mono text-xs tracking-widest uppercase text-white/40 group-hover:text-white/70 transition-colors'>
+					{current.label}
+				</span>
+				<span className='font-mono text-xs text-white/25'>
+					{current.clients.length}
 				</span>
 				<TbChevronDown
-					className={`text-white/40 group-hover:text-white/70 transition-all ${
+					className={`text-white/30 group-hover:text-white/60 transition-all ${
 						open ? 'rotate-180' : ''
 					}`}
 				/>
@@ -91,7 +91,7 @@ function ViewDropdown({ groups, current, onSelect }) {
 			{open && (
 				<>
 					<div className='fixed inset-0 z-10' onClick={() => setOpen(false)} />
-					<div className='absolute left-0 top-full mt-2 z-20 flex flex-col gap-0.5 p-1.5 rounded-xl border border-white/10 bg-[#12151c] shadow-xl min-w-full'>
+					<div className='absolute left-0 top-full mt-2 z-20 flex flex-col gap-0.5 p-1.5 rounded-xl border border-white/10 bg-[#12151c] shadow-xl min-w-[200px]'>
 						{groups.map((g) => {
 							const isCurrent = g.key === current.key;
 							return (
@@ -172,7 +172,7 @@ export default function ClientList({ clients }) {
 		<div className='flex flex-col'>
 			<ViewDropdown groups={groups} current={current} onSelect={setView} />
 
-			<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+			<div className='flex flex-col'>
 				{current.clients.map((client, i) => (
 					<ClientRow
 						key={client.slug}

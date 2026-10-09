@@ -128,6 +128,8 @@ function AwaitingReplies({ notes, onArchive, onPinToggle, onBackBurnerToggle }) 
 export default function NoteList({ notes = [], onArchive, onSent, onPinToggle, onBackBurnerToggle }) {
 	const [expanded, setExpanded] = useState(false);
 
+	if (notes.length === 0) return null;
+
 	const active = notes.filter(
 		(n) => !n.pinned && !(n.type === 'email' && n.sentAt),
 	);
@@ -142,53 +144,47 @@ export default function NoteList({ notes = [], onArchive, onSent, onPinToggle, o
 		<div className='mb-12 max-w-7xl mx-auto'>
 			<NoteListHeader />
 
-			{notes.length === 0 ? (
-				<EmptyState />
-			) : (
-				<>
-					{active.length > 0 && (
-						<div className='grid sm:grid-cols-2 gap-3 lg:gap-5'>
-							{visible.map((note) => (
-								<NoteCard
-									key={note._id}
-									note={note}
-									onArchive={onArchive}
-									onSent={onSent}
-									onPinToggle={onPinToggle}
-									onBackBurnerToggle={onBackBurnerToggle}
-								/>
-							))}
-							{expanded &&
-								rest.map((note) => (
-									<NoteCard
-										key={note._id}
-										note={note}
-										onArchive={onArchive}
-										onSent={onSent}
-										onPinToggle={onPinToggle}
-										onBackBurnerToggle={onBackBurnerToggle}
-									/>
-								))}
-							{rest.length > 0 && (
-								<div className='sm:col-span-2'>
-									<ExpandToggle
-										expanded={expanded}
-										count={rest.length}
-										onToggle={() => setExpanded(!expanded)}
-									/>
-								</div>
-							)}
+			{active.length > 0 && (
+				<div className='grid sm:grid-cols-2 gap-3 lg:gap-5'>
+					{visible.map((note) => (
+						<NoteCard
+							key={note._id}
+							note={note}
+							onArchive={onArchive}
+							onSent={onSent}
+							onPinToggle={onPinToggle}
+							onBackBurnerToggle={onBackBurnerToggle}
+						/>
+					))}
+					{expanded &&
+						rest.map((note) => (
+							<NoteCard
+								key={note._id}
+								note={note}
+								onArchive={onArchive}
+								onSent={onSent}
+								onPinToggle={onPinToggle}
+								onBackBurnerToggle={onBackBurnerToggle}
+							/>
+						))}
+					{rest.length > 0 && (
+						<div className='sm:col-span-2'>
+							<ExpandToggle
+								expanded={expanded}
+								count={rest.length}
+								onToggle={() => setExpanded(!expanded)}
+							/>
 						</div>
 					)}
-
-					<AwaitingReplies
-						notes={awaiting}
-						onArchive={onArchive}
-						onPinToggle={onPinToggle}
-						onBackBurnerToggle={onBackBurnerToggle}
-					/>
-				</>
+				</div>
 			)}
+
+			<AwaitingReplies
+				notes={awaiting}
+				onArchive={onArchive}
+				onPinToggle={onPinToggle}
+				onBackBurnerToggle={onBackBurnerToggle}
+			/>
 		</div>
 	);
 }

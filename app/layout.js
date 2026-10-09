@@ -1,4 +1,4 @@
-import { DM_Sans, DM_Mono } from 'next/font/google'
+import { DM_Sans, DM_Mono, Fraunces } from 'next/font/google'
 import './globals.css'
 import { auth } from '@/auth'
 import GlobalSearch from './components/utils/GlobalSearch'
@@ -15,6 +15,13 @@ const dmMono = DM_Mono({
   weight: ['400', '500'],
 })
 
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
+  subsets: ['latin'],
+  weight: ['500', '600'],
+  style: ['normal', 'italic'],
+})
+
 export const metadata = {
   title: 'Latz Portal',
   description: 'Latz Web Design internal portal',
@@ -29,7 +36,7 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang='en'
-      className={`${dmSans.variable} ${dmMono.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${dmMono.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className='min-h-full flex flex-col bg-dark'>
         {children}

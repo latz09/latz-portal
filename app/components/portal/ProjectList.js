@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Card from '@/app/components/ui/Card';
+import Link from 'next/link';
 import { STATUS_LABELS, STATUS_COLORS } from '@/app/utils/statusConfig';
 
 export default function ProjectList({ projects, clientSlug }) {
@@ -28,19 +28,22 @@ export default function ProjectList({ projects, clientSlug }) {
 	}, [selected, projects, clientSlug, router]);
 
 	return (
-		<div className='flex flex-col gap-3 max-w-4xl mx-auto w-full'>
+		<div className='max-w-4xl mx-auto w-full bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden'>
 			{projects.map((project, i) => (
-				<Card
+				<Link
 					key={project.slug}
 					href={`/clients/${clientSlug}/${project.slug}`}
-					selected={i === selected}
 					onMouseEnter={() => setSelected(i)}
-					className='flex flex-col gap-4'
+					className={`flex flex-col gap-3 px-5 py-4 transition-colors ${
+						i !== projects.length - 1 ? 'border-b border-white/[0.06]' : ''
+					} ${i === selected ? 'bg-white/[0.06]' : 'hover:bg-white/[0.06]'}`}
 				>
-					<div className='flex justify-between'>
-						<span className='font-medium lg:text-lg'>{project.name}</span>
+					<div className='flex items-center justify-between gap-3'>
+						<span className='font-medium lg:text-lg text-white/90'>
+							{project.name}
+						</span>
 						<span
-							className={`font-mono text-xs lg:text-sm font-bold uppercase ${
+							className={`font-mono text-[10px] lg:text-xs font-semibold uppercase tracking-widest shrink-0 ${
 								STATUS_COLORS[project.status] || 'text-white/40'
 							}`}
 						>
@@ -48,14 +51,14 @@ export default function ProjectList({ projects, clientSlug }) {
 						</span>
 					</div>
 					<div className='flex items-center justify-between'>
-						<span className='font-mono text-xs lg:text-sm text-white/70'>
+						<span className='font-mono text-xs text-white/40'>
 							{project.month}/{project.year}
 						</span>
-						<span className='font-mono text-xs lg:text-sm text-warning'>
+						<span className='font-mono text-xs text-white/40'>
 							{project.docCount} documents
 						</span>
 					</div>
-				</Card>
+				</Link>
 			))}
 		</div>
 	);

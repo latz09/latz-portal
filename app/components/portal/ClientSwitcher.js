@@ -216,7 +216,7 @@ export default function ClientSwitcher({ clients }) {
 	const listContent = (
 		<div ref={listContainerRef} className='flex-1 overflow-y-auto p-5'>
 			{isSearching ? (
-				<div className='border border-white/[0.08] rounded-xl overflow-hidden'>
+				<div className='flex flex-col'>
 					{sorted.length === 0 && (
 						<p className='font-mono text-xs text-white/20 px-4 py-6 text-center'>
 							No clients found
@@ -226,11 +226,11 @@ export default function ClientSwitcher({ clients }) {
 						<button
 							key={client.slug}
 							onClick={() => goTo(client.slug)}
-							className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-white/[0.04] hover:bg-white/[0.07] focus:bg-teal/70 focus:outline-none transition-colors text-left ${
+							className={`w-full flex items-center justify-between gap-3  py-4 hover:bg-white/[0.13] px-4 focus:bg-teal/10 focus:outline-none transition-colors text-left ${
 								i !== sorted.length - 1 ? 'border-b border-white/[0.06]' : ''
 							}`}
 						>
-							<span className='font-medium text-white truncate'>
+							<span className='font-display font-medium text-lg text-white/95 truncate'>
 								{client.name}
 							</span>
 							<span className='font-mono text-xs text-teal shrink-0'>
@@ -295,7 +295,7 @@ export default function ClientSwitcher({ clients }) {
 	const widget = (
 		<div ref={widgetRef}>
 			<div
-				className={`fixed inset-0 z-[90] bg-black/70 backdrop-blur-md transition-opacity duration-200 ${
+				className={`fixed inset-0 z-[90] bg-dark/85 backdrop-blur-lg transition-opacity duration-200 ${
 					open ? 'opacity-100' : 'opacity-0 invisible pointer-events-none'
 				}`}
 				onClick={close}
@@ -311,7 +311,7 @@ export default function ClientSwitcher({ clients }) {
 						<div
 							onClick={handlePanelClick}
 							style={{ marginBottom: keyboardInset + 76 }}
-							className={`pointer-events-auto w-full max-h-[90vh] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-200 ease-out ${
+							className={`pointer-events-auto w-full max-h-[90vh] flex flex-col transition-all duration-200 ease-out ${
 								open
 									? 'translate-y-0 opacity-100'
 									: 'translate-y-4 opacity-0 invisible pointer-events-none'
@@ -334,14 +334,14 @@ export default function ClientSwitcher({ clients }) {
 					<div className='fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4 pointer-events-none'>
 						<div
 							onClick={handlePanelClick}
-							className={`pointer-events-auto w-full sm:w-[720px] max-h-[90vh] flex flex-col rounded-2xl border border-white/10 bg-[#0d0f14] shadow-2xl transition-all duration-300 ease-out ${
+							className={`pointer-events-auto w-full sm:w-[720px] max-h-[90vh] flex flex-col transition-all duration-300 ease-out ${
 								open
 									? 'translate-y-0 scale-100 opacity-100'
 									: 'translate-y-4 scale-95 opacity-0 invisible pointer-events-none'
 							} ${leaving ? 'drawer-leaving-bottom' : ''}`}
 						>
 							{listContent}
-							<div className='hidden lg:block px-4 py-3 border-t border-white/10 shrink-0'>
+							<div className='hidden lg:block px-4 py-3 shrink-0'>
 								<p className='font-mono text-[12px] text-center text-warning/60'>
 									↑↓ browse · Enter to go · Esc to close · ⌘K to search
 								</p>

@@ -59,7 +59,7 @@ export default function JourneyRollup({ projects }) {
       {visible.length === 0 ? (
         <p className='font-mono text-sm text-white/40 py-8'>No projects match.</p>
       ) : (
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-5 lg:gap-6'>
           {visible.map((p) => (
             <JourneyRollupRow key={p._id} project={p} />
           ))}

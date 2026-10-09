@@ -20,59 +20,66 @@ export default async function JourneyPage({ params }) {
 	const pct = total ? Math.round((done / total) * 100) : 0;
 
 	return (
-		<main className='page-enter max-w-7xl mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
-			<div className='flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-4 mb-10'>
-				<Link
-					href={`/clients/${clientSlug}/${projectSlug}`}
-					className='group inline-flex items-center gap-2 text-warning hover:opacity-70 transition-opacity mb-2'
-				>
-					<TbArrowLeft className='mt-1 shrink-0' />
-					<span className='flex flex-col gap-2'>
-						<span className='font-mono text-[10px] text-white tracking-widest uppercase opacity-70'>
-							{clientName}
-						</span>
-						<span className='font-mono text-xs lg:text-sm tracking-widest uppercase'>
-							{project.name}
-						</span>
-					</span>
-				</Link>
-
-				<div className='flex items-center gap-2 self-center lg:self-start shrink-0'>
-					<AddStepTrigger projectId={project._id} />
-					<StudioLink
-						type='project'
-						id={project._id}
-						label='Edit journey'
-					/>
+		<>
+			<div className='sticky top-[var(--nav-h,64px)] z-30 bg-dark-mid/70 backdrop-blur-sm border-b border-dark-mid'>
+				<div className='max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-2.5 flex items-center gap-2 font-mono text-xs tracking-widest uppercase'>
+					<Link
+						href={`/clients/${clientSlug}`}
+						className='text-teal hover:text-teal/70 transition-colors font-display'
+					>
+						{clientName}
+					</Link>
+					<span className='text-white/20'>/</span>
+					<span className='text-white/50 truncate'>{project.name}</span>
 				</div>
 			</div>
 
-			{/* overall progress bar */}
-			<div className='mb-12'>
-				<div className='flex items-center justify-between mb-3'>
-					<span className='font-mono text-sm tracking-widest uppercase text-white/60'>
-						Overall Progress
-					</span>
-					<span className='font-mono text-sm text-white/70 tabular-nums'>
-						{done}
-						<span className='text-white/30'>/{total}</span>
-						<span className='text-teal ml-3'>{pct}%</span>
-					</span>
-				</div>
-				<div className='h-2 rounded-full bg-white/10 overflow-hidden'>
-					<div
-						className='h-full bg-teal rounded-full transition-all'
-						style={{ width: `${pct}%` }}
-					/>
-				</div>
-			</div>
+			<main className='page-enter max-w-7xl mx-auto px-4 lg:px-10 py-10 lg:py-20 w-full'>
+				<div className='flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-4 mb-10'>
+					<Link
+						href={`/clients/${clientSlug}/${projectSlug}`}
+						className='group flex items-center gap-2'
+					>
+						<TbArrowLeft className='shrink-0' />
 
-			<JourneyMap
-				journeySteps={project.journeySteps}
-				clientPayment={project.clientPayment}
-				projectId={project._id}
-			/>
-		</main>
+						<span className='font-mono text-[10px] text-white tracking-widest'>
+							<span className="font-display lg:text-[16px] text-teal">{clientName}</span> - {project.name}
+						</span>
+					</Link>
+
+					<div className='flex items-center gap-2 self-center lg:self-start shrink-0'>
+						<AddStepTrigger projectId={project._id} />
+						<StudioLink type='project' id={project._id} label='Edit journey' />
+					</div>
+				</div>
+
+				{/* overall progress bar */}
+				<div className='mb-12'>
+					<div className='flex items-center justify-between mb-3'>
+						<span className='font-mono text-sm tracking-widest uppercase text-white/60'>
+							Overall Progress
+						</span>
+						<span className='font-mono text-sm text-white/70 tabular-nums'>
+							{done}
+							<span className='text-white/30'>/{total}</span>
+							<span className='text-teal ml-3'>{pct}%</span>
+						</span>
+					</div>
+					<div className='h-2 rounded-full bg-white/10 overflow-hidden'>
+						<div
+							className='h-full bg-teal rounded-full transition-all'
+							style={{ width: `${pct}%` }}
+						/>
+					</div>
+				</div>
+
+				<JourneyMap
+					journeySteps={project.journeySteps}
+					clientPayment={project.clientPayment}
+					projectId={project._id}
+				/>
+			</main>
+		</>
 	);
 }
 

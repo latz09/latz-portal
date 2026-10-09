@@ -34,15 +34,20 @@ export default async function ProjectPage({ params }) {
 			projectName={project.name}
 		>
 			<main>
-				<div className='sticky top-0 z-40 bg-dark/90 backdrop-blur-sm border-b border-white/10'>
+				<div className='sticky top-[var(--nav-h,64px)] z-30 bg-dark-mid/70 backdrop-blur-sm border-b border-dark-mid'>
 					<div className='max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-2.5 flex items-center gap-2 font-mono text-xs tracking-widest uppercase'>
-						<span className='text-teal'>{clientName}</span>
+						<Link
+							href={`/clients/${clientSlug}`}
+							className='text-teal hover:text-teal/70 transition-colors font-display'
+						>
+							{clientName}
+						</Link>
 						<span className='text-white/20'>/</span>
 						<span className='text-white/50 truncate'>{project.name}</span>
 					</div>
 				</div>
 
-				<div className='bg-linear-to-b from-white/5 via-white/5 to-white/0'>
+				<div className='bg-linear-to-b from-dark-mid/70 via-white/0 to-white/0'>
 					<div className='page-enter max-w-[120rem] w-full mx-auto px-3 lg:px-8 py-4 lg:py-10'>
 						<ProjectHeader
 							variant='internal'
@@ -60,11 +65,11 @@ export default async function ProjectPage({ params }) {
 									>
 										Edit Details
 									</Link>
-									<StudioLink
+									{/* <StudioLink
 										type='project'
 										id={project._id}
 										label='Edit project'
-									/>
+									/> */}
 								</div>
 							}
 						/>

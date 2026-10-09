@@ -2,7 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { TbChevronDown, TbExternalLink, TbStarFilled } from 'react-icons/tb';
+import {
+	TbChevronDown,
+	TbExternalLink,
+	TbStarFilled,
+	TbClock,
+} from 'react-icons/tb';
 import {
 	PHASE_LABELS,
 	summarizeJourney,
@@ -91,7 +96,7 @@ export default function JourneyRollupRow({ project }) {
 	const milestone = nextMilestone(project);
 
 	return (
-		<div className='bg-white/[0.0175] border border-white/[0.08] rounded-xl transition-colors overflow-hidden'>
+		<div className='bg-white/[0.04] border border-white/[0.08] rounded-xl transition-colors overflow-hidden'>
 			<button
 				type='button'
 				onClick={() => setOpen((v) => !v)}
@@ -101,11 +106,11 @@ export default function JourneyRollupRow({ project }) {
 				<div className='flex flex-col gap-3 lg:grid lg:grid-cols-[280px_1fr_140px] lg:items-center lg:gap-8'>
 					{/* name + status */}
 					<div className='flex items-start justify-between gap-3 min-w-0'>
-						<div className='flex flex-col min-w-0'>
-							<span className='font-medium text-sm lg:text-base leading-tight truncate'>
+						<div className='flex flex-col min-w-0 gap-1'>
+							<span className='font-display font-medium text-base lg:text-lg leading-tight truncate text-white/95'>
 								{project.clientName}
 							</span>
-							<span className='font-mono text-xs text-white/40 truncate mt-0.5'>
+							<span className='font-mono text-[11px] lg:text-xs text-white/40 truncate'>
 								{project.name}
 							</span>
 						</div>
@@ -123,7 +128,7 @@ export default function JourneyRollupRow({ project }) {
 						<div className='flex items-center gap-3'>
 							<span className='flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden'>
 								<span
-									className='block h-full bg-teal rounded-full'
+									className='block h-full bg-teal rounded-full transition-all'
 									style={{ width: `${pct}%` }}
 								/>
 							</span>
@@ -134,7 +139,7 @@ export default function JourneyRollupRow({ project }) {
 
 						<div className='flex items-center gap-2 font-mono text-[11px] min-w-0'>
 							<span
-								className={`uppercase tracking-wide shrink-0 ${allDone ? 'text-teal' : 'text-white/50'}`}
+								className={`uppercase tracking-widest shrink-0 ${allDone ? 'text-teal' : 'text-white/50'}`}
 							>
 								{allDone
 									? 'Complete'
@@ -154,7 +159,7 @@ export default function JourneyRollupRow({ project }) {
 									{stepTitle(milestone.step)}
 								</span>
 								{milestone.step.dueDate ? (
-									<span className='text-warning/60 shrink-0'>
+									<span className='text-warning/70 shrink-0'>
 										Due {formatDue(milestone.step.dueDate)}
 									</span>
 								) : (
@@ -165,7 +170,7 @@ export default function JourneyRollupRow({ project }) {
 
 						{blockers?.length > 0 && (
 							<div className='flex items-center gap-1.5 font-mono text-[11px] text-warning/70 min-w-0'>
-								<span className='shrink-0'>⏳</span>
+								<TbClock className='text-[11px] shrink-0' />
 								<span className='truncate'>
 									waiting on {blockers.map(blockerLabel).join(', ')}
 								</span>
@@ -192,9 +197,9 @@ export default function JourneyRollupRow({ project }) {
 			</button>
 
 			{open && (
-				<div className='border-t border-white/[0.08] bg-dark px-4 lg:px-6 py-5'>
+				<div className='border-t border-white/[0.08] bg-dark/40 px-4 lg:px-6 py-5'>
 					<div className='flex items-center justify-between mb-6'>
-						<span className='font-mono text-xs tracking-widest uppercase text-white/40'>
+						<span className='font-mono text-[10px] lg:text-xs tracking-widest uppercase text-white/40'>
 							Overall progress
 						</span>
 						<div className='flex items-center gap-4'>
