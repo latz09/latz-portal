@@ -268,7 +268,7 @@ function DesignerLedgerRow({ p, hrefFor }) {
 					className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${dotColor}`}
 				/>
 				<div className='flex flex-col min-w-0'>
-					<span className='font-mono text-sm text-white/50 truncate mb-1'>
+					<span className='font-display font-medium text-sm text-white/60 truncate mb-1'>
 						{p.clientName}
 					</span>
 					<span className='font-mono text-base text-white/90 truncate leading-tight mb-2'>
@@ -306,11 +306,11 @@ function MobileProjectCard({ p, isInternal, hrefFor, variant }) {
 	return (
 		<Link
 			href={hrefFor(p)}
-			className='flex flex-col gap-3 border border-white/10 bg-white/5 hover:bg-white/10 rounded-xl px-4 py-4 transition-colors'
+			className='flex flex-col gap-3 border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06] rounded-xl px-4 py-4 transition-colors'
 		>
 			<div className='flex items-start justify-between gap-3'>
 				<div className='flex flex-col'>
-					<span className='text-white font-medium'>{p.clientName}</span>
+					<span className='font-display font-medium text-white'>{p.clientName}</span>
 					<span className='text-xs text-white/50'>{p.name}</span>
 				</div>
 				{isInternal && (
@@ -520,10 +520,10 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 			)}
 
 			{/* Desktop */}
-			<div className='hidden lg:block overflow-x-auto border border-white/30 rounded-xl'>
+			<div className='hidden lg:block overflow-x-auto border border-white/[0.08] rounded-xl'>
 				<table className='w-full text-left border-collapse '>
 					<thead>
-						<tr className='border-b border-white/10 bg-white/5'>
+						<tr className='border-b border-white/[0.08] bg-white/[0.04]'>
 							<th className='font-mono text-sm text-white/60 uppercase tracking-widest px-4 py-3'>
 								Client
 							</th>
@@ -554,7 +554,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 								key={p._id}
 								className='border-b border-white/5 hover:bg-white/5 transition-colors '
 							>
-								<td className='px-4 py-5 text-sm text-white/80 font-mono whitespace-nowrap'>
+								<td className='px-4 py-5 text-sm text-white/80 font-display font-medium whitespace-nowrap'>
 									{p.clientName}
 								</td>
 								<td className='px-4 py-5 text-sm'>

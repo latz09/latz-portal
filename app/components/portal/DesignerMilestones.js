@@ -32,12 +32,18 @@ export default function DesignerMilestones({ project }) {
 					return (
 						<div
 							key={item.key}
-							className={`flex items-center justify-between gap-4 py-3 transition-all ${
+							className={`flex items-center gap-4 py-3.5 pl-4 border-l-2 transition-all ${
 								i !== ordered.length - 1 ? 'border-b border-white/[0.06]' : ''
+							} ${
+								item.done
+									? 'border-l-white/10'
+									: item.waiting
+										? 'border-l-warning/50'
+										: 'border-l-purple/50'
 							} ${item.waiting ? ' scale-[0.99] origin-left' : ''}`}
 						>
-						<span
-								className={`flex items-center gap-2.5 text-sm min-w-0 ${
+							<span
+								className={`flex items-center gap-2.5 text-sm min-w-0 flex-1 ${
 									item.done
 										? 'text-white/30'
 										: item.waiting

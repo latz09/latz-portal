@@ -13,7 +13,7 @@ export default function PortalPageHeader({ variant, label, title }) {
 			>
 				{label}
 			</p>
-			<h1 className='text-lg lg:text-xl font-semibold text-white'>{title}</h1>
+			<h1 className='font-display text-lg lg:text-xl  text-white'>{title}</h1>
 		</div>
 	);
 }
