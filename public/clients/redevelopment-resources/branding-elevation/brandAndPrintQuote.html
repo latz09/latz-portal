@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Redevelopment Resources — Brand &amp; Print Quote | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1A25;
+    --ink-soft:#1B2C3D;
+    --paper:#EFE7D6;
+    --surface:#FFFFFF;
+    --border:rgba(172,164,138,.55);
+    --border-soft:rgba(172,164,138,.3);
+    --text:#15222F;
+    --text-muted:#5B6673;
+    --text-faint:#8A93A0;
+    --accent:#8E4D40;
+    --accent-deep:#6E3B31;
+    --accent-soft:#F3E5E0;
+    --gold:#8E4D40;
+    --gold-soft:#F3E5E0;
+    --green:#3F7A52;
+    --green-soft:#EEF6F0;
+    --radius-s:6px;
+    --radius-m:10px;
+    --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(15,26,37,.06), 0 8px 24px rgba(15,26,37,.07);
+    --sidebar-w:288px;
+    --font-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+  body{
+    margin:0; font-family:var(--font-body); color:var(--text); background:var(--paper);
+    -webkit-font-smoothing:antialiased; font-size:16.5px; line-height:1.65;
+  }
+  h1,h2,h3,h4{font-family:var(--font-display); margin:0; color:var(--ink); font-weight:600;}
+  p{margin:0 0 1em; color:var(--text);}
+  ul,ol{margin:0 0 1em; padding-left:1.3em;}
+  li{margin-bottom:.4em;}
+  li:last-child{margin-bottom:0;}
+  a{color:var(--accent-deep);}
+  strong{color:var(--ink); font-weight:700;}
+
+  .progress{position:fixed; top:0; left:0; height:3px; background:var(--accent); width:0%; z-index:200; transition:width .1s linear;}
+
+  .topbar{
+    display:none; position:sticky; top:0; z-index:150; align-items:center; gap:.65rem;
+    height:56px; padding:0 1rem; background:var(--ink); color:#fff;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .topbar__menu{
+    appearance:none; border:none; background:transparent; color:#fff; width:36px; height:36px;
+    border-radius:var(--radius-s); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  }
+  .topbar__menu:hover{background:rgba(255,255,255,.08);}
+  .topbar__title{font-family:var(--font-mono); font-size:.74rem; letter-spacing:.05em; text-transform:uppercase; opacity:.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .topbar__crumb{font-family:var(--font-mono); font-size:.68rem; color:var(--accent); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; margin-top:1px;}
+  .topbar__titles{min-width:0; overflow:hidden;}
+  .topbar__spacer{flex:1;}
+
+  .mark{
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border:1.5px solid var(--accent); border-radius:2px;
+    font-family:var(--font-mono); font-weight:600; font-size:.6rem; letter-spacing:.01em;
+    color:var(--accent); background:rgba(142,77,64,.08);
+  }
+
+  .docbar{
+    display:none; position:sticky; top:0; z-index:100; align-items:center; justify-content:space-between; gap:1rem;
+    height:46px; padding:0 4rem; background:rgba(239,231,214,.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+  }
+  .docbar__left{display:flex; align-items:center; gap:.6rem; min-width:0;}
+  .docbar__id{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.05em; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .docbar__right{display:flex; align-items:center; gap:.9rem; flex-shrink:0;}
+  .docbar__crumb{font-family:var(--font-mono); font-size:.72rem; color:var(--ink); font-weight:500;}
+  .docbar__tag{
+    font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent); border:1px solid var(--accent); border-radius:2px; padding:.15rem .45rem;
+  }
+  @media (min-width:1024px){ .docbar{display:flex;} }
+
+  .bracket-frame{position:relative;}
+  .corner{position:absolute; width:18px; height:18px; pointer-events:none;}
+  .corner--tl{top:-1px; left:-1px; border-top:2px solid var(--accent); border-left:2px solid var(--accent);}
+  .corner--tr{top:-1px; right:-1px; border-top:2px solid var(--accent); border-right:2px solid var(--accent);}
+  .corner--bl{bottom:-1px; left:-1px; border-bottom:2px solid var(--accent); border-left:2px solid var(--accent);}
+  .corner--br{bottom:-1px; right:-1px; border-bottom:2px solid var(--accent); border-right:2px solid var(--accent);}
+
+  .stamp{
+    position:absolute; top:1.8rem; right:2.2rem; width:150px; padding:.9rem .8rem .65rem; text-align:center;
+    border:1.5px solid var(--ink); border-radius:2px; transform:rotate(-4deg); background:rgba(255,255,255,.65);
+  }
+  .stamp__logo{display:block; width:100%; height:auto; opacity:.6;}
+  .stamp__caption{display:block; margin-top:.5rem; font-family:var(--font-mono); font-size:.5rem; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted);}
+
+  .rule-double{width:64px; margin:1.1rem 0 1.5rem;}
+  .rule-double__a{height:2px; background:var(--ink); margin-bottom:3px;}
+  .rule-double__b{height:1px; background:var(--accent); width:70%;}
+
+  .doc-control{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:0; margin:0;
+    border:1px solid var(--border); border-radius:var(--radius-s); overflow:hidden;
+  }
+  .doc-control > div{padding:.75rem 1.1rem; border-left:1px solid var(--border); background:var(--surface);}
+  .doc-control > div:first-child{border-left:none;}
+  .doc-control dt{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin:0 0 .3rem;}
+  .doc-control dd{font-family:var(--font-mono); font-size:.82rem; color:var(--ink); margin:0; font-weight:500;}
+  .doc-control dd.ok{color:var(--green);}
+  .doc-control dd.warn{color:var(--accent);}
+
+  .sidebar{
+    position:fixed; top:0; left:0; bottom:0; width:var(--sidebar-w); background:var(--ink); color:#EDEFF3;
+    display:flex; flex-direction:column; z-index:120; border-right:1px solid rgba(255,255,255,.06);
+  }
+  .sidebar__brand{ padding:1.6rem 1.5rem 1.2rem; border-bottom:1px solid rgba(255,255,255,.08); }
+  .sidebar__brand-eyebrow{
+    display:block; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:.5rem;
+  }
+  .sidebar__brand-name{font-family:var(--font-display); font-size:1.18rem; font-weight:700; color:#fff; line-height:1.25;}
+  .sidebar__brand-sub{font-size:.78rem; color:#B7BCC6; margin-top:.3rem;}
+
+  .sidebar__nav{flex:1; overflow-y:auto; padding:1rem 0 1.25rem;}
+  .sidebar__nav::-webkit-scrollbar{width:6px;}
+  .sidebar__nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15); border-radius:3px;}
+
+  .navgroup{margin:0 0 .35rem;}
+  .navgroup__title{
+    display:block; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.12em;
+    text-transform:uppercase; color:#8893A0; padding:.85rem 1.5rem .4rem;
+  }
+  .navlist{list-style:none; margin:0; padding:0;}
+  .navlink{
+    display:flex; align-items:baseline; gap:.55rem; padding:.42rem 1.5rem; font-size:.88rem; color:#C8CCD3;
+    text-decoration:none; border-left:2px solid transparent; transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .navlink:hover{background:rgba(255,255,255,.05); color:#fff;}
+  .navlink__num{font-family:var(--font-mono); font-size:.72rem; color:#8893A0; min-width:1.5em;}
+  .navlink.is-active{color:#fff; border-left-color:var(--accent); background:rgba(142,77,64,.18);}
+  .navlink.is-active .navlink__num{color:var(--accent);}
+
+  .sidebar__meta{
+    padding:1rem 1.5rem 1rem; border-top:1px solid rgba(255,255,255,.08);
+    font-family:var(--font-mono); font-size:.7rem; color:#8893A0; line-height:1.8;
+  }
+  .sidebar__meta strong{color:#C8CCD3; font-family:var(--font-mono); font-weight:500;}
+  .sidebar__footer{
+    padding:.9rem 1.5rem 1.3rem; border-top:1px solid rgba(255,255,255,.06);
+    font-family:var(--font-mono); font-size:.68rem; color:#636B76; line-height:1.9;
+  }
+
+  .backdrop{display:none; position:fixed; inset:0; background:rgba(10,16,26,.5); z-index:110;}
+  .backdrop.is-visible{display:block;}
+
+  .main{margin-left:var(--sidebar-w); min-height:100vh;}
+
+  .cover{ padding:5rem 4rem 4rem; max-width:920px; border-bottom:1px solid var(--border); }
+  .cover__panel{position:relative; border:1px solid var(--border); border-radius:var(--radius-m); padding:2.6rem 2.8rem 2.4rem; background:var(--surface);}
+  .cover__eyebrow{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid rgba(142,77,64,.35);
+    padding:.3rem .7rem; border-radius:2px; margin-bottom:1.5rem;
+  }
+  .cover__title{font-size:clamp(1.9rem, 3.4vw, 2.5rem); line-height:1.15; margin-bottom:.4rem; max-width:76%;}
+  .cover__tagline{font-family:var(--font-mono); font-size:.85rem; letter-spacing:.03em; color:var(--text-muted); max-width:min(600px, 76%);}
+  .cover__desc{font-size:1.02rem; color:var(--text-muted); max-width:620px; margin:1.6rem 0 1.3rem;}
+
+  .callout{border-radius:var(--radius-m); padding:1.1rem 1.3rem; margin:1.2rem 0 2rem; border:1px solid var(--border);}
+  .callout__label{display:block; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.5rem; font-weight:600;}
+  .callout p:last-child, .callout ul:last-child{margin-bottom:0;}
+  .callout--note{background:#F7F2E6; border-color:var(--border);}
+  .callout--note .callout__label{color:var(--accent);}
+  .callout--note p, .callout--note li{font-size:.9rem; color:var(--text-muted);}
+  .callout--tbd{background:var(--accent-soft); border-color:#E3C9C0;}
+  .callout--tbd .callout__label{color:var(--accent-deep);}
+  .callout--tbd p, .callout--tbd li{font-size:.9rem; color:var(--ink);}
+
+  .toc{padding:0 4rem 3rem; max-width:920px;}
+  .toc__label{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); margin:0 0 1.1rem;}
+
+  .part{
+    position:relative; overflow:hidden; background:var(--ink); color:#fff; padding:2.6rem 4rem;
+    scroll-margin-top:1rem; display:flex; align-items:center; gap:2rem;
+  }
+  .part__numeral{font-family:var(--font-display); font-weight:700; font-size:3.4rem; line-height:1; color:var(--accent); flex-shrink:0; opacity:.95;}
+  .part__eyebrow{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#AEB6C2; display:block; margin-bottom:.4rem;}
+  .part__title{color:#fff; font-size:clamp(1.3rem, 2.2vw, 1.7rem); margin-bottom:.4rem;}
+  .part__desc{color:#C3C9D2; margin:0; font-size:.92rem; max-width:520px;}
+
+  .section{padding:3.2rem 4rem; max-width:1080px; scroll-margin-top:1.2rem; border-bottom:1px solid var(--border-soft);}
+  .section__head{display:flex; align-items:center; gap:.9rem; margin-bottom:.4rem; flex-wrap:wrap;}
+  .section__eyebrow{font-family:var(--font-mono); font-size:.82rem; color:var(--accent); font-weight:600; letter-spacing:.03em;}
+  .section__title{font-size:1.5rem;}
+  .badge{
+    font-family:var(--font-mono); font-size:.64rem; letter-spacing:.06em; text-transform:uppercase;
+    padding:.22rem .6rem; border-radius:2px; border:1px solid var(--border); color:var(--text-muted);
+    background:var(--surface); white-space:nowrap;
+  }
+  .badge--ready{color:var(--green); border-color:var(--green); background:var(--green-soft);}
+  .deliverable{font-family:var(--font-mono); font-size:.76rem; color:var(--text-faint); margin:.5rem 0 1.5rem;}
+  .lede{font-size:1rem; color:var(--text-muted); margin-bottom:1rem; max-width:760px;}
+
+  .wf-embed{margin-top:1.2rem; border:1px solid var(--border); border-radius:var(--radius-m); overflow:hidden; box-shadow:var(--shadow-card); background:#fff;}
+
+  .mtp-page{max-width:960px; margin:0 auto;}
+  .mtp-body{padding:2rem 2rem 1.6rem;}
+  .mtp-lede{font-size:.92rem; color:var(--text-muted); margin-bottom:1.6rem; max-width:640px; padding:.8rem 1rem; background:var(--paper); border-left:3px solid var(--accent); border-radius:0 6px 6px 0;}
+
+  .mtp-block{border:1px solid var(--border); border-radius:var(--radius-m); padding:1.4rem 1.5rem; margin-bottom:1.3rem; background:#FBF8F1;}
+  .mtp-block-head{display:flex; align-items:center; justify-content:space-between; gap:.7rem; margin-bottom:.9rem; flex-wrap:wrap;}
+  .mtp-block-title{font-weight:700; font-size:.98rem; color:var(--ink);}
+  .mtp-block-sub{font-family:var(--font-mono); font-size:.66rem; color:var(--text-faint); display:block; margin-top:.15rem; text-transform:none; letter-spacing:0;}
+
+  .mtp-tag{font-family:var(--font-mono); font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; padding:.2rem .55rem; border-radius:3px; border:1px solid; white-space:nowrap; flex-shrink:0;}
+  .mtp-tag--cms{color:var(--accent-deep); border-color:var(--accent); background:var(--accent-soft);}
+  .mtp-tag--form{color:var(--accent); border-color:var(--accent); background:var(--accent-soft);}
+  .mtp-tag--ext{color:var(--text-faint); border-color:var(--border); background:var(--surface);}
+  .mtp-tag--confirmed{color:var(--green); border-color:var(--green); background:var(--green-soft);}
+  .mtp-tag--missing{color:var(--accent); border-color:var(--accent); background:var(--accent-soft);}
+  .mtp-tag--optional{color:var(--text-muted); border-color:var(--border); background:var(--surface);}
+
+  .mtp-annotation{font-size:.85rem; color:var(--text-muted); background:rgba(255,255,255,.7); border-left:3px solid var(--accent); border-radius:0 6px 6px 0; padding:.7rem 1rem; margin-top:.9rem;}
+  .mtp-annotation:first-child{margin-top:0;}
+
+  .mtp-btn{display:inline-block; background:var(--ink); color:#fff; font-weight:600; font-size:.82rem; padding:.6rem 1.3rem; border-radius:6px;}
+  .mtp-btn--ghost{background:transparent; border:1px solid var(--ink); color:var(--ink);}
+  .mtp-btn-row{display:flex; gap:.7rem; flex-wrap:wrap; margin-top:.4rem;}
+
+  .mtp-closing{text-align:center; padding:2.6rem 2rem;}
+  .mtp-closing h2{font-size:1.2rem; color:var(--ink); margin-bottom:.35rem;}
+  .mtp-closing p{font-size:.85rem; color:var(--text-muted); margin-bottom:1.1rem;}
+
+  @media (max-width:640px){
+    .mtp-nav, .mtp-body{padding-left:1.2rem; padding-right:1.2rem;}
+  }
+
+  .decision-list{border-top:1px solid var(--border-soft);}
+  .decision-item{display:flex; gap:.9rem; padding:1rem 0; border-bottom:1px solid var(--border-soft);}
+  .decision-item:last-child{border-bottom:none;}
+  .decision-icon{flex-shrink:0; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.82rem; margin-top:.1rem;}
+  .decision-icon--done{background:var(--green-soft); color:var(--green); border:1px solid var(--green);}
+  .decision-icon--open{background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent);}
+  .decision-body strong{display:block; font-size:.96rem; color:var(--ink); margin-bottom:.15rem; font-family:var(--font-body); font-weight:700;}
+  .decision-body span{font-size:.86rem; color:var(--text-muted);}
+
+  .closing{padding:2.6rem 4rem 5rem; max-width:920px;}
+  .closing__box{background:var(--ink); color:#fff; border-radius:var(--radius-l); padding:2.2rem 2.4rem;}
+  .closing__box h3{color:#fff; font-size:1.15rem; margin-bottom:.6rem;}
+  .closing__box p{color:#C3C9D2; margin:0; font-size:.92rem;}
+
+  .backtotop{
+    position:fixed; right:1.6rem; bottom:1.6rem; z-index:130; width:2.6rem; height:2.6rem; border-radius:50%;
+    border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow-card); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; color:var(--ink);
+    opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .2s ease, transform .2s ease;
+  }
+  .backtotop.is-visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+
+  @media (max-width:1023px){
+    .topbar{display:flex;}
+    .sidebar{transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.3);}
+    .sidebar.is-open{transform:translateX(0);}
+    .main{margin-left:0;}
+    .cover{padding:2.4rem 1.2rem 2rem;}
+    .cover__panel{padding:1.7rem 1.3rem 1.5rem;}
+    .cover__title{max-width:100%;}
+    .stamp{width:100px; top:1.1rem; right:1.1rem; padding:.55rem .45rem .35rem;}
+    .doc-control{grid-template-columns:repeat(2, 1fr);}
+    .doc-control > div:nth-child(2n+1){border-left:none;}
+    .doc-control > div:nth-child(n+3){border-top:1px solid var(--border);}
+    .toc{padding:0 1.2rem 2.5rem;}
+    .part{padding:2rem 1.2rem; flex-direction:column; align-items:flex-start; gap:.8rem;}
+    .part__numeral{font-size:2.6rem;}
+    .section{padding:2.1rem 1.2rem;}
+    .closing{padding:2rem 1.2rem 3rem;}
+  }
+  @media (min-width:1024px){ .backdrop{display:none !important;} }
+
+  @media print{
+    .sidebar, .topbar, .progress, .backtotop, .backdrop{display:none !important;}
+    .main{margin-left:0;}
+  }
+
+  @media (max-width:480px){
+    .stamp{ width:64px; top:.6rem; right:.6rem; padding:.35rem .3rem .2rem; }
+    .stamp__caption{ display:none; }
+  }
+
+  .price-table{width:100%; border-collapse:collapse; margin:1.1rem 0 .4rem;}
+  .price-table th{text-align:left; font-family:var(--font-mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); padding:.5rem .3rem; border-bottom:1px solid var(--border); font-weight:600;}
+  .price-table th.num, .price-table td.price{text-align:right;}
+  .price-table td{padding:.8rem .3rem; border-bottom:1px solid var(--border-soft); font-size:.92rem; vertical-align:top;}
+  .price-table td .item-name{font-weight:700; color:var(--ink); display:block;}
+  .price-table td .item-desc{font-size:.82rem; color:var(--text-muted); display:block; margin-top:.15rem;}
+  .price-table td.price{font-family:var(--font-mono); color:var(--ink); font-weight:600; white-space:nowrap;}
+  .price-table tr.subtotal td{font-weight:700; color:var(--ink); border-top:1.5px solid var(--ink); border-bottom:1px solid var(--border-soft); padding-top:.7rem;}
+  .price-table tr.subtotal td.price{font-size:1rem;}
+  .price-table tr.addon td{color:var(--text-muted);}
+  .price-table tr.addon td.price{color:var(--text-muted); font-weight:500;}
+  .price-table tr.waived td.price{color:var(--green); font-style:italic; font-weight:500; font-size:.82rem;}
+  .price-table tr.bundle td{font-weight:700; color:var(--ink); border-top:2px solid var(--accent); background:var(--accent-soft); padding-top:.9rem; padding-bottom:.9rem;}
+  .price-table tr.bundle td:first-child{border-radius:var(--radius-s) 0 0 var(--radius-s); padding-left:.7rem;}
+  .price-table tr.bundle td:last-child{border-radius:0 var(--radius-s) var(--radius-s) 0; padding-right:.7rem;}
+  .price-table tr.bundle td.price{font-size:1.1rem; color:var(--ink);}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <button class="topbar__menu" id="menuBtn" aria-label="Open navigation">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+  <div class="topbar__titles">
+    <span class="topbar__title">Redevelopment Resources — Brand &amp; Print Quote</span>
+    <span class="topbar__crumb" id="topbarCrumb">Overview</span>
+  </div>
+  <span class="topbar__spacer"></span>
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar__brand">
+    <span class="sidebar__brand-eyebrow">For Kristen · Brand &amp; Print Quote</span>
+    <div style="display:flex; align-items:center; gap:.65rem;">
+      <span class="mark">RR</span>
+      <div>
+        <div class="sidebar__brand-name">Redevelopment Resources</div>
+        <div class="sidebar__brand-sub">Brand &amp; Print Quote</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav" id="sidebarNav">
+    <div class="navgroup">
+      <ul class="navlist">
+        <li><a class="navlink" href="#cover" data-nav><span class="navlink__num">—</span>Overview</a></li>
+      </ul>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup__title">The Quote</span>
+      <ul class="navlist">
+        <li><a class="navlink" href="#included" data-nav><span class="navlink__num">1</span>What's Included So Far</a></li>
+        <li><a class="navlink" href="#pricing" data-nav><span class="navlink__num">2</span>Pricing — Pick What You Need</a></li>
+        <li><a class="navlink" href="#more" data-nav><span class="navlink__num">3</span>Additional Collateral</a></li>
+        <li><a class="navlink" href="#know" data-nav><span class="navlink__num">4</span>Good to Know</a></li>
+        <li><a class="navlink" href="#payment" data-nav><span class="navlink__num">5</span>Next Steps</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="sidebar__meta">
+    <div><strong>Status</strong> — For Review</div>
+    <div><strong>Bundle</strong> — $1,225</div>
+    <div><strong>À La Carte</strong> — $1,400</div>
+  </div>
+  <div class="sidebar__footer">
+    jordan@latzwebdesign.com<br>
+    "No fluff. Just results."
+  </div>
+</aside>
+
+<main class="main">
+
+  <div class="docbar">
+    <div class="docbar__left">
+      <span class="mark">RR</span>
+      <span class="docbar__id">Redevelopment Resources · Brand &amp; Print Quote</span>
+    </div>
+    <div class="docbar__right">
+      <span class="docbar__crumb" id="docbarCrumb">Overview</span>
+      <span class="docbar__tag">For Review</span>
+    </div>
+  </div>
+
+  <!-- COVER -->
+  <section class="cover" id="cover">
+    <div class="cover__panel bracket-frame">
+      <span class="corner corner--tl"></span><span class="corner corner--tr"></span>
+      <span class="corner corner--bl"></span><span class="corner corner--br"></span>
+
+      <div class="stamp" aria-hidden="true">
+        <img class="stamp__logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANEAAAA2CAYAAABZe3zVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAEmRJREFUeAHtnQl4W9WVgM+570neJTvEsSU7jWNbJqRQlmEJJKWhLANlDW2G8LGUgX4QYDoFphDKGsoy0JlC5yvzsZSWkKYsAwxbJ8CkLWErKQWS0ECCJScCYsvGSSzJu/TePXOuHDmylniRlSiZ93/f09vOO/fep3vuct679wHsRZwuz0MOt+cVsLDYh9Fhb4I0BwGqwcJiH2aPGVFtbW1R0Cis582DgEgngTvYisoBCCws9mUQckxpdePXNYHfZ1O5hAOrTCPSz7FYSZJeiEbE6v7tza1gYbEPkTMjqqurK+yK2Jby5pKdh4Jc6zzPtdD7SCIikSoAcQlHoCrhMrY1+l9B4u6uQPPbYGGxD5AjI1qoOd3r/sQbx7NRfMjB3FhZTG/7fL7BRCmnu3Etr6qFSSebGn6L5S7gCB0bO0mwmX/viwha2d/q2woWFnlKTozI4W5aikC3E8HKcMB7BmTo+MSNKNTmcw1fW+U5BnS6GiWezbFz8IVfIcHzaMCjwU7vOrCwyDNyYER/Z3O4Q2EkDJhEx/S0+zoTz1ZVVZUMiLK5iHCmJPE9RColpP9mM/ODpDV2I/TOtm3bukvqZldrg9Hz+Py/cDSnq2vZoDbx7x80Ev9ll6GPOjqOH3BOWzcDdVxOQC+H2rw/AwuLPcykG5Gjtt4DUjyOgO9wpr4xfnzKlEaHUSiu4xrqR7xbPooaVeOsJTBXmahtFFLWCRAXEsIJHOEp6S5gvQ8G23w/BAuLPUzOvXOKInfDdDuIZ0D1dwg6OdRlYMoPUYjb2DCq2dlwMh+vJyEOYWM4lmucIzhiB8SvJ8B2JPqYa69BPvdNSDBC3o+wwd4famu+CSx/ucVeYI8YUbnL83s2ltPZWB7i5toNnZ2dPep4uj7R8DXTmg4lTR5FiGezYR0ab9INQX283ywlrgCtd1l3a+t2sLDYX3FU1x/ldHvIWdO4MvmcMiJeAmNSNH++XuZqmqoWsLDII3L+xgIK/ceqlUUm/RKyYfVqoxtgG1hY5BkCcsxgQfQG9rotDLe3vA4WFvshOa+JBrZs+XwA4HOwsNhPyXlNZGGxv2MZkYVFllhGZGGRJZYRWVhkiV5YXVcH46RwAILBoD8IeUR5eV35QOGorxOlMNDu94OFRRboBcK2BcaJLKY7IAhLIY8wi2z3FiBcMa6LgNrZc+gCC4ss2GvNucrKytL4thrABxYW+yg5f05UMM1TX6TTfAKcy7uHx144lVAZwV1hd0Vs/Q6Xx0CEdiLw87pZgnxZaLgh9KWvBSws8phJN6KKinqnWaSfJojOkAgnI8A0SnjPFdV71mlee8Uho6rldS2v5wkQl4Kp3q/zeInoPSDxdLim7A/w4YdRsNinUGPIhBAUCAT6YD9k0oyoeMYMlz1asFgCXYxAdVzjTNYr4h5E9LD1XewIhDeJmsZHBwGezcch42zwT/FqltrmsqKfC4TloVbvwylyLs9DfHPmDB8g8oUCvoUjZGo8V7CSxUPn0ZCCtmBE3hTubPEl63PUeB7gwmn+riPkD7X5Fuzan687Xa2ruKQaCLU1n6aO7JxAZgX/T8+HW713JcXvDY5fwnATejHc5rtjRJguzzL+X6azvhMhAxzGbF2Ie/pBHoMgbE536Sow6JbQV6mtiyF9cOhQeNgLaD4abm1ZnizH9/g9vrcGES7oDjTH3qUsdzct5TiejZKuDbb7VifKl9c0/pZlD47vc958N9jm+6cRYbsbb+fVKdEBWtS/o+VLh9vzQ867lw7K6IJEx5PD3bCI07EkOU5Z94lKqxqm8U1/xBa1beWE3MaH6iBHcMJm8Q253074eZnbc29RTWMt5BWkDOgwNoogZ2oX54aHnK7GU9IIxuQ4MwyoBVCEUjQRuWIyRDpwtS4IFqJNrI0NekwCieoS9XGTuGekxGqDb16AtZ5a6Kr/Wuwagd9R1wiSf0uJHXIa+H+M6xNS9KSKwAx2Mc2GDJS7Zs4QAldLkmdyJmOjkev58CLQ8X2VZ9Lr23nvQH4NSTzhrDnw28lynMcOY9l5bAy3qn1nTcO3+ZgygsNMImeyvCRsTLw3vG+kRJZwJgIeZyvAR4fiQjWxuCShmVydqv8LaCrs/G9i9wcmiGq2qbkUNCG8HOrl6m+BPYfgwJawMf2ZS5Gr1cQokD/4uVY5gSRnGIXA49MJqZsfkdHz1YJ9kR9nUkZgLOTa7GiU2kzeNXj9n5lk4/pEv5EywpcN6/dqbQftnKFowfdYeRT6zDfTKkPYFNdnM7segXFCYLtCTZHGNd3lXPLP45rxRG6lnMWnpnDtdFOGy4Lq3gFqlwzpkMdl0s+11lVqzBlI8SsYHf+uexNdmlknnlruarwm0/muDu+T4TavGjT6a7UvDLxI7U8o47PVfkMWaa+pyUjUZCKw95jOcXnQWbPuZQE4A/KDcm6a/IiLlEvVDknalE6IM1iherygFirSF4+mNNi+yc9/nqo1DsokE9cni20PpIRnG3xVGQ3fr3PKauqbePtotqRXMj7vI5gT19dvqzgDxgkhHcIro7vN95v4se62Wo4D9XFf+e8zXFYYu3ckL4jtydiMT+nwcfx6uR5Qzc56ror/Brunbte90a/JLIbbCfGnoLoP42CifaIFkE8QfGfIY5EXlHMp+Qu1wTF6Ohzwrcggx+16GatV0BQfwBjgQquEVx2ZzrO+/xgS1NYknwt98UUX19or2XjPRlM7TzXkBZqPQWbYoSNjAym5NTluD6lACnLTW+d+0dT4ZDVTarZWGxLtfH8ypaFQ3budvqffhQLeJ9MJcZ/pEy6dPuKa4w421g1cMKj7+PBuosNxkU+oDR30NZmEpKTruYnzGAdwLoyDvTsX9/6Jn4Q8WRkG/7lVu5Ez2fn4GoyGsM0pczXMEihUU+gIbv/fkVHhsD4y06oiXM7Nq7O5luS+K/Xboz1vQUYoFNenY6a5K1ArcTWcGtMNpr874B+udTntz/BFF7Lz4skyd8NSiBKaEm5WXlgJsCxDoEGU0cMN0vp6Olq+gt1gN7QHonbzMpLySiG0xlGK0J7heyMGM75po5mwFjS8nvs6P4dxYL07lwPCW9mDhlwyIp1QXt04P4NYgY7i1diiQ8Z2PfdkH2cDeoE3/5Gz8nPhtgt/mkl2WB/Q8vQhRv/EmU1NoMki8GZHR0cvZASPjOsj1K7OIFQZlxFo/37iia5Wr5pXQ9XIJ/HjineETXubm0mnct/sie5W77JMoQbZGzaaASm2bfusO4LFc7sDm9+B0amNxxMhtak7IvzW5vv53rwF48CqiSYVVYqJ2D1Fe/Re2W9fxzXHQKoY3E0m7uqsC0wpHaVme05EzOGSXRbS+p7PvRshzdtWksTPUcIz8X02lBRvmiLo9wcdtU3nUhQcEvWM/Qgk8zIpdXtCCP6UMAFvRROGvaOmDhuTZdh1fm1FVcOv+dwCrpkKBWkruwKfvQtpUPo44qPOn8HpvBh1GWse9rd+PPSYw9RWc3PtfEPHD1P0SvqJILHryyNp7jU3Dx/javw1qUNMn4YFFxpmZG6Z7N02kCYO8f8mLo9qEhH4fwu1p5tpyMJiPFjNOQuLLLGMyMIiS/Z0nyjIDe51ILGZ3ZPtpqRudVBoUM7PU6Zzx1N9BOwodm8WgIXFPkLujYgfiiHSi+ypedk0aPVonpdC18wZhWA7njvkZ3IHfCFYWOQ5uXMsEPTw44VHoN+4a6KjYKe4G6bzM4Nr2Aivg5xgORYssic3RkSwUoDtyq7Ap1/AJFBePatOCrmCjXIuTCqWEVlkz6Q6FvhJr8k/94QC3jMmy4AU6r2xcJt7Pm/+O1hY5BmT651DvCgU8N0MOfnEyWoj1Oa9no30ZrCwyCMmx7FACnFJuL35KcgxbKT3OF2N/IAb/xXyCDVnRB/smjfC5Yx0JX+jNk5J5ezqxP1i6OyJf24mEYejdgqVFhxkRuyb+7Zt3O3XMxy1DY0koUpGzZbeTn/77sLt7fy0Pb5vNwb6u7o2h3aXlt7Or3cCPGtmDn2hVlq9dhairCiWvWvTvU5UW1tb1DXoGDHep7cSdsCnn0aSZYunznBptoJGIrkp+UuL+cik1ESIcCcb0HLYQ7Ah3ct13bjHuOSSfs15pGaLbokvnX3iY2fNgf+QLKf6d4lyaonYnOcly3Ff9WQsLfSp985s9ugnXHDcmC7cogOaalh2FUr8LCZrs31Q7m68LZ2srhtvaDZj7a796HuyUHtxtLQ43OvWl7nq56XTqUavOtzr39IEbhCovT0gHB+XuRsvTZYLRwsPTU532fboKanpPnCJzWbfKJCUzvf5Hua9hzZrI+J22yvBNt/tsIfhfteV7AL/K+QRaowQqu/KknyEa2c7r59wOr9WkVZOfaMW4OnYYmDKhP8EuFy9ws16fgKEIb5ocbpvM9nt9DavTmKtLylZIojwtXeUuT2pA/2QOH40PLMS8T7ngMKMaSFYwxuPg/rCO4jnIWnEf6xAEPguazoSiX7BYd/NYWiC8L6CdCNwYzpxQzzdnLiRn8qJzfokVQujSxLdRGoMoTQuhzwnKyNSjgQho/8ME4RL0PVOd9O4572LBy8l5sj1PXG4CfJmONByzc7Rj4VQrDekFUTaxLIvqQUj0ZTxRAgyol4klSQCQjPPqiyGA+NzCsRxVDedxoIzY86cNu+5qoYWA+bhbIFbOMPemO1UZPys7qVwq/cqNqY3uLkxjY34gBECwlBvbpejiRcHA75rwwHvLdoAzMP+qGdw62Zvep2wMZZuE57f0eEbMbanqt+hqc+HcpoMBG2tDgVzQoGWUyDPycqIuBn3b8HsZhAtVu8nwwThTPUO/y3PQB7BJfaJaiISFLCYc8wX2qBoTi+J56ghDrFhDjZbXcpZibdzraELQctIaq991Y/XQ/LcL0hNQ4Fqf4wfUv0brmHU4LsD2gegGrIB8btOV9Ov+EH5icowk42YO6Z1MbHByPC3p3bs8G3d3XNBfuZ3USzdGvw2+VxHx8e9AvA+rtHquH/1qkmDbzjcTVdBnpONEVE0omX39btJwJRwJ+QRnOFquTT9AWe6Co3oNM5U4bRyBP+DJBeoBaJRf/L54KyaFaak2VxqnyaHJj65s6zKc3qijCYxNkIUwfzGSOXwLfVbW6qP7VOeGWBDPJgN9Qe8aZiyaE6a87FOv1miDw9ZH63243T/TqVZDV1IK9AXecA0jVoJUs0FoXFB8suSaTN3N7hxrzNhI5IIz/Vt+6wN9jLsvfmE/803IU9Qw5A5c6kpmYpNgadnkuOaqkSCmKEWKipoTDxXVjPrAEdz6wbub7zOghUIuHOQmBw5IUvEeJV/W4nwVmeN5+YSt+d8p7vxaUQ8mDPrXWm8g2q6rXKHq/Eari0Xs95qkhTMnJbYKNolasIRDfu+m3JeM59VM6kIgqfUFF+s94JgxP5HbqZ/kG5Gn6GEo1OlmbPegdw8nJV4qqR21iGy2ObVdP1Rkmjj5qQao4RSF3bIYyZsRCjp5bHIOd31J5VVey5RE87DGKmsrKuOXZN5VOhIpFwFeQQ7PR5RI0d586aMH2ommK/mExiaj8E8KfFUd+umHeydUvMbHM4Z+EnlVOALPjJs2oi+U8w1TXQW6wrzcpeuZAHPYwN6XR+klAfTugm3cC3ZyUb2AOt8SF3HzcWfwW4opp4HeeUHgTe4XK7ixHPhLzf/lZtnV3CYZazrYda7gguRY7nWfLWnoyWta5prljOG0y3MEbVb8aBQfbkveTmLC5BnWZ+aI++F/raWLyGPmdhzIoLooBn589iEtcuEgEVmkfBBEMYylBeidlu1GhbNXiZlHKtHkzc0+YouxV2wF+kpNNaUR22HG1Ez9gzGMKKLbJwOFGpKgV0ECwfalVziMcOk5Bqdgq2+6yqqZj3OOX+GaUBnuONC9kQulcnhsjPhI17VV7ia5hKYU8murw9//llaZ832Du9f2Khns9PiCE2Vg/3GX9L1X+JpYafGVjVrafHUg46zFxhV0YiDLxvZQmTP7G+4CfdkV8Q2j/WWRM2iNb1fbUiZiCRcZKxLTrfWa/oT9zs7P1XPyo5gh8nRAk039/W2BFub10OeM7F35xDeC7V6jxuL6M5ZQRdJMr+ZPB5eTRHM+aU0+f218hrPYVyaqucZq9jrNCbvjKPG0xabMHFcWO/OWWTPRJtzWXVYcwE3AZrBwmIvMDEjkjTRZzs5g9vaed1utth/UVMnbRrvRYTCP2ZZoO38lNqf/pyaRQZLk49rMjpggI07szTmcUjsoWqdQFrawcIiS/4P7EbEntNnQW0AAAAASUVORK5CYII=" alt="">
+        <span class="stamp__caption">For Review</span>
+      </div>
+
+      <span class="cover__eyebrow">Branding &amp; Print Package — For Review</span>
+      <h1 class="cover__title">Brand &amp; Print Quote</h1>
+      <div class="cover__tagline">Extending the refreshed brand — logo, business cards, and presentation materials — across the pieces you need most.</div>
+      <div class="rule-double"><div class="rule-double__a"></div><div class="rule-double__b"></div></div>
+      <p class="cover__desc">This builds on the brand elevation concepts Alyssa put together — the refined logo, pattern &amp; icon system, and business card direction you've already seen in the presentation. Below is the itemized cost to finalize and deliver those pieces, broken out so you can pick exactly what to move forward with now versus later. Nothing here has been started — we'll hold off until you give the go-ahead.</p>
+
+      <dl class="doc-control">
+        <div><dt>Prepared For</dt><dd>Kristen Fish-Peterson</dd></div>
+        <div><dt>Bundle Price</dt><dd>$1,225</dd></div>
+        <div><dt>À La Carte</dt><dd>$1,400</dd></div>
+        <div><dt>Status</dt><dd class="warn">Awaiting Your Go-Ahead</dd></div>
+      </dl>
+    </div>
+
+    <div class="callout callout--note" style="margin-top:1.6rem;">
+      <span class="callout__label">📋 For Review — Nothing Started Yet</span>
+      <p>This is a quote, not an invoice. Pick the pieces you'd like to move forward with — all four, or just the essentials — and let us know. Once confirmed, we'll get to work and follow up with an invoice for what's included.</p>
+    </div>
+  </section>
+
+  <!-- ================= 1 — WHAT'S INCLUDED SO FAR ================= -->
+  <section class="section" id="included">
+    <div class="section__head"><span class="section__eyebrow">1</span><h2 class="section__title">What's Included So Far</h2></div>
+    <p class="lede">The direction below is already designed — you've seen it in the brand elevation presentation. This quote covers finalizing it and turning it into usable files and collateral.</p>
+
+    <div class="wf-embed">
+      <div class="mtp-page">
+        <div class="mtp-body">
+
+          <div class="mtp-block">
+            <div class="mtp-block-head"><span class="mtp-block-title">Logo Refinement &amp; Finalization</span></div>
+            <p style="font-size:.92rem;">The outlined logo direction, refined per your feedback (including the bridge detail), finalized and prepped as a full file package — SVG, EPS, PNG, and JPG, in the color variations you'll need for web, print, and signage.</p>
+          </div>
+
+          <div class="mtp-block">
+            <div class="mtp-block-head"><span class="mtp-block-title">Brand Pattern, Texture &amp; Icon System</span></div>
+            <p style="font-size:.92rem;">The oversized brand-element pattern and the solid icon set, documented as a reusable system — colors, usage, and spacing — so it applies consistently across anything built after this (social, print, future pages).</p>
+          </div>
+
+          <div class="mtp-block">
+            <div class="mtp-block-head"><span class="mtp-block-title">Business Card Design</span></div>
+            <p style="font-size:.92rem;">The business card concept you've already seen, finalized as a print-ready file for your team — swap in name, title, and contact details per person.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2 — PRICING ================= -->
+  <section class="section" id="pricing">
+    <div class="section__head"><span class="section__eyebrow">2</span><h2 class="section__title">Pricing — Pick What You Need, or Bundle &amp; Save</h2></div>
+    <p class="lede">Each piece below is priced on its own, so you can move forward with just what matters most right now — or take all four together at a lower bundle price.</p>
+
+    <div class="wf-embed">
+      <div class="mtp-page">
+        <div class="mtp-body">
+
+          <div class="mtp-block">
+            <div class="mtp-block-head"><span class="mtp-block-title">À La Carte</span><span class="mtp-tag mtp-tag--optional">Pick &amp; choose</span></div>
+            <table class="price-table">
+              <tr><th>Item</th><th class="num">Price</th></tr>
+              <tr>
+                <td><span class="item-name">Brand Guidelines &amp; Logo Files</span><span class="item-desc">Final logo package + a short usage guide</span></td>
+                <td class="price">$875</td>
+              </tr>
+              <tr>
+                <td><span class="item-name">Social Profile Pictures &amp; Headers</span><span class="item-desc">Profile icon plus header/banner images, sized for your active platforms</span></td>
+                <td class="price">$175</td>
+              </tr>
+              <tr>
+                <td><span class="item-name">Business Cards</span><span class="item-desc">Print-ready design, one layout for the team</span></td>
+                <td class="price">$175</td>
+              </tr>
+              <tr>
+                <td><span class="item-name">Presentation Template</span><span class="item-desc">6 simple branded slides for internal/external use. Cost increases if more slides are needed.</span></td>
+                <td class="price">$175+</td>
+              </tr>
+              <tr class="subtotal">
+                <td>All Four, Individually</td>
+                <td class="price">$1,400</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="mtp-block" style="border-color:var(--accent); background:var(--accent-soft);">
+            <div class="mtp-block-head"><span class="mtp-block-title">Bundle — All Four Together</span><span class="mtp-tag mtp-tag--confirmed">Best value</span></div>
+            <table class="price-table">
+              <tr>
+                <td><span class="item-name">Brand Guidelines &amp; Logo Files</span></td>
+                <td class="price">$875</td>
+              </tr>
+              <tr>
+                <td><span class="item-name">Social Profile Pictures &amp; Headers</span></td>
+                <td class="price">$175</td>
+              </tr>
+              <tr class="waived">
+                <td><span class="item-name">Business Cards</span><span class="item-desc">Included free when bundled</span></td>
+                <td class="price">$175 value — free</td>
+              </tr>
+              <tr>
+                <td><span class="item-name">Presentation Template</span></td>
+                <td class="price">$175+</td>
+              </tr>
+              <tr class="bundle">
+                <td>Bundle Price</td>
+                <td class="price">$1,225</td>
+              </tr>
+            </table>
+            <div class="mtp-annotation">Buying these individually runs $1,400. Bundled together it's $1,225 — business cards included free, a $175 savings.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3 — ADDITIONAL COLLATERAL ================= -->
+  <section class="section" id="more">
+    <div class="section__head"><span class="section__eyebrow">3</span><h2 class="section__title">Additional Collateral</h2></div>
+    <p class="lede">Not included in the estimate above, but easy to add now or down the road once the core brand package is finalized.</p>
+
+    <div class="wf-embed">
+      <div class="mtp-page">
+        <div class="mtp-body">
+
+          <div class="mtp-block">
+            <div class="mtp-block-head"><span class="mtp-block-title">Available Add-Ons</span></div>
+            <table class="price-table">
+              <tr><th>Item</th><th class="num">Price</th></tr>
+              <tr class="addon">
+                <td><span class="item-name">Letterhead</span></td>
+                <td class="price">$175</td>
+              </tr>
+              <tr class="addon">
+                <td><span class="item-name">Brochures / Flyers / Whitepapers</span><span class="item-desc">Digital and/or print</span></td>
+                <td class="price">$350+</td>
+              </tr>
+              <tr class="addon">
+                <td><span class="item-name">Social Post Templates</span><span class="item-desc">Recommended in Canva, so your team can self-serve going forward</span></td>
+                <td class="price">$350+</td>
+              </tr>
+            </table>
+            <div class="mtp-annotation">No need to decide on these now — they slot in cleanly once the core brand package is locked in.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4 — GOOD TO KNOW ================= -->
+  <section class="section" id="know">
+    <div class="section__head"><span class="section__eyebrow">4</span><h2 class="section__title">Good to Know</h2></div>
+
+    <div class="wf-embed">
+      <div class="mtp-page">
+        <div class="mtp-body">
+          <div class="mtp-block">
+            <div class="mtp-block-head"><span class="mtp-block-title">Files, Ownership &amp; Revisions</span></div>
+            <ul style="font-size:.9rem; color:var(--text-muted);">
+              <li>You'll own every file outright — logo package (SVG, EPS, PNG, JPG) and print-ready PDFs for anything else, with no ongoing fees.</li>
+              <li>Reasonable revisions are already built into the pricing above.</li>
+              <li>Printing itself isn't included — you'd handle that through your own printer with the print-ready files we provide.</li>
+              <li>Prices above are estimates based on the direction already shown; final cost is confirmed once we know exactly which pieces you're moving forward with.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5 — NEXT STEPS ================= -->
+  <section class="section" id="payment" style="border-bottom:none;">
+    <div class="section__head"><span class="section__eyebrow">5</span><h2 class="section__title">Next Steps</h2></div>
+
+    <div class="wf-embed">
+      <div class="mtp-page">
+        <div class="mtp-body">
+          <div class="mtp-block" style="text-align:center; background:var(--accent-soft); border-color:var(--accent);">
+            <div style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin-bottom:.4rem;">Bundle Price</div>
+            <div style="font-family:var(--font-display); font-size:2.2rem; font-weight:700; color:var(--ink); margin-bottom:1.1rem;">$1,225</div>
+            <div style="font-size:.88rem; color:var(--text-muted);">No payment due yet — just let us know which pieces to move forward with.</div>
+          </div>
+          <div class="mtp-annotation" style="margin-top:1.1rem;">Reply and let us know what you'd like included — the full bundle at $1,225 (business cards included free), or pick individual pieces à la carte. Once confirmed, we'll lock in the scope and send an invoice to kick things off.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="closing__box">
+      <h3>Whenever You're Ready</h3>
+      <p>No pressure to decide on everything at once — happy to start with just the logo &amp; guidelines, or go bigger. Let us know what you'd like to include and we'll take it from there.</p>
+    </div>
+  </div>
+
+</main>
+
+<button class="backtotop" id="backtotop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+(function(){
+  var sidebar = document.getElementById('sidebar');
+  var backdrop = document.getElementById('backdrop');
+  var menuBtn = document.getElementById('menuBtn');
+  var backtotop = document.getElementById('backtotop');
+  var progress = document.getElementById('progress');
+  var navlinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+
+  function openMenu(){ sidebar.classList.add('is-open'); backdrop.classList.add('is-visible'); }
+  function closeMenu(){ sidebar.classList.remove('is-open'); backdrop.classList.remove('is-visible'); }
+  menuBtn && menuBtn.addEventListener('click', function(){
+    sidebar.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  backdrop && backdrop.addEventListener('click', closeMenu);
+  navlinks.forEach(function(a){
+    a.addEventListener('click', function(){ if(window.innerWidth < 1024){ closeMenu(); } });
+  });
+
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    var pct = height > 0 ? (scrolled / height) * 100 : 0;
+    progress.style.width = pct + '%';
+    if(scrolled > 600){ backtotop.classList.add('is-visible'); } else { backtotop.classList.remove('is-visible'); }
+  }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+  backtotop.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section[id], .cover[id]'));
+  var linkMap = {};
+  navlinks.forEach(function(a){ linkMap[a.getAttribute('href').slice(1)] = a; });
+  var docbarCrumb = document.getElementById('docbarCrumb');
+  var topbarCrumb = document.getElementById('topbarCrumb');
+
+  function crumbFor(link){
+    if(link.getAttribute('href') === '#cover') return 'Overview';
+    return link.textContent.trim();
+  }
+
+  var spyObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = entry.target.id;
+      var link = linkMap[id];
+      if(!link) return;
+      if(entry.isIntersecting){
+        navlinks.forEach(function(l){ l.classList.remove('is-active'); });
+        link.classList.add('is-active');
+        var crumb = crumbFor(link);
+        if(docbarCrumb) docbarCrumb.textContent = crumb;
+        if(topbarCrumb) topbarCrumb.textContent = crumb;
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  sections.forEach(function(s){ spyObserver.observe(s); });
+})();
+</script>
+
+</body>
+</html>
