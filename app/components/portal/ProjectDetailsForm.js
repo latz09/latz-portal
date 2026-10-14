@@ -25,6 +25,7 @@ const STATUS_OPTIONS = [
 ]
 
 const DESIGNER_STATUS_OPTIONS = [
+	{ value: 'waiting-on-payment', label: 'Waiting on Client Payment' },
 	{ value: 'not-started', label: 'Not Started' },
 	{ value: 'in-progress', label: 'In Progress' },
 	{ value: 'delivered', label: 'Delivered' },

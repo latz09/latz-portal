@@ -11,7 +11,10 @@ import {
 	STATUS_COLORS,
 	STATUS_ORDER,
 } from '@/app/utils/statusConfig';
-
+import {
+	designerStatusLabel,
+	designerStatusClassName,
+} from '@/app/utils/designerStatusDisplay';
 const STATUS_FILTERS = ['all', ...STATUS_ORDER];
 const PAYMENT_FILTERS = ['all', 'outstanding', 'paid'];
 
@@ -27,7 +30,7 @@ const DESIGNER_PAYMENT_LABELS = {
 function bucketForDesignerPayment(status) {
 	if (status === 'paid') return 'paid';
 	if (status === 'delivered' || status === 'invoiced') return 'owed';
-	return 'upcoming'; // not-started, in-progress, or unset
+	return 'upcoming'; // not-started, in-progress, waiting-on-payment, or unset
 }
 
 function formatMoney(n) {
@@ -83,7 +86,8 @@ function NextDueCell({ project, variant }) {
 
 		// No upcoming due — say what state the project is in instead of "—".
 		if (!next) {
-			const paid = project.designerPayment?.status === 'paid';
+			const dpStatus = project.designerPayment?.status;
+			const paid = dpStatus === 'paid';
 			const isComplete = project.status === 'complete';
 
 			let label;
@@ -91,6 +95,9 @@ function NextDueCell({ project, variant }) {
 
 			if (paid) {
 				label = 'Paid · closed';
+			} else if (dpStatus === 'waiting-on-payment') {
+				label = designerStatusLabel(dpStatus);
+				tone = designerStatusClassName(dpStatus) || tone;
 			} else if (isComplete) {
 				// her work's done, payment is what's outstanding
 				label = 'Project closed · payment due';
@@ -183,7 +190,7 @@ function ClientPaymentCell({ clientPayment }) {
 	);
 }
 
-function DesignerPaymentCell({ designerPayment }) {
+function DesignerPaymentCell({ designerPayment, variant }) {
 	if (!designerPayment?.assigned)
 		return <span className='text-white/20'>—</span>;
 	const { quoteLow, quoteHigh, actualAmount, status } = designerPayment;
@@ -193,6 +200,14 @@ function DesignerPaymentCell({ designerPayment }) {
 		: quoteLow && quoteHigh
 			? `${formatMoney(quoteLow)}–${formatMoney(quoteHigh)}`
 			: '—';
+
+	// Designer variant already surfaces the waiting-on-payment message in the
+	// Next Due column (NextDueCell) — don't repeat it in this column too.
+	const suppressOverride = variant === 'designer';
+	const statusOverrideClass = suppressOverride ? null : designerStatusClassName(status);
+	const statusLabel = suppressOverride
+		? (status || 'not-started').replace('-', ' ')
+		: designerStatusLabel(status);
 
 	return (
 		<div className='flex flex-col'>
@@ -206,8 +221,12 @@ function DesignerPaymentCell({ designerPayment }) {
 					{amount}
 				</span>
 			</span>
-			<span className='font-mono text-[10px] text-white/40 capitalize'>
-				{(status || 'not-started').replace('-', ' ')}
+			<span
+				className={`font-mono text-[10px] ${
+					statusOverrideClass || 'text-white/40 capitalize'
+				}`}
+			>
+				{statusLabel}
 			</span>
 		</div>
 	);
@@ -251,12 +270,17 @@ function DesignerLedgerRow({ p, hrefFor }) {
 		}
 	} else if (dp?.status === 'paid') {
 		dueLine = 'Paid · closed';
+	} else if (dp?.status === 'waiting-on-payment') {
+		dueLine = designerStatusLabel(dp.status);
+		dueTone = 'text-warning/80';
 	} else if (p.status === 'complete') {
 		dueLine = 'Closed · payment due';
 		dueTone = 'text-purple/70';
 	} else {
 		dueLine = 'In progress';
 	}
+
+	const statusOverrideClass = designerStatusClassName(dp?.status);
 
 	return (
 		<Link
@@ -294,8 +318,12 @@ function DesignerLedgerRow({ p, hrefFor }) {
 						{amount}
 					</span>
 				)}
-				<span className='font-mono text-[10px] text-white/30 mt-1 capitalize'>
-					{(dp?.status || 'not-started').replace('-', ' ')}
+				<span
+					className={`font-mono text-[10px] mt-1 ${
+						statusOverrideClass || 'text-white/30 capitalize'
+					}`}
+				>
+					{designerStatusLabel(dp?.status)}
 				</span>
 			</div>
 		</Link>
@@ -310,7 +338,9 @@ function MobileProjectCard({ p, isInternal, hrefFor, variant }) {
 		>
 			<div className='flex items-start justify-between gap-3'>
 				<div className='flex flex-col'>
-					<span className='font-display font-medium text-white'>{p.clientName}</span>
+					<span className='font-display font-medium text-white'>
+						{p.clientName}
+					</span>
 					<span className='text-xs text-white/50'>{p.name}</span>
 				</div>
 				{isInternal && (
@@ -343,7 +373,7 @@ function MobileProjectCard({ p, isInternal, hrefFor, variant }) {
 					<span className='font-mono text-[10px] text-white/30 uppercase tracking-widest mb-1'>
 						{isInternal ? 'Designer $' : 'Design Budget'}
 					</span>
-					<DesignerPaymentCell designerPayment={p.designerPayment} />
+					<DesignerPaymentCell designerPayment={p.designerPayment} variant={variant} />
 				</div>
 			</div>
 		</Link>
@@ -583,7 +613,7 @@ export default function ProjectsTable({ projects, variant = 'internal' }) {
 									</td>
 								)}
 								<td className='px-4 py-5'>
-									<DesignerPaymentCell designerPayment={p.designerPayment} />
+									<DesignerPaymentCell designerPayment={p.designerPayment} variant={variant} />
 								</td>
 							</tr>
 						))}

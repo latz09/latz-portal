@@ -9,7 +9,7 @@ const DESIGNER_PAYMENT_NUMBER_FIELDS = ['quoteLow', 'quoteHigh', 'hourlyRate', '
 const DESIGNER_PAYMENT_BOOLEAN_FIELDS = ['assigned']
 const DESIGNER_PAYMENT_DATE_FIELDS = ['dateInvoiced', 'datePaid']
 const DESIGNER_PAYMENT_TEXT_FIELDS = ['invoiceNumber', 'notes']
-const DESIGNER_PAYMENT_STATUSES = ['not-started', 'in-progress', 'delivered', 'invoiced', 'paid']
+const DESIGNER_PAYMENT_STATUSES = ['waiting-on-payment', 'not-started', 'in-progress', 'delivered', 'invoiced', 'paid']
 
 function pickNumber(value) {
 	if (value === '' || value === null || value === undefined) return undefined
