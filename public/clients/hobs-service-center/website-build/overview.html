@@ -108,6 +108,14 @@
     animation: pulse 2s infinite;
   }
 
+  /* kickoff-stage variant — same component, teal (confirmed) palette already used elsewhere (nav-link.active, timeline-item.complete, badge-cms) */
+  .sidebar-brand .status-pill.kickoff {
+    background: var(--teal-dim);
+    border-color: var(--teal-line);
+    color: var(--teal);
+  }
+  .status-pill.kickoff::before { background: var(--teal); }
+
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
@@ -465,6 +473,9 @@
   .highlight-box strong { font-weight: 700; color: var(--ink); }
   .highlight-box p { font-size: 14px; margin-top: 9px; color: var(--ink-2); }
 
+  /* kickoff-stage highlight variant — reuses the teal "confirmed" accent instead of warning */
+  .highlight-box.kickoff { border-left-color: var(--teal); }
+
   /* ── TIMELINE ── */
   .timeline {
     position: relative;
@@ -768,6 +779,10 @@
 
   .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
 
+  /* resolved-note variant — same component, teal accent instead of warning */
+  .note-block.resolved { background: var(--teal-dim); border-color: var(--teal-line); }
+  .note-block.resolved .note-date { color: var(--teal); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .sidebar { width: 200px; }
@@ -827,11 +842,12 @@
   <div class="sidebar-brand">
     <div class="lwd">Latz Web Design</div>
     <div class="client-name">Hobs Service</div>
-    <div class="status-pill">Proposal Sent — Awaiting Decision</div>
+    <div class="status-pill kickoff">Deposit Received — Kickoff</div>
   </div>
 
   <div class="nav-section-label">Overview</div>
-  <a href="#client" class="nav-link active"><span class="nav-icon">🛥️</span> Client Info</a>
+  <a href="#open-items" class="nav-link active"><span class="nav-icon">🧭</span> Open Items</a>
+  <a href="#client" class="nav-link"><span class="nav-icon">🛥️</span> Client Info</a>
   <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
   <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials & Pricing</a>
   <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client Journey</a>
@@ -873,16 +889,16 @@
         <span class="value">Terra Plaisance — Marketing Rep</span>
       </div>
       <div class="header-meta-item">
-        <span class="label">Proposal Value</span>
-        <span class="value orange">$3,000–$3,500 + optional add-ons</span>
+        <span class="label">Contract Value</span>
+        <span class="value green">$3,850 — 4-Page Build</span>
       </div>
       <div class="header-meta-item">
-        <span class="label">Deposit Received</span>
-        <span class="value orange">None — nothing approved yet</span>
+        <span class="label">Down Payment</span>
+        <span class="value green">$850 — received Oct 12, 2026</span>
       </div>
       <div class="header-meta-item">
         <span class="label">Status</span>
-        <span class="value orange">Proposal + wireframe sent Oct 5</span>
+        <span class="value green">Deposit Received — Kickoff</span>
       </div>
       <div class="header-meta-item">
         <span class="label">Domain</span>
@@ -897,6 +913,39 @@
 
   <!-- CONTENT -->
   <div class="content">
+
+    <!-- OPEN ITEMS GOING INTO DESIGN -->
+    <section id="open-items">
+      <div class="section-header">
+        <div class="section-icon">🧭</div>
+        <h2>Open Items Going Into Design</h2>
+      </div>
+
+      <div class="highlight-box kickoff">
+        <strong>Reconciliation complete — here's what's clear and what's still hanging before design starts.</strong>
+        <p>Every item from the approved wireframe's "What We'll Finalize Together" list was checked against the Oct 5–13 email thread. Five of six are closed out. One carries forward, plus one new question that surfaced along the way.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>✅ Resolved This Round</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> Business hours — M–F 8–5, Sat 8–12 (Terra, Oct 9)</li>
+            <li><span class="check-icon">✅</span> Shop address — 1992 County Road L, Tomahawk, WI 54487 (Terra, Oct 6)</li>
+            <li><span class="check-icon">✅</span> Logo/brand refresh — declined; keeping the current logo as-is (Terra, Oct 6)</li>
+            <li><span class="check-icon">✅</span> Photos — placeholders at launch confirmed; real photos to follow once Terra visits the shop (Terra, Oct 6)</li>
+            <li><span class="check-icon">✅</span> Blog launch approach — structure only, client pastes posts in manually, no live Constant Contact integration (confirmed Oct 13)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>❓ Still Open — Needs an Answer</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">○</span> <strong style="color:var(--ink);">Client-supplied copy</strong> — not yet delivered. Terra will write it from scratch herself if the client can't locate what was originally sent to HIBU (not a paid add-on either way).</li>
+            <li><span class="check-icon">○</span> <strong style="color:var(--ink);">Blog post scheduling</strong> — Terra asked Oct 13 whether the CMS can schedule posts in advance. Unanswered — new this round, wasn't on the original wireframe list.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
     <!-- CLIENT INFO -->
     <section id="client">
@@ -914,7 +963,7 @@
           </div>
           <div class="data-row">
             <span class="data-label">Role</span>
-            <span class="data-value">Marketing professional, not a Hob's Service employee — acting as an intermediary/account manager on her own contract with the client. This is her first client.</span>
+            <span class="data-value">Marketing professional, not a Hob's Service employee — acting as an intermediary/account manager on her own contract with the client. This is her first client. Also handles the client's social media (separate retainer, paid to her directly).</span>
           </div>
           <div class="data-row">
             <span class="data-label">Email</span>
@@ -958,16 +1007,16 @@
           </div>
           <div class="data-row">
             <span class="data-label">Decision Process</span>
-            <span class="data-value">No direct contact with the actual business owner yet. Every detail so far has come through Terra, who holds her own contract with the client and is managing budget/comms on their behalf.</span>
+            <span class="data-value">Still no direct contact with the actual business owner — every detail continues to come through Terra, who holds her own contract with the client and manages budget/comms on their behalf. She mentioned meeting the client in person around Oct 12–13 to go over details.</span>
           </div>
         </div>
       </div>
 
-      <div class="callout warn">
+      <div class="callout info">
         <span class="callout-icon">✍️</span>
         <div class="callout-body">
-          <strong>Her name is Terra, not Tara</strong>
-          <span>She signs every email "Terra Plaisance" and her address is terraplaisance@gmail.com, but every reply from Jordan in the thread so far opens "Hey Tara." Worth fixing before the next message — it's been wrong across five-plus emails already.</span>
+          <strong>Name corrected — now "Terra" throughout</strong>
+          <span>Early emails misaddressed her as "Tara." Every reply from Oct 6 onward correctly opens "Hey Terra" — resolved, flagged here for the record only.</span>
         </div>
       </div>
     </section>
@@ -979,9 +1028,9 @@
         <h2>Project Summary</h2>
       </div>
 
-      <div class="highlight-box">
-        <strong>Nothing is approved yet — formal proposal and wireframe went out Oct 5, waiting on Terra and the client to decide.</strong>
-        <p>The old HIBU site is gone for good: the platform shows it as unpublished, it's proprietary, and nothing is portable even if HIBU brings it back. The domain itself is healthy and under Jordan's DNS control. This is a full rebuild from near-scratch — Wayback only yielded the Home page (5 screenshots), and even that copy is generic, snowmobile-centric HIBU boilerplate that needs rewriting to reflect the real service mix. The proposal offers two sizes (3-page at $3,000 or 4-page at $3,500) plus optional "Room to Grow" add-ons, priced together only once Terra/the client pick what they want.</p>
+      <div class="highlight-box kickoff">
+        <strong>4-page build confirmed, deposit received Oct 12 — kickoff is underway.</strong>
+        <p>The old HIBU site is gone for good: the platform shows it as unpublished, it's proprietary, and nothing is portable even if HIBU brings it back. The domain itself is healthy and under Jordan's DNS control. This is a full rebuild from near-scratch — Wayback only yielded the Home page (5 screenshots), and even that copy is generic, snowmobile-centric HIBU boilerplate that needs rewriting to reflect the real service mix. Terra and the client chose the 4-page build ($3,500 base), took none of the optional "Room to Grow" add-ons, and signed a 12-month payment plan ($850 down + $250/mo × 12 = $3,850 total) so the down payment fit her client's budget. Down payment cleared Oct 12, 2026 — build is officially underway.</p>
       </div>
 
       <div class="two-col">
@@ -991,7 +1040,7 @@
             <li><span class="check-icon">🔴</span> Site is unpublished on HIBU's proprietary platform — not recoverable or migratable even if HIBU restores it</li>
             <li><span class="check-icon">🔴</span> No content exists off-platform; only one page survives via Wayback Machine, and it's generic and snowmobile-heavy</li>
             <li><span class="check-icon">🔴</span> Business has 40+ years of experience and 91 five-star reviews with nowhere online to show for it right now</li>
-            <li><span class="check-icon">🔴</span> Terra quoted the client $1,200 before she understood the real scope — now needs a defensible number she can bring back</li>
+            <li><span class="check-icon">🔴</span> Terra quoted the client $1,200 before she understood the real scope — needed a defensible, real-build number</li>
           </ul>
         </div>
         <div class="card">
@@ -999,7 +1048,7 @@
           <ul class="checklist">
             <li><span class="check-icon">✅</span> hobsservice.com live again, owned outright, off a platform that can vanish without warning</li>
             <li><span class="check-icon">✅</span> Real service mix (boats/ATVs/UTVs/docks) represented accurately — not snowmobile-first boilerplate</li>
-            <li><span class="check-icon">✅</span> Terra has a real, build-based proposal to bring to the client instead of a guessed number</li>
+            <li><span class="check-icon">✅</span> Terra brought a real, build-based proposal to the client and got it signed</li>
             <li><span class="check-icon">✅</span> Client can self-edit the site (CMS) going forward with no developer dependency for routine updates</li>
           </ul>
         </div>
@@ -1008,8 +1057,8 @@
       <div class="callout info">
         <span class="callout-icon">🚫</span>
         <div class="callout-body">
-          <strong>Not in the base proposal — folded into "Room to Grow" instead</strong>
-          <span>Individual service pages, a blog/content hub, a brand/icon extension package, and from-scratch copywriting are all scoped as optional add-ons, priced together only if Terra/the client want them — not itemized individually, not assumed into the base $3,000–$3,500.</span>
+          <strong>Room to Grow add-ons — none taken this round</strong>
+          <span>Individual service pages, a live blog/CMS integration, a brand/icon extension package, and from-scratch copywriting were all scoped as optional add-ons. Terra and the client didn't take any of them — see Scope & Pages and Future Upsells for the final status of each.</span>
         </div>
       </div>
 
@@ -1017,7 +1066,7 @@
         <span class="callout-icon">❓</span>
         <div class="callout-body">
           <strong>Still open</strong>
-          <span>3-page vs. 4-page build, which Room to Grow add-ons (if any), whether the client has any usable content at all, and whether there's interest in a logo/brand refresh (asked Sep 25, never answered).</span>
+          <span>Client-supplied copy (not yet delivered) and whether the blog can schedule posts in advance — see Open Items Going Into Design above for the full reconciliation.</span>
         </div>
       </div>
     </section>
@@ -1030,7 +1079,7 @@
       </div>
 
       <div class="card">
-        <h3>Pricing History (nothing approved)</h3>
+        <h3>Pricing History → Locked</h3>
         <table class="budget-table">
           <thead>
             <tr>
@@ -1047,61 +1096,81 @@
             </tr>
             <tr>
               <td><strong>Terra's Quoted Budget</strong></td>
-              <td>Revealed Sep 25 — what she quoted the client before understanding real scope; her first client, anxious about going back for more</td>
+              <td>Revealed Sep 25 — what she quoted the client before understanding real scope; her first client</td>
               <td class="amount">$1,200</td>
             </tr>
-            <tr class="pending-row">
-              <td>⏳ Formal Proposal — Sent Oct 5</td>
-              <td>3-page or 4-page build, consult mode (not locked), 50% to start / 50% at launch once scope is picked</td>
+            <tr>
+              <td><strong>Formal Proposal — Sent Oct 5</strong></td>
+              <td>3-page or 4-page build, consult mode, 50% to start / 50% at launch once scope picked</td>
               <td class="amount">$3,000–$3,500</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Final Contract Total</strong></td>
+              <td>4-page build locked, no add-ons taken, plus 12-month payment plan financing</td>
+              <td class="amount">$3,850</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="card" style="margin-top:16px;">
-        <h3>Build Options (as proposed)</h3>
+        <h3>Build & Terms — Confirmed</h3>
         <table class="budget-table">
           <thead>
             <tr>
-              <th>Option</th>
+              <th>Item</th>
               <th>Notes</th>
-              <th class="amount">Price</th>
+              <th class="amount">Amount</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>3-Page Build</strong></td>
-              <td>Home, About Us, Contact — Services lives as a section on Home</td>
-              <td class="amount">$3,000</td>
-            </tr>
-            <tr>
               <td><strong>4-Page Build</strong></td>
-              <td>Everything in the 3-page build, plus a dedicated Services page (better for search, better for a visitor who already knows what they need) — marked "Best Value" in the proposal</td>
+              <td>Home, About Us, Services, Contact — confirmed build size ("Best Value" option from the proposal)</td>
               <td class="amount">$3,500</td>
             </tr>
             <tr>
-              <td><strong>Room to Grow (optional, un-itemized)</strong></td>
-              <td>Individual service pages, blog/content hub, brand extension package, from-scratch copywriting — "folded into one number once we talk it through"</td>
-              <td class="amount">TBD</td>
+              <td><strong>Room to Grow Add-Ons</strong></td>
+              <td>Individual service pages, live blog/CMS integration, brand extension package, from-scratch copywriting — none taken this round</td>
+              <td class="amount">$0</td>
+            </tr>
+            <tr>
+              <td><strong>Payment Plan Financing</strong></td>
+              <td>10% of base price — covers extending payment over 12 months plus processing on 13 separate payments instead of 2</td>
+              <td class="amount">+$350</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Total Contract Value</strong></td>
+              <td>Locked</td>
+              <td class="amount">$3,850</td>
+            </tr>
+            <tr class="paid-row">
+              <td>✅ Down Payment — Paid</td>
+              <td>Cleared Oct 12, 2026 — build officially underway</td>
+              <td class="amount">$850</td>
+            </tr>
+            <tr class="pending-row">
+              <td>⏳ Balance — 12 Monthly Payments</td>
+              <td>$250/mo, same date each month, starting one month after the down payment. Full balance due by Month 12, before domain/hosting transfer, CMS admin access, and source files hand off.</td>
+              <td class="amount">$3,000</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="callout warn" style="margin-top:16px;">
-        <span class="callout-icon">💡</span>
+        <span class="callout-icon">💳</span>
         <div class="callout-body">
-          <strong>Pricing philosophy for this one</strong>
-          <span>Terra led with a $1,200 budget she'd already promised the client — she's not shopping casually, she's genuinely worried about going back for more on her first engagement. Jordan held the line on $4,000–5,000 verbally, then landed the formal proposal at $3,000–$3,500, with an explicit lever: if Terra packages content and handles client comms herself, the price trends toward the lower end.</span>
+          <strong>Standard terms replaced with a 12-month financing plan</strong>
+          <span>Jordan's usual terms are 50% down / 50% at launch. Terra's budget situation — her client paid her $600 down toward a $1,200 quote, plus a monthly retainer — couldn't support that, so this project runs on $850 down + $250/mo × 12 instead, a $350 premium over the $3,500 base, built into the monthly number rather than itemized separately. Terms: 5-day grace period with a flat $25 late fee after; two missed/late payments or 30+ days past due triggers written notice; 45–60 days past due triggers site suspension (a "maintenance" page, not deletion). Ownership — domain/hosting transfer, full CMS admin access, final source files — only transfers once the balance is paid in full at Month 12. That's a real deviation from the standard launch-day handoff, worth remembering when the site is ready before the plan is paid off.</span>
         </div>
       </div>
 
       <div class="callout info">
         <span class="callout-icon">🏦</span>
         <div class="callout-body">
-          <strong>Hosting — already addressed in the proposal</strong>
-          <span>$20/month, paid directly to Vercel in the client's name, no markup. The proposal frames this explicitly against the $100–$300/month agencies typically charge for hosting they control, which keeps it from contradicting the "no ongoing fees" / "you own it forever" messaging.</span>
+          <strong>Hosting — unchanged</strong>
+          <span>$20/month, paid directly to Vercel in the client's name, no markup. Same framing as the proposal against the $100–$300/month agencies typically charge for hosting they control.</span>
         </div>
       </div>
     </section>
@@ -1116,8 +1185,8 @@
       <div class="callout yellow">
         <span class="callout-icon">⚡</span>
         <div class="callout-body">
-          <strong>Two-week back-and-forth to pin down scope, then a proposal built from a single in-person meeting</strong>
-          <span>Terra re-opened the thread Sep 22 after a quiet stretch; design authority, budget, and page count all got negotiated over email before the Sep 28 meeting locked in what the proposal needed.</span>
+          <strong>Proposal to deposit took one week, gated by a check Terra's own client mailed her</strong>
+          <span>Once the proposal and wireframe landed Oct 5, nearly every open item resolved in the first 48 hours. The remaining delay wasn't scope or indecision — it was a real two-step payment chain: the client's check had to reach Terra and clear before she could pay Jordan's down payment.</span>
         </div>
       </div>
 
@@ -1150,7 +1219,7 @@
         <div class="timeline-item complete">
           <div class="timeline-date">Fri, Sep 25 — 2:33 PM</div>
           <div class="timeline-title">Jordan Holds the Range, Sets Up the Meeting</div>
-          <div class="timeline-desc">Agrees to build from the Wayback Home page and existing logo. Cites HIBU's own $449/mo published price as a comparison point, holds the $4,000–$5,000 range but flags that packaged content/client comms from Terra could land it lower. Asks about logo/brand refresh interest (unanswered since). Proposes Monday.</div>
+          <div class="timeline-desc">Agrees to build from the Wayback Home page and existing logo. Cites HIBU's own $449/mo published price as a comparison point, holds the $4,000–$5,000 range but flags that packaged content/client comms from Terra could land it lower. Asks about logo/brand refresh interest. Proposes Monday.</div>
         </div>
         <div class="timeline-item complete">
           <div class="timeline-date">Sun, Sep 27</div>
@@ -1167,15 +1236,50 @@
           <div class="timeline-title">Terra Delivers Final Scope Inputs</div>
           <div class="timeline-desc">Confirms 5 pages (Home, Contact Us, Products/Services, Blog, About Us), standard contact form fields plus a message box, and that photos are thin (generic placeholders OK). Sends the logo file. Notes the client is busy and content may need to come from scratch if what was sent to HIBU can't be found.</div>
         </div>
-        <div class="timeline-item active">
+        <div class="timeline-item complete">
           <div class="timeline-date">Mon, Oct 5</div>
           <div class="timeline-title">Proposal &amp; Wireframe Sent</div>
-          <div class="timeline-desc">Jordan delivers both: a six-section proposal (3-page/4-page pricing, Room to Grow add-ons, process, timeline) and a full wireframe. Consult mode — no price locked, no deposit link active. Awaiting Terra's and the client's decision.</div>
+          <div class="timeline-desc">Jordan delivers both: a six-section proposal (3-page/4-page pricing, Room to Grow add-ons, process, timeline) and a full wireframe. Consult mode — no price locked, no deposit link active.</div>
         </div>
-        <div class="timeline-item pending">
-          <div class="timeline-date">TBD</div>
-          <div class="timeline-title">Decision &amp; Deposit</div>
-          <div class="timeline-desc">Terra and the client review, pick 3-page vs. 4-page plus any Room to Grow items. Jordan invoices the 50% deposit once scope is locked.</div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Oct 6 — 9:05 AM</div>
+          <div class="timeline-title">Terra Responds — Loves It, Reveals the Real Budget Constraint</div>
+          <div class="timeline-desc">Confirms the client only gave her $1,200 total ($600 of it already collected as a down payment), and proposes her own payment structure ($600 down + $242/mo × 12) against the 4-page build. Also answers nearly every wireframe open item in one message: hosting/GoDaddy question, blog as structure-only, photos as placeholders, keep the current logo, hours to follow, and the shop address.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Oct 6 — 12:11 PM</div>
+          <div class="timeline-title">Jordan Confirms Scope, Counters on Payment Terms</div>
+          <div class="timeline-desc">Confirms hosting/domain (no GoDaddy changes needed, just a DNS repoint at launch), blog structure-only, placeholder photos, current logo, and the address. Can't match Terra's exact proposed payment structure, but builds a close alternative and sends it as a dedicated payment plan page rather than negotiating the number over email.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Oct 6 — 12:17 PM</div>
+          <div class="timeline-title">Terra Accepts — Pending Her Client's Check</div>
+          <div class="timeline-desc">Agrees to the payment plan. Explains the real bottleneck: the client mailed a $600 check that day (covering the website retainer plus Terra's first month of social media services) and the down payment won't go out until that check clears her own account — expected Thursday or Friday.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Oct 6 — 12:49 PM &amp; 1:30 PM</div>
+          <div class="timeline-title">Payment Plan Signed</div>
+          <div class="timeline-desc">Jordan confirms the timing is fine and sends a SignWell agreement to formalize the payment terms. Terra signs the same day.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Fri, Oct 9 — 8:21 AM &amp; 8:28 AM</div>
+          <div class="timeline-title">Hours Delivered, First Blog Post Sent</div>
+          <div class="timeline-desc">Terra sends shop hours (M–F 8–5, Sat 8–12) and her first blog post draft, asking whether her Constant Contact feed can integrate as the live blog source. Still waiting on the check to clear.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Oct 12 — 10:02 AM</div>
+          <div class="timeline-title">Jordan Scopes the Blog Question, Holds the Line on Starting the Build</div>
+          <div class="timeline-desc">Explains that a live Constant Contact integration would be a small add-on, while a simple "paste the post in" blog works at no extra cost. Reiterates he'll hold off starting the build until the down payment is actually through.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Oct 13 — 8:17 AM</div>
+          <div class="timeline-title">Terra Declines the Integration, Raises One New Question</div>
+          <div class="timeline-desc">Confirms she'll paste blog posts in manually — no integration needed — and asks whether the CMS can schedule posts in advance. Says the down payment is coming shortly.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Mon, Oct 12, 2026</div>
+          <div class="timeline-title">Down Payment Clears — Kickoff</div>
+          <div class="timeline-desc">The $850 down payment clears, confirming the 12-month payment plan and officially starting the build. (Note: per the thread itself, Terra's last message about the payment was Oct 13 and still read as "coming shortly" — the clearing date above is Jordan's confirmed record, so there may be a day or two of lag between the bank clearing and the thread catching up.)</div>
         </div>
       </div>
     </section>
@@ -1190,54 +1294,54 @@
       <div class="callout info">
         <span class="callout-icon">📋</span>
         <div class="callout-body">
-          <strong>Two build sizes proposed — Terra/client pick one, plus any optional add-ons</strong>
-          <span>Built from the Wayback Home page and existing logo as the starting design reference, with content either edited from what the client supplies or rewritten from scratch (Room to Grow item) if nothing survives.</span>
+          <strong>4-page build confirmed — built from the Wayback Home page and existing logo as the starting design reference</strong>
+          <span>Content either edited from what the client supplies or rewritten from scratch if nothing survives (Terra will handle this herself at no extra charge if needed).</span>
         </div>
       </div>
 
       <div class="two-col">
-        <div class="page-card" style="border-top-color: var(--ink-4);">
-          <span class="page-badge badge-priority">Option A — $3,000</span>
+        <div class="page-card" style="border-top-color: var(--border-strong); opacity: 0.6;">
+          <span class="page-badge badge-gray">Option A — $3,000 · Not Selected</span>
           <h4>3-Page Build</h4>
           <ul>
             <li>Home, About Us, Contact</li>
             <li>Services covered as a prominent section on Home, not its own page</li>
-            <li>Custom CMS, spam-filtered contact form rebuilt to spec, mobile-first</li>
-            <li>Client owns the site, code, and domain outright</li>
+            <li>Kept here for the record — the 4-page option was chosen instead</li>
           </ul>
         </div>
 
-        <div class="page-card" style="border-top-color: var(--warning);">
-          <span class="page-badge badge-new">Option B — $3,500 · Best Value</span>
+        <div class="page-card" style="border-top-color: var(--teal);">
+          <span class="page-badge badge-cms">Option B — $3,500 · Confirmed</span>
           <h4>4-Page Build</h4>
           <ul>
-            <li>Everything in the 3-page build, plus a dedicated Services page</li>
+            <li>Home, About Us, Contact, plus a dedicated Services page</li>
             <li>All four services get real detail — repairs &amp; service, powersport sales, seasonal prep &amp; storage, installation &amp; removal</li>
             <li>Better for search, and for a visitor who already knows what they need</li>
-            <li>Same CMS, form, and ownership terms as the 3-page option</li>
+            <li>Custom CMS, spam-filtered contact form, mobile-first, client owns everything outright</li>
           </ul>
         </div>
       </div>
 
       <div class="two-col" style="margin-top:16px;">
-        <div class="page-card" style="border-top-color: var(--purple);">
-          <span class="page-badge badge-gray">Room to Grow — Optional, Not Priced Individually</span>
-          <h4>Add-Ons, Finalized Together</h4>
+        <div class="page-card" style="border-top-color: var(--purple); opacity: 0.75;">
+          <span class="page-badge badge-gray">Room to Grow — Final Status</span>
+          <h4>None Taken This Round</h4>
           <ul>
-            <li>Individual service pages — each service gets its own URL instead of sharing one Services page</li>
-            <li>Blog / content hub — can launch as structure only, or with real posts</li>
-            <li>Brand extension package — small custom icon/pattern set built from the existing logo, extendable to print</li>
-            <li>From-scratch copywriting — if the original HIBU content can't be recovered, full copy written for all pages instead of edited from client-supplied material</li>
+            <li>Individual service pages — not discussed or taken; services stay consolidated on one Services page</li>
+            <li>Live Constant Contact blog integration — explicitly declined Oct 13; see Blog, below</li>
+            <li>Brand extension package — declined along with the logo refresh (Oct 6)</li>
+            <li>From-scratch copywriting (paid) — not engaged; Terra will write it herself if the client's original content can't be found</li>
           </ul>
         </div>
 
-        <div class="page-card" style="border-top-color: var(--border-strong); opacity: 0.65;">
-          <span class="page-badge badge-gray">Dropped From Original 5-Page Ask</span>
-          <h4>Blog Moved Out of Base Scope</h4>
+        <div class="page-card" style="border-top-color: var(--teal);">
+          <span class="page-badge badge-cms">Blog — Confirmed, Included</span>
+          <h4>Structure-Only, Manually Updated</h4>
           <ul>
-            <li>Terra's Sep 30 answer listed 5 pages including a standalone Blog</li>
-            <li>Proposal folds Blog into Room to Grow rather than the base 3/4-page builds</li>
-            <li>If it comes back into scope, still needs: who writes the posts, and whether it launches with content or just structure</li>
+            <li>Originally dropped from the base page count into Room to Grow framing</li>
+            <li>Terra uses Constant Contact for her own email marketing; asked about pulling that feed in live</li>
+            <li>Settled Oct 12–13: simple "paste the post in" blog, no live integration — included at no extra cost</li>
+            <li>Open question: whether the CMS supports scheduling posts in advance (see Open Items)</li>
           </ul>
         </div>
       </div>
@@ -1246,23 +1350,23 @@
         <h3>Current Content Status (context for the build)</h3>
         <div class="data-row">
           <span class="data-label">Copy</span>
-          <span class="data-value">Client-supplied content still pending — Terra is waiting on the client, who's been busy. If they can't locate what they originally sent HIBU, copy gets written from scratch (Room to Grow item).</span>
+          <span class="data-value">Still not delivered as of Oct 13 — Terra is waiting on the client, who's been busy. If they can't locate what they originally sent HIBU, Terra will write it from scratch herself rather than engaging the paid copywriting add-on.</span>
         </div>
         <div class="data-row">
           <span class="data-label">Old Copy Accuracy</span>
-          <span class="data-value">Wayback Home page is heavily snowmobile-focused ("Expert Snowmobile Services," etc.) — Terra describes the real service mix as boats, ATVs, UTVs, and docks. Confirm the actual mix before reusing or adapting any of the old copy.</span>
+          <span class="data-value">Wayback Home page is heavily snowmobile-focused ("Expert Snowmobile Services," etc.) — Terra describes the real service mix as boats, ATVs, UTVs, and docks. Confirm the actual mix before reusing or adapting any of the old copy — not yet re-confirmed this round.</span>
         </div>
         <div class="data-row">
           <span class="data-label">Photos</span>
-          <span class="data-value">Client doesn't have many — generic placeholders acceptable for launch</span>
+          <span class="data-value">Confirmed — placeholders at launch, real photos to follow once Terra visits the shop</span>
         </div>
         <div class="data-row">
           <span class="data-label">Logo</span>
-          <span class="data-value">File received, attached to Terra's Sep 30 email</span>
+          <span class="data-value">File in hand (received Sep 30); confirmed no refresh — using as-is</span>
         </div>
         <div class="data-row">
           <span class="data-label">Brand/Icon Refresh</span>
-          <span class="data-value">Asked Sep 25 whether there's interest — no answer yet; ties into the Room to Grow brand extension package</span>
+          <span class="data-value">Confirmed declined Oct 6 — client wants to keep the current logo</span>
         </div>
       </div>
     </section>
@@ -1277,8 +1381,8 @@
       <div class="callout warn">
         <span class="callout-icon">⚠️</span>
         <div class="callout-body">
-          <strong>Decision on build size is the current bottleneck</strong>
-          <span>Everything else below is either in progress with Terra or sitting with the client's own availability.</span>
+          <strong>Client-supplied copy is the current bottleneck</strong>
+          <span>Everything else below is confirmed. Copy delivery and the blog-scheduling question are the two things still open heading into design.</span>
         </div>
       </div>
 
@@ -1288,26 +1392,26 @@
           <li>
             <span class="check-icon">🧮</span>
             <div>
-              <strong>Build Size Decision</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">3-page ($3,000) vs. 4-page ($3,500, "Best Value") — unlocks the deposit invoice</span>
+              <strong>Build Size</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">4-page build, $3,500 base — locked Oct 5–6</span>
             </div>
-            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
           </li>
           <li>
             <span class="check-icon">📈</span>
             <div>
               <strong>Room to Grow Add-Ons</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">Individual service pages, blog, brand extension, from-scratch copywriting — any or none</span>
+              <span style="font-size:12px;color:var(--ink-3);">None taken — see Scope & Pages and Future Upsells</span>
             </div>
-            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
           </li>
           <li>
             <span class="check-icon">✍️</span>
             <div>
               <strong>Client-Supplied Copy</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">Terra waiting on the client; may not exist, in which case copywriting becomes a Room to Grow item</span>
+              <span style="font-size:12px;color:var(--ink-3);">Still not delivered; falls to Terra to write from scratch if the client can't find the original</span>
             </div>
-            <span class="check-status"><span class="pill pill-teal">In Progress</span></span>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
           </li>
           <li>
             <span class="check-icon">🔧</span>
@@ -1321,33 +1425,57 @@
             <span class="check-icon">🖼️</span>
             <div>
               <strong>Photos</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">Thin on hand — generic placeholders fine for launch</span>
+              <span style="font-size:12px;color:var(--ink-3);">Placeholders at launch confirmed; real photos later from Terra's shop visit</span>
             </div>
-            <span class="check-status"><span class="pill pill-gray">With Client</span></span>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
           </li>
           <li>
             <span class="check-icon">🎨</span>
             <div>
               <strong>Logo File</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">Received Sep 30</span>
+              <span style="font-size:12px;color:var(--ink-3);">Received Sep 30; no refresh, using as-is</span>
             </div>
             <span class="check-status"><span class="pill pill-green">In Hand</span></span>
           </li>
           <li>
-            <span class="check-icon">🪪</span>
+            <span class="check-icon">🕐</span>
             <div>
-              <strong>Logo/Brand Refresh Interest</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">Asked Sep 25 — no response yet</span>
+              <strong>Business Hours</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">M–F 8–5, Sat 8–12 — received Oct 9</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📍</span>
+            <div>
+              <strong>Shop Address</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">1992 County Road L, Tomahawk, WI 54487 — received Oct 6</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📝</span>
+            <div>
+              <strong>Blog Launch Approach</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Structure only, pasted in manually — no Constant Contact integration</span>
+            </div>
+            <span class="check-status"><span class="pill pill-green">Confirmed</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🗓️</span>
+            <div>
+              <strong>Blog Post Scheduling</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Terra asked Oct 13 whether posts can be scheduled in advance — unanswered</span>
             </div>
             <span class="check-status"><span class="pill pill-orange">Pending</span></span>
           </li>
           <li>
             <span class="check-icon">💵</span>
             <div>
-              <strong>50% Deposit</strong><br>
-              <span style="font-size:12px;color:var(--ink-3);">Invoiced once build size and add-ons are confirmed</span>
+              <strong>Down Payment</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">$850 of $3,850 total — cleared Oct 12, 2026</span>
             </div>
-            <span class="check-status"><span class="pill pill-gray">Awaiting Decision</span></span>
+            <span class="check-status"><span class="pill pill-green">Paid</span></span>
           </li>
         </ul>
       </div>
@@ -1383,6 +1511,10 @@
             <span class="data-label">Contact Form</span>
             <span class="data-value">Standard fields plus a message box, spam-filtered, notifications to both the client and Jordan</span>
           </div>
+          <div class="data-row">
+            <span class="data-label">Blog</span>
+            <span class="data-value">Structure-only, manually pasted content — no live Constant Contact feed. Post-scheduling capability still to confirm.</span>
+          </div>
         </div>
 
         <div class="card">
@@ -1397,11 +1529,11 @@
           </div>
           <div class="data-row">
             <span class="data-label">Leave Alone</span>
-            <span class="data-value">GoDaddy payments, _domainconnect, NS, and SOA records</span>
+            <span class="data-value">GoDaddy payments, _domainconnect, NS, and SOA records. Confirmed with Terra Oct 6 — no GoDaddy cancellation or migration needed; domain stays registered there through 2027.</span>
           </div>
           <div class="data-row">
             <span class="data-label">At Launch</span>
-            <span class="data-value">Repoint the @ A records and www CNAME to Vercel. Nothing needs to change before then — domain can stay at GoDaddy indefinitely.</span>
+            <span class="data-value">Repoint the @ A records and www CNAME to Vercel. Site deployment itself is gated by the payment plan's full-balance term (see Financials) — confirm whether DNS repointing happens at functional launch or waits for the balance to clear.</span>
           </div>
         </div>
       </div>
@@ -1430,11 +1562,11 @@
         <h2>Roadmap & Next Steps</h2>
       </div>
 
-      <div class="callout warn">
-        <span class="callout-icon">⏳</span>
+      <div class="callout info">
+        <span class="callout-icon">🚀</span>
         <div class="callout-body">
-          <strong>No build timeline locked — estimate is 4–6 weeks once a build size is chosen and the deposit clears</strong>
-          <span>The Home page content is essentially already drafted from what was live before, which gives the first page a head start once a design direction is picked.</span>
+          <strong>Build is underway — estimate is 4–6 weeks from kickoff (Oct 12)</strong>
+          <span>The Home page content is essentially already drafted from what was live before, which gives the first page a head start now that a design direction can begin.</span>
         </div>
       </div>
 
@@ -1455,12 +1587,11 @@
       <div class="phase">
         <div class="phase-num">02</div>
         <div>
-          <div class="weeks">Current — Oct 5</div>
+          <div class="weeks">Complete — Oct 5</div>
           <h4>Proposal Delivered</h4>
           <ul>
-            <li>Wireframe and formal proposal sent, consult mode, nothing locked</li>
+            <li>Wireframe and formal proposal sent, consult mode, nothing locked yet</li>
             <li>Two build sizes presented ($3,000 / $3,500) plus Room to Grow add-ons</li>
-            <li>Awaiting Terra's and the client's decision</li>
           </ul>
         </div>
       </div>
@@ -1468,12 +1599,12 @@
       <div class="phase">
         <div class="phase-num">03</div>
         <div>
-          <div class="weeks">Upon decision</div>
+          <div class="weeks">Complete — Oct 6–12</div>
           <h4>Scope Lock & Deposit</h4>
           <ul>
-            <li>Terra/client pick 3-page vs. 4-page plus any add-ons</li>
-            <li>50% deposit invoiced and collected</li>
-            <li>Real content gathering finalized (or copywriting add-on confirmed)</li>
+            <li>4-page build picked, no Room to Grow add-ons taken</li>
+            <li>12-month payment plan negotiated and signed (SignWell, Oct 6) in place of the standard 50/50 split</li>
+            <li>$850 down payment cleared Oct 12 — kickoff confirmed</li>
           </ul>
         </div>
       </div>
@@ -1481,10 +1612,11 @@
       <div class="phase">
         <div class="phase-num">04</div>
         <div>
-          <div class="weeks">Build — est. 4–6 weeks from kickoff</div>
+          <div class="weeks">Current — est. 4–6 weeks from kickoff</div>
           <h4>Design & Build</h4>
           <ul>
-            <li>1–2 design directions proposed, built around the existing logo</li>
+            <li>1–2 design directions to be proposed, built around the existing logo</li>
+            <li>Client-supplied copy is the main blocker — see Needed from Client</li>
             <li>Pages built and shared live as they're completed, not held until the end</li>
             <li>Review and refinement pass before launch</li>
           </ul>
@@ -1499,7 +1631,7 @@
           <ul>
             <li>DNS repointed from HIBU/parking IPs to Vercel</li>
             <li>Search Console, sitemap, and SEO fully configured</li>
-            <li>CMS, hosting, and analytics handed to the client</li>
+            <li>CMS, hosting, and analytics handed to the client — full ownership transfer waits on the balance being paid in full (Month 12 of the payment plan, see Financials)</li>
             <li>Google Business Profile website link updated (91 reviews live there already)</li>
           </ul>
         </div>
@@ -1516,7 +1648,7 @@
       <div class="callout info">
         <span class="callout-icon">💡</span>
         <div class="callout-body">
-          <strong>Some of these are already on the table as Room to Grow add-ons — pitch the rest once the site's live and real usage exists</strong>
+          <strong>All four Room to Grow items were offered and declined this round — worth revisiting once the site's live and real usage exists</strong>
           <span>Each ties to a gap already visible in this project, not a generic add-on.</span>
         </div>
       </div>
@@ -1524,23 +1656,23 @@
       <div class="three-col">
         <div class="upsell-card">
           <h4>📄 Individual Service Pages</h4>
-          <div class="price">Room to Grow — TBD</div>
-          <p>Each service gets its own URL instead of sharing one Services page — stronger local SEO than the consolidated option.</p>
+          <div class="price">Not taken this round — TBD</div>
+          <p>Each service gets its own URL instead of sharing one Services page — stronger local SEO than the consolidated option. Not discussed again after the proposal; services stay consolidated.</p>
         </div>
         <div class="upsell-card">
-          <h4>📝 Blog / Content Hub</h4>
-          <div class="price">Room to Grow — TBD</div>
-          <p>Dropped from the base 5-page ask into optional scope. Seasonal tips, service reminders — can launch as structure only or with real posts.</p>
+          <h4>📝 Live Constant Contact Blog Integration</h4>
+          <div class="price">Declined Oct 13 — TBD</div>
+          <p>Terra already runs her own Constant Contact email marketing for the client — pulling that feed in live as the blog source was scoped as a small add-on. She opted for manual paste-in instead, but the infrastructure question (and her existing Constant Contact habit) makes this a natural revisit later.</p>
         </div>
         <div class="upsell-card">
           <h4>🎨 Brand Extension Package</h4>
-          <div class="price">Room to Grow — TBD</div>
-          <p>Custom icon/pattern set built from the existing logo, woven through the site instead of stock icons — extendable to print later.</p>
+          <div class="price">Declined Oct 6 — TBD</div>
+          <p>Custom icon/pattern set built from the existing logo, woven through the site instead of stock icons — extendable to print later. Declined alongside the logo refresh question.</p>
         </div>
         <div class="upsell-card">
           <h4>✍️ Copywriting From Scratch</h4>
-          <div class="price">Room to Grow — TBD</div>
-          <p>If the original HIBU content can't be recovered, full site copy written for all pages instead of edited from client-supplied material.</p>
+          <div class="price">Not engaged — TBD</div>
+          <p>If the client's original content can't be found, Terra plans to write it herself rather than pay for this add-on. Still worth offering if she changes her mind once the content deadline gets real.</p>
         </div>
         <div class="upsell-card">
           <h4>📧 Domain Email Setup</h4>
@@ -1562,29 +1694,39 @@
         <h2>Notes & Observations</h2>
       </div>
 
-      <div class="note-block">
-        <div class="note-date">Fix the Name Before the Next Email</div>
-        <p>Every one of Jordan's emails so far opens "Hey Tara" — her actual name is Terra Plaisance, confirmed by her own sign-off and email address on every message. Small thing, but it's compounded across five-plus emails and is worth catching before anything more formal goes out.</p>
+      <div class="note-block resolved">
+        <div class="note-date">Name Issue — Fixed</div>
+        <p>Earlier emails opened "Hey Tara" — her actual name is Terra Plaisance. Corrected from Oct 6 onward; no longer an open item.</p>
       </div>
 
       <div class="note-block">
-        <div class="note-date">First-Client Budget Anxiety — Handle Gently</div>
-        <p>Terra's $1,200 figure was quoted to the client before she understood real scope, and she's explicitly worried about going back to ask for more on her first engagement. The repricing conversation (now formalized at $3,000–$3,500 in the proposal) should keep leaning on "this is the real shape of the build," not just present a bigger number and hope it lands.</p>
+        <div class="note-date">The Payment Chain Is Two Steps Deep — Budget This Into Future Delays</div>
+        <p>Terra isn't paying out of her own operating cash — she's forwarding money from her client's check, which has to physically arrive and clear her own account before she can pay Jordan. That's what actually gated the down payment (not indecision), and it's worth factoring into expectations for the monthly payments too: each one likely depends on her own collections from the client running on schedule, not just her own intent to pay.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Financing Plan Is a Real Departure From Standard Terms</div>
+        <p>This is the first project on a 12-month installment plan instead of 50% down / 50% at launch. The $350 premium covers the financing and processing cost, but the bigger operational difference is that full ownership transfer (domain, CMS, source files) now waits on the final payment at Month 12 — not on launch. Flag this clearly before launch so the handoff conversation doesn't get ahead of the actual terms.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">First-Client Budget Anxiety — Still Worth Handling Gently</div>
+        <p>Terra's original $1,200 figure was quoted to the client before she understood real scope, and she was explicit about not wanting to go back to the client for more money. The $3,850 total and installment structure let her do this without that conversation — worth remembering if any future change order or add-on comes up, since the same anxiety likely still applies.</p>
       </div>
 
       <div class="note-block">
         <div class="note-date">No Direct Line to the Actual Business</div>
-        <p>Every fact about Hob's Service Center — services, reviews, credentials, content, decisions — has come through Terra so far. Worth keeping in mind if anything ever needs direct confirmation from the client owner, since there's currently no contact info for them on file.</p>
+        <p>Every fact about Hob's Service Center — services, reviews, credentials, content, decisions — has come through Terra so far. Terra mentioned meeting the client in person around Oct 12–13; worth asking her afterward whether anything changed or whether a direct line opened up.</p>
       </div>
 
       <div class="note-block">
         <div class="note-date">Old Copy Is Unreliable — Don't Reuse Without Checking</div>
-        <p>The Wayback Home page is snowmobile-first throughout (headline, intro section, service tiles), reads as generic HIBU boilerplate, and has at least one dangling reference ("these installations") that likely pointed to dock/lift content on a page that never loaded. Confirm the real service mix (boats/ATVs/UTVs/docks per Terra) before adapting any of it, and don't assume the hero photo is licensed for reuse — it looks like HIBU stock.</p>
+        <p>The Wayback Home page is snowmobile-first throughout (headline, intro section, service tiles), reads as generic HIBU boilerplate, and has at least one dangling reference ("these installations") that likely pointed to dock/lift content on a page that never loaded. Confirm the real service mix (boats/ATVs/UTVs/docks per Terra) before adapting any of it — not yet re-confirmed this round — and don't assume the hero photo is licensed for reuse.</p>
       </div>
 
       <div class="note-block">
         <div class="note-date">Response Pattern</div>
-        <p>Terra goes quiet for several days to over a week when she's busy (this happened early in the thread), then replies fully once she resurfaces. A direct follow-up has reliably gotten a response — don't read the gaps as disinterest.</p>
+        <p>Terra goes quiet for several days to over a week when she's busy (this happened early in the thread), then replies fully once she resurfaces — often same-day once content/logistics are top of mind. A direct follow-up has reliably gotten a response.</p>
       </div>
 
       <div class="note-block">
