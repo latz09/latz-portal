@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Redevelopment Resources — Design Brief | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1A25;
+    --paper:#EFE7D6;
+    --surface:#FFFFFF;
+    --border:rgba(172,164,138,.55);
+    --border-soft:rgba(172,164,138,.3);
+    --text:#15222F;
+    --text-muted:#5B6673;
+    --text-faint:#8A93A0;
+    --accent:#8E4D40;
+    --accent-deep:#6E3B31;
+    --accent-soft:#F3E5E0;
+    --green:#3F7A52;
+    --green-soft:#EEF6F0;
+    --radius-s:6px;
+    --radius-m:10px;
+    --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(15,26,37,.06), 0 8px 24px rgba(15,26,37,.07);
+    --font-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  body{
+    margin:0; font-family:var(--font-body); color:var(--text); background:var(--paper);
+    -webkit-font-smoothing:antialiased; font-size:16.5px; line-height:1.65;
+  }
+  h1,h2,h3{font-family:var(--font-display); margin:0; color:var(--ink); font-weight:600;}
+  p{margin:0 0 1em; color:var(--text);}
+  a{color:var(--accent-deep);}
+  strong{color:var(--ink); font-weight:700;}
+
+  .wrap{max-width:760px; margin:0 auto; padding:4.5rem 1.5rem 4rem;}
+
+  .mark{
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border:1.5px solid var(--accent); border-radius:2px;
+    font-family:var(--font-mono); font-weight:600; font-size:.6rem; letter-spacing:.01em;
+    color:var(--accent); background:rgba(142,77,64,.08);
+  }
+
+  .bracket-frame{position:relative;}
+  .corner{position:absolute; width:18px; height:18px; pointer-events:none;}
+  .corner--tl{top:-1px; left:-1px; border-top:2px solid var(--accent); border-left:2px solid var(--accent);}
+  .corner--tr{top:-1px; right:-1px; border-top:2px solid var(--accent); border-right:2px solid var(--accent);}
+  .corner--bl{bottom:-1px; left:-1px; border-bottom:2px solid var(--accent); border-left:2px solid var(--accent);}
+  .corner--br{bottom:-1px; right:-1px; border-bottom:2px solid var(--accent); border-right:2px solid var(--accent);}
+
+  .panel{position:relative; border:1px solid var(--border); border-radius:var(--radius-m); padding:2.6rem 2.6rem 2.4rem; background:var(--surface);}
+  .brand-row{display:flex; align-items:center; gap:.65rem; margin-bottom:1.6rem;}
+  .brand-name{font-family:var(--font-display); font-size:1.05rem; font-weight:700; color:var(--ink);}
+  .brand-sub{font-size:.78rem; color:var(--text-muted);}
+
+  .eyebrow{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid rgba(142,77,64,.35);
+    padding:.3rem .7rem; border-radius:2px; margin-bottom:1.1rem;
+  }
+  .title{font-size:clamp(1.7rem, 3.4vw, 2.2rem); line-height:1.15; margin-bottom:.3rem;}
+  .tagline{font-family:var(--font-mono); font-size:.82rem; letter-spacing:.03em; color:var(--text-muted);}
+
+  .rule-double{width:64px; margin:1.1rem 0 1.4rem;}
+  .rule-double__a{height:2px; background:var(--ink); margin-bottom:3px;}
+  .rule-double__b{height:1px; background:var(--accent); width:70%;}
+
+  .doc-control{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:0; margin:0;
+    border:1px solid var(--border); border-radius:var(--radius-s); overflow:hidden;
+  }
+  .doc-control > div{padding:.75rem 1.1rem; border-left:1px solid var(--border); background:var(--surface);}
+  .doc-control > div:first-child{border-left:none;}
+  .doc-control dt{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin:0 0 .3rem;}
+  .doc-control dd{font-family:var(--font-mono); font-size:.82rem; color:var(--ink); margin:0; font-weight:500;}
+  .doc-control dd.ok{color:var(--green);}
+
+  .section{margin-top:2.4rem;}
+  .section-label{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:.9rem;}
+  .section p.intro{font-size:.95rem; color:var(--text-muted); margin-bottom:1.1rem;}
+
+  .phase-block{border:1px solid var(--border); border-radius:var(--radius-m); overflow:hidden; margin-bottom:1.1rem;}
+  .phase-head{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem 1.2rem; background:var(--accent-soft); border-bottom:1px solid var(--border);}
+  .phase-head.phase-head--later{background:#F2F0E8;}
+  .phase-tag{font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600;}
+  .phase-tag.later{color:var(--text-muted);}
+  .phase-name{font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--ink);}
+  .phase-status{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; padding:.25rem .6rem; border-radius:20px; background:var(--green-soft); color:var(--green); font-weight:600; white-space:nowrap;}
+  .phase-status.hold{background:#EEEBE0; color:var(--text-muted);}
+
+  .deliverable-list{list-style:none; margin:0; padding:0;}
+  .deliverable-list li{display:flex; gap:.8rem; padding:.95rem 1.2rem; border-bottom:1px solid var(--border-soft);}
+  .deliverable-list li:last-child{border-bottom:none;}
+  .d-bullet{flex-shrink:0; width:7px; height:7px; border-radius:50%; background:var(--accent); margin-top:.5rem;}
+  .phase-head--later ~ .deliverable-list .d-bullet{background:var(--text-faint);}
+  .d-name{font-weight:700; color:var(--ink); display:block; font-size:.95rem; margin-bottom:.2rem;}
+  .d-note{font-size:.88rem; color:var(--text-muted); margin:0;}
+
+  .callout{border-radius:var(--radius-m); padding:1.1rem 1.3rem; margin-top:1.4rem; border:1px solid var(--border); background:#F7F2E6;}
+  .callout__label{display:block; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.5rem; font-weight:600; color:var(--accent);}
+  .callout p{font-size:.9rem; color:var(--text-muted); margin:0;}
+  .callout p + p{margin-top:.6rem;}
+
+  .refs{display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.4rem;}
+  .ref-chip{font-family:var(--font-mono); font-size:.78rem; color:var(--accent-deep); background:var(--accent-soft); border:1px solid rgba(142,77,64,.3); padding:.4rem .8rem; border-radius:6px; text-decoration:none;}
+
+  .closing-footer{
+    margin-top:3rem; padding-top:1.8rem; border-top:1px solid var(--border-soft);
+    display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  }
+  .closing-footer__brand{display:flex; align-items:center; gap:.6rem;}
+  .closing-footer__brand img{height:42px; width:auto; display:block;}
+  .closing-footer__text{font-family:var(--font-mono); font-size:.72rem; color:var(--text-faint); line-height:1.6;}
+  .closing-footer__text a{color:var(--text-faint);}
+
+  @media (max-width:600px){
+    .wrap{padding:2.4rem 1.1rem 3rem;}
+    .panel{padding:1.7rem 1.4rem 1.5rem;}
+    .doc-control{grid-template-columns:1fr;}
+    .doc-control > div{border-left:none; border-top:1px solid var(--border);}
+    .doc-control > div:first-child{border-top:none;}
+    .phase-head{flex-wrap:wrap;}
+    .closing-footer{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="panel bracket-frame">
+    <span class="corner corner--tl"></span><span class="corner corner--tr"></span>
+    <span class="corner corner--bl"></span><span class="corner corner--br"></span>
+
+    <div class="brand-row">
+      <span class="mark">RR</span>
+      <div>
+        <div class="brand-name">Redevelopment Resources</div>
+        <div class="brand-sub">Design Brief — Brand &amp; Print Package</div>
+      </div>
+    </div>
+
+    <span class="eyebrow">Design Brief</span>
+    <h1 class="title">Brand &amp; Print Package</h1>
+    <div class="tagline">Scope, deliverables, and sequencing for Alyssa</div>
+    <div class="rule-double"><div class="rule-double__a"></div><div class="rule-double__b"></div></div>
+
+    <dl class="doc-control">
+      <div><dt>Client</dt><dd>Kristen Fish-Peterson</dd></div>
+      <div><dt>Logo Direction</dt><dd>Logo 03</dd></div>
+      <div><dt>Status</dt><dd class="ok">Approved — Scoped</dd></div>
+    </dl>
+
+    <div class="section">
+      <div class="section-label">Context</div>
+      <p class="intro">Kristen approved the full brand &amp; print package. The site needs to launch before the rest of the package is finished, so the work is split into two phases — website-facing items first, everything else after launch. No pricing involved here, just scope and order.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Phase 1 — Website-Facing (Needed Before Launch)</div>
+      <div class="phase-block">
+        <div class="phase-head">
+          <div>
+            <span class="phase-tag">Priority</span>
+            <div class="phase-name">Site-Blocking Deliverables</div>
+          </div>
+          <span class="phase-status">In Progress</span>
+        </div>
+        <ul class="deliverable-list">
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Finalized Logo — Logo 03 Direction</span>
+              <p class="d-note">Includes the bridge-element update Kristen requested: a small vertical line through the middle of the bridge, not spanning the full height, to echo the two mirrored "R"s the mark is built on.</p>
+            </div>
+          </li>
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Icon Style — Solid/Filled</span>
+              <p class="d-note">Kristen's pick: solid/filled icons rather than outlined, applied consistently across the site.</p>
+            </div>
+          </li>
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Oversized Brand Elements — Site Integration</span>
+              <p class="d-note">The oversized logo-derived elements direction (not the brick/texture option), built out for use across the website — hero sections, section breaks, etc. Existing brand colors and fonts stay as-is.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Phase 2 — Post-Launch (Rest of Package)</div>
+      <div class="phase-block">
+        <div class="phase-head phase-head--later">
+          <div>
+            <span class="phase-tag later">On Hold</span>
+            <div class="phase-name">Everything Else</div>
+          </div>
+          <span class="phase-status hold">After Launch</span>
+        </div>
+        <ul class="deliverable-list">
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Brand Guidelines &amp; Logo File Package</span>
+              <p class="d-note">Full file set and usage guidelines once the logo above is locked.</p>
+            </div>
+          </li>
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Social Profile Pictures &amp; Headers</span>
+            </div>
+          </li>
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Business Cards</span>
+              <p class="d-note">Not urgent — Kristen isn't reprinting until her current stock runs out.</p>
+            </div>
+          </li>
+          <li>
+            <span class="d-bullet"></span>
+            <div>
+              <span class="d-name">Presentation Template</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout__label">Budget Range — Full Package</span>
+      <p>$700–800 total across both phases combined.</p>
+    </div>
+
+    <div class="callout">
+      <span class="callout__label">Why the Split</span>
+      <p>We're launching the site before the full package is done, so Phase 1 is what's actually gating go-live. Phase 2 has no hard deadline — happy to work it in whenever makes sense on your end once Phase 1 is locked.</p>
+    </div>
+  </div>
+
+  <div class="closing-footer">
+    <div class="closing-footer__brand">
+      <img src="/images/internal-logos/black.png" alt="Latz Web Design">
+    </div>
+    <span class="closing-footer__text"><a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></span>
+  </div>
+
+</div>
+
+</body>
+</html>
