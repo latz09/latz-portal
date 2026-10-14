@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Redevelopment Resources — Invoice | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1A25;
+    --paper:#EFE7D6;
+    --surface:#FFFFFF;
+    --border:rgba(172,164,138,.55);
+    --border-soft:rgba(172,164,138,.3);
+    --text:#15222F;
+    --text-muted:#5B6673;
+    --text-faint:#8A93A0;
+    --accent:#8E4D40;
+    --accent-deep:#6E3B31;
+    --accent-soft:#F3E5E0;
+    --green:#3F7A52;
+    --green-soft:#EEF6F0;
+    --radius-s:6px;
+    --radius-m:10px;
+    --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(15,26,37,.06), 0 8px 24px rgba(15,26,37,.07);
+    --font-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  body{
+    margin:0; font-family:var(--font-body); color:var(--text); background:var(--paper);
+    -webkit-font-smoothing:antialiased; font-size:16.5px; line-height:1.65;
+  }
+  h1,h2,h3{font-family:var(--font-display); margin:0; color:var(--ink); font-weight:600;}
+  p{margin:0 0 1em; color:var(--text);}
+  a{color:var(--accent-deep);}
+  strong{color:var(--ink); font-weight:700;}
+
+  .wrap{max-width:720px; margin:0 auto; padding:4.5rem 1.5rem 4rem;}
+
+  .mark{
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border:1.5px solid var(--accent); border-radius:2px;
+    font-family:var(--font-mono); font-weight:600; font-size:.6rem; letter-spacing:.01em;
+    color:var(--accent); background:rgba(142,77,64,.08);
+  }
+
+  .bracket-frame{position:relative;}
+  .corner{position:absolute; width:18px; height:18px; pointer-events:none;}
+  .corner--tl{top:-1px; left:-1px; border-top:2px solid var(--accent); border-left:2px solid var(--accent);}
+  .corner--tr{top:-1px; right:-1px; border-top:2px solid var(--accent); border-right:2px solid var(--accent);}
+  .corner--bl{bottom:-1px; left:-1px; border-bottom:2px solid var(--accent); border-left:2px solid var(--accent);}
+  .corner--br{bottom:-1px; right:-1px; border-bottom:2px solid var(--accent); border-right:2px solid var(--accent);}
+
+  .panel{position:relative; border:1px solid var(--border); border-radius:var(--radius-m); padding:2.6rem 2.6rem 2.4rem; background:var(--surface);}
+  .brand-row{display:flex; align-items:center; gap:.65rem; margin-bottom:1.6rem;}
+  .brand-name{font-family:var(--font-display); font-size:1.05rem; font-weight:700; color:var(--ink);}
+  .brand-sub{font-size:.78rem; color:var(--text-muted);}
+
+  .eyebrow{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid rgba(142,77,64,.35);
+    padding:.3rem .7rem; border-radius:2px; margin-bottom:1.1rem;
+  }
+  .title{font-size:clamp(1.7rem, 3.4vw, 2.2rem); line-height:1.15; margin-bottom:.3rem;}
+  .tagline{font-family:var(--font-mono); font-size:.82rem; letter-spacing:.03em; color:var(--text-muted);}
+
+  .rule-double{width:64px; margin:1.1rem 0 1.4rem;}
+  .rule-double__a{height:2px; background:var(--ink); margin-bottom:3px;}
+  .rule-double__b{height:1px; background:var(--accent); width:70%;}
+
+  .doc-control{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:0; margin:0;
+    border:1px solid var(--border); border-radius:var(--radius-s); overflow:hidden;
+  }
+  .doc-control > div{padding:.75rem 1.1rem; border-left:1px solid var(--border); background:var(--surface);}
+  .doc-control > div:first-child{border-left:none;}
+  .doc-control dt{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin:0 0 .3rem;}
+  .doc-control dd{font-family:var(--font-mono); font-size:.82rem; color:var(--ink); margin:0; font-weight:500;}
+  .doc-control dd.ok{color:var(--green);}
+
+  .section{margin-top:2.2rem;}
+  .section-label{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:.8rem;}
+
+  .price-table{width:100%; border-collapse:collapse; margin:0;}
+  .price-table th{text-align:left; font-family:var(--font-mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); padding:.5rem .3rem; border-bottom:1px solid var(--border); font-weight:600;}
+  .price-table th.num, .price-table td.price{text-align:right;}
+  .price-table td{padding:.8rem .3rem; border-bottom:1px solid var(--border-soft); font-size:.92rem; vertical-align:top;}
+  .price-table td .item-name{font-weight:700; color:var(--ink); display:block;}
+  .price-table td.price{font-family:var(--font-mono); color:var(--ink); font-weight:600; white-space:nowrap;}
+  .price-table tr.waived td.price{color:var(--green); font-style:italic; font-weight:500; font-size:.82rem;}
+  .price-table tr.total td{font-weight:700; color:var(--ink); border-top:2px solid var(--accent); background:var(--accent-soft); padding-top:.9rem; padding-bottom:.9rem; border-bottom:none;}
+  .price-table tr.total td:first-child{border-radius:var(--radius-s) 0 0 var(--radius-s); padding-left:.7rem;}
+  .price-table tr.total td:last-child{border-radius:0 var(--radius-s) var(--radius-s) 0; padding-right:.7rem;}
+  .price-table tr.total td.price{font-size:1.1rem; color:var(--ink);}
+
+  .callout{border-radius:var(--radius-m); padding:1.1rem 1.3rem; margin-top:1.4rem; border:1px solid var(--border); background:#F7F2E6;}
+  .callout__label{display:block; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.5rem; font-weight:600; color:var(--accent);}
+  .callout p{font-size:.9rem; color:var(--text-muted); margin:0;}
+
+  .pay-block{text-align:center; margin-top:2.2rem; padding:2rem 1.5rem; border:1px solid var(--accent); border-radius:var(--radius-m); background:var(--accent-soft);}
+  .pay-amount{font-family:var(--font-display); font-size:2.1rem; font-weight:700; color:var(--ink); margin-bottom:1.1rem;}
+  .pay-btn{
+    display:inline-block; background:var(--ink); color:#fff !important; font-weight:600; font-size:.92rem;
+    padding:.85rem 2.1rem; border-radius:7px; text-decoration:none; letter-spacing:.01em;
+  }
+  .pay-btn:hover{background:var(--accent-deep);}
+  .pay-note{font-size:.8rem; color:var(--text-muted); margin-top:.9rem;}
+
+  .pay-methods{display:flex; align-items:center; justify-content:center; gap:.65rem; flex-wrap:wrap; margin-top:1.1rem;}
+  .pay-methods img{height:22px; width:auto; display:block;}
+
+  .closing-footer{
+    margin-top:3rem; padding-top:1.8rem; border-top:1px solid var(--border-soft);
+    display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  }
+  .closing-footer__brand{display:flex; align-items:center; gap:.6rem;}
+  .closing-footer__brand img{height:18px; width:auto; display:block;}
+  .closing-footer__text{font-family:var(--font-mono); font-size:.72rem; color:var(--text-faint); line-height:1.6;}
+  .closing-footer__text a{color:var(--text-faint);}
+
+  @media (max-width:600px){
+    .wrap{padding:2.4rem 1.1rem 3rem;}
+    .panel{padding:1.7rem 1.4rem 1.5rem;}
+    .doc-control{grid-template-columns:1fr;}
+    .doc-control > div{border-left:none; border-top:1px solid var(--border);}
+    .doc-control > div:first-child{border-top:none;}
+    .closing-footer{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="panel bracket-frame">
+    <span class="corner corner--tl"></span><span class="corner corner--tr"></span>
+    <span class="corner corner--bl"></span><span class="corner corner--br"></span>
+
+    <div class="brand-row">
+      <span class="mark">RR</span>
+      <div>
+        <div class="brand-name">Redevelopment Resources</div>
+        <div class="brand-sub">Invoice — Brand &amp; Print Package</div>
+      </div>
+    </div>
+
+    <span class="eyebrow">Invoice</span>
+    <h1 class="title">Brand &amp; Print Package</h1>
+    <div class="tagline">The full bundle as approved — logo &amp; brand files, social assets, business cards, and presentation template.</div>
+    <div class="rule-double"><div class="rule-double__a"></div><div class="rule-double__b"></div></div>
+
+    <dl class="doc-control">
+      <div><dt>Bill To</dt><dd>Kristen Fish-Peterson</dd></div>
+      <div><dt>Amount Due</dt><dd>$1,225.00</dd></div>
+      <div><dt>Status</dt><dd class="ok">Approved — Ready for Payment</dd></div>
+    </dl>
+
+    <div class="section">
+      <div class="section-label">What's Included</div>
+      <table class="price-table">
+        <tr><th>Item</th><th class="num">Price</th></tr>
+        <tr>
+          <td><span class="item-name">Brand Guidelines &amp; Logo Files</span></td>
+          <td class="price">$875</td>
+        </tr>
+        <tr>
+          <td><span class="item-name">Social Profile Pictures &amp; Headers</span></td>
+          <td class="price">$175</td>
+        </tr>
+        <tr class="waived">
+          <td><span class="item-name">Business Cards</span></td>
+          <td class="price">Included free</td>
+        </tr>
+        <tr>
+          <td><span class="item-name">Presentation Template</span></td>
+          <td class="price">$175</td>
+        </tr>
+        <tr class="total">
+          <td>Bundle Total</td>
+          <td class="price">$1,225</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout__label">📋 Next Steps</span>
+      <p>Once this is paid, we get started on finalizing the logo, pattern &amp; icon system, business cards, and presentation template — you'll own every file outright, no ongoing fees.</p>
+    </div>
+
+    <div class="pay-block">
+      <div class="pay-amount">$1,225.00</div>
+      <a class="pay-btn" href="https://www.paypal.com/invoice/p/#VPRHE8UYQGKGBC7M" target="_blank" rel="noopener noreferrer">Pay Invoice →</a>
+      <div class="pay-methods">
+        <img src="/images/payment-icons/cc-visa.svg" alt="Visa">
+        <img src="/images/payment-icons/cc-mastercard.svg" alt="Mastercard">
+        <img src="/images/payment-icons/cc-amex.svg" alt="American Express">
+        <img src="/images/payment-icons/cc-discover.svg" alt="Discover">
+        <img src="/images/payment-icons/cc-paypal.svg" alt="PayPal">
+      </div>
+      <div class="pay-note">Secure payment via PayPal — card, bank transfer, or PayPal balance.</div>
+    </div>
+  </div>
+
+  <div class="closing-footer">
+    <div class="closing-footer__brand">
+      <img src="/images/internal-logos/black.png" alt="Latz Web Design">
+      <span class="closing-footer__text">Latz Web Design<br>"No fluff. Just results."</span>
+    </div>
+    <span class="closing-footer__text"><a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></span>
+  </div>
+
+</div>
+
+</body>
+</html>
