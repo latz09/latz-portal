@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Irish Hospital Apartments — Domain Access | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Libre+Franklin:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #132E41;
+    --primary-08: rgba(19,46,65,0.06);
+    --primary-15: rgba(19,46,65,0.14);
+    --primary-40: rgba(19,46,65,0.45);
+    --primary-65: rgba(19,46,65,0.68);
+    --light: #F6F3ED;
+    --accent: #A94F47;
+    --accent-08: rgba(169,79,71,0.08);
+    --accent-15: rgba(169,79,71,0.18);
+    --white: #ffffff;
+    --font-heading: 'Jost', sans-serif;
+    --font-body: 'Libre Franklin', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--light);
+    color: var(--primary);
+    line-height: 1.65;
+    font-size: 15.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    background: var(--primary);
+    color: var(--light);
+    padding: 56px 24px 44px;
+  }
+
+  .hero-inner { max-width: 680px; margin: 0 auto; }
+
+  .overline {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(246,243,237,0.55);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .overline::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+
+  .hero p.subhead {
+    font-size: 16px;
+    color: rgba(246,243,237,0.75);
+    max-width: 520px;
+    margin-bottom: 22px;
+  }
+
+  .domain-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(246,243,237,0.08);
+    border: 1px solid rgba(246,243,237,0.18);
+    border-radius: 100px;
+    padding: 7px 16px 7px 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+  }
+
+  .domain-pill .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .domain-pill strong {
+    font-weight: 400;
+    color: var(--white);
+  }
+
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  .callout {
+    background: var(--white);
+    border: 1px solid var(--primary-15);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 32px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .callout .icon { font-size: 22px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+
+  .callout h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-size: 14px;
+    color: var(--primary-65);
+  }
+
+  .callout p + p { margin-top: 8px; }
+
+  section.picker { margin-bottom: 8px; }
+
+  section.picker h2 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  section.picker > p.lead {
+    font-size: 14px;
+    color: var(--primary-65);
+    margin-bottom: 20px;
+  }
+
+  .registrar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .registrar-btn {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--primary);
+    background: var(--white);
+    border: 1.5px solid var(--primary-15);
+    border-radius: 8px;
+    padding: 14px 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  }
+
+  .registrar-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-08);
+  }
+
+  .registrar-btn.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .registrar-btn.unsure {
+    grid-column: 1 / -1;
+    color: var(--primary-65);
+    font-style: normal;
+    border-style: dashed;
+  }
+
+  .panel {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--primary-15);
+    border-radius: 10px;
+    padding: 26px 26px 24px;
+    margin-top: 22px;
+  }
+
+  .panel.visible { display: block; animation: fadein 0.2s ease; }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+
+  .panel .panel-sub {
+    font-size: 13px;
+    color: var(--primary-40);
+    margin-bottom: 18px;
+  }
+
+  .steps { list-style: none; counter-reset: step; }
+
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--primary-08);
+  }
+
+  .steps li:first-child { border-top: none; padding-top: 2px; }
+
+  .steps li::before {
+    content: counter(step);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--accent-08);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .step-body { flex: 1; min-width: 0; }
+
+  .step-text {
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  .step-text strong { font-weight: 600; color: var(--primary); }
+
+  .step-values {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  .value-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .value-label {
+    font-family: var(--font-heading);
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary-40);
+  }
+
+  .value-code {
+    display: inline-block;
+    background: var(--primary-08);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+
+  .panel-note {
+    margin-top: 18px;
+    padding: 12px 14px;
+    background: var(--light);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--primary-65);
+  }
+
+  .panel-note strong { color: var(--primary); }
+
+  .unsure-panel .tip {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-top: 1px solid var(--primary-08);
+    font-size: 14.5px;
+  }
+  .unsure-panel .tip:first-of-type { border-top: none; }
+  .unsure-panel .tip .icon { font-size: 18px; margin-top: 1px; }
+
+  .unsure-panel .tip a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-15);
+  }
+  .unsure-panel .tip a:hover { border-bottom-color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--primary-15);
+    padding: 28px 24px 40px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  footer .signoff {
+    font-size: 14px;
+    color: var(--primary-65);
+    margin-bottom: 16px;
+  }
+
+  footer .brand-line {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--primary-40);
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    .hero { padding: 40px 18px 32px; }
+    .hero h1 { font-size: 26px; }
+    main { padding: 32px 18px 50px; }
+    .registrar-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="overline">Ready to Launch · Domain Access</div>
+      <h1>Let's get irishhospitalapartments.com pointed at your new site.</h1>
+      <p class="subhead">As we get close to launch, the last technical step is connecting your domain. Here's exactly how — and it works differently than it did with Accent Graphix.</p>
+      <div class="domain-pill"><span class="dot"></span> Domain on file: <strong>irishhospitalapartments.com</strong></div>
+    </div>
+  </div>
+
+  <main>
+
+    <div class="callout">
+      <div class="icon">🔑</div>
+      <div>
+        <h3>Full access, always yours — for real this time</h3>
+        <p>This isn't a login handoff or a transfer. Your domain stays registered in your name, under your control, the whole time. What I'm asking for is scoped access to manage DNS settings only — enough to point irishhospitalapartments.com at your new site. You can see exactly what's changed, and revoke access whenever you want.</p>
+        <p>No gatekeeping, no waiting on someone else to touch your own domain. That's the whole point of doing it this way.</p>
+      </div>
+    </div>
+
+    <section class="picker">
+      <h2>Where is your domain registered?</h2>
+      <p class="lead">Click your registrar below for exact steps. If you're not sure, that's normal — click "I'm not sure" and I'll walk you through finding out.</p>
+
+      <div class="registrar-grid">
+        <button class="registrar-btn" data-target="godaddy">GoDaddy</button>
+        <button class="registrar-btn" data-target="namecheap">Namecheap</button>
+        <button class="registrar-btn" data-target="squarespace">Squarespace Domains</button>
+        <button class="registrar-btn" data-target="bluehost">Bluehost</button>
+        <button class="registrar-btn" data-target="hostgator">HostGator</button>
+        <button class="registrar-btn" data-target="networksolutions">Network Solutions</button>
+        <button class="registrar-btn" data-target="ionos">IONOS</button>
+        <button class="registrar-btn unsure" data-target="unsure">I'm not sure / something else</button>
+      </div>
+
+      <!-- GoDaddy -->
+      <div class="panel" id="panel-godaddy">
+        <h3>GoDaddy — Delegate Access</h3>
+        <p class="panel-sub">GoDaddy calls this "Delegate Access." It's built for exactly this.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Go to your GoDaddy <strong>Delegate Access</strong> page (Account Settings → Delegate Access).</div></div></li>
+          <li><div class="step-body"><div class="step-text">Under "People who can access my account," click <strong>Invite to Access</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter my name and email when prompted.</div><div class="step-values"><div class="value-row"><span class="value-label">Name</span><span class="value-code">Jordan Latz</span></div><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Select access level: <strong>Domains Only</strong> (not "Products and Domains").</div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Invite</strong> — I'll get an email to accept.</div></div></li>
+        </ol>
+        <div class="panel-note"><strong>Note:</strong> "Domains Only" keeps this scoped to DNS and nameservers — I won't see billing, payment info, or anything else on the account.</div>
+      </div>
+
+      <!-- Namecheap -->
+      <div class="panel" id="panel-namecheap">
+        <h3>Namecheap — Share Access</h3>
+        <p class="panel-sub">Namecheap calls this "Share Access," set per domain.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Go to <strong>Domain List</strong> → click <strong>Manage</strong> next to irishhospitalapartments.com.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Open the <strong>Sharing & Transfer</strong> tab.</div></div></li>
+          <li><div class="step-body"><div class="step-text">In the <strong>Share Access</strong> section, enter my email as the New Manager.</div><div class="step-values"><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Check the <strong>Advanced DNS</strong> permission box.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter your Namecheap password to confirm, then click <strong>Confirm</strong>.</div></div></li>
+        </ol>
+        <div class="panel-note"><strong>Note:</strong> This is set per domain, not account-wide — it only applies to irishhospitalapartments.com.</div>
+      </div>
+
+      <!-- Squarespace Domains -->
+      <div class="panel" id="panel-squarespace">
+        <h3>Squarespace Domains — Domain Manager</h3>
+        <p class="panel-sub">Squarespace treats domain permissions separately from website permissions.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Open your <strong>Domains</strong> dashboard, then click irishhospitalapartments.com.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Permissions</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Invite Domain Manager</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter my name and email when prompted.</div><div class="step-values"><div class="value-row"><span class="value-label">Name</span><span class="value-code">Jordan Latz</span></div><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Submit</strong>.</div></div></li>
+        </ol>
+        <div class="panel-note"><strong>Don't see "Invite Domain Manager"?</strong> That means your domain shares permissions with a Squarespace website. In that case, go to that site's Settings → Permissions and add me as an <strong>Administrator</strong> instead.</div>
+      </div>
+
+      <!-- Bluehost -->
+      <div class="panel" id="panel-bluehost">
+        <h3>Bluehost — Accounts & Users</h3>
+        <p class="panel-sub">Role-based access through the Bluehost Portal.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Log in and click your <strong>profile icon</strong> (top right) → <strong>Accounts & Users</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Find your account, click <strong>Manage</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Scroll to <strong>User Roles & Permissions</strong>, click <strong>+ Add User</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter my name and email, and choose the <strong>Tech</strong> role.</div><div class="step-values"><div class="value-row"><span class="value-label">Name</span><span class="value-code">Jordan Latz</span></div><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Invite</strong>.</div></div></li>
+        </ol>
+        <div class="panel-note"><strong>Note:</strong> "Tech" is the right scope for DNS work — it skips billing and account-level settings.</div>
+      </div>
+
+      <!-- HostGator -->
+      <div class="panel" id="panel-hostgator">
+        <h3>HostGator — Accounts & Users</h3>
+        <p class="panel-sub">Same portal system as Bluehost, same flow.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Log in to the HostGator Customer Portal, click your <strong>profile icon</strong> (top right) → <strong>Accounts & Users</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Find your account, click <strong>Manage</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Scroll to <strong>User Roles & Permissions</strong>, click <strong>+ Add User</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter my name and email, and choose the <strong>Technical</strong> role.</div><div class="step-values"><div class="value-row"><span class="value-label">Name</span><span class="value-code">Jordan Latz</span></div><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Invite</strong>.</div></div></li>
+        </ol>
+      </div>
+
+      <!-- Network Solutions -->
+      <div class="panel" id="panel-networksolutions">
+        <h3>Network Solutions — Accounts & Users</h3>
+        <p class="panel-sub">Same pattern, slightly different menu wording.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Log in and click your <strong>username</strong> (top right) → <strong>Accounts & Users</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Select your account, click <strong>Manage</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Scroll to <strong>User Roles & Permissions</strong>, click <strong>+ Add User</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter my name and email, and select the <strong>Tech</strong> role.</div><div class="step-values"><div class="value-row"><span class="value-label">Name</span><span class="value-code">Jordan Latz</span></div><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Invite</strong>.</div></div></li>
+        </ol>
+      </div>
+
+      <!-- IONOS -->
+      <div class="panel" id="panel-ionos">
+        <h3>IONOS — Users & Permissions</h3>
+        <p class="panel-sub">Formerly 1&1 — access is managed account-wide with permission checkboxes.</p>
+        <ol class="steps">
+          <li><div class="step-body"><div class="step-text">Log in at my.ionos.com.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Menu</strong> (top left) → <strong>Users & Permissions</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Click <strong>Add User</strong>.</div></div></li>
+          <li><div class="step-body"><div class="step-text">Enter my name and email.</div><div class="step-values"><div class="value-row"><span class="value-label">Name</span><span class="value-code">Jordan Latz</span></div><div class="value-row"><span class="value-label">Email</span><span class="value-code">jordan@latzwebdesign.com</span></div></div></div></li>
+          <li><div class="step-body"><div class="step-text">Under permissions, check <strong>Domains & DNS</strong>, then save.</div></div></li>
+        </ol>
+      </div>
+
+      <!-- Not sure -->
+      <div class="panel unsure-panel" id="panel-unsure">
+        <h3>Not sure who your registrar is?</h3>
+        <p class="panel-sub">Totally normal — most people don't know off-hand. A few ways to check:</p>
+        <div class="tip">
+          <span class="icon">📧</span>
+          <div>Search your email for a receipt or renewal reminder mentioning irishhospitalapartments.com — usually from a company like GoDaddy, Namecheap, or Squarespace.</div>
+        </div>
+        <div class="tip">
+          <span class="icon">💳</span>
+          <div>Check a card statement for a small recurring charge (often $10–$20 a year) from one of those same companies.</div>
+        </div>
+        <div class="tip">
+          <span class="icon">🔍</span>
+          <div>Go to <a href="https://who.is" target="_blank" rel="noopener">who.is</a> and type <span class="value-code">irishhospitalapartments.com</span> into the search bar — it'll show your registrar under "Registrar."</div>
+        </div>
+        <div class="tip">
+          <span class="icon">✉️</span>
+          <div>Still not sure? Last resort — just reply to this email and let me know. I'll track it down myself.</div>
+        </div>
+        <div class="panel-note">Once you know, come back and click your registrar above. Don't see it in the list of seven? Just reply and we'll sort it out together.</div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="signoff">Questions about any of this? Just reply to the email this came with, or reach me directly at <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a>.</p>
+    <div class="brand-line">Latz Web Design · No fluff. Just results.</div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.registrar-btn');
+    const panels = document.querySelectorAll('.panel');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('visible'));
+
+        btn.classList.add('active');
+        const target = document.getElementById('panel-' + btn.dataset.target);
+        if (target) {
+          target.classList.add('visible');
+          target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
