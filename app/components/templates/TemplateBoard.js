@@ -124,8 +124,8 @@ export default function TemplateBoard({ templateOptions, catalogs }) {
         <div
           className={`flex flex-col gap-y-10 w-full ${
             dimmed
-              ? 'lg:w-[300px] lg:shrink-0 lg:sticky lg:top-[var(--nav-h)] lg:h-[calc(100vh-var(--nav-h))] lg:overflow-y-auto lg:pr-2'
-              : ''
+              ? 'lg:w-[420px]  lg:shrink-0 lg:sticky lg:top-[var(--nav-h)] lg:h-[calc(100vh-var(--nav-h))] lg:overflow-y-auto lg:pr-2'
+              : 'lg:max-w-3xl'
           }`}
         >
           {catalog?.phases.map((phase, phaseIndex) => (
@@ -166,7 +166,7 @@ export default function TemplateBoard({ templateOptions, catalogs }) {
                   const opacityClass = isOpen
                     ? 'opacity-100'
                     : rowDimmed
-                    ? 'opacity-30 hover:opacity-100 transition-opacity duration-150'
+                    ? 'opacity-50 hover:opacity-100 transition-opacity duration-150'
                     : step.deprecated
                     ? 'opacity-40'
                     : 'opacity-100'

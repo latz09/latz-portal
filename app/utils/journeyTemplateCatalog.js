@@ -16,11 +16,15 @@ function camelCaseFilename(title) {
     .join('')
 }
 
-function exampleUrlForTitle(title) {
+function resolveExample(title) {
   const name = camelCaseFilename(title)
-  if (!name) return null
-  const filePath = path.join(EXAMPLES_DIR, `${name}.html`)
-  return fs.existsSync(filePath) ? `/examples/${name}.html` : null
+  if (!name) return { exampleFilename: null, exampleUrl: null }
+  const filename = `${name}.html`
+  const exists = fs.existsSync(path.join(EXAMPLES_DIR, filename))
+  return {
+    exampleFilename: filename,
+    exampleUrl: exists ? `/examples/${filename}` : null,
+  }
 }
 
 export function resolveTemplateCatalog(templateKey, generators) {
@@ -36,7 +40,7 @@ export function resolveTemplateCatalog(templateKey, generators) {
 
   const resolved = steps
     .filter((s) => !s.broken)
-    .map((s) => ({ ...s, exampleUrl: exampleUrlForTitle(s.title) }))
+    .map((s) => ({ ...s, ...resolveExample(s.title) }))
   const broken = steps.filter((s) => s.broken)
 
   const phases = PHASE_ORDER.map((phaseKey) => ({
