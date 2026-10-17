@@ -1,5 +1,15 @@
+import fs from 'fs'
+import path from 'path'
 import { JOURNEY_TEMPLATES } from '@/app/data/journeyTemplates'
 import { PHASE_ORDER, PHASE_LABELS } from '@/app/utils/journeyHelpers'
+
+const EXAMPLES_DIR = path.join(process.cwd(), 'public', 'examples')
+
+function exampleUrlForSlug(slug) {
+  if (!slug) return null
+  const filePath = path.join(EXAMPLES_DIR, `${slug}.html`)
+  return fs.existsSync(filePath) ? `/examples/${slug}.html` : null
+}
 
 export function resolveTemplateCatalog(templateKey, generators) {
   const template = JOURNEY_TEMPLATES[templateKey]
@@ -12,7 +22,9 @@ export function resolveTemplateCatalog(templateKey, generators) {
     return doc ? doc : { _id: id, title: id, phase: null, broken: true }
   })
 
-  const resolved = steps.filter((s) => !s.broken)
+  const resolved = steps
+    .filter((s) => !s.broken)
+    .map((s) => ({ ...s, exampleUrl: exampleUrlForSlug(s.slug) }))
   const broken = steps.filter((s) => s.broken)
 
   const phases = PHASE_ORDER.map((phaseKey) => ({
