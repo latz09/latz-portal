@@ -5,10 +5,22 @@ import { PHASE_ORDER, PHASE_LABELS } from '@/app/utils/journeyHelpers'
 
 const EXAMPLES_DIR = path.join(process.cwd(), 'public', 'examples')
 
-function exampleUrlForSlug(slug) {
-  if (!slug) return null
-  const filePath = path.join(EXAMPLES_DIR, `${slug}.html`)
-  return fs.existsSync(filePath) ? `/examples/${slug}.html` : null
+function camelCaseFilename(title) {
+  if (!title) return null
+  const words = title.trim().split(/\s+/).map((w) => w.replace(/[^a-zA-Z0-9]/g, ''))
+  return words
+    .map((w, i) => {
+      if (!w) return ''
+      return i === 0 ? w.charAt(0).toLowerCase() + w.slice(1) : w.charAt(0).toUpperCase() + w.slice(1)
+    })
+    .join('')
+}
+
+function exampleUrlForTitle(title) {
+  const name = camelCaseFilename(title)
+  if (!name) return null
+  const filePath = path.join(EXAMPLES_DIR, `${name}.html`)
+  return fs.existsSync(filePath) ? `/examples/${name}.html` : null
 }
 
 export function resolveTemplateCatalog(templateKey, generators) {
@@ -24,7 +36,7 @@ export function resolveTemplateCatalog(templateKey, generators) {
 
   const resolved = steps
     .filter((s) => !s.broken)
-    .map((s) => ({ ...s, exampleUrl: exampleUrlForSlug(s.slug) }))
+    .map((s) => ({ ...s, exampleUrl: exampleUrlForTitle(s.title) }))
   const broken = steps.filter((s) => s.broken)
 
   const phases = PHASE_ORDER.map((phaseKey) => ({
