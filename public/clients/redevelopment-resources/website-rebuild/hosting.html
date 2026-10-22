@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Hosting Handoff · Redevelopment Resources</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700&f[]=satoshi@400,500&display=swap">
+<style>
+  :root {
+    --bg: #E9DFC9;
+    --text: #0F1A25;
+    --card: #FFFFFF;
+    --card-border: rgba(15, 26, 37, 0.12);
+    --accent: #ACA48A;
+    --accent-deep: #8E4D40;
+    --muted: rgba(15, 26, 37, 0.6);
+    --muted-2: rgba(15, 26, 37, 0.42);
+    --font-heading: 'Cabinet Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Satoshi', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .skyline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 260px;
+    height: 160px;
+    pointer-events: none;
+    opacity: 0.07;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  /* ---------- Header ---------- */
+
+  .overline {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin: 0 0 16px;
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0 0 16px;
+  }
+
+  .subline {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0 0 28px;
+    max-width: 52ch;
+  }
+
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .meta-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    flex: 1 1 150px;
+  }
+
+  .meta-chip .label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 500;
+  }
+
+  .meta-chip .value {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  /* ---------- Callouts ---------- */
+
+  .callout {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--accent-deep);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin: 40px 0;
+  }
+
+  .callout.closing {
+    border-left-color: var(--accent);
+  }
+
+  .callout h2 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 19px;
+    margin: 0 0 10px;
+  }
+
+  .callout p {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  .callout p:last-child { margin-bottom: 0; }
+
+  .callout strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ---------- Steps ---------- */
+
+  .steps-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin: 48px 0 20px;
+  }
+
+  .step {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 26px 26px 28px;
+    margin-bottom: 20px;
+  }
+
+  .step-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .step-number {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-copy h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 19px;
+    margin: 2px 0 8px;
+  }
+
+  .step-copy p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .step-note {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-deep);
+    background: rgba(142, 77, 64, 0.08);
+    border-radius: 6px;
+    padding: 4px 9px;
+  }
+
+  /* ---------- Mockups ---------- */
+
+  .mockup {
+    margin-top: 18px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    background: #FBF9F3;
+  }
+
+  .mockup-chrome {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 9px 12px;
+    background: rgba(15, 26, 37, 0.04);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .mockup-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(15, 26, 37, 0.18);
+  }
+
+  .mockup-body {
+    padding: 18px 20px 20px;
+  }
+
+  .mockup-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .mockup-icon {
+    flex: none;
+    width: 38px;
+    height: 30px;
+    border-radius: 5px;
+    background: var(--accent);
+    position: relative;
+  }
+
+  .mockup-icon.envelope::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    right: 3px;
+    top: 5px;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 11px solid #FBF9F3;
+  }
+
+  .mockup-lines { flex: 1; }
+
+  .mockup-line {
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(15, 26, 37, 0.14);
+    margin-bottom: 6px;
+  }
+
+  .mockup-line.short { width: 55%; }
+  .mockup-line.full { width: 85%; }
+
+  .mockup-pill {
+    margin-top: 16px;
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #FFFFFF;
+    background: var(--accent-deep);
+    border-radius: 999px;
+    padding: 8px 18px;
+  }
+
+  .mockup-field {
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 9px 11px;
+    background: #FFFFFF;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .mockup-field-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .mockup-field-row .mockup-field { flex: 1; }
+
+  .mockup-card-tile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--card-border);
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background: #FFFFFF;
+  }
+
+  .mockup-card-tile.is-default {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .mockup-card-tile .tile-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .mockup-chip {
+    width: 24px;
+    height: 16px;
+    border-radius: 3px;
+    background: rgba(15, 26, 37, 0.16);
+  }
+
+  .mockup-badge {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 3px 9px;
+  }
+
+  .mockup-field-label {
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin: 0 0 4px;
+    font-weight: 500;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--card-border);
+    text-align: center;
+  }
+
+  footer .contact {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  footer .contact a {
+    color: var(--accent-deep);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer .tagline {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--muted-2);
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 48px 18px 64px; }
+    h1 { font-size: 30px; }
+    .meta-chip { flex: 1 1 100%; }
+    .mockup-field-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="skyline" viewBox="0 0 680 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="90" width="48" height="70" fill="#0F1A25"/>
+  <rect x="54" y="60" width="34" height="100" fill="#0F1A25"/>
+  <rect x="94" y="100" width="56" height="60" fill="#0F1A25"/>
+  <rect x="156" y="40" width="30" height="120" fill="#0F1A25"/>
+  <rect x="192" y="75" width="44" height="85" fill="#0F1A25"/>
+  <rect x="242" y="20" width="26" height="140" fill="#0F1A25"/>
+  <rect x="274" y="95" width="60" height="65" fill="#0F1A25"/>
+  <rect x="340" y="55" width="38" height="105" fill="#0F1A25"/>
+  <rect x="384" y="85" width="50" height="75" fill="#0F1A25"/>
+  <rect x="440" y="30" width="28" height="130" fill="#0F1A25"/>
+  <rect x="474" y="70" width="46" height="90" fill="#0F1A25"/>
+  <rect x="526" y="105" width="56" height="55" fill="#0F1A25"/>
+  <rect x="588" y="50" width="32" height="110" fill="#0F1A25"/>
+  <rect x="626" y="88" width="54" height="72" fill="#0F1A25"/>
+</svg>
+
+<div class="wrap">
+
+  <p class="overline">Hosting Handoff · Redevelopment Resources</p>
+  <h1>Make Your Hosting Officially Yours</h1>
+  <p class="subline">Before your new site goes live, we're moving hosting into your own Vercel account. It takes about five minutes.</p>
+
+  <div class="meta-strip">
+    <div class="meta-chip">
+      <span class="label">Domain</span>
+      <span class="value">redevelopment-resources.com</span>
+    </div>
+    <div class="meta-chip">
+      <span class="label">Status</span>
+      <span class="value">Final step before launch</span>
+    </div>
+    <div class="meta-chip">
+      <span class="label">Time needed</span>
+      <span class="value">~5 minutes</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h2>Why this matters</h2>
+    <p>You own this site, so the hosting should be in your name too, not billed through us. Moving it over doesn't touch the build or your launch timeline, it's simply a billing handoff. <strong>Once your card and billing address are confirmed, we'll connect redevelopment-resources.com and your site goes live.</strong></p>
+  </div>
+
+  <p class="steps-label">Four Steps</p>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-number">1</span>
+      <div class="step-copy">
+        <h3>Accept your invite</h3>
+        <p>Check your email for an invite from Vercel to join the Redevelopment Resources team. Click through and create an account, or log into one you already have.</p>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-chrome">
+        <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-row">
+          <div class="mockup-icon envelope"></div>
+          <div class="mockup-lines">
+            <div class="mockup-line short"></div>
+            <div class="mockup-line full"></div>
+          </div>
+        </div>
+        <span class="mockup-pill">Accept Invite</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-number">2</span>
+      <div class="step-copy">
+        <h3>Add your card</h3>
+        <p>In your new account, go to Settings &rarr; Billing and add a payment card.</p>
+        <span class="step-note">Your first month of hosting is already covered, so nothing is charged right away.</span>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-chrome">
+        <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+      </div>
+      <div class="mockup-body">
+        <p class="mockup-field-label">Card Details</p>
+        <div class="mockup-field">•••• •••• •••• 4242</div>
+        <div class="mockup-field-row">
+          <div class="mockup-field">MM / YY</div>
+          <div class="mockup-field">CVC</div>
+        </div>
+        <span class="mockup-pill">Add Card</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-number">3</span>
+      <div class="step-copy">
+        <h3>Set it as default</h3>
+        <p>Still on the Billing tab, mark your new card as the default payment method so it's the one Vercel uses going forward.</p>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-chrome">
+        <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-card-tile is-default">
+          <span class="tile-label"><span class="mockup-chip"></span> Visa •••• 4242</span>
+          <span class="mockup-badge">Default</span>
+        </div>
+        <div class="mockup-card-tile">
+          <span class="tile-label"><span class="mockup-chip"></span> Old card on file</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-number">4</span>
+      <div class="step-copy">
+        <h3>Add your billing address</h3>
+        <p>On the same Billing tab, scroll down to the Billing Address section below your card details. Enter Redevelopment Resources' business address and save.</p>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-chrome">
+        <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+      </div>
+      <div class="mockup-body">
+        <p class="mockup-field-label">Billing Address</p>
+        <div class="mockup-field">Country</div>
+        <div class="mockup-field">Street Address</div>
+        <div class="mockup-field-row">
+          <div class="mockup-field">City</div>
+          <div class="mockup-field">State</div>
+          <div class="mockup-field">ZIP</div>
+        </div>
+        <span class="mockup-pill">Save</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout closing">
+    <h2>That's everything on your end</h2>
+    <p>Once your card, default payment method, and billing address are all set, we'll connect redevelopment-resources.com to the live site and you'll be ready to launch. From there, hosting is fully in your control, no monthly bill to us, no middleman.</p>
+    <p>One note: once the site is live, don't remove or let that card lapse, Vercel needs an active payment method on file to keep the site running.</p>
+  </div>
+
+  <footer>
+    <p class="contact">Questions along the way? <a href="mailto:jordan@latzwebdesign.com">jordan@latzwebdesign.com</a></p>
+    <p class="contact">Jordan &middot; Latz Web Design</p>
+    <p class="tagline">No fluff. Just results.</p>
+  </footer>
+
+</div>
+</body>
+</html>
