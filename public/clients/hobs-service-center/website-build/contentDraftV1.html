@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<meta name="color-scheme" content="light" />
+<title>Hob's Service Center — Internal Content Draft | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#15171C;
+    --ink-soft:#20232B;
+    --paper:#F5F6F8;
+    --surface:#FFFFFF;
+    --border:#E1E5EC;
+    --border-soft:#EBEEF3;
+    --text:#1B2333;
+    --text-muted:#5B6472;
+    --text-faint:#8992A0;
+
+    --yellow:#FEFE00;
+    --yellow-ink:#6B6300;
+    --yellow-soft:#FFFBD1;
+
+    --gray:#919297;
+    --gray-soft:#F2F2F3;
+
+    --green:#16A34A;
+    --green-soft:#F0FDF4;
+
+    --radius-s:6px; --radius-m:10px; --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(10,12,16,.06), 0 8px 24px rgba(10,12,16,.08);
+    --sidebar-w:288px;
+    --topbar-h:58px;
+
+    --font-serif:'Source Serif 4', Georgia, serif;
+    --font-sans:'Inter', -apple-system, sans-serif;
+    --font-mono:'IBM Plex Mono', 'SFMono-Regular', monospace;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--font-sans);
+    background:var(--paper);
+    color:var(--text);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  p{ margin:0; }
+  strong{ color:var(--ink); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress{ position:fixed; top:0; left:0; height:3px; width:0%; background:var(--yellow); z-index:500; transition:width .1s linear; }
+
+  /* ===== BACK TO TOP ===== */
+  .backtotop{
+    position:fixed; bottom:26px; right:26px; width:46px; height:46px; border-radius:50%;
+    background:var(--ink); color:var(--surface); border:none; font-size:18px; cursor:pointer; z-index:250;
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-card);
+    opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+  }
+  .backtotop.visible{ opacity:1; pointer-events:auto; }
+  .backtotop:hover{ transform:translateY(-2px); }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar{ position:fixed; top:0; left:0; width:var(--sidebar-w); height:100vh; background:var(--ink); display:flex; flex-direction:column; z-index:200; overflow-y:auto; }
+  .sb-top{ padding:28px 24px 20px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .sb-eyebrow{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--yellow); margin-bottom:16px; }
+  .sb-markrow{ display:flex; align-items:center; gap:12px; margin-bottom:4px; }
+  .sb-mark{ width:38px; height:38px; border-radius:7px; border:1.5px solid var(--yellow); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--yellow); }
+  .sb-client{ font-family:var(--font-serif); font-weight:600; font-size:19px; color:rgba(255,255,255,.95); line-height:1.2; }
+  .sb-sub{ font-family:var(--font-sans); font-size:12.5px; color:rgba(255,255,255,.4); margin-top:8px; letter-spacing:.01em; }
+  .sb-nav{ padding:14px 12px; flex:1; }
+  .nav-group-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); padding:16px 12px 6px; }
+  .nav-link{ display:flex; align-items:center; gap:11px; padding:8px 12px; color:rgba(255,255,255,.62); font-size:15px; font-weight:500; border-radius:6px; border-left:2px solid transparent; margin-bottom:1px; transition:all .12s; }
+  .nav-link:hover{ color:rgba(255,255,255,.92); background:rgba(255,255,255,.04); }
+  .nav-link.active{ color:#fff; background:rgba(254,254,0,.1); border-left-color:var(--yellow); font-weight:600; }
+  .nav-num{ font-family:var(--font-mono); font-size:12.5px; color:var(--yellow); width:18px; flex-shrink:0; }
+  .sb-meta{ padding:14px 24px; border-top:1px solid rgba(255,255,255,.08); }
+  .sb-meta-row{ display:flex; justify-content:space-between; gap:10px; font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,.4); padding:4px 0; }
+  .sb-meta-row b{ color:rgba(255,255,255,.72); font-weight:500; }
+  .sb-meta-row b.warn{ color:var(--yellow); }
+  .sb-footer{ padding:18px 24px; border-top:1px solid rgba(255,255,255,.08); font-size:12.5px; color:rgba(255,255,255,.38); line-height:1.8; }
+  .sb-footer strong{ color:var(--yellow); font-weight:700; }
+
+  /* ===== TOPBAR (mobile) ===== */
+  .topbar{ display:none; }
+  @media (max-width:1023px){
+    .topbar{ display:flex; align-items:center; gap:12px; position:sticky; top:0; height:var(--topbar-h); background:var(--ink); padding:0 16px; z-index:190; }
+    .topbar-burger{ width:34px; height:34px; border-radius:6px; border:1px solid rgba(255,255,255,.18); background:transparent; color:#fff; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .topbar-title{ font-family:var(--font-serif); font-weight:600; font-size:14.5px; color:#fff; flex-shrink:0; }
+    .topbar-crumb{ font-family:var(--font-mono); font-size:11.5px; color:rgba(255,255,255,.4); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border-left:1px solid rgba(255,255,255,.15); padding-left:12px; }
+  }
+
+  /* ===== DOCBAR (desktop) ===== */
+  .docbar{ display:none; }
+  @media (min-width:1024px){
+    .docbar{ display:flex; align-items:center; gap:8px; position:sticky; top:0; z-index:150; height:40px; background:rgba(245,246,248,.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border-soft); padding:0 40px; font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); letter-spacing:.03em; }
+    .docbar b{ color:var(--text-muted); font-weight:600; }
+  }
+
+  /* ===== BACKDROP ===== */
+  .backdrop{ display:none; }
+  @media (max-width:1023px){
+    .backdrop{ display:block; position:fixed; inset:0; background:rgba(10,12,16,.45); opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:199; }
+    .backdrop.is-visible{ opacity:1; pointer-events:auto; }
+  }
+
+  /* ===== MAIN ===== */
+  .main{ margin-left:var(--sidebar-w); min-height:100vh; }
+  @media (max-width:1023px){ .main{ margin-left:0; } }
+  .content{ max-width:980px; margin:0 auto; padding:48px 40px 110px; }
+  @media (max-width:1023px){ .content{ padding:36px 28px 90px; } }
+  @media (max-width:560px){ .content{ padding:28px 18px 80px; } }
+
+  /* ===== COVER ===== */
+  .cover-panel{ position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:3rem 3.2rem; margin-bottom:1.6rem; }
+  @media (max-width:560px){ .cover-panel{ padding:2.2rem 1.5rem; } }
+  .corner{ position:absolute; width:18px; height:18px; border-color:var(--ink); }
+  .corner.tl{ top:-1px; left:-1px; border-top:2px solid var(--ink); border-left:2px solid var(--ink); }
+  .corner.tr{ top:-1px; right:-1px; border-top:2px solid var(--ink); border-right:2px solid var(--ink); }
+  .corner.bl{ bottom:-1px; left:-1px; border-bottom:2px solid var(--ink); border-left:2px solid var(--ink); }
+  .corner.br{ bottom:-1px; right:-1px; border-bottom:2px solid var(--ink); border-right:2px solid var(--ink); }
+
+  .cover-eyebrow{ display:inline-block; font-family:var(--font-mono); font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); background:var(--yellow); border-radius:20px; padding:4px 13px; margin-bottom:18px; }
+  .cover-title{ font-family:var(--font-serif); font-weight:700; font-size:2.7rem; line-height:1.08; color:var(--ink); letter-spacing:-.01em; max-width:14ch; }
+  @media (max-width:560px){ .cover-title{ font-size:2.05rem; } }
+  .cover-tagline{ font-family:var(--font-mono); font-size:.92rem; letter-spacing:.02em; color:var(--text-muted); margin-top:10px; font-weight:500; max-width:600px; }
+  .cover-rule{ margin:22px 0 18px; }
+  .cover-rule .thick{ height:2px; background:var(--ink); width:72px; }
+  .cover-rule .thin{ height:3px; background:var(--yellow); width:72px; margin-top:5px; }
+  .cover-desc{ font-size:.97rem; color:var(--text-muted); max-width:62ch; line-height:1.65; margin-bottom:28px; }
+
+  .doc-control{ display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--border); border-radius:var(--radius-s); overflow:hidden; max-width:640px; }
+  @media (max-width:680px){ .doc-control{ grid-template-columns:1fr 1fr; } }
+  .dc-cell{ padding:13px 16px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .dc-cell:nth-child(4n){ border-right:none; }
+  @media (max-width:680px){ .dc-cell:nth-child(2n){ border-right:none; } .dc-cell:nth-child(4n){ border-right:1px solid var(--border); } }
+  .dc-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin-bottom:5px; }
+  .dc-value{ font-size:14.5px; font-weight:700; color:var(--text); }
+  .dc-value.ok{ color:var(--green); }
+  .dc-value.warn{ color:var(--yellow-ink); }
+
+  .stamp{ position:absolute; top:1.8rem; right:2.2rem; width:150px; border:1px solid var(--border); border-radius:5px; background:var(--surface); box-shadow:var(--shadow-card); padding:.75rem .6rem .6rem; transform:rotate(-4deg); }
+  .stamp__word{ font-family:var(--font-serif); font-weight:600; font-size:.66rem; letter-spacing:.02em; color:var(--ink); text-align:center; line-height:1.3; }
+  .stamp__caption{ font-family:var(--font-mono); font-size:.56rem; letter-spacing:.06em; text-transform:uppercase; color:var(--text-faint); text-align:center; margin-top:.4rem; }
+  @media (max-width:1023px){ .stamp{ width:100px; top:1.1rem; right:1.1rem; padding:.55rem .45rem .45rem; } .stamp__word{ font-size:.56rem; } }
+  @media (max-width:480px){ .stamp{ width:64px; top:.6rem; right:.6rem; padding:.4rem .3rem .3rem; } .stamp__caption{ display:none; } .stamp__word{ font-size:.46rem; } }
+
+  .illustrative-note{ display:flex; gap:11px; align-items:flex-start; background:var(--yellow-soft); border:1px solid var(--ink); border-radius:var(--radius-s); padding:14px 18px; margin-bottom:3rem; font-size:.92rem; color:var(--text); line-height:1.55; }
+  .illustrative-note b{ color:var(--ink); }
+  .illustrative-note .emoji{ font-size:18px; flex-shrink:0; }
+
+  /* ===== KEY CALLOUT ===== */
+  .key-callout{ display:flex; gap:11px; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--yellow-ink); border-radius:0 var(--radius-s) var(--radius-s) 0; padding:16px 20px; margin-bottom:3rem; font-size:.9rem; color:var(--text-muted); line-height:1.65; }
+  .key-callout .emoji{ font-size:17px; flex-shrink:0; }
+  .key-callout strong{ display:block; color:var(--ink); margin-bottom:4px; }
+
+  /* ===== SECTION LABEL ===== */
+  .wf-section{ margin-bottom:3.4rem; scroll-margin-top:70px; }
+  .sec-head{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:.4rem; }
+  .sec-eyebrow{ display:flex; align-items:center; gap:11px; }
+  .sec-num{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:var(--ink); color:#fff; border-radius:50%; font-family:var(--font-mono); font-size:12.5px; flex-shrink:0; }
+  .sec-name{ font-family:var(--font-serif); font-weight:600; font-size:1.3rem; color:var(--ink); }
+  .sec-slug{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); }
+  .badge{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; border-radius:4px; padding:3px 9px; font-weight:600; }
+  .badge--ready{ color:var(--green); background:var(--green-soft); border:1px solid rgba(22,163,74,.3); }
+  .badge--gaps{ color:var(--text-muted); background:var(--gray-soft); border:1px solid var(--border); }
+  .sec-rule{ flex:1; height:1px; background:var(--border); min-width:30px; }
+  .diff-line{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); margin:0 0 1.1rem; }
+  .diff-line b{ color:var(--text-muted); font-weight:600; }
+
+  /* ===== SITE MAP ===== */
+  .tree-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); box-shadow:var(--shadow-card); padding:30px 28px; }
+  @media (max-width:560px){ .tree-card{ padding:22px 16px; } }
+  .tree-row{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:14px 0; }
+  .tree-leaf{ border:1.5px solid var(--border); border-radius:var(--radius-s); padding:10px 17px; background:var(--paper); text-align:center; min-width:128px; }
+  .tree-leaf .nm{ font-family:var(--font-serif); font-weight:600; font-size:14.5px; color:var(--ink); }
+  .tree-leaf .sl{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); margin-top:2px; }
+  .tree-leaf .dg{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--yellow-ink); margin-top:6px; }
+  .tree-root-row{ display:flex; justify-content:center; margin-bottom:10px; }
+  .tree-root{ background:var(--ink); color:#fff; border-radius:var(--radius-s); padding:11px 22px; font-family:var(--font-serif); font-weight:600; font-size:15.5px; display:flex; align-items:center; gap:8px; }
+  .tree-root .sl{ font-family:var(--font-mono); font-size:11.5px; color:rgba(255,255,255,.5); }
+  .tree-notes{ margin-top:22px; font-size:.9rem; color:var(--text-muted); line-height:1.65; border-top:1px solid var(--border-soft); padding-top:18px; }
+  .tree-notes b{ color:var(--ink); }
+
+  /* ===== WF EMBED CARD ===== */
+  .wf-embed{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); box-shadow:var(--shadow-card); overflow:hidden; }
+  .embed-banner{ background:var(--ink); color:rgba(255,255,255,.72); font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; padding:7px 22px; text-align:center; }
+  .embed-nav{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:13px 26px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+  .embed-logo{ display:flex; align-items:center; gap:9px; }
+  .embed-logo .mk{ width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--yellow); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:700; flex-shrink:0; }
+  .embed-logo span{ font-family:var(--font-serif); font-weight:700; font-size:16px; color:var(--ink); }
+  .embed-links{ display:flex; gap:19px; flex-wrap:wrap; }
+  .embed-links a{ font-size:13.5px; font-weight:600; color:var(--text-faint); }
+  .embed-links a.active{ color:var(--ink); border-bottom:3px solid var(--yellow); padding-bottom:2px; }
+  @media (max-width:680px){ .embed-links{ display:none; } }
+  .embed-cta{ font-family:var(--font-sans); font-size:13px; font-weight:700; color:var(--yellow); background:var(--ink); border-radius:6px; padding:8px 15px; white-space:nowrap; }
+  .embed-body{ padding:26px; }
+  @media (max-width:560px){ .embed-body{ padding:18px 15px; } }
+  .embed-footer{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:16px 26px; border-top:1px solid var(--border); font-size:13px; color:var(--text-faint); }
+  .embed-footer .f-nav{ display:flex; gap:16px; }
+
+  /* ===== WF BLOCK ===== */
+  .wf-block{ border:1px solid var(--border); border-radius:var(--radius-s); background:var(--paper); padding:22px 22px 20px; margin-bottom:18px; }
+  .wf-block:last-child{ margin-bottom:0; }
+  .block-head{ display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:13px; }
+  .block-title{ font-family:var(--font-serif); font-weight:600; font-size:1.12rem; color:var(--ink); }
+  .block-title small{ display:block; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.02em; text-transform:none; color:var(--text-faint); font-weight:400; margin-top:3px; }
+
+  .tag{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; border-radius:4px; padding:3px 10px; white-space:nowrap; font-weight:600; border:1px solid; }
+  .tag--cms{ color:var(--ink); border-color:var(--ink); background:var(--yellow-soft); }
+  .tag--form{ color:var(--ink); border-color:var(--ink); background:var(--yellow); font-weight:700; }
+  .tag--ext{ color:var(--gray); border-color:var(--gray); background:var(--surface); }
+  .tag--confirmed{ color:var(--green); border-color:var(--green); background:var(--green-soft); }
+  .tag--missing{ color:var(--yellow-ink); border-color:var(--yellow-ink); background:var(--yellow-soft); }
+
+  .ph-head{ font-family:var(--font-serif); font-weight:700; font-size:1.5rem; line-height:1.22; color:var(--text); margin-bottom:9px; max-width:32ch; }
+  .seed-copy{ font-size:.97rem; color:var(--text); line-height:1.6; }
+  .seed-copy p{ margin-bottom:8px; }
+  .seed-copy p:last-child{ margin-bottom:0; }
+
+  .pill-btn{ display:inline-block; font-size:14.5px; font-weight:700; color:var(--yellow); background:var(--ink); border-radius:7px; padding:9px 19px; margin:6px 8px 0 0; }
+  .pill-btn.ghost{ color:var(--ink); background:transparent; border:1.5px solid var(--ink); }
+  .cta-bar{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; background:var(--ink); border-radius:var(--radius-s); padding:20px 24px; margin-top:4px; }
+  .cta-bar .cta-txt{ font-family:var(--font-serif); font-weight:600; font-size:1.05rem; color:#fff; }
+  .cta-bar .pill-btn{ color:var(--ink); background:var(--yellow); margin:0; }
+
+  .annotation{ font-size:.89rem; color:var(--text-muted); border-left:3px solid var(--ink); background:var(--surface); padding:10px 15px; border-radius:0 5px 5px 0; margin-top:13px; line-height:1.6; }
+  .annotation b{ color:var(--ink); }
+
+  .img-ph{ border:1.5px dashed var(--border); border-radius:var(--radius-s); background:var(--surface); min-height:96px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:18px; text-align:center; }
+  .img-ph .ico{ font-size:22px; }
+  .img-ph .lbl{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); line-height:1.5; max-width:46ch; }
+
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+  @media (max-width:560px){ .form-grid{ grid-template-columns:1fr; } }
+  .form-field{ background:var(--surface); border:1.5px dashed var(--border); border-radius:6px; padding:11px 13px; font-family:var(--font-mono); font-size:13px; color:var(--text-faint); }
+  .form-field.full{ grid-column:1/-1; }
+  .form-field.area{ grid-column:1/-1; min-height:68px; }
+
+  .list-row{ display:flex; align-items:center; gap:13px; border:1px solid var(--border); border-radius:6px; padding:12px 15px; background:var(--surface); margin-bottom:9px; }
+  .list-row:last-child{ margin-bottom:0; }
+  .list-badge{ font-family:var(--font-mono); font-size:11.5px; color:#fff; background:var(--ink); border-radius:5px; padding:4px 9px; flex-shrink:0; }
+  .list-badge.yellow{ background:var(--yellow); color:var(--ink); }
+  .list-main .t{ font-size:14.5px; font-weight:600; color:var(--ink); }
+  .list-main .d{ font-size:12.5px; color:var(--text-muted); margin-top:1px; }
+  .list-act{ font-size:12.5px; font-weight:600; color:var(--text-faint); margin-left:auto; }
+
+  .check-list-mini{ display:flex; flex-direction:column; gap:7px; }
+  .ck-row{ display:flex; align-items:center; gap:9px; font-size:.92rem; color:var(--text); }
+  .ck-row .ic{ color:var(--green); font-weight:700; }
+
+  .decision{ border:1.5px dashed var(--yellow-ink); border-radius:var(--radius-s); background:var(--yellow-soft); padding:16px 19px; margin-top:14px; }
+  .decision-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--yellow-ink); font-weight:700; margin-bottom:9px; }
+  .decision-opt{ font-size:.9rem; color:var(--text); margin-bottom:6px; line-height:1.55; }
+  .decision-opt:last-child{ margin-bottom:0; }
+
+  .svc-sub{ padding:14px 0; border-bottom:1px solid var(--border-soft); }
+  .svc-sub:last-of-type{ border-bottom:none; padding-bottom:0; }
+  .svc-sub .anchor-tag{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); }
+  .svc-sub h4{ font-family:var(--font-serif); font-size:1.08rem; color:var(--ink); margin:3px 0 5px; }
+  .svc-sub p{ font-size:.93rem; color:var(--text-muted); line-height:1.55; }
+
+  /* ===== DECISION LIST (Status Tracker) ===== */
+  .decision-list{ border-top:1px solid var(--border-soft); }
+  .dl-item{ display:flex; gap:14px; padding:13px 0; border-bottom:1px solid var(--border-soft); }
+  .dl-item:last-child{ border-bottom:none; }
+  .dl-icon{ font-size:1.05rem; flex-shrink:0; margin-top:1px; width:22px; text-align:center; }
+  .dl-item.confirmed .dl-icon{ color:var(--green); }
+  .dl-item.open .dl-icon{ color:var(--yellow-ink); }
+  .dl-body strong{ font-family:var(--font-serif); font-size:1rem; font-weight:600; color:var(--ink); display:block; margin-bottom:2px; }
+  .dl-body span{ font-size:.92rem; color:var(--text-muted); line-height:1.55; }
+
+  /* ===== PART DIVIDER ===== */
+  .part{ background:var(--ink); border-radius:var(--radius-m); padding:2.4rem 2.6rem; display:flex; align-items:center; gap:2rem; margin-bottom:3.4rem; }
+  .part__numeral{ font-family:var(--font-serif); font-weight:700; font-size:3rem; color:var(--yellow); flex-shrink:0; line-height:1; }
+  .part__eyebrow{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.45); display:block; margin-bottom:.4rem; }
+  .part__title{ font-family:var(--font-serif); font-weight:600; font-size:1.5rem; color:#fff; margin-bottom:.3rem; }
+  .part__desc{ color:rgba(255,255,255,.65); font-size:.92rem; margin:0; max-width:560px; }
+  @media (max-width:680px){ .part{ flex-direction:column; align-items:flex-start; gap:1rem; padding:1.8rem; } }
+
+  /* ===== CLOSING ===== */
+  .closing-box{ background:var(--ink); color:#fff; border-radius:var(--radius-l); padding:2.2rem 2.4rem; text-align:center; }
+  .closing-box h3{ font-family:var(--font-serif); color:#fff; font-size:1.2rem; margin-bottom:.6rem; }
+  .closing-box p{ color:rgba(255,255,255,.65); margin:0; font-size:.92rem; }
+
+  /* ===== RESPONSIVE: SIDEBAR MOBILE ===== */
+  @media (max-width:1023px){
+    .sidebar{ transform:translateX(-100%); transition:transform .25s ease; width:290px; z-index:220; }
+    .sidebar.is-open{ transform:translateX(0); }
+  }
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="backdrop" id="backdrop"></div>
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-top">
+      <div class="sb-eyebrow">For Jordan · Internal Draft</div>
+      <div class="sb-markrow">
+        <div class="sb-mark">HS</div>
+        <div>
+          <div class="sb-client">Hob's Service Center</div>
+        </div>
+      </div>
+      <div class="sb-sub">Content Draft — Not Client-Facing</div>
+    </div>
+
+    <div class="sb-nav">
+      <a href="#cover" class="nav-link">Overview</a>
+
+      <div class="nav-group-label">Overview</div>
+      <a href="#sitemap" class="nav-link"><span class="nav-num">0</span> Site Map</a>
+
+      <div class="nav-group-label">Pages</div>
+      <a href="#home" class="nav-link"><span class="nav-num">1</span> Home</a>
+      <a href="#services" class="nav-link"><span class="nav-num">2</span> Services</a>
+      <a href="#about" class="nav-link"><span class="nav-num">3</span> About Us</a>
+      <a href="#contact" class="nav-link"><span class="nav-num">4</span> Contact</a>
+      <a href="#blog" class="nav-link"><span class="nav-num">5</span> Blog</a>
+
+      <div class="nav-group-label">Status</div>
+      <a href="#have" class="nav-link"><span class="nav-num">✓</span> What We Have</a>
+      <a href="#missing" class="nav-link"><span class="nav-num">!</span> What's Missing</a>
+    </div>
+
+    <div class="sb-meta">
+      <div class="sb-meta-row"><span>Pages drafted</span><b>5 of 5</b></div>
+      <div class="sb-meta-row"><span>Status</span><b class="warn">Internal only</b></div>
+      <div class="sb-meta-row"><span>Gaps</span><b class="warn">10 open</b></div>
+    </div>
+
+    <div class="sb-footer">
+      jordan@latzwebdesign.com<br />
+      <strong>No fluff. Just results.</strong>
+    </div>
+  </nav>
+
+  <div class="topbar" id="topbar">
+    <button class="topbar-burger" id="burgerBtn" aria-label="Toggle navigation">☰</button>
+    <span class="topbar-title">Hob's Service Center</span>
+    <span class="topbar-crumb" id="topbarCrumb">Overview</span>
+  </div>
+
+  <div class="main">
+    <div class="docbar"><span>Hob's Service Center</span><span>·</span><b id="docbarCrumb">Overview</b></div>
+
+    <div class="content">
+
+      <!-- COVER -->
+      <section class="wf-section" id="cover">
+        <div class="cover-panel">
+          <div class="corner tl"></div><div class="corner tr"></div>
+          <div class="corner bl"></div><div class="corner br"></div>
+
+          <div class="stamp">
+            <div class="stamp__word">LATZ<br/>WEB DESIGN</div>
+            <div class="stamp__caption">Internal Draft</div>
+          </div>
+
+          <div class="cover-eyebrow">Internal Working Draft — Not Client-Facing</div>
+          <div class="cover-title">Content Draft</div>
+          <div class="cover-tagline">Preliminary copy to design around — sourced from real material, wording may still change.</div>
+          <div class="cover-rule"><div class="thick"></div><div class="thin"></div></div>
+          <p class="cover-desc">Same page structure as the client wireframe, but every block is marked by how solid the content actually is — pulled from Terra's content doc and the Oct 5–13 email thread, or still missing. Status Tracker at the end rounds up every open item in one place.</p>
+
+          <div class="doc-control">
+            <div class="dc-cell"><div class="dc-label">Status</div><div class="dc-value warn">Internal Draft</div></div>
+            <div class="dc-cell"><div class="dc-label">Pages</div><div class="dc-value">5</div></div>
+            <div class="dc-cell"><div class="dc-label">Source material</div><div class="dc-value">1 content doc + thread</div></div>
+            <div class="dc-cell"><div class="dc-label">Open gaps</div><div class="dc-value warn">10</div></div>
+          </div>
+        </div>
+
+        <div class="key-callout">
+          <span class="emoji">🛠</span>
+          <div>
+            <strong>Internal Only — Not for Terra or the Client</strong>
+            Real content dropped into the same structure as the client wireframe (Oct 5), so we can see it in place and know what's actually short. A green <strong style="display:inline;color:var(--green);">Confirmed</strong> tag means it's sourced from Terra's content doc or the email thread — good to design around, even where wording might still get polished. A gold <strong style="display:inline;color:var(--yellow-ink);">Missing</strong> tag means we don't have it yet. A dashed gold box is an open call that needs a decision, same pattern as the client wireframe. Full rundown at the bottom, in What We Have / What's Missing.
+          </div>
+        </div>
+      </section>
+
+      <!-- SITE MAP -->
+      <section class="wf-section" id="sitemap">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">0</span><span class="sec-name">Site Map</span></div>
+          <div class="sec-rule"></div>
+        </div>
+
+        <div class="tree-card">
+          <div class="tree-root-row">
+            <div class="tree-root">Home <span class="sl">/</span></div>
+          </div>
+          <div class="tree-row">
+            <div class="tree-leaf"><div class="nm">Services</div><div class="sl">/services</div><div class="dg">8 real services vs. 4 anchors</div></div>
+            <div class="tree-leaf"><div class="nm">About Us</div><div class="sl">/about-us</div></div>
+            <div class="tree-leaf"><div class="nm">Contact</div><div class="sl">/contact</div></div>
+            <div class="tree-leaf"><div class="nm">Blog</div><div class="sl">/blog</div></div>
+          </div>
+
+          <div class="tree-notes">
+            <b>What's changed since the client wireframe.</b> Business hours and the exact shop address are now confirmed real values — both were open items on the wireframe. Logo and photo approach are confirmed (no refresh; placeholders at launch, real photos once Terra visits the shop). Blog launch approach is decided: structure-only, no posts required before launch. The big open item is <b>Services</b> — Terra's content doc has real copy for 8 distinct services, not the 4 consolidated anchors the wireframe scoped. That's a structural decision, not just a content gap — see the Services section below.
+          </div>
+        </div>
+      </section>
+
+      <!-- 1 — HOME -->
+      <section class="wf-section" id="home">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">1</span><span class="sec-name">Home</span></div>
+          <span class="badge badge--gaps">Gaps Flagged</span>
+          <span class="sec-slug">/</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="diff-line"><b>vs. client wireframe:</b> hero headline and intro now finalized. Everything else unchanged.</div>
+
+        <div class="wf-embed">
+          <div class="embed-banner">Content &amp; structure wireframe — Home · not final visual design</div>
+          <div class="embed-nav">
+            <div class="embed-logo"><span class="mk">HS</span><span>Hob's Service Center</span></div>
+            <div class="embed-links">
+              <a class="active">Home</a><a>Services</a><a>About Us</a><a>Contact</a><a>Blog</a>
+            </div>
+            <span class="embed-cta">Call or Text (715) 400-7322</span>
+          </div>
+
+          <div class="embed-body">
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Hero — Headline &amp; Intro</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="ph-head">Full-Service Boat, ATV, UTV &amp; Dock Care.</div>
+              <div class="seed-copy">
+                <p>Expert service for snowmobiles, ATVs, UTVs, boats, and Sea-Doos. Count on Hob's for repairs, seasonal prep, and more throughout the year.</p>
+              </div>
+              <div style="margin-top:4px;">
+                <span class="pill-btn">Call or Text (715) 400-7322</span>
+                <span class="pill-btn ghost">View Our Services</span>
+              </div>
+              <div class="img-ph" style="margin-top:14px;"><span class="ico">📷</span><span class="lbl">Hero photo still needed — shop, team, or equipment shot. Find a free/royalty-free placeholder to build this with now. If Terra has a real shot ready once she visits the shop, we'll use that instead — otherwise we move forward with the royalty-free pick, she gives feedback once she sees it, and we search for alternatives if needed.</span></div>
+              <div class="annotation">Final headline and intro from Jordan (Nov 6) — supersedes the two draft directions in Terra's content doc. Headline decision is closed.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Why Choose Us</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="seed-copy"><p>With 40+ years of combined experience, Hob's Service Center keeps boats, ATVs, UTVs, and docks running right — from routine repairs to full seasonal prep and storage. We're a BRP Master Technician shop and a Lakeview Dock Dealer at Gold Status, carrying Lakeview Docks and Lakeshore Product Boat Lifts.</p></div>
+              <div class="annotation">Unchanged from the client wireframe — carried straight over.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Credentials</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="check-list-mini">
+                <div class="ck-row"><span class="ic">✓</span><span>40+ Years Combined Experience</span></div>
+                <div class="ck-row"><span class="ic">✓</span><span>BRP Master Technician</span></div>
+                <div class="ck-row"><span class="ic">✓</span><span>Lakeview Dock Dealer — Gold Status</span></div>
+                <div class="ck-row"><span class="ic">✓</span><span>Locally &amp; Family Owned Since 2019</span></div>
+                <div class="ck-row"><span class="ic">✓</span><span>Carries Lakeview Docks &amp; Lakeshore Product Boat Lifts</span></div>
+              </div>
+              <div class="annotation">Unchanged from the client wireframe.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Service Highlights</span><span class="tag tag--missing">Pending structure decision</span></div>
+              <div class="list-row"><span class="list-badge">Service</span><div class="list-main"><div class="t">Repairs &amp; Service</div></div><span class="list-act">Learn more →</span></div>
+              <div class="list-row"><span class="list-badge">Service</span><div class="list-main"><div class="t">Powersport Sales</div></div><span class="list-act">Learn more →</span></div>
+              <div class="list-row"><span class="list-badge">Service</span><div class="list-main"><div class="t">Seasonal Prep &amp; Storage</div></div><span class="list-act">Learn more →</span></div>
+              <div class="list-row"><span class="list-badge">Service</span><div class="list-main"><div class="t">Installation &amp; Removal</div></div><span class="list-act">Learn more →</span></div>
+              <div class="annotation">Carried over as-is for now. Whatever the Services page ends up structured as (see Services, below), these four teaser tiles either stay as high-level categories or get swapped for the real 8-service list — holding off until that's decided rather than updating twice.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Reviews</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="ph-head" style="font-size:1.6rem;">★ 4.9 · 91 Google Reviews</div>
+              <div class="annotation">Unchanged from the client wireframe.</div>
+            </div>
+
+            <div class="cta-bar">
+              <span class="cta-txt">Ready to get your boat, ATV, UTV, or dock serviced?</span>
+              <span class="pill-btn">Call or Text (715) 400-7322</span>
+            </div>
+          </div>
+
+          <div class="embed-footer">
+            <div class="f-logo">Hob's Service Center</div>
+            <div class="f-nav"><span>Services</span><span>About Us</span><span>Contact</span><span>Blog</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 — SERVICES -->
+      <section class="wf-section" id="services">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">2</span><span class="sec-name">Services</span></div>
+          <span class="badge badge--gaps">Gaps Flagged</span>
+          <span class="sec-slug">/services</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="diff-line"><b>vs. client wireframe:</b> wireframe scoped one page with 4 consolidated anchors; Terra's content doc has real copy for 8 distinct services — the page structure itself is now an open question.</div>
+
+        <div class="wf-embed">
+          <div class="embed-banner">Content &amp; structure wireframe — Services · not final visual design</div>
+          <div class="embed-nav">
+            <div class="embed-logo"><span class="mk">HS</span><span>Hob's Service Center</span></div>
+            <div class="embed-links">
+              <a>Home</a><a class="active">Services</a><a>About Us</a><a>Contact</a><a>Blog</a>
+            </div>
+            <span class="embed-cta">Call or Text (715) 400-7322</span>
+          </div>
+
+          <div class="embed-body">
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Real Service Mix — Confirmed</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="seed-copy"><p>Terra's content doc lists real copy for <b>8 services</b>, not just the 4 categories the wireframe anchored: Docks &amp; Boat Lifts, ATV &amp; UTV Service and Repair, Boat &amp; Jet Ski Service, Shrink Wrapping &amp; Storage, <b>Snowmobile Service &amp; Repair</b>, Seasonal Preparation &amp; Maintenance, Pickup &amp; Delivery, and Batteries, Tires &amp; Accessories.</p></div>
+              <div class="annotation"><b>Worth flagging:</b> the old HIBU site's snowmobile-heavy copy was flagged earlier as likely generic boilerplate that didn't match the real business. Turns out snowmobile service is real after all — it's one of Terra's 8 confirmed services, just one piece of a broader mix rather than the whole business. Good to know before writing off anything else from the old copy.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Service Sections — Real Copy, All 8</span><span class="tag tag--confirmed">Confirmed</span></div>
+
+              <div class="svc-sub" id="docks-lifts">
+                <span class="anchor-tag">#docks-boat-lifts</span>
+                <h4>Docks &amp; Boat Lifts</h4>
+                <p>Sales, installation, removal, and seasonal services to help you enjoy your waterfront. Whether you're looking for a new dock or need help preparing your existing dock and lift for the changing seasons, Hob's is here to help.</p>
+              </div>
+              <div class="svc-sub" id="atv-utv">
+                <span class="anchor-tag">#atv-utv-service</span>
+                <h4>ATV &amp; UTV Service and Repair</h4>
+                <p>Keep your recreational vehicles ready for work, trails, and everything in between. From maintenance and repairs to seasonal preparation, our goal is to help keep you moving with confidence.</p>
+              </div>
+              <div class="svc-sub" id="boat-jetski">
+                <span class="anchor-tag">#boat-jet-ski</span>
+                <h4>Boat &amp; Jet Ski Service</h4>
+                <p>Make the most of your time on the water with service and repair for your boat or personal watercraft. From seasonal maintenance to getting ready for your next adventure, Hob's helps you prepare for the season ahead.</p>
+              </div>
+              <div class="svc-sub" id="shrink-wrap">
+                <span class="anchor-tag">#shrink-wrap-storage</span>
+                <h4>Shrink Wrapping &amp; Storage</h4>
+                <p>Protect your recreational investment when the season comes to an end. Hob's offers shrink-wrapping and storage services to help keep your equipment protected during the off-season.</p>
+              </div>
+              <div class="svc-sub" id="snowmobile">
+                <span class="anchor-tag">#snowmobile-service</span>
+                <h4>Snowmobile Service &amp; Repair</h4>
+                <p>Get ready for Wisconsin winters with snowmobile service and repair. Proper maintenance and seasonal preparation can help you spend less time worrying about your equipment and more time enjoying the trails.</p>
+              </div>
+              <div class="svc-sub" id="seasonal-prep">
+                <span class="anchor-tag">#seasonal-prep</span>
+                <h4>Seasonal Preparation &amp; Maintenance</h4>
+                <p>Every season brings different demands. From spring preparation to fall and winter maintenance, Hob's helps you get your equipment ready for changing temperatures and changing adventures.</p>
+              </div>
+              <div class="svc-sub" id="pickup-delivery">
+                <span class="anchor-tag">#pickup-delivery</span>
+                <h4>Pickup &amp; Delivery</h4>
+                <p>We know getting your equipment to and from the shop isn't always easy. Ask about our pickup and delivery options for added convenience and help simplifying your service needs.</p>
+              </div>
+              <div class="svc-sub" id="batteries-tires">
+                <span class="anchor-tag">#batteries-tires-accessories</span>
+                <h4>Batteries, Tires &amp; Accessories</h4>
+                <p>Find products to help keep your recreational equipment ready for the next season. Hob's offers battery and tire sales, along with accessories to support your boating and outdoor recreation needs.</p>
+              </div>
+
+              <div class="annotation">All 8 real, all from Terra's content doc — not placeholder copy. <b>Missing:</b> specific brands/equipment beyond Lakeview Docks &amp; Lakeshore Product Boat Lifts, and typical turnaround times — Terra's doc asked for both but didn't supply them.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Closing</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="ph-head" style="font-size:1.3rem;">One Shop. More Ways to Enjoy the Northwoods.</div>
+              <div class="seed-copy"><p>Whether you're preparing for a summer on the lake, getting your ATV or UTV ready for the trails, or protecting your equipment for winter, Hob's Service Center is here to help.</p><p>Have a question about a service or need help getting started? Contact our team today. We're happy to help you find the right solution for your equipment and your next adventure.</p></div>
+            </div>
+
+            <div class="decision">
+              <div class="decision-label">⚑ A choice to make — final page structure</div>
+              <div class="decision-opt"><b>Option 1 — Build all 8 as their own anchored sections, one page.</b> Matches what Terra actually sent; better for the specific things people search for (e.g. "snowmobile repair Tomahawk").</div>
+              <div class="decision-opt"><b>Option 2 — Fold the 8 into the wireframe's original 4 categories</b> (Repairs &amp; Service, Powersport Sales, Seasonal Prep &amp; Storage, Installation &amp; Removal), each with 2 real services as sub-copy. Keeps the simpler nav/anchor structure already shown to the client, but buries specific services a step deeper.</div>
+              <div class="decision-opt" style="color:var(--text-muted);"><b>Not on the table without a change order:</b> individual service pages (8 separate URLs) — that was scoped as a paid Room to Grow add-on and wasn't taken.</div>
+            </div>
+
+            <div class="cta-bar">
+              <span class="cta-txt">Think we can help with your boat, ATV, UTV, or dock?</span>
+              <span class="pill-btn">Call or Text (715) 400-7322</span>
+            </div>
+          </div>
+
+          <div class="embed-footer">
+            <div class="f-logo">Hob's Service Center</div>
+            <div class="f-nav"><span>Services</span><span>About Us</span><span>Contact</span><span>Blog</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 — ABOUT US -->
+      <section class="wf-section" id="about">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">3</span><span class="sec-name">About Us</span></div>
+          <span class="badge badge--gaps">Gaps Flagged</span>
+          <span class="sec-slug">/about-us</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="diff-line"><b>vs. client wireframe:</b> real story copy now on hand; origin story and which trust angle to lead with are still open.</div>
+
+        <div class="wf-embed">
+          <div class="embed-banner">Content &amp; structure wireframe — About Us · not final visual design</div>
+          <div class="embed-nav">
+            <div class="embed-logo"><span class="mk">HS</span><span>Hob's Service Center</span></div>
+            <div class="embed-links">
+              <a>Home</a><a>Services</a><a class="active">About Us</a><a>Contact</a><a>Blog</a>
+            </div>
+            <span class="embed-cta">Call or Text (715) 400-7322</span>
+          </div>
+
+          <div class="embed-body">
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Our Story</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="ph-head" style="font-size:1.3rem;">Local Service. Recreational Expertise. Northwoods Values.</div>
+              <div class="seed-copy">
+                <p>At Hob's Service Center, we understand that your boat, ATV, UTV, snowmobile, and waterfront equipment are more than just machines. They're part of the experiences, traditions, and memories that make life in the Northwoods special.</p>
+                <p>That's why we're committed to helping our customers maintain their equipment, prepare for every season, and spend more time enjoying the activities they love.</p>
+                <p>From service and repairs to dock and lift solutions, shrink wrapping, storage, and seasonal maintenance, Hob's brings a variety of recreational services together in one convenient place.</p>
+                <p>We believe in helping customers find practical solutions, providing dependable service, and making it easier to get ready for whatever the season brings.</p>
+                <p>Whether you're a year-round Northwoods resident, a lake property owner, or someone who loves exploring Wisconsin's outdoors, we're here to help keep your adventures moving.</p>
+                <p>At Hob's Service Center, we're proud to be part of the Northwoods recreation community — and we look forward to helping you make the most of every season.</p>
+              </div>
+              <div class="annotation">From Terra's content doc — real copy, not a placeholder. Founding year (2019) and family-owned/Chamber-member framing are already confirmed elsewhere (see Credentials below) and don't need to be re-asked.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Credentials</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="check-list-mini">
+                <div class="ck-row"><span class="ic">✓</span><span>BRP Master Technician</span></div>
+                <div class="ck-row"><span class="ic">✓</span><span>Lakeview Dock Dealer — Gold Status</span></div>
+                <div class="ck-row"><span class="ic">✓</span><span>40+ Years Combined Experience</span></div>
+              </div>
+              <div class="annotation">Unchanged from the client wireframe.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Team / Shop Photo</span><span class="tag tag--missing">Photo missing</span></div>
+              <div class="img-ph"><span class="ico">📷</span><span class="lbl">Team or shop photo still needed. Find a free/royalty-free placeholder to build this with now. If Terra has a real shot ready, we'll use that instead — otherwise we move forward with the royalty-free pick, she gives feedback once she sees it, and we search for alternatives if needed.</span></div>
+            </div>
+
+            <div class="decision">
+              <div class="decision-label">⚑ A choice to make — origin story &amp; lead angle</div>
+              <div class="decision-opt">Terra's content doc asks the client directly how Hob's got started and what it would most like customers to know, offering five angles to choose from (or a combination): personal service &amp; community relationships; knowledgeable technicians &amp; quality workmanship; a wide range of services in one place; family-owned business &amp; Northwoods lifestyle. None picked yet. The founding year (2019) is already on record — it's the <i>story</i> behind it, and which angle to lead with, that's still open.</div>
+            </div>
+          </div>
+
+          <div class="embed-footer">
+            <div class="f-logo">Hob's Service Center</div>
+            <div class="f-nav"><span>Services</span><span>About Us</span><span>Contact</span><span>Blog</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 — CONTACT -->
+      <section class="wf-section" id="contact">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">4</span><span class="sec-name">Contact</span></div>
+          <span class="badge badge--gaps">Gaps Flagged</span>
+          <span class="sec-slug">/contact</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="diff-line"><b>vs. client wireframe:</b> address and hours now confirmed real values — both were open items on the wireframe. Customer-profile and differentiation detail still missing, useful but not blocking.</div>
+
+        <div class="wf-embed">
+          <div class="embed-banner">Content &amp; structure wireframe — Contact · not final visual design</div>
+          <div class="embed-nav">
+            <div class="embed-logo"><span class="mk">HS</span><span>Hob's Service Center</span></div>
+            <div class="embed-links">
+              <a>Home</a><a>Services</a><a>About Us</a><a class="active">Contact</a><a>Blog</a>
+            </div>
+            <span class="embed-cta">Call or Text (715) 400-7322</span>
+          </div>
+
+          <div class="embed-body">
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Contact Details</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="list-row"><span class="list-badge">📍</span><div class="list-main"><div class="t">1992 County Road L, Tomahawk, WI 54487</div></div></div>
+              <div class="list-row"><span class="list-badge">📞</span><div class="list-main"><div class="t">(715) 400-7322</div><div class="d">Call or Text</div></div></div>
+              <div class="list-row"><span class="list-badge">🕐</span><div class="list-main"><div class="t">Mon–Fri 8am–5pm, Sat 8am–12pm</div></div></div>
+              <div class="annotation">Address confirmed Oct 6, hours confirmed Oct 9 — both were open items on the client wireframe. Preferred contact method confirmed as call or email, with the contact form routing to email too.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Contact Form — general</span><span class="tag tag--form">Form → email + spam filter</span></div>
+              <div class="form-grid">
+                <div class="form-field">Name</div>
+                <div class="form-field">Phone or Email</div>
+                <div class="form-field area">Message</div>
+              </div>
+              <span class="pill-btn" style="margin-top:14px;">Send Message</span>
+              <div class="annotation">Unchanged from the client wireframe.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Map</span><span class="tag tag--ext">Embed</span></div>
+              <div class="img-ph"><span class="ico">🗺️</span><span class="lbl">Embedded map — now buildable with the confirmed address: 1992 County Road L, Tomahawk, WI 54487</span></div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Nice-to-Have — Differentiation Copy</span><span class="tag tag--missing">Missing</span></div>
+              <div class="seed-copy"><p>Terra's content doc also asked the client: who's the typical customer (boat, ATV/UTV, or dock owner — or an even mix), which towns/lake communities they draw from beyond Tomahawk, what comes up a lot when people call (common complaints about other shops, what makes someone choose Hob's), and any awards/certifications/press not already listed. None of this came back yet.</p></div>
+              <div class="annotation">Useful for sharpening Home/About copy later, but nothing here blocks building the site — flagging as a nice-to-have, not a blocker.</div>
+            </div>
+          </div>
+
+          <div class="embed-footer">
+            <div class="f-logo">Hob's Service Center</div>
+            <div class="f-nav"><span>Services</span><span>About Us</span><span>Contact</span><span>Blog</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 — BLOG -->
+      <section class="wf-section" id="blog">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">5</span><span class="sec-name">Blog</span></div>
+          <span class="badge badge--gaps">Gaps Flagged</span>
+          <span class="sec-slug">/blog</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="diff-line"><b>vs. client wireframe:</b> launch approach now decided (Option 2 — structure only); post-scheduling capability is a new open question, not on the original wireframe list.</div>
+
+        <div class="wf-embed">
+          <div class="embed-banner">Content &amp; structure wireframe — Blog · not final visual design</div>
+          <div class="embed-nav">
+            <div class="embed-logo"><span class="mk">HS</span><span>Hob's Service Center</span></div>
+            <div class="embed-links">
+              <a>Home</a><a>Services</a><a>About Us</a><a>Contact</a><a class="active">Blog</a>
+            </div>
+            <span class="embed-cta">Call or Text (715) 400-7322</span>
+          </div>
+
+          <div class="embed-body">
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Post List</span><span class="tag tag--confirmed">Confirmed</span></div>
+              <div class="list-row"><span class="list-badge yellow">Post</span><div class="list-main"><div class="t">Sample Post Title</div><div class="d">Month Year</div></div></div>
+              <div class="list-row"><span class="list-badge yellow">Post</span><div class="list-main"><div class="t">Sample Post Title</div><div class="d">Month Year</div></div></div>
+              <div class="list-row"><span class="list-badge yellow">Post</span><div class="list-main"><div class="t">Sample Post Title</div><div class="d">Month Year</div></div></div>
+              <div class="annotation"><b>Resolved Oct 12–13:</b> structure-only, posts pasted in manually, no live Constant Contact integration. Launches with the structure in place — real posts get added after launch, not required before. Terra's first draft post (sent Oct 9) is on hand for whenever she's ready to add it.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Post-Scheduling Capability</span><span class="tag tag--missing">Pending</span></div>
+              <div class="annotation">Terra asked Oct 13 whether the CMS can schedule posts in advance — unanswered, new this round, wasn't on the original wireframe list. This is a build question for Jordan to confirm, not something to wait on Terra for.</div>
+            </div>
+
+            <div class="wf-block">
+              <div class="block-head"><span class="block-title">Post Template</span><span class="tag tag--cms">CMS editable</span></div>
+              <div class="seed-copy"><p>Sample post — for layout reference only, not planned content. Carried over from the client wireframe (title, featured photo, body copy with subheadings, closing call-to-action) — nothing new here.</p></div>
+            </div>
+          </div>
+
+          <div class="embed-footer">
+            <div class="f-logo">Hob's Service Center</div>
+            <div class="f-nav"><span>Services</span><span>About Us</span><span>Contact</span><span>Blog</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PART DIVIDER -->
+      <div class="part" id="status-divider">
+        <div class="part__numeral">II</div>
+        <div>
+          <span class="part__eyebrow">✓ / !</span>
+          <div class="part__title">Status Tracker</div>
+          <p class="part__desc">What we've actually got from Terra's content doc and the email thread, and what's still needed before this becomes the real build.</p>
+        </div>
+      </div>
+
+      <!-- WHAT WE HAVE -->
+      <section class="wf-section" id="have">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">✓</span><span class="sec-name">What We Have</span></div>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="decision-list">
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Real copy for all 8 services</strong><span>Docks &amp; lifts, ATV/UTV, boat/jet ski, shrink wrap &amp; storage, snowmobile, seasonal prep, pickup &amp; delivery, batteries/tires — richer than the wireframe's 4 consolidated anchors.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Real service mix confirmed, snowmobiles included</strong><span>The old site's snowmobile framing wasn't pure boilerplate after all — it's a real part of the mix, alongside boats, ATVs, UTVs, and docks.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Home hero &amp; intro copy — finalized</strong><span>"Full-Service Boat, ATV, UTV &amp; Dock Care." plus intro paragraph, final from Jordan (Nov 6).</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>About Us story copy</strong><span>Full "Local Service. Recreational Expertise. Northwoods Values." narrative, six paragraphs.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Business hours</strong><span>Mon–Fri 8am–5pm, Sat 8am–12pm — received Oct 9.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Shop address</strong><span>1992 County Road L, Tomahawk, WI 54487 — received Oct 6.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Logo file, no refresh</strong><span>In hand since Sep 30; confirmed to use as-is.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Photo approach</strong><span>Placeholders at launch confirmed; real photos to follow once Terra visits the shop.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Blog launch approach</strong><span>Structure-only, manually pasted content, no live Constant Contact integration — resolved Oct 12–13.</span></div></div>
+          <div class="dl-item confirmed"><span class="dl-icon">✓</span><div class="dl-body"><strong>Preferred contact method</strong><span>Call or email; contact form also routes to email.</span></div></div>
+        </div>
+      </section>
+
+      <!-- WHAT'S MISSING -->
+      <section class="wf-section" id="missing" style="margin-bottom:2rem;">
+        <div class="sec-head">
+          <div class="sec-eyebrow"><span class="sec-num">!</span><span class="sec-name">What's Missing</span></div>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="decision-list">
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Hero photo</strong><span>Still need a shot. Royalty-free placeholder first, real photo once Terra visits the shop.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Services page structure</strong><span>8 real services vs. the wireframe's 4 consolidated anchors — needs a decision before this maps to a design. See Services, above.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Service specifics</strong><span>Exact brands/equipment beyond Lakeview Docks &amp; Lakeshore Product Boat Lifts, and typical turnaround times — asked for, not supplied.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>About Us origin story</strong><span>How Hob's actually got started — the founding year (2019) is on record, the story behind it isn't.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>About Us — lead trust angle</strong><span>Five options given (personal service, technical skill, range of services, family/lifestyle, or a blend) — none picked.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Team/shop photo</strong><span>Still missing — placeholder plan applies here too.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Typical customer profile</strong><span>Boat/ATV/dock mix, towns and lake communities served beyond Tomahawk — nice-to-have for sharper copy, not a blocker.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Competitive differentiation</strong><span>What makes someone choose Hob's over another shop, common complaints Terra's heard about competitors — nice-to-have.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Awards / certifications / press</strong><span>Anything beyond what's already listed (BRP Master Technician, Lakeview Gold Status) — nice-to-have.</span></div></div>
+          <div class="dl-item open"><span class="dl-icon">○</span><div class="dl-body"><strong>Blog post-scheduling</strong><span>Can the CMS schedule posts in advance? Asked Oct 13, unanswered — a build question for Jordan, not Terra.</span></div></div>
+        </div>
+      </section>
+
+      <div class="closing-box">
+        <h3>End of Working Draft</h3>
+        <p>Content and structure only — real copy where we have it, flagged gaps where we don't. Not for Terra or the client's eyes.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="backtotop" id="backtotop" aria-label="Back to top">↑</button>
+
+  <script>
+    const sections = document.querySelectorAll('.wf-section[id], .part[id]');
+    const navLinks = document.querySelectorAll('.sidebar .nav-link');
+    const topbarCrumb = document.getElementById('topbarCrumb');
+    const docbarCrumb = document.getElementById('docbarCrumb');
+    const crumbNames = { cover:'Overview', sitemap:'Site Map', home:'Home', services:'Services', about:'About Us', contact:'Contact', blog:'Blog', 'status-divider':'Status Tracker', have:'What We Have', missing:"What's Missing" };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+          const name = crumbNames[entry.target.id] || '';
+          if (topbarCrumb) topbarCrumb.textContent = name;
+          if (docbarCrumb) docbarCrumb.textContent = name;
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    sections.forEach((s) => observer.observe(s));
+
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('backdrop');
+    const burgerBtn = document.getElementById('burgerBtn');
+    let menuOpen = false;
+    function openMenu(){ menuOpen = true; sidebar.classList.add('is-open'); backdrop.classList.add('is-visible'); }
+    function closeMenu(cb){ menuOpen = false; sidebar.classList.remove('is-open'); backdrop.classList.remove('is-visible'); if (cb) setTimeout(cb, 250); }
+    if (burgerBtn) burgerBtn.addEventListener('click', () => { menuOpen ? closeMenu() : openMenu(); });
+    backdrop.addEventListener('click', () => closeMenu());
+    navLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1023 && menuOpen) {
+          e.preventDefault();
+          const target = link.getAttribute('href');
+          closeMenu(() => { const el = document.querySelector(target); if (el) el.scrollIntoView({ behavior:'smooth' }); });
+        }
+      });
+    });
+
+    const progress = document.getElementById('progress');
+    function updateProgress(){
+      const h = document.documentElement;
+      const scrolled = h.scrollTop;
+      const max = h.scrollHeight - h.clientHeight;
+      progress.style.width = max > 0 ? ((scrolled / max) * 100) + '%' : '0%';
+    }
+    document.addEventListener('scroll', updateProgress, { passive:true });
+    updateProgress();
+
+    const backtotop = document.getElementById('backtotop');
+    document.addEventListener('scroll', () => {
+      backtotop.classList.toggle('visible', window.scrollY > 600);
+    }, { passive:true });
+    backtotop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+  </script>
+</body>
+</html>
