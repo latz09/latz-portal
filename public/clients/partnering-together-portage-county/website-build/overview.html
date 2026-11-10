@@ -1,29 +1,1635 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Partnering Together Portage County — Website Build | Latz Web Design</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0F14;
+    --surface: #141A2B;
+    --surface-2: #141A2B;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.18);
+    --ink: rgba(255,255,255,0.95);
+    --ink-2: rgba(255,255,255,0.70);
+    --ink-3: rgba(255,255,255,0.46);
+    --ink-4: rgba(255,255,255,0.30);
+    --teal: #1E8A94;
+    --teal-dim: rgba(30,138,148,0.16);
+    --teal-line: rgba(30,138,148,0.42);
+    --purple: #8B7FCF;
+    --purple-dim: rgba(139,127,207,0.16);
+    --purple-line: rgba(139,127,207,0.42);
+    --warning: #C9A227;
+    --warning-dim: rgba(201,162,39,0.14);
+    --warning-line: rgba(201,162,39,0.42);
+    --danger: #B3524A;
+    --danger-dim: rgba(179,82,74,0.14);
+    --danger-line: rgba(179,82,74,0.42);
+    --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink-2);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 248px;
+    height: 100vh;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 36px 0;
+    overflow-y: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-brand {
+    padding: 0 26px 26px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+  }
+
+  .sidebar-brand .lwd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-brand .client-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .sidebar-brand .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    color: var(--warning);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--warning);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 10px 26px 5px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 26px;
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.03);
+    border-left-color: var(--teal-line);
+  }
+
+  .nav-link.active {
+    color: var(--teal);
+    background: var(--teal-dim);
+    border-left-color: var(--teal);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 22px 26px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+
+  /* ── MOBILE NAV CONTROLS ── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-size: 22px;
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 248px;
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 900px 500px at 80% 0%, rgba(30,138,148,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: 'PORTAL';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 130px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header .overline {
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-header .overline::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+
+  .page-header h1 {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .page-header .sub {
+    position: relative;
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    position: relative;
+    display: flex;
+    gap: 0;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .header-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-soft);
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .header-meta-item:last-child { border-right: none; }
+
+  .header-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .header-meta-item .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .header-meta-item .value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .header-meta-item .value.green { color: var(--teal); }
+  .header-meta-item .value.orange { color: var(--warning); }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 56px 64px 100px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .section-icon {
+    width: 34px; height: 34px;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal-line);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS & GRIDS ── */
+  .card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 26px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  /* ── DATA ROWS ── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .data-value {
+    font-size: 14px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  .data-value a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .swatch {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 1px solid var(--border-strong);
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    border: 1px solid;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+  .callout-body p, .callout-body span { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  .callout.info { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.warn { background: var(--warning-dim); border-color: var(--warning-line); }
+  .callout.success { background: var(--teal-dim); border-color: var(--teal-line); }
+  .callout.alert { background: var(--danger-dim); border-color: var(--danger-line); }
+  .callout.yellow { background: var(--warning-dim); border-color: var(--warning-line); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--warning);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+
+  .highlight-box strong { font-weight: 700; color: var(--ink); }
+  .highlight-box p { font-size: 14px; margin-top: 9px; color: var(--ink-2); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border-strong);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-item.complete::before { background: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+  .timeline-item.pending::before { background: var(--ink-4); box-shadow: 0 0 0 2px var(--ink-4); }
+  .timeline-item.active::before { background: var(--teal); box-shadow: 0 0 0 3px var(--teal-line); animation: pulse 2s infinite; }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3px 0;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ── BUDGET TABLE ── */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .budget-table th {
+    background: var(--surface);
+    color: var(--ink-3);
+    padding: 12px 18px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .budget-table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--ink-2);
+    background: var(--bg);
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+  .budget-table .total-row td {
+    background: var(--teal-dim) !important;
+    color: var(--ink);
+    font-weight: 700;
+    border-top: 2px solid var(--teal);
+    font-size: 15px;
+  }
+
+  .budget-table .paid-row td {
+    background: var(--teal-dim) !important;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .budget-table .pending-row td {
+    background: var(--warning-dim) !important;
+    color: var(--warning);
+    font-weight: 600;
+  }
+
+  .amount { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+
+  /* ── PAGE SCOPE GRID ── */
+  .page-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    border-top: 2px solid var(--teal);
+    box-shadow: var(--shadow);
+  }
+
+  .page-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .page-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .page-card ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .page-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .badge-cms { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .badge-static { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-new { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .badge-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .badge-priority { background: var(--teal); color: #ffffff; border-color: var(--teal); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .check-status { margin-left: auto; flex-shrink: 0; }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .pill-green { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-orange { background: var(--warning-dim); color: var(--warning); border-color: var(--warning-line); }
+  .pill-gray { background: rgba(255,255,255,0.04); color: var(--ink-3); border-color: var(--border); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal); border-color: var(--teal-line); }
+  .pill-red { background: var(--danger-dim); color: var(--danger); border-color: var(--danger-line); }
+
+  /* ── UPSELL ── */
+  .upsell-card {
+    background: var(--surface);
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 22px;
+    transition: border-color 0.2s;
+  }
+
+  .upsell-card:hover { border-color: var(--purple); }
+
+  .upsell-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+
+  .upsell-card .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 9px;
+  }
+
+  .upsell-card p { font-size: 13px; color: var(--ink-3); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 22px;
+    align-items: start;
+    box-shadow: var(--shadow);
+  }
+
+  .phase-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--ink-4);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .phase .weeks {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+
+  .phase ul { list-style: none; padding: 0; }
+  .phase ul li {
+    font-size: 13px;
+    color: var(--ink-3);
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .phase ul li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); }
+
+  /* ── NOTES AREA ── */
+  .note-block {
+    background: var(--warning-dim);
+    border: 1px solid var(--warning-line);
+    border-radius: 8px;
+    padding: 17px 21px;
+    margin-bottom: 14px;
+  }
+
+  .note-block .note-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--warning);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .page-header, .content { padding-left: 32px; padding-right: 32px; }
+    .phase { grid-template-columns: 56px 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-fab { display: flex; }
+    .mobile-overlay { display: block; }
+
+    .page-header { padding: 40px 20px 32px; }
+    .content { padding: 40px 20px 90px; }
+    .page-header h1 { font-size: 26px; }
+    .page-header::after { font-size: 80px; }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
     }
-  </style>
+
+    .data-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .data-label { font-size: 10px; }
+
+    .checklist li { flex-wrap: wrap; }
+    .check-status { margin-left: 0; margin-top: 4px; width: 100%; }
+
+    .budget-table th, .budget-table td { padding: 8px 10px; font-size: 12px; }
+
+    .phase {
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 16px;
+    }
+    .phase-num { font-size: 36px; }
+
+    .callout { flex-direction: column; gap: 6px; }
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="lwd">Latz Web Design</div>
+    <div class="client-name">Partnering Together Portage County</div>
+    <div class="status-pill">Quote Pending · Board 11/13</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#client" class="nav-link active"><span class="nav-icon">🏛️</span> Client Info</a>
+  <a href="#brand" class="nav-link"><span class="nav-icon">🎨</span> Brand & Visual Identity</a>
+  <a href="#project" class="nav-link"><span class="nav-icon">📋</span> Project Summary</a>
+  <a href="#financials" class="nav-link"><span class="nav-icon">💰</span> Financials</a>
+  <a href="#history" class="nav-link"><span class="nav-icon">🗓️</span> Client Journey</a>
+
+  <div class="nav-section-label">Build</div>
+  <a href="#scope" class="nav-link"><span class="nav-icon">📐</span> Scope & Pages</a>
+  <a href="#content" class="nav-link"><span class="nav-icon">📦</span> Needed from Client</a>
+  <a href="#technical" class="nav-link"><span class="nav-icon">⚙️</span> Technical</a>
+  <a href="#timeline" class="nav-link"><span class="nav-icon">🚀</span> Project Timeline</a>
+
+  <div class="nav-section-label">Strategy</div>
+  <a href="#upsells" class="nav-link"><span class="nav-icon">📈</span> Future Upsells</a>
+  <a href="#notes" class="nav-link"><span class="nav-icon">📝</span> Notes</a>
+
+  <div class="sidebar-footer">
+    Latz Web Design LLC<br>
+    Stevens Point, WI<br>
+    jordan@latzwebdesign.com<br><br>
+    No fluff. Just results.
+  </div>
+</nav>
+
+<!-- MOBILE NAV CONTROLS -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<button class="mobile-fab" id="mobileFab" aria-label="Toggle navigation">☰</button>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="overline">Project Overview · Source of Truth</div>
+    <h1>Partnering Together Portage County</h1>
+    <div class="sub">From-scratch nonprofit website build: community resource hub, partner agency directory, outbound donation links</div>
+
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <span class="label">Contact</span>
+        <span class="value">Tabby Prutz, Executive Director (self-titled, unconfirmed)</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Contract Value</span>
+        <span class="value orange">Quote pending, board sees it Fri 11/13</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Deposit Received</span>
+        <span class="value orange">None, nothing invoiced yet</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Domain</span>
+        <span class="value">TBD, based on "Partnering Together Portage County," availability unconfirmed</span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Phone</span>
+        <span class="value"><a href="tel:7153219396">(715) 321-9396</a></span>
+      </div>
+      <div class="header-meta-item">
+        <span class="label">Email</span>
+        <span class="value"><a href="mailto:partneringtogetherpc@gmail.com">partneringtogetherpc@gmail.com</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CLIENT INFO -->
+    <section id="client">
+      <div class="section-header">
+        <div class="section-icon">🏛️</div>
+        <h2>Client Information</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary Contact</h3>
+          <div class="data-row">
+            <span class="data-label">Name</span>
+            <span class="data-value">Tabby Prutz</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Role</span>
+            <span class="data-value">Signs as "Executive Director." Not one of the four listed board officers (President Gregg Hansel, VP Jerry Gargulak, Secretary Leigh Ann Trzinski, Treasurer Greg Bruckbauer). She's clearly driving this and presenting to the board, but she hasn't confirmed she can approve a price on her own.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Phone</span>
+            <span class="data-value"><a href="tel:7153219396">(715) 321-9396</a></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Email</span>
+            <span class="data-value"><a href="mailto:partneringtogetherpc@gmail.com">partneringtogetherpc@gmail.com</a></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Organization</h3>
+          <div class="data-row">
+            <span class="data-label">Operating As</span>
+            <span class="data-value">Partnering Together Portage County (DBA)</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Legal Name</span>
+            <span class="data-value">Partnering Together Central Wisconsin Inc., EIN 39-4405558, Stevens Point, WI. 501(c)(3), classified Housing & Shelter. Confirm which name goes on the proposal/contract.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">What They Are</span>
+            <span class="data-value">A connector org, not a direct service provider. Brings partner agencies, volunteers, and donors together in one place for residents seeking housing/poverty-related help.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Maturity</span>
+            <span class="data-value">New organization. No existing website found anywhere, confirmed from-scratch build.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Finances</span>
+            <span class="data-value">Total assets and annual income both in the $100K to $500K range, per nonprofit registry data, driven mostly by one large founding contribution rather than steady recurring revenue. No paid staff, all-volunteer board.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Cold inbound, reads like a formal RFP</strong>
+          <span>The original contact-form submission had structured headers and consistent phrasing throughout, unusual for a cold lead. Never directly confirmed whether other vendors are being asked to quote this. Worth asking outright before or after Friday.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRAND & VISUAL IDENTITY -->
+    <section id="brand">
+      <div class="section-header">
+        <div class="section-icon">🎨</div>
+        <h2>Brand & Visual Identity</h2>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Provisional, not locked.</strong>
+        <p>Nothing here came from the client directly. The logo was pulled from the org's public Facebook page, and the colors were pulled from that logo file. No confirmation, no sign-off, no fonts chosen. Every other generator in this system (wireframe, design brief, asset collection, domain/hosting handoff) should treat this as a starting point, not a final answer, until Tabby or the board signs off.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Logo</h3>
+          <div class="data-row">
+            <span class="data-label">Status</span>
+            <span class="data-value">Sourced from Facebook, not sent by the client. Staged in the portal at <code>/public/clients/partnering-together-portage-county/logo.png</code></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Confidence</span>
+            <span class="data-value">Provisional, unconfirmed by client. Treat as a placeholder, expect a refresh request once they see it in context.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Fonts</h3>
+          <div class="data-row">
+            <span class="data-label">Heading</span>
+            <span class="data-value">Not yet discussed</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Body</span>
+            <span class="data-value">Not yet discussed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Color Palette (pulled from logo, unconfirmed)</h3>
+        <div class="data-row">
+          <span class="data-label">Yellow</span>
+          <span class="data-value"><span class="swatch" style="background:#ffb925;"></span>#ffb925</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Orange</span>
+          <span class="data-value"><span class="swatch" style="background:#f39f1b;"></span>#f39f1b</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Purple</span>
+          <span class="data-value"><span class="swatch" style="background:#58115d;"></span>#58115d</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Black</span>
+          <span class="data-value"><span class="swatch" style="background:#010101;"></span>#010101</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Blue</span>
+          <span class="data-value"><span class="swatch" style="background:#3da2d0;"></span>#3da2d0</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Green</span>
+          <span class="data-value"><span class="swatch" style="background:#6b9124;"></span>#6b9124</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Blue-Gray</span>
+          <span class="data-value"><span class="swatch" style="background:#5d869c;"></span>#5d869c</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">🎨</span>
+        <div class="callout-body">
+          <strong>Seven colors, no primary/accent/background split yet</strong>
+          <span>These are every hue in the logo artwork, not a chosen web palette. Seven colors is too many for a usable site. Before the wireframe or design brief stage, narrow this to a working primary, accent, and background (or confirm with Tabby which of these she actually wants carried onto the site).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT SUMMARY -->
+    <section id="project">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Project Summary</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Pain Points / Why They're Building This</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">🔴</span> No central place for residents to find partner agencies, resources, and support. People currently bounce between orgs piecing it together themselves.</li>
+            <li><span class="check-icon">🔴</span> No website exists at all today, from-scratch build.</li>
+            <li><span class="check-icon">🔴</span> No paid staff. Whatever gets built has to be manageable by a volunteer or staff member after Jordan hands it off.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What Success Looks Like</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✅</span> A welcoming, mobile-friendly hub listing all participating partner agencies with descriptions and contact info.</li>
+            <li><span class="check-icon">✅</span> Visitors can donate directly to any partner org's existing donation page in one click, no extra navigation friction.</li>
+            <li><span class="check-icon">✅</span> A separate path to "learn more" about each partner org on their own site.</li>
+            <li><span class="check-icon">✅</span> Directory structured so more partner agencies can be added later without a rebuild.</li>
+            <li><span class="check-icon">✅</span> Management transitions to a Partnering Together staff member or volunteer within 6 months of launch.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🚫</span>
+        <div class="callout-body">
+          <strong>Explicitly not in scope</strong>
+          <span>A unified, multi-org donation platform that splits and receipts gifts across separate 501(c)(3)s. Tabby's 11/10 email closed this out in favor of simple outbound links, she wants direct access to each org's own donation page, not a payments integration Partnering Together would have to stand up and maintain.</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-body">
+          <strong>Open questions, see "Needed from Client"</strong>
+          <span>Legal name to use on the proposal, Tabby's approval authority, whether other vendors are quoting this, the actual donate/learn-more URLs for each partner org, and the full list for the new Community Resources page are all still unanswered.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIALS -->
+    <section id="financials">
+      <div class="section-header">
+        <div class="section-icon">💰</div>
+        <h2>Financials</h2>
+      </div>
+
+      <div class="card">
+        <h3>Pricing Status</h3>
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Notes</th>
+              <th class="amount">Figure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pending-row">
+              <td>⏳ Quote, Not Sent</td>
+              <td>Tabby needs it in hand for the board meeting Fri 11/13, about a week turnaround from her prior Fri 11/7 meeting</td>
+              <td class="amount">TBD</td>
+            </tr>
+            <tr>
+              <td>Internal Ballpark</td>
+              <td>Working figure only, not shared with the client. Full build, 6-entry directory, outbound donate/learn-more links, testing/launch, 6 months support and CMS training. The donation-scope simplification (no payment platform) likely pushes toward the lower-to-middle end of this range.</td>
+              <td class="amount">$5,500 to $8,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Conservative nonprofit budget mindset, real capacity in the bank</strong>
+          <span>Tabby flagged "conservative budget" directly, but the org's financials show $100K to $500K in assets and income, mostly one founding gift. She never gave a number when asked. Price the full scope she described rather than guessing at a stripped-down version.</span>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🏦</span>
+        <div class="callout-body">
+          <strong>Ongoing costs, not yet discussed</strong>
+          <span>Hosting (Vercel, per standard stack) and any recurring costs haven't been raised with Tabby yet. Fold into the formal proposal once pricing is locked.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT JOURNEY -->
+    <section id="history">
+      <div class="section-header">
+        <div class="section-icon">🗓️</div>
+        <h2>Client Journey</h2>
+      </div>
+
+      <div class="callout yellow">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <strong>Fast-moving thread, under a week from cold inbound to quote deadline</strong>
+          <span>Tabby came in with a detailed, well-scoped submission and has replied same-day or next-day at every step since. The pace is coming from her end: a board meeting she scheduled before reaching out, and another one now driving the quote deadline.</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Nov 9 · 1:34 PM</div>
+          <div class="timeline-title">Contact Form Submission</div>
+          <div class="timeline-desc">Detailed, structured submission covering planning/IA, core site build, partner agency info, content/photography, a dedicated donation page, testing/launch, and 6 months of support and training. Reads like a formal RFP.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Mon, Nov 9 · 3:28 PM</div>
+          <div class="timeline-title">Jordan's First Reply</div>
+          <div class="timeline-desc">Acknowledged the mission, asked about donation platform preference, partner agency count, and launch timeline or board deadline.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Nov 10 · 11:51 AM</div>
+          <div class="timeline-title">Tabby's First Response</div>
+          <div class="timeline-desc">No donation platform in mind yet. Confirmed three 5013c-type partners initially (One Big Tent, Partnering Together, Salvation Army) with plans to add more. Board meeting is Friday, wants quotes in hand, about a week turnaround from her prior Friday meeting.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Nov 10 · 12:20 PM</div>
+          <div class="timeline-title">Jordan's Follow-Up</div>
+          <div class="timeline-desc">Confirmed Friday works. Sharpened the donation question (link-out vs. a platform that splits/receipts gifts across separate nonprofits), asked partner count, domain name, and a ballpark budget to scope against instead of building multiple pricing tiers.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Nov 10 · 1:12 PM</div>
+          <div class="timeline-title">Tabby's Second Response</div>
+          <div class="timeline-desc">Donation scope resolved: direct outbound links to each partner's donation page, plus a separate "learn more" link to each partner's own site, no platform integration. Domain name confirmed as "Partnering Together Portage County." Full partner list confirmed at 6: One Big Tent, Salvation Army, Stevens Point Community Outreach (SPCO), Lunch Partners, Noble Clinic, Catholic Charities. No budget number given, redirected back to the full scope from the original submission.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Nov 10 · 3:09 PM</div>
+          <div class="timeline-title">Jordan's Follow-Up Question</div>
+          <div class="timeline-desc">Asked whether the partner directory should be one page per organization or a single directory page with a card/section for each partner. Offered to price both versions.</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-date">Tue, Nov 10 · 3:25 PM</div>
+          <div class="timeline-title">Tabby's Answer, New Scope Surfaces</div>
+          <div class="timeline-desc">Confirmed one directory page for organizations within the PTPC Center and collaborative partners. Also asked for a separate page for broader community resources that aren't part of Partnering Together itself, outbound links plus explanation of what each provides, naming "Partners HP," CAP Services, and Operation Bootstrap as examples. This is new scope beyond the original submission.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-date">Current</div>
+          <div class="timeline-title">Building the Quote</div>
+          <div class="timeline-desc">Scoping summary compiled from the thread and independent org research, now including the new Community Resources page. Next step is turning it into a priced proposal ahead of Friday.</div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-date">Fri, Nov 13</div>
+          <div class="timeline-title">Board Meeting</div>
+          <div class="timeline-desc">Tabby presents quotes to the board. Everything past this point in the document is contingent on the outcome.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE & PAGES -->
+    <section id="scope">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2>Scope & Pages</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">🗺️</span>
+        <div class="callout-body">
+          <strong>From-scratch build, no existing site or content to migrate</strong>
+          <span>Everything below is new. No domain registered yet either.</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Homepage</h4>
+          <ul>
+            <li>Mission overview and welcome</li>
+            <li>CTA into the partner directory and donation links</li>
+            <li>Social media and community resource links</li>
+          </ul>
+        </div>
+        <div class="page-card">
+          <span class="page-badge badge-static">Static</span>
+          <h4>Contact</h4>
+          <ul>
+            <li>Contact form, routing destination still to confirm</li>
+            <li>General org contact info</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card">
+          <span class="page-badge badge-cms">CMS</span>
+          <h4>Partner Agency Directory</h4>
+          <ul>
+            <li>Single directory page confirmed (not separate pages per partner), Tabby's preference as of 11/10 3:25 PM</li>
+            <li>Covers orgs within the PTPC Center and collaborative partners, 6 entries at launch: One Big Tent, Salvation Army, SPCO, Lunch Partners, Noble Clinic, Catholic Charities</li>
+            <li>Each profile: description, service info, contact details</li>
+            <li>Outbound donate link per partner, where one exists</li>
+            <li>Separate "learn more" link to each partner's own site</li>
+            <li>SPCO runs the actual shelter on Church St, likely warrants a fuller profile than the others</li>
+            <li>Lunch Partners isn't a legal org, just volunteers, probably a short description with no links</li>
+            <li>Noble Clinic is referral-only, no physical presence at Partnering Together's location, worth a one-line clarifying note</li>
+            <li>Built extensible, Tabby's explicit about wanting to add partners over time</li>
+          </ul>
+        </div>
+        <div class="page-card" style="border-top-color: var(--warning);">
+          <span class="page-badge badge-new">New, 11/10</span>
+          <h4>Community Resources</h4>
+          <ul>
+            <li>Separate page from the Partner Agency Directory, for external orgs not part of Partnering Together itself</li>
+            <li>Outbound link per entry plus a short explanation of what the org provides</li>
+            <li>Named so far: "Partners HP" (name unconfirmed, likely shorthand or a typo, needs clarification), CAP Services, Operation Bootstrap</li>
+            <li>Full list and descriptions not yet in hand, see "Needed from Client"</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="page-card" style="border-top-color: var(--warning);">
+          <span class="page-badge badge-new">Scope Reduced</span>
+          <h4>Donation Links</h4>
+          <ul>
+            <li>Originally requested as a dedicated donation page with platform integration</li>
+            <li>Now confirmed as simple outbound links folded into the partner directory, no payment processing built or maintained by this site</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px; opacity:.75;">
+        <h3>Not In Scope</h3>
+        <div class="data-row">
+          <span class="data-label">Unified Donations</span>
+          <span class="data-value">A single platform that splits and receipts gifts across legally separate 501(c)(3)s, ruled out directly by Tabby on 11/10</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Content Migration</span>
+          <span class="data-value">No existing site, nothing to migrate</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEEDED FROM CLIENT -->
+    <section id="content">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Needed from Client</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>None of these block the quote, all of them block build</strong>
+          <span>The board meeting decides budget first. These can resolve after.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li>
+            <span class="check-icon">⚖️</span>
+            <div>
+              <strong>Legal Name for the Proposal</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Partnering Together Portage County (DBA) vs. Partnering Together Central Wisconsin Inc. (EIN-registered name)</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🖊️</span>
+            <div>
+              <strong>Tabby's Approval Authority</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Whether she can sign off on a price herself or needs board sign-off, likely answered one way or another after Friday</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📄</span>
+            <div>
+              <strong>Other Vendors Quoting This</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Never directly asked. The RFP-style formatting of the original submission makes this worth confirming outright.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔗</span>
+            <div>
+              <strong>Donate Page URLs Per Partner</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Which of the 6 partners have their own donation page to link to, and the actual URLs</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔗</span>
+            <div>
+              <strong>"Learn More" URLs Per Partner</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Each partner org's own website to link out to</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">📮</span>
+            <div>
+              <strong>Contact Form Routing Destination</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Where form submissions should go, no paid staff means this matters more than usual</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🔗</span>
+            <div>
+              <strong>Community Resources List</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">Full list of external orgs for the new Community Resources page, with URLs and a short description for each. Confirm what "Partners HP" refers to, plus CAP Services, Operation Bootstrap, and any others.</span>
+            </div>
+            <span class="check-status"><span class="pill pill-orange">Pending</span></span>
+          </li>
+          <li>
+            <span class="check-icon">🏦</span>
+            <div>
+              <strong>Board-Approved Budget</strong><br>
+              <span style="font-size:12px;color:var(--ink-3);">The Fri 11/13 meeting outcome, everything else is contingent on it</span>
+            </div>
+            <span class="check-status"><span class="pill pill-red">Awaiting 11/13</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNICAL -->
+    <section id="technical">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <h2>Technical Specifications</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Planned Stack</h3>
+          <div class="data-row">
+            <span class="data-label">Framework</span>
+            <span class="data-value">Next.js, App Router</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Frontend</span>
+            <span class="data-value">React, Tailwind CSS, Framer Motion</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">CMS</span>
+            <span class="data-value">Custom-built, so a volunteer or designated staff member can add/edit partner profiles after the 6-month handoff without Jordan's involvement</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Hosting</span>
+            <span class="data-value">Vercel (standard), recurring cost not yet raised with client</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Domain & Integrations</h3>
+          <div class="data-row">
+            <span class="data-label">Domain</span>
+            <span class="data-value">New registration based on "Partnering Together Portage County." A quick check found nothing currently resolving at that name, but that's not a definitive registrar check, confirm before quoting domain setup as scope.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Third-Party</span>
+            <span class="data-value">None required. All donation functionality is outbound links to partner orgs' existing pages, no payment processor to integrate.</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Migration</span>
+            <span class="data-value">None, no existing site</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT TIMELINE -->
+    <section id="timeline">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <h2>Project Timeline</h2>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⏳</span>
+        <div class="callout-body">
+          <strong>No build timeline yet, everything downstream of the board decision</strong>
+          <span>Phases below are sequenced but not dated until Fri 11/13 passes.</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="weeks">Now, pre-board</div>
+          <h4>Quote Prep</h4>
+          <ul>
+            <li>Org independently verified (EIN, 501(c)(3) status, financial position)</li>
+            <li>Donation scope clarified down to outbound links, no platform build</li>
+            <li>Scoping summary compiled, quote being built against full original scope</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="weeks">Upon board approval</div>
+          <h4>Lock Scope & Price</h4>
+          <ul>
+            <li>Resolve legal name, donate/learn-more URLs, form routing</li>
+            <li>Formal proposal and contract signed</li>
+            <li>Deposit collected before build starts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="weeks">Build</div>
+          <h4>Core Build</h4>
+          <ul>
+            <li>Homepage, contact page, partner agency directory (6 entries, extensible)</li>
+            <li>Domain registration and setup</li>
+            <li>Content population: client supplies photos/copy, Jordan formats and uploads</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="weeks">Launch</div>
+          <h4>Testing, Launch, Handoff</h4>
+          <ul>
+            <li>Mobile and desktop testing, contact form and link testing</li>
+            <li>Site goes live</li>
+            <li>6 months of support and CMS training begins, goal of transitioning management to a staff member or volunteer by the end of that window</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE UPSELLS -->
+    <section id="upsells">
+      <div class="section-header">
+        <div class="section-icon">📈</div>
+        <h2>Future Upsells</h2>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>None discussed with Tabby yet, pitch after launch once the directory has real usage</strong>
+          <span>Each ties to something the client already raised, not a generic add-on.</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="upsell-card">
+          <h4>🧩 Additional Partner Portals</h4>
+          <div class="price">TBD</div>
+          <p>Tabby explicitly wants to add more donation portals and partner agencies as the hub grows. The directory is built extensible for this, worth a light retainer or per-partner fee once the pattern repeats.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>💳 Unified Donation Platform</h4>
+          <div class="price">TBD</div>
+          <p>If Partnering Together ever wants one donor flow that splits and receipts gifts across all the legally separate partner orgs automatically, instead of outbound links, that's a much bigger build. Only worth raising if they outgrow the simple-links approach.</p>
+        </div>
+        <div class="upsell-card">
+          <h4>📅 Volunteer/Events Calendar</h4>
+          <div class="price">TBD</div>
+          <p>Lunch Partners is volunteer-driven. If Partnering Together wants to coordinate volunteer shifts or community events through the site later, a calendar/signup module is a natural add-on.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Notes & Observations</h2>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Confirm Before Formalizing: Who's Actually Authorizing This</div>
+        <p>Tabby signs as Executive Director, but she isn't one of the four officers on file with the IRS (President Gregg Hansel, VP Jerry Gargulak, Secretary Leigh Ann Trzinski, Treasurer Greg Bruckbauer). She's clearly the one driving this, but don't assume she can sign a contract solo until that's confirmed, likely resolved one way or another after Friday's board meeting.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">RFP-Style Formality</div>
+        <p>The original submission had structured headers and consistent phrasing throughout, unusual for a cold inbound lead. Never directly asked whether other vendors are being asked to quote this. Worth asking outright, it changes how competitively this should be priced and how much runway there is to build rapport before the decision.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Fast Communicator, Detailed Answers</div>
+        <p>Tabby replies same-day or next-day at every step and gives thorough, specific answers when asked direct questions (partner list, donation model, domain name all came back clearly once asked). The Friday deadline is real and self-imposed by her own board calendar, not artificial pressure.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">Budget Framing Doesn't Match Financial Capacity</div>
+        <p>She described the budget as conservative, but org financials show $100K to $500K in assets and income, mostly from one founding gift. She redirected back to the full original scope rather than naming a number. Price the whole thing rather than assuming she wants something stripped down.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">No Paid Staff, Ever</div>
+        <p>All-volunteer board, no paid staff anywhere in the org. The 6-month training and handoff period matters more here than on a typical small-business build, whoever ends up managing the CMS day-to-day is a volunteer, not a hired employee with ongoing accountability.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="note-date">New Scope Surfaced Two Days Before the Board Meeting (11/10, 3:25 PM)</div>
+        <p>Tabby's answer to the single-page-vs-separate-pages question added a second page beyond the original submission: a Community Resources page linking out to external orgs not part of Partnering Together itself. She named "Partners HP" as one of them, unconfirmed whether that's the exact org name or shorthand, worth a quick clarifying question. Small addition in build terms (links plus short write-ups), but it's new scope landing this close to Friday, worth pricing explicitly rather than folding in silently.</p>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Mobile nav FAB
+  const sidebar = document.getElementById('sidebar');
+  const fab = document.getElementById('mobileFab');
+  const overlay = document.getElementById('mobileOverlay');
+
+  function openNav() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('open');
+    fab.textContent = '✕';
+  }
+
+  function closeNav() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+    fab.textContent = '☰';
+  }
+
+  fab.addEventListener('click', () => {
+    if (sidebar.classList.contains('mobile-open')) closeNav();
+    else openNav();
+  });
+
+  overlay.addEventListener('click', closeNav);
+
+  // Nav link tap on mobile: close, wait for animation, then scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 680 && sidebar.classList.contains('mobile-open')) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeNav();
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
