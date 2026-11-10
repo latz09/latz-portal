@@ -1,29 +1,877 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0D1B2A;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Partnering Together Portage County — Site Wireframes | Latz Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#16233F;
+    --ink-soft:#22355C;
+    --paper:#F5F6F8;
+    --surface:#FFFFFF;
+    --border:#E1E5EC;
+    --border-soft:#EBEEF3;
+    --border-strong:#C7CEDA;
+    --text:#1B2333;
+    --text-muted:#5B6472;
+    --text-faint:#8992A0;
+
+    --accent:#F39F1B;
+    --accent-deep:#C2790D;
+    --accent-soft:#FDF1DE;
+
+    --gold:#B8863B;
+    --gold-soft:#F6EEDD;
+
+    --green:#16A34A;
+    --green-soft:#F0FDF4;
+
+    --radius-s:6px; --radius-m:10px; --radius-l:16px;
+    --shadow-card:0 1px 2px rgba(20,32,56,.05), 0 8px 24px rgba(20,32,56,.06);
+    --sidebar-w:288px;
+
+    --font-serif:'Source Serif 4', serif;
+    --font-sans:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-sans);
+    background:var(--paper);
+    color:var(--text);
+    font-size:15.5px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:400;width:0%;}
+
+  /* ===== BACKDROP ===== */
+  .backdrop{display:none;}
+  @media(max-width:1023px){
+    .backdrop{display:block;position:fixed;inset:0;background:rgba(10,14,26,.55);z-index:150;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+    .backdrop.is-visible{opacity:1;pointer-events:auto;}
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar{
+    position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+    background:var(--ink);display:flex;flex-direction:column;
+    z-index:200;overflow-y:auto;
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+  }
+  .sidebar-eyebrow{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);padding:28px 24px 0;
+  }
+  .sidebar-id{display:flex;align-items:center;gap:12px;padding:14px 24px 20px;border-bottom:1px solid rgba(255,255,255,.1);}
+  .sidebar-mark{
+    width:42px;height:42px;border:1.5px solid var(--gold);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    font-family:var(--font-mono);font-size:13px;color:var(--gold);
+  }
+  .sidebar-id-text .name{font-family:var(--font-serif);font-size:16.5px;font-weight:600;color:#fff;line-height:1.25;}
+  .sidebar-id-text .sub{font-size:11.5px;color:rgba(255,255,255,.4);margin-top:4px;}
+
+  .sidebar-nav{padding:10px 0 4px;flex:1;}
+  .nav-group-label{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(255,255,255,.3);padding:18px 24px 6px;
+  }
+  .nav-link{
+    display:flex;align-items:center;gap:10px;padding:8px 24px;
+    color:rgba(255,255,255,.62);text-decoration:none;font-size:13.5px;
+    border-left:3px solid transparent;transition:all .12s;
+  }
+  .nav-link:hover{color:#fff;background:rgba(255,255,255,.04);}
+  .nav-link.active{color:#fff;background:rgba(243,159,27,.14);border-left-color:var(--accent);font-weight:600;}
+  .nav-num{font-family:var(--font-mono);font-size:12px;color:var(--accent);width:16px;flex-shrink:0;}
+
+  .sidebar-meta{
+    padding:16px 24px;border-top:1px solid rgba(255,255,255,.1);
+    font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,.45);line-height:2;
+  }
+  .sidebar-meta b{color:rgba(255,255,255,.85);font-weight:500;}
+
+  .sidebar-footer{
+    padding:18px 24px 26px;font-family:var(--font-mono);font-size:11px;
+    color:rgba(255,255,255,.35);line-height:1.8;
+  }
+  .sidebar-footer strong{color:var(--gold);font-weight:600;}
+
+  /* ===== MAIN ===== */
+  .main{margin-left:var(--sidebar-w);min-height:100vh;}
+
+  /* ===== DOCBAR (desktop) ===== */
+  .docbar{
+    display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:100;
+    background:rgba(245,246,248,.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);padding:10px 48px;
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--text-faint);
+  }
+  .docbar .crumb-current{color:var(--ink);font-weight:600;}
+  .docbar .sep{opacity:.5;}
+
+  /* ===== TOPBAR (mobile) ===== */
+  .topbar{display:none;}
+
+  /* ===== CONTENT ===== */
+  .content{padding:40px 48px 120px;max-width:1120px;}
+
+  section{margin:0 0 64px;scroll-margin-top:90px;}
+
+  .section-head{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);
+  }
+  .section-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;
+    font-family:var(--font-mono);font-size:13px;flex-shrink:0;
+  }
+  .section-title{font-family:var(--font-serif);font-size:21px;font-weight:600;color:var(--ink);}
+  .section-slug{font-family:var(--font-mono);font-size:12px;color:var(--text-faint);margin-left:auto;}
+
+  /* ===== COVER ===== */
+  .cover{
+    position:relative;border:1px solid var(--border);border-radius:var(--radius-m);
+    background:var(--surface);padding:48px 56px;margin-bottom:24px;box-shadow:var(--shadow-card);
+  }
+  .cover-bracket{position:absolute;width:18px;height:18px;border:2px solid var(--gold);}
+  .cover-bracket.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .cover-bracket.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
+  .cover-bracket.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
+  .cover-bracket.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+  .cover-head{padding-right:190px;}
+  .cover-eyebrow-pill{
+    display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent-deep);background:var(--accent-soft);border:1px solid var(--accent);
+    border-radius:20px;padding:4px 14px;margin-bottom:20px;
+  }
+  .cover h1{font-family:var(--font-serif);font-size:40px;font-weight:700;color:var(--ink);line-height:1.14;letter-spacing:-.01em;margin-bottom:10px;}
+  .cover .tagline{font-size:16px;color:var(--text-muted);max-width:640px;}
+
+  .cover-rule{margin:26px 0;}
+  .cover-rule .r1{height:2px;background:var(--ink);}
+  .cover-rule .r2{height:1px;background:var(--gold);margin-top:3px;}
+
+  .cover-desc{font-size:14.5px;color:var(--text-muted);max-width:700px;line-height:1.75;margin-bottom:28px;}
+
+  .doc-control{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:var(--radius-s);overflow:hidden;}
+  .dc-cell{padding:14px 18px;border-right:1px solid var(--border-soft);}
+  .dc-cell:last-child{border-right:none;}
+  .dc-label{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:5px;}
+  .dc-value{font-size:14px;font-weight:600;color:var(--ink);}
+  .dc-value.ok{color:var(--green);}
+  .dc-value.warn{color:var(--gold);}
+
+  /* brand mark stamp */
+  .stamp{
+    position:absolute;top:1.8rem;right:2.2rem;width:150px;
+    padding:16px 10px 10px;border:1px solid var(--border);border-radius:8px;
+    background:var(--surface);transform:rotate(-4deg);text-align:center;box-shadow:var(--shadow-card);
+  }
+  .stamp .mark-word{font-family:var(--font-serif);font-weight:600;color:var(--ink);opacity:.22;line-height:1.3;font-size:12.5px;}
+  .stamp__caption{font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);margin-top:9px;}
+
+  /* illustrative note */
+  .illustrative-note{
+    display:flex;gap:12px;align-items:flex-start;background:var(--accent-soft);
+    border:1px solid var(--accent);border-radius:var(--radius-s);padding:16px 20px;
+    margin-bottom:48px;font-size:13.5px;color:var(--ink);line-height:1.65;
+  }
+  .illustrative-note .emoji{font-size:18px;flex-shrink:0;}
+
+  /* ===== SITE MAP ===== */
+  .sitemap{border:1px solid var(--border);border-radius:var(--radius-m);background:var(--surface);padding:28px;box-shadow:var(--shadow-card);}
+  .sm-root{display:flex;justify-content:center;}
+  .sm-node{border:1px solid var(--border);border-radius:8px;padding:12px 20px;background:var(--surface);text-align:center;min-width:150px;}
+  .sm-node.home{background:var(--ink);border-color:var(--ink);cursor:pointer;user-select:none;}
+  .sm-node.home .sm-name{color:#fff;}
+  .sm-node.home .sm-slug{color:rgba(255,255,255,.5);}
+  .sm-toggle{font-size:10px;color:var(--gold);margin-left:4px;}
+  .sm-name{font-family:var(--font-serif);font-weight:700;font-size:15px;color:var(--ink);}
+  .sm-slug{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:2px;}
+  .sm-connector{text-align:center;color:var(--text-faint);margin:4px 0;font-size:18px;}
+  .sm-children{
+    display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:10px;
+    max-height:400px;opacity:1;overflow:hidden;transition:max-height .3s ease, opacity .25s ease, margin .3s ease;
+  }
+  .sm-children.collapsed{max-height:0;opacity:0;margin-top:0;}
+  .sitemap-note{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-soft);font-size:13.5px;color:var(--text-muted);line-height:1.75;}
+  .sitemap-note strong{color:var(--ink);font-weight:600;}
+
+  /* ===== PAGE EMBED CARD ===== */
+  .wf-embed{border:1px solid var(--border);border-radius:var(--radius-m);overflow:hidden;background:var(--surface);box-shadow:var(--shadow-card);}
+  .wf-banner{background:var(--ink);color:rgba(255,255,255,.75);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.03em;text-align:center;padding:7px;}
+  .wf-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 26px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .wf-logo{font-family:var(--font-serif);font-weight:700;font-size:17px;color:var(--ink);}
+  .wf-nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .wf-nav-link{font-size:12.5px;color:var(--text-muted);font-weight:500;}
+  .wf-nav-link.active{color:var(--ink);font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:2px;}
+  .wf-cta-pill{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--ink);border:1.5px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:5px 12px;white-space:nowrap;}
+
+  .wf-body{padding:26px;}
+
+  .wf-block{border:1px solid var(--border-soft);border-radius:var(--radius-s);background:var(--paper);padding:20px 22px;margin-bottom:18px;}
+  .wf-block:last-child{margin-bottom:0;}
+  .wf-block-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+  .wf-block-title{font-weight:700;font-size:15.5px;color:var(--ink);}
+
+  .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;border:1px solid;border-radius:4px;padding:3px 9px;white-space:nowrap;}
+  .tag--cms{color:var(--accent-deep);border-color:var(--accent);background:var(--accent-soft);}
+  .tag--form{color:var(--gold);border-color:var(--gold);background:var(--gold-soft);}
+  .tag--ext{color:var(--text-muted);border-color:var(--border-strong);background:var(--border-soft);}
+
+  .annotation{
+    font-size:13px;color:var(--text-muted);background:rgba(22,35,63,.035);
+    border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 16px;
+    margin-top:12px;line-height:1.65;
+  }
+  .annotation strong{color:var(--accent-deep);font-weight:600;}
+
+  .img-ph{
+    border:2px dashed var(--border);border-radius:var(--radius-s);background:rgba(22,35,63,.025);
+    min-height:108px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:6px;padding:18px;text-align:center;
+  }
+  .img-ph .ico{font-size:21px;}
+  .img-ph .lbl{font-family:var(--font-mono);font-size:11.5px;color:var(--text-faint);line-height:1.5;}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .form-field{background:var(--surface);border:1.5px dashed var(--border-strong);border-radius:6px;padding:10px 13px;font-family:var(--font-mono);font-size:12.5px;color:var(--text-faint);}
+  .form-field.full{grid-column:1/-1;}
+
+  .list-row{display:flex;align-items:center;gap:14px;border:1px solid var(--border-soft);border-radius:6px;padding:12px 16px;background:var(--surface);margin-bottom:9px;}
+  .list-row:last-child{margin-bottom:0;}
+  .list-badge{font-family:var(--font-mono);font-size:10.5px;color:#fff;background:var(--ink);border-radius:5px;padding:3px 9px;flex-shrink:0;}
+  .list-badge.accent{background:var(--accent);}
+  .list-main{flex:1;}
+  .list-main .t{font-weight:700;font-size:14px;color:var(--ink);}
+  .list-main .d{font-size:12px;color:var(--text-muted);margin-top:1px;line-height:1.5;}
+  .list-act{font-family:var(--font-mono);font-size:11px;color:var(--accent-deep);flex-shrink:0;white-space:nowrap;}
+
+  /* ===== PARTNER CARD ===== */
+  .partner-card{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--border-soft);border-radius:var(--radius-s);background:var(--surface);padding:20px 22px;margin-bottom:14px;}
+  .partner-card:last-child{margin-bottom:0;}
+  .partner-logo-ph{
+    width:72px;height:72px;flex-shrink:0;border:2px dashed var(--border);border-radius:8px;
+    background:rgba(22,35,63,.025);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  }
+  .partner-logo-ph .ico{font-size:18px;color:var(--text-faint);}
+  .partner-logo-ph .lbl{font-family:var(--font-mono);font-size:8px;letter-spacing:.03em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.3;}
+  .partner-content{flex:1;min-width:0;}
+  .partner-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+  .partner-card h4{font-family:var(--font-serif);font-weight:700;font-size:17px;color:var(--ink);}
+  .partner-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);}
+  .partner-card p{font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:9px;}
+  .partner-card p:last-of-type{margin-bottom:14px;}
+  .partner-cta{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn-sm{font-size:12.5px;font-weight:700;padding:7px 17px;border-radius:6px;display:inline-block;text-align:center;}
+  .btn-sm.solid{background:var(--accent);color:#fff;}
+  .btn-sm.outline{background:transparent;border:1.5px solid var(--ink);color:var(--ink);}
+  .partner-no-link{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);}
+
+  .pill-btn{font-size:13.5px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:8px 18px;display:inline-block;margin-right:8px;margin-top:4px;}
+  .pill-btn.ghost-ink{background:transparent;border:1.5px solid var(--ink);color:var(--ink);}
+
+  .cta-bar{background:var(--ink);border-radius:var(--radius-s);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .cta-bar .cta-txt{font-family:var(--font-serif);font-weight:600;font-size:16.5px;color:#fff;}
+  .cta-bar .pill-btn{margin:0;}
+
+  .wf-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:20px;padding-top:16px;}
+  .wf-footer .fnav{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);}
+
+  /* ===== DECISION LIST ===== */
+  .decision-list{border:1px solid var(--border);border-radius:var(--radius-m);background:var(--surface);overflow:hidden;box-shadow:var(--shadow-card);}
+  .decision-row{display:flex;align-items:flex-start;gap:14px;padding:16px 26px;border-bottom:1px solid var(--border-soft);}
+  .decision-row:last-child{border-bottom:none;}
+  .decision-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px;}
+  .decision-icon.done{background:var(--green-soft);color:var(--green);border:1.5px solid var(--green);}
+  .decision-icon.open{background:var(--gold-soft);color:var(--gold);border:1.5px solid var(--gold);}
+  .decision-row strong{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .decision-row span{font-size:13px;color:var(--text-muted);line-height:1.6;}
+
+  /* ===== BACK TO TOP ===== */
+  .back-to-top{
+    position:fixed;bottom:26px;right:26px;width:46px;height:46px;border-radius:50%;
+    background:var(--ink);color:#fff;border:none;display:flex;align-items:center;justify-content:center;
+    font-size:18px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;z-index:250;box-shadow:var(--shadow-card);
+  }
+  .back-to-top.visible{opacity:1;pointer-events:auto;}
+
+  /* ===== RESPONSIVE — TABLET / MOBILE NAV SWITCH ===== */
+  @media(max-width:1023px){
+    .sidebar{transform:translateX(-100%);}
+    .sidebar.is-open{transform:translateX(0);}
+    .main{margin-left:0;}
+    .docbar{display:none;}
+    .topbar{
+      display:flex;position:sticky;top:0;z-index:120;background:var(--ink);
+      align-items:center;gap:14px;padding:14px 18px;color:#fff;
     }
-    p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-  </style>
+    .topbar button{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:0;}
+    .topbar .doc-title{font-family:var(--font-serif);font-size:13.5px;font-weight:600;}
+    .topbar .crumb{font-family:var(--font-mono);font-size:9.5px;color:rgba(255,255,255,.5);margin-left:auto;text-transform:uppercase;letter-spacing:.05em;text-align:right;}
+    .content{padding:36px 28px 100px;}
+    .cover{padding:36px 30px;}
+    .cover-head{padding-right:130px;}
+    .cover h1{font-size:32px;}
+    .stamp{width:100px;top:1.1rem;right:1.1rem;padding:10px 8px 7px;}
+    .stamp .mark-word{font-size:9.5px;}
+    .stamp__caption{font-size:8px;}
+  }
+
+  @media(max-width:680px){
+    .content{padding:28px 16px 90px;}
+    .cover{padding:28px 18px;}
+    .cover-head{padding-right:0;padding-top:70px;}
+    .cover h1{font-size:26px;}
+    .doc-control{grid-template-columns:1fr 1fr;}
+    .dc-cell:nth-child(2){border-right:none;}
+    .wf-nav-links{display:none;}
+    .wf-body{padding:18px;}
+    .form-grid{grid-template-columns:1fr;}
+    .cta-bar,.wf-footer{flex-direction:column;align-items:flex-start;}
+    .section-slug{margin-left:0;}
+    .sm-children{flex-direction:column;align-items:center;}
+    .partner-card{flex-direction:column;}
+    .partner-logo-ph{width:56px;height:56px;}
+  }
+
+  @media(max-width:480px){
+    .stamp{width:64px;top:.6rem;right:.6rem;padding:6px 5px;}
+    .stamp__caption{display:none;}
+    .stamp .mark-word{font-size:7.5px;}
+    .cover-head{padding-top:56px;}
+    .doc-control{grid-template-columns:1fr;}
+    .dc-cell{border-right:none;border-bottom:1px solid var(--border-soft);}
+    .dc-cell:last-child{border-bottom:none;}
+  }
+</style>
 </head>
 <body>
-  <p>Coming Soon</p>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="backdrop" id="backdrop"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-eyebrow">For Tabby Prutz · Site Wireframes</div>
+  <div class="sidebar-id">
+    <div class="sidebar-mark">PT</div>
+    <div class="sidebar-id-text">
+      <div class="name">Partnering Together Portage County</div>
+      <div class="sub">Website Build — Wireframes</div>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <a href="#cover" class="nav-link active">Overview</a>
+
+    <div class="nav-group-label">Overview</div>
+    <a href="#sitemap" class="nav-link"><span class="nav-num">0</span>Site Map</a>
+
+    <div class="nav-group-label">Pages</div>
+    <a href="#home" class="nav-link"><span class="nav-num">1</span>Home</a>
+    <a href="#partners" class="nav-link"><span class="nav-num">2</span>Partner Directory</a>
+    <a href="#resources" class="nav-link"><span class="nav-num">3</span>Community Resources</a>
+    <a href="#contact" class="nav-link"><span class="nav-num">4</span>Contact</a>
+
+    <div class="nav-group-label">Decisions</div>
+    <a href="#confirmed" class="nav-link"><span class="nav-num">✓</span>Decided</a>
+    <a href="#discussion" class="nav-link"><span class="nav-num">?</span>To Finalize</a>
+  </div>
+
+  <div class="sidebar-meta">
+    <div>Pages drafted: <b>4</b></div>
+    <div>Status: <b>Client Ready</b></div>
+    <div>Contact: <b>Tabby Prutz</b></div>
+  </div>
+
+  <div class="sidebar-footer">
+    jordan@latzwebdesign.com<br />
+    <strong>No fluff. Just results.</strong>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="docbar" id="docbar">
+    <span>Site Wireframes</span><span class="sep">/</span><span class="crumb-current" id="docbarCrumb">Overview</span>
+  </div>
+  <div class="topbar" id="topbar">
+    <button id="hamburger" aria-label="Toggle navigation">☰</button>
+    <span class="doc-title">PTPC Wireframes</span>
+    <span class="crumb" id="topbarCrumb">Overview</span>
+  </div>
+
+  <div class="content">
+
+    <!-- COVER -->
+    <section id="cover">
+      <div class="cover">
+        <span class="cover-bracket tl"></span><span class="cover-bracket tr"></span>
+        <span class="cover-bracket bl"></span><span class="cover-bracket br"></span>
+
+        <!-- NOTE: placeholder wordmark — swap in the prepared base64 Latz Web Design logo PNG (black version) used in the Proposal Generator's Brand Mark once available -->
+        <div class="stamp">
+          <div class="mark-word">LATZ<br />WEB<br />DESIGN</div>
+          <div class="stamp__caption">Site Wireframes</div>
+        </div>
+
+        <div class="cover-head">
+          <span class="cover-eyebrow-pill">Nonprofit Website Build · From Scratch</span>
+          <h1>Partnering Together Portage County</h1>
+          <p class="tagline">A community resource hub connecting Portage County families to local housing and support services.</p>
+        </div>
+
+        <div class="cover-rule"><div class="r1"></div><div class="r2"></div></div>
+
+        <p class="cover-desc">This wireframe covers the four core pages of your new site: a homepage that welcomes both families and donors, a single Partner Organization Directory for your six founding partners, a new Community Resources page for outside organizations, and a simple way for people to reach you. Donations route out to each partner's own page — nothing to build or maintain on your end.</p>
+
+        <div class="doc-control">
+          <div class="dc-cell"><div class="dc-label">Status</div><div class="dc-value ok">Client Ready</div></div>
+          <div class="dc-cell"><div class="dc-label">Pages</div><div class="dc-value">4</div></div>
+          <div class="dc-cell"><div class="dc-label">Contact</div><div class="dc-value">Tabby Prutz</div></div>
+          <div class="dc-cell"><div class="dc-label">Deposit</div><div class="dc-value warn">Pending</div></div>
+        </div>
+      </div>
+
+      <div class="illustrative-note">
+        <span class="emoji">✏️</span>
+        <span><strong>Please Note</strong> — These layouts are illustrative — they show what content lives on each page and how it behaves, not the final visual design. Colors and fonts here are a starting point, and we'll refine them together.</span>
+      </div>
+    </section>
+
+    <!-- SITE MAP -->
+    <section id="sitemap">
+      <div class="section-head"><span class="section-num">0</span><span class="section-title">Site Map</span></div>
+      <div class="sitemap">
+        <div class="sm-root">
+          <div class="sm-node home" id="smToggle">
+            <div class="sm-name">Home <span class="sm-toggle" id="smToggleIcon">−</span></div>
+            <div class="sm-slug">/</div>
+          </div>
+        </div>
+        <div class="sm-connector">↓</div>
+        <div class="sm-children" id="smChildren">
+          <div class="sm-node"><div class="sm-name">Partner Directory</div><div class="sm-slug">/partners</div></div>
+          <div class="sm-node"><div class="sm-name">Community Resources</div><div class="sm-slug">/community-resources</div></div>
+          <div class="sm-node"><div class="sm-name">Contact</div><div class="sm-slug">/contact</div></div>
+        </div>
+        <div class="sitemap-note">
+          A from-scratch build — there's no existing site to migrate and no domain registered yet. The working name is <strong>"Partnering Together Portage County"</strong>, pending an availability check. Four pages total, with the Partner Directory and Community Resources both built so you can add organizations over time without a rebuild.
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 — HOME -->
+    <section id="home">
+      <div class="section-head"><span class="section-num">1</span><span class="section-title">Home</span><span class="section-slug">/</span></div>
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Home · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">PTPC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link active">Home</span>
+            <span class="wf-nav-link">Partners</span>
+            <span class="wf-nav-link">Community Resources</span>
+            <span class="wf-nav-link">Contact</span>
+          </div>
+          <span class="wf-cta-pill">Donate →</span>
+        </div>
+        <div class="wf-body">
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Hero — Welcome</span><span class="tag tag--cms">CMS editable</span></div>
+            <div style="font-family:var(--font-serif);font-weight:700;font-size:23px;color:var(--ink);margin-bottom:10px;line-height:1.3;">Connecting Portage County families to the help they need.</div>
+            <div style="height:10px;width:75%;background:rgba(22,35,63,.08);border-radius:5px;margin-bottom:8px;"></div>
+            <div style="height:10px;width:55%;background:rgba(22,35,63,.08);border-radius:5px;margin-bottom:14px;"></div>
+            <span class="pill-btn">View Our Partners →</span>
+            <span class="pill-btn ghost-ink">Ways to Give →</span>
+            <div class="img-ph" style="margin-top:16px;"><span class="ico">📷</span><span class="lbl">Warm photo — community members, partner staff, or the PTPC Center</span></div>
+            <div class="annotation">Speaks to both audiences right away: families and individuals looking for help, and people who want to support the work. Two clear paths, right at the top.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Who We Are</span><span class="tag tag--cms">CMS editable</span></div>
+            <p style="font-size:14px;color:var(--text);line-height:1.7;">Partnering Together Portage County brings local partner organizations, volunteers, and donors together in one place for residents seeking housing and poverty-related support — so no one has to piece together help on their own.</p>
+            <div class="annotation">A plain-language welcome introducing what Partnering Together does. Draft copy based on what you've shared so far — your words have the final say.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Partner Organizations</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="list-row"><span class="list-badge accent">1</span><div class="list-main"><div class="t">One Big Tent</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">2</span><div class="list-main"><div class="t">Salvation Army</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">3</span><div class="list-main"><div class="t">Stevens Point Community Outreach (SPCO)</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">4</span><div class="list-main"><div class="t">Lunch Partners</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">5</span><div class="list-main"><div class="t">Noble Clinic</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">6</span><div class="list-main"><div class="t">Catholic Charities</div></div><span class="list-act">Learn more →</span></div>
+            <div class="annotation">All six partners right on the homepage, not just a teaser. Update a partner once in the directory and it stays in sync here automatically.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Community Resources Teaser</span><span class="tag tag--cms">CMS editable</span></div>
+            <div style="height:10px;width:60%;background:rgba(22,35,63,.08);border-radius:5px;"></div>
+            <div class="annotation">Points visitors to the Community Resources page for outside organizations that aren't part of Partnering Together itself.</div>
+          </div>
+
+          <div class="cta-bar">
+            <span class="cta-txt">Want to help a family today?</span>
+            <span class="pill-btn">View Donation Options</span>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">PTPC</div>
+            <div class="fnav"><span>Partners</span><span>Community Resources</span><span>Contact</span><span>Social Media</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — PARTNER DIRECTORY -->
+    <section id="partners">
+      <div class="section-head"><span class="section-num">2</span><span class="section-title">Partner Organization Directory</span><span class="section-slug">/partners</span></div>
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Partner Directory · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">PTPC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link">Home</span>
+            <span class="wf-nav-link active">Partners</span>
+            <span class="wf-nav-link">Community Resources</span>
+            <span class="wf-nav-link">Contact</span>
+          </div>
+          <span class="wf-cta-pill">Donate →</span>
+        </div>
+        <div class="wf-body">
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Partner Organizations</span><span class="tag tag--cms">CMS editable</span></div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>One Big Tent</h4></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Donate →</span><span class="btn-sm outline">Learn More →</span></div>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>Salvation Army</h4></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Donate →</span><span class="btn-sm outline">Learn More →</span></div>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>Stevens Point Community Outreach (SPCO)</h4><span class="partner-note">Fuller Profile</span></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                <p>Laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Donate →</span><span class="btn-sm outline">Learn More →</span></div>
+                <div class="annotation" style="margin-top:14px;">Runs the area's shelter on Church Street — warrants a longer write-up than the others.</div>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>Lunch Partners</h4><span class="partner-note">No Links</span></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <span class="partner-no-link">Volunteer-run, not a registered organization — no outbound links</span>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>Noble Clinic</h4><span class="partner-note">Referral Only</span></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm outline">Learn More →</span></div>
+                <div class="annotation" style="margin-top:14px;">No physical presence at the PTPC Center — referral-only, worth a one-line clarifying note on the page itself.</div>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>Catholic Charities</h4></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Donate →</span><span class="btn-sm outline">Learn More →</span></div>
+              </div>
+            </div>
+
+            <div class="annotation">Six organizations at launch, confirmed Nov 10. Add, edit, or remove a partner anytime from your dashboard — no developer required as the directory grows. Descriptions above are placeholder text standing in for each partner's real write-up.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Donate &amp; Learn More Links</span><span class="tag tag--ext">External link</span></div>
+            <p style="font-size:13px;color:var(--text-muted);">Each partner card can carry up to two outbound links: a direct link to that organization's own donation page, and a "learn more" link to their website.</p>
+            <div class="annotation">Links point out to each partner's own site — nothing is processed or hosted here. We still need the actual donate and website URLs for each of the six partners before this goes live.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">PTPC</div>
+            <div class="fnav"><span>Home</span><span>Community Resources</span><span>Contact</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 — COMMUNITY RESOURCES -->
+    <section id="resources">
+      <div class="section-head"><span class="section-num">3</span><span class="section-title">Community Resources</span><span class="section-slug">/community-resources</span></div>
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Community Resources · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">PTPC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link">Home</span>
+            <span class="wf-nav-link">Partners</span>
+            <span class="wf-nav-link active">Community Resources</span>
+            <span class="wf-nav-link">Contact</span>
+          </div>
+          <span class="wf-cta-pill">Donate →</span>
+        </div>
+        <div class="wf-body">
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Intro</span><span class="tag tag--cms">CMS editable</span></div>
+            <div style="height:10px;width:85%;background:rgba(22,35,63,.08);border-radius:5px;"></div>
+            <div class="annotation">A short framing line explaining that this page covers outside organizations that aren't part of Partnering Together itself — separate from the Partner Directory.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Resource List</span><span class="tag tag--ext">External link</span></div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>CAP Services</h4></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Visit Site →</span></div>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>Operation Bootstrap</h4></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Visit Site →</span></div>
+              </div>
+            </div>
+
+            <div class="partner-card">
+              <div class="partner-logo-ph"><span class="ico">🖼️</span><span class="lbl">Org logo</span></div>
+              <div class="partner-content">
+                <div class="partner-card-head"><h4>"Partners HP"</h4><span class="partner-note">Name to Confirm</span></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
+                <div class="partner-cta"><span class="btn-sm solid">Visit Site →</span></div>
+              </div>
+            </div>
+
+            <div class="annotation">Each entry is an outbound link plus a short write-up of what the organization offers. Add more anytime — the full list, real write-ups, and the correct name for "Partners HP" are still needed from you.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">PTPC</div>
+            <div class="fnav"><span>Home</span><span>Partners</span><span>Contact</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 — CONTACT -->
+    <section id="contact">
+      <div class="section-head"><span class="section-num">4</span><span class="section-title">Contact</span><span class="section-slug">/contact</span></div>
+      <div class="wf-embed">
+        <div class="wf-banner">Content &amp; structure wireframe — Contact · not final visual design</div>
+        <div class="wf-nav">
+          <div class="wf-logo">PTPC</div>
+          <div class="wf-nav-links">
+            <span class="wf-nav-link">Home</span>
+            <span class="wf-nav-link">Partners</span>
+            <span class="wf-nav-link">Community Resources</span>
+            <span class="wf-nav-link active">Contact</span>
+          </div>
+          <span class="wf-cta-pill">Donate →</span>
+        </div>
+        <div class="wf-body">
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Contact Details</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="list-row"><span class="list-badge">📞</span><div class="list-main"><div class="t">(715) 321-9396</div></div></div>
+            <div class="list-row"><span class="list-badge">✉️</span><div class="list-main"><div class="t">partneringtogetherpc@gmail.com</div></div></div>
+            <div class="annotation">Your phone and email, editable yourself anytime.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Partner Organizations</span><span class="tag tag--cms">CMS editable</span></div>
+            <div class="list-row"><span class="list-badge accent">1</span><div class="list-main"><div class="t">One Big Tent</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">2</span><div class="list-main"><div class="t">Salvation Army</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">3</span><div class="list-main"><div class="t">Stevens Point Community Outreach (SPCO)</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">4</span><div class="list-main"><div class="t">Lunch Partners</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">5</span><div class="list-main"><div class="t">Noble Clinic</div></div><span class="list-act">Learn more →</span></div>
+            <div class="list-row"><span class="list-badge accent">6</span><div class="list-main"><div class="t">Catholic Charities</div></div><span class="list-act">Learn more →</span></div>
+            <div class="annotation">So anyone landing on Contact looking for a specific partner can find them right away, instead of hunting for the directory first.</div>
+          </div>
+
+          <div class="wf-block">
+            <div class="wf-block-head"><span class="wf-block-title">Contact Form</span><span class="tag tag--form">Form → routing TBD</span></div>
+            <div class="form-grid">
+              <div class="form-field">Name</div>
+              <div class="form-field">Email</div>
+              <div class="form-field full">Message</div>
+            </div>
+            <span class="pill-btn" style="margin-top:14px;">Send Message</span>
+            <div class="annotation">A simple way for anyone to reach out. We'll route submissions to whichever inbox you'd like — just let us know.</div>
+          </div>
+
+          <div class="wf-footer">
+            <div class="wf-logo" style="font-size:15px;">PTPC</div>
+            <div class="fnav"><span>Home</span><span>Partners</span><span>Community Resources</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIRMED -->
+    <section id="confirmed">
+      <div class="section-head"><span class="section-num">✓</span><span class="section-title">What We've Decided</span></div>
+      <div class="decision-list">
+        <div class="decision-row"><span class="decision-icon done">✓</span><div><strong>Simple outbound donations</strong><span>Direct links to each partner's own donation page — nothing to build or maintain here.</span></div></div>
+        <div class="decision-row"><span class="decision-icon done">✓</span><div><strong>One shared directory</strong><span>A single Partner Directory page rather than a separate page per organization.</span></div></div>
+        <div class="decision-row"><span class="decision-icon done">✓</span><div><strong>Six partners at launch</strong><span>One Big Tent, Salvation Army, SPCO, Lunch Partners, Noble Clinic, and Catholic Charities, with room to add more.</span></div></div>
+        <div class="decision-row"><span class="decision-icon done">✓</span><div><strong>A dedicated Community Resources page</strong><span>Separate from the Partner Directory, for outside organizations like CAP Services and Operation Bootstrap.</span></div></div>
+        <div class="decision-row"><span class="decision-icon done">✓</span><div><strong>Built to grow</strong><span>Both directories are structured so you can add a new organization anytime without a rebuild.</span></div></div>
+        <div class="decision-row"><span class="decision-icon done">✓</span><div><strong>You keep it current</strong><span>A simple dashboard lets your team update partner profiles without calling a developer.</span></div></div>
+      </div>
+    </section>
+
+    <!-- DISCUSSION -->
+    <section id="discussion">
+      <div class="section-head"><span class="section-num">?</span><span class="section-title">What We'll Finalize Together</span></div>
+      <div class="decision-list">
+        <div class="decision-row"><span class="decision-icon open">○</span><div><strong>Colors &amp; fonts</strong><span>We've used orange from your logo as a working accent for this draft — let us know if you'd rather lead with a different color, and send along any fonts you like.</span></div></div>
+        <div class="decision-row"><span class="decision-icon open">○</span><div><strong>Community Resources list</strong><span>The full list of organizations, links, and write-ups — including confirming what "Partners HP" refers to.</span></div></div>
+        <div class="decision-row"><span class="decision-icon open">○</span><div><strong>Donate links</strong><span>Which of the six partners have their own donation page, and the actual URLs.</span></div></div>
+        <div class="decision-row"><span class="decision-icon open">○</span><div><strong>Learn-more links</strong><span>Each partner organization's own website to link out to.</span></div></div>
+        <div class="decision-row"><span class="decision-icon open">○</span><div><strong>Contact form routing</strong><span>Which inbox should receive general contact-form submissions.</span></div></div>
+        <div class="decision-row"><span class="decision-icon open">○</span><div><strong>Domain name</strong><span>Confirm "Partnering Together Portage County" is available to register, or choose an alternative.</span></div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+  // Scrollspy
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar .nav-link');
+  const docbarCrumb = document.getElementById('docbarCrumb');
+  const topbarCrumb = document.getElementById('topbarCrumb');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+        const activeLink = document.querySelector('.sidebar .nav-link[href="#' + id + '"]');
+        const label = activeLink ? activeLink.textContent.trim() : id;
+        if (docbarCrumb) docbarCrumb.textContent = label;
+        if (topbarCrumb) topbarCrumb.textContent = label;
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach((s) => observer.observe(s));
+
+  // Mobile nav
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('backdrop');
+  const hamburger = document.getElementById('hamburger');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    sidebar.classList.add('is-open');
+    backdrop.classList.add('is-visible');
+  }
+  function closeMenu(cb) {
+    menuOpen = false;
+    sidebar.classList.remove('is-open');
+    backdrop.classList.remove('is-visible');
+    if (cb) setTimeout(cb, 280);
+  }
+  if (hamburger) {
+    hamburger.addEventListener('click', () => (menuOpen ? closeMenu() : openMenu()));
+  }
+  backdrop.addEventListener('click', () => closeMenu());
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 1023 && menuOpen) {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+        closeMenu(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  });
+
+  // Site map collapse toggle
+  const smToggle = document.getElementById('smToggle');
+  const smChildren = document.getElementById('smChildren');
+  const smToggleIcon = document.getElementById('smToggleIcon');
+  if (smToggle) {
+    smToggle.addEventListener('click', () => {
+      const collapsed = smChildren.classList.toggle('collapsed');
+      smToggleIcon.textContent = collapsed ? '+' : '−';
+    });
+  }
+
+  // Progress bar
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress() {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    progressBar.style.width = height > 0 ? (scrolled / height) * 100 + '%' : '0%';
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Back to top
+  const backToTop = document.getElementById('backToTop');
+  document.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 600);
+  }, { passive: true });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
 </body>
 </html>
