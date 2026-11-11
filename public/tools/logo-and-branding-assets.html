@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Brand Assets</title>
+<style>
+  :root {
+    --bg: #0d0f12;
+    --panel: #16191d;
+    --panel-2: #1d2126;
+    --border: #2a2f36;
+    --text: #e8eaed;
+    --text-dim: #8b929c;
+    --accent: #4f9dff;
+    --accent-hover: #6bacff;
+    --danger: #ff5f5f;
+    --ok: #6fd48a;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+    min-height: 100vh;
+    padding: 32px 20px 60px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  header { margin-bottom: 20px; }
+  h1 { font-size: 22px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--text-dim); font-size: 14px; }
+
+  /* Shared top bar */
+  .topbar {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: 260px 1fr auto;
+    gap: 16px;
+    align-items: end;
+  }
+  @media (max-width: 860px) { .topbar { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 0; }
+  label {
+    display: block; font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--text-dim); margin-bottom: 6px;
+  }
+  input[type="text"], select {
+    width: 100%; background: var(--panel-2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 9px 10px; font-size: 14px;
+  }
+  input[type="text"]:focus, select:focus { outline: 1px solid var(--accent); }
+  .saved-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 5px 6px 5px 12px; font-size: 13px; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--accent); }
+  .chip .x { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-size: 13px; }
+  .chip .x:hover { color: var(--danger); }
+  .topbar-actions { display: flex; flex-direction: column; gap: 8px; min-width: 160px; }
+
+  button {
+    font-family: inherit; font-size: 13px; font-weight: 600; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--panel-2); color: var(--text);
+    padding: 9px 12px; cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #0d0f12; }
+  button.primary:hover { background: var(--accent-hover); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 6px; margin-bottom: 16px; }
+  .tab-btn {
+    background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
+    padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px;
+  }
+  .tab-btn.active { color: var(--text); border-color: var(--accent); background: var(--panel-2); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+  .panel + .panel { margin-top: 16px; }
+  .field-block { margin-bottom: 16px; }
+  .field-block:last-child { margin-bottom: 0; }
+
+  .color-row { display: flex; gap: 8px; align-items: center; }
+  input[type="color"] {
+    -webkit-appearance: none; width: 42px; height: 36px; border: 1px solid var(--border);
+    border-radius: 6px; background: none; padding: 0; cursor: pointer; flex-shrink: 0;
+  }
+  input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+  input[type="color"]::-webkit-color-swatch { border-radius: 4px; border: none; }
+  .swatches { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .swatch { width: 22px; height: 22px; border-radius: 5px; border: 1px solid var(--border); cursor: pointer; }
+
+  .dropzone {
+    border: 1.5px dashed var(--border); border-radius: 8px; padding: 18px 12px;
+    text-align: center; font-size: 13px; color: var(--text-dim); cursor: pointer; transition: border-color 0.15s;
+  }
+  .dropzone:hover, .dropzone.drag { border-color: var(--accent); color: var(--text); }
+  .dropzone input { display: none; }
+  .logo-preview-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 13px; color: var(--text-dim); }
+  .logo-thumb {
+    width: 36px; height: 36px; border-radius: 6px; background: var(--panel-2);
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .logo-thumb img { max-width: 100%; max-height: 100%; }
+
+  .btn-row { display: flex; gap: 8px; }
+  .btn-row button { flex: 1; }
+  .slider-row { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); }
+  .slider-val { font-size: 12px; color: var(--text-dim); width: 34px; text-align: right; }
+  .hint { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+  textarea, .field-block input[type="text"] { font-family: inherit; }
+
+  .preview-shell { position: relative; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+  .canvas-frame { width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); line-height: 0; }
+  canvas { width: 100%; height: auto; display: block; cursor: grab; touch-action: none; }
+  canvas.dragging { cursor: grabbing; }
+  .meta-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 12px; color: var(--text-dim); }
+
+  .crop-frame { max-width: 320px; margin: 0 auto; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); line-height: 0; }
+  #favCropCanvas { width: 100%; height: auto; display: block; cursor: grab; touch-action: none; }
+
+  .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); }
+  .checkbox-row input { width: 16px; height: 16px; accent-color: var(--accent); }
+
+  .status { font-size: 12px; color: var(--text-dim); margin-top: 8px; min-height: 16px; }
+  .status.ok { color: var(--ok); }
+  .status.err { color: var(--danger); }
+
+  .nextjs-note {
+    margin-top: 16px; font-size: 12px; color: var(--text-dim); background: var(--panel-2);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; line-height: 1.5;
+  }
+  .nextjs-note b { color: var(--text); }
+  code { background: #0006; padding: 1px 5px; border-radius: 4px; font-size: 11px; }
+
+  /* Logo -> Base64 tool */
+  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0; }
+  .stat-box { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .stat-box .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-dim); margin-bottom: 4px; }
+  .stat-box .stat-value { font-size: 17px; font-weight: 700; }
+  .stat-box .stat-value.good { color: var(--ok); }
+  .preview-logo-frame {
+    display: flex; align-items: center; justify-content: center; min-height: 180px;
+    background-image:
+      linear-gradient(45deg, #20242a 25%, transparent 25%),
+      linear-gradient(-45deg, #20242a 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #20242a 75%),
+      linear-gradient(-45deg, transparent 75%, #20242a 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+  }
+  .preview-logo-frame img { max-width: 100%; max-height: 220px; }
+  .output-group { margin-bottom: 14px; }
+  .output-group:last-child { margin-bottom: 0; }
+  .output-group > label { margin-bottom: 6px; }
+  .output-row { display: flex; gap: 8px; align-items: flex-start; }
+  textarea.code-out {
+    flex: 1; min-height: 64px; resize: vertical; background: var(--panel-2);
+    border: 1px solid var(--border); color: var(--text); border-radius: 6px;
+    padding: 8px 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px; line-height: 1.45; white-space: pre-wrap; word-break: break-all;
+  }
+  .copy-btn { flex-shrink: 0; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Client Brand Assets</h1>
+    <p>One client: a base64 logo embed for your HTML docs, an Open Graph image, and a favicon set.</p>
+  </header>
+
+  <div class="topbar">
+    <div class="field">
+      <label for="clientName">Client name</label>
+      <input type="text" id="clientName" placeholder="e.g. Acme Roofing">
+    </div>
+    <div class="field">
+      <label>Saved clients</label>
+      <div class="saved-list" id="savedList"><span class="hint">None saved yet.</span></div>
+    </div>
+    <div class="topbar-actions">
+      <button id="saveClientBtn" type="button">Save this client</button>
+      <button id="downloadAllBtn" class="primary" type="button">Download everything (.zip)</button>
+    </div>
+  </div>
+  <div class="status" id="saveStatus" style="margin: -10px 0 16px 2px;"></div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="base64" type="button">Logo &rarr; Base64</button>
+    <button class="tab-btn" data-tab="og" type="button">OG Image</button>
+    <button class="tab-btn" data-tab="favicon" type="button">Favicons</button>
+  </div>
+
+  <!-- ===================== TAB: LOGO -> BASE64 ===================== -->
+  <div class="tab-panel active" id="panel-base64">
+    <div class="layout">
+      <div>
+        <div class="panel">
+          <div class="field-block">
+            <label>Logo / icon source</label>
+            <div class="dropzone" id="b64Dropzone">
+              Click or drop an image
+              <input type="file" id="b64SourceInput" accept="image/*">
+            </div>
+            <div class="logo-preview-row" id="b64SourceRow" style="display:none;">
+              <div class="logo-thumb"><img id="b64SourceThumb" alt=""></div>
+              <span id="b64SourceName">logo.png</span>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label for="b64MaxSize">Max width/height (px)</label>
+            <input type="text" id="b64MaxSize" value="600" inputmode="numeric">
+            <div class="hint">Scales down to fit this box. Never upscales a smaller source image.</div>
+          </div>
+
+          <div class="field-block">
+            <label for="b64Format">Output format</label>
+            <select id="b64Format">
+              <option value="webp" selected>WebP (smallest, keeps transparency)</option>
+              <option value="png">PNG (lossless, keeps transparency)</option>
+              <option value="jpeg">JPEG (small, no transparency)</option>
+            </select>
+          </div>
+
+          <div class="field-block" id="b64QualityRow">
+            <label>Quality</label>
+            <div class="slider-row">
+              <input type="range" id="b64Quality" min="30" max="100" value="85">
+              <span class="slider-val" id="b64QualityVal">85%</span>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label for="b64Alt">Alt text</label>
+            <input type="text" id="b64Alt" placeholder="e.g. Acme Roofing logo">
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-shell">
+        <div class="preview-logo-frame" id="b64PreviewFrame">
+          <span class="hint" id="b64PreviewPlaceholder">Upload a logo to preview</span>
+          <img id="b64PreviewImg" alt="Logo preview" style="display:none;">
+        </div>
+        <div class="meta-row">
+          <span id="b64Dims">&mdash;</span>
+          <button type="button" id="b64DownloadImgBtn" style="padding:4px 10px;">Download compressed image</button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-label">Original</div><div class="stat-value" id="statOriginal">&mdash;</div></div>
+          <div class="stat-box"><div class="stat-label">Compressed</div><div class="stat-value" id="statCompressed">&mdash;</div></div>
+          <div class="stat-box"><div class="stat-label">Base64 (pasted size)</div><div class="stat-value" id="statBase64">&mdash;</div></div>
+          <div class="stat-box"><div class="stat-label">Size change</div><div class="stat-value" id="statReduction">&mdash;</div></div>
+        </div>
+
+        <div class="output-group">
+          <label style="margin-bottom:6px;">Data URI</label>
+          <div class="output-row">
+            <textarea class="code-out" id="b64DataUriOut" readonly rows="3" placeholder="Upload a logo to generate this"></textarea>
+            <button type="button" class="copy-btn" id="b64CopyDataUri">Copy</button>
+          </div>
+        </div>
+
+        <div class="output-group">
+          <label style="margin-bottom:6px;">&lt;img&gt; tag</label>
+          <div class="output-row">
+            <textarea class="code-out" id="b64ImgTagOut" readonly rows="3" placeholder="Upload a logo to generate this"></textarea>
+            <button type="button" class="copy-btn" id="b64CopyImgTag">Copy</button>
+          </div>
+        </div>
+
+        <div class="status" id="b64Status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB: OG IMAGE ===================== -->
+  <div class="tab-panel" id="panel-og">
+    <div class="layout">
+      <div>
+        <div class="panel">
+          <div class="field-block">
+            <label>Background color</label>
+            <div class="color-row">
+              <input type="color" id="ogColor" value="#0D0F14">
+              <input type="text" id="ogColorHex" value="#0D0F14">
+            </div>
+            <div class="swatches" id="ogSwatches"></div>
+          </div>
+
+          <div class="field-block">
+            <label>Logo</label>
+            <div class="dropzone" id="ogDropzone">
+              Click or drop an image
+              <input type="file" id="ogLogoInput" accept="image/*">
+            </div>
+            <div class="logo-preview-row" id="ogLogoRow" style="display:none;">
+              <div class="logo-thumb"><img id="ogLogoThumb" alt=""></div>
+              <span id="ogLogoName">logo.png</span>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label>Logo size</label>
+            <div class="slider-row">
+              <input type="range" id="ogLogoScale" min="5" max="40" value="14">
+              <span class="slider-val" id="ogLogoScaleVal">14%</span>
+            </div>
+            <div class="hint">Drag the logo on the preview to reposition it.</div>
+            <div class="btn-row" style="margin-top:10px;">
+              <button id="ogCenterBtn" type="button">Center logo</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="field-block">
+            <label for="ogHeadline">Headline</label>
+            <input type="text" id="ogHeadline" placeholder="Page title or headline">
+          </div>
+          <div class="field-block">
+            <label for="ogSubheadline">Subheadline (optional)</label>
+            <input type="text" id="ogSubheadline" placeholder="Short supporting line">
+          </div>
+          <div class="field-block">
+            <label>Text color</label>
+            <div class="color-row">
+              <input type="color" id="ogTextColor" value="#ffffff">
+              <input type="text" id="ogTextColorHex" value="#ffffff">
+            </div>
+          </div>
+          <div class="field-block">
+            <label for="ogTextAlign">Text position</label>
+            <select id="ogTextAlign">
+              <option value="bottom" selected>Bottom</option>
+              <option value="middle">Middle</option>
+              <option value="top">Top</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-shell">
+        <div class="canvas-frame">
+          <canvas id="ogCanvas" width="1200" height="630"></canvas>
+        </div>
+        <div class="meta-row">
+          <span>1200 × 630</span>
+          <span id="ogFileLabel">will save as: background-og.png</span>
+        </div>
+        <button class="primary" id="ogDownloadBtn" type="button" style="margin-top:14px; width:100%;">Download PNG</button>
+        <div class="nextjs-note">
+          <b>Next.js (app router):</b> save this as <code>app/opengraph-image.png</code> (or inside a route folder for a page-specific version) — the <code>og:image</code> and Twitter card tags are wired automatically, no meta tags needed.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB: FAVICONS ===================== -->
+  <div class="tab-panel" id="panel-favicon">
+    <div class="layout">
+      <div>
+        <div class="panel">
+          <div class="field-block">
+            <label>Icon source</label>
+            <div class="dropzone" id="favDropzone">
+              Click or drop a square icon (or any logo — crop it below)
+              <input type="file" id="favSourceInput" accept="image/*">
+            </div>
+            <div class="logo-preview-row" id="favSourceRow" style="display:none;">
+              <div class="logo-thumb"><img id="favSourceThumb" alt=""></div>
+              <span id="favSourceName">icon.png</span>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label>Zoom / crop</label>
+            <div class="slider-row">
+              <input type="range" id="favZoom" min="1" max="4" step="0.05" value="1">
+            </div>
+            <div class="hint">Drag inside the preview square to reposition the crop.</div>
+          </div>
+
+          <div class="field-block">
+            <div class="checkbox-row">
+              <input type="checkbox" id="favPadding">
+              <label style="margin:0; text-transform:none; font-weight:500; color: var(--text);" for="favPadding">Add background &amp; padding (for app/PWA icons)</label>
+            </div>
+            <div class="hint">Turns on a background fill with the icon inset — useful if your mark has transparent edges. The Apple touch icon always gets a background fill regardless, since iOS renders transparency as solid black.</div>
+          </div>
+
+          <div class="field-block" id="favBgRow" style="display:none;">
+            <label>Icon background color</label>
+            <div class="color-row">
+              <input type="color" id="favBgColor" value="#ffffff">
+              <input type="text" id="favBgColorHex" value="#ffffff">
+            </div>
+            <div class="swatches" id="favSwatches"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-shell">
+        <div class="crop-frame">
+          <canvas id="favCropCanvas" width="320" height="320"></canvas>
+        </div>
+        <div class="meta-row" style="justify-content:center;">
+          <span id="favFileLabel">will save as: background-favicons.zip</span>
+        </div>
+        <button class="primary" id="favDownloadZipBtn" type="button" style="margin-top:14px; width:100%;">Download favicon set (.zip)</button>
+        <div class="status" id="favStatus" style="text-align:center;"></div>
+        <div class="nextjs-note">
+          <b>Next.js (app router):</b> from the zip, drop <code>favicon.ico</code>, <code>icon-192.png</code> → rename to <code>icon.png</code>, and <code>apple-icon.png</code> straight into <code>app/</code> — all wired automatically, no <code>&lt;head&gt;</code> edits needed.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(function () {
+  // ---------------- Utilities ----------------
+  function slugify(str) {
+    return (str || 'background').toLowerCase().trim()
+      .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'background';
+  }
+  function dataUrlToBytes(dataUrl) {
+    const base64 = dataUrl.split(',')[1];
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return bytes;
+  }
+  function loadImage(dataUrl) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = dataUrl;
+    });
+  }
+  function buildIco(images) {
+    const count = images.length;
+    const headerSize = 6 + 16 * count;
+    let total = headerSize;
+    for (const im of images) total += im.bytes.length;
+    const buf = new Uint8Array(total);
+    const view = new DataView(buf.buffer);
+    view.setUint16(0, 0, true);
+    view.setUint16(2, 1, true);
+    view.setUint16(4, count, true);
+    let entryPos = 6;
+    let dataPos = headerSize;
+    for (const im of images) {
+      buf[entryPos] = im.size >= 256 ? 0 : im.size;
+      buf[entryPos + 1] = im.size >= 256 ? 0 : im.size;
+      buf[entryPos + 2] = 0;
+      buf[entryPos + 3] = 0;
+      view.setUint16(entryPos + 4, 1, true);
+      view.setUint16(entryPos + 6, 32, true);
+      view.setUint32(entryPos + 8, im.bytes.length, true);
+      view.setUint32(entryPos + 12, dataPos, true);
+      buf.set(im.bytes, dataPos);
+      dataPos += im.bytes.length;
+      entryPos += 16;
+    }
+    return buf;
+  }
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  function downloadDataUrl(dataUrl, filename) {
+    const a = document.createElement('a');
+    a.href = dataUrl; a.download = filename;
+    a.click();
+  }
+  function showStatusOn(elId, msg, isErr) {
+    const el = document.getElementById(elId);
+    el.textContent = msg;
+    el.className = 'status ' + (isErr ? 'err' : 'ok');
+    setTimeout(() => { el.textContent = ''; el.className = 'status'; }, 3200);
+  }
+  function formatBytes(bytes) {
+    if (bytes === null || bytes === undefined || isNaN(bytes)) return '—';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  // ---------------- Tabs ----------------
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---------------- Shared helpers ----------------
+  const brandSwatches = ['#0D0F14', '#0d1b2a', '#1b1b1b', '#0f2027', '#1a2e35', '#2b2118', '#ffffff', '#f4f1ea'];
+  function buildSwatches(container, onPick) {
+    brandSwatches.forEach(hex => {
+      const s = document.createElement('div');
+      s.className = 'swatch';
+      s.style.background = hex;
+      s.title = hex;
+      s.addEventListener('click', () => onPick(hex));
+      container.appendChild(s);
+    });
+  }
+  function wireColorInputs(colorEl, hexEl, onChange) {
+    colorEl.addEventListener('input', e => { hexEl.value = e.target.value; onChange(e.target.value); });
+    hexEl.addEventListener('change', e => {
+      let v = e.target.value.trim();
+      if (!v.startsWith('#')) v = '#' + v;
+      if (/^#[0-9a-fA-F]{6}$/.test(v)) { colorEl.value = v; onChange(v); }
+    });
+  }
+  function setupLogoUpload(dropId, inputId, rowId, thumbId, nameId, onLoaded) {
+    const dropzone = document.getElementById(dropId);
+    const input = document.getElementById(inputId);
+    dropzone.addEventListener('click', () => input.click());
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault(); dropzone.classList.remove('drag');
+      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+    });
+    input.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+    function handleFile(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById(thumbId).src = reader.result;
+        document.getElementById(nameId).textContent = file.name;
+        document.getElementById(rowId).style.display = 'flex';
+        onLoaded(reader.result, file.name, file);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  function attachDrag(canvasEl, state, renderFn) {
+    let dragging = false;
+    function coords(evt) {
+      const rect = canvasEl.getBoundingClientRect();
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+      return { x: (clientX - rect.left) / rect.width, y: (clientY - rect.top) / rect.height };
+    }
+    function start(evt) { if (!state.logoImg) return; dragging = true; canvasEl.classList.add('dragging'); move(evt); }
+    function move(evt) {
+      if (!dragging) return;
+      evt.preventDefault();
+      const p = coords(evt);
+      state.posX = Math.min(1, Math.max(0, p.x));
+      state.posY = Math.min(1, Math.max(0, p.y));
+      renderFn();
+    }
+    function end() { dragging = false; canvasEl.classList.remove('dragging'); }
+    canvasEl.addEventListener('mousedown', start);
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    canvasEl.addEventListener('touchstart', start, { passive: false });
+    window.addEventListener('touchmove', move, { passive: false });
+    window.addEventListener('touchend', end);
+  }
+  async function copyTextareaToClipboard(sourceId) {
+    const el = document.getElementById(sourceId);
+    const text = el.value;
+    if (!text) return false;
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      try {
+        el.removeAttribute('readonly');
+        el.select();
+        document.execCommand('copy');
+        el.setAttribute('readonly', 'readonly');
+        return true;
+      } catch (err2) {
+        return false;
+      }
+    }
+  }
+
+  // ---------------- Client name (shared) ----------------
+  const clientNameInput = document.getElementById('clientName');
+  let clientName = '';
+  clientNameInput.addEventListener('input', e => { clientName = e.target.value; updateFileLabels(); });
+  function updateFileLabels() {
+    const slug = slugify(clientName);
+    document.getElementById('ogFileLabel').textContent = 'will save as: ' + slug + '-og.png';
+    document.getElementById('favFileLabel').textContent = 'will save as: ' + slug + '-favicons.zip';
+  }
+  updateFileLabels();
+
+  // ================= TAB: LOGO -> BASE64 =================
+  const stateLogo = {
+    img: null, fileName: '', originalBytes: 0,
+    maxSize: 600, format: 'webp', quality: 85,
+    dataUrl: null, outW: 0, outH: 0
+  };
+
+  const b64Dropzone = document.getElementById('b64Dropzone');
+  const b64SourceInput = document.getElementById('b64SourceInput');
+  b64Dropzone.addEventListener('click', () => b64SourceInput.click());
+  b64Dropzone.addEventListener('dragover', e => { e.preventDefault(); b64Dropzone.classList.add('drag'); });
+  b64Dropzone.addEventListener('dragleave', () => b64Dropzone.classList.remove('drag'));
+  b64Dropzone.addEventListener('drop', e => {
+    e.preventDefault(); b64Dropzone.classList.remove('drag');
+    if (e.dataTransfer.files[0]) handleB64File(e.dataTransfer.files[0]);
+  });
+  b64SourceInput.addEventListener('change', e => { if (e.target.files[0]) handleB64File(e.target.files[0]); });
+
+  function handleB64File(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      loadImage(reader.result).then(img => {
+        stateLogo.img = img;
+        stateLogo.fileName = file.name;
+        stateLogo.originalBytes = file.size;
+        document.getElementById('b64SourceThumb').src = reader.result;
+        document.getElementById('b64SourceName').textContent = file.name + ' (' + formatBytes(file.size) + ')';
+        document.getElementById('b64SourceRow').style.display = 'flex';
+        renderB64();
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.getElementById('b64MaxSize').addEventListener('change', e => {
+    const v = parseInt(e.target.value, 10);
+    stateLogo.maxSize = (v > 0) ? v : 600;
+    e.target.value = stateLogo.maxSize;
+    renderB64();
+  });
+  document.getElementById('b64Format').addEventListener('change', e => {
+    stateLogo.format = e.target.value;
+    updateB64QualityVisibility();
+    renderB64();
+  });
+  document.getElementById('b64Quality').addEventListener('input', e => {
+    stateLogo.quality = Number(e.target.value);
+    document.getElementById('b64QualityVal').textContent = stateLogo.quality + '%';
+    renderB64();
+  });
+  document.getElementById('b64Alt').addEventListener('input', renderB64Output);
+
+  function updateB64QualityVisibility() {
+    document.getElementById('b64QualityRow').style.display = (stateLogo.format === 'png') ? 'none' : 'block';
+  }
+  updateB64QualityVisibility();
+
+  function renderB64() {
+    if (!stateLogo.img) return;
+    const img = stateLogo.img;
+    const maxDim = Math.max(16, stateLogo.maxSize || 600);
+    const w = img.naturalWidth, h = img.naturalHeight;
+    const scale = Math.min(1, maxDim / Math.max(w, h));
+    const outW = Math.max(1, Math.round(w * scale));
+    const outH = Math.max(1, Math.round(h * scale));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = outW; canvas.height = outH;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    const mime = stateLogo.format === 'jpeg' ? 'image/jpeg' : stateLogo.format === 'webp' ? 'image/webp' : 'image/png';
+    if (mime === 'image/jpeg') {
+      // JPEG has no alpha channel — fill white so transparent logos don't turn black.
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, outW, outH);
+    }
+    ctx.drawImage(img, 0, 0, outW, outH);
+
+    const dataUrl = (mime === 'image/png') ? canvas.toDataURL('image/png') : canvas.toDataURL(mime, stateLogo.quality / 100);
+
+    stateLogo.dataUrl = dataUrl;
+    stateLogo.outW = outW;
+    stateLogo.outH = outH;
+
+    document.getElementById('b64PreviewPlaceholder').style.display = 'none';
+    const previewImg = document.getElementById('b64PreviewImg');
+    previewImg.src = dataUrl;
+    previewImg.style.display = 'block';
+    document.getElementById('b64Dims').textContent = outW + ' × ' + outH + 'px';
+
+    const compressedBytes = dataUrlToBytes(dataUrl).length;
+    const base64StringBytes = dataUrl.length;
+
+    document.getElementById('statOriginal').textContent = formatBytes(stateLogo.originalBytes);
+    document.getElementById('statCompressed').textContent = formatBytes(compressedBytes);
+    document.getElementById('statBase64').textContent = formatBytes(base64StringBytes);
+
+    const reductionEl = document.getElementById('statReduction');
+    if (stateLogo.originalBytes > 0) {
+      const reduction = Math.round((1 - base64StringBytes / stateLogo.originalBytes) * 100);
+      reductionEl.textContent = (reduction >= 0 ? '−' : '+') + Math.abs(reduction) + '%';
+      reductionEl.className = 'stat-value ' + (reduction > 0 ? 'good' : '');
+    } else {
+      reductionEl.textContent = '—';
+      reductionEl.className = 'stat-value';
+    }
+
+    renderB64Output();
+  }
+
+  function renderB64Output() {
+    if (!stateLogo.dataUrl) return;
+    const altRaw = document.getElementById('b64Alt').value.trim() || 'Logo';
+    const alt = altRaw.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    document.getElementById('b64DataUriOut').value = stateLogo.dataUrl;
+    document.getElementById('b64ImgTagOut').value =
+      '<img src="' + stateLogo.dataUrl + '" alt="' + alt + '" width="' + stateLogo.outW + '" height="' + stateLogo.outH + '">';
+  }
+
+  document.getElementById('b64CopyDataUri').addEventListener('click', async () => {
+    const ok = await copyTextareaToClipboard('b64DataUriOut');
+    showStatusOn('b64Status', ok ? 'Data URI copied.' : 'Could not copy — select and copy manually.', !ok);
+  });
+  document.getElementById('b64CopyImgTag').addEventListener('click', async () => {
+    const ok = await copyTextareaToClipboard('b64ImgTagOut');
+    showStatusOn('b64Status', ok ? '<img> tag copied.' : 'Could not copy — select and copy manually.', !ok);
+  });
+  document.getElementById('b64DownloadImgBtn').addEventListener('click', () => {
+    if (!stateLogo.dataUrl) { showStatusOn('b64Status', 'Upload a logo first.', true); return; }
+    const ext = stateLogo.format === 'jpeg' ? 'jpg' : stateLogo.format;
+    const base = clientName ? slugify(clientName) : slugify((stateLogo.fileName || 'logo').replace(/\.[^.]+$/, ''));
+    downloadDataUrl(stateLogo.dataUrl, base + '-logo.' + ext);
+  });
+
+  // ================= TAB: OG IMAGE =================
+  const ogCanvas = document.getElementById('ogCanvas');
+  const ogCtx = ogCanvas.getContext('2d');
+  const stateOG = {
+    color: '#0D0F14', logoImg: null, logoDataUrl: null, logoFileName: '',
+    logoScalePct: 14, posX: 0.12, posY: 0.18,
+    headline: '', subheadline: '', textColor: '#ffffff', textAlign: 'bottom'
+  };
+
+  buildSwatches(document.getElementById('ogSwatches'), hex => {
+    stateOG.color = hex; document.getElementById('ogColor').value = hex; document.getElementById('ogColorHex').value = hex; renderOG();
+  });
+  wireColorInputs(document.getElementById('ogColor'), document.getElementById('ogColorHex'), hex => { stateOG.color = hex; renderOG(); });
+
+  setupLogoUpload('ogDropzone', 'ogLogoInput', 'ogLogoRow', 'ogLogoThumb', 'ogLogoName', (dataUrl, name) => {
+    loadImage(dataUrl).then(img => { stateOG.logoImg = img; stateOG.logoDataUrl = dataUrl; stateOG.logoFileName = name; renderOG(); });
+  });
+  document.getElementById('ogLogoScale').addEventListener('input', e => {
+    stateOG.logoScalePct = Number(e.target.value);
+    document.getElementById('ogLogoScaleVal').textContent = stateOG.logoScalePct + '%';
+    renderOG();
+  });
+  document.getElementById('ogHeadline').addEventListener('input', e => { stateOG.headline = e.target.value; renderOG(); });
+  document.getElementById('ogSubheadline').addEventListener('input', e => { stateOG.subheadline = e.target.value; renderOG(); });
+  wireColorInputs(document.getElementById('ogTextColor'), document.getElementById('ogTextColorHex'), hex => { stateOG.textColor = hex; renderOG(); });
+  document.getElementById('ogTextAlign').addEventListener('change', e => { stateOG.textAlign = e.target.value; renderOG(); });
+  document.getElementById('ogCenterBtn').addEventListener('click', () => { stateOG.posX = 0.5; stateOG.posY = 0.5; renderOG(); });
+
+  function wrapText(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let line = '';
+    for (const w of words) {
+      const test = line ? line + ' ' + w : w;
+      if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+      else line = test;
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  function renderOG() {
+    ogCtx.fillStyle = stateOG.color;
+    ogCtx.fillRect(0, 0, 1200, 630);
+
+    if (stateOG.logoImg) {
+      const targetW = 1200 * (stateOG.logoScalePct / 100);
+      const ratio = stateOG.logoImg.naturalHeight / stateOG.logoImg.naturalWidth;
+      const targetH = targetW * ratio;
+      const cx = stateOG.posX * 1200, cy = stateOG.posY * 630;
+      ogCtx.drawImage(stateOG.logoImg, cx - targetW / 2, cy - targetH / 2, targetW, targetH);
+    }
+
+    const pad = 80;
+    const maxTextWidth = 1200 - pad * 2;
+    ogCtx.fillStyle = stateOG.textColor;
+    ogCtx.textBaseline = 'alphabetic';
+
+    let headlineLines = [];
+    if (stateOG.headline) {
+      ogCtx.font = '700 64px -apple-system, Segoe UI, Arial, sans-serif';
+      headlineLines = wrapText(ogCtx, stateOG.headline, maxTextWidth);
+    }
+    let subLines = [];
+    if (stateOG.subheadline) {
+      ogCtx.font = '400 30px -apple-system, Segoe UI, Arial, sans-serif';
+      subLines = wrapText(ogCtx, stateOG.subheadline, maxTextWidth);
+    }
+
+    const lineH = 74, subLineH = 42, gapBetween = 20;
+    const blockHeight = headlineLines.length * lineH + (subLines.length ? gapBetween + subLines.length * subLineH : 0);
+
+    let startY;
+    if (stateOG.textAlign === 'top') startY = 150;
+    else if (stateOG.textAlign === 'middle') startY = 315 - blockHeight / 2 + lineH * 0.8;
+    else startY = 630 - 80 - blockHeight + lineH * 0.8;
+
+    ogCtx.font = '700 64px -apple-system, Segoe UI, Arial, sans-serif';
+    headlineLines.forEach((line, i) => { ogCtx.fillText(line, pad, startY + i * lineH); });
+
+    let subStartY = startY + headlineLines.length * lineH + gapBetween;
+    ogCtx.font = '400 30px -apple-system, Segoe UI, Arial, sans-serif';
+    ogCtx.globalAlpha = 0.82;
+    subLines.forEach((line, i) => { ogCtx.fillText(line, pad, subStartY + i * subLineH); });
+    ogCtx.globalAlpha = 1;
+  }
+  attachDrag(ogCanvas, stateOG, renderOG);
+
+  document.getElementById('ogDownloadBtn').addEventListener('click', () => {
+    downloadDataUrl(ogCanvas.toDataURL('image/png'), slugify(clientName) + '-og.png');
+  });
+
+  // ================= TAB: FAVICONS =================
+  const favCropCanvas = document.getElementById('favCropCanvas');
+  const favCropCtx = favCropCanvas.getContext('2d');
+  const stateFav = { img: null, dataUrl: null, fileName: '', centerX: 0.5, centerY: 0.5, zoom: 1, padding: false, bgColor: '#ffffff' };
+
+  setupLogoUpload('favDropzone', 'favSourceInput', 'favSourceRow', 'favSourceThumb', 'favSourceName', (dataUrl, name) => {
+    loadImage(dataUrl).then(img => {
+      stateFav.img = img; stateFav.dataUrl = dataUrl; stateFav.fileName = name;
+      stateFav.centerX = 0.5; stateFav.centerY = 0.5; stateFav.zoom = 1;
+      document.getElementById('favZoom').value = 1;
+      renderFavCrop();
+    });
+  });
+
+  document.getElementById('favZoom').addEventListener('input', e => { stateFav.zoom = Number(e.target.value); renderFavCrop(); });
+  document.getElementById('favPadding').addEventListener('change', e => {
+    stateFav.padding = e.target.checked;
+    document.getElementById('favBgRow').style.display = stateFav.padding ? 'flex' : 'none';
+    renderFavCrop();
+  });
+  buildSwatches(document.getElementById('favSwatches'), hex => {
+    stateFav.bgColor = hex; document.getElementById('favBgColor').value = hex; document.getElementById('favBgColorHex').value = hex; renderFavCrop();
+  });
+  wireColorInputs(document.getElementById('favBgColor'), document.getElementById('favBgColorHex'), hex => { stateFav.bgColor = hex; renderFavCrop(); });
+
+  function getCropRect() {
+    const img = stateFav.img;
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const minDim = Math.min(iw, ih);
+    const cropSize = minDim / stateFav.zoom;
+    const halfFracX = (cropSize / 2) / iw;
+    const halfFracY = (cropSize / 2) / ih;
+    const cx = Math.min(1 - halfFracX, Math.max(halfFracX, stateFav.centerX));
+    const cy = Math.min(1 - halfFracY, Math.max(halfFracY, stateFav.centerY));
+    stateFav.centerX = cx; stateFav.centerY = cy;
+    return { sx: cx * iw - cropSize / 2, sy: cy * ih - cropSize / 2, size: cropSize };
+  }
+
+  function renderFavCrop() {
+    const size = favCropCanvas.width;
+    favCropCtx.clearRect(0, 0, size, size);
+    if (!stateFav.img) {
+      favCropCtx.fillStyle = '#1d2126';
+      favCropCtx.fillRect(0, 0, size, size);
+      return;
+    }
+    if (stateFav.padding) {
+      favCropCtx.fillStyle = stateFav.bgColor;
+      favCropCtx.fillRect(0, 0, size, size);
+    }
+    const rect = getCropRect();
+    const inner = stateFav.padding ? size * 0.7 : size;
+    const offset = (size - inner) / 2;
+    favCropCtx.drawImage(stateFav.img, rect.sx, rect.sy, rect.size, rect.size, offset, offset, inner, inner);
+  }
+
+  (function () {
+    let dragging = false, startX = 0, startY = 0, startCenterX = 0.5, startCenterY = 0.5;
+    function getPos(evt) { return evt.touches ? { x: evt.touches[0].clientX, y: evt.touches[0].clientY } : { x: evt.clientX, y: evt.clientY }; }
+    function start(evt) {
+      if (!stateFav.img) return;
+      dragging = true;
+      const p = getPos(evt);
+      startX = p.x; startY = p.y; startCenterX = stateFav.centerX; startCenterY = stateFav.centerY;
+      favCropCanvas.classList.add('dragging');
+    }
+    function move(evt) {
+      if (!dragging) return;
+      evt.preventDefault();
+      const p = getPos(evt);
+      const rect = favCropCanvas.getBoundingClientRect();
+      const displaySize = rect.width;
+      const cropInfo = getCropRect();
+      const scaleFactor = cropInfo.size / displaySize;
+      const dxCss = p.x - startX, dyCss = p.y - startY;
+      const iw = stateFav.img.naturalWidth, ih = stateFav.img.naturalHeight;
+      stateFav.centerX = startCenterX - (dxCss * scaleFactor) / iw;
+      stateFav.centerY = startCenterY - (dyCss * scaleFactor) / ih;
+      renderFavCrop();
+    }
+    function end() { dragging = false; favCropCanvas.classList.remove('dragging'); }
+    favCropCanvas.addEventListener('mousedown', start);
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    favCropCanvas.addEventListener('touchstart', start, { passive: false });
+    window.addEventListener('touchmove', move, { passive: false });
+    window.addEventListener('touchend', end);
+  })();
+
+  async function generateFaviconFiles() {
+    if (!stateFav.img) return null;
+    const sizes = [16, 32, 48, 180, 192, 512];
+    const files = {};
+    const icoImages = [];
+    for (const size of sizes) {
+      const off = document.createElement('canvas');
+      off.width = size; off.height = size;
+      const octx = off.getContext('2d');
+      const forceBg = (size === 180);
+      const usePadding = stateFav.padding || forceBg;
+      if (usePadding) {
+        octx.fillStyle = stateFav.bgColor || '#ffffff';
+        octx.fillRect(0, 0, size, size);
+      }
+      const rect = getCropRect();
+      const inner = stateFav.padding ? size * 0.7 : size;
+      const offset = (size - inner) / 2;
+      octx.drawImage(stateFav.img, rect.sx, rect.sy, rect.size, rect.size, offset, offset, inner, inner);
+      const dataUrl = off.toDataURL('image/png');
+      const bytes = dataUrlToBytes(dataUrl);
+      let filename;
+      if (size === 16) filename = 'favicon-16x16.png';
+      else if (size === 32) filename = 'favicon-32x32.png';
+      else if (size === 48) filename = 'favicon-48x48.png';
+      else if (size === 180) filename = 'apple-icon.png';
+      else if (size === 192) filename = 'icon-192.png';
+      else filename = 'icon-512.png';
+      files[filename] = bytes;
+      if (size === 16 || size === 32 || size === 48) icoImages.push({ size, bytes });
+    }
+    files['favicon.ico'] = buildIco(icoImages);
+    files['site.webmanifest'] = new TextEncoder().encode(JSON.stringify({
+      name: clientName || 'Site',
+      icons: [
+        { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: '/icon-512.png', sizes: '512x512', type: 'image/png' }
+      ],
+      theme_color: stateFav.bgColor || '#ffffff',
+      background_color: stateFav.bgColor || '#ffffff'
+    }, null, 2));
+    return files;
+  }
+
+  document.getElementById('favDownloadZipBtn').addEventListener('click', async () => {
+    if (!stateFav.img) { showStatusOn('favStatus', 'Upload a logo or icon first.', true); return; }
+    try {
+      const files = await generateFaviconFiles();
+      const zip = new JSZip();
+      Object.entries(files).forEach(([name, bytes]) => zip.file(name, bytes));
+      const blob = await zip.generateAsync({ type: 'blob' });
+      downloadBlob(blob, slugify(clientName) + '-favicons.zip');
+      showStatusOn('favStatus', 'Downloaded favicon set.', false);
+    } catch (err) {
+      showStatusOn('favStatus', 'Could not build favicon set: ' + err, true);
+    }
+  });
+
+  // ---------------- Save / load client (OG + favicons) ----------------
+  function serializeOG() {
+    return { color: stateOG.color, logoDataUrl: stateOG.logoDataUrl, logoFileName: stateOG.logoFileName, logoScalePct: stateOG.logoScalePct, posX: stateOG.posX, posY: stateOG.posY, headline: stateOG.headline, subheadline: stateOG.subheadline, textColor: stateOG.textColor, textAlign: stateOG.textAlign };
+  }
+  function serializeFav() {
+    return { dataUrl: stateFav.dataUrl, fileName: stateFav.fileName, centerX: stateFav.centerX, centerY: stateFav.centerY, zoom: stateFav.zoom, padding: stateFav.padding, bgColor: stateFav.bgColor };
+  }
+
+  function loadClientRecord(record) {
+    clientName = record.name || '';
+    clientNameInput.value = clientName;
+
+    const og = record.og;
+    document.getElementById('ogHeadline').value = og ? (og.headline || '') : '';
+    document.getElementById('ogSubheadline').value = og ? (og.subheadline || '') : '';
+    if (og) {
+      stateOG.color = og.color || '#0D0F14';
+      stateOG.logoScalePct = og.logoScalePct || 14;
+      stateOG.posX = typeof og.posX === 'number' ? og.posX : 0.12;
+      stateOG.posY = typeof og.posY === 'number' ? og.posY : 0.18;
+      stateOG.headline = og.headline || '';
+      stateOG.subheadline = og.subheadline || '';
+      stateOG.textColor = og.textColor || '#ffffff';
+      stateOG.textAlign = og.textAlign || 'bottom';
+      document.getElementById('ogColor').value = stateOG.color;
+      document.getElementById('ogColorHex').value = stateOG.color;
+      document.getElementById('ogLogoScale').value = stateOG.logoScalePct;
+      document.getElementById('ogLogoScaleVal').textContent = stateOG.logoScalePct + '%';
+      document.getElementById('ogTextColor').value = stateOG.textColor;
+      document.getElementById('ogTextColorHex').value = stateOG.textColor;
+      document.getElementById('ogTextAlign').value = stateOG.textAlign;
+      if (og.logoDataUrl) {
+        loadImage(og.logoDataUrl).then(img => {
+          stateOG.logoImg = img; stateOG.logoDataUrl = og.logoDataUrl; stateOG.logoFileName = og.logoFileName || '';
+          document.getElementById('ogLogoThumb').src = og.logoDataUrl;
+          document.getElementById('ogLogoName').textContent = og.logoFileName || 'logo';
+          document.getElementById('ogLogoRow').style.display = 'flex';
+          renderOG();
+        });
+      } else {
+        stateOG.logoImg = null;
+        document.getElementById('ogLogoRow').style.display = 'none';
+        renderOG();
+      }
+    } else {
+      stateOG.headline = ''; stateOG.subheadline = ''; stateOG.logoImg = null;
+      document.getElementById('ogLogoRow').style.display = 'none';
+      renderOG();
+    }
+
+    const fav = record.fav;
+    if (fav && fav.dataUrl) {
+      stateFav.centerX = typeof fav.centerX === 'number' ? fav.centerX : 0.5;
+      stateFav.centerY = typeof fav.centerY === 'number' ? fav.centerY : 0.5;
+      stateFav.zoom = fav.zoom || 1;
+      stateFav.padding = !!fav.padding;
+      stateFav.bgColor = fav.bgColor || '#ffffff';
+      document.getElementById('favZoom').value = stateFav.zoom;
+      document.getElementById('favPadding').checked = stateFav.padding;
+      document.getElementById('favBgRow').style.display = stateFav.padding ? 'flex' : 'none';
+      document.getElementById('favBgColor').value = stateFav.bgColor;
+      document.getElementById('favBgColorHex').value = stateFav.bgColor;
+      loadImage(fav.dataUrl).then(img => {
+        stateFav.img = img; stateFav.dataUrl = fav.dataUrl; stateFav.fileName = fav.fileName || '';
+        document.getElementById('favSourceThumb').src = fav.dataUrl;
+        document.getElementById('favSourceName').textContent = fav.fileName || 'icon';
+        document.getElementById('favSourceRow').style.display = 'flex';
+        renderFavCrop();
+      });
+    } else {
+      stateFav.img = null;
+      document.getElementById('favSourceRow').style.display = 'none';
+      renderFavCrop();
+    }
+
+    updateFileLabels();
+  }
+
+  async function refreshSavedList() {
+    const el = document.getElementById('savedList');
+    el.innerHTML = '';
+    try {
+      const result = await window.storage.list('client:', false);
+      const keys = (result && result.keys) || [];
+      if (keys.length === 0) { el.innerHTML = '<span class="hint">None saved yet.</span>'; return; }
+      for (const key of keys) {
+        try {
+          const rec = await window.storage.get(key, false);
+          if (!rec) continue;
+          const data = JSON.parse(rec.value);
+          const chip = document.createElement('div');
+          chip.className = 'chip';
+          const label = document.createElement('span');
+          label.textContent = data.name || key.replace('client:', '');
+          const del = document.createElement('span');
+          del.className = 'x'; del.textContent = '✕';
+          del.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            try { await window.storage.delete(key, false); refreshSavedList(); }
+            catch (err) { showStatusOn('saveStatus', 'Could not delete: ' + err, true); }
+          });
+          chip.appendChild(label); chip.appendChild(del);
+          chip.addEventListener('click', () => loadClientRecord(data));
+          el.appendChild(chip);
+        } catch (err) { /* skip unreadable entry */ }
+      }
+    } catch (err) {
+      el.innerHTML = '<span class="hint">Could not load saved clients.</span>';
+    }
+  }
+
+  document.getElementById('saveClientBtn').addEventListener('click', async () => {
+    if (!clientName.trim()) { showStatusOn('saveStatus', 'Enter a client name first.', true); return; }
+    const slug = slugify(clientName);
+    const record = {
+      name: clientName,
+      og: (stateOG.headline || stateOG.logoDataUrl) ? serializeOG() : null,
+      fav: stateFav.dataUrl ? serializeFav() : null
+    };
+    try {
+      const result = await window.storage.set('client:' + slug, JSON.stringify(record), false);
+      if (!result) throw new Error('no result returned');
+      showStatusOn('saveStatus', 'Saved "' + clientName + '".', false);
+      refreshSavedList();
+    } catch (err) {
+      showStatusOn('saveStatus', 'Could not save: ' + err, true);
+    }
+  });
+
+  document.getElementById('downloadAllBtn').addEventListener('click', async () => {
+    try {
+      const zip = new JSZip();
+      let any = false;
+      if (stateOG.logoImg || stateOG.headline) {
+        zip.file(slugify(clientName) + '-og.png', dataUrlToBytes(ogCanvas.toDataURL('image/png')));
+        any = true;
+      }
+      if (stateFav.img) {
+        const files = await generateFaviconFiles();
+        Object.entries(files).forEach(([name, bytes]) => zip.file('favicons/' + name, bytes));
+        any = true;
+      }
+      if (!any) { showStatusOn('saveStatus', 'Nothing to export yet — add an OG image or favicon first.', true); return; }
+      const blob = await zip.generateAsync({ type: 'blob' });
+      downloadBlob(blob, slugify(clientName) + '-brand-kit.zip');
+      showStatusOn('saveStatus', 'Downloaded full kit.', false);
+    } catch (err) {
+      showStatusOn('saveStatus', 'Could not build kit: ' + err, true);
+    }
+  });
+
+  // ---------------- Init ----------------
+  refreshSavedList();
+  renderOG();
+  renderFavCrop();
+})();
+</script>
+</body>
+</html>
